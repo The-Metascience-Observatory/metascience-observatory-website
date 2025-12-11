@@ -37,8 +37,6 @@
   ],
   "exclude": [
     "node_modules",
-    "sanity.cli.ts",
-    "sanity.config.ts",
     "src/sanity/**"
   ]
 }

@@ -27,6 +27,7 @@ export const Navbar = () => {
             <Link href="/#about" className="text-foreground/80 hover:text-foreground transition-colors">About</Link>
             <Link href="/#team" className="text-foreground/80 hover:text-foreground transition-colors">Team</Link>
             <Link href="/approach" className="text-foreground/80 hover:text-foreground transition-colors">Approach</Link>
+            <Link href="/articles" className="text-foreground/80 hover:text-foreground transition-colors">Articles</Link>
             <Link href="/#donate" className="text-foreground/80 hover:text-foreground transition-colors">Donate</Link>
             <Button variant="outline" size="sm" asChild>
               <Link href="/replications-database">
@@ -83,6 +84,13 @@ export const Navbar = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Approach
+              </Link>
+              <Link
+                href="/articles"
+                className="text-foreground/80 hover:text-foreground transition-colors py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Articles
               </Link>
               <Link
                 href="/#donate"
