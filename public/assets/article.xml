@@ -1,0 +1,4493 @@
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="EN" article-type="research-article">
+<front>
+<journal-meta>
+<journal-id journal-id-type="publisher-id">Front. Commun.</journal-id>
+<journal-title>Frontiers in Communication</journal-title>
+<abbrev-journal-title abbrev-type="pubmed">Front. Commun.</abbrev-journal-title>
+<issn pub-type="epub">2297-900X</issn>
+<publisher>
+<publisher-name>Frontiers Media S.A.</publisher-name>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="doi">10.3389/fcomm.2022.1048896</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Communication</subject>
+<subj-group>
+<subject>Original Research</subject>
+</subj-group>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>Evaluating replicability of ten influential research on sensory marketing</article-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" corresp="yes">
+<name>
+<surname>Motoki</surname>
+<given-names>Kosuke</given-names>
+</name>
+<xref ref-type="aff" rid="aff1">
+<sup>1</sup>
+</xref>
+<xref ref-type="aff" rid="aff2">
+<sup>2</sup>
+</xref>
+<xref ref-type="corresp" rid="c001">
+<sup>*</sup>
+</xref>
+<uri xlink:href="http://loop.frontiersin.org/people/274823/overview"/>
+</contrib>
+<contrib contrib-type="author">
+<name>
+<surname>Iseki</surname>
+<given-names>Sayo</given-names>
+</name>
+<xref ref-type="aff" rid="aff3">
+<sup>3</sup>
+</xref>
+<uri xlink:href="http://loop.frontiersin.org/people/313456/overview"/>
+</contrib>
+</contrib-group>
+<aff id="aff1">
+<sup>1</sup>
+<institution>Department of Management, The University of Tokyo</institution>
+,
+<addr-line>Tokyo</addr-line>
+,
+<country>Japan</country>
+</aff>
+<aff id="aff2">
+<sup>2</sup>
+<institution>Department of Food Science and Business, Miyagi University</institution>
+,
+<addr-line>Sendai</addr-line>
+,
+<country>Japan</country>
+</aff>
+<aff id="aff3">
+<sup>3</sup>
+<institution>Department of Management, Chukyo University</institution>
+,
+<addr-line>Nagoya</addr-line>
+,
+<country>Japan</country>
+</aff>
+<author-notes>
+<fn fn-type="edited-by">
+<p>Edited by: Felipe Reinoso-Carvalho, University of Los Andes, Colombia</p>
+</fn>
+<fn fn-type="edited-by">
+<p>Reviewed by: Catalina Estrada-Mejia, Universidad de Los Andes, Colombia; Enrique Ter Horst, University of Los Andes, Colombia</p>
+</fn>
+<corresp id="c001">
+*Correspondence: Kosuke Motoki
+<email>motoki@e.u-tokyo.ac.jp</email>
+</corresp>
+<fn fn-type="other" id="fn001">
+<p>This article was submitted to Advertising and Marketing Communication, a section of the journal Frontiers in Communication</p>
+</fn>
+</author-notes>
+<pub-date pub-type="epub">
+<day>28</day>
+<month>10</month>
+<year>2022</year>
+</pub-date>
+<pub-date pub-type="collection">
+<year>2022</year>
+</pub-date>
+<volume>7</volume>
+<elocation-id>1048896</elocation-id>
+<history>
+<date date-type="received">
+<day>20</day>
+<month>09</month>
+<year>2022</year>
+</date>
+<date date-type="accepted">
+<day>30</day>
+<month>09</month>
+<year>2022</year>
+</date>
+</history>
+<permissions>
+<copyright-statement>Copyright © 2022 Motoki and Iseki.</copyright-statement>
+<copyright-year>2022</copyright-year>
+<copyright-holder>Motoki and Iseki</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/">
+<p>This is an open-access article distributed under the terms of the Creative Commons Attribution License (CC BY). The use, distribution or reproduction in other forums is permitted, provided the original author(s) and the copyright owner(s) are credited and that the original publication in this journal is cited, in accordance with accepted academic practice. No use, distribution or reproduction is permitted which does not comply with these terms.</p>
+</license>
+</permissions>
+<abstract>
+<p>We attempted to evaluate the replicability and generalizability of ten influential research on sensory marketing by conducting a high-powered and pre-registered replication in online settings in non-WEIRD consumers. The results revealed that only 20% of findings could be successfully replicated, and their effect sizes are as half as the original ones. Two successful studies had relatively larger sample sizes, used sound symbolism, and employed within-participants manipulation of senses. No studies involving visual factors, between-participant manipulation of senses, or interactions between factors could be replicated. Our findings reveal an initial estimate of the replicability and generalizability of sensory marketing.</p>
+</abstract>
+<kwd-group>
+<kwd>sensory marketing</kwd>
+<kwd>consumer psychology</kwd>
+<kwd>replication</kwd>
+<kwd>pre-registration</kwd>
+<kwd>consumer behavior</kwd>
+</kwd-group>
+<counts>
+<fig-count count="0"/>
+<table-count count="5"/>
+<equation-count count="0"/>
+<ref-count count="65"/>
+<page-count count="13"/>
+<word-count count="9064"/>
+</counts>
+</article-meta>
+</front>
+<body>
+<sec sec-type="intro" id="s1">
+<title>Introduction</title>
+<p>
+Over the past decade, sensory marketing has become a growing field of research. Sensory marketing is “marketing that engages consumers' senses and affects their perception, judgment, and behavior” (Krishna,
+<xref ref-type="bibr" rid="B30">2012</xref>
+, p. 332). An influential review, “An integrative review of sensory marketing: Engaging the senses to affect perception, judgment, and behavior” (Krishna,
+<xref ref-type="bibr" rid="B30">2012</xref>
+) has been cited more than 1300 times (Google Scholar, 11/2021). Many studies have demonstrated that sensory factors affect consumers' perceptions, judgments, and behaviors (Krishna and Schwarz,
+<xref ref-type="bibr" rid="B33">2014</xref>
+; Krishna et al.,
+<xref ref-type="bibr" rid="B32">2016</xref>
+; Wörfel et al.,
+<xref ref-type="bibr" rid="B62">2022</xref>
+). A growing body of research has demonstrated that vision (Biswas et al.,
+<xref ref-type="bibr" rid="B5">2017</xref>
+), audition (Motoki et al.,
+<xref ref-type="bibr" rid="B42">2022</xref>
+), olfaction (Madzharov et al.,
+<xref ref-type="bibr" rid="B39">2015</xref>
+; Iseki et al.,
+<xref ref-type="bibr" rid="B24">2021</xref>
+), touch (Zwebner et al.,
+<xref ref-type="bibr" rid="B65">2014</xref>
+), and tastes (Litt and Shiv,
+<xref ref-type="bibr" rid="B35">2012</xref>
+) influence consumer behaviors. Several reviews on sensory marketing also have appeared including multisensory store atmospherics (Spence et al.,
+<xref ref-type="bibr" rid="B56">2014</xref>
+), grounded cognition (Krishna and Schwarz,
+<xref ref-type="bibr" rid="B33">2014</xref>
+), package design (Krishna et al.,
+<xref ref-type="bibr" rid="B31">2017</xref>
+), advertising (Krishna et al.,
+<xref ref-type="bibr" rid="B32">2016</xref>
+), and new technologies (Petit et al.,
+<xref ref-type="bibr" rid="B47">2019</xref>
+). However, to our knowledge, the replicability of sensory marketing findings has not yet been addressed.
+</p>
+<p>
+Psychology and behavioral sciences face a replication crisis. Replication can be regarded as the cornerstone for establishing scientific findings in psychology, marketing, and consumer research (Asendorpf et al.,
+<xref ref-type="bibr" rid="B2">2013</xref>
+; Lynch et al.,
+<xref ref-type="bibr" rid="B37">2015</xref>
+; Ding et al.,
+<xref ref-type="bibr" rid="B12">2020</xref>
+; Edlund et al.,
+<xref ref-type="bibr" rid="B14">2022</xref>
+). Most research on psychology and behavioral science (including consumer psychology) relies on testing statistical hypotheses using empirical observations and data (Shrout and Rodgers,
+<xref ref-type="bibr" rid="B51">2018</xref>
+). Statistically significant findings can be replicated using an independent dataset (Shrout and Rodgers,
+<xref ref-type="bibr" rid="B51">2018</xref>
+). However, since the 2010s, it has been found that many of the findings published in top-tier journals cannot be replicated (Open Science Collaboration,
+<xref ref-type="bibr" rid="B45">2015</xref>
+; Camerer et al.,
+<xref ref-type="bibr" rid="B7">2018</xref>
+). For example, one of the first large replication attempts has found that only 36% of one hundred psychology findings can be replicated (Open Science Collaboration,
+<xref ref-type="bibr" rid="B45">2015</xref>
+). Non-successful replications of classic and famous findings in the field of social psychology (morality salience and ego depletion) have also been reported (Vadillo et al.,
+<xref ref-type="bibr" rid="B59">2018</xref>
+; Klein et al.,
+<xref ref-type="bibr" rid="B26">2019</xref>
+), though consumer research has relied on classical findings (Ferraro et al.,
+<xref ref-type="bibr" rid="B16">2005</xref>
+; Baumeister et al.,
+<xref ref-type="bibr" rid="B4">2008</xref>
+; Fransen et al.,
+<xref ref-type="bibr" rid="B18">2008</xref>
+). The findings that fail replication include research in the fields of cognitive and social psychology (Open Science Collaboration,
+<xref ref-type="bibr" rid="B45">2015</xref>
+; Klein et al.,
+<xref ref-type="bibr" rid="B26">2019</xref>
+). Further, given that consumer psychology has strived by applying the theory/findings of social and cognitive psychology (Hoyer et al.,
+<xref ref-type="bibr" rid="B22">2012</xref>
+; Malter et al.,
+<xref ref-type="bibr" rid="B40">2020</xref>
+), evaluation of the replicability of consumer research should be required.
+</p>
+<p>
+Consumer psychology is no exception to replication crises. Data Colada (
+<ext-link ext-link-type="uri" xlink:href="https://datacolada.org/">https://datacolada.org/</ext-link>
+) attempted to replicate ten studies published in the Journal of Marketing Research and the Journal of Consumer Research. The replication attempts by Data Colada revealed that most findings could not be replicated. Even when the results showed the same direction, the effect size
+<xref ref-type="fn" rid="fn0001">
+<sup>1</sup>
+</xref>
+was much smaller than that of the original authors (
+<ext-link ext-link-type="uri" xlink:href="https://datacolada.org/92">https://datacolada.org/92</ext-link>
+). This suggests that the effect size of the original findings would be inflated, and it is important to re-evaluate the effect size by a high-powered replication study. Moreover, other researchers have failed to replicate the findings of consumer psychology (Tunca and Yanar,
+<xref ref-type="bibr" rid="B57">2020</xref>
+; Tunca et al.,
+<xref ref-type="bibr" rid="B58">2022</xref>
+), even though some can be replicated (Sarstedt et al.,
+<xref ref-type="bibr" rid="B50">2017</xref>
+). For example, neither two findings that appeared in the Journal of Consumer Research (Dubois et al.,
+<xref ref-type="bibr" rid="B13">2011</xref>
+; Wang and Griskevicius,
+<xref ref-type="bibr" rid="B61">2013</xref>
+) were unsuccessfully replicated (Tunca and Yanar,
+<xref ref-type="bibr" rid="B57">2020</xref>
+; Tunca et al.,
+<xref ref-type="bibr" rid="B58">2022</xref>
+). Moreover, it has been estimated that most of the process evidence in marketing obtained by mediation analyses is noisy and inadequately powered (Charlton et al.,
+<xref ref-type="bibr" rid="B9">2021</xref>
+). Conclusively, one researcher has estimated that the replication rate of marketing and consumer research is ~10% (
+<ext-link ext-link-type="uri" xlink:href="https://www.openmktg.org/research/replications">https://www.openmktg.org/research/replications</ext-link>
+).
+</p>
+<p>
+The present study used pre-registered replication to evaluate the replicability of ten influential research on sensory marketing. Replications of marketing research have been reported, especially in the Replication Corner of the International Journal of Research in Marketing (Lynch et al.,
+<xref ref-type="bibr" rid="B37">2015</xref>
+). Most replication research published in the Replication Corner is successful (i.e., original findings are successfully replicated) (Lynch et al.,
+<xref ref-type="bibr" rid="B37">2015</xref>
+). Additionally, only three studies can be regarded as unsuccessful (i.e., the replication score was below the midpoint) (Lynch et al.,
+<xref ref-type="bibr" rid="B37">2015</xref>
+). In other words, 90% (27/30) of replication studies can be regarded as successful (i.e., replication score was above midpoint) (Lynch et al.,
+<xref ref-type="bibr" rid="B37">2015</xref>
+). The ratio of successful replication appears to contradict that of pre-registered replication (
+<ext-link ext-link-type="uri" xlink:href="https://www.openmktg.org/research/replications">https://www.openmktg.org/research/replications</ext-link>
+). It is possible that publication bias (i.e., only successful replications were submitted and then published) and/or selective reporting inflated the ratio of successful replications in the Replication Corner (Lynch et al.,
+<xref ref-type="bibr" rid="B37">2015</xref>
+). Further, it has been suggested that pre-registration
+<xref ref-type="fn" rid="fn0002">
+<sup>2</sup>
+</xref>
+helps create credible and robust science (van't Veer and Giner-Sorolla,
+<xref ref-type="bibr" rid="B60">2016</xref>
+; Nosek et al.,
+<xref ref-type="bibr" rid="B43">2018</xref>
+). Actually, pre-registration has been also recently regarded as an essential research practice in consumer psychology (Simmons et al.,
+<xref ref-type="bibr" rid="B53">2021</xref>
+). Therefore, to obtain findings that are more reliable, we employed a pre-registered replication.
+</p>
+<p>
+It should be noted that our replication attempts were conceptual replication with an extension of populations and settings (LeBel et al.,
+<xref ref-type="bibr" rid="B34">2018</xref>
+). Most of the facets in the experimental design (e.g., effect, hypotheses, IV/DV construct, IV/DV operationalization, and IV/DV stimuli) (LeBel et al.,
+<xref ref-type="bibr" rid="B34">2018</xref>
+) are the same as (or very close to) the original research. The populations, physical settings, and contextual variables were different from those in the original research. Most of the original research recruited WEIRD (Western, Educated, Industrialized, Rich, and Democratic) samples (Western university students in most cases) in a laboratory setting. By contrast, our replication research recruited non-WEIRD consumers on an online platform. It has been suggested that participants of most research are from WEIRD samples (96% of top-psychology journals), but WEIRD people constitute only 12% of the population (Henrich et al.,
+<xref ref-type="bibr" rid="B21">2010</xref>
+). Moreover, consumer research has moved traditional settings/participants (i.e., university students in a lab setting) to the general population from crowdsourcing platforms (Goodman and Paolacci,
+<xref ref-type="bibr" rid="B19">2017</xref>
+). Together, our attempts at conceptual replication test whether previous findings in sensory marketing can be generalized to non-WEIRD consumers using an online platform.
+</p>
+<p>
+The present study aimed to replicate ten influential pieces of research on sensory marketing, relying on the recent attempts of empirical audits and reviews (O'Donnell et al.,
+<xref ref-type="bibr" rid="B44">2021</xref>
+). The empirical audit and review can be referred to as an approach to assessing the evidentiary value of a research area (O'Donnell et al.,
+<xref ref-type="bibr" rid="B44">2021</xref>
+). Based on the concepts of empirical audit and review, we replicated ten influential studies on sensory marketing (see
+<xref ref-type="table" rid="T1">Table 1</xref>
+). These studies include sound symbolism in brand names (Klink,
+<xref ref-type="bibr" rid="B28">2000</xref>
+; Yorkston and Menon,
+<xref ref-type="bibr" rid="B63">2004</xref>
+; Lowrey and Shrum,
+<xref ref-type="bibr" rid="B36">2007</xref>
+), product color (Hagtvedt and Brasel,
+<xref ref-type="bibr" rid="B20">2017</xref>
+), logo design (Cian et al.,
+<xref ref-type="bibr" rid="B10">2014</xref>
+; Jiang et al.,
+<xref ref-type="bibr" rid="B25">2015</xref>
+), and visual product depictions (Madzharov and Block,
+<xref ref-type="bibr" rid="B38">2010</xref>
+; Elder and Krishna,
+<xref ref-type="bibr" rid="B15">2011</xref>
+; Chae and Hoegg,
+<xref ref-type="bibr" rid="B8">2013</xref>
+; Romero and Biswas,
+<xref ref-type="bibr" rid="B49">2016</xref>
+).
+</p>
+<table-wrap position="float" id="T1">
+<label>Table 1</label>
+<caption>
+<p>Summary of previous findings that the current research attempts to replicate.</p>
+</caption>
+<table frame="hsides" rules="groups">
+<thead>
+<tr>
+<th valign="top" align="left">
+<bold>Author(s), Year, Journal</bold>
+</th>
+<th valign="top" align="left">
+<bold>The study number, sample size, samples, settings</bold>
+</th>
+<th valign="top" align="left">
+<bold>Primary findings</bold>
+</th>
+<th valign="top" align="left">
+<bold>Dependent variable and original effect size (r)</bold>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top" align="left">
+Klink (
+<xref ref-type="bibr" rid="B28">2000</xref>
+) Marketing Letters
+<break/>
+491 citations
+</td>
+<td valign="top" align="left">
+Study 1 (H1a-m)
+<break/>
+<italic>n =</italic>
+265
+<break/>
+Undergraduate students from a Mid-Atlantic college
+</td>
+<td valign="top" align="left">
+- Hypothetical brand names including front (vs. back) vowels are associated with smallness, fastness, softness, bitterness, friendliness, and prettiness
+<break/>
+- Hypothetical brand names including back (vs. front) vowels are associated with dark color, mildness, richness, warmness, masculine, strong, and heaviness.
+</td>
+<td valign="top" align="left">
+H1a: small (
+<italic>r =</italic>
+0.623)
+<break/>
+H1b: dark color (
+<italic>r =</italic>
+0.639)
+<break/>
+H1c: mild (
+<italic>r =</italic>
+0.283)
+<break/>
+H1d: rich (
+<italic>r =</italic>
+0.819)
+<break/>
+H1e: soft (
+<italic>r =</italic>
+0.215)
+<break/>
+H1f: fast (
+<italic>r =</italic>
+0.411)
+<break/>
+H1g: warm (
+<italic>r =</italic>
+0.615)
+<break/>
+H1h: bitter (
+<italic>r =</italic>
+0.230)
+<break/>
+H1i: masculine (
+<italic>r =</italic>
+0.570)
+<break/>
+H1j: friendly (
+<italic>r =</italic>
+0.245)
+<break/>
+H1k: strong (
+<italic>r =</italic>
+0.230)
+<break/>
+H1l: heavy (
+<italic>r =</italic>
+0.796)
+<break/>
+H1m: pretty (
+<italic>r =</italic>
+0.336)
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+Shrum et al. (
+<xref ref-type="bibr" rid="B52">2012</xref>
+) International Journal of Research in Marketing
+<break/>
+133 citations
+</td>
+<td valign="top" align="left">
+Experiment 1a
+<break/>
+<italic>n =</italic>
+88
+<break/>
+Experiment 1b
+<break/>
+n=88
+<break/>
+Experiment 1c = 181
+<break/>
+-Undergraduates at a French university Undergraduates at a university in the US with a substantial proportion of Hispanic students
+<break/>
+-Chinese participants who were recruited by students in a graduate research course at a university in Taipei
+</td>
+<td valign="top" align="left">- Front (back) vowel words are preferred for convertible/knife (4 × 4 vehicles/hammer)</td>
+<td valign="top" align="left">
+Choice of preferred names;
+<break/>
+<italic>F</italic>
+<sub>(1, 367)</sub>
+= 63.87,
+<italic>r =</italic>
+0.385
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+Hagtvedt and Brasel (
+<xref ref-type="bibr" rid="B20">2017</xref>
+) Journal of Consumer Research
+<break/>
+105 citations
+</td>
+<td valign="top" align="left">
+Study 3
+<break/>
+<italic>n =</italic>
+77
+<break/>
+Undergraduates
+</td>
+<td valign="top" align="left">- High (vs. low) saturation increases product size estimates, attention, and arousal</td>
+<td valign="top" align="left">
+Size perception:
+<italic>F</italic>
+<sub>(1, 75)</sub>
+= 7.13,
+<italic>r =</italic>
+0.295
+<break/>
+Attention:
+<italic>F</italic>
+<sub>(1, 75)</sub>
+= 4.95,
+<italic>r =</italic>
+0.249
+<break/>
+Arousal:
+<italic>F</italic>
+<sub>(1, 75)</sub>
+= 7.35,
+<italic>r =</italic>
+0.299
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+Romero and Biswas (
+<xref ref-type="bibr" rid="B49">2016</xref>
+) Journal of Consumer Research
+<break/>
+117 citations
+</td>
+<td valign="top" align="left">
+Study 1B
+<break/>
+<italic>n =</italic>
+93
+<break/>
+<break/>
+Students from a major US university
+</td>
+<td valign="top" align="left">- Participants tend to prefer the healthy item (broccoli salad) when it is on the left (vs. right) of the images</td>
+<td valign="top" align="left">
+Choice of food; x2 = 5.42,
+<break/>
+df = 1,
+<italic>r =</italic>
+0.241
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+Yorkston and Menon (
+<xref ref-type="bibr" rid="B63">2004</xref>
+) Journal of Consumer Research
+<break/>
+528 citations
+</td>
+<td valign="top" align="left">
+Study 1
+<break/>
+<italic>n =</italic>
+126
+<break/>
+-US University students in a lab setting
+<break/>
+-Undergraduate students in a large northeastern university
+</td>
+<td valign="top" align="left">- Brand names including back (vs. front) vowels are rated as higher in the attribute perception index (richness, smoothness, and creaminess) - The diagnostic information (true name, test name) and the timing of the information provided (simultaneously, afterward) modulate the effects of brand names on the attribute perception index</td>
+<td valign="top" align="left">
+H1: Main effect of the brand name; (
+<italic>F</italic>
+1, 118) = 9.39,
+<italic>r =</italic>
+0.271
+<break/>
+H2: Name x diagnosticity; (
+<italic>F</italic>
+1, 121) = 7.77,
+<italic>r =</italic>
+0.246
+<break/>
+H3: Name x diagnosticity x timing (
+<italic>F</italic>
+1, 118) = 4.78,
+<italic>r =</italic>
+0.197
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+Elder and Krishna (
+<xref ref-type="bibr" rid="B15">2011</xref>
+) Journal of Consumer Research
+<break/>
+341 citations
+</td>
+<td valign="top" align="left">
+Study 4
+<break/>
+<italic>n =</italic>
+78
+<break/>
+An online panel
+</td>
+<td valign="top" align="left">- Visual product depictions within advertisements, such as the manipulation of orienting a product toward a participant's dominant hand, facilitate purchase intention.</td>
+<td valign="top" align="left">
+Purchase intention;
+<italic>F</italic>
+<sub>(1, 76)</sub>
+= 14.47,
+<break/>
+<italic>r =</italic>
+0.400
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+Jiang et al. (
+<xref ref-type="bibr" rid="B25">2015</xref>
+) Journal of Consumer Research
+<break/>
+221 citations
+</td>
+<td valign="top" align="left">
+Experiment 1
+<break/>
+<italic>n =</italic>
+109
+<break/>
+Undergraduates
+</td>
+<td valign="top" align="left">- Circular and angular-logo shapes influence consumers' judgment of softness-related and hardness-related product attributes</td>
+<td valign="top" align="left">
+Comfortableness and durability judgments:
+<italic>F</italic>
+<sub>(2, 106)</sub>
+= 7.63,
+<italic>r =</italic>
+0.251
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+Chae and Hoegg (
+<xref ref-type="bibr" rid="B8">2013</xref>
+) Journal of Consumer Research
+<break/>
+200 citations
+</td>
+<td valign="top" align="left">
+Study 2
+<break/>
+<italic>n =</italic>
+194
+<break/>
+English-speaking participants from a national subject pool completed an online study
+</td>
+<td valign="top" align="left">
+-When participants are primed to desire a modern product, they were more favorable when it appeared on the right side of the advertisement
+<break/>
+- In contrast, when participants are primed to desire an antique, they are more favorable when the product appeared on the left
+</td>
+<td valign="top" align="left">
+Product attitude;
+<italic>F</italic>
+<sub>(2, 173)</sub>
+= 6.62,
+<break/>
+<italic>r =</italic>
+0.189
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+Cian et al. (
+<xref ref-type="bibr" rid="B10">2014</xref>
+) Journal of Marketing Research
+<break/>
+229 citations
+</td>
+<td valign="top" align="left">
+Study 1
+<break/>
+<italic>n =</italic>
+74
+<break/>
+Undergraduate students from a large university in the western US
+</td>
+<td valign="top" align="left">- A logo that evokes greater perceived movement (logo dynamism) generates more favorable attitudes toward the brand</td>
+<td valign="top" align="left">
+Attitudes toward the brand;
+<break/>
+<italic>F</italic>
+<sub>(1, 72)</sub>
+= 5.26,
+<italic>r =</italic>
+0.261
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+Madzharov and Block (
+<xref ref-type="bibr" rid="B38">2010</xref>
+) Journal of Consumer Psychology
+<break/>
+161 citations
+</td>
+<td valign="top" align="left">
+Study 1A
+<break/>
+<italic>n =</italic>
+37
+<break/>
+Undergraduate business students from a large Northeastern university
+</td>
+<td valign="top" align="left">- Packages with more product units displayed on the package are perceived to contain more product quantity than packages with fewer product units displayed on the package</td>
+<td valign="top" align="left">
+Product quantity;
+<italic>F</italic>
+<sub>(1, 35)</sub>
+= 6.93,
+<break/>
+<italic>r =</italic>
+0.407
+<break/>
+Serving size;
+<italic>F</italic>
+<sub>(1, 35)</sub>
+= 4.83,
+<italic>r =</italic>
+0.348
+</td>
+</tr>
+</tbody>
+</table>
+</table-wrap>
+</sec>
+<sec sec-type="methods" id="s2">
+<title>Methods</title>
+<p>
+Ten studies were selected for the replication project. Our replication attempts were based on an empirical audit and review (O'Donnell et al.,
+<xref ref-type="bibr" rid="B44">2021</xref>
+), which is an approach to assessing the evidentiary value of a research area (O'Donnell et al.,
+<xref ref-type="bibr" rid="B44">2021</xref>
+). According to O'Donnell et al. (
+<xref ref-type="bibr" rid="B44">2021</xref>
+), the following steps involve empirical audits and reviews: (1) identifying the bounds of a topic area; (2) selecting studies that belong to a topic area; and (3) replicating the studies. Based on the concepts of empirical audit and review, we replicated ten influential studies on sensory marketing (see
+<xref ref-type="table" rid="T1">Table 1</xref>
+).
+</p>
+<p>
+Our selection criteria include (1) sensory marketing research, (2) having more than 100 citations, (3) sufficient materials, and/or procedures publicly available, and (4) could be replicated with an online platform. Criterion (1) indicates that studies need to manipulate sensory stimuli in consumer contexts. We did not set any operational definition of sensory stimuli similar to a previous empirical audit and review (O'Donnell et al.,
+<xref ref-type="bibr" rid="B44">2021</xref>
+), and accepted all manipulations of sensory stimuli written by the original authors. Criterion (2) was added to refer to “influential” research. One factor related to influential research is the number of citations. We set more than 100 citations as our operational requirements. Criterion (3) is needed because we attempted to replicate the research as directly as possible. Criterion (4) was included since we could not recruit a large number of participants during the COVID-19 pandemic and decided to use an online platform for the current project. Two authors evaluated each of the criteria.
+</p>
+<p>
+We selected one study investigating simple effects (i.e., simple effects of sensory stimuli without mediation and/or moderation) in consumer contexts when the research contained multiple qualifying studies. It should be noted that we did not attempt to replicate all influential research on sensory marketing. It has been suggested that empirical audits and reviews do not always include all relevant research (O'Donnell et al.,
+<xref ref-type="bibr" rid="B44">2021</xref>
+) possibly because of the limitations of time, money, and human resources.
+</p>
+<p>
+We opened up the data collection to recruit 1000 Japanese participants. The sample size was determined to be at least 2.5 times the sample size of any original paper (Simonsohn,
+<xref ref-type="bibr" rid="B54">2015</xref>
+; O'Donnell et al.,
+<xref ref-type="bibr" rid="B44">2021</xref>
+). The high-power, large sample size allowed us to detect small effects and reduce type 1 errors. Following the pre-registered exclusion criteria, we excluded 247 participants who failed an instructional manipulation check (IMC; Oppenheimer et al.,
+<xref ref-type="bibr" rid="B46">2009</xref>
+; Miura and Kobayashi,
+<xref ref-type="bibr" rid="B41">2016</xref>
+) and an attention check question (ACQ; e.g., Oppenheimer et al.,
+<xref ref-type="bibr" rid="B46">2009</xref>
+; Aust et al.,
+<xref ref-type="bibr" rid="B3">2013</xref>
+). Detailed information about the data exclusion criteria can be found in the
+<xref ref-type="supplementary-material" rid="SM1">Appendix</xref>
+. Finally, the data of 823 participants (mean age = 40.77, SD of age = 10.48, 428 males, 391 females, 4 did not prefer to say) were analyzed. The participants were recruited from Crowdworks and completed an online survey created on Qualtrics. The study was pre-registered (
+<ext-link ext-link-type="uri" xlink:href="https://aspredicted.org/ZW2_C76">https://aspredicted.org/ZW2_C76</ext-link>
+). All participants gave their informed consent before the survey, and the study was conducted following the ethical guidelines of the Declaration of Helsinki.
+</p>
+<p>
+The participants performed all the studies in randomized order. Within each study, participants were randomly allocated to one condition (e.g., one of the two conditions for Romero and Biswas,
+<xref ref-type="bibr" rid="B49">2016</xref>
+). Participants completed all the studies within about 10 minutes (
+<italic>M</italic>
+= 609 s). This procedure was similar with previous replication attempts involving many studies (e.g., participants completing 13 or 15 studies; see Forsell et al.,
+<xref ref-type="bibr" rid="B17">2019</xref>
+). Methods, analyses, and sample sizes were performed before data collection. The details of the methods, procedures, and analyses of each study are presented in the
+<xref ref-type="supplementary-material" rid="SM1">Supplementary material</xref>
+(Methodological Detail Appendix). All surveys were conducted in Japanese. The materials were translated by two authors (K.M. and S.I.).
+</p>
+</sec>
+<sec sec-type="results" id="s3">
+<title>Results</title>
+<sec>
+<title>Klink (2000), marketing letters</title>
+<p>
+We conducted binominal tests as described by Klink (
+<xref ref-type="bibr" rid="B28">2000</xref>
+). The data were also analyzed using chi-squared tests, although not pre-registered. The analyses were reported based on chi-squared tests because the statistical value (χ
+<sup>2</sup>
+) can be converted into an effect size (r), commonly used in our replication research. A summary of these findings is presented in
+<xref ref-type="table" rid="T2">Table 2</xref>
+. We successfully replicated previous findings except for H1i and H1k (i.e., more masculine and stronger).
+</p>
+<table-wrap position="float" id="T2">
+<label>Table 2</label>
+<caption>
+<p>
+Summary of findings that the current research replicated Klink (
+<xref ref-type="bibr" rid="B28">2000</xref>
+).
+</p>
+</caption>
+<table frame="hsides" rules="groups">
+<thead>
+<tr>
+<th valign="top" align="left">
+<bold>Hypothesis</bold>
+</th>
+<th valign="top" align="left">
+<bold>Attributes</bold>
+</th>
+<th valign="top" align="left">
+<bold>Product category</bold>
+</th>
+<th valign="top" align="center">
+<bold>Frequencies of choosing front vowel sounds</bold>
+</th>
+<th valign="top" align="center">
+<bold>Frequencies of choosing back vowel sounds</bold>
+</th>
+<th valign="top" align="center">
+<bold>Statistics</bold>
+</th>
+<th valign="top" align="left">
+<bold>Hypothesis testing</bold>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top" align="left">H1a</td>
+<td valign="top" align="left">Smaller</td>
+<td valign="top" align="left">Laptop computer</td>
+<td valign="top" align="center">512</td>
+<td valign="top" align="center">311</td>
+<td valign="top" align="center">
+χ
+<sup>2</sup>
+= 49.09,
+<italic>p <</italic>
+0.001
+</td>
+<td valign="top" align="left">Supported</td>
+</tr>
+<tr>
+<td valign="top" align="left">H1b</td>
+<td valign="top" align="left">Darker</td>
+<td valign="top" align="left">Beer</td>
+<td valign="top" align="center">289</td>
+<td valign="top" align="center">534</td>
+<td valign="top" align="center">
+χ
+<sup>2</sup>
+= 72.934,
+<italic>p <</italic>
+0.001
+</td>
+<td valign="top" align="left">Supported</td>
+</tr>
+<tr>
+<td valign="top" align="left">H1c</td>
+<td valign="top" align="left">Milder</td>
+<td valign="top" align="left">Soap</td>
+<td valign="top" align="center">331</td>
+<td valign="top" align="center">492</td>
+<td valign="top" align="center">
+χ
+<sup>2</sup>
+= 31.496,
+<italic>p <</italic>
+0.001
+</td>
+<td valign="top" align="left">Supported</td>
+</tr>
+<tr>
+<td valign="top" align="left">H1d</td>
+<td valign="top" align="left">Thicker</td>
+<td valign="top" align="left">Ketchup</td>
+<td valign="top" align="center">320</td>
+<td valign="top" align="center">503</td>
+<td valign="top" align="center">
+χ
+<sup>2</sup>
+= 40.691,
+<italic>p <</italic>
+0.001
+</td>
+<td valign="top" align="left">Supported</td>
+</tr>
+<tr>
+<td valign="top" align="left">H1e</td>
+<td valign="top" align="left">Softer</td>
+<td valign="top" align="left">Tissues</td>
+<td valign="top" align="center">536</td>
+<td valign="top" align="center">287</td>
+<td valign="top" align="center">
+χ
+<sup>2</sup>
+= 75.335,
+<italic>p <</italic>
+0.001
+</td>
+<td valign="top" align="left">Supported</td>
+</tr>
+<tr>
+<td valign="top" align="left">H1f</td>
+<td valign="top" align="left">Faster</td>
+<td valign="top" align="left">Internet service</td>
+<td valign="top" align="center">539</td>
+<td valign="top" align="center">284</td>
+<td valign="top" align="center">
+χ
+<sup>2</sup>
+= 79.01,
+<italic>p <</italic>
+0.001
+</td>
+<td valign="top" align="left">Supported</td>
+</tr>
+<tr>
+<td valign="top" align="left">H1g</td>
+<td valign="top" align="left">Warmer</td>
+<td valign="top" align="left">Gloves</td>
+<td valign="top" align="center">343</td>
+<td valign="top" align="center">480</td>
+<td valign="top" align="center">
+χ
+<sup>2</sup>
+= 22.806,
+<italic>p <</italic>
+0.001
+</td>
+<td valign="top" align="left">Supported</td>
+</tr>
+<tr>
+<td valign="top" align="left">H1h</td>
+<td valign="top" align="left">More bitter</td>
+<td valign="top" align="left">Lemonade</td>
+<td valign="top" align="center">456</td>
+<td valign="top" align="center">367</td>
+<td valign="top" align="center">
+χ
+<sup>2</sup>
+= 9.6245,
+<italic>p =</italic>
+0.002
+</td>
+<td valign="top" align="left">Supported</td>
+</tr>
+<tr>
+<td valign="top" align="left">H1i</td>
+<td valign="top" align="left">More masculine</td>
+<td valign="top" align="left">Deodorant</td>
+<td valign="top" align="center">452</td>
+<td valign="top" align="center">371</td>
+<td valign="top" align="center">
+χ
+<sup>2</sup>
+= 7.9721,
+<italic>p =</italic>
+0.005
+</td>
+<td valign="top" align="left">
+Not supported
+<break/>
+(opposite direction)
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">H1j</td>
+<td valign="top" align="left">Friendlier</td>
+<td valign="top" align="left">Airline service</td>
+<td valign="top" align="center">515</td>
+<td valign="top" align="center">308</td>
+<td valign="top" align="center">
+χ
+<sup>2</sup>
+= 52.064,
+<italic>p <</italic>
+0.001
+</td>
+<td valign="top" align="left">Supported</td>
+</tr>
+<tr>
+<td valign="top" align="left">H1k</td>
+<td valign="top" align="left">Stronger</td>
+<td valign="top" align="left">Pain relievers</td>
+<td valign="top" align="center">546</td>
+<td valign="top" align="center">277</td>
+<td valign="top" align="center">
+χ
+<sup>2</sup>
+= 87.923,
+<italic>p <</italic>
+0.001
+</td>
+<td valign="top" align="left">
+Not supported
+<break/>
+(opposite direction)
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">H1l</td>
+<td valign="top" align="left">Heavier</td>
+<td valign="top" align="left">Vacuum cleaner</td>
+<td valign="top" align="center">233</td>
+<td valign="top" align="center">590</td>
+<td valign="top" align="center">
+χ
+<sup>2</sup>
+= 154.86,
+<italic>p <</italic>
+0.001
+</td>
+<td valign="top" align="left">Supported</td>
+</tr>
+<tr>
+<td valign="top" align="left">H1m</td>
+<td valign="top" align="left">Prettier</td>
+<td valign="top" align="left">Dresses</td>
+<td valign="top" align="center">461</td>
+<td valign="top" align="center">362</td>
+<td valign="top" align="center">
+χ
+<sup>2</sup>
+= 11.909,
+<italic>p <</italic>
+0.001
+</td>
+<td valign="top" align="left">Supported</td>
+</tr>
+</tbody>
+</table>
+</table-wrap>
+</sec>
+<sec>
+<title>Shrum et al. (2012), IJMR</title>
+<p>
+We conducted a 2 (vowel: front, back) × 2 (product category: convertible/knife, 4 × 4 SUV/hammer) mixed model analysis of variance (ANOVA), with a vowel as a within-participants factor and product category as between-participant factors. The results of the analysis revealed a main effect of vowel (
+<italic>F</italic>
+<sub>1,821</sub>
+= 252.615,
+<italic>p</italic>
+< 0.001, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.235) and product category (
+<italic>F</italic>
+<sub>1,821</sub>
+= 18.478,
+<italic>p</italic>
+< 0.001, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.022). As predicted, a significant interaction was found (
+<italic>F</italic>
+<sub>1,821</sub>
+= 55.002,
+<italic>p</italic>
+< 0.001, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.063). Front vowel sounds were preferred over back vowel sounds for convertible and knife (52.56–47.45%;
+<italic>F</italic>
+<sub>1,821</sub>
+= 4.717,
+<italic>p</italic>
+= 0.030, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.011). In contrast, back vowel sounds were preferred over front vowel sounds for 4 × 4 vehicle and hammer (59.59–40.41%; F
+<sub>1,821</sub>
+= 70.981,
+<italic>p</italic>
+< 0.001, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.149). Thus, we successfully replicated the previous findings (
+<xref ref-type="table" rid="T3">Table 3</xref>
+).
+</p>
+<table-wrap position="float" id="T3">
+<label>Table 3</label>
+<caption>
+<p>
+Summary of findings that the current research replicated Shrum et al. (
+<xref ref-type="bibr" rid="B52">2012</xref>
+).
+</p>
+</caption>
+<table frame="hsides" rules="groups">
+<thead>
+<tr>
+<th valign="top" align="left">
+<bold>Product category</bold>
+</th>
+<th valign="top" align="center">
+<bold>% Front vowel words preferred</bold>
+</th>
+<th valign="top" align="center">
+<bold>% Back vowel words preferred</bold>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top" align="left">Convertible/Knife</td>
+<td valign="top" align="center">52.56</td>
+<td valign="top" align="center">47.45</td>
+</tr>
+<tr>
+<td valign="top" align="left">4 × 4 SUV/Hammer</td>
+<td valign="top" align="center">40.41</td>
+<td valign="top" align="center">59.59</td>
+</tr>
+<tr>
+<td valign="top" align="left">Convertible</td>
+<td valign="top" align="center">47.84</td>
+<td valign="top" align="center">52.16</td>
+</tr>
+<tr>
+<td valign="top" align="left">Knife</td>
+<td valign="top" align="center">57.22</td>
+<td valign="top" align="center">42.78</td>
+</tr>
+<tr>
+<td valign="top" align="left">4 × 4 SUV</td>
+<td valign="top" align="center">39.59</td>
+<td valign="top" align="center">60.41</td>
+</tr>
+<tr>
+<td valign="top" align="left">Hammer</td>
+<td valign="top" align="center">41.13</td>
+<td valign="top" align="center">58.87</td>
+</tr>
+</tbody>
+</table>
+<table-wrap-foot>
+<p>Convertible (n = 208), knife (n = 210), 4 × 4 SUV (n = 189), hammer (n =216).</p>
+</table-wrap-foot>
+</table-wrap>
+</sec>
+<sec>
+<title>Hagtvedt and Brasel (2017), journal of consumer research</title>
+<p>
+ANOVA was conducted to investigate the effects of saturation (high and low) on the size estimate of the product. The results of the analysis did not reveal any effects of saturation (high saturation:
+<italic>M</italic>
+= 15.46, SD = 1.94, vs. low saturation:
+<italic>M</italic>
+= 15.42, SD = 1.84;
+<italic>F</italic>
+<sub>1,821</sub>
+= 0.095,
+<italic>p</italic>
+= 0.758, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.000). ANOVAs were conducted to investigate the effects of saturation (high and low) on attention and arousal. The results of the analysis revealed that high (vs. low) saturation increased attention (high saturation:
+<italic>M</italic>
+= 5.30, SD = 1.07; vs. low saturation:
+<italic>M</italic>
+= 4.75, SD = 1.14; F
+<sub>1,821</sub>
+= 49.238,
+<italic>p</italic>
+< 001, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.057) and arousal (high saturation:
+<italic>M</italic>
+= 5.83, SD = 1.10; vs. low saturation:
+<italic>M</italic>
+= 5.41, SD = 1.20;
+<italic>F</italic>
+<sub>1,821</sub>
+= 27.539,
+<italic>p</italic>
+< 0.001, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.033). Given that our main result (i.e., saturation and size estimates) was not significant, we did not perform pre-registered mediation analyses.
+</p>
+</sec>
+<sec>
+<title>Romero and Biswas (2016), journal of consumer research</title>
+<p>
+A chi-squared test was performed to investigate whether the frequencies of choosing healthy food differ in the positions where the foods are located on the left vs. the right side of unhealthy foods. The results of the analysis showed that the frequency of choosing healthy food did not differ regardless of whether it was on the left (24.44%) or the right (25.59%) of the unhealthy food (χ
+<sup>2</sup>
+= 0.091,
+<italic>p</italic>
+= 0.763).
+</p>
+</sec>
+<sec>
+<title>Yorkston and Menon (2004), journal of consumer research</title>
+<p>
+An ANOVA was performed to test the effects of sound symbolism of brand name (
+<italic>F</italic>
+rish, Frosh), diagnosticity of brand name (test, true), and timing (simultaneous, after) on the attribute perception index. The results of the analysis revealed the main effect of sound symbolism of brand name (
+<italic>F</italic>
+<sub>1,821</sub>
+= 7.492,
+<italic>p</italic>
+= 0.006, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.009) such that frosh (vs. frish) had higher ratings in the attribute perception index. However, the results of the analysis did not show a three-way interaction (
+<italic>F</italic>
+<sub>1,821</sub>
+= 1.053,
+<italic>p</italic>
+= 0.305, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.001) or an interaction between sound symbolism and diagnosticity (
+<italic>F</italic>
+<sub>1,821</sub>
+= 0.118,
+<italic>p</italic>
+= 0.731, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.000).
+</p>
+<p>
+An ANOVA was also conducted to investigate the effects of sound symbolism of brand name (
+<italic>F</italic>
+rish, Frosh), diagnosticity of brand name (test, true), and timing (simultaneous, after) on the brand attribute index. The results of the analysis did not reveal the main effect of sound symbolism of brand name (
+<italic>F</italic>
+<sub>1,821</sub>
+= 0.114,
+<italic>p</italic>
+= 0.736, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.000), the three-way interaction (
+<italic>F</italic>
+<sub>1,821</sub>
+= 1.400,
+<italic>p</italic>
+= 0.237, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.002), or the interaction between sound symbolism and diagnosticity (
+<italic>F</italic>
+<sub>1,821</sub>
+= 1.174,
+<italic>p</italic>
+= 0.279, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.001).
+</p>
+</sec>
+<sec>
+<title>Elder and Krishna (2011), journal of consumer research</title>
+<p>
+ANOVA was conducted to investigate the effects of product orientation on a participant's dominant hand (match or mismatch) on purchase intentions. The results of the analysis did not reveal any effects on purchase intentions (match:
+<italic>M</italic>
+= 3.39, SD = 1.75; mismatch:
+<italic>M</italic>
+= 3.36, SD = 1.82; F
+<sub>1,821</sub>
+= 0.068,
+<italic>p</italic>
+= 0.794, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.0001). ANOVA was also conducted to investigate the effects of orientation (match and mismatch) on mental simulations. The results of the analysis did not reveal any effects on mental simulations (match:
+<italic>M</italic>
+= 4.87, SD = 2.00 vs. mismatch:
+<italic>M</italic>
+= 4.86, SD = 2.03;
+<italic>F</italic>
+<sub>1,821</sub>
+= 0.006,
+<italic>p</italic>
+= 0.941, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.0000). Given that our main result was not significant, we did not perform pre-registered mediation analyses.
+</p>
+</sec>
+<sec>
+<title>Jiang et al. (2015), journal of consumer research</title>
+<p>
+An ANOVA was conducted to investigate the log-shape-by-product attribute interactions. The results of the analysis did not reveal logo shape-by-cut attribute interactions (
+<italic>F</italic>
+<sub>2,820</sub>
+= 0.141,
+<italic>p</italic>
+= 0.868, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.000). For completeness, we analyzed the effects of circular vs. angular-logo on comfort (circular-logo:
+<italic>M</italic>
+= 5.33, SD = 1.35, vs. angular-logo:
+<italic>M</italic>
+= 5.34, SD = 1.30;
+<italic>F</italic>
+<sub>1,550</sub>
+= 0.004,
+<italic>p</italic>
+= 0.949, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.000) and durability judgment (angular-logo:
+<italic>M</italic>
+= 5.37, SD = 1.31 vs. circular-logo:
+<italic>M</italic>
+= 5.37, SD = 1.32;
+<italic>F</italic>
+<sub>1,550</sub>
+= 0.0001,
+<italic>p</italic>
+= 0.994, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.000). The analyses did not reveal the effects of logo shape on comfort and durability judgments.
+</p>
+<p>
+Additionally, Jiang et al. (
+<xref ref-type="bibr" rid="B25">2015</xref>
+) confirmed that logo shape does not affect attitudes. Therefore, an ANOVA was conducted to investigate the effect of angular and circular-logo shapes on attitude. The results showed that there were no differences in attitudes between logo shapes (circular-logo:
+<italic>M</italic>
+= 5.08, SD = 1.23, vs. angular-logo:
+<italic>M</italic>
+= 5.13, SD = 1.20, vs. control:
+<italic>M</italic>
+= 5.18, SD = 1.21;
+<italic>F</italic>
+<sub>2,820</sub>
+= 0.478,
+<italic>p</italic>
+= 0.620, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.001).
+</p>
+</sec>
+<sec>
+<title>Chae and Hoegg (2013), journal of consumer research</title>
+<p>
+In this replication, 85 participants were unable to identify the shopping goal in the manipulation check and were excluded, leaving 738 participants in the analysis. An ANOVA was conducted to investigate the effects of desirable attributes (antique, modern, and control) and position (left and right) on product attitudes. The results of the analysis revealed the main effect of the desirable attribute (
+<italic>F</italic>
+<sub>2,732</sub>
+= 7.952,
+<italic>p</italic>
+< 0.001, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.021) but not the main effect of position (
+<italic>F</italic>
+<sub>1,732</sub>
+= 1.093,
+<italic>p</italic>
+= 0.296, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.002). A significant interaction was found (
+<italic>F</italic>
+<sub>2,732</sub>
+= 2.758,
+<italic>p</italic>
+= 0.064, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.008). However,
+<italic>post hoc</italic>
+analyses did not reveal any hypothetical findings. Antique priming did not influence product attitudes depending on position (left:
+<italic>M</italic>
+= 5.95, SD = 1.47 vs. right:
+<italic>M</italic>
+= 5.98, SD = 1.53; F
+<sub>1,732</sub>
+= 0.032,
+<italic>p</italic>
+= 0.859, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.000). Modern priming did not influence product attitudes depending on position (right:
+<italic>M</italic>
+= 5.47, SD = 1.41 vs. left:
+<italic>M</italic>
+= 5.63, SD = 1.68;
+<italic>F</italic>
+<sub>1,732</sub>
+= 0.695,
+<italic>p</italic>
+= 0.405, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.001). Given that our main result was not significant, we did not perform pre-registered mediation analyses.
+</p>
+</sec>
+<sec>
+<title>Cian et al. (2014), journal of marketing research</title>
+<p>
+An ANOVA was conducted to investigate the effect of logo dynamism (high and low) on brand attitudes. The results of the analysis did not reveal an effect on brand attitudes (high dynamism:
+<italic>M</italic>
+= 5.64, SD = 1.05; vs. low dynamism:
+<italic>M</italic>
+= 5.59, SD = 1.15; F
+<sub>1,821</sub>
+= 0.393,
+<italic>p</italic>
+= 0.531, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.001). An ANOVA was also conducted to investigate the effect of logo dynamism (high and low) on perceived movement as a manipulation check. The results of the analysis revealed an effect on perceived movement (high dynamism:
+<italic>M</italic>
+= 5.85, SD = 1.27, vs. low dynamism:
+<italic>M</italic>
+= 5.00, SD = 1.50;
+<italic>F</italic>
+<sub>1,821</sub>
+= 77.863,
+<italic>p</italic>
+< 0.001, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.087).
+</p>
+</sec>
+<sec>
+<title>Madzharov and Block (2010), journal of consumer psychology</title>
+<p>
+ANOVA was conducted to investigate the effect of product units displayed on the package (
+<italic>f</italic>
+our and seven) on perceived product quantity. The results of the analysis did not reveal any effect on perceived product quantity (
+<italic>f</italic>
+our:
+<italic>M</italic>
+= 21.40, SD = 100.28; seven:
+<italic>M</italic>
+= 17. 71, SD = 9.14;
+<italic>F</italic>
+<sub>1,821</sub>
+= 0.565,
+<italic>p</italic>
+= 0.452, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.001). Since there was an outlier in the response for perceived product quantity (i.e., a response = 2020), the Mann-Whitney U test (nonparametric test) was not pre-registered. The results of the analysis did not reveal any effect on the perceived product quantity (
+<italic>U</italic>
+= 78,727, Z = 1.743,
+<italic>p</italic>
+= 0.081,
+<italic>r</italic>
+= 0.061).
+</p>
+<p>
+ANOVA was also conducted to investigate the effect of product units displayed on the package (
+<italic>f</italic>
+our, seven) on the serving size. The results of the analysis did not reveal an effect on serving size (
+<italic>f</italic>
+our:
+<italic>M</italic>
+= 4.45, SD = 3.00, vs. seven:
+<italic>M</italic>
+= 4.80, SD = 3.52;
+<italic>F</italic>
+<sub>1,821</sub>
+= 2.380,
+<italic>p</italic>
+= 0.123, η
+<sup>2</sup>
+<sub>
+<italic>p</italic>
+</sub>
+= 0.003).
+</p>
+</sec>
+</sec>
+<sec id="s4">
+<title>Summary of findings</title>
+<p>
+A summary of our replication findings is shown in
+<xref ref-type="table" rid="T4">Tables 4</xref>
+,
+<xref ref-type="table" rid="T5">5</xref>
+. The results reveal that only 20% (2/10) of the findings could be successfully replicated in terms of statistical significance (
+<italic>p</italic>
+< 0.05; 95% CI not including zero in the hypothesized direction). In other words, replication of eight studies (80%, 8/10) did not reach statistical significance. Moreover, the replication effect sizes were smaller than the original effect sizes in all ten studies. The replication effect sizes of the two successfully replicated findings were half of the original ones. We also provided estimated power and the upper bounds of 95% for the estimated power of the original studies. Most of the original studies (i.e., their main DVs of 8/10 unsuccessful replications) included <20% power in their 95% CIs. This suggests that most of the original findings that we attempted to replicate appear to have much smaller effects that thousands of sample sizes are needed for detection.
+</p>
+<table-wrap position="float" id="T4">
+<label>Table 4</label>
+<caption>
+<p>Main findings of selected 10 studies.</p>
+</caption>
+<table frame="hsides" rules="groups">
+<thead>
+<tr>
+<th valign="top" align="left">
+<bold>Selected 10 studies</bold>
+</th>
+<th valign="top" align="left">
+<bold>Hypotheses/DV</bold>
+</th>
+<th valign="top" align="left">
+<bold>Effect sizes</bold>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top" align="left">
+Klink (
+<xref ref-type="bibr" rid="B28">2000</xref>
+),
+<break/>
+Study 1
+</td>
+<td valign="top" align="left">Average of H1a-m</td>
+<td valign="top" align="left">
+<inline-graphic mimetype="image" mime-subtype="tiff" xlink:href="fcomm-07-1048896-i0001.tif"/>
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">
+Shrum et al. (
+<xref ref-type="bibr" rid="B52">2012</xref>
+),
+<break/>
+Experiment 1a, 1b, 1c
+</td>
+<td valign="top" align="left">Vowel sound-product category interaction</td>
+<td/>
+</tr>
+<tr>
+<td valign="top" align="left">
+Hagtvedt and Brasel (
+<xref ref-type="bibr" rid="B20">2017</xref>
+),
+<break/>
+Study 3
+</td>
+<td valign="top" align="left">Size estimate</td>
+<td/>
+</tr>
+<tr>
+<td valign="top" align="left">
+Romero and Biswas (
+<xref ref-type="bibr" rid="B49">2016</xref>
+),
+<break/>
+Study 1B
+</td>
+<td valign="top" align="left">Choice</td>
+<td/>
+</tr>
+<tr>
+<td valign="top" align="left">
+Yorkston and Menon (
+<xref ref-type="bibr" rid="B63">2004</xref>
+),
+<break/>
+Study 1
+</td>
+<td valign="top" align="left">Average of main, two-way, three-way attribution perception index</td>
+<td/>
+</tr>
+<tr>
+<td valign="top" align="left">
+Elder and Krishna (
+<xref ref-type="bibr" rid="B15">2011</xref>
+),
+<break/>
+Study 4
+</td>
+<td valign="top" align="left">Purchase intention</td>
+<td/>
+</tr>
+<tr>
+<td valign="top" align="left">
+Jiang et al. (
+<xref ref-type="bibr" rid="B25">2015</xref>
+),
+<break/>
+Experiment 1
+</td>
+<td valign="top" align="left">Logo shape-by-product-attribute interaction</td>
+<td/>
+</tr>
+<tr>
+<td valign="top" align="left">
+Chae and Hoegg (
+<xref ref-type="bibr" rid="B8">2013</xref>
+),
+<break/>
+Study 2
+</td>
+<td valign="top" align="left">interaction between position and desirable attribute on product attitude</td>
+<td/>
+</tr>
+<tr>
+<td valign="top" align="left">
+Cian et al. (
+<xref ref-type="bibr" rid="B10">2014</xref>
+),
+<break/>
+Study 1
+</td>
+<td valign="top" align="left">Brand attitude</td>
+<td/>
+</tr>
+<tr>
+<td valign="top" align="left">
+Madzharov and Block (
+<xref ref-type="bibr" rid="B38">2010</xref>
+),
+<break/>
+Study 1A
+</td>
+<td valign="top" align="left">Average of product quantity and surving size</td>
+<td/>
+</tr>
+</tbody>
+</table>
+<table-wrap-foot>
+<p>The Rightmost column depicts effect size (correlation coefficients) for the original and replication studies. Effect sizes are bounded by 95% CIs.</p>
+</table-wrap-foot>
+</table-wrap>
+<table-wrap position="float" id="T5">
+<label>Table 5</label>
+<caption>
+<p>Detailed findings of selected 10 studies.</p>
+</caption>
+<table frame="hsides" rules="groups">
+<thead>
+<tr>
+<th valign="top" align="left">
+<bold>Hypotheses/DV</bold>
+</th>
+<th valign="top" align="center" colspan="3" style="border-bottom: thin solid #000000;">
+<bold>Original effect</bold>
+</th>
+<th valign="top" align="center" colspan="3" style="border-bottom: thin solid #000000;">
+<bold>Replication effect</bold>
+</th>
+<th valign="top" align="center">
+<bold>Estimated Power of the original</bold>
+</th>
+<th valign="top" align="center">
+<bold>Upper Bound of 95% Cl for Estimated Power</bold>
+</th>
+<th valign="top" align="center">
+<bold>Estimated Sample Size required for 80% power</bold>
+</th>
+</tr>
+<tr>
+<th/>
+<th valign="top" align="center">
+<bold>Effect size</bold>
+</th>
+<th valign="top" align="center">
+<bold>95% CI lower</bold>
+</th>
+<th valign="top" align="center">
+<bold>95% CI upper</bold>
+</th>
+<th valign="top" align="center">
+<bold>Effect size</bold>
+</th>
+<th valign="top" align="center">
+<bold>95% CI lower</bold>
+</th>
+<th valign="top" align="center">
+<bold>95% CI upper</bold>
+</th>
+<th/>
+<th/>
+<th/>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top" align="left" colspan="10">
+Klink (
+<xref ref-type="bibr" rid="B28">2000</xref>
+), Study 1
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">Small</td>
+<td valign="top" align="center">0.623</td>
+<td valign="top" align="center">0.543</td>
+<td valign="top" align="center">0.691</td>
+<td valign="top" align="center">0.244</td>
+<td valign="top" align="center">0.179</td>
+<td valign="top" align="center">0.307</td>
+<td valign="top" align="center">0.981</td>
+<td valign="top" align="center">0.999</td>
+<td valign="top" align="center">128.452</td>
+</tr>
+<tr>
+<td valign="top" align="left">Dark color</td>
+<td valign="top" align="center">0.638</td>
+<td valign="top" align="center">0.560</td>
+<td valign="top" align="center">0.704</td>
+<td valign="top" align="center">0.298</td>
+<td valign="top" align="center">0.234</td>
+<td valign="top" align="center">0.359</td>
+<td valign="top" align="center">0.999</td>
+<td valign="top" align="center">1.000</td>
+<td valign="top" align="center">85.432</td>
+</tr>
+<tr>
+<td valign="top" align="left">Mild</td>
+<td valign="top" align="center">0.283</td>
+<td valign="top" align="center">0.168</td>
+<td valign="top" align="center">0.390</td>
+<td valign="top" align="center">0.196</td>
+<td valign="top" align="center">0.129</td>
+<td valign="top" align="center">0.260</td>
+<td valign="top" align="center">0.895</td>
+<td valign="top" align="center">0.991</td>
+<td valign="top" align="center">201.958</td>
+</tr>
+<tr>
+<td valign="top" align="left">Rich</td>
+<td valign="top" align="center">0.819</td>
+<td valign="top" align="center">0.775</td>
+<td valign="top" align="center">0.855</td>
+<td valign="top" align="center">0.222</td>
+<td valign="top" align="center">0.156</td>
+<td valign="top" align="center">0.286</td>
+<td valign="top" align="center">0.956</td>
+<td valign="top" align="center">0.998</td>
+<td valign="top" align="center">155.613</td>
+</tr>
+<tr>
+<td valign="top" align="left">Soft</td>
+<td valign="top" align="center">0.215</td>
+<td valign="top" align="center">0.097</td>
+<td valign="top" align="center">0.327</td>
+<td valign="top" align="center">0.303</td>
+<td valign="top" align="center">0.239</td>
+<td valign="top" align="center">0.363</td>
+<td valign="top" align="center">0.999</td>
+<td valign="top" align="center">1.000</td>
+<td valign="top" align="center">82.609</td>
+</tr>
+<tr>
+<td valign="top" align="left">Fast</td>
+<td valign="top" align="center">0.411</td>
+<td valign="top" align="center">0.306</td>
+<td valign="top" align="center">0.507</td>
+<td valign="top" align="center">0.310</td>
+<td valign="top" align="center">0.247</td>
+<td valign="top" align="center">0.370</td>
+<td valign="top" align="center">0.999</td>
+<td valign="top" align="center">1.000</td>
+<td valign="top" align="center">78.621</td>
+</tr>
+<tr>
+<td valign="top" align="left">Warm</td>
+<td valign="top" align="center">0.615</td>
+<td valign="top" align="center">0.534</td>
+<td valign="top" align="center">0.685</td>
+<td valign="top" align="center">0.166</td>
+<td valign="top" align="center">0.099</td>
+<td valign="top" align="center">0.232</td>
+<td valign="top" align="center">0.778</td>
+<td valign="top" align="center">0.970</td>
+<td valign="top" align="center">280.107</td>
+</tr>
+<tr>
+<td valign="top" align="left">Bitter</td>
+<td valign="top" align="center">0.230</td>
+<td valign="top" align="center">0.113</td>
+<td valign="top" align="center">0.341</td>
+<td valign="top" align="center">0.108</td>
+<td valign="top" align="center">0.040</td>
+<td valign="top" align="center">0.175</td>
+<td valign="top" align="center">0.421</td>
+<td valign="top" align="center">0.819</td>
+<td valign="top" align="center">668.029</td>
+</tr>
+<tr>
+<td valign="top" align="left">Masculine</td>
+<td valign="top" align="center">0.570</td>
+<td valign="top" align="center">0.482</td>
+<td valign="top" align="center">0.646</td>
+<td valign="top" align="center">−0.327</td>
+<td valign="top" align="center">−0.265</td>
+<td valign="top" align="center">−0.387</td>
+<td valign="top" align="center"><5%</td>
+<td valign="top" align="center">–</td>
+<td valign="top" align="center">–</td>
+</tr>
+<tr>
+<td valign="top" align="left">Friendly</td>
+<td valign="top" align="center">0.245</td>
+<td valign="top" align="center">0.129</td>
+<td valign="top" align="center">0.355</td>
+<td valign="top" align="center">0.252</td>
+<td valign="top" align="center">0.186</td>
+<td valign="top" align="center">0.314</td>
+<td valign="top" align="center">0.986</td>
+<td valign="top" align="center">1.000</td>
+<td valign="top" align="center">120.935</td>
+</tr>
+<tr>
+<td valign="top" align="left">Strong</td>
+<td valign="top" align="center">0.230</td>
+<td valign="top" align="center">0.113</td>
+<td valign="top" align="center">0.341</td>
+<td valign="top" align="center">−0.327</td>
+<td valign="top" align="center">−0.264</td>
+<td valign="top" align="center">−0.387</td>
+<td valign="top" align="center"><5%</td>
+<td valign="top" align="center">–</td>
+<td valign="top" align="center">–</td>
+</tr>
+<tr>
+<td valign="top" align="left">Heavy</td>
+<td valign="top" align="center">0.796</td>
+<td valign="top" align="center">0.747</td>
+<td valign="top" align="center">0.836</td>
+<td valign="top" align="center">0.434</td>
+<td valign="top" align="center">0.377</td>
+<td valign="top" align="center">0.488</td>
+<td valign="top" align="center">1.000</td>
+<td valign="top" align="center">1.000</td>
+<td valign="top" align="center">38.571</td>
+</tr>
+<tr>
+<td valign="top" align="left">Pretty</td>
+<td valign="top" align="center">0.336</td>
+<td valign="top" align="center">0.224</td>
+<td valign="top" align="center">0.439</td>
+<td valign="top" align="center">0.120</td>
+<td valign="top" align="center">0.052</td>
+<td valign="top" align="center">0.187</td>
+<td valign="top" align="center">0.500</td>
+<td valign="top" align="center">0.866</td>
+<td valign="top" align="center">539.280</td>
+</tr>
+<tr>
+<td valign="top" align="left" colspan="10">
+Shrum et al. (
+<xref ref-type="bibr" rid="B52">2012</xref>
+), Experiment 1a, 1b, 1c
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">Vowel sound-product category interaction</td>
+<td valign="top" align="center">0.385</td>
+<td valign="top" align="center">0.295</td>
+<td valign="top" align="center">0.468</td>
+<td valign="top" align="center">0.251</td>
+<td valign="top" align="center">0.185</td>
+<td valign="top" align="center">0.314</td>
+<td valign="top" align="center">0.999</td>
+<td valign="top" align="center">1.000</td>
+<td valign="top" align="center">121.873</td>
+</tr>
+<tr>
+<td valign="top" align="left">Front vowel sounds for convertible and knife</td>
+<td valign="top" align="center">0.362</td>
+<td valign="top" align="center">0.232</td>
+<td valign="top" align="center">0.480</td>
+<td valign="top" align="center">0.106</td>
+<td valign="top" align="center">0.010</td>
+<td valign="top" align="center">0.200</td>
+<td valign="top" align="center">0.536</td>
+<td valign="top" align="center">0.921</td>
+<td valign="top" align="center">698.523</td>
+</tr>
+<tr>
+<td valign="top" align="left">Back vowel sounds for 4 × 4 SUV/Hammer</td>
+<td valign="top" align="center">0.367</td>
+<td valign="top" align="center">0.236</td>
+<td valign="top" align="center">0.485</td>
+<td valign="top" align="center">0.387</td>
+<td valign="top" align="center">0.300</td>
+<td valign="top" align="center">0.466</td>
+<td valign="top" align="center">1.000</td>
+<td valign="top" align="center">1.000</td>
+<td valign="top" align="center">49.384</td>
+</tr>
+<tr>
+<td valign="top" align="left" colspan="10">
+Hagtvedt and Brasel (
+<xref ref-type="bibr" rid="B20">2017</xref>
+), Study 3
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">Size estimate</td>
+<td valign="top" align="center">0.295</td>
+<td valign="top" align="center">0.076</td>
+<td valign="top" align="center">0.487</td>
+<td valign="top" align="center">0.011</td>
+<td valign="top" align="center">−0.058</td>
+<td valign="top" align="center">0.079</td>
+<td valign="top" align="center">0.051</td>
+<td valign="top" align="center">0.105</td>
+<td valign="top" align="center">68,050.270</td>
+</tr>
+<tr>
+<td valign="top" align="left">Attention</td>
+<td valign="top" align="center">0.249</td>
+<td valign="top" align="center">0.026</td>
+<td valign="top" align="center">0.448</td>
+<td valign="top" align="center">0.238</td>
+<td valign="top" align="center">0.172</td>
+<td valign="top" align="center">0.301</td>
+<td valign="top" align="center">0.555</td>
+<td valign="top" align="center">0.767</td>
+<td valign="top" align="center">135.587</td>
+</tr>
+<tr>
+<td valign="top" align="left">Arousal</td>
+<td valign="top" align="center">0.299</td>
+<td valign="top" align="center">0.080</td>
+<td valign="top" align="center">0.490</td>
+<td valign="top" align="center">0.180</td>
+<td valign="top" align="center">0.113</td>
+<td valign="top" align="center">0.245</td>
+<td valign="top" align="center">0.350</td>
+<td valign="top" align="center">0.582</td>
+<td valign="top" align="center">238.707</td>
+</tr>
+<tr>
+<td valign="top" align="left" colspan="10">
+Romero and Biswas (
+<xref ref-type="bibr" rid="B49">2016</xref>
+), Study 1B
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">Choice</td>
+<td valign="top" align="center">0.241</td>
+<td valign="top" align="center">0.040</td>
+<td valign="top" align="center">0.424</td>
+<td valign="top" align="center">−0.011</td>
+<td valign="top" align="center">−0.079</td>
+<td valign="top" align="center">0.058</td>
+<td valign="top" align="center"><5%</td>
+<td valign="top" align="center">–</td>
+<td valign="top" align="center">–</td>
+</tr>
+<tr>
+<td valign="top" align="left" colspan="10">
+Yorkston and Menon (
+<xref ref-type="bibr" rid="B63">2004</xref>
+), Study 1
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">Attribute Perception Index (Main effect of brand name)</td>
+<td valign="top" align="center">0.274</td>
+<td valign="top" align="center">0.104</td>
+<td valign="top" align="center">0.429</td>
+<td valign="top" align="center">0.095</td>
+<td valign="top" align="center">0.027</td>
+<td valign="top" align="center">0.163</td>
+<td valign="top" align="center">0.187</td>
+<td valign="top" align="center">0.447</td>
+<td valign="top" align="center">858.592</td>
+</tr>
+<tr>
+<td valign="top" align="left">Attribute Perception Index (2-way interaction)</td>
+<td valign="top" align="center">0.186</td>
+<td valign="top" align="center">0.012</td>
+<td valign="top" align="center">0.350</td>
+<td valign="top" align="center">0.012</td>
+<td valign="top" align="center">−0.056</td>
+<td valign="top" align="center">0.080</td>
+<td valign="top" align="center">0.052</td>
+<td valign="top" align="center">0.146</td>
+<td valign="top" align="center">54,169.160</td>
+</tr>
+<tr>
+<td valign="top" align="left">Attribute Perception Index (3-way interaction)</td>
+<td valign="top" align="center">0.178</td>
+<td valign="top" align="center">0.003</td>
+<td valign="top" align="center">0.342</td>
+<td valign="top" align="center">0.036</td>
+<td valign="top" align="center">−0.033</td>
+<td valign="top" align="center">0.104</td>
+<td valign="top" align="center">0.068</td>
+<td valign="top" align="center">0.213</td>
+<td valign="top" align="center">6,081.877</td>
+</tr>
+<tr>
+<td valign="top" align="left">Brand Evaluation Index (Main effect of brand name)</td>
+<td valign="top" align="center">0.271</td>
+<td valign="top" align="center">0.101</td>
+<td valign="top" align="center">0.426</td>
+<td valign="top" align="center">0.012</td>
+<td valign="top" align="center">−0.057</td>
+<td valign="top" align="center">0.080</td>
+<td valign="top" align="center">0.052</td>
+<td valign="top" align="center">0.145</td>
+<td valign="top" align="center">56,068.000</td>
+</tr>
+<tr>
+<td valign="top" align="left">Brand Evaluation Index (2-way interaction)</td>
+<td valign="top" align="center">0.246</td>
+<td valign="top" align="center">0.074</td>
+<td valign="top" align="center">0.403</td>
+<td valign="top" align="center">0.038</td>
+<td valign="top" align="center">−0.030</td>
+<td valign="top" align="center">0.106</td>
+<td valign="top" align="center">0.071</td>
+<td valign="top" align="center">0.220</td>
+<td valign="top" align="center">5,453.455</td>
+</tr>
+<tr>
+<td valign="top" align="left">Brand Evaluation Index (3-way interaction)</td>
+<td valign="top" align="center">0.197</td>
+<td valign="top" align="center">0.023</td>
+<td valign="top" align="center">0.360</td>
+<td valign="top" align="center">0.041</td>
+<td valign="top" align="center">−0.027</td>
+<td valign="top" align="center">0.109</td>
+<td valign="top" align="center">0.075</td>
+<td valign="top" align="center">0.231</td>
+<td valign="top" align="center">4,574.852</td>
+</tr>
+<tr>
+<td valign="top" align="left" colspan="10">
+Elder and Krishna (
+<xref ref-type="bibr" rid="B15">2011</xref>
+), Study 4
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">Purchase intention</td>
+<td valign="top" align="center">0.400</td>
+<td valign="top" align="center">0.195</td>
+<td valign="top" align="center">0.572</td>
+<td valign="top" align="center">0.009</td>
+<td valign="top" align="center">−0.059</td>
+<td valign="top" align="center">0.077</td>
+<td valign="top" align="center">0.051</td>
+<td valign="top" align="center">0.103</td>
+<td valign="top" align="center">95,047.700</td>
+</tr>
+<tr>
+<td valign="top" align="left">Mental simulation</td>
+<td valign="top" align="center">0.245</td>
+<td valign="top" align="center">0.024</td>
+<td valign="top" align="center">0.444</td>
+<td valign="top" align="center">0.003</td>
+<td valign="top" align="center">−0.066</td>
+<td valign="top" align="center">0.071</td>
+<td valign="top" align="center">0.050</td>
+<td valign="top" align="center">0.095</td>
+<td valign="top" align="center">1,171,626.000</td>
+</tr>
+<tr>
+<td valign="top" align="left" colspan="10">
+Jiang et al. (
+<xref ref-type="bibr" rid="B25">2015</xref>
+), Experiment 1
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">Logo shape-by-product-attribute interaction</td>
+<td valign="top" align="center">0.251</td>
+<td valign="top" align="center">0.066</td>
+<td valign="top" align="center">0.419</td>
+<td valign="top" align="center">0.013</td>
+<td valign="top" align="center">−0.055</td>
+<td valign="top" align="center">0.081</td>
+<td valign="top" align="center">0.052</td>
+<td valign="top" align="center">0.134</td>
+<td valign="top" align="center">45,561.510</td>
+</tr>
+<tr>
+<td valign="top" align="left">Comfortable: circular-logo (vs. angular-logo)</td>
+<td valign="top" align="center">0.258</td>
+<td valign="top" align="center">0.074</td>
+<td valign="top" align="center">0.426</td>
+<td valign="top" align="center">−0.003</td>
+<td valign="top" align="center">−0.086</td>
+<td valign="top" align="center">0.081</td>
+<td valign="top" align="center"><5%</td>
+<td valign="top" align="center">–</td>
+<td valign="top" align="center">–</td>
+</tr>
+<tr>
+<td valign="top" align="left">Durable: angular-logo (vs. circular-logo)</td>
+<td valign="top" align="center">0.195</td>
+<td valign="top" align="center">0.007</td>
+<td valign="top" align="center">0.370</td>
+<td valign="top" align="center">0.000</td>
+<td valign="top" align="center">−0.084</td>
+<td valign="top" align="center">0.083</td>
+<td valign="top" align="center"><5%</td>
+<td valign="top" align="center">–</td>
+<td valign="top" align="center">–</td>
+</tr>
+<tr>
+<td valign="top" align="left" colspan="10">
+Chae and Hoegg (
+<xref ref-type="bibr" rid="B8">2013</xref>
+), Study 2
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">interaction between position and desirable attribute on product attitude</td>
+<td valign="top" align="center">0.189</td>
+<td valign="top" align="center">0.043</td>
+<td valign="top" align="center">0.326</td>
+<td valign="top" align="center">0.061</td>
+<td valign="top" align="center">−0.011</td>
+<td valign="top" align="center">0.133</td>
+<td valign="top" align="center">0.129</td>
+<td valign="top" align="center">0.427</td>
+<td valign="top" align="center">2,096.105</td>
+</tr>
+<tr>
+<td valign="top" align="left">Antique conditions increase favorable responses to product image on the left than on the right</td>
+<td valign="top" align="center">0.171</td>
+<td valign="top" align="center">0.025</td>
+<td valign="top" align="center">0.310</td>
+<td valign="top" align="center">−0.007</td>
+<td valign="top" align="center">−0.079</td>
+<td valign="top" align="center">0.066</td>
+<td valign="top" align="center"><5%</td>
+<td valign="top" align="center">–</td>
+<td valign="top" align="center">–</td>
+</tr>
+<tr>
+<td valign="top" align="left">Modern conditions increase favorable responses to product image on the right than on the left</td>
+<td valign="top" align="center">0.208</td>
+<td valign="top" align="center">0.063</td>
+<td valign="top" align="center">0.344</td>
+<td valign="top" align="center">−0.031</td>
+<td valign="top" align="center">−0.103</td>
+<td valign="top" align="center">0.042</td>
+<td valign="top" align="center"><5%</td>
+<td valign="top" align="center">–</td>
+<td valign="top" align="center">–</td>
+</tr>
+<tr>
+<td valign="top" align="left" colspan="10">
+Cian et al. (
+<xref ref-type="bibr" rid="B10">2014</xref>
+), Study 1
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">Brand attitude</td>
+<td valign="top" align="center">0.261</td>
+<td valign="top" align="center">0.034</td>
+<td valign="top" align="center">0.462</td>
+<td valign="top" align="center">0.022</td>
+<td valign="top" align="center">−0.047</td>
+<td valign="top" align="center">0.090</td>
+<td valign="top" align="center">0.054</td>
+<td valign="top" align="center">0.119</td>
+<td valign="top" align="center">16,422.330</td>
+</tr>
+<tr>
+<td valign="top" align="left">Perceived movement</td>
+<td valign="top" align="center">0.386</td>
+<td valign="top" align="center">0.173</td>
+<td valign="top" align="center">0.565</td>
+<td valign="top" align="center">0.294</td>
+<td valign="top" align="center">0.231</td>
+<td valign="top" align="center">0.356</td>
+<td valign="top" align="center">0.729</td>
+<td valign="top" align="center">0.883</td>
+<td valign="top" align="center">87.473</td>
+</tr>
+<tr>
+<td valign="top" align="left" colspan="10">
+Madzharov and Block (
+<xref ref-type="bibr" rid="B38">2010</xref>
+), Study 1A
+</td>
+</tr>
+<tr>
+<td valign="top" align="left">Product quantity</td>
+<td valign="top" align="center">0.407</td>
+<td valign="top" align="center">0.095</td>
+<td valign="top" align="center">0.646</td>
+<td valign="top" align="center">0.026</td>
+<td valign="top" align="center">−0.042</td>
+<td valign="top" align="center">0.094</td>
+<td valign="top" align="center">0.052</td>
+<td valign="top" align="center">0.086</td>
+<td valign="top" align="center">11,405.840</td>
+</tr>
+<tr>
+<td valign="top" align="left">Serving size</td>
+<td valign="top" align="center">0.348</td>
+<td valign="top" align="center">0.027</td>
+<td valign="top" align="center">0.604</td>
+<td valign="top" align="center">0.054</td>
+<td valign="top" align="center">−0.015</td>
+<td valign="top" align="center">0.122</td>
+<td valign="top" align="center">0.061</td>
+<td valign="top" align="center">0.111</td>
+<td valign="top" align="center">2,712.469</td>
+</tr>
+</tbody>
+</table>
+<table-wrap-foot>
+<p>The Leftmost columns and the Middle columns depict effect size (correlation coefficients) and 95% CIs for the original and replication studies. The Right columns indicate the estimated power in the original studies (third column from Right), the upper bound of the 95% CI for estimated power in the original (second column from Right), and well as an estimated sample size required for 80% power, based on the replication effect (Rightmost column). Hypotheses/DVs in bold indicate that effect sizes of upper and lower 95% CIs are >0.</p>
+</table-wrap-foot>
+</table-wrap>
+<p>
+We employ empirical audits and reviews (O'Donnell et al.,
+<xref ref-type="bibr" rid="B44">2021</xref>
+), which can be used to reach aggregate conclusions to evaluate research designs (e.g., manipulations and measures) that empirically strengthen (or weaken) evidence. Two successful studies had relatively larger sample sizes, used sound symbolism, and employed within-participants manipulation of senses. No studies involving visual factors, between-participant manipulation of senses, or interactions between factors could be replicated. This suggests that specific research designs (e.g., the type of senses, manipulation of senses, and number of sample sizes) influence the credibility of the findings.
+</p>
+</sec>
+<sec sec-type="discussion" id="s5">
+<title>Discussion</title>
+<p>
+Our research examined the replicability of ten influential studies on sensory marketing. Sensory marketing has attracted the attention of researchers and practitioners over the last decade (Krishna,
+<xref ref-type="bibr" rid="B29">2011</xref>
+,
+<xref ref-type="bibr" rid="B30">2012</xref>
+). An influential article on sensory marketing (Krishna,
+<xref ref-type="bibr" rid="B29">2011</xref>
+) was cited more than 1400 times in Google Scholar (February 2022). However, to our knowledge, no research has attempted to replicate these findings from the perspective of empirical audit and review (O'Donnell et al.,
+<xref ref-type="bibr" rid="B44">2021</xref>
+). In general, our findings demonstrated that 20% (2/10) of the influential research on sensory marketing was successfully replicated. Our findings suggest that not all influential research can be replicated, and indicate the importance of replication research to examine the reliability of prior findings in consumer psychology and marketing.
+</p>
+<sec>
+<title>Contribution to replication attempts in consumer psychology</title>
+<p>
+Our findings contribute to replication attempts in consumer psychology. The sciences are facing a replication crisis. Since it has been revealed that famous psychological findings are less replicable (Open Science Collaboration,
+<xref ref-type="bibr" rid="B45">2015</xref>
+), several attempts have been made in psychology (Klein et al.,
+<xref ref-type="bibr" rid="B27">2018</xref>
+), economics (Camerer et al.,
+<xref ref-type="bibr" rid="B6">2016</xref>
+), and behavioral sciences (Camerer et al.,
+<xref ref-type="bibr" rid="B7">2018</xref>
+). However, replication attempts in consumer psychology have been relatively rare [see O'Donnell et al.,
+<xref ref-type="bibr" rid="B44">2021</xref>
+and Data Colada (
+<ext-link ext-link-type="uri" xlink:href="http://datacolada.org/">http://datacolada.org/</ext-link>
+) for a few exemptions]. Our study is one of the first attempts to replicate research on consumer psychology, especially from the standpoint of empirical audits and reviews (O'Donnell et al.,
+<xref ref-type="bibr" rid="B44">2021</xref>
+). The replication findings revealed that 20% could be replicated in terms of pre-registered analyses (
+<italic>p</italic>
+< 0.05). Together, our results demonstrate the replicability of the scientific findings in consumer psychology.
+</p>
+</sec>
+<sec>
+<title>Which findings can or cannot be replicated?</title>
+<p>
+Our results reveal the sensory marketing findings that can or cannot be replicated. First, sensory marketing research that capitalizes on sound symbolism is replicable. Our replication attempts successfully replicated two findings (Klink,
+<xref ref-type="bibr" rid="B28">2000</xref>
+; Shrum et al.,
+<xref ref-type="bibr" rid="B52">2012</xref>
+) and partially replicated one of them (Yorkston and Menon,
+<xref ref-type="bibr" rid="B63">2004</xref>
+). This is consistent with the argument that sound symbolism is robust and found in diverse cultures (Cwiek et al.,
+<xref ref-type="bibr" rid="B11">2022</xref>
+). Among sensory marketing research, the reliability of the findings might differ depending on the type of sensory stimuli. Findings based on sounds, especially sound symbolism, appear to be more reliable than those based on other sensory stimuli.
+</p>
+<p>
+Second, replicable findings tend to manipulate sensory stimuli within-participants. Two of the replicable findings adopt the within-participants manipulation of sensory stimuli (Klink,
+<xref ref-type="bibr" rid="B28">2000</xref>
+; Shrum et al.,
+<xref ref-type="bibr" rid="B52">2012</xref>
+); though not all research on within-participants manipulation can be replicated (Romero and Biswas,
+<xref ref-type="bibr" rid="B49">2016</xref>
+). Two sensory stimuli (e.g., hypothetical brand names, including front vowels and back vowels) are evaluated side by side simultaneously (i.e., joint rather than separate evaluation) (Hsee,
+<xref ref-type="bibr" rid="B23">1996</xref>
+). Recent research has suggested that the effects of sensory stimuli (i.e., verticality and horizontality of photos) on judgment appear to be more reliably obtained in within-participants than between-participant designs (Zhang et al.,
+<xref ref-type="bibr" rid="B64">2022</xref>
+). Some findings that were not successfully replicated in our research employed between-participant manipulations of sensory stimuli (Elder and Krishna,
+<xref ref-type="bibr" rid="B15">2011</xref>
+; Hagtvedt and Brasel,
+<xref ref-type="bibr" rid="B20">2017</xref>
+). Together, our replication attempts suggest that within-participants manipulation creates more reliable and replicable findings.
+</p>
+<p>
+Third, previous findings obtained from larger samples and effect sizes are more replicable. We successfully replicated two findings that had relatively larger samples and effect sizes (Klink,
+<xref ref-type="bibr" rid="B28">2000</xref>
+; Shrum et al.,
+<xref ref-type="bibr" rid="B52">2012</xref>
+). Their sample sizes (Klink,
+<xref ref-type="bibr" rid="B28">2000</xref>
+; Shrum et al.,
+<xref ref-type="bibr" rid="B52">2012</xref>
+) are the top two largest among the ten research targets. The effect size of Klink (
+<xref ref-type="bibr" rid="B28">2000</xref>
+) is the largest, and that of Shrum et al. (
+<xref ref-type="bibr" rid="B52">2012</xref>
+) is the third largest among the ten sensory marketing studies. Klink (
+<xref ref-type="bibr" rid="B28">2000</xref>
+) had
+<italic>n</italic>
+= 265 and
+<italic>r</italic>
+= 0.46 (mean r of Study 1 H1a-m). Shrum et al. (
+<xref ref-type="bibr" rid="B52">2012</xref>
+) had
+<italic>n</italic>
+= 357 (combined analysis of Experiment 1a-c) and
+<italic>r</italic>
+= 0.39. This appears to be consistent with the evidence that the sample size and effect size in the original study were associated with the success of the replications (Soto,
+<xref ref-type="bibr" rid="B55">2019</xref>
+); however, see Altmejd et al. (
+<xref ref-type="bibr" rid="B1">2019</xref>
+).
+</p>
+<p>
+Our findings contribute to the research on sensory marketing in digital environments. Consumers tend to spend a lot of time shopping in digital environments (e.g., e-commerce). This tendency is present in WEIRD and non-WEIRD consumers. Although some studies have attempted to investigate the role of sensory stimuli in consumer behavior in an online setting (e.g., Rodríguez et al.,
+<xref ref-type="bibr" rid="B48">2021</xref>
+), less is known about how previous influential findings on sensory marketing, mostly obtained from WEIRD consumers in an offline setting, can be generalized to non-WEIRD consumers in an online setting. To fill this gap, we attempted to replicate ten influential studies on sensory marketing in digital environments by recruiting non-WEIRD consumers. The results revealed that only 20% of the findings of the influential studies can be replicated by non-WEIRD consumers in an online setting. Given that our replication research does not cover all aspects of sensory marketing in digital and/or virtual environments, more such research is needed. For example, it would be intriguing to test in future research the replicability and generalizability of findings involving new sensory-enabling technologies (Petit et al.,
+<xref ref-type="bibr" rid="B47">2019</xref>
+).
+</p>
+</sec>
+<sec>
+<title>Limitation of the current study</title>
+<p>
+Our study had the following limitations. First, the differences in participants' nationality/cultures between the present and the original research might influence our findings. Our participants were non-WEIRD consumers (i.e., Japanese consumers), while the participants in the original research were WEIRD consumers. It should be noted that we did not aim for the exact or direct replications (LeBel et al.,
+<xref ref-type="bibr" rid="B34">2018</xref>
+). Rather, we conducted conceptual replications by recruiting non-WEIRD consumers to test the generalizability of previous findings on sensory marketing. Our results cast doubt on the generalizability of previous findings on sensory marketing. Further research should conduct the direct replications to recruit the same characteristic of the participant with the original studies. Second, our study did not attempt to replicate influential research on sensory marketing that addressed olfaction, taste, and haptics. Namely, the senses manipulated as independent variables were limited to auditory and visual senses, although replication of Klink (
+<xref ref-type="bibr" rid="B28">2000</xref>
+) addressed all senses except the independent variable. It is important to conduct additional studies that consider various sense factors. Moreover, participants went through ten studies sequentially at the same time. The fatigues, the order effects, and/or attentiveness possibly influence our findings. However, it should be noted that the required time (and the number of studies) was shorted than that of previous attempts of replications projects. Our participants completed the ten studies within about 10 minutes (
+<italic>M</italic>
+= 609 s), while participants in a previous replication project completed 13 or 15 studies for about 30 min (see Klein et al.,
+<xref ref-type="bibr" rid="B27">2018</xref>
+). Our attention check was also conducted after performing all the studies, which possibly suggesting that participants could attend to the tasks. Given this, our procedures apparently not induced excessive fatigues and not lead to the problem of attentiveness. The order of ten studies were also randomized and could cancel out any order effects. Nevertheless, further research should treat with issues. Finally, our results might be influenced by differences in the materials and instructions. We used the same visual stimuli as the original ones. In the case of auditory stimuli (i.e., sounds in brand names), the manipulation of the auditory stimuli was the same as that of the original ones. However, the presentation of the stimuli differed between the original study and our study. Klink (
+<xref ref-type="bibr" rid="B28">2000</xref>
+) presented brand-name stimuli in a 2-page booklet. Yorkston and Menon (
+<xref ref-type="bibr" rid="B63">2004</xref>
+) had participants read a press release containing brand-name stimuli. We cannot confirm whether our replication study exactly followed the instructions and materials in the original research because detailed instructions and materials were missing in many cases. Further research is required to clarify this issue.
+</p>
+</sec>
+</sec>
+<sec sec-type="conclusions" id="s6">
+<title>Conclusion</title>
+<p>We evaluated the replicability of ten influential research on sensory marketing by conducting a high-powered and pre-registered replication. The results demonstrated that only 20% (2/10) of study findings could be successfully replicated, and their effect sizes are half of the original ones. Successfully replicated findings are characterized by relatively larger sample sizes, use of sound symbolism, and within-participants manipulation of the senses. Our findings reveal an initial estimate of the replicability of sensory marketing and provide implications for how to build a cumulative science in consumer psychology.</p>
+</sec>
+<sec sec-type="data-availability" id="s7">
+<title>Data availability statement</title>
+<p>
+The original contributions presented in the study are included in the article/
+<xref ref-type="sec" rid="s11">Supplementary material</xref>
+, further inquiries can be directed to the corresponding author/s. Data, materials, and analysis code are available at
+<ext-link ext-link-type="uri" xlink:href="https://osf.io/tnmvq/">https://osf.io/tnmvq/</ext-link>
+.
+</p>
+</sec>
+<sec id="s8">
+<title>Ethics statement</title>
+<p>Ethical approval was not provided for this study on human participants because online experiments and participants' responses are anonymous. The patients/participants provided their written informed consent to participate in this study.</p>
+</sec>
+<sec id="s9">
+<title>Author contributions</title>
+<p>Conceptualization, data curation, formal analysis, investigation, methodology, project administration, resources, software, validation, visualization, and writing—review and editing: KM and SI. Roles/writing—original draft: KM. Both authors contributed to the article and approved the submitted version.</p>
+</sec>
+<sec sec-type="COI-statement" id="conf1">
+<title>Conflict of interest</title>
+<p>The authors declare that the research was conducted in the absence of any commercial or financial relationships that could be construed as a potential conflict of interest.</p>
+</sec>
+<sec sec-type="disclaimer" id="s10">
+<title>Publisher's note</title>
+<p>All claims expressed in this article are solely those of the authors and do not necessarily represent those of their affiliated organizations, or those of the publisher, the editors and the reviewers. Any product that may be evaluated in this article, or claim that may be made by its manufacturer, is not guaranteed or endorsed by the publisher.</p>
+</sec>
+</body>
+<back>
+<sec sec-type="supplementary-material" id="s11">
+<title>Supplementary material</title>
+<p>
+The Supplementary Material for this article can be found online at:
+<ext-link ext-link-type="uri" xlink:href="https://www.frontiersin.org/articles/10.3389/fcomm.2022.1048896/full#supplementary-material">https://www.frontiersin.org/articles/10.3389/fcomm.2022.1048896/full#supplementary-material</ext-link>
+</p>
+<supplementary-material xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="Data_Sheet_1.docx" id="SM1" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document"/>
+</sec>
+<ref-list>
+<title>References</title>
+<ref id="B1">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Altmejd</surname>
+<given-names>A.</given-names>
+</name>
+<name>
+<surname>Dreber</surname>
+<given-names>A.</given-names>
+</name>
+<name>
+<surname>Forsell</surname>
+<given-names>E.</given-names>
+</name>
+<name>
+<surname>Huber</surname>
+<given-names>J.</given-names>
+</name>
+<name>
+<surname>Imai</surname>
+<given-names>T.</given-names>
+</name>
+<name>
+<surname>Johannesson</surname>
+<given-names>M.</given-names>
+</name>
+<etal/>
+</person-group>
+. (
+<year>2019</year>
+).
+<article-title>Predicting the replicability of social science lab experiments</article-title>
+.
+<source>PloS ONE.</source>
+<volume>14</volume>
+,
+<fpage>e0225826</fpage>
+.
+<pub-id pub-id-type="doi">10.1371/journal.pone.0225826</pub-id>
+<pub-id pub-id-type="pmid">31805105</pub-id>
+</citation>
+</ref>
+<ref id="B2">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Asendorpf</surname>
+<given-names>J. B.</given-names>
+</name>
+<name>
+<surname>Conner</surname>
+<given-names>M.</given-names>
+</name>
+<name>
+<surname>De Fruyt</surname>
+<given-names>F.</given-names>
+</name>
+<name>
+<surname>De Houwer</surname>
+<given-names>J.</given-names>
+</name>
+<name>
+<surname>Denissen</surname>
+<given-names>J. J. A.</given-names>
+</name>
+<name>
+<surname>Fiedler</surname>
+<given-names>K.</given-names>
+</name>
+<etal/>
+</person-group>
+. (
+<year>2013</year>
+).
+<article-title>Recommendations for increasing replicability in psychology</article-title>
+.
+<source>Eur. J. Pers.</source>
+<volume>27</volume>
+,
+<fpage>108</fpage>
+–
+<lpage>119</lpage>
+.
+<pub-id pub-id-type="doi">10.1002/per.1919</pub-id>
+</citation>
+</ref>
+<ref id="B3">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Aust</surname>
+<given-names>F.</given-names>
+</name>
+<name>
+<surname>Diedenhofen</surname>
+<given-names>B.</given-names>
+</name>
+<name>
+<surname>Ullrich</surname>
+<given-names>S.</given-names>
+</name>
+<name>
+<surname>Musch</surname>
+<given-names>J.</given-names>
+</name>
+</person-group>
+(
+<year>2013</year>
+).
+<article-title>Seriousness checks are useful to. improve data validity in online research</article-title>
+.
+<source>Behav. Res. Methods.</source>
+<volume>45</volume>
+,
+<fpage>527</fpage>
+–
+<lpage>535</lpage>
+.
+<pub-id pub-id-type="doi">10.3758/s13428-012-0265-2</pub-id>
+<pub-id pub-id-type="pmid">23055170</pub-id>
+</citation>
+</ref>
+<ref id="B4">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Baumeister</surname>
+<given-names>R. F.</given-names>
+</name>
+<name>
+<surname>Sparks</surname>
+<given-names>E. A.</given-names>
+</name>
+<name>
+<surname>Stillman</surname>
+<given-names>T. F.</given-names>
+</name>
+<name>
+<surname>Vohs</surname>
+<given-names>K. D.</given-names>
+</name>
+</person-group>
+(
+<year>2008</year>
+).
+<article-title>Free will in. consumer behavior: Self-control, ego depletion, and choice</article-title>
+.
+<source>J. Consum. Psychol.</source>
+<volume>18</volume>
+,
+<fpage>4</fpage>
+–
+<lpage>13</lpage>
+.
+<pub-id pub-id-type="doi">10.1016/j.jcps.2007.10.002</pub-id>
+</citation>
+</ref>
+<ref id="B5">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Biswas</surname>
+<given-names>D.</given-names>
+</name>
+<name>
+<surname>Szocs</surname>
+<given-names>C.</given-names>
+</name>
+<name>
+<surname>Chacko</surname>
+<given-names>R.</given-names>
+</name>
+<name>
+<surname>Wansink</surname>
+<given-names>B.</given-names>
+</name>
+</person-group>
+(
+<year>2017</year>
+).
+<article-title>Shining light on atmospherics: how ambient light influences food choices</article-title>
+.
+<source>J. Market. Res.</source>
+<volume>54</volume>
+,
+<fpage>111</fpage>
+–
+<lpage>123</lpage>
+.
+<pub-id pub-id-type="doi">10.1509/jmr.14.0115</pub-id>
+</citation>
+</ref>
+<ref id="B6">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Camerer</surname>
+<given-names>C. F.</given-names>
+</name>
+<name>
+<surname>Dreber</surname>
+<given-names>A.</given-names>
+</name>
+<name>
+<surname>Forsell</surname>
+<given-names>E.</given-names>
+</name>
+<name>
+<surname>Ho</surname>
+<given-names>T.-. H</given-names>
+</name>
+<name>
+<surname>Huber</surname>
+<given-names>J.</given-names>
+</name>
+<etal/>
+</person-group>
+. (
+<year>2016</year>
+).
+<article-title>Evaluating replicability of laboratory experiments in economics</article-title>
+.
+<source>Science</source>
+<volume>351</volume>
+,
+<fpage>1433</fpage>
+–
+<lpage>1436</lpage>
+.
+<pub-id pub-id-type="doi">10.1126/science.aaf0918</pub-id>
+<pub-id pub-id-type="pmid">26940865</pub-id>
+</citation>
+</ref>
+<ref id="B7">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Camerer</surname>
+<given-names>C. F.</given-names>
+</name>
+<name>
+<surname>Dreber</surname>
+<given-names>A.</given-names>
+</name>
+<name>
+<surname>Holzmeister</surname>
+<given-names>F.</given-names>
+</name>
+<name>
+<surname>Ho</surname>
+<given-names>T.-. H</given-names>
+</name>
+<name>
+<surname>Huber</surname>
+<given-names>J.</given-names>
+</name>
+<etal/>
+</person-group>
+. (
+<year>2018</year>
+).
+<article-title>Evaluating the replicability of social science experiments in Nature and Science between 2010 and 2015</article-title>
+.
+<source>Nat. Human Behav.</source>
+<volume>2</volume>
+,
+<fpage>637</fpage>
+–
+<lpage>644</lpage>
+.
+<pub-id pub-id-type="doi">10.1038/s41562-018-0399-z</pub-id>
+<pub-id pub-id-type="pmid">31346273</pub-id>
+</citation>
+</ref>
+<ref id="B8">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Chae</surname>
+<given-names>B.</given-names>
+</name>
+<name>
+<surname>Hoegg</surname>
+<given-names>J.</given-names>
+</name>
+</person-group>
+(
+<year>2013</year>
+).
+<article-title>The future looks “right”: effects of the horizontal location. of advertising images on product attitude</article-title>
+.
+<source>J. Consum. Res.</source>
+<volume>40</volume>
+,
+<fpage>223</fpage>
+–
+<lpage>238</lpage>
+.
+<pub-id pub-id-type="doi">10.1086/669476</pub-id>
+</citation>
+</ref>
+<ref id="B9">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Charlton</surname>
+<given-names>A.</given-names>
+</name>
+<name>
+<surname>Montoya</surname>
+<given-names>A.</given-names>
+</name>
+<name>
+<surname>Price</surname>
+<given-names>J.</given-names>
+</name>
+<name>
+<surname>Hilgard</surname>
+<given-names>J.</given-names>
+</name>
+</person-group>
+(
+<year>2021</year>
+).
+<article-title>Noise in the process: an assessment of the evidential value of mediation effects in marketing journals</article-title>
+.
+<source>PsyArXiv [Preprints]</source>
+.
+<pub-id pub-id-type="doi">10.31234/osf.io/ck2r5</pub-id>
+</citation>
+</ref>
+<ref id="B10">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Cian</surname>
+<given-names>L.</given-names>
+</name>
+<name>
+<surname>Krishna</surname>
+<given-names>A.</given-names>
+</name>
+<name>
+<surname>Elder</surname>
+<given-names>R. S.</given-names>
+</name>
+</person-group>
+(
+<year>2014</year>
+).
+<article-title>This logo moves me: dynamic imagery from static images</article-title>
+.
+<source>J. Market. Res.</source>
+<volume>51</volume>
+,
+<fpage>184</fpage>
+–
+<lpage>197</lpage>
+.
+<pub-id pub-id-type="doi">10.1509/jmr.13.0023</pub-id>
+</citation>
+</ref>
+<ref id="B11">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Cwiek</surname>
+<given-names>A.</given-names>
+</name>
+<name>
+<surname>Fuchs</surname>
+<given-names>S.</given-names>
+</name>
+<name>
+<surname>Draxler</surname>
+<given-names>C.</given-names>
+</name>
+<name>
+<surname>Asu</surname>
+<given-names>E. L.</given-names>
+</name>
+<name>
+<surname>Dediu</surname>
+<given-names>D.</given-names>
+</name>
+<name>
+<surname>Hiovain</surname>
+<given-names>K.</given-names>
+</name>
+<etal/>
+</person-group>
+. (
+<year>2022</year>
+).
+<article-title>The bouba/kiki effect is robust across cultures and writing systems</article-title>
+.
+<source>Philos. Transac. Royal Soc. London. Ser. B Biol. Sci.</source>
+<volume>377</volume>
+,
+<fpage>20200390</fpage>
+.
+<pub-id pub-id-type="doi">10.1098/rstb.2020.0390</pub-id>
+<pub-id pub-id-type="pmid">34775818</pub-id>
+</citation>
+</ref>
+<ref id="B12">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Ding</surname>
+<given-names>Y.</given-names>
+</name>
+<name>
+<surname>DeSarbo</surname>
+<given-names>W. S.</given-names>
+</name>
+<name>
+<surname>Hanssens</surname>
+<given-names>D. M.</given-names>
+</name>
+<name>
+<surname>Jedidi</surname>
+<given-names>K.</given-names>
+</name>
+<name>
+<surname>Lynch</surname>
+<given-names>J. G.</given-names>
+</name>
+<name>
+<surname>Lehmann</surname>
+<given-names>D. R.</given-names>
+</name>
+</person-group>
+(
+<year>2020</year>
+).
+<article-title>The past, present, and future of measurement and methods in marketing analysis</article-title>
+.
+<source>Market. Lett.</source>
+<volume>31</volume>
+,
+<fpage>175</fpage>
+–
+<lpage>186</lpage>
+.
+<pub-id pub-id-type="doi">10.1007/s11002-020-09527-7</pub-id>
+</citation>
+</ref>
+<ref id="B13">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Dubois</surname>
+<given-names>D.</given-names>
+</name>
+<name>
+<surname>Rucker</surname>
+<given-names>D. D.</given-names>
+</name>
+<name>
+<surname>Galinsky</surname>
+<given-names>a D.</given-names>
+</name>
+</person-group>
+(
+<year>2011</year>
+).
+<article-title>Super size me: product size as a Signal of Status</article-title>
+.
+<source>J. Consum. Res.</source>
+<volume>38</volume>
+,
+<fpage>1047</fpage>
+–
+<lpage>1062</lpage>
+.
+<pub-id pub-id-type="doi">10.1086/661890</pub-id>
+</citation>
+</ref>
+<ref id="B14">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Edlund</surname>
+<given-names>J. E.</given-names>
+</name>
+<name>
+<surname>Cuccolo</surname>
+<given-names>K.</given-names>
+</name>
+<name>
+<surname>Irgens</surname>
+<given-names>M. S.</given-names>
+</name>
+<name>
+<surname>Wagge</surname>
+<given-names>J. R.</given-names>
+</name>
+<name>
+<surname>Zlokovich</surname>
+<given-names>M. S.</given-names>
+</name>
+</person-group>
+(
+<year>2022</year>
+).
+<article-title>Saving science through replication studies</article-title>
+.
+<source>Perspect. Psychol. Sci. J. Assoc. Psychol. Sci.</source>
+<volume>17</volume>
+,
+<fpage>216</fpage>
+–
+<lpage>225</lpage>
+.
+<pub-id pub-id-type="doi">10.1177/1745691620984385</pub-id>
+<pub-id pub-id-type="pmid">33682522</pub-id>
+</citation>
+</ref>
+<ref id="B15">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Elder</surname>
+<given-names>R. S.</given-names>
+</name>
+<name>
+<surname>Krishna</surname>
+<given-names>A.</given-names>
+</name>
+</person-group>
+(
+<year>2011</year>
+).
+<article-title>The “visual depiction effect” in advertising: facilitating. embodied mental simulation through product orientation</article-title>
+.
+<source>J. Consum. Res.</source>
+<volume>38</volume>
+,
+<fpage>988</fpage>
+–
+<lpage>1003</lpage>
+.
+<pub-id pub-id-type="doi">10.1086/661531</pub-id>
+</citation>
+</ref>
+<ref id="B16">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Ferraro</surname>
+<given-names>R.</given-names>
+</name>
+<name>
+<surname>Shiv</surname>
+<given-names>B.</given-names>
+</name>
+<name>
+<surname>Bettman</surname>
+<given-names>J. R.</given-names>
+</name>
+</person-group>
+(
+<year>2005</year>
+).
+<article-title>Let us eat and drink, for tomorrow we shall. die: effects of mortality salience and self-esteem on self-regulation in consumer choice</article-title>
+.
+<source>J. Consum. Res.</source>
+<volume>32</volume>
+,
+<fpage>65</fpage>
+–
+<lpage>75</lpage>
+.
+<pub-id pub-id-type="doi">10.1086/429601</pub-id>
+</citation>
+</ref>
+<ref id="B17">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Forsell</surname>
+<given-names>E.</given-names>
+</name>
+<name>
+<surname>Viganola</surname>
+<given-names>D.</given-names>
+</name>
+<name>
+<surname>Pfeiffer</surname>
+<given-names>T.</given-names>
+</name>
+<name>
+<surname>Almenberg</surname>
+<given-names>J.</given-names>
+</name>
+<name>
+<surname>Wilson</surname>
+<given-names>B.</given-names>
+</name>
+<name>
+<surname>Chen</surname>
+<given-names>Y.</given-names>
+</name>
+<etal/>
+</person-group>
+. (
+<year>2019</year>
+).
+<article-title>Predicting replication outcomes in the many labs 2 study</article-title>
+.
+<source>J. Econ. Psychol.</source>
+<volume>75</volume>
+,
+<fpage>102117</fpage>
+.
+<pub-id pub-id-type="doi">10.1016/j.joep.2018.10.009</pub-id>
+</citation>
+</ref>
+<ref id="B18">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Fransen</surname>
+<given-names>M. L.</given-names>
+</name>
+<name>
+<surname>Fennis</surname>
+<given-names>B. M.</given-names>
+</name>
+<name>
+<surname>Pruyn</surname>
+<given-names>a T. H.</given-names>
+</name>
+<name>
+<surname>Das</surname>
+<given-names>E.</given-names>
+</name>
+</person-group>
+(
+<year>2008</year>
+).
+<article-title>Rest in peace? Brand-induced mortality salience and consumer behavior</article-title>
+.
+<source>J. Bus. Res.</source>
+<volume>61</volume>
+,
+<fpage>1053</fpage>
+–
+<lpage>1061</lpage>
+.
+<pub-id pub-id-type="doi">10.1016/j.jbusres.2007.09.020</pub-id>
+</citation>
+</ref>
+<ref id="B19">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Goodman</surname>
+<given-names>J. K.</given-names>
+</name>
+<name>
+<surname>Paolacci</surname>
+<given-names>G.</given-names>
+</name>
+</person-group>
+(
+<year>2017</year>
+).
+<article-title>Crowdsourcing consumer research</article-title>
+.
+<source>J. Consum. Res.</source>
+<volume>44</volume>
+,
+<fpage>196</fpage>
+–
+<lpage>210</lpage>
+.
+<pub-id pub-id-type="doi">10.1093/jcr/ucx047</pub-id>
+</citation>
+</ref>
+<ref id="B20">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Hagtvedt</surname>
+<given-names>H.</given-names>
+</name>
+<name>
+<surname>Brasel</surname>
+<given-names>S. A.</given-names>
+</name>
+</person-group>
+(
+<year>2017</year>
+).
+<article-title>Color Saturation Increases Perceived Product Size</article-title>
+.
+<source>J. Consum. Res.</source>
+<volume>44</volume>
+,
+<fpage>396</fpage>
+–
+<lpage>413</lpage>
+.
+<pub-id pub-id-type="doi">10.1093/jcr/ucx039</pub-id>
+</citation>
+</ref>
+<ref id="B21">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Henrich</surname>
+<given-names>J.</given-names>
+</name>
+<name>
+<surname>Heine</surname>
+<given-names>S. J.</given-names>
+</name>
+<name>
+<surname>Norenzayan</surname>
+<given-names>A.</given-names>
+</name>
+</person-group>
+(
+<year>2010</year>
+).
+<article-title>Most people are not WEIRD</article-title>
+.
+<source>Nature</source>
+<volume>466</volume>
+,
+<fpage>29</fpage>
+–
+<lpage>29</lpage>
+.
+<pub-id pub-id-type="doi">10.1038/466029a</pub-id>
+<pub-id pub-id-type="pmid">20595995</pub-id>
+</citation>
+</ref>
+<ref id="B22">
+<citation citation-type="book">
+<person-group person-group-type="author">
+<name>
+<surname>Hoyer</surname>
+<given-names>W. D.</given-names>
+</name>
+<name>
+<surname>MacInnis</surname>
+<given-names>D. J.</given-names>
+</name>
+<name>
+<surname>Pieters</surname>
+<given-names>R.</given-names>
+</name>
+</person-group>
+(
+<year>2012</year>
+).
+<source>Consumer Behavior</source>
+.
+<publisher-loc>Boston, MA</publisher-loc>
+:
+<publisher-name>Cengage Learning</publisher-name>
+.
+</citation>
+</ref>
+<ref id="B23">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Hsee</surname>
+<given-names>C. K.</given-names>
+</name>
+</person-group>
+(
+<year>1996</year>
+).
+<article-title>The evaluability hypothesis: an explanation for preference reversals. between joint and separate evaluations of alternatives</article-title>
+.
+<source>Organ. Behav. Human Dec. Process.</source>
+<volume>67</volume>
+,
+<fpage>247</fpage>
+–
+<lpage>257</lpage>
+.
+<pub-id pub-id-type="doi">10.1006/obhd.1996.0077</pub-id>
+</citation>
+</ref>
+<ref id="B24">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Iseki</surname>
+<given-names>S.</given-names>
+</name>
+<name>
+<surname>Motoki</surname>
+<given-names>K.</given-names>
+</name>
+<name>
+<surname>Sakata</surname>
+<given-names>R.</given-names>
+</name>
+<name>
+<surname>Kitagami</surname>
+<given-names>S.</given-names>
+</name>
+</person-group>
+(
+<year>2021</year>
+).
+<article-title>How semantically labeled scent-gender associations influence the evaluations of scent and texture</article-title>
+.
+<source>Front. Psychol.</source>
+<volume>12</volume>
+,
+<fpage>713329</fpage>
+.
+<pub-id pub-id-type="doi">10.3389/fpsyg.2021.713329</pub-id>
+<pub-id pub-id-type="pmid">34744873</pub-id>
+</citation>
+</ref>
+<ref id="B25">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Jiang</surname>
+<given-names>Y.</given-names>
+</name>
+<name>
+<surname>Gorn</surname>
+<given-names>G. J.</given-names>
+</name>
+<name>
+<surname>Galli</surname>
+<given-names>M.</given-names>
+</name>
+<name>
+<surname>Chattopadhyay</surname>
+<given-names>A.</given-names>
+</name>
+</person-group>
+(
+<year>2015</year>
+).
+<article-title>Does your company have the right logo? How and why circular- and angular-logo shapes influence brand attribute judgments</article-title>
+.
+<source>J. Consum. Res.</source>
+<volume>42</volume>
+,
+<fpage>709</fpage>
+–
+<lpage>726</lpage>
+.
+<pub-id pub-id-type="doi">10.1093/jcr/ucv049</pub-id>
+</citation>
+</ref>
+<ref id="B26">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Klein</surname>
+<given-names>R. A.</given-names>
+</name>
+<name>
+<surname>Cook</surname>
+<given-names>C. L.</given-names>
+</name>
+<name>
+<surname>Ebersole</surname>
+<given-names>C. R.</given-names>
+</name>
+<name>
+<surname>Vitiello</surname>
+<given-names>C. A.</given-names>
+</name>
+<name>
+<surname>Nosek</surname>
+<given-names>B. A.</given-names>
+</name>
+<name>
+<surname>Chartier</surname>
+<given-names>C. R.</given-names>
+</name>
+<etal/>
+</person-group>
+. (
+<year>2019</year>
+).
+<article-title>Many labs 4: failure to replicate mortality salience effect with and without original author involvement</article-title>
+.
+<source>Collab. Pshycol</source>
+. 8, 3527
+<pub-id pub-id-type="doi">10.31234/osf.io/vef2c</pub-id>
+</citation>
+</ref>
+<ref id="B27">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Klein</surname>
+<given-names>R. A.</given-names>
+</name>
+<name>
+<surname>Vianello</surname>
+<given-names>M.</given-names>
+</name>
+<name>
+<surname>Hasselman</surname>
+<given-names>F.</given-names>
+</name>
+<name>
+<surname>Adams</surname>
+<given-names>B. G.</given-names>
+</name>
+<name>
+<surname>Adams</surname>
+<given-names>R. B.</given-names>
+</name>
+<name>
+<surname>Alper</surname>
+<given-names>S.</given-names>
+</name>
+<etal/>
+</person-group>
+. (
+<year>2018</year>
+).
+<article-title>Many labs 2: investigating variation in replicability across samples and settings</article-title>
+.
+<source>Adv. Methods Pract. Psychol. Sci.</source>
+<volume>1</volume>
+,
+<fpage>443</fpage>
+–
+<lpage>490</lpage>
+.
+<pub-id pub-id-type="doi">10.1177/2515245918810225</pub-id>
+</citation>
+</ref>
+<ref id="B28">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Klink</surname>
+<given-names>R. R.</given-names>
+</name>
+</person-group>
+(
+<year>2000</year>
+).
+<article-title>Creating brand names with meaning: the use of sound symbolism</article-title>
+.
+<source>Market. Lett.</source>
+<volume>11</volume>
+,
+<fpage>5</fpage>
+–
+<lpage>20</lpage>
+.
+<pub-id pub-id-type="doi">10.1023/A:1008184423824</pub-id>
+</citation>
+</ref>
+<ref id="B29">
+<citation citation-type="book">
+<person-group person-group-type="author">
+<name>
+<surname>Krishna</surname>
+<given-names>A.</given-names>
+</name>
+</person-group>
+(
+<year>2011</year>
+).
+<source>Sensory Marketing: Research on the Sensuality of Products</source>
+.
+<publisher-loc>London, UK</publisher-loc>
+:
+<publisher-name>Routledge</publisher-name>
+.
+</citation>
+</ref>
+<ref id="B30">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Krishna</surname>
+<given-names>A.</given-names>
+</name>
+</person-group>
+(
+<year>2012</year>
+).
+<article-title>An integrative review of sensory marketing: Engaging the senses to. affect perception, judgment and behavior</article-title>
+.
+<source>J. Consum. Psychol.</source>
+<volume>22</volume>
+,
+<fpage>332</fpage>
+–
+<lpage>351</lpage>
+.
+<pub-id pub-id-type="doi">10.1016/j.jcps.2011.08.003</pub-id>
+</citation>
+</ref>
+<ref id="B31">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Krishna</surname>
+<given-names>A.</given-names>
+</name>
+<name>
+<surname>Cian</surname>
+<given-names>L.</given-names>
+</name>
+<name>
+<surname>Aydinoglu</surname>
+<given-names>N. Z.</given-names>
+</name>
+</person-group>
+(
+<year>2017</year>
+).
+<article-title>Sensory aspects of package design</article-title>
+.
+<source>J. Retail.</source>
+<volume>93</volume>
+,
+<fpage>43</fpage>
+–
+<lpage>54</lpage>
+.
+<pub-id pub-id-type="doi">10.1016/j.jretai.2016.12.002</pub-id>
+</citation>
+</ref>
+<ref id="B32">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Krishna</surname>
+<given-names>A.</given-names>
+</name>
+<name>
+<surname>Cian</surname>
+<given-names>L.</given-names>
+</name>
+<name>
+<surname>Sokolova</surname>
+<given-names>T.</given-names>
+</name>
+</person-group>
+(
+<year>2016</year>
+).
+<article-title>The power of sensory marketing in advertising</article-title>
+.
+<source>Curr. Opin. Psychol.</source>
+<volume>10</volume>
+,
+<fpage>142</fpage>
+–
+<lpage>147</lpage>
+.
+<pub-id pub-id-type="doi">10.1016/j.copsyc.2016.01.007</pub-id>
+<pub-id pub-id-type="pmid">35386898</pub-id>
+</citation>
+</ref>
+<ref id="B33">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Krishna</surname>
+<given-names>A.</given-names>
+</name>
+<name>
+<surname>Schwarz</surname>
+<given-names>N.</given-names>
+</name>
+</person-group>
+(
+<year>2014</year>
+).
+<article-title>Sensory marketing, embodiment, and grounded. cognition: a review and introduction</article-title>
+.
+<source>J. Consum. Psychol.</source>
+<volume>24</volume>
+,
+<fpage>159</fpage>
+–
+<lpage>168</lpage>
+.
+<pub-id pub-id-type="doi">10.1016/j.jcps.2013.12.006</pub-id>
+</citation>
+</ref>
+<ref id="B34">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>LeBel</surname>
+<given-names>E. P.</given-names>
+</name>
+<name>
+<surname>McCarthy</surname>
+<given-names>R. J.</given-names>
+</name>
+<name>
+<surname>Earp</surname>
+<given-names>B. D.</given-names>
+</name>
+<name>
+<surname>Elson</surname>
+<given-names>M.</given-names>
+</name>
+<name>
+<surname>Vanpaemel</surname>
+<given-names>W.</given-names>
+</name>
+</person-group>
+(
+<year>2018</year>
+).
+<article-title>A Unified framework to quantify the credibility of scientific findings</article-title>
+.
+<source>Adv. Methods Pract. Psychol. Sci.</source>
+<volume>1</volume>
+,
+<fpage>389</fpage>
+–
+<lpage>402</lpage>
+.
+<pub-id pub-id-type="doi">10.1177/2515245918787489</pub-id>
+</citation>
+</ref>
+<ref id="B35">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Litt</surname>
+<given-names>A.</given-names>
+</name>
+<name>
+<surname>Shiv</surname>
+<given-names>B.</given-names>
+</name>
+</person-group>
+(
+<year>2012</year>
+).
+<article-title>Manipulating basic taste perception to explore how product. information affects experience</article-title>
+.
+<source>J. Consum. Psychol.</source>
+<volume>22</volume>
+,
+<fpage>55</fpage>
+–
+<lpage>66</lpage>
+.
+<pub-id pub-id-type="doi">10.1016/j.jcps.2011.11.007</pub-id>
+</citation>
+</ref>
+<ref id="B36">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Lowrey</surname>
+<given-names>T. M.</given-names>
+</name>
+<name>
+<surname>Shrum</surname>
+<given-names>L. J.</given-names>
+</name>
+</person-group>
+(
+<year>2007</year>
+).
+<article-title>Phonetic symbolism and brand name preference</article-title>
+.
+<source>The. J. Consum. Res.</source>
+<volume>34</volume>
+,
+<fpage>406</fpage>
+–
+<lpage>414</lpage>
+.
+<pub-id pub-id-type="doi">10.1086/518530</pub-id>
+</citation>
+</ref>
+<ref id="B37">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Lynch</surname>
+<given-names>J. G.</given-names>
+</name>
+<name>
+<surname>Bradlow</surname>
+<given-names>E. T.</given-names>
+</name>
+<name>
+<surname>Huber</surname>
+<given-names>J. C.</given-names>
+</name>
+<name>
+<surname>Lehmann</surname>
+<given-names>D. R.</given-names>
+</name>
+</person-group>
+(
+<year>2015</year>
+).
+<article-title>Reflections on the. replication corner: In praise of conceptual replications</article-title>
+.
+<source>Int. J. Res. in Market.</source>
+<volume>32</volume>
+,
+<fpage>333</fpage>
+–
+<lpage>342</lpage>
+.
+<pub-id pub-id-type="doi">10.1016/j.ijresmar.2015.09.006</pub-id>
+</citation>
+</ref>
+<ref id="B38">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Madzharov</surname>
+<given-names>a V.</given-names>
+</name>
+<name>
+<surname>Block</surname>
+<given-names>L. G.</given-names>
+</name>
+</person-group>
+(
+<year>2010</year>
+).
+<article-title>Effects of product unit image on consumption of snack foods</article-title>
+.
+<source>J. Consum. Psychol.</source>
+<volume>20</volume>
+,
+<fpage>398</fpage>
+–
+<lpage>409</lpage>
+.
+<pub-id pub-id-type="doi">10.1016/j.jcps.2010.06.007</pub-id>
+</citation>
+</ref>
+<ref id="B39">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Madzharov</surname>
+<given-names>a V.</given-names>
+</name>
+<name>
+<surname>Block</surname>
+<given-names>L. G.</given-names>
+</name>
+<name>
+<surname>Morrin</surname>
+<given-names>M.</given-names>
+</name>
+</person-group>
+(
+<year>2015</year>
+).
+<article-title>The cool scent of power: effects of ambient scent on consumer preferences and choice behavior</article-title>
+.
+<source>J. Market.</source>
+<volume>79</volume>
+,
+<fpage>83</fpage>
+–
+<lpage>96</lpage>
+.
+<pub-id pub-id-type="doi">10.1509/jm.13.0263</pub-id>
+</citation>
+</ref>
+<ref id="B40">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Malter</surname>
+<given-names>M. S.</given-names>
+</name>
+<name>
+<surname>Holbrook</surname>
+<given-names>M. B.</given-names>
+</name>
+<name>
+<surname>Kahn</surname>
+<given-names>B. E.</given-names>
+</name>
+<name>
+<surname>Parker</surname>
+<given-names>J. R.</given-names>
+</name>
+<name>
+<surname>Lehmann</surname>
+<given-names>D. R.</given-names>
+</name>
+</person-group>
+(
+<year>2020</year>
+).
+<article-title>The past, present, and future of consumer research</article-title>
+.
+<source>Market. Lett.</source>
+1–13.
+<pub-id pub-id-type="doi">10.1007/s11002-020-09526-8</pub-id>
+<pub-id pub-id-type="pmid">32836799</pub-id>
+</citation>
+</ref>
+<ref id="B41">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Miura</surname>
+<given-names>A.</given-names>
+</name>
+<name>
+<surname>Kobayashi</surname>
+<given-names>T.</given-names>
+</name>
+</person-group>
+(
+<year>2016</year>
+).
+<article-title>Survey satisficing inflates stereotypical responses in. online experiment: the case of immigration study</article-title>
+.
+<source>Front. Psychol.</source>
+<volume>7</volume>
+,
+<fpage>1563</fpage>
+.
+<pub-id pub-id-type="doi">10.3389/fpsyg.2016.01563</pub-id>
+<pub-id pub-id-type="pmid">27803680</pub-id>
+</citation>
+</ref>
+<ref id="B42">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Motoki</surname>
+<given-names>K.</given-names>
+</name>
+<name>
+<surname>Takahashi</surname>
+<given-names>N.</given-names>
+</name>
+<name>
+<surname>Velasco</surname>
+<given-names>C.</given-names>
+</name>
+<name>
+<surname>Spence</surname>
+<given-names>C.</given-names>
+</name>
+</person-group>
+(
+<year>2022</year>
+).
+<article-title>Is classical music sweeter than. jazz? Crossmodal influences of background music and taste/flavour on healthy and indulgent food preferences</article-title>
+.
+<source>Food Qual. Pref.</source>
+<volume>96</volume>
+,
+<fpage>104380</fpage>
+.
+<pub-id pub-id-type="doi">10.1016/j.foodqual.2021.104380</pub-id>
+</citation>
+</ref>
+<ref id="B43">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Nosek</surname>
+<given-names>B. A.</given-names>
+</name>
+<name>
+<surname>Ebersole</surname>
+<given-names>C. R.</given-names>
+</name>
+<name>
+<surname>DeHaven</surname>
+<given-names>a C.</given-names>
+</name>
+<name>
+<surname>Mellor</surname>
+<given-names>D. T.</given-names>
+</name>
+</person-group>
+(
+<year>2018</year>
+).
+<article-title>The preregistration revolution</article-title>
+.
+<source>Proc. Natl. Acad. Sci. U. S. A.</source>
+<volume>115</volume>
+,
+<fpage>2600</fpage>
+–
+<lpage>2606</lpage>
+.
+<pub-id pub-id-type="doi">10.1073/pnas.1708274114</pub-id>
+<pub-id pub-id-type="pmid">29531091</pub-id>
+</citation>
+</ref>
+<ref id="B44">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>O'Donnell</surname>
+<given-names>M.</given-names>
+</name>
+<name>
+<surname>Dev</surname>
+<given-names>a S.</given-names>
+</name>
+<name>
+<surname>Antonoplis</surname>
+<given-names>S.</given-names>
+</name>
+<name>
+<surname>Baum</surname>
+<given-names>S. M.</given-names>
+</name>
+<name>
+<surname>Benedetti</surname>
+<given-names>a H.</given-names>
+</name>
+<name>
+<surname>Brown</surname>
+<given-names>N. D.</given-names>
+</name>
+<etal/>
+</person-group>
+. (
+<year>2021</year>
+).
+<article-title>Empirical audit and review and an assessment of evidentiary value in research on the psychological consequences of scarcity</article-title>
+.
+<source>Proc. Natl. Acad. Sci. U. S. A.</source>
+<volume>118</volume>
+,
+<fpage>2103313118</fpage>
+.
+<pub-id pub-id-type="doi">10.1073/pnas.2103313118</pub-id>
+<pub-id pub-id-type="pmid">34711679</pub-id>
+</citation>
+</ref>
+<ref id="B45">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<collab>Open Science Collaboration</collab>
+</person-group>
+(
+<year>2015</year>
+).
+<article-title>Estimating the reproducibility of psychological science</article-title>
+.
+<source>Science</source>
+349, aac4716.
+<pub-id pub-id-type="doi">10.1126/science.aac4716</pub-id>
+<pub-id pub-id-type="pmid">26315443</pub-id>
+</citation>
+</ref>
+<ref id="B46">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Oppenheimer</surname>
+<given-names>D. M.</given-names>
+</name>
+<name>
+<surname>Meyvis</surname>
+<given-names>T.</given-names>
+</name>
+<name>
+<surname>Davidenko</surname>
+<given-names>N.</given-names>
+</name>
+</person-group>
+(
+<year>2009</year>
+).
+<article-title>Instructional manipulation. checks: Detecting satisficing to increase statistical power</article-title>
+.
+<source>J. Exp. Soc. Psychol.</source>
+<volume>45</volume>
+,
+<fpage>867</fpage>
+–
+<lpage>872</lpage>
+.
+<pub-id pub-id-type="doi">10.1016/j.jesp.2009.03.009</pub-id>
+</citation>
+</ref>
+<ref id="B47">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Petit</surname>
+<given-names>O.</given-names>
+</name>
+<name>
+<surname>Velasco</surname>
+<given-names>C.</given-names>
+</name>
+<name>
+<surname>Spence</surname>
+<given-names>C.</given-names>
+</name>
+</person-group>
+(
+<year>2019</year>
+).
+<article-title>Digital sensory marketing: integrating new technologies into multisensory online experience</article-title>
+.
+<source>J. Interact. Market.</source>
+<volume>45</volume>
+,
+<fpage>42</fpage>
+–
+<lpage>61</lpage>
+.
+<pub-id pub-id-type="doi">10.1016/j.intmar.2018.07.004</pub-id>
+</citation>
+</ref>
+<ref id="B48">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Rodríguez</surname>
+<given-names>B.</given-names>
+</name>
+<name>
+<surname>Arroyo</surname>
+<given-names>C.</given-names>
+</name>
+<name>
+<surname>Reyes</surname>
+<given-names>L. H.</given-names>
+</name>
+<name>
+<surname>Reinoso-Carvalho</surname>
+<given-names>F.</given-names>
+</name>
+</person-group>
+(
+<year>2021</year>
+).
+<article-title>Promoting healthier drinking habits: using sound to encourage the choice for non-alcoholic beers in E-commerce</article-title>
+.
+<source>Foods</source>
+<volume>10</volume>
+,
+<fpage>2063</fpage>
+.
+<pub-id pub-id-type="doi">10.3390/foods10092063</pub-id>
+<pub-id pub-id-type="pmid">34574172</pub-id>
+</citation>
+</ref>
+<ref id="B49">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Romero</surname>
+<given-names>M.</given-names>
+</name>
+<name>
+<surname>Biswas</surname>
+<given-names>D.</given-names>
+</name>
+</person-group>
+(
+<year>2016</year>
+).
+<article-title>Healthy-left, unhealthy-right: can displaying healthy. items to the left (vs. right) of unhealthy items nudge healthier choices?</article-title>
+<source>J. Consum. Res.</source>
+<volume>43</volume>
+,
+<fpage>103</fpage>
+–
+<lpage>112</lpage>
+.
+<pub-id pub-id-type="doi">10.1093/jcr/ucw008</pub-id>
+</citation>
+</ref>
+<ref id="B50">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Sarstedt</surname>
+<given-names>M.</given-names>
+</name>
+<name>
+<surname>Neubert</surname>
+<given-names>D.</given-names>
+</name>
+<name>
+<surname>Barth</surname>
+<given-names>K.</given-names>
+</name>
+</person-group>
+(
+<year>2017</year>
+).
+<article-title>The IKEA effect. A conceptual replication</article-title>
+.
+<source>J. Market. Behav.</source>
+<volume>2</volume>
+,
+<fpage>307</fpage>
+–
+<lpage>312</lpage>
+.
+<pub-id pub-id-type="doi">10.1561/107.00000039</pub-id>
+</citation>
+</ref>
+<ref id="B51">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Shrout</surname>
+<given-names>P. E.</given-names>
+</name>
+<name>
+<surname>Rodgers</surname>
+<given-names>J. L.</given-names>
+</name>
+</person-group>
+(
+<year>2018</year>
+).
+<article-title>Psychology, science, and knowledge construction: broadening perspectives from the replication crisis</article-title>
+.
+<source>Ann. Rev. Psychol.</source>
+<volume>69</volume>
+,
+<fpage>487</fpage>
+–
+<lpage>510</lpage>
+.
+<pub-id pub-id-type="doi">10.1146/annurev-psych-122216-011845</pub-id>
+<pub-id pub-id-type="pmid">29300688</pub-id>
+</citation>
+</ref>
+<ref id="B52">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Shrum</surname>
+<given-names>L. J.</given-names>
+</name>
+<name>
+<surname>Lowrey</surname>
+<given-names>T. M.</given-names>
+</name>
+<name>
+<surname>Luna</surname>
+<given-names>D.</given-names>
+</name>
+<name>
+<surname>Lerman</surname>
+<given-names>D. B.</given-names>
+</name>
+<name>
+<surname>Liu</surname>
+<given-names>M.</given-names>
+</name>
+</person-group>
+(
+<year>2012</year>
+).
+<article-title>Sound symbolism effects across languages: implications for global brand names</article-title>
+.
+<source>Int. J. Res. Market.</source>
+<volume>29</volume>
+,
+<fpage>275</fpage>
+–
+<lpage>279</lpage>
+.
+<pub-id pub-id-type="doi">10.1016/j.ijresmar.2012.03.002</pub-id>
+</citation>
+</ref>
+<ref id="B53">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Simmons</surname>
+<given-names>J.</given-names>
+</name>
+<name>
+<surname>Nelson</surname>
+<given-names>L.</given-names>
+</name>
+<name>
+<surname>Simonsohn</surname>
+<given-names>U.</given-names>
+</name>
+</person-group>
+(
+<year>2021</year>
+).
+<article-title>Pre-registration: why and how</article-title>
+.
+<source>J. Consum. Psychol.</source>
+<volume>31</volume>
+,
+<fpage>151</fpage>
+–
+<lpage>162</lpage>
+.
+<pub-id pub-id-type="doi">10.1002/jcpy.1208</pub-id>
+</citation>
+</ref>
+<ref id="B54">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Simonsohn</surname>
+<given-names>U.</given-names>
+</name>
+</person-group>
+(
+<year>2015</year>
+).
+<article-title>Small telescopes: detectability and the evaluation of replication results</article-title>
+.
+<source>Psychol. Sci.</source>
+<volume>26</volume>
+,
+<fpage>559</fpage>
+–
+<lpage>569</lpage>
+.
+<pub-id pub-id-type="doi">10.1177/0956797614567341</pub-id>
+<pub-id pub-id-type="pmid">25800521</pub-id>
+</citation>
+</ref>
+<ref id="B55">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Soto</surname>
+<given-names>C. J.</given-names>
+</name>
+</person-group>
+(
+<year>2019</year>
+).
+<article-title>How replicable are links between personality traits and consequential life outcomes? The life outcomes of personality replication project</article-title>
+.
+<source>Psychol. Sci.</source>
+<volume>30</volume>
+,
+<fpage>711</fpage>
+–
+<lpage>727</lpage>
+.
+<pub-id pub-id-type="doi">10.1177/0956797619831612</pub-id>
+<pub-id pub-id-type="pmid">30950321</pub-id>
+</citation>
+</ref>
+<ref id="B56">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Spence</surname>
+<given-names>C.</given-names>
+</name>
+<name>
+<surname>Puccinelli</surname>
+<given-names>N. M.</given-names>
+</name>
+<name>
+<surname>Grewal</surname>
+<given-names>D.</given-names>
+</name>
+<name>
+<surname>Roggeveen</surname>
+<given-names>A. L.</given-names>
+</name>
+</person-group>
+(
+<year>2014</year>
+).
+<article-title>Store atmospherics: a multisensory perspective</article-title>
+.
+<source>Psychol. Market.</source>
+<volume>31</volume>
+,
+<fpage>472</fpage>
+–
+<lpage>488</lpage>
+.
+<pub-id pub-id-type="doi">10.1002/mar.20709</pub-id>
+</citation>
+</ref>
+<ref id="B57">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Tunca</surname>
+<given-names>B.</given-names>
+</name>
+<name>
+<surname>Yanar</surname>
+<given-names>E.</given-names>
+</name>
+</person-group>
+(
+<year>2020</year>
+).
+<article-title>Women's luxury products as signals to other women</article-title>
+.
+<source>J. Market. Behav.</source>
+<volume>4</volume>
+,
+<fpage>227</fpage>
+–
+<lpage>238</lpage>
+.
+<pub-id pub-id-type="doi">10.1561/107.00000066</pub-id>
+</citation>
+</ref>
+<ref id="B58">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Tunca</surname>
+<given-names>B.</given-names>
+</name>
+<name>
+<surname>Ziano</surname>
+<given-names>I.</given-names>
+</name>
+<name>
+<surname>Wenting</surname>
+<given-names>X.</given-names>
+</name>
+</person-group>
+(
+<year>2022</year>
+).
+<article-title>Super-size me: an unsuccessful preregistered replication of the effect of product size on status signaling</article-title>
+.
+<source>Mol. Pathol.</source>
+6.
+<pub-id pub-id-type="doi">10.15626/MP.2020.2538</pub-id>
+</citation>
+</ref>
+<ref id="B59">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Vadillo</surname>
+<given-names>M. A.</given-names>
+</name>
+<name>
+<surname>Gold</surname>
+<given-names>N.</given-names>
+</name>
+<name>
+<surname>Osman</surname>
+<given-names>M.</given-names>
+</name>
+</person-group>
+(
+<year>2018</year>
+).
+<article-title>Searching for the bottom of the ego well: failure to uncover ego depletion in Many Labs 3</article-title>
+.
+<source>Royal Soc. Open Sci.</source>
+<volume>5</volume>
+,
+<fpage>180390</fpage>
+.
+<pub-id pub-id-type="doi">10.1098/rsos.180390</pub-id>
+<pub-id pub-id-type="pmid">30225026</pub-id>
+</citation>
+</ref>
+<ref id="B60">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>van't Veer</surname>
+<given-names>A. E.</given-names>
+</name>
+<name>
+<surname>Giner-Sorolla</surname>
+<given-names>R.</given-names>
+</name>
+</person-group>
+(
+<year>2016</year>
+).
+<article-title>Pre-registration in social psychology—A discussion and suggested template</article-title>
+.
+<source>J. Exp. Soc. Psychol.</source>
+<volume>67</volume>
+,
+<fpage>2</fpage>
+–
+<lpage>12</lpage>
+.
+<pub-id pub-id-type="doi">10.1016/j.jesp.2016.03.004</pub-id>
+</citation>
+</ref>
+<ref id="B61">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Wang</surname>
+<given-names>Y.</given-names>
+</name>
+<name>
+<surname>Griskevicius</surname>
+<given-names>V.</given-names>
+</name>
+</person-group>
+(
+<year>2013</year>
+).
+<article-title>Conspicuous consumption, relationships, and rivals: women's luxury products as signals to other women</article-title>
+.
+<source>J. Consum. Res.</source>
+<volume>40</volume>
+,
+<fpage>834</fpage>
+–
+<lpage>854</lpage>
+.
+<pub-id pub-id-type="doi">10.1086/673256</pub-id>
+</citation>
+</ref>
+<ref id="B62">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Wörfel</surname>
+<given-names>P.</given-names>
+</name>
+<name>
+<surname>Frentz</surname>
+<given-names>F.</given-names>
+</name>
+<name>
+<surname>Tautu</surname>
+<given-names>C.</given-names>
+</name>
+</person-group>
+(
+<year>2022</year>
+).
+<source>Marketing comes to its senses: a bibliometric, review and integrated framework of sensory experience in marketing. Eur. J. Market.</source>
+<pub-id pub-id-type="doi">10.1108/EJM-07-2020-0510.</pub-id>
+[Epub ahead of print].
+</citation>
+</ref>
+<ref id="B63">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Yorkston</surname>
+<given-names>E.</given-names>
+</name>
+<name>
+<surname>Menon</surname>
+<given-names>G.</given-names>
+</name>
+</person-group>
+(
+<year>2004</year>
+).
+<article-title>A sound idea: phonetic effects of brand names on consumer judgments</article-title>
+.
+<source>J. Consum. Res.</source>
+<volume>31</volume>
+,
+<fpage>43</fpage>
+–
+<lpage>51</lpage>
+.
+<pub-id pub-id-type="doi">10.1086/383422</pub-id>
+</citation>
+</ref>
+<ref id="B64">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Zhang</surname>
+<given-names>L.</given-names>
+</name>
+<name>
+<surname>Atari</surname>
+<given-names>M.</given-names>
+</name>
+<name>
+<surname>Schwarz</surname>
+<given-names>N.</given-names>
+</name>
+<name>
+<surname>Newman</surname>
+<given-names>E. J.</given-names>
+</name>
+<name>
+<surname>Afhami</surname>
+<given-names>R.</given-names>
+</name>
+</person-group>
+(
+<year>2022</year>
+).
+<article-title>Conceptual. metaphors, processing fluency, and aesthetic preference</article-title>
+.
+<source>J. Exp, Soc. Psychol.</source>
+<volume>98</volume>
+,
+<fpage>104247</fpage>
+.
+<pub-id pub-id-type="doi">10.1016/j.jesp.2021.104247</pub-id>
+</citation>
+</ref>
+<ref id="B65">
+<citation citation-type="journal">
+<person-group person-group-type="author">
+<name>
+<surname>Zwebner</surname>
+<given-names>Y.</given-names>
+</name>
+<name>
+<surname>Lee</surname>
+<given-names>L.</given-names>
+</name>
+<name>
+<surname>Goldenberg</surname>
+<given-names>J.</given-names>
+</name>
+</person-group>
+(
+<year>2014</year>
+).
+<article-title>The temperature premium: warm temperatures increase product valuation</article-title>
+.
+<source>J. Consum. Psychol.</source>
+<volume>24</volume>
+,
+<fpage>251</fpage>
+–
+<lpage>259</lpage>
+.
+<pub-id pub-id-type="doi">10.1016/j.jcps.2013.11.003</pub-id>
+</citation>
+</ref>
+</ref-list>
+<fn-group>
+<fn id="fn0001">
+<p>
+<sup>1</sup>
+The effect size is the magnitude of the relationship between the independent and dependent variables.
+</p>
+</fn>
+<fn id="fn0002">
+<p>
+<sup>2</sup>
+Pre-registration refers to the process of registering the contents of a study to be conducted with a third-party organization (e.g.,
+<ext-link ext-link-type="uri" xlink:href="https://osf.io/">https://osf.io/</ext-link>
+,
+<ext-link ext-link-type="uri" xlink:href="https://aspredicted.org/">https://aspredicted.org/</ext-link>
+). The contents to be pre-registered include hypotheses, sample size, independent variables, dependent variables, analysis methods, and data exclusion criteria. Researchers must conduct the study based on these pre-registered contents. In principle, deviations from the pre-registered content are not permitted. Hence, pre-registration can prevent questionable research practices (QRPs) such as p-hacking, HARKing, and cherry picking.
+</p>
+</fn>
+</fn-group>
+</back>
+</article>
