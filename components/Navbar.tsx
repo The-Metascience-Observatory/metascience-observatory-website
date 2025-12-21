@@ -34,11 +34,11 @@ export const Navbar = () => {
                 Replications Database
               </Link>
             </Button>
-            {/* <Button variant="outline" size="sm" asChild>
+            <Button variant="outline" size="sm" asChild>
               <Link href="https://explore.metascienceobservatory.org/" target="_blank" rel="noopener noreferrer">
                 SciSci-V2 Explorer
               </Link>
-            </Button> */}
+            </Button>
           </div>
 
           {/* Mobile menu button */}
@@ -109,11 +109,11 @@ export const Navbar = () => {
                   Replications Database
                 </Link>
               </Button>
-              {/* <Button variant="outline" size="sm" asChild className="w-full justify-center">
+              <Button variant="outline" size="sm" asChild className="w-full justify-center">
                 <Link href="https://explore.metascienceobservatory.org/" target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)}>
                   SciSci-V2 Explorer
                 </Link>
-              </Button> */}
+              </Button>
             </div>
           </div>
         )}
