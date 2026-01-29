@@ -809,9 +809,9 @@ export default function ReplicationsDatabasePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[90%] grid md:grid-cols-10 gap-4 mt-6">
-        <div className="border rounded p-4 col-span-10 md:col-span-3">
-          <div className="text-sm font-medium mb-3">Outcome mix -- human or AI judgement <span className="font-bold">({resultStat.n} Replication Experiments)</span></div>
+      <section className="mx-auto max-w-[90%] grid md:grid-cols-3 gap-4 mt-6">
+        <div className="border rounded p-4">
+          <div className="text-sm font-medium mb-3">Outcome mix -- human or AI judgement <span className="font-bold">({resultStat.n} Effect replications)</span></div>
           <div className="space-y-2">
             <div className="flex items-center gap-3">
               <div className="w-24 text-sm">Success</div>
@@ -830,8 +830,8 @@ export default function ReplicationsDatabasePage() {
             </div>
           </div>
         </div>
-        <div className="border rounded p-4 col-span-10 md:col-span-3">
-          <div className="text-sm font-medium mb-3">Outcome mix - computed from statistics when available <span className="font-bold">({outcomeStat.n} Replication Experiments)</span></div>
+        <div className="border rounded p-4">
+          <div className="text-sm font-medium mb-3">Outcome mix - computed from stat when available <span className="font-bold">({outcomeStat.n} Effect replications)</span></div>
           <div className="space-y-2">
             <div className="flex items-center gap-3">
               <div className="w-24 text-sm">Success</div>
@@ -875,7 +875,7 @@ export default function ReplicationsDatabasePage() {
             </select>
           </div>
         </div>
-        <div className="border rounded p-4 col-span-10 md:col-span-4">
+        <div className="border rounded p-4">
           <div className="text-sm opacity-70">Replication Effect Size vs Original Effect Size ({computedOutcomes.length} replications)</div>
           <div className="mt-2">
             <InlineScatter points={computedOutcomes} />
