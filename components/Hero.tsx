@@ -67,9 +67,9 @@ export const Hero = () => {
                   className="flex-1 h-12 text-base"
                   disabled={isSubmitting}
                 />
-                <Button 
-                  type="submit" 
-                  variant="hero" 
+                <Button
+                  type="submit"
+                  variant="hero"
                   size="lg"
                   disabled={isSubmitting}
                   className="h-12 px-8"

@@ -1,3 +1,5 @@
+import path from "path";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -6,7 +8,12 @@ const nextConfig = {
   },
   images: {
     dangerouslyAllowSVG: true
-  }
+  },
+  // Explicitly set the workspace root so Next.js
+  // doesn't accidentally pick a parent directory
+  // (e.g., your home folder) just because it finds
+  // another lockfile there.
+  outputFileTracingRoot: path.join(process.cwd())
 };
 
 export default nextConfig;

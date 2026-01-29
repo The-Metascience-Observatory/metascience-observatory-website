@@ -8,6 +8,12 @@ interface ArticleMeta {
   date: string;
 }
 
+interface DocMeta {
+  href: string;
+  title: string;
+  date: string;
+}
+
 const articles: ArticleMeta[] = [
   {
     href: "/replication-projects",
@@ -46,13 +52,43 @@ const articles: ArticleMeta[] = [
   },
 ];
 
+const documentation: DocMeta[] = [
+  {
+    href: "/docs/effect-size-normalization",
+    title: "Effect size types and their normalization",
+    date: "2026-01-28",
+  },
+  {
+    href: "/docs/replication-outcome-classification",
+    title: "Mathematical methods for classifying replication outcomes",
+    date: "2026-01-28",
+  },
+];
+
 export default function ArticlesPage() {
   return (
     <div className="min-h-screen">
       <Navbar />
       <main className="pt-20 pb-16">
         <div className="container mx-auto px-4 py-12 max-w-3xl">
-          <h1 className="text-4xl font-bold mb-8 text-foreground">Articles</h1>
+          <h1 className="text-4xl font-bold mb-8 text-foreground">Documentation</h1>
+          <div className="space-y-4">
+            {documentation.map((doc) => (
+              <div key={doc.href} className="flex items-baseline gap-3">
+                <span className="text-sm text-foreground/60">
+                  {doc.date}
+                </span>
+                <Link
+                  href={doc.href}
+                  className="text-blue-600 hover:text-blue-700 underline"
+                >
+                  {doc.title}
+                </Link>
+              </div>
+            ))}
+          </div>
+
+          <h2 className="text-3xl font-bold mt-12 mb-8 text-foreground">Articles</h2>
           <div className="space-y-4">
             {articles.map((article) => (
               <div key={article.href} className="flex items-baseline gap-3">

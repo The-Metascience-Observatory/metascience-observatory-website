@@ -5,7 +5,8 @@
 /* Design tokens copied from Vite app to preserve visuals */
 @layer base {
   :root {
-    --background: 210 20% 98%;
+    /* White background */
+    --background: 0 0% 100%;
     --foreground: 215 25% 15%;
 
     --card: 0 0% 100%;

@@ -30,13 +30,13 @@ export const Navbar = () => {
             <Link href="/articles" className="text-foreground/80 hover:text-foreground transition-colors">Articles</Link>
             <Link href="/#donate" className="text-foreground/80 hover:text-foreground transition-colors">Donate</Link>
             <Button variant="outline" size="sm" asChild>
-              <Link href="/replications-database">
-                Replications Database
+              <Link href="https://explore.metascienceobservatory.org/" target="_blank" rel="noopener noreferrer">
+                Explorer
               </Link>
             </Button>
             <Button variant="outline" size="sm" asChild>
-              <Link href="https://explore.metascienceobservatory.org/" target="_blank" rel="noopener noreferrer">
-                SciSci-V2 Explorer
+              <Link href="/replications-database">
+                Replications Database
               </Link>
             </Button>
           </div>
@@ -105,13 +105,13 @@ export const Navbar = () => {
                 Donate
               </Link>
               <Button variant="outline" size="sm" asChild className="w-full justify-center">
-                <Link href="/replications-database" onClick={() => setIsMobileMenuOpen(false)}>
-                  Replications Database
+                <Link href="https://explore.metascienceobservatory.org/" target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)}>
+                  Explorer
                 </Link>
               </Button>
               <Button variant="outline" size="sm" asChild className="w-full justify-center">
-                <Link href="https://explore.metascienceobservatory.org/" target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)}>
-                  SciSci-V2 Explorer
+                <Link href="/replications-database" onClick={() => setIsMobileMenuOpen(false)}>
+                  Replications Database
                 </Link>
               </Button>
             </div>

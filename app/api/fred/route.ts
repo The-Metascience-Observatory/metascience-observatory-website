@@ -61,9 +61,11 @@ async function loadCsv(filePath: string): Promise<{ rows: AnyRecord[]; columns: 
 async function getLatestFilename(): Promise<string> {
   const versionHistoryPath = path.join(process.cwd(), "data", "version_history.txt");
   const versionHistoryText = await fs.readFile(versionHistoryPath, "utf8");
-  const lines = versionHistoryText.trim().split("\n").filter(line => line.trim());
+  const lines = versionHistoryText.trim().split("\n").filter(line => line.trim() && !line.trim().startsWith('#'));
   const lastLine = lines[lines.length - 1];
-  return lastLine.trim();
+  // Strip any inline comments
+  const filename = lastLine.split('#')[0].trim();
+  return filename;
 }
 
 function extractDateFromFilename(filename: string): string | null {
