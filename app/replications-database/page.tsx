@@ -1173,7 +1173,7 @@ function InlineScatter({ points }: { points: ScatterPoint[] }) {
   const innerH = height - margin.top - margin.bottom;
 
   // Axis ranges - original ES is always positive (0 to 1), replication can be -1 to 1
-  const xMin: number = -0.1;
+  const xMin: number = 0;
   const xMax: number = 1;
   const yMin: number = -1;
   const yMax: number = 1;
@@ -1228,7 +1228,7 @@ function InlineScatter({ points }: { points: ScatterPoint[] }) {
           {/* X-axis label */}
           <text x={innerW / 2} y={innerH + 40} textAnchor="middle" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 10 }}>Original Effect Size (r)</text>
           {/* Y-axis label */}
-          <text x={-innerH / 2} y={-32} textAnchor="middle" transform="rotate(-90)" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 10 }}>Replication Effect Size (r)</text>
+          <text x={-innerH / 2} y={-38} textAnchor="middle" transform="rotate(-90)" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 10 }}>Replication Effect Size (r)</text>
           {points.map((p, i) => {
             const fill = color(p.outcome);
             return (
