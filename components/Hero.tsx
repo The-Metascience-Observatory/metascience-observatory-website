@@ -38,7 +38,7 @@ export const Hero = () => {
       <div className="container px-4">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
-            <div className="space-y-4 text-lg text-muted-foreground">
+            <div className="space-y-4 text-base text-muted-foreground">
               <p className="font-medium text-foreground">
                 Is science healthy? How do rigor and reproducibility vary across fields, journals, and institutions?
               </p>
@@ -50,21 +50,21 @@ export const Hero = () => {
             <div ref={formWrapperRef} className="relative max-w-md">
               {showInlineToast && inlineToastMessage ? (
                 <div className="absolute -top-12 left-0 right-0 z-20 flex justify-center">
-                  <div className="rounded-md border bg-background px-4 py-2 text-sm text-foreground shadow-lg">
+                  <div className="rounded-md border bg-background px-4 py-2 text-xs text-foreground shadow-lg">
                     {inlineToastMessage}
                   </div>
                 </div>
               ) : null}
 
               <form onSubmit={handleSubmit}>
-                <p className="text-sm text-muted-foreground mt-3">Subscribe to our newsletter: </p>
+                <p className="text-xs text-muted-foreground mt-3">Subscribe to our newsletter: </p>
                 <div className="flex flex-col sm:flex-row gap-3">
                 <Input
                   type="email"
                   placeholder="you@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="flex-1 h-12 text-base"
+                  className="flex-1 h-12 text-sm"
                   disabled={isSubmitting}
                 />
                 <Button

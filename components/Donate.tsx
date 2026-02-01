@@ -10,7 +10,7 @@ export const Donate = () => {
           <div className="text-center space-y-4">
             <div className="flex items-center justify-center gap-3">
               <Heart className="w-10 h-10 text-primary" />
-              <h2 className="font-clarendon text-3xl md:text-4xl font-bold">Donate</h2>
+              <h2 className="font-clarendon text-2xl md:text-3xl font-bold">Donate</h2>
             </div>
           </div>
 

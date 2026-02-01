@@ -10,7 +10,7 @@ export const AdvisoryBoard = () => {
           <div className="text-center space-y-4">
             <div className="flex items-center justify-center gap-3">
               <Users className="w-10 h-10 text-primary" />
-              <h2 className="font-clarendon text-3xl md:text-4xl font-bold">
+              <h2 className="font-clarendon text-2xl md:text-3xl font-bold">
                 Advisory Board
               </h2>
             </div>
@@ -19,7 +19,7 @@ export const AdvisoryBoard = () => {
           <Card className="p-8 md:p-10 shadow-lg">
             <div className="space-y-4">
               <div>
-                <h3 className="text-xl font-semibold mb-1">
+                <h3 className="text-lg font-semibold mb-1">
                   <Link
                     href="https://goodscienceproject.org/about/stuart-buck/"
                     target="_blank"
@@ -43,7 +43,7 @@ export const AdvisoryBoard = () => {
               </div>
 
               {/* <div>
-                <h3 className="text-xl font-semibold mb-1">
+                <h3 className="text-lg font-semibold mb-1">
                   <Link
                     href="https://www.linkedin.com/in/james-heathers-phd-63a70240"
                     target="_blank"
@@ -67,7 +67,7 @@ export const AdvisoryBoard = () => {
               </div> */}
 
               <div>
-                <h3 className="text-xl font-semibold mb-1">
+                <h3 className="text-lg font-semibold mb-1">
                   <Link
                     href="https://www.gleech.org/about/"
                     target="_blank"

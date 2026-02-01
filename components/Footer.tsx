@@ -42,17 +42,17 @@ export const Footer = () => {
             </a>
             <a
               href="mailto:info@metascienceobservatory.org"
-              className="ml-auto text-sm text-muted-foreground hover:text-primary underline"
+              className="ml-auto text-xs text-muted-foreground hover:text-primary underline"
             >
               Contact Us: info@metascienceobservatory.org
             </a>
           </div>
 
           <div className="text-center space-y-2 pt-8 border-t border-border">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs text-muted-foreground">
               © 2025 The Metascience Observatory
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs text-muted-foreground">
               The Metascience Observatory is a fiscally sponsored initiative of the <a href="https://mindfirst.foundation/" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">Mind First Foundation</a>, a 501(c)(3) nonprofit based in Massachusetts.
             </p>
           </div>

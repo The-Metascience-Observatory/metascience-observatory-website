@@ -8,7 +8,7 @@ export const About = () => {
       <div className="container px-4">
         <div className="max-w-6xl mx-auto space-y-6">
           <div className="text-center space-y-4">
-            <h2 className="font-clarendon text-3xl md:text-4xl font-bold">About</h2>
+            <h2 className="font-clarendon text-2xl md:text-3xl font-bold">About</h2>
           </div>
 
           <div className="grid md:grid-cols-5 gap-10 items-center" >

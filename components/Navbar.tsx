@@ -18,12 +18,12 @@ export const Navbar = () => {
               width={40}
               height={40}
             />
-            <h1 className="font-clarendon font-bold text-xl sm:text-2xl text-foreground">
+            <h1 className="font-clarendon font-bold text-lg sm:text-xl text-foreground">
               The Metascience Observatory
             </h1>
           </Link>
 
-          <div className="hidden md:flex items-center gap-6 text-sm">
+          <div className="hidden md:flex items-center gap-6 text-xs">
             <Link href="/#about" className="text-foreground/80 hover:text-foreground transition-colors">About</Link>
             <Link href="/#team" className="text-foreground/80 hover:text-foreground transition-colors">Team</Link>
             <Link href="/roadmap" className="text-foreground/80 hover:text-foreground transition-colors">Roadmap</Link>

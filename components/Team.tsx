@@ -10,7 +10,7 @@ export const Team = () => {
           <div className="text-center space-y-4">
             <div className="flex items-center justify-center gap-3">
               <Users className="w-10 h-10 text-primary" />
-              <h2 className="font-clarendon text-3xl md:text-4xl font-bold">Team</h2>
+              <h2 className="font-clarendon text-2xl md:text-3xl font-bold">Team</h2>
             </div>
           </div>
 
@@ -25,7 +25,7 @@ export const Team = () => {
                     className="w-48 h-48 object-cover rounded-lg"
                   />
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">
+                    <h3 className="text-lg font-semibold mb-2">
                       <span>Dan Elton, Ph.D.</span>
                       <span className="ml-2 font-normal text-foreground/80">- Founder and Director</span>
                     </h3>
@@ -43,7 +43,7 @@ export const Team = () => {
                   className="w-48 h-48 object-cover rounded-lg"
                 />
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">
+                  <h3 className="text-lg font-semibold mb-2">
                       <span>Greg Fitzgerald</span>
                       <span className="ml-2 font-normal text-foreground/80">- Prompt Engineer and meta-analysis expert</span>
                     </h3>
