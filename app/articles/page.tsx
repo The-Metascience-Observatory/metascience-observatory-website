@@ -54,6 +54,11 @@ const articles: ArticleMeta[] = [
 
 const documentation: DocMeta[] = [
   {
+    href: "/docs/data-dictionary",
+    title: "Data dictionary",
+    date: "2026-02-01",
+  },
+  {
     href: "/docs/effect-size-normalization",
     title: "Effect size types and their normalization",
     date: "2026-01-28",

@@ -318,8 +318,6 @@ const DEFAULT_COLUMNS: ColumnKey[] = [
   "result",
   "original_n",
   "replication_n",
-  "original_es_r",
-  "replication_es_r",
   "validated",
 ];
 

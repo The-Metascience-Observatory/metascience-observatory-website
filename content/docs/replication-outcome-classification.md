@@ -14,17 +14,13 @@ The Replications Database provides three statistical methods for classifying whe
 
 This method evaluates whether the replication study achieves a statistically significant result in the same direction as the original study.
 
-This method is based on the [FReD R package](https://github.com/forrtproject/FReD) (`criterion = "significance_r"`), with an additional **reversal** outcome for significant effects in the opposite direction.
-
 ### Rationale
 
 The simplest criterion for replication success: if the original study found a significant effect in one direction, a successful replication should also find a significant effect in that same direction.
 
-**Important**: This criterion only makes sense when the original study was statistically significant. If the original study was not significant, the criterion is meaningless and returns "inconclusive."
-
-A **reversal** is a particularly noteworthy outcome: the replication finds a statistically significant effect, but in the *opposite* direction from the original. This is stronger evidence against the original finding than a simple failure to replicate—it suggests the original finding may have been wrong about the direction of the effect.
-
 ### Algorithm
+
+This method is based on the [FReD R package](https://github.com/forrtproject/FReD) (`criterion = "significance_r"`).
 
 **Step 1: Check if the Original Study Was Significant**
 
@@ -56,17 +52,9 @@ Compare the signs of the original ($r_O$) and replication ($r_R$) effect sizes:
 | Condition | Outcome |
 |-----------|---------|
 | Original not significant ($p_O \geq 0.05$) | **Inconclusive** |
-| Same direction AND replication significant ($p_R < 0.05$) | **Success** |
-| Opposite direction AND replication significant ($p_R < 0.05$) | **Reversal** |
+| Replication significant ($p_R < 0.05$) with same direction  | **Success** |
+| Replication significant ($p_R < 0.05$) with opposite direction | **Reversal** |
 | Replication not significant ($p_R \geq 0.05$) | **Failure** |
-| Cannot compute (missing data, $n \leq 2$) | **Inconclusive** |
-
-### Limitations
-
-- Does not account for the magnitude of effects, only direction and significance
-- A replication with a much smaller effect size can still be classified as "success" if significant
-- Significance depends heavily on sample size
-- Non-significant replications are always classified as "failure," even if they show effects in the same direction
 
 ---
 
@@ -290,8 +278,9 @@ Since $p > 0.05$, this correlation is **not statistically significant** at the c
 
 LeBel, E. P., Vanpaemel, W., Cheung, I., & Campbell, L. (2019). [A brief guide to evaluate replications](https://doi.org/10.1037/met0000255). *Meta-Psychology*, 3.
 
-Open Science Collaboration. (2015). [Estimating the reproducibility of psychological science](https://doi.org/10.1126/science.aac4716). *Science*, 349(6251), aac4716.
+Röseler, L., & Kühberger, A. (2025). [FReD: The Framework for Replication Databases](https://osf.io/preprints/metaarxiv/me2ub_v1). *MetaArXiv Preprints*.
 
-Press, W. H., Teukolsky, S. A., Vetterling, W. T., & Flannery, B. P. (2007). [*Numerical Recipes: The Art of Scientific Computing*](https://numerical.recipes/) (3rd ed.). Cambridge University Press. (Chapters 6.1–6.4 on special functions)
+Röseler, L., Weber, L., Helber, J., et al. (2024). [The Replication Database: Documenting the Replicability of Psychological Science](https://openpsychologydata.metajnl.com/articles/10.5334/jopd.101). *Journal of Open Psychology Data*.
 
-Simonsohn, U. (2015). [Small telescopes: Detectability and the evaluation of replication results](https://doi.org/10.1177/0956797614567341). *Psychological Science*, 26(5), 559-569.
+
+
