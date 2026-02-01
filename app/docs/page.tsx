@@ -54,7 +54,7 @@ interface DocMeta {
 const documentation: DocMeta[] = [
   {
     href: "/docs/data-dictionary",
-    title: "Data dictionary",
+    title: "Replications database data dictionary",
   },
   {
     href: "/docs/effect-size-normalization",
@@ -66,7 +66,15 @@ const documentation: DocMeta[] = [
   },
   {
     href: "/replication-projects",
-    title: "Previous initiatives",
+    title: "Large-scale replication initiatives",
+  },
+  {
+    href: "/docs/previous-initiatives",
+    title: "Previous replication database initiatives",
+  },
+  {
+    href: "/docs/defining-replication",
+    title: "Defining replication",
   },
 ];
 
@@ -76,7 +84,7 @@ export default function DocsPage() {
       <Navbar />
       <main className="pt-20 pb-16">
         <div className="container mx-auto px-4 py-12 max-w-3xl">
-          <h1 className="text-4xl font-bold mb-8 text-foreground">Documentation (continually updated)</h1>
+          <h1 className="text-3xl font-bold mb-8 text-foreground">Documentation (continually updated)</h1>
           <div className="space-y-4">
             {documentation.map((doc) => (
               <div key={doc.href}>

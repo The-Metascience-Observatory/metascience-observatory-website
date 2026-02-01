@@ -21,6 +21,16 @@ const nextConfig = {
         destination: '/replication-projects',
         permanent: true,
       },
+      {
+        source: '/articles',
+        destination: '/docs',
+        permanent: true,
+      },
+      {
+        source: '/approach',
+        destination: '/roadmap',
+        permanent: true,
+      },
     ];
   },
 };

@@ -1,4 +1,4 @@
-
+# Previous replication database initiatives
 
 ### Curate Science
 This was a website documenting and summarizing the individual efforts as well as large-scale collective projects. 

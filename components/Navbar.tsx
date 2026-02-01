@@ -26,7 +26,7 @@ export const Navbar = () => {
           <div className="hidden md:flex items-center gap-6 text-sm">
             <Link href="/#about" className="text-foreground/80 hover:text-foreground transition-colors">About</Link>
             <Link href="/#team" className="text-foreground/80 hover:text-foreground transition-colors">Team</Link>
-            <Link href="/approach" className="text-foreground/80 hover:text-foreground transition-colors">Approach</Link>
+            <Link href="/roadmap" className="text-foreground/80 hover:text-foreground transition-colors">Roadmap</Link>
             <Link href="/docs" className="text-foreground/80 hover:text-foreground transition-colors">Docs</Link>
             <Link href="/#donate" className="text-foreground/80 hover:text-foreground transition-colors">Donate</Link>
             <Button variant="outline" size="sm" asChild>
@@ -84,11 +84,11 @@ export const Navbar = () => {
                 Team
               </Link>
               <Link
-                href="/approach"
+                href="/roadmap"
                 className="text-foreground/80 hover:text-foreground transition-colors py-2"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Approach
+                Roadmap
               </Link>
               <Link
                 href="/docs"

@@ -7,6 +7,10 @@ import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
 import "katex/dist/katex.min.css";
 
+// Email stored as char codes to prevent scraping from source
+const _ec = [100,97,110,64,109,101,116,97,115,99,105,101,110,99,101,111,98,115,101,114,118,97,116,111,114,121,46,111,114,103];
+function _de() { return _ec.map(c => String.fromCharCode(c)).join(""); }
+
 interface MarkdownContentProps {
   content: string;
 }
@@ -66,16 +70,29 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
           hr: () => (
             <hr className="my-8 border-border" />
           ),
-          a: ({ href, children }) => (
-            <a
-              href={href}
-              className="text-blue-600 hover:text-blue-700 underline"
-              target={href?.startsWith("http") ? "_blank" : undefined}
-              rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
-            >
-              {children}
-            </a>
-          ),
+          a: ({ href, children }) => {
+            if (href === "mailto:OBFUSCATED_EMAIL") {
+              const email = _de();
+              return (
+                <a
+                  href={`mailto:${email}`}
+                  className="text-blue-600 hover:text-blue-700 underline"
+                >
+                  {children}
+                </a>
+              );
+            }
+            return (
+              <a
+                href={href}
+                className="text-blue-600 hover:text-blue-700 underline"
+                target={href?.startsWith("http") ? "_blank" : undefined}
+                rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
+              >
+                {children}
+              </a>
+            );
+          },
           code: ({ children }) => (
             <code className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono">
               {children}
