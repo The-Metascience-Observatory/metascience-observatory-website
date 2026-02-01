@@ -34,7 +34,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="pt-24 pb-16 md:py-32">
+    <section className="pt-20 pb-16 md:pt-24 md:pb-32">
       <div className="container px-4">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
@@ -84,12 +84,12 @@ export const Hero = () => {
           </div>
 
           <div className="flex justify-center md:justify-end">
-            <Image 
+            <Image
               src="/assets/herschel-observatory.jpeg"
               alt="Historical observatory with telescope"
-              width={400}
-              height={500}
-              className=" max-w-lg rounded-lg mix-blend-multiply dark:mix-blend-screen dark:invert"
+              width={340}
+              height={425}
+              className="max-w-md rounded-lg mix-blend-multiply dark:mix-blend-screen dark:invert"
             />
           </div>
         </div>

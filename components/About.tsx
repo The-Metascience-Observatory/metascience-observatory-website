@@ -16,9 +16,9 @@ export const About = () => {
               <Image
                 src="/assets/woodcut-looking-at-world.jpeg"
                 alt="Woodcut illustration of a person observing the world"
-                width={400}
-                height={500}
-                className="max-w-lg rounded-lg shadow-lg object-cover h-auto"
+                width={360}
+                height={450}
+                className="max-w-md rounded-lg shadow-lg object-cover h-auto"
                 priority
               />
             </div>
