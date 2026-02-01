@@ -4,7 +4,12 @@
 
 ## Workstream #2 - Automating meta-analysis
 
-## Workstream #3 - The forensic metascience agent 
+## Workstream #3 - Automating forensic metascience
+
+## Side projects
+
+* The Metascience Observatory explorer
+* z-curve analysis
 
 
 # We're hiring! 
