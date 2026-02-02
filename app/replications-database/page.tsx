@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ReplicationsNavbar } from "@/components/ReplicationsNavbar";
 import { Footer } from "@/components/Footer";
 import { Input } from "@/components/ui/input";
+import { generateCitationHtml, transformCitationHtmlToExplorer, citationSearchText } from "@/lib/citations";
 
 type AnyRecord = Record<string, unknown>;
 
@@ -194,10 +195,11 @@ function pValueFromR(r: number, n: number): number | null {
  * with an additional "reversal" outcome for significant effects in the opposite direction.
  *
  * Key behaviors:
- * 1. First checks if ORIGINAL study was significant - if not, returns "inconclusive" (criterion is meaningless)
- * 2. Then checks replication significance AND direction consistency
- * 3. Returns "reversal" for significant replications in the opposite direction
- * 4. Returns "failure" for non-significant replications
+ * 1. Uses CSV p-values (original_p_value, replication_p_value) when available, falling back to computing from r and n
+ * 2. If original was not significant: success if replication also not significant, failure if replication is significant
+ * 3. If original was significant: checks replication significance AND direction consistency
+ * 4. Returns "reversal" for significant replications in the opposite direction
+ * 5. Returns "failure" for non-significant replications
  */
 function computeSignificanceOutcome(
   origES: number,
@@ -205,7 +207,9 @@ function computeSignificanceOutcome(
   origN: number,
   repN: number,
   origESType: string,
-  repESType: string
+  repESType: string,
+  pOrigCSV?: number | null,
+  pRepCSV?: number | null
 ): "success" | "failure" | "reversal" | "inconclusive" {
   // Validate inputs
   if (!Number.isFinite(origES) || !Number.isFinite(repES) || !Number.isFinite(origN) || !Number.isFinite(repN)) {
@@ -215,15 +219,22 @@ function computeSignificanceOutcome(
     return "inconclusive";
   }
 
-  // Step 1: Check if ORIGINAL study was significant
-  // This matches R package's behavior: if original wasn't significant, criterion is meaningless
-  const pOrig = pValueFromR(origES, origN);
-  if (pOrig === null || pOrig >= 0.05) {
-    return "inconclusive"; // "OS not significant" in R package terminology
+  // Use CSV p-value if available, otherwise compute from r
+  const pOrig = (pOrigCSV != null && Number.isFinite(pOrigCSV)) ? pOrigCSV : pValueFromR(origES, origN);
+  if (pOrig === null) {
+    return "inconclusive";
   }
 
-  // Step 2: Compute p-value for replication
-  const pRep = pValueFromR(repES, repN);
+  // If original was not significant, classify based on replication agreement
+  if (pOrig >= 0.05) {
+    const pRep = (pRepCSV != null && Number.isFinite(pRepCSV)) ? pRepCSV : pValueFromR(repES, repN);
+    if (pRep === null) return "inconclusive";
+    // Both non-significant = agreement (success); replication significant = disagreement (failure)
+    return pRep >= 0.05 ? "success" : "failure";
+  }
+
+  // Step 2: Original was significant — compute p-value for replication
+  const pRep = (pRepCSV != null && Number.isFinite(pRepCSV)) ? pRepCSV : pValueFromR(repES, repN);
   if (pRep === null) {
     return "inconclusive";
   }
@@ -423,7 +434,9 @@ function getOutcomeForRow(
     if (eO_r == null || eR_r == null || nO == null || nR == null || nO <= 0 || nR <= 0) {
       return "inconclusive";
     }
-    return computeSignificanceOutcome(eO_r, eR_r, nO, nR, esOType, esRType);
+    const pOrigCSV = toNumber(row.original_p_value);
+    const pRepCSV = toNumber(row.replication_p_value);
+    return computeSignificanceOutcome(eO_r, eR_r, nO, nR, esOType, esRType, pOrigCSV, pRepCSV);
   }
 
   // For CI-based methods: pass both raw and r values; functions will use appropriate strategy
@@ -433,16 +446,6 @@ function getOutcomeForRow(
     // rep_in_orig_ci
     return computeReplicationInOriginalCI(eR_raw, eR_r, eO_r, nO, origCIStr);
   }
-}
-
-function transformCitationHtmlToExplorer(html: string): string {
-  if (!html) return html;
-  // Replace doi.org links with explorer links
-  // Match href="https://doi.org/..." and replace with explorer URL
-  return html.replace(
-    /href=["']https?:\/\/doi\.org\/([^"']+)["']/g,
-    (_, doi) => `href="http://explore.metascienceobservatory.org/doi/${doi}" target="_blank" rel="noopener noreferrer"`
-  );
 }
 
 type ColumnKey =
@@ -521,7 +524,6 @@ const DEFAULT_COLUMNS: ColumnKey[] = [
   "original_citation_html",
   "replication_citation_html",
   "description",
-  "discipline",
   "result",
   "original_n",
   "replication_n",
@@ -569,10 +571,13 @@ export default function ReplicationsDatabasePage() {
     if (!data) return [];
     const counts = new Map<string, number>();
     for (const r of data.rows) {
-      const key = String(r.discipline ?? "");
-      counts.set(key, (counts.get(key) || 0) + 1);
+      const raw = String(r.discipline ?? "");
+      const parts = raw.split(",").map((s) => s.trim()).filter(Boolean);
+      for (const part of parts) {
+        counts.set(part, (counts.get(part) || 0) + 1);
+      }
     }
-    const entries = Array.from(counts.entries()).filter(([k]) => k !== "");
+    const entries = Array.from(counts.entries());
     entries.sort((a, b) => {
       if (b[1] !== a[1]) return b[1] - a[1];
       return a[0].localeCompare(b[0]);
@@ -615,12 +620,12 @@ export default function ReplicationsDatabasePage() {
   const filteredRows = useMemo(() => {
     if (!data) return [] as AnyRecord[];
     return data.rows.filter((r) => {
-      if (discipline && String(r.discipline ?? "") !== discipline) return false;
+      if (discipline && !String(r.discipline ?? "").split(",").map((s) => s.trim()).includes(discipline)) return false;
       if (openAlexField && String(r.openalex_field ?? "") !== openAlexField) return false;
       if (result && String(r.result ?? "") !== result) return false;
       if (search) {
         const s = search.toLowerCase();
-        const hay = `${r.description ?? ""} ${r.tags ?? ""} ${r.original_citation_html ?? ""} ${r.replication_citation_html ?? ""}`.toLowerCase();
+        const hay = `${r.description ?? ""} ${r.tags ?? ""} ${citationSearchText(r.original_authors as string, r.original_journal as string, r.original_year as string)} ${citationSearchText(r.replication_authors as string, r.replication_journal as string, r.replication_year as string)}`.toLowerCase();
         if (!hay.includes(s)) return false;
       }
       return true;
@@ -796,7 +801,7 @@ export default function ReplicationsDatabasePage() {
               ))}
             </select>
           </div>
-          <div className="md:col-span-3">
+          <div className="md:col-span-2">
             <label htmlFor="search" className="block text-sm font-medium opacity-80 mb-1">Search description, tags, or references</label>
             <Input
               id="search"
@@ -805,6 +810,11 @@ export default function ReplicationsDatabasePage() {
               placeholder="Search description, tags, or references"
               className="h-10"
             />
+          </div>
+          <div className="md:col-span-1 flex items-end">
+            <a href="/replications-database/by-discipline" className="text-sm underline hover:opacity-80 h-10 flex items-center">
+              Breakdown by discipline →
+            </a>
           </div>
         </div>
       </section>
@@ -831,17 +841,12 @@ export default function ReplicationsDatabasePage() {
           </div>
         </div>
         <div className="border rounded p-4">
-          <div className="text-sm font-medium mb-3">Outcome mix - computed from stat when available <span className="font-bold">({outcomeStat.n} Effect replications)</span></div>
+          <div className="text-sm font-medium mb-3">Outcome mix - computed from stats when available <span className="font-bold">({outcomeStat.n} Effect replications)</span></div>
           <div className="space-y-2">
             <div className="flex items-center gap-3">
               <div className="w-24 text-sm">Success</div>
               <div className="flex-1"><MiniBar value={outcomeStat.pctSuccess} max={100} color="#10b981" /></div>
               <div className="w-24 text-right text-sm">{outcomeStat.success} ({outcomeStat.pctSuccess}%)</div>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="w-24 text-sm">Inconclusive</div>
-              <div className="flex-1"><MiniBar value={outcomeStat.pctInconclusive} max={100} color="#9ca3af" /></div>
-              <div className="w-24 text-right text-sm">{outcomeStat.inconclusive} ({outcomeStat.pctInconclusive}%)</div>
             </div>
             <div className="flex items-center gap-3">
               <div className="w-24 text-sm">Failure</div>
@@ -876,9 +881,9 @@ export default function ReplicationsDatabasePage() {
           </div>
         </div>
         <div className="border rounded p-4">
-          <div className="text-sm opacity-70">Replication Effect Size vs Original Effect Size ({computedOutcomes.length} replications)</div>
+          <div className="text-sm opacity-70">Replication Effect Size vs Original Effect Size ({computedOutcomes.filter(p => p.outcome !== "inconclusive").length} replications)</div>
           <div className="mt-2">
-            <InlineScatter points={computedOutcomes} />
+            <InlineScatter points={computedOutcomes.filter(p => p.outcome !== "inconclusive")} />
           </div>
         </div>
       </section>
@@ -995,8 +1000,8 @@ export default function ReplicationsDatabasePage() {
                 
                 const esOType = String(r.original_es_type ?? "");
                 const esRType = String(r.replication_es_type ?? "");
-                const citationO = transformCitationHtmlToExplorer(String(r.original_citation_html || ""));
-                const citationR = transformCitationHtmlToExplorer(String(r.replication_citation_html || ""));
+                const citationO = transformCitationHtmlToExplorer(generateCitationHtml(r.original_authors as string, r.original_journal as string, r.original_year as string, r.original_url as string));
+                const citationR = transformCitationHtmlToExplorer(generateCitationHtml(r.replication_authors as string, r.replication_journal as string, r.replication_year as string, r.replication_url as string));
                 return (
                   <tr key={i} className="border-b hover:bg-black/5 dark:hover:bg-white/5">
                     {visibleColumns.has("index") && (

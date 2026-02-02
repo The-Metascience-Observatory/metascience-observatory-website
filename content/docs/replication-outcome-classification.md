@@ -16,33 +16,35 @@ This method evaluates whether the replication study achieves a statistically sig
 
 ### Rationale
 
-The simplest criterion for replication success: if the original study found a significant effect in one direction, a successful replication should also find a significant effect in that same direction.
+The simplest criterion for replication success: if the original study found a significant effect in one direction, a successful replication should also find a significant effect in that same direction. When the original study was not significant, the method checks whether the replication agrees (also non-significant) or disagrees (significant).
 
 ### Algorithm
 
-This method is based on the [FReD R package](https://github.com/forrtproject/FReD) (`criterion = "significance_r"`).
+This method is inspired by the [FReD R package](https://github.com/forrtproject/FReD) (`criterion = "significance_r"`), with modifications to handle non-significant originals and to prefer reported $p$-values over computed ones.
 
-**Step 1: Check if the Original Study Was Significant**
+**Step 1: Determine $p$-Values**
 
-First, compute the $p$-value for the original effect:
+For both the original and replication studies, the $p$-value is determined using this priority:
 
-$$t_O = r_O \cdot \sqrt{\frac{n_O - 2}{1 - r_O^2}}$$
+1. **Use the reported $p$-value** from the database (`original_p_value` or `replication_p_value`) if available
+2. **Otherwise, compute** the $p$-value from the normalized Pearson $r$ and sample size $n$:
 
-Compute the two-tailed $p$-value with $df = n_O - 2$ degrees of freedom. If $p_O \geq 0.05$, the original was not significant, and the outcome is **inconclusive** (criterion is meaningless).
+$$t = r \cdot \sqrt{\frac{n - 2}{1 - r^2}}$$
 
-**Step 2: Test Significance of Replication Effect**
+Compute the two-tailed $p$-value with $df = n - 2$ degrees of freedom.
 
-If the original was significant, compute the $p$-value for the replication effect:
+Reported $p$-values are preferred because the conversion from other effect size types (Cohen's $d$, eta-squared, etc.) to Pearson $r$ introduces error, especially with small samples. This can cause computed $p$-values to disagree with reported ones on significance in approximately 10% of cases.
 
-$$t_R = r_R \cdot \sqrt{\frac{n_R - 2}{1 - r_R^2}}$$
+**Step 2: Check if the Original Study Was Significant**
 
-where $n_R$ is the replication sample size and $r_R$ is the replication effect size.
+If $p_O \geq 0.05$, the original was not significant. In this case, we check whether the replication agrees:
 
-Compute the two-tailed $p$-value with $df = n_R - 2$ degrees of freedom.
+- If the replication is also not significant ($p_R \geq 0.05$): both studies agree there is no effect → **Success**
+- If the replication is significant ($p_R < 0.05$): the studies disagree → **Failure**
 
-**Step 3: Check Direction Consistency**
+**Step 3: If the Original Was Significant, Test the Replication**
 
-Compare the signs of the original ($r_O$) and replication ($r_R$) effect sizes:
+If the original was significant ($p_O < 0.05$), check the replication's significance and direction consistency:
 
 - **Same direction**: $\text{sign}(r_O) = \text{sign}(r_R)$
 - **Opposite direction**: $\text{sign}(r_O) \neq \text{sign}(r_R)$
@@ -51,10 +53,11 @@ Compare the signs of the original ($r_O$) and replication ($r_R$) effect sizes:
 
 | Condition | Outcome |
 |-----------|---------|
-| Original not significant ($p_O \geq 0.05$) | **Inconclusive** |
-| Replication significant ($p_R < 0.05$) with same direction  | **Success** |
-| Replication significant ($p_R < 0.05$) with opposite direction | **Reversal** |
-| Replication not significant ($p_R \geq 0.05$) | **Failure** |
+| Original not significant ($p_O \geq 0.05$), replication also not significant ($p_R \geq 0.05$) | **Success** |
+| Original not significant ($p_O \geq 0.05$), replication significant ($p_R < 0.05$) | **Failure** |
+| Original significant, replication significant ($p_R < 0.05$) with same direction  | **Success** |
+| Original significant, replication significant ($p_R < 0.05$) with opposite direction | **Reversal** |
+| Original significant, replication not significant ($p_R \geq 0.05$) | **Failure** |
 
 ---
 
@@ -191,7 +194,7 @@ Computing the replication CI:
 
 ## Computing $p$-Values from Correlation Coefficients
 
-The significance-based outcome method requires computing $p$-values from correlation coefficients. This section describes the mathematical approach used.
+The significance-based outcome method requires $p$-values for both original and replication studies. When the database contains a reported $p$-value (`original_p_value` or `replication_p_value`), that value is used directly. Otherwise, $p$-values are computed from the normalized Pearson $r$ correlation coefficients as described below.
 
 ### From Correlation to $t$-Statistic
 

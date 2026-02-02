@@ -1,5 +1,27 @@
 import requests
 import time
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+def _request_with_retry(url, headers=None, timeout=10, max_retries=3):
+    """Make an HTTP GET request with exponential backoff on transient failures."""
+    for attempt in range(max_retries):
+        try:
+            r = requests.get(url, timeout=timeout, headers=headers)
+            if r.status_code == 429 or r.status_code >= 500:
+                wait = 2 ** attempt
+                logger.warning(f"HTTP {r.status_code} from {url}, retrying in {wait}s (attempt {attempt+1}/{max_retries})")
+                time.sleep(wait)
+                continue
+            return r
+        except requests.exceptions.RequestException as e:
+            wait = 2 ** attempt
+            logger.warning(f"Request error for {url}: {e}, retrying in {wait}s (attempt {attempt+1}/{max_retries})")
+            time.sleep(wait)
+    return None
+
 
 def fetch_metadata_from_doi(doi, email="your_email@example.com", delay=0.2):
     """
@@ -38,8 +60,8 @@ def fetch_metadata_from_doi(doi, email="your_email@example.com", delay=0.2):
 
     # ---------- 1️⃣ OpenAlex ----------
     try:
-        r = requests.get(f"https://api.openalex.org/works/https://doi.org/{doi}", timeout=10, headers=headers)
-        if r.status_code == 200:
+        r = _request_with_retry(f"https://api.openalex.org/works/https://doi.org/{doi}", headers=headers)
+        if r and r.status_code == 200:
             data = r.json()
             oa = {
                 "authors": "; ".join([a["author"]["display_name"] for a in data.get("authorships", [])]) or None,
@@ -54,37 +76,44 @@ def fetch_metadata_from_doi(doi, email="your_email@example.com", delay=0.2):
             meta = enrich(meta, oa)
             if is_complete(meta):
                 return meta
-    except Exception:
-        pass
+        elif r:
+            logger.warning(f"OpenAlex returned HTTP {r.status_code} for DOI {doi}")
+    except Exception as e:
+        logger.warning(f"OpenAlex error for DOI {doi}: {e}")
     time.sleep(delay)
 
     # ---------- 2️⃣ DataCite ----------
     try:
-        r = requests.get(f"https://api.datacite.org/dois/{doi.lower()}", timeout=10, headers=headers)
-        if r.status_code == 200:
+        r = _request_with_retry(f"https://api.datacite.org/dois/{doi.lower()}", headers=headers)
+        if r and r.status_code == 200:
             d = r.json().get("data", {}).get("attributes", {})
             authors = []
             for a in d.get("creators", []):
                 name = a.get("name") or f"{a.get('givenName','')} {a.get('familyName','')}".strip()
                 if name:
                     authors.append(name)
+            # Use container title if available; publisher is not the journal
+            container = d.get("container", {}) or {}
+            journal = container.get("title") or None
             dc = {
                 "authors": "; ".join(authors) or None,
                 "title": (d.get("titles") or [{}])[0].get("title"),
-                "journal": d.get("publisher"),
+                "journal": journal,
                 "year": d.get("publicationYear"),
                 "url": d.get("url") or f"https://doi.org/{doi}",
             }
             meta = enrich(meta, dc)
             if is_complete(meta):
                 return meta
-    except Exception:
-        pass
+        elif r:
+            logger.warning(f"DataCite returned HTTP {r.status_code} for DOI {doi}")
+    except Exception as e:
+        logger.warning(f"DataCite error for DOI {doi}: {e}")
 
     # ---------- 3️⃣ Crossref ----------
     try:
-        r = requests.get(f"https://api.crossref.org/works/{doi}", timeout=10, headers=headers)
-        if r.status_code == 200:
+        r = _request_with_retry(f"https://api.crossref.org/works/{doi}", headers=headers)
+        if r and r.status_code == 200:
             m = r.json()["message"]
             authors = []
             for a in m.get("author", []):
@@ -111,13 +140,15 @@ def fetch_metadata_from_doi(doi, email="your_email@example.com", delay=0.2):
             meta = enrich(meta, cr)
             if is_complete(meta):
                 return meta
-    except Exception:
-        pass
+        elif r:
+            logger.warning(f"Crossref returned HTTP {r.status_code} for DOI {doi}")
+    except Exception as e:
+        logger.warning(f"Crossref error for DOI {doi}: {e}")
 
     # ---------- 4️⃣ Unpaywall ----------
     try:
-        r = requests.get(f"https://api.unpaywall.org/v2/{doi}?email={email}", timeout=10, headers=headers)
-        if r.status_code == 200:
+        r = _request_with_retry(f"https://api.unpaywall.org/v2/{doi}?email={email}", headers=headers)
+        if r and r.status_code == 200:
             u = r.json()
             best_loc = u.get("best_oa_location") or {}
             authors = "; ".join(
@@ -136,16 +167,17 @@ def fetch_metadata_from_doi(doi, email="your_email@example.com", delay=0.2):
             meta = enrich(meta, up)
             if is_complete(meta):
                 return meta
-    except Exception:
-        pass
+        elif r:
+            logger.warning(f"Unpaywall returned HTTP {r.status_code} for DOI {doi}")
+    except Exception as e:
+        logger.warning(f"Unpaywall error for DOI {doi}: {e}")
 
     # ---------- 5️⃣ Europe PMC ----------
     try:
-        r = requests.get(
+        r = _request_with_retry(
             f"https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI:{doi}&format=json",
-            timeout=10,
         )
-        if r.status_code == 200:
+        if r and r.status_code == 200:
             data = r.json().get("resultList", {}).get("result", [])
             if data:
                 d = data[0]
@@ -162,18 +194,19 @@ def fetch_metadata_from_doi(doi, email="your_email@example.com", delay=0.2):
                 meta = enrich(meta, ep)
                 if is_complete(meta):
                     return meta
-    except Exception:
-        pass
+        elif r:
+            logger.warning(f"Europe PMC returned HTTP {r.status_code} for DOI {doi}")
+    except Exception as e:
+        logger.warning(f"Europe PMC error for DOI {doi}: {e}")
 
     # ---------- 6️⃣ Semantic Scholar ----------
     try:
-        r = requests.get(
+        r = _request_with_retry(
             f"https://api.semanticscholar.org/graph/v1/paper/DOI:{doi}"
             "?fields=title,year,venue,url,authors",
-            timeout=10,
             headers=headers,
         )
-        if r.status_code == 200:
+        if r and r.status_code == 200:
             s = r.json()
             ss = {
                 "authors": "; ".join(a.get("name", "") for a in s.get("authors", [])) or None,
@@ -185,8 +218,10 @@ def fetch_metadata_from_doi(doi, email="your_email@example.com", delay=0.2):
             meta = enrich(meta, ss)
             if is_complete(meta):
                 return meta
-    except Exception:
-        pass
+        elif r:
+            logger.warning(f"Semantic Scholar returned HTTP {r.status_code} for DOI {doi}")
+    except Exception as e:
+        logger.warning(f"Semantic Scholar error for DOI {doi}: {e}")
 
     # ---------- Default fallback ----------
     if not meta["url"]:

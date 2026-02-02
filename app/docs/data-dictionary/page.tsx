@@ -4,6 +4,7 @@ import { csvParse } from "d3-dsv";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { MarkdownContent } from "@/components/MarkdownContent";
+import { DocsBackLink } from "@/components/DocsBackLink";
 
 function escapeMarkdown(s: string): string {
   return s.replace(/\|/g, "\\|").replace(/\n/g, " ");
@@ -42,6 +43,7 @@ export default function DataDictionaryPage() {
       <Navbar />
       <main className="pt-20 pb-16">
         <div className="container mx-auto px-4 py-12 max-w-3xl">
+          <DocsBackLink />
           <MarkdownContent content={content} />
         </div>
       </main>

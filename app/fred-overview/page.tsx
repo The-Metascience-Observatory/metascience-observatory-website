@@ -38,13 +38,17 @@ export default function FredOverviewPage() {
     const counts = new Map<string, { success: number; failure: number; inconclusive: number }>();
     if (!data) return [] as Array<{ discipline: string; success: number; failure: number; inconclusive: number; successPct: number; failurePct: number; total: number }>;
     for (const r of data.rows) {
-      const d = String(r.discipline ?? "");
+      const raw = String(r.discipline ?? "");
+      const parts = raw.split(",").map((s) => s.trim()).filter(Boolean);
+      const disciplines = parts.length > 0 ? parts : [""];
       const res = String(r.result ?? "").toLowerCase();
-      const entry = counts.get(d) || { success: 0, failure: 0, inconclusive: 0 };
-      if (res.includes("success")) entry.success++;
-      else if (res.includes("failure")) entry.failure++;
-      else entry.inconclusive++;
-      counts.set(d, entry);
+      for (const d of disciplines) {
+        const entry = counts.get(d) || { success: 0, failure: 0, inconclusive: 0 };
+        if (res.includes("success")) entry.success++;
+        else if (res.includes("failure")) entry.failure++;
+        else entry.inconclusive++;
+        counts.set(d, entry);
+      }
     }
     const list = Array.from(counts.entries()).map(([discipline, v]) => {
       const total = v.success + v.failure + v.inconclusive;

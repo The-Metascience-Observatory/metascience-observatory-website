@@ -15,14 +15,22 @@ export const ReplicationsNavbar = () => {
               width={40}
               height={40}
             />
-            <h1 className="font-clarendon font-bold text-xl sm:text-2xl text-foreground">
+            <h1 className="font-clarendon font-bold text-lg sm:text-xl text-foreground">
               The Metascience Observatory: Replications Database
             </h1>
           </Link>
 
-          <div className="hidden md:flex items-center gap-6 text-sm">
-            <Link href="/" className="text-foreground/80 hover:text-foreground transition-colors">Home</Link>
+          <div className="hidden md:flex items-center gap-4 text-sm">
+            <Link href="/#about" className="text-foreground/80 hover:text-foreground transition-colors">About</Link>
+            <Link href="/#team" className="text-foreground/80 hover:text-foreground transition-colors">Team</Link>
+            <Link href="/roadmap" className="text-foreground/80 hover:text-foreground transition-colors">Roadmap</Link>
+            <Link href="/docs" className="text-foreground/80 hover:text-foreground transition-colors">Docs</Link>
             <Link href="/#donate" className="text-foreground/80 hover:text-foreground transition-colors">Donate</Link>
+            <Button variant="outline" size="sm" asChild>
+              <Link href="https://explore.metascienceobservatory.org/" target="_blank" rel="noopener noreferrer">
+                Explorer
+              </Link>
+            </Button>
             <Button variant="outline" size="sm" asChild>
               <Link href="/upload-bibliography">
                 Upload Bibliography

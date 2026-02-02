@@ -16,10 +16,20 @@ import time
 import os
 import re
 import math
+import logging
 from datetime import datetime
+from difflib import SequenceMatcher
 from fetch_metadata_from_doi import fetch_metadata_from_doi
 from fetch_metadata_from_title import fetch_metadata_from_title
 from generate_citation_html_for_website import generate_citation_html_for_website
+
+# Configure logging for the ingestion pipeline
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s %(name)s: %(message)s',
+    datefmt='%H:%M:%S',
+)
+logger = logging.getLogger(__name__)
 
 # Get the directory where this script lives
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -28,14 +38,16 @@ VERSION_HISTORY_PATH = os.path.join(DATA_DIR, 'version_history.txt')
 
 
 def get_latest_master_database():
-    """Get the latest master database filename from version_history.txt"""
+    """Get the latest master database filename from version_history.txt.
+    Walks backwards through the file to find the most recent entry that
+    actually exists on disk."""
     if not os.path.exists(VERSION_HISTORY_PATH):
         return None
 
     with open(VERSION_HISTORY_PATH, 'r') as f:
         lines = f.readlines()
 
-    # Find the last non-empty line
+    # Walk backwards to find the last entry that exists on disk
     for line in reversed(lines):
         line = line.strip()
         # Skip empty lines and comments
@@ -45,7 +57,12 @@ def get_latest_master_database():
             # Handle both relative paths and just filenames
             if filename.startswith('../data/'):
                 filename = filename.replace('../data/', '')
-            return filename
+            # Verify the file actually exists
+            full_path = os.path.join(DATA_DIR, filename)
+            if os.path.exists(full_path):
+                return filename
+            else:
+                logger.warning(f"Version history references missing file: {filename}, skipping")
 
     return None
 
@@ -79,6 +96,12 @@ def normalize_doi(doi):
     elif doi.startswith("https://dx.doi.org/"):
         doi = doi.replace("https://dx.doi.org/", "")
     return doi if doi else None
+
+def is_valid_doi(doi):
+    """Validate that a DOI has a plausible format (starts with 10. followed by registrant code)."""
+    if not isinstance(doi, str) or not doi.strip():
+        return False
+    return bool(re.match(r'^10\.\d{4,}/.+$', doi.strip()))
 
 def is_empty(value):
     """Check if value is empty/missing"""
@@ -487,27 +510,13 @@ def calculate_effect_sizes(df):
     return df
 
 def needs_enrichment(row, prefix):
-    """Check if any key metadata fields are missing or abbreviated"""
+    """Check if any key metadata fields are missing"""
     fields_to_check = ['authors', 'title', 'journal', 'volume', 'issue', 'pages', 'year']
 
-    # Check if any field is missing or doesn't exist
     for field in fields_to_check:
         col_name = f"{prefix}_{field}"
-        # Need enrichment if column doesn't exist OR if it's empty
         if col_name not in row.index or is_empty(row.get(col_name)):
             return True
-
-    # Check if authors contains abbreviated names (single letter first names like "J.")
-    authors = row.get(f"{prefix}_authors")
-    if isinstance(authors, str) and authors.strip():
-        # Check for pattern like "J. " or "M. " (abbreviated first names)
-        if any(f" {c}. " in authors or authors.startswith(f"{c}. ") for c in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"):
-            return True
-
-    # Check if journal is highly abbreviated (less than 10 chars, likely abbreviated)
-    journal = row.get(f"{prefix}_journal")
-    if isinstance(journal, str) and len(journal.strip()) < 10 and "." in journal:
-        return True
 
     return False
 
@@ -529,8 +538,21 @@ def enrich_from_metadata(row, prefix, metadata):
     for meta_key, col_name in field_mapping.items():
         # Fill if column doesn't exist or current value is empty
         if col_name not in row.index or is_empty(row.get(col_name)):
-            if metadata.get(meta_key):
-                row[col_name] = metadata[meta_key]
+            value = metadata.get(meta_key)
+            if value:
+                # Normalize year to int and validate range
+                if meta_key == 'year':
+                    try:
+                        year_int = int(float(value))
+                        if 1800 <= year_int <= 2030:
+                            value = year_int
+                        else:
+                            logger.warning(f"Year {year_int} out of range for {col_name}, skipping")
+                            continue
+                    except (ValueError, TypeError):
+                        logger.warning(f"Could not parse year '{value}' for {col_name}, skipping")
+                        continue
+                row[col_name] = value
 
     return row
 
@@ -538,38 +560,52 @@ def sanity_check_metadata(row, prefix, metadata):
     """
     Check if fetched metadata matches existing data.
     Returns True if metadata is likely correct, False otherwise.
-    Only checks the year field.
+    Checks year field and title similarity when available.
     """
     if not metadata:
         return False
 
-    # Check year field only
-    col_name = f"{prefix}_year"
-    if col_name in row.index and not is_empty(row[col_name]):
-        existing_value = str(row[col_name]).strip()
+    # Check year field
+    year_col = f"{prefix}_year"
+    if year_col in row.index and not is_empty(row[year_col]):
+        existing_value = str(row[year_col]).strip()
         fetched_value = str(metadata.get('year', "")).strip()
-
-        print(fetched_value, existing_value)
 
         if fetched_value:
             # Handle float values like "2020.0" vs "2020"
-            if existing_value.replace(".0", "") == fetched_value.replace(".0", ""):
-                return True
-            else:
+            if existing_value.replace(".0", "") != fetched_value.replace(".0", ""):
+                logger.warning(f"Year mismatch for {prefix}: existing={existing_value}, fetched={fetched_value}")
                 return False
-    
-    # If no year data to verify against, assume correct
+
+    # Check title similarity when both exist
+    title_col = f"{prefix}_title"
+    if title_col in row.index and not is_empty(row[title_col]) and metadata.get('title'):
+        existing_title = str(row[title_col]).lower().strip()
+        fetched_title = str(metadata['title']).lower().strip()
+        similarity = SequenceMatcher(None, existing_title, fetched_title).ratio()
+        if similarity < 0.6:
+            logger.warning(f"Title mismatch for {prefix} (similarity={similarity:.2f}): "
+                           f"existing='{existing_title[:60]}' vs fetched='{fetched_title[:60]}'")
+            return False
+
     return True
 
-def process_row(row, row_idx, total_rows, doi_cache=None):
+def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None):
     """Process a single row to enrich metadata"""
     if doi_cache is None:
         doi_cache = {}
+    if title_cache is None:
+        title_cache = {}
     print(f"\nProcessing row {row_idx + 1}/{total_rows}...")
 
     # ===== PROCESS ORIGINAL STUDY =====
     original_url = row.get('original_url')
     original_doi = extract_doi_from_url(original_url)
+
+    # Validate DOI format before making API calls
+    if original_doi and not is_valid_doi(original_doi):
+        logger.warning(f"Invalid DOI format for original: {original_doi}, skipping API lookup")
+        original_doi = None
 
     if original_doi and needs_enrichment(row, 'original'):
         if original_doi in doi_cache:
@@ -584,8 +620,15 @@ def process_row(row, row_idx, total_rows, doi_cache=None):
 
     # If no DOI URL but title exists, try to fetch DOI from title
     elif is_empty(original_url) and not is_empty(row.get('original_title')):
-        print(f"  No original_url found, searching by title: {row.get('original_title')}...")
-        metadata = fetch_metadata_from_title(row.get('original_title'))
+        original_title = row.get('original_title')
+        title_key = original_title.lower().strip()
+        if title_key in title_cache:
+            print(f"  Using cached metadata for original title: {original_title[:50]}...")
+            metadata = title_cache[title_key]
+        else:
+            print(f"  No original_url found, searching by title: {original_title}...")
+            metadata = fetch_metadata_from_title(original_title)
+            title_cache[title_key] = metadata
 
         if metadata and metadata.get('doi'):
             # Sanity check the DOI
@@ -609,6 +652,11 @@ def process_row(row, row_idx, total_rows, doi_cache=None):
     replication_url = row.get('replication_url')
     replication_doi = extract_doi_from_url(replication_url)
 
+    # Validate DOI format before making API calls
+    if replication_doi and not is_valid_doi(replication_doi):
+        logger.warning(f"Invalid DOI format for replication: {replication_doi}, skipping API lookup")
+        replication_doi = None
+
     if replication_doi and needs_enrichment(row, 'replication'):
         if replication_doi in doi_cache:
             print(f"  Using cached metadata for replication DOI: {replication_doi}")
@@ -622,8 +670,15 @@ def process_row(row, row_idx, total_rows, doi_cache=None):
 
     # If no DOI URL but title exists, try to fetch DOI from title
     elif is_empty(replication_url) and not is_empty(row.get('replication_title')):
-        print(f"  No replication_url found, searching by title: {row.get('replication_title')[:50]}...")
-        metadata = fetch_metadata_from_title(row.get('replication_title'))
+        replication_title = row.get('replication_title')
+        title_key = replication_title.lower().strip()
+        if title_key in title_cache:
+            print(f"  Using cached metadata for replication title: {replication_title[:50]}...")
+            metadata = title_cache[title_key]
+        else:
+            print(f"  No replication_url found, searching by title: {replication_title[:50]}...")
+            metadata = fetch_metadata_from_title(replication_title)
+            title_cache[title_key] = metadata
 
         if metadata and metadata.get('doi'):
             # Sanity check the DOI
@@ -676,8 +731,10 @@ def generate_citations(df):
 
     return df
 
-def filter_columns(df, data_dict_path='data_dictionary.csv'):
+def filter_columns(df, data_dict_path=None):
     """Keep only columns that appear in data_dictionary.csv, preserving order from data dictionary"""
+    if data_dict_path is None:
+        data_dict_path = os.path.join(DATA_DIR, 'data_dictionary.csv')
     print("\nFiltering columns based on data_dictionary.csv...")
 
     data_dict = pd.read_csv(data_dict_path)
@@ -702,8 +759,10 @@ def normalize_discipline_column(df):
         print(f"  ✓ Converted discipline values to lowercase")
     return df
 
-def reorder_columns(df, data_dict_path='data_dictionary.csv'):
+def reorder_columns(df, data_dict_path=None):
     """Reorder columns according to the order in data_dictionary.csv"""
+    if data_dict_path is None:
+        data_dict_path = os.path.join(DATA_DIR, 'data_dictionary.csv')
     data_dict = pd.read_csv(data_dict_path)
     valid_columns = data_dict['column_name'].tolist()
     
@@ -755,6 +814,43 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None):
     input_df = pd.read_csv(input_csv)
     print(f"  Loaded {len(input_df)} rows")
 
+    # Skip rows where original_url is literal "na" (not a real URL)
+    if 'original_url' in input_df.columns:
+        before_count = len(input_df)
+        input_df = input_df[~input_df['original_url'].apply(
+            lambda x: isinstance(x, str) and x.strip().lower() == 'na'
+        )]
+        skipped = before_count - len(input_df)
+        if skipped:
+            print(f"  Skipped {skipped} rows where original_url is 'na'")
+        input_df = input_df.reset_index(drop=True)
+
+    # Clean Unicode artifacts (zero-width spaces, trailing periods) from URL columns
+    def clean_doi_url(url):
+        if not isinstance(url, str):
+            return url
+        for char in ['\u200b', '\u200c', '\u200d', '\uFEFF']:
+            url = url.replace(char, '')
+        url = url.rstrip('.')
+        return url
+
+    # Convert bare DOIs (starting with "10.") to http://doi.org/ URLs
+    def normalize_url_to_doi_url(url):
+        if not isinstance(url, str) or not url.strip():
+            return url
+        url = url.strip()
+        if url.startswith("http://") or url.startswith("https://"):
+            return url
+        if url.startswith("10."):
+            return f"http://doi.org/{url}"
+        return url
+
+    for col in ['original_url', 'replication_url']:
+        if col in input_df.columns:
+            input_df[col] = input_df[col].apply(clean_doi_url)
+            input_df[col] = input_df[col].apply(normalize_url_to_doi_url)
+            print(f"  Cleaned and normalized {col} (bare DOIs → http://doi.org/ URLs)")
+
     # Apply discipline to all rows if specified
     if discipline:
         input_df['discipline'] = discipline.lower()
@@ -787,9 +883,10 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None):
         print(f"{'='*60}")
 
         doi_cache = {}  # Cache to avoid redundant API calls for same DOI
+        title_cache = {}  # Cache to avoid redundant API calls for same title
         processed_rows = []
         for idx, row in input_df.iterrows():
-            processed_row = process_row(row, idx, len(input_df), doi_cache)
+            processed_row = process_row(row, idx, len(input_df), doi_cache, title_cache)
             processed_rows.append(processed_row)
 
         processed_df = pd.DataFrame(processed_rows)
@@ -878,7 +975,8 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None):
         content = f.read()
     with open(VERSION_HISTORY_PATH, 'w') as f:
         # Strip trailing whitespace and ensure single newline at end
-        f.write(content.rstrip() + '\n' + output_filename + '\n')
+        input_basename = os.path.basename(input_csv)
+        f.write(content.rstrip() + '\n' + output_filename + f' # added {input_basename}' + '\n')
     print(f"✓ Added {output_filename} to version_history.txt")
 
     print(f"\n{'='*60}")

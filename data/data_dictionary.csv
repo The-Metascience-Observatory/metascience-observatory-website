@@ -33,12 +33,12 @@ replication_es_95_CI,"[float, float]",no,no,95% confidence interval for the effe
 replication_p_value,float,no,no,replication p value
 replication_p_value_type,,no,no,Whether the p value is for one or two tails
 replication_p_value_tails,“one” OR “two” OR “”,no,no,
-disciplines,comma separated list,no,no,"discipline category labels (ie economics, psychology, neuroscience, etc) seperated by commas (one experiment may span multiple disciplines )"
+discipline,string,no,no,discipline category labels - mostly manually curated
+subdiscipline,string,no,no,subdiscipline category labels - mostly manually curated
 tags,semicolon separated list,no,no,set of manually curated tags to enable search
 validated,"“yes"" OR ""no""",no,no,has the core required data been validated by a human at least once?
 validated_person,string,no,no,"name of the person and/or organization who did the validation, if applicable"
 replication_initiative_tag,string,no,no,"A tag that appears if the experiment was replicated as part of a major initiative to replicate many experiments (eg > 10) in a particular field. For instance, for Replication Project: Cancer Biology, the tag is “RP:CB”"
 openalex_field,string,no,no,
 openalex_subfield,string,no,no,
-replication_citation_html,string,no,yes,html for website
-original_citation_html,string,no,yes,html for website
+source,string,no,no,notes on source of data
