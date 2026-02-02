@@ -5,6 +5,7 @@ import { ReplicationsNavbar } from "@/components/ReplicationsNavbar";
 import { Footer } from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import { generateCitationHtml, transformCitationHtmlToExplorer, citationSearchText } from "@/lib/citations";
+import { jStat } from "jstat";
 
 type AnyRecord = Record<string, unknown>;
 
@@ -64,114 +65,11 @@ function MiniBar({ value, max, color }: { value: number; max: number; color?: st
   );
 }
 
-// Compute p-value from t-statistic using proper t-distribution approximation
-function pValueFromT(t: number, df: number): number {
-  const absT = Math.abs(t);
-  if (absT === 0) return 1;
-  if (!Number.isFinite(absT) || !Number.isFinite(df) || df <= 0) return 1;
-
-  // Use regularized incomplete beta function for t-distribution CDF
-  // For t-distribution: P(T > t) = 0.5 * I_x(df/2, 0.5) where x = df/(df + t^2)
-  const x = df / (df + absT * absT);
-  const a = df / 2;
-  const b = 0.5;
-
-  // Compute regularized incomplete beta function I_x(a, b) using continued fraction
-  // This gives accurate p-values for all df values
-  const betaIncomplete = incompleteBeta(x, a, b);
-
-  // Two-tailed p-value
-  return betaIncomplete;
-}
-
-// Regularized incomplete beta function I_x(a, b) using continued fraction expansion
-function incompleteBeta(x: number, a: number, b: number): number {
-  if (x <= 0) return 0;
-  if (x >= 1) return 1;
-
-  // Use symmetry relation if needed for better convergence
-  if (x > (a + 1) / (a + b + 2)) {
-    return 1 - incompleteBeta(1 - x, b, a);
-  }
-
-  // Compute beta function B(a,b) using log-gamma for numerical stability
-  const lnBeta = lnGamma(a) + lnGamma(b) - lnGamma(a + b);
-
-  // Front factor: x^a * (1-x)^b / (a * B(a,b))
-  const front = Math.exp(a * Math.log(x) + b * Math.log(1 - x) - lnBeta) / a;
-
-  // Continued fraction using Lentz's algorithm
-  const maxIter = 200;
-  const eps = 1e-14;
-
-  let f = 1;
-  let c = 1;
-  let d = 0;
-
-  for (let m = 0; m <= maxIter; m++) {
-    let numerator: number;
-    if (m === 0) {
-      numerator = 1;
-    } else if (m % 2 === 0) {
-      const k = m / 2;
-      numerator = (k * (b - k) * x) / ((a + 2 * k - 1) * (a + 2 * k));
-    } else {
-      const k = (m - 1) / 2;
-      numerator = -((a + k) * (a + b + k) * x) / ((a + 2 * k) * (a + 2 * k + 1));
-    }
-
-    d = 1 + numerator * d;
-    if (Math.abs(d) < 1e-30) d = 1e-30;
-    d = 1 / d;
-
-    c = 1 + numerator / c;
-    if (Math.abs(c) < 1e-30) c = 1e-30;
-
-    const delta = c * d;
-    f *= delta;
-
-    if (Math.abs(delta - 1) < eps) break;
-  }
-
-  return front * f;
-}
-
-// Log-gamma function using Lanczos approximation
-function lnGamma(z: number): number {
-  if (z <= 0) return Infinity;
-
-  const g = 7;
-  const coefficients = [
-    0.99999999999980993,
-    676.5203681218851,
-    -1259.1392167224028,
-    771.32342877765313,
-    -176.61502916214059,
-    12.507343278686905,
-    -0.13857109526572012,
-    9.9843695780195716e-6,
-    1.5056327351493116e-7
-  ];
-
-  if (z < 0.5) {
-    // Reflection formula: gamma(z) * gamma(1-z) = pi / sin(pi*z)
-    return Math.log(Math.PI / Math.sin(Math.PI * z)) - lnGamma(1 - z);
-  }
-
-  z -= 1;
-  let x = coefficients[0];
-  for (let i = 1; i < g + 2; i++) {
-    x += coefficients[i] / (z + i);
-  }
-
-  const t = z + g + 0.5;
-  return 0.5 * Math.log(2 * Math.PI) + (z + 0.5) * Math.log(t) - t + Math.log(x);
-}
-
 /**
- * Compute p-value from correlation coefficient r and sample size N.
+ * Compute two-tailed p-value from correlation coefficient r and sample size N.
  * Uses t-test: t = r * sqrt((N-2)/(1-r^2)), df = N-2
  * This matches the FReD R package's p_from_r() function.
+ * Uses jStat for the t-distribution CDF (replaces buggy hand-rolled incompleteBeta).
  */
 function pValueFromR(r: number, n: number): number | null {
   if (!Number.isFinite(r) || !Number.isFinite(n) || n <= 2) {
@@ -186,7 +84,8 @@ function pValueFromR(r: number, n: number): number | null {
   }
   const t = r * Math.sqrt((n - 2) / denom);
   const df = n - 2;
-  return pValueFromT(t, df);
+  // Two-tailed p-value from t-distribution
+  return 2 * jStat.studentt.cdf(-Math.abs(t), df);
 }
 
 /**
@@ -1249,10 +1148,6 @@ function InlineScatter({ points }: { points: ScatterPoint[] }) {
         <div className="flex items-center gap-2">
           <span className="inline-block w-3 h-3 rounded" style={{ background: "#10b981" }} />
           <span>Success</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="inline-block w-3 h-3 rounded" style={{ background: "#9ca3af" }} />
-          <span>Inconclusive</span>
         </div>
         <div className="flex items-center gap-2">
           <span className="inline-block w-3 h-3 rounded" style={{ background: "#f87171" }} />
