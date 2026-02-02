@@ -11,6 +11,7 @@ let cachedData: { rows: AnyRecord[]; columns: string[]; lastUpdated?: string } |
 
 function toNumber(value: unknown): number | null {
   if (value == null) return null;
+  if (typeof value === "string" && value.trim() === "") return null;
   const n = typeof value === "number" ? value : Number(String(value).trim());
   return Number.isFinite(n) ? n : null;
 }

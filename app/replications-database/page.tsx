@@ -28,6 +28,7 @@ function uniqueValues(rows: AnyRecord[], key: string): string[] {
 
 function toNumber(value: unknown): number | null {
   if (value == null) return null;
+  if (typeof value === "string" && value.trim() === "") return null;
   const n = typeof value === "number" ? value : Number(String(value).trim());
   return Number.isFinite(n) ? n : null;
 }
@@ -85,7 +86,8 @@ function pValueFromR(r: number, n: number): number | null {
   const t = r * Math.sqrt((n - 2) / denom);
   const df = n - 2;
   // Two-tailed p-value from t-distribution
-  return 2 * jStat.studentt.cdf(-Math.abs(t), df);
+  const p = 2 * jStat.studentt.cdf(-Math.abs(t), df);
+  return p;
 }
 
 /**

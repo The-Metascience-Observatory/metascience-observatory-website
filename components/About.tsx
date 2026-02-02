@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export const About = () => {
   return (
-    <section id="about" className="py-20 scroll-mt-1 bg-gradient-to-b from-background to-muted/30">
+    <section id="about" className="py-12 scroll-mt-1 bg-gradient-to-b from-background to-muted/30">
       <div className="container px-4">
         <div className="max-w-6xl mx-auto space-y-6">
           <div className="text-center space-y-4">
@@ -24,7 +24,7 @@ export const About = () => {
             </div>
 
             <Card className="p-[30px] md:p-[38px] shadow-lg hover:shadow-xl transition-shadow md:col-span-3">
-              <div className="space-y-6 text-foreground/90 leading-relaxed">
+              <div className="space-y-4 text-sm text-foreground/90 leading-relaxed">
               <p>
                 The first major project of The Metascience Observatory is to build a <Link href="/replications-database" className="underline">public database of experimental replications across all of science</Link>. There have already been several great studies assessing reproducibility, most famously in <Link href="https://www.science.org/doi/10.1126/science.aac4716" target="_blank" rel="noopener noreferrer" className="underline">psychology</Link> and <Link href="https://www.cos.io/rpcb" target="_blank" rel="noopener noreferrer" className="underline">cancer biology</Link>. These were large, concerted efforts requiring large teams and lots of funding.
               </p>

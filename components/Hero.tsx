@@ -34,7 +34,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="pt-20 pb-16 md:pt-24 md:pb-32">
+    <section className="pt-20 pb-10 md:pt-24 md:pb-16">
       <div className="container px-4">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">

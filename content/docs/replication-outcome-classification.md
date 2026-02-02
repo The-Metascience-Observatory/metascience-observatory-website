@@ -220,44 +220,13 @@ $$I_x(a, b) = \frac{B(x; a, b)}{B(a, b)} = \frac{1}{B(a, b)} \int_0^x t^{a-1}(1-
 
 where $B(a, b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}$ is the complete beta function.
 
-### Numerical Implementation
+### Implementation
 
-The implementation uses the following techniques for numerical accuracy:
+The two-tailed $p$-value is computed using the [jStat](https://github.com/jstat/jstat) JavaScript statistical library, which provides a well-tested implementation of the Student's $t$-distribution CDF. Specifically:
 
-**1. Continued Fraction Expansion (Lentz's Algorithm)**
+$$p = 2 \cdot P(T < -|t|) = 2 \cdot F_t(-|t|;\, \nu)$$
 
-The incomplete beta function is computed using a continued fraction representation, which converges rapidly for appropriate values of $x$:
-
-$$I_x(a, b) = \frac{x^a (1-x)^b}{a \cdot B(a, b)} \cdot \cfrac{1}{1 + \cfrac{d_1}{1 + \cfrac{d_2}{1 + \cdots}}}$$
-
-where the coefficients $d_m$ are:
-
-- For even $m = 2k$: $d_m = \frac{k(b-k)x}{(a+2k-1)(a+2k)}$
-- For odd $m = 2k+1$: $d_m = -\frac{(a+k)(a+b+k)x}{(a+2k)(a+2k+1)}$
-
-**2. Symmetry Relation**
-
-For better convergence, the symmetry property is used when $x > \frac{a+1}{a+b+2}$:
-
-$$I_x(a, b) = 1 - I_{1-x}(b, a)$$
-
-**3. Log-Gamma via Lanczos Approximation**
-
-The beta function is computed using logarithms of the gamma function for numerical stability:
-
-$$\ln B(a, b) = \ln\Gamma(a) + \ln\Gamma(b) - \ln\Gamma(a+b)$$
-
-The log-gamma function uses the Lanczos approximation with $g = 7$ and precomputed coefficients, providing accuracy to approximately 15 significant digits.
-
-### Accuracy
-
-This implementation provides accurate $p$-values across all degrees of freedom, including:
-
-- **Small samples** ($n < 30$): Critical for cancer biology and other fields with small sample sizes
-- **Large samples** ($n > 1000$): Correctly handles the convergence to normal distribution
-- **Edge cases**: Correlations near $\pm 1$ are handled with appropriate bounds
-
-The numerical precision is approximately $10^{-14}$ relative error, sufficient for all practical significance testing applications.
+where $F_t$ is the $t$-distribution CDF with $\nu = n - 2$ degrees of freedom.
 
 ### Example
 

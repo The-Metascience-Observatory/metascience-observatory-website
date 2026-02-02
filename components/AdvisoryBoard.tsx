@@ -4,9 +4,9 @@ import Link from "next/link";
 
 export const AdvisoryBoard = () => {
   return (
-    <section id="advisory-board" className="py-20 scroll-mt-24">
+    <section id="advisory-board" className="py-12 scroll-mt-24">
       <div className="container px-4">
-        <div className="max-w-4xl mx-auto space-y-10">
+        <div className="max-w-4xl mx-auto space-y-6">
           <div className="text-center space-y-4">
             <div className="flex items-center justify-center gap-3">
               <Users className="w-10 h-10 text-primary" />
