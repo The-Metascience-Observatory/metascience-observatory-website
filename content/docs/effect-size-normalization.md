@@ -256,6 +256,7 @@ $$r = \sqrt{\frac{\chi^2}{N}}$$
 
 The following effect sizes cannot be reliably converted to $r$ and are returned as missing values:
 
+* Incidence Rate Difference (IRD) — raw percentage-point differences between groups, on a scale of roughly −100 to +100, incompatible with the standardized 0–1 scale
 * Partial eta-squared ($\eta^2_p$)
 * Cramér's V
 * Cohen's h
@@ -266,6 +267,29 @@ The following effect sizes cannot be reliably converted to $r$ and are returned 
 * Semi-partial correlations ($sr^2$)
 * Chi-squared with df > 1
 * Percentages
+
+---
+
+## Effect Size Types in the Database
+
+The table below lists all effect size types present in the database, their abbreviations, and whether they can be converted to Pearson's $r$.
+
+| Effect Size | Abbreviation | Convertible to $r$? |
+|---|---|---|
+| Cohen's d | d | Yes |
+| Pearson correlation | r | Yes (already $r$) |
+| Incidence Rate Difference | IRD | No |
+| Glass' delta | Glass' delta | No |
+| Odds Ratio | OR | Yes |
+| Cliff's delta | Cliff's delta | No |
+| Cohen's w | w | No |
+| Regression coefficient (standardized) | beta | No |
+| Eta squared | etasq, η² | Yes |
+| Hazard Ratio | HR | Yes |
+| Probability Difference | PD | No |
+| Cohen's $d_z$ (paired) | dz | No |
+| Regression coefficient (unstandardized) | b | No |
+| Spearman's rank correlation | Spearman's r | No |
 
 ---
 

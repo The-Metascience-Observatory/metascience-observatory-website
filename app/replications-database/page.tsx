@@ -6,8 +6,22 @@ import { Footer } from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import { generateCitationHtml, transformCitationHtmlToExplorer, citationSearchText } from "@/lib/citations";
 import { jStat } from "jstat";
+import INITIATIVE_TAG_NAMES from "@/data/initiative_tag_names.json";
 
 type AnyRecord = Record<string, unknown>;
+
+const ES_TYPE_COLORS: Record<string, string> = {
+  "d": "#3b82f6",
+  "r": "#10b981",
+  "Glass' delta": "#8b5cf6",
+  "w": "#ec4899",
+  "Cliff's delta": "#14b8a6",
+  "OR": "#f59e0b",
+  "Other": "#9ca3af",
+};
+const NAMED_ES_TYPES = new Set(Object.keys(ES_TYPE_COLORS).filter(k => k !== "Other"));
+// ES types with incompatible scales (e.g. percentage-point differences) excluded from raw scatterplot
+const EXCLUDED_ES_TYPES = new Set(["IRD"]);
 
 type FredResponse = {
   columns: string[];
@@ -31,14 +45,6 @@ function toNumber(value: unknown): number | null {
   if (typeof value === "string" && value.trim() === "") return null;
   const n = typeof value === "number" ? value : Number(String(value).trim());
   return Number.isFinite(n) ? n : null;
-}
-
-// Helper to check if a value is present (not null, undefined, empty string, or NaN)
-function isPresent(val: unknown): boolean {
-  if (val == null) return false;
-  if (typeof val === "string" && val.trim() === "") return false;
-  const n = toNumber(val);
-  return n != null;
 }
 
 function formatSig4(value: unknown): string {
@@ -330,14 +336,26 @@ function getOutcomeForRow(
   const origCIStr = row.original_es_95_CI as string | null | undefined;
   const repCIStr = row.replication_es_95_CI as string | null | undefined;
 
-  // For significance-based methods, require normalized r values
+  // For significance-based methods: prefer normalized r values, fall back to p-values + raw ES direction
   if (outcomeMethod === "significance") {
-    if (eO_r == null || eR_r == null || nO == null || nR == null || nO <= 0 || nR <= 0) {
-      return "inconclusive";
+    if (eO_r != null && eR_r != null && nO != null && nR != null && nO > 0 && nR > 0) {
+      const pOrigCSV = toNumber(row.original_p_value);
+      const pRepCSV = toNumber(row.replication_p_value);
+      return computeSignificanceOutcome(eO_r, eR_r, nO, nR, esOType, esRType, pOrigCSV, pRepCSV);
     }
-    const pOrigCSV = toNumber(row.original_p_value);
-    const pRepCSV = toNumber(row.replication_p_value);
-    return computeSignificanceOutcome(eO_r, eR_r, nO, nR, esOType, esRType, pOrigCSV, pRepCSV);
+    // Fallback: use p-values directly + raw ES for direction
+    const pOrig = toNumber(row.original_p_value);
+    const pRep = toNumber(row.replication_p_value);
+    if (pOrig != null && pRep != null && eO_raw != null && eR_raw != null) {
+      const sameDirection = Math.sign(eO_raw) === Math.sign(eR_raw);
+      if (pOrig >= 0.05) {
+        return pRep >= 0.05 ? "success" : "failure";
+      }
+      if (pRep < 0.05 && sameDirection) return "success";
+      if (pRep < 0.05 && !sameDirection) return "reversal";
+      return "failure";
+    }
+    return "inconclusive";
   }
 
   // For CI-based methods: pass both raw and r values; functions will use appropriate strategy
@@ -355,6 +373,7 @@ type ColumnKey =
   | "replication_citation_html"
   | "description"
   | "discipline"
+  | "subdiscipline"
   | "result"
   | "original_n"
   | "replication_n"
@@ -364,6 +383,14 @@ type ColumnKey =
   | "replication_es_r"
   | "original_es_type"
   | "replication_es_type"
+  | "original_es_95_CI"
+  | "replication_es_95_CI"
+  | "original_p_value"
+  | "replication_p_value"
+  | "original_p_value_type"
+  | "replication_p_value_type"
+  | "original_p_value_tails"
+  | "replication_p_value_tails"
   | "original_authors"
   | "replication_authors"
   | "original_title"
@@ -382,7 +409,11 @@ type ColumnKey =
   | "replication_url"
   | "tags"
   | "validated"
-  | "validated_person";
+  | "validated_person"
+  | "replication_initiative_tag"
+  | "openalex_field"
+  | "openalex_subfield"
+  | "source";
 
 const ALL_COLUMNS: Array<{ key: ColumnKey; label: string }> = [
   { key: "index", label: "#" },
@@ -390,15 +421,24 @@ const ALL_COLUMNS: Array<{ key: ColumnKey; label: string }> = [
   { key: "replication_citation_html", label: "Replication publication" },
   { key: "description", label: "Description of the original effect" },
   { key: "discipline", label: "Discipline" },
+  { key: "subdiscipline", label: "Subdiscipline" },
   { key: "result", label: "Result" },
   { key: "original_n", label: "N (orig)" },
   { key: "replication_n", label: "N (rep)" },
   { key: "original_es", label: "ES (orig)" },
   { key: "replication_es", label: "ES (rep)" },
-  { key: "original_es_r", label: "ES_r(orig)" },
-  { key: "replication_es_r", label: "ES_r(rep)" },
+  { key: "original_es_r", label: "ES_r (orig)" },
+  { key: "replication_es_r", label: "ES_r (rep)" },
   { key: "original_es_type", label: "ES type (orig)" },
   { key: "replication_es_type", label: "ES type (rep)" },
+  { key: "original_es_95_CI", label: "ES 95% CI (orig)" },
+  { key: "replication_es_95_CI", label: "ES 95% CI (rep)" },
+  { key: "original_p_value", label: "p-value (orig)" },
+  { key: "replication_p_value", label: "p-value (rep)" },
+  { key: "original_p_value_type", label: "p-value type (orig)" },
+  { key: "replication_p_value_type", label: "p-value type (rep)" },
+  { key: "original_p_value_tails", label: "p-value tails (orig)" },
+  { key: "replication_p_value_tails", label: "p-value tails (rep)" },
   { key: "original_authors", label: "Original authors" },
   { key: "replication_authors", label: "Replication authors" },
   { key: "original_title", label: "Original title" },
@@ -418,6 +458,10 @@ const ALL_COLUMNS: Array<{ key: ColumnKey; label: string }> = [
   { key: "tags", label: "Tags" },
   { key: "validated", label: "Human Validated" },
   { key: "validated_person", label: "Validated Person" },
+  { key: "replication_initiative_tag", label: "Replication Initiative" },
+  { key: "openalex_field", label: "OpenAlex Field" },
+  { key: "openalex_subfield", label: "OpenAlex Subfield" },
+  { key: "source", label: "Source" },
 ];
 
 const DEFAULT_COLUMNS: ColumnKey[] = [
@@ -442,8 +486,9 @@ export default function ReplicationsDatabasePage() {
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
 
   const [discipline, setDiscipline] = useState<string>("");
-  const [openAlexField, setOpenAlexField] = useState<string>("");
+  const [subdiscipline, setSubdiscipline] = useState<string>("");
     const [result, setResult] = useState<string>("");
+  const [initiative, setInitiative] = useState<string>("");
   const [search, setSearch] = useState<string>("");
   const [visibleColumns, setVisibleColumns] = useState<Set<ColumnKey>>(
     new Set(DEFAULT_COLUMNS)
@@ -492,14 +537,17 @@ export default function ReplicationsDatabasePage() {
     });
   }, [data]);
 
-  const openAlexFieldOptions: Option[] = useMemo(() => {
+  const subdisciplineOptions: Option[] = useMemo(() => {
     if (!data) return [];
     const counts = new Map<string, number>();
     for (const r of data.rows) {
-      const key = String(r.openalex_field ?? "");
-      counts.set(key, (counts.get(key) || 0) + 1);
+      const raw = String(r.subdiscipline ?? "");
+      const parts = raw.split(",").map((s) => s.trim()).filter(Boolean);
+      for (const part of parts) {
+        counts.set(part, (counts.get(part) || 0) + 1);
+      }
     }
-    const entries = Array.from(counts.entries()).filter(([k]) => k !== "");
+    const entries = Array.from(counts.entries());
     entries.sort((a, b) => {
       if (b[1] !== a[1]) return b[1] - a[1];
       return a[0].localeCompare(b[0]);
@@ -507,7 +555,7 @@ export default function ReplicationsDatabasePage() {
     const sortedValues = entries.map(([k]) => k);
     const values = ["", ...sortedValues];
     return values.map((v) => {
-      if (v === "") return { value: v, label: "All fields" };
+      if (v === "") return { value: v, label: "All subdisciplines" };
       const c = counts.get(v) || 0;
       return { value: v, label: `${v} (${c})` };
     });
@@ -518,12 +566,35 @@ export default function ReplicationsDatabasePage() {
     return ["", ...uniqueValues(data.rows, "result")].map((v) => ({ value: v, label: v || "All results" }));
   }, [data]);
 
+  const initiativeOptions: Option[] = useMemo(() => {
+    if (!data) return [];
+    const counts = new Map<string, number>();
+    for (const r of data.rows) {
+      const tag = String(r.replication_initiative_tag ?? "").trim();
+      if (tag) counts.set(tag, (counts.get(tag) || 0) + 1);
+    }
+    const entries = Array.from(counts.entries());
+    entries.sort((a, b) => {
+      if (b[1] !== a[1]) return b[1] - a[1];
+      return a[0].localeCompare(b[0]);
+    });
+    const tagNames: Record<string, string> = INITIATIVE_TAG_NAMES;
+    return [
+      { value: "", label: "All initiatives" },
+      ...entries.map(([tag, count]) => ({
+        value: tag,
+        label: `${tagNames[tag] || tag} (${count})`,
+      })),
+    ];
+  }, [data]);
+
   const filteredRows = useMemo(() => {
     if (!data) return [] as AnyRecord[];
     return data.rows.filter((r) => {
       if (discipline && !String(r.discipline ?? "").split(",").map((s) => s.trim()).includes(discipline)) return false;
-      if (openAlexField && String(r.openalex_field ?? "") !== openAlexField) return false;
+      if (subdiscipline && !String(r.subdiscipline ?? "").split(",").map((s) => s.trim()).includes(subdiscipline)) return false;
       if (result && String(r.result ?? "") !== result) return false;
+      if (initiative && String(r.replication_initiative_tag ?? "").trim() !== initiative) return false;
       if (search) {
         const s = search.toLowerCase();
         const hay = `${r.description ?? ""} ${r.tags ?? ""} ${citationSearchText(r.original_authors as string, r.original_journal as string, r.original_year as string)} ${citationSearchText(r.replication_authors as string, r.replication_journal as string, r.replication_year as string)}`.toLowerCase();
@@ -531,45 +602,42 @@ export default function ReplicationsDatabasePage() {
       }
       return true;
     });
-  }, [data, discipline, openAlexField, result, search]);
+  }, [data, discipline, subdiscipline, result, initiative, search]);
 
   // Compute outcomes once and share between stats and scatterplot
-  // This eliminates duplicate computation (Issue #5)
-  // IMPORTANT: Only include rows where BOTH original_es_r AND replication_es_r are present
-  // Do NOT fall back to es_original/es_replication - those are raw effect sizes in various units
+  // Includes rows with es_r (plottable on scatterplot) AND rows with only raw ES (stats only)
+  // oAdj/rAdj are NaN for rows without es_r — scatterplot filters these out
   const computedOutcomes = useMemo(() => {
     const results: Array<{
       row: AnyRecord;
       outcome: "success" | "failure" | "reversal" | "inconclusive";
-      // Scatterplot coordinates: original direction is always "positive"
-      // Original ES is normalized to absolute value
-      // Replication ES is flipped to maintain the relationship
+      // Scatterplot coordinates: NaN when es_r not available (raw-ES-only rows)
       oAdj: number;
       rAdj: number;
       desc: string;
     }> = [];
 
     for (const r of filteredRows) {
-      // Only use the normalized Pearson r columns - do NOT fall back to raw effect sizes
-      // If original_es_r or replication_es_r is missing/empty, skip this row
-      if (!isPresent(r.original_es_r) || !isPresent(r.replication_es_r)) continue;
-
       const eO = toNumber(r.original_es_r);
       const eR = toNumber(r.replication_es_r);
+      const hasESR = eO != null && eR != null && eO !== 0 && eR !== 0;
 
-      // Double-check after conversion (handles edge cases)
-      // Also skip rows where either effect size is exactly 0 (meaningless for replication assessment)
-      if (eO == null || eR == null || eO === 0 || eR === 0) continue;
+      // Also check if row has raw ES data (for CI/significance fallback)
+      const eO_raw = toNumber(r.original_es);
+      const eR_raw = toNumber(r.replication_es);
+      const hasRawES = eO_raw != null && eR_raw != null;
+
+      // Skip rows with neither es_r nor raw ES
+      if (!hasESR && !hasRawES) continue;
 
       const outcome = getOutcomeForRow(r, outcomeMethod);
 
-      // Coordinate transformation for scatterplot:
-      // The original effect direction is ALWAYS considered "positive"
-      // So we take absolute value of original and flip replication accordingly
-      // This preserves the relationship: if replication is in same direction as original,
-      // it will appear above y=0; if opposite direction, below y=0
-      const oAdj = Math.abs(eO);
-      const rAdj = eO >= 0 ? eR : -eR;
+      // Skip rows that produce inconclusive AND have no es_r (nothing useful to contribute)
+      if (outcome === "inconclusive" && !hasESR) continue;
+
+      // Scatterplot coordinates: only when es_r available
+      const oAdj = hasESR ? Math.abs(eO!) : NaN;
+      const rAdj = hasESR ? (eO! >= 0 ? eR! : -eR!) : NaN;
 
       results.push({
         row: r,
@@ -583,8 +651,23 @@ export default function ReplicationsDatabasePage() {
     return results;
   }, [filteredRows, outcomeMethod]);
 
+  const rawESPoints = useMemo(() => {
+    const results: Array<{ origES: number; repES: number; esType: string; desc: string }> = [];
+    for (const r of filteredRows) {
+      const oRaw = toNumber(r.original_es);
+      const rRaw = toNumber(r.replication_es);
+      if (oRaw == null || rRaw == null) continue;
+      const rawType = String(r.original_es_type ?? "").trim();
+      if (EXCLUDED_ES_TYPES.has(rawType)) continue;
+      const esType = NAMED_ES_TYPES.has(rawType) ? rawType : "Other";
+      results.push({ origES: oRaw, repES: rRaw, esType, desc: String(r.description || r.tags || "") });
+    }
+    return results;
+  }, [filteredRows]);
+
   // Stat for outcome mix - uses precomputed outcomes
-  // Note: computedOutcomes already filters to only rows with BOTH original_es_r AND replication_es_r present
+  // For significance method: sample sizes needed (to compute p from r)
+  // For CI methods: pre-computed CIs don't need sample sizes, so skip the gate
   const outcomeStat = useMemo(() => {
     let n = 0;
     let success = 0;
@@ -593,12 +676,11 @@ export default function ReplicationsDatabasePage() {
     let inconclusive = 0;
 
     for (const { row, outcome } of computedOutcomes) {
-      const nO = toNumber(row.original_n ?? row.n_original);
-      const nR = toNumber(row.replication_n ?? row.n_replication);
-
-      // Only include if sample sizes are available
-      if (nO == null || nR == null || nO <= 0 || nR <= 0) {
-        continue;
+      // For significance method, require sample sizes (needed to compute p from r)
+      if (outcomeMethod === "significance") {
+        const nO = toNumber(row.original_n ?? row.n_original);
+        const nR = toNumber(row.replication_n ?? row.n_replication);
+        if (nO == null || nR == null || nO <= 0 || nR <= 0) continue;
       }
 
       n++;
@@ -611,7 +693,7 @@ export default function ReplicationsDatabasePage() {
 
     const pct = (v: number) => (n > 0 ? Math.round((v / n) * 1000) / 10 : 0);
     return { n, success, failure, reversal, inconclusive, pctSuccess: pct(success), pctFailure: pct(failure), pctReversal: pct(reversal), pctInconclusive: pct(inconclusive) };
-  }, [computedOutcomes]);
+  }, [computedOutcomes, outcomeMethod]);
 
   // Stat for result column-based display
   const resultStat = useMemo(() => {
@@ -675,7 +757,7 @@ export default function ReplicationsDatabasePage() {
 
       {/* Controls */}
       <section className="mx-auto max-w-[90%] mt-6">
-        <div className="grid gap-3 md:grid-cols-5 items-end">
+        <div className="grid gap-3 md:grid-cols-6 items-end">
           <div className="md:col-span-1">
             <label htmlFor="discipline" className="block text-sm font-medium opacity-80 mb-1">Discipline</label>
             <select
@@ -690,14 +772,27 @@ export default function ReplicationsDatabasePage() {
             </select>
           </div>
           <div className="md:col-span-1">
-            <label htmlFor="openAlexField" className="block text-sm font-medium opacity-80 mb-1">OpenAlex Field (experimental - has errors)</label>
+            <label htmlFor="subdiscipline" className="block text-sm font-medium opacity-80 mb-1">Subdiscipline</label>
             <select
-              id="openAlexField"
-              value={openAlexField}
-              onChange={(e) => setOpenAlexField(e.target.value)}
+              id="subdiscipline"
+              value={subdiscipline}
+              onChange={(e) => setSubdiscipline(e.target.value)}
               className="w-full h-10 rounded-md border border-border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
             >
-              {openAlexFieldOptions.map((opt) => (
+              {subdisciplineOptions.map((opt) => (
+                <option key={opt.value || "__all"} value={opt.value}>{opt.label}</option>
+              ))}
+            </select>
+          </div>
+          <div className="md:col-span-1">
+            <label htmlFor="initiative" className="block text-sm font-medium opacity-80 mb-1">Replication Initiative</label>
+            <select
+              id="initiative"
+              value={initiative}
+              onChange={(e) => setInitiative(e.target.value)}
+              className="w-full h-10 rounded-md border border-border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            >
+              {initiativeOptions.map((opt) => (
                 <option key={opt.value || "__all"} value={opt.value}>{opt.label}</option>
               ))}
             </select>
@@ -782,11 +877,19 @@ export default function ReplicationsDatabasePage() {
           </div>
         </div>
         <div className="border rounded p-4">
-          <div className="text-sm opacity-70">Replication Effect Size vs Original Effect Size ({computedOutcomes.filter(p => p.outcome !== "inconclusive").length} replications)</div>
+          <div className="text-sm opacity-70">Replication Effect Size vs Original Effect Size - Converted to Standard Scale ({computedOutcomes.filter(p => p.outcome !== "inconclusive" && Number.isFinite(p.oAdj)).length} replications)</div>
           <div className="mt-2">
-            <InlineScatter points={computedOutcomes.filter(p => p.outcome !== "inconclusive")} />
+            <InlineScatter points={computedOutcomes.filter(p => p.outcome !== "inconclusive" && Number.isFinite(p.oAdj) && Number.isFinite(p.rAdj))} />
           </div>
         </div>
+        {/* Raw effect sizes scatterplot - hidden for now
+        <div className="border rounded p-4">
+          <div className="text-sm opacity-70">Raw Effect Sizes ({rawESPoints.length} replications)</div>
+          <div className="mt-2">
+            <RawESScatter points={rawESPoints} />
+          </div>
+        </div>
+        */}
       </section>
 
       <section className="mx-auto max-w-[90%] border rounded mt-6">
@@ -854,6 +957,7 @@ export default function ReplicationsDatabasePage() {
                 {visibleColumns.has("replication_citation_html") && <th className="text-left p-2">Replication publication</th>}
                 {visibleColumns.has("description") && <th className="text-left p-2">Description of the original effect</th>}
                 {visibleColumns.has("discipline") && <th className="text-left p-2">Discipline</th>}
+                {visibleColumns.has("subdiscipline") && <th className="text-left p-2">Subdiscipline</th>}
                 {visibleColumns.has("result") && <th className="text-left p-2">Result</th>}
                 {visibleColumns.has("original_n") && <th className="text-right p-2">N (orig)</th>}
                 {visibleColumns.has("replication_n") && <th className="text-right p-2">N (rep)</th>}
@@ -863,6 +967,14 @@ export default function ReplicationsDatabasePage() {
                 {visibleColumns.has("replication_es_r") && <th className="text-right p-2"><a href="/docs/effect-size-normalization" className="underline hover:opacity-80">ES_r(rep)</a></th>}
                 {visibleColumns.has("original_es_type") && <th className="text-right p-2">ES type (orig)</th>}
                 {visibleColumns.has("replication_es_type") && <th className="text-right p-2">ES type (rep)</th>}
+                {visibleColumns.has("original_es_95_CI") && <th className="text-right p-2">ES 95% CI (orig)</th>}
+                {visibleColumns.has("replication_es_95_CI") && <th className="text-right p-2">ES 95% CI (rep)</th>}
+                {visibleColumns.has("original_p_value") && <th className="text-right p-2">p-value (orig)</th>}
+                {visibleColumns.has("replication_p_value") && <th className="text-right p-2">p-value (rep)</th>}
+                {visibleColumns.has("original_p_value_type") && <th className="text-left p-2">p-value type (orig)</th>}
+                {visibleColumns.has("replication_p_value_type") && <th className="text-left p-2">p-value type (rep)</th>}
+                {visibleColumns.has("original_p_value_tails") && <th className="text-left p-2">p-value tails (orig)</th>}
+                {visibleColumns.has("replication_p_value_tails") && <th className="text-left p-2">p-value tails (rep)</th>}
                 {visibleColumns.has("original_authors") && <th className="text-left p-2">Original authors</th>}
                 {visibleColumns.has("replication_authors") && <th className="text-left p-2">Replication authors</th>}
                 {visibleColumns.has("original_title") && <th className="text-left p-2">Original title</th>}
@@ -882,6 +994,10 @@ export default function ReplicationsDatabasePage() {
                 {visibleColumns.has("tags") && <th className="text-left p-2">Tags</th>}
                 {visibleColumns.has("validated") && <th className="text-left p-2">Human Validated</th>}
                 {visibleColumns.has("validated_person") && <th className="text-left p-2">Validated Person</th>}
+                {visibleColumns.has("replication_initiative_tag") && <th className="text-left p-2">Replication Initiative</th>}
+                {visibleColumns.has("openalex_field") && <th className="text-left p-2">OpenAlex Field</th>}
+                {visibleColumns.has("openalex_subfield") && <th className="text-left p-2">OpenAlex Subfield</th>}
+                {visibleColumns.has("source") && <th className="text-left p-2">Source</th>}
               </tr>
             </thead>
             <tbody>
@@ -934,6 +1050,9 @@ export default function ReplicationsDatabasePage() {
                     {visibleColumns.has("discipline") && (
                     <td className="align-top p-2">{String(r.discipline || "")}</td>
                     )}
+                    {visibleColumns.has("subdiscipline") && (
+                      <td className="align-top p-2">{String(r.subdiscipline || "")}</td>
+                    )}
                     {visibleColumns.has("result") && (
                     <td className="align-top p-2">{String(r.result || "")}</td>
                     )}
@@ -964,6 +1083,30 @@ export default function ReplicationsDatabasePage() {
                     )}
                     {visibleColumns.has("replication_es_type") && (
                       <td className="align-top p-2 text-right">{esRType || ""}</td>
+                    )}
+                    {visibleColumns.has("original_es_95_CI") && (
+                      <td className="align-top p-2 text-right">{String(r.original_es_95_CI || "")}</td>
+                    )}
+                    {visibleColumns.has("replication_es_95_CI") && (
+                      <td className="align-top p-2 text-right">{String(r.replication_es_95_CI || "")}</td>
+                    )}
+                    {visibleColumns.has("original_p_value") && (
+                      <td className="align-top p-2 text-right">{String(r.original_p_value || "")}</td>
+                    )}
+                    {visibleColumns.has("replication_p_value") && (
+                      <td className="align-top p-2 text-right">{String(r.replication_p_value || "")}</td>
+                    )}
+                    {visibleColumns.has("original_p_value_type") && (
+                      <td className="align-top p-2">{String(r.original_p_value_type || "")}</td>
+                    )}
+                    {visibleColumns.has("replication_p_value_type") && (
+                      <td className="align-top p-2">{String(r.replication_p_value_type || "")}</td>
+                    )}
+                    {visibleColumns.has("original_p_value_tails") && (
+                      <td className="align-top p-2">{String(r.original_p_value_tails || "")}</td>
+                    )}
+                    {visibleColumns.has("replication_p_value_tails") && (
+                      <td className="align-top p-2">{String(r.replication_p_value_tails || "")}</td>
                     )}
                     {visibleColumns.has("original_authors") && (
                       <td className="align-top p-2">{String(r.original_authors || "")}</td>
@@ -1021,6 +1164,18 @@ export default function ReplicationsDatabasePage() {
                     )}
                     {visibleColumns.has("validated_person") && (
                       <td className="align-top p-2">{String(r.validated_person || "")}</td>
+                    )}
+                    {visibleColumns.has("replication_initiative_tag") && (
+                      <td className="align-top p-2">{(INITIATIVE_TAG_NAMES as Record<string, string>)[String(r.replication_initiative_tag || "")] || String(r.replication_initiative_tag || "")}</td>
+                    )}
+                    {visibleColumns.has("openalex_field") && (
+                      <td className="align-top p-2">{String(r.openalex_field || "")}</td>
+                    )}
+                    {visibleColumns.has("openalex_subfield") && (
+                      <td className="align-top p-2">{String(r.openalex_subfield || "")}</td>
+                    )}
+                    {visibleColumns.has("source") && (
+                      <td className="align-top p-2">{String(r.source || "")}</td>
                     )}
                   </tr>
                 );
@@ -1132,9 +1287,9 @@ function InlineScatter({ points }: { points: ScatterPoint[] }) {
           {/* Horizontal line at y=0 showing direction boundary */}
           <line x1={0} y1={y(0)} x2={innerW} y2={y(0)} stroke="#9ca3af" strokeWidth={1} strokeDasharray="2 2" />
           {/* X-axis label */}
-          <text x={innerW / 2} y={innerH + 40} textAnchor="middle" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 10 }}>Original Effect Size (r)</text>
+          <text x={innerW / 2} y={innerH + 40} textAnchor="middle" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 10 }}>Original Effect Size (Pearson's r equivalent)</text>
           {/* Y-axis label */}
-          <text x={-innerH / 2} y={-38} textAnchor="middle" transform="rotate(-90)" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 10 }}>Replication Effect Size (r)</text>
+          <text x={-innerH / 2} y={-38} textAnchor="middle" transform="rotate(-90)" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 10 }}>Replication Effect Size (Pearson's r equivalent)</text>
           {points.map((p, i) => {
             const fill = color(p.outcome);
             return (
@@ -1164,4 +1319,155 @@ function InlineScatter({ points }: { points: ScatterPoint[] }) {
   );
 }
 
+type RawScatterPoint = {
+  origES: number;
+  repES: number;
+  esType: string;
+  desc: string;
+};
+
+function percentile(arr: number[], p: number): number {
+  const sorted = [...arr].sort((a, b) => a - b);
+  const idx = (p / 100) * (sorted.length - 1);
+  const lower = Math.floor(idx);
+  const upper = Math.ceil(idx);
+  if (lower === upper) return sorted[lower];
+  return sorted[lower] + (sorted[upper] - sorted[lower]) * (idx - lower);
+}
+
+function niceStep(range: number): number {
+  const rough = range / 5;
+  const pow = Math.pow(10, Math.floor(Math.log10(Math.abs(rough))));
+  const normalized = rough / pow;
+  if (normalized <= 1) return pow;
+  if (normalized <= 2) return 2 * pow;
+  if (normalized <= 5) return 5 * pow;
+  return 10 * pow;
+}
+
+function RawESScatter({ points }: { points: RawScatterPoint[] }) {
+  const width = 600;
+  const height = 240;
+  const margin = { top: 10, right: 10, bottom: 45, left: 50 };
+  const innerW = width - margin.left - margin.right;
+  const innerH = height - margin.top - margin.bottom;
+
+  if (points.length === 0) {
+    return <div className="text-sm opacity-50">No data with raw effect sizes</div>;
+  }
+
+  // Dynamic axis range using percentile clamping
+  const allX = points.map(p => p.origES);
+  const allY = points.map(p => p.repES);
+
+  let xMin: number, xMax: number, yMin: number, yMax: number;
+  if (points.length <= 2) {
+    const allVals = [...allX, ...allY];
+    const lo = Math.min(...allVals) - 1;
+    const hi = Math.max(...allVals) + 1;
+    xMin = lo; xMax = hi; yMin = lo; yMax = hi;
+  } else {
+    const p2x = percentile(allX, 2.5);
+    const p97x = percentile(allX, 97.5);
+    const p2y = percentile(allY, 2.5);
+    const p97y = percentile(allY, 97.5);
+    const padX = Math.max((p97x - p2x) * 0.05, 0.1);
+    const padY = Math.max((p97y - p2y) * 0.05, 0.1);
+    xMin = p2x - padX;
+    xMax = p97x + padX;
+    yMin = p2y - padY;
+    yMax = p97y + padY;
+  }
+
+  const clampX = (v: number) => Math.max(xMin, Math.min(xMax, v));
+  const clampY = (v: number) => Math.max(yMin, Math.min(yMax, v));
+  const isClamped = (p: RawScatterPoint) =>
+    p.origES < xMin || p.origES > xMax || p.repES < yMin || p.repES > yMax;
+
+  const x = (v: number) => {
+    if (xMax === xMin) return innerW / 2;
+    return ((v - xMin) / (xMax - xMin)) * innerW;
+  };
+  const y = (v: number) => {
+    if (yMax === yMin) return innerH / 2;
+    return innerH - ((v - yMin) / (yMax - yMin)) * innerH;
+  };
+
+  // Generate nice tick marks
+  const stepX = niceStep(xMax - xMin);
+  const stepY = niceStep(yMax - yMin);
+  const xTicks: number[] = [];
+  const yTicks: number[] = [];
+  for (let t = Math.ceil(xMin / stepX) * stepX; t <= xMax; t += stepX) xTicks.push(Math.round(t * 1000) / 1000);
+  for (let t = Math.ceil(yMin / stepY) * stepY; t <= yMax; t += stepY) yTicks.push(Math.round(t * 1000) / 1000);
+
+  // Legend: only show types present, sorted by count descending
+  const typeCounts = new Map<string, number>();
+  for (const p of points) typeCounts.set(p.esType, (typeCounts.get(p.esType) || 0) + 1);
+  const presentTypes = [...typeCounts.entries()].sort((a, b) => b[1] - a[1]).map(e => e[0]);
+
+  // Diagonal line range (y=x)
+  const diagMin = Math.max(xMin, yMin);
+  const diagMax = Math.min(xMax, yMax);
+
+  return (
+    <div className="relative">
+      <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet" className="max-w-full h-auto">
+        <g transform={`translate(${margin.left},${margin.top})`}>
+          <rect x={0} y={0} width={innerW} height={innerH} fill="#f3f4f6" />
+          {xTicks.map((t) => (
+            <g key={`x-${t}`} transform={`translate(${x(t)},${innerH})`}>
+              <line y1={0} y2={6} stroke="#111827" strokeWidth={1} />
+              <text y={20} textAnchor="middle" className="text-xs fill-current" style={{ opacity: 0.7 }}>{t}</text>
+            </g>
+          ))}
+          {yTicks.map((t) => (
+            <g key={`y-${t}`} transform={`translate(0,${y(t)})`}>
+              <line x1={-6} x2={0} stroke="#111827" strokeWidth={1} />
+              <text x={-10} dy="0.32em" textAnchor="end" className="text-xs fill-current" style={{ opacity: 0.7 }}>{t}</text>
+            </g>
+          ))}
+          {/* Diagonal y=x line */}
+          {diagMin < diagMax && (
+            <line x1={x(diagMin)} y1={y(diagMin)} x2={x(diagMax)} y2={y(diagMax)} stroke="#6b7280" strokeDasharray="4 4" />
+          )}
+          {/* y=0 line if in range */}
+          {yMin <= 0 && yMax >= 0 && (
+            <line x1={0} y1={y(0)} x2={innerW} y2={y(0)} stroke="#9ca3af" strokeWidth={1} strokeDasharray="2 2" />
+          )}
+          {/* x=0 line if in range */}
+          {xMin <= 0 && xMax >= 0 && (
+            <line x1={x(0)} y1={0} x2={x(0)} y2={innerH} stroke="#9ca3af" strokeWidth={1} strokeDasharray="2 2" />
+          )}
+          <text x={innerW / 2} y={innerH + 40} textAnchor="middle" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 10 }}>Original Effect Size (raw)</text>
+          <text x={-innerH / 2} y={-42} textAnchor="middle" transform="rotate(-90)" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 10 }}>Replication Effect Size (raw)</text>
+          {points.map((p, i) => {
+            const cx = x(clampX(p.origES));
+            const cy = y(clampY(p.repES));
+            const fill = ES_TYPE_COLORS[p.esType] || ES_TYPE_COLORS["Other"];
+            const clamped = isClamped(p);
+            return (
+              <g key={i} transform={`translate(${cx},${cy})`}>
+                <title>{`${p.desc}\n${p.esType}: orig=${p.origES}, rep=${p.repES}`}</title>
+                {clamped ? (
+                  <polygon points="0,-4 3.5,3 -3.5,3" fill={fill} fillOpacity={0.6} />
+                ) : (
+                  <circle r={3} fill={fill} fillOpacity={0.85} />
+                )}
+              </g>
+            );
+          })}
+        </g>
+      </svg>
+      <div className="mt-2 flex flex-wrap items-center gap-3 text-xs">
+        {presentTypes.map(type => (
+          <div key={type} className="flex items-center gap-1.5">
+            <span className="inline-block w-3 h-3 rounded" style={{ background: ES_TYPE_COLORS[type] || ES_TYPE_COLORS["Other"] }} />
+            <span>{type} ({typeCounts.get(type)})</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
