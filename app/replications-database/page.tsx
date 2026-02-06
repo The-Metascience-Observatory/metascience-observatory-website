@@ -494,7 +494,7 @@ export default function ReplicationsDatabasePage() {
     new Set(DEFAULT_COLUMNS)
   );
   const [showColumnSelector, setShowColumnSelector] = useState(false);
-  const [outcomeMethod, setOutcomeMethod] = useState<"significance" | "orig_in_rep_ci" | "rep_in_orig_ci">("significance");
+  const [outcomeMethod, setOutcomeMethod] = useState<"significance" | "orig_in_rep_ci" | "rep_in_orig_ci">("rep_in_orig_ci");
 
   useEffect(() => {
     async function fetchData() {
@@ -849,11 +849,13 @@ export default function ReplicationsDatabasePage() {
               <div className="flex-1"><MiniBar value={outcomeStat.pctFailure} max={100} color="#f87171" /></div>
               <div className="w-24 text-right text-sm">{outcomeStat.failure} ({outcomeStat.pctFailure}%)</div>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="w-24 text-sm">Reversal</div>
-              <div className="flex-1"><MiniBar value={outcomeStat.pctReversal} max={100} color="#b91c1c" /></div>
-              <div className="w-24 text-right text-sm">{outcomeStat.reversal} ({outcomeStat.pctReversal}%)</div>
-            </div>
+            {outcomeMethod === "significance" && (
+              <div className="flex items-center gap-3">
+                <div className="w-24 text-sm">Reversal</div>
+                <div className="flex-1"><MiniBar value={outcomeStat.pctReversal} max={100} color="#b91c1c" /></div>
+                <div className="w-24 text-right text-sm">{outcomeStat.reversal} ({outcomeStat.pctReversal}%)</div>
+              </div>
+            )}
           </div>
           <div className="mt-3">
             <label className="block text-sm font-medium opacity-80 mb-1">
@@ -879,7 +881,7 @@ export default function ReplicationsDatabasePage() {
         <div className="border rounded p-4">
           <div className="text-sm opacity-70">Replication Effect Size vs Original Effect Size - Converted to Standard Scale ({computedOutcomes.filter(p => p.outcome !== "inconclusive" && Number.isFinite(p.oAdj)).length} replications)</div>
           <div className="mt-2">
-            <InlineScatter points={computedOutcomes.filter(p => p.outcome !== "inconclusive" && Number.isFinite(p.oAdj) && Number.isFinite(p.rAdj))} />
+            <InlineScatter points={computedOutcomes.filter(p => p.outcome !== "inconclusive" && Number.isFinite(p.oAdj) && Number.isFinite(p.rAdj))} showReversal={outcomeMethod === "significance"} />
           </div>
         </div>
         {/* Raw effect sizes scatterplot - hidden for now
@@ -1226,7 +1228,7 @@ type ScatterPoint = {
   outcome: "success" | "failure" | "reversal" | "inconclusive";
 };
 
-function InlineScatter({ points }: { points: ScatterPoint[] }) {
+function InlineScatter({ points, showReversal = true }: { points: ScatterPoint[]; showReversal?: boolean }) {
   const width = 600;
   const height = 240;
   const margin = { top: 10, right: 10, bottom: 45, left: 45 };
@@ -1310,10 +1312,12 @@ function InlineScatter({ points }: { points: ScatterPoint[] }) {
           <span className="inline-block w-3 h-3 rounded" style={{ background: "#f87171" }} />
           <span>Failure</span>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="inline-block w-3 h-3 rounded" style={{ background: "#b91c1c" }} />
-          <span>Reversal</span>
-        </div>
+        {showReversal && (
+          <div className="flex items-center gap-2">
+            <span className="inline-block w-3 h-3 rounded" style={{ background: "#b91c1c" }} />
+            <span>Reversal</span>
+          </div>
+        )}
       </div>
     </div>
   );
