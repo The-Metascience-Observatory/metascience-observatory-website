@@ -17,6 +17,8 @@ import os
 import re
 import math
 import logging
+import concurrent.futures
+import threading
 from datetime import datetime
 from difflib import SequenceMatcher
 from fetch_metadata_from_doi import fetch_metadata_from_doi
@@ -590,8 +592,32 @@ def sanity_check_metadata(row, prefix, metadata):
 
     return True
 
-def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None):
-    """Process a single row to enrich metadata"""
+def _cache_get_or_fetch(cache, key, fetch_fn, cache_lock=None):
+    """Thread-safe cache lookup. On miss, calls fetch_fn() outside the lock,
+    then stores the result. Occasional duplicate fetches under contention are
+    harmless and keep lock hold-time short."""
+    if cache_lock:
+        with cache_lock:
+            if key in cache:
+                return cache[key], True  # (result, was_cached)
+    elif key in cache:
+        return cache[key], True
+
+    # Fetch outside the lock so other threads aren't blocked on I/O
+    result = fetch_fn()
+
+    if cache_lock:
+        with cache_lock:
+            cache[key] = result
+    else:
+        cache[key] = result
+
+    return result, False
+
+
+def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cache_lock=None):
+    """Process a single row to enrich metadata.
+    cache_lock: optional threading.Lock for thread-safe cache access."""
     if doi_cache is None:
         doi_cache = {}
     if title_cache is None:
@@ -608,13 +634,15 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None):
         original_doi = None
 
     if original_doi and needs_enrichment(row, 'original'):
-        if original_doi in doi_cache:
+        metadata, was_cached = _cache_get_or_fetch(
+            doi_cache, original_doi,
+            lambda: fetch_metadata_from_doi(original_doi),
+            cache_lock
+        )
+        if was_cached:
             print(f"  Using cached metadata for original DOI: {original_doi}")
-            metadata = doi_cache[original_doi]
         else:
-            print(f"  Fetching metadata for original DOI: {original_doi}")
-            metadata = fetch_metadata_from_doi(original_doi)
-            doi_cache[original_doi] = metadata
+            print(f"  Fetched metadata for original DOI: {original_doi}")
             time.sleep(0.3)  # Rate limiting
         row = enrich_from_metadata(row, 'original', metadata)
 
@@ -622,18 +650,18 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None):
     elif is_empty(original_url) and not is_empty(row.get('original_title')):
         original_title = row.get('original_title')
         title_key = original_title.lower().strip()
-        if title_key in title_cache:
+        metadata, was_cached = _cache_get_or_fetch(
+            title_cache, title_key,
+            lambda: fetch_metadata_from_title(original_title),
+            cache_lock
+        )
+        if was_cached:
             print(f"  Using cached metadata for original title: {original_title[:50]}...")
-            metadata = title_cache[title_key]
         else:
-            print(f"  No original_url found, searching by title: {original_title}...")
-            metadata = fetch_metadata_from_title(original_title)
-            title_cache[title_key] = metadata
+            print(f"  Searched by title: {original_title[:50]}...")
 
         if metadata and metadata.get('doi'):
-            # Sanity check the DOI
             if sanity_check_metadata(row, 'original', metadata):
-                # Normalize DOI to handle cases where it's already a full URL
                 normalized_doi = normalize_doi(metadata['doi'])
                 if normalized_doi:
                     print(f"  ✓ Found and verified DOI: {normalized_doi}")
@@ -646,7 +674,8 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None):
         else:
             print(f"  ✗ Could not find DOI from title")
 
-        time.sleep(0.3)  # Rate limiting
+        if not was_cached:
+            time.sleep(0.3)  # Rate limiting
 
     # ===== PROCESS REPLICATION STUDY =====
     replication_url = row.get('replication_url')
@@ -658,13 +687,15 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None):
         replication_doi = None
 
     if replication_doi and needs_enrichment(row, 'replication'):
-        if replication_doi in doi_cache:
+        metadata, was_cached = _cache_get_or_fetch(
+            doi_cache, replication_doi,
+            lambda: fetch_metadata_from_doi(replication_doi),
+            cache_lock
+        )
+        if was_cached:
             print(f"  Using cached metadata for replication DOI: {replication_doi}")
-            metadata = doi_cache[replication_doi]
         else:
-            print(f"  Fetching metadata for replication DOI: {replication_doi}")
-            metadata = fetch_metadata_from_doi(replication_doi)
-            doi_cache[replication_doi] = metadata
+            print(f"  Fetched metadata for replication DOI: {replication_doi}")
             time.sleep(0.3)  # Rate limiting
         row = enrich_from_metadata(row, 'replication', metadata)
 
@@ -672,18 +703,18 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None):
     elif is_empty(replication_url) and not is_empty(row.get('replication_title')):
         replication_title = row.get('replication_title')
         title_key = replication_title.lower().strip()
-        if title_key in title_cache:
+        metadata, was_cached = _cache_get_or_fetch(
+            title_cache, title_key,
+            lambda: fetch_metadata_from_title(replication_title),
+            cache_lock
+        )
+        if was_cached:
             print(f"  Using cached metadata for replication title: {replication_title[:50]}...")
-            metadata = title_cache[title_key]
         else:
-            print(f"  No replication_url found, searching by title: {replication_title[:50]}...")
-            metadata = fetch_metadata_from_title(replication_title)
-            title_cache[title_key] = metadata
+            print(f"  Searched by title: {replication_title[:50]}...")
 
         if metadata and metadata.get('doi'):
-            # Sanity check the DOI
             if sanity_check_metadata(row, 'replication', metadata):
-                # Normalize DOI to handle cases where it's already a full URL
                 normalized_doi = normalize_doi(metadata['doi'])
                 if normalized_doi:
                     print(f"  ✓ Found and verified DOI: {normalized_doi}")
@@ -696,7 +727,8 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None):
         else:
             print(f"  ✗ Could not find DOI from title")
 
-        time.sleep(0.3)  # Rate limiting
+        if not was_cached:
+            time.sleep(0.3)  # Rate limiting
 
     return row
 
@@ -778,35 +810,146 @@ def reorder_columns(df, data_dict_path=None):
     
     return df[final_column_order]
 
-def check_duplicate(row, master_df):
+def find_duplicate_matches(row, master_df):
     """
-    Check if row is duplicate based on original_url, replication_url, and description.
-    Returns True if duplicate found.
+    Find potential duplicate rows in master based on original_url + replication_url match.
+    Returns list of matching master row indices.
     """
     if master_df.empty:
-        return False
-
-    # Get values to check (handle different column names)
-    original_check = row.get('original_url')
-    replication_check = row.get('replication_url')
-    description_check = row.get('description')
-
-    # Check for exact match on all three fields
+        return []
+    orig = str(row.get('original_url', '')).strip()
+    rep = str(row.get('replication_url', '')).strip()
+    if not orig and not rep:
+        return []
     matches = master_df[
-        (master_df['original_url'] == original_check) &
-        (master_df['replication_url'] == replication_check) &
-        (master_df['description'] == description_check)
+        (master_df['original_url'].fillna('').str.strip() == orig) &
+        (master_df['replication_url'].fillna('').str.strip() == rep)
     ]
+    return matches.index.tolist()
 
-    return len(matches) > 0
 
-def ingest_data(input_csv, skip_api_calls=False, discipline=None):
+def merge_into_master(master_df, match_idx, incoming_row):
+    """Merge incoming row into an existing master row, filling empty fields.
+    Returns the number of fields that were filled."""
+    filled = 0
+    for col in incoming_row.index:
+        if col not in master_df.columns:
+            continue
+        incoming_val = incoming_row[col]
+        existing_val = master_df.at[match_idx, col]
+        if not is_empty(incoming_val) and is_empty(existing_val):
+            master_df.at[match_idx, col] = incoming_val
+            filled += 1
+    return filled
+
+
+def prompt_duplicate_action(new_row, master_df, match_indices, ingest_idx, total_ingest,
+                            dup_number=None, total_dups=None):
+    """
+    Display comparison between new row and existing master row(s) and prompt user for action.
+    Returns: 'add', 'replace', 'skip', 'merge', 'add_all', 'skip_all', or 'merge_all'
+    """
+    # Description shown separately (full width, not truncated)
+    table_fields = ['original_es', 'replication_es', 'original_es_type',
+                     'replication_es_type', 'result', 'original_n', 'replication_n',
+                     'original_es_r', 'replication_es_r', 'discipline', 'subdiscipline',
+                     'original_title', 'original_authors', 'original_year',
+                     'replication_title', 'replication_authors', 'replication_year']
+
+    dup_label = ""
+    if dup_number is not None and total_dups is not None:
+        dup_label = f"  [duplicate {dup_number}/{total_dups}]"
+
+    print(f"\n{'='*120}")
+    print(f"  POSSIBLE DUPLICATE: Ingest row {ingest_idx + 1}/{total_ingest}{dup_label}")
+    print(f"{'='*120}")
+    print(f"  original_url:    {str(new_row.get('original_url', '')).strip()}")
+    print(f"  replication_url: {str(new_row.get('replication_url', '')).strip()}")
+
+    for mi in match_indices:
+        master_row = master_df.loc[mi]
+
+        # Show descriptions in full (wrapped, not truncated)
+        existing_desc = str(master_row.get('description', '')).strip()
+        new_desc = str(new_row.get('description', '')).strip()
+        if existing_desc.lower() == 'nan':
+            existing_desc = ''
+        if new_desc.lower() == 'nan':
+            new_desc = ''
+
+        print(f"\n  ── Match: master row {mi} ──")
+        print(f"  EXISTING description: {existing_desc if existing_desc else '(empty)'}")
+        print(f"  NEW description:      {new_desc if new_desc else '(empty)'}")
+        if existing_desc and new_desc and existing_desc == new_desc:
+            print(f"  (descriptions are identical)")
+
+        # Table for other fields
+        print(f"\n  {'FIELD':<24} {'EXISTING':<45} {'NEW':<45} NOTE")
+        print(f"  {'─'*24} {'─'*45} {'─'*45} {'─'*20}")
+        for field in table_fields:
+            existing_val = str(master_row.get(field, '')).strip()
+            new_val = str(new_row.get(field, '')).strip()
+            if existing_val.lower() == 'nan':
+                existing_val = ''
+            if new_val.lower() == 'nan':
+                new_val = ''
+            # Truncate long values for table columns
+            if len(existing_val) > 42:
+                existing_val = existing_val[:42] + "..."
+            if len(new_val) > 42:
+                new_val = new_val[:42] + "..."
+            # Determine note
+            if existing_val == new_val:
+                marker = " "
+                note = ""
+            elif not existing_val and new_val:
+                marker = "+"
+                note = "← merge would fill"
+            elif existing_val and not new_val:
+                marker = " "
+                note = "(incoming empty)"
+            else:
+                marker = "*"
+                note = "DIFFERS"
+            print(f" {marker}{field:<23} {existing_val:<45} {new_val:<45} {note}")
+
+    print(f"\n  What would you like to do?")
+    print(f"    [s] Skip (do not add this row)")
+    print(f"    [m] Merge (fill empty fields in existing row with incoming data)")
+    print(f"    [a] Add as new row (not a duplicate — different effect)")
+    print(f"    [r] Replace existing row(s) with this new row")
+    print(f"    [S] Skip ALL remaining duplicates")
+    print(f"    [M] Merge ALL remaining duplicates")
+    print(f"    [A] Add ALL remaining duplicates as new rows")
+
+    while True:
+        choice = input("  > ").strip()
+        if choice == 's':
+            return 'skip'
+        elif choice == 'm':
+            return 'merge'
+        elif choice == 'a':
+            return 'add'
+        elif choice == 'r':
+            return 'replace'
+        elif choice == 'S':
+            return 'skip_all'
+        elif choice == 'M':
+            return 'merge_all'
+        elif choice == 'A':
+            return 'add_all'
+        else:
+            print("  Invalid choice. Enter s, m, a, r, S, M, or A.")
+
+def ingest_data(input_csv, skip_api_calls=False, discipline=None, workers=2):
     """Main ingestion function"""
     print(f"\n{'='*60}")
     print(f"REPLICATIONS DATABASE INGESTION ENGINE")
     print(f"{'='*60}")
     if skip_api_calls:
         print("  [Skipping API calls - metadata enrichment disabled]")
+    else:
+        print(f"  [Parallel enrichment with {workers} worker(s)]")
     print(f"{'='*60}")
 
     # Load input data
@@ -896,10 +1039,18 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None):
 
         doi_cache = {}  # Cache to avoid redundant API calls for same DOI
         title_cache = {}  # Cache to avoid redundant API calls for same title
-        processed_rows = []
-        for idx, row in input_df.iterrows():
-            processed_row = process_row(row, idx, len(input_df), doi_cache, title_cache)
-            processed_rows.append(processed_row)
+        cache_lock = threading.Lock()
+        total = len(input_df)
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
+            futures = {
+                executor.submit(process_row, row, idx, total, doi_cache, title_cache, cache_lock): idx
+                for idx, row in input_df.iterrows()
+            }
+            processed_rows = [None] * total
+            for future in concurrent.futures.as_completed(futures):
+                idx = futures[future]
+                processed_rows[idx] = future.result()
 
         processed_df = pd.DataFrame(processed_rows)
 
@@ -929,21 +1080,73 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None):
     print(f"STEP 5: CHECKING DUPLICATES AND APPENDING")
     print(f"{'='*60}")
 
+    # Pre-scan to count total potential duplicates
+    dup_indices = []
+    for idx, row in processed_df.iterrows():
+        if find_duplicate_matches(row, master_df):
+            dup_indices.append(idx)
+    total_dups = len(dup_indices)
+    non_dup_count = len(processed_df) - total_dups
+    print(f"\n  {non_dup_count} new rows (no match in master)")
+    print(f"  {total_dups} potential duplicate(s) to review")
+
     rows_to_append = []
     duplicates_found = 0
+    replaced_count = 0
+    merged_count = 0
+    batch_decision = None  # None, 'add_all', 'skip_all', or 'merge_all'
+    dup_counter = 0
 
     for idx, row in processed_df.iterrows():
-        if check_duplicate(row, master_df):
-            print(f"\n⚠️  WARNING: Row {idx + 1} is a duplicate (matching original_url, replication_url, and description)")
-            print(f"    Original: {row.get('original_url')}")
-            print(f"    Replication: {row.get('replication_url')}")
-            print(f"    Description: {row.get('description', '')[:80]}...")
-            duplicates_found += 1
-        else:
-            rows_to_append.append(row)
+        match_indices = find_duplicate_matches(row, master_df)
 
-    print(f"\n  Found {duplicates_found} duplicates (skipped)")
-    print(f"  Adding {len(rows_to_append)} new rows to master database")
+        if not match_indices:
+            rows_to_append.append(row)
+            continue
+
+        dup_counter += 1
+
+        # Apply batch decision if set
+        if batch_decision == 'add_all':
+            rows_to_append.append(row)
+            continue
+        elif batch_decision == 'skip_all':
+            duplicates_found += 1
+            continue
+        elif batch_decision == 'merge_all':
+            filled = merge_into_master(master_df, match_indices[0], row)
+            merged_count += 1
+            if filled:
+                print(f"  Merged row {idx + 1} → master row {match_indices[0]} ({filled} fields filled)")
+            continue
+
+        # Interactive prompt
+        action = prompt_duplicate_action(row, master_df, match_indices, idx, len(processed_df),
+                                         dup_number=dup_counter, total_dups=total_dups)
+
+        if action in ('add', 'add_all'):
+            rows_to_append.append(row)
+            if action == 'add_all':
+                batch_decision = 'add_all'
+        elif action == 'replace':
+            master_df = master_df.drop(match_indices)
+            rows_to_append.append(row)
+            replaced_count += 1
+        elif action in ('merge', 'merge_all'):
+            filled = merge_into_master(master_df, match_indices[0], row)
+            merged_count += 1
+            print(f"  ✓ Merged into master row {match_indices[0]} ({filled} fields filled)")
+            if action == 'merge_all':
+                batch_decision = 'merge_all'
+        elif action in ('skip', 'skip_all'):
+            duplicates_found += 1
+            if action == 'skip_all':
+                batch_decision = 'skip_all'
+
+    print(f"\n  Duplicates skipped: {duplicates_found}")
+    print(f"  Existing rows merged: {merged_count}")
+    print(f"  Existing rows replaced: {replaced_count}")
+    print(f"  New rows to add: {len(rows_to_append)}")
 
     # Append new rows to master
     if rows_to_append:
@@ -997,6 +1200,8 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None):
     print(f"Summary:")
     print(f"  - Input rows: {len(input_df)}")
     print(f"  - Duplicates skipped: {duplicates_found}")
+    print(f"  - Existing rows merged: {merged_count}")
+    print(f"  - Existing rows replaced: {replaced_count}")
     print(f"  - New rows added: {len(rows_to_append)}")
     print(f"  - Total rows in database: {len(updated_master_df)}")
     print(f"  - Output file: {output_path}")
@@ -1017,7 +1222,10 @@ Examples:
                        help='Skip metadata enrichment API calls (faster but no metadata updates)')
     parser.add_argument('--discipline', type=str, default=None,
                        help='Set discipline value for all rows (e.g., "cancer biology")')
+    parser.add_argument('--workers', type=int, default=2,
+                       help='Number of parallel workers for metadata enrichment (default: 2)')
 
     args = parser.parse_args()
 
-    ingest_data(args.input_csv, skip_api_calls=args.skip_api_calls, discipline=args.discipline)
+    ingest_data(args.input_csv, skip_api_calls=args.skip_api_calls,
+                discipline=args.discipline, workers=args.workers)

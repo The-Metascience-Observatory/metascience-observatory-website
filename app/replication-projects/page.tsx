@@ -18,6 +18,7 @@ const PROJECT_TO_TAG: Record<string, string> = {
   "Reproducibility Project: Cancer Biology": "RP:CB",
   "Boyce et al. (2023) – Student Replication Projects": "SRP",
   "Motoki and Iseki (2022) – Sensory Marketing Replication": "SMR",
+  "Soto (2019) – Life Outcomes of Personality Replication Project": "Soto et al LOPPRP",
 };
 
 interface Project {

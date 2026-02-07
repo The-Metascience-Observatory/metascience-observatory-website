@@ -8,3 +8,7 @@ replications_database_2026_02_02_123012.csv
 replications_database_2026_02_02_142359.csv # added ground_truth_dan_elton.csv
 replications_database_2026_02_05_101830.csv # added bri_45_appended_updated.csv
 replications_database_2026_02_07_125937.csv # added collated_results_econ_replications_sonnet_02_06_2026.csv
+replications_database_2026_02_07_154347.csv # added soto_personality_data_to_ingest.csv
+replications_database_2026_02_07_154619.csv # added 2_soto_rows.csv
+replications_database_2026_02_07_161022.csv # added 2_soto_rows.csv
+replications_database_2026_02_07_165234.csv # added new_row_experiment_repeated_less_than_7_times.csv

@@ -7,8 +7,9 @@
   "BRI": "Brazilian Reproducibility Initiative",
   "XPHIR": "Experimental Philosophy Reproducibility Project",
   "RRR": "Registered Replication Reports",
-  "SMR": "Sensory Marketing Replication",
-  "ExECON": "Camerer et al. (2016) – Experimental Economics",
-  "SRP": "Student Replication Projects (Boyce et al., 2023)",
-  "SSRP": "Camerer et al. (2018) – Social Science Replication Project"
+  "SMR": "Sensory Marketing Replications",
+  "ExECON": "Camerer et al. – Experimental Economics Replications (2016)",
+  "SRP": "Boyce et al.- Student Replication Projects (2023)",
+  "SSRP": "Camerer et al. - Social Science Replication Project (2018)",
+  "Soto et al LOPPRP": "Life Outcomes of Personality Replication Project (2019)"
 }
