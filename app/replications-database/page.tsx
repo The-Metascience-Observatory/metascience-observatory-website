@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { ReplicationsNavbar } from "@/components/ReplicationsNavbar";
 import { Footer } from "@/components/Footer";
 import { Input } from "@/components/ui/input";
@@ -480,6 +481,9 @@ const DEFAULT_COLUMNS: ColumnKey[] = [
 ];
 
 export default function ReplicationsDatabasePage() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   const [data, setData] = useState<FredResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -487,8 +491,8 @@ export default function ReplicationsDatabasePage() {
 
   const [discipline, setDiscipline] = useState<string>("");
   const [subdiscipline, setSubdiscipline] = useState<string>("");
-    const [result, setResult] = useState<string>("");
-  const [initiative, setInitiative] = useState<string>("");
+  const [result, setResult] = useState<string>("");
+  const [initiative, setInitiative] = useState<string>(searchParams.get("initiative") || "");
   const [search, setSearch] = useState<string>("");
   const [visibleColumns, setVisibleColumns] = useState<Set<ColumnKey>>(
     new Set(DEFAULT_COLUMNS)
@@ -512,6 +516,18 @@ export default function ReplicationsDatabasePage() {
     }
     fetchData();
   }, []);
+
+  // Sync initiative filter to URL
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (initiative) {
+      params.set("initiative", initiative);
+    } else {
+      params.delete("initiative");
+    }
+    const newUrl = params.toString() ? `?${params.toString()}` : window.location.pathname;
+    router.replace(newUrl, { scroll: false });
+  }, [initiative, searchParams, router]);
 
   const disciplineOptions: Option[] = useMemo(() => {
     if (!data) return [];

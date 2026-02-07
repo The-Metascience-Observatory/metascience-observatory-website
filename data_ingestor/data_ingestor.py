@@ -814,6 +814,18 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None):
     input_df = pd.read_csv(input_csv)
     print(f"  Loaded {len(input_df)} rows")
 
+    # Skip rows where contains_replications is NO or False
+    if 'contains_replications' in input_df.columns:
+        before_count = len(input_df)
+        input_df = input_df[~input_df['contains_replications'].apply(
+            lambda x: (isinstance(x, str) and x.strip().lower() in ('no', 'false'))
+                      or (isinstance(x, bool) and not x)
+        )]
+        skipped = before_count - len(input_df)
+        if skipped:
+            print(f"  Skipped {skipped} rows where contains_replications is NO/False")
+        input_df = input_df.reset_index(drop=True)
+
     # Skip rows where original_url is literal "na" (not a real URL)
     if 'original_url' in input_df.columns:
         before_count = len(input_df)

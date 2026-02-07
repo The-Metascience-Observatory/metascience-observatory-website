@@ -6,6 +6,20 @@ import { Footer } from "@/components/Footer";
 
 type CsvRow = Record<string, string>;
 
+// Map project names to their database initiative tags
+const PROJECT_TO_TAG: Record<string, string> = {
+  "Reproducibility Project: Psychology": "RP:P",
+  "Camerer et al. (2016) – Experimental Economics Replication Project": "ExECON",
+  "Camerer et al. (2018) – Nature/Science Social Science Replication Project": "SSRP",
+  "Many Labs 1": "ML1",
+  "Many Labs 2": "ML2",
+  "Experimental Philosophy – Reproducibility Project": "XPHIR",
+  "Brazilian Reproducibility Initiative": "BRI",
+  "Reproducibility Project: Cancer Biology": "RP:CB",
+  "Boyce et al. (2023) – Student Replication Projects": "SRP",
+  "Motoki and Iseki (2022) – Sensory Marketing Replication": "SMR",
+};
+
 interface Project {
   id: string;
   field: string;
@@ -19,6 +33,7 @@ interface Project {
   authors?: string;
   projectUrl?: string;
   paperUrl?: string;
+  tag?: string;
 }
 
 interface FieldGroup {
@@ -76,11 +91,12 @@ function loadProjects(): FieldGroup[] {
   const paperUrlKey = inferColumn(headers, [/paper/, /doi/, /publication/]);
 
   const projects: Project[] = rows.map((row, index) => {
+    const name = row[nameKey] || `Project ${index + 1}`;
     return {
       id: `${index}`,
       field: row[fieldKey] || "Uncategorized",
       year: yearKey ? row[yearKey] : undefined,
-      name: row[nameKey] || `Project ${index + 1}`,
+      name,
       replicatedCount: replicatedKey ? row[replicatedKey] : undefined,
       totalCount: totalKey ? row[totalKey] : undefined,
       replicationRate: replicationRateKey ? row[replicationRateKey] : undefined,
@@ -89,6 +105,7 @@ function loadProjects(): FieldGroup[] {
       authors: authorsKey ? row[authorsKey] : undefined,
       projectUrl: projectUrlKey ? row[projectUrlKey] : undefined,
       paperUrl: paperUrlKey ? row[paperUrlKey] : undefined,
+      tag: PROJECT_TO_TAG[name],
     };
   });
 
@@ -241,8 +258,16 @@ export default function ReplicationProjectsPage() {
                                 {project.authors}
                               </p>
                             )}
-                            {(project.projectUrl || project.paperUrl) && (
+                            {(project.projectUrl || project.paperUrl || project.tag) && (
                               <p className="flex flex-wrap gap-4">
+                                {project.tag && (
+                                  <a
+                                    href={`/replications-database?initiative=${project.tag}`}
+                                    className="text-primary hover:underline"
+                                  >
+                                    View in replications database →
+                                  </a>
+                                )}
                                 {project.projectUrl && (
                                   <a
                                     href={project.projectUrl}
