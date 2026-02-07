@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { ReplicationsNavbar } from "@/components/ReplicationsNavbar";
 import { Footer } from "@/components/Footer";
@@ -481,6 +481,14 @@ const DEFAULT_COLUMNS: ColumnKey[] = [
 ];
 
 export default function ReplicationsDatabasePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <ReplicationsDatabaseContent />
+    </Suspense>
+  );
+}
+
+function ReplicationsDatabaseContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
