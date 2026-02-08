@@ -1,24 +1,35 @@
 # Effect Size Types and Their Normalization
 
-| Effect Size | Abbreviation |
-|-------------|--------------|
-| [Cohen's d](#cohens-d) | d |
-| [Odds Ratio](#odds-ratio-or) | OR |
-| [Hazard Ratio](#hazard-ratio-hr) | HR |
-| [Eta Squared](#eta-squared-eta2) | η² |
-| [Cohen's f](#cohens-f) | f |
-| [Cohen's f²](#cohens-f2-f2) | f² |
-| [R Squared](#r-squared-r2) | R² |
-| [Phi Coefficient](#phi-coefficient-phi) | φ |
-| [Pearson Correlation](#pearson-correlation-r) | r |
-| [t-test](#t-test) | t |
-| [F-test](#f-test-df1--1-only) | F |
-| [z-test](#z-test) | z |
-| [Chi-squared](#chi-squared-df--1-only) | χ² |
+| Effect Size Type | Abbreviation in Database | Convertible to $r$? |
+|---|---|---|
+| [Cohen's d](#cohens-d) | d | Yes |
+| [Hedges' g](#hedges-g) | g | Yes |
+| [Odds Ratio](#odds-ratio-or) | OR | Yes |
+| [Hazard Ratio](#hazard-ratio-hr) | HR | Yes |
+| [Eta Squared](#eta-squared-eta2) | etasq | Yes |
+| [Cohen's f](#cohens-f) | f | Yes |
+| [Cohen's f²](#cohens-f2-f2) | f² | Yes |
+| [R Squared](#r-squared-r2) | R² | Yes |
+| [Phi Coefficient](#phi-coefficient-phi) | phi | Yes |
+| [Pearson Correlation](#pearson-correlation-r) | r | Yes (already $r$) |
+| [t-test](#t-test) | t | Yes |
+| [F-test](#f-test-df1--1-only) | F | Yes |
+| [z-test](#z-test) | z | Yes |
+| [Chi-squared](#chi-squared-df--1-only) | χ² | Yes |
+| Incidence Rate Difference | IRD | No |
+| Glass' delta | Glass' delta | No |
+| Cliff's delta | Cliff's delta | No |
+| Cohen's w | w | No |
+| Regression coefficient (standardized) | β | No |
+| Regression coefficient (unstandardized) | b | No |
+| Probability Difference | PD | No |
+| Cohen's $d_z$ (paired) | dz | No |
+| Log Ratio of Means (signed) | log ROM | No |
+| Spearman's rank correlation | Spearman's r | No |
 
-The **Replication Database** handles a wide variety of effect sizes. It achieves commensurability by converting actionable effect sizes into **Pearson correlation coefficients ($r$)**, which serves as the common metric.
+The **Replication Database** handles a wide variety of effect sizes. It achieves commensurability by converting effect sizes into an equivalent or approximate **Pearson correlation coefficient ($r$)** when possible. 
 
-To ensure a consistent magnitude scale for comparison (effectively acting as a 0–1 scale), the database codes **original** effect sizes as positive values. **Replication** effect sizes are then coded with signs reflecting whether they match the original direction (positive) or reverse it (negative).
+To ensure a consistent magnitude scale for comparison (effectively acting as a 0–1 scale), the database codes **original** effect sizes as positive values. **Replication** effect sizes are then coded with a sign reflecting whether the entry matches the original direction (positive) or reverses it (negative).
 
 ---
 
@@ -39,6 +50,24 @@ $$r = \frac{d}{\sqrt{d^2 + \frac{(n_1 + n_2)^2}{n_1 n_2}}}$$
 
 *Note: If sample sizes are equal ($n_1 = n_2$), this simplifies to the commonly seen approximation $r = \frac{d}{\sqrt{d^2 + 4}}$ ([Cohen, 1988](#ref-cohen-1988)).*
 
+---
+
+## Hedges' g
+
+Hedges' $g$ is a bias-corrected version of Cohen's $d$ that adjusts for the slight upward bias of $d$ in small samples ([Hedges, 1981](#ref-hedges-1981)). It is defined as:
+
+$$g = J \cdot d$$
+
+**Where:**
+* $d$: Cohen's $d$.
+* $J$: The correction factor, $J = 1 - \frac{3}{4 \cdot df - 1}$, where $df = n_1 + n_2 - 2$.
+
+### Normalization to 0–1 Scale (Conversion to $r$)
+Because $g$ is on the same scale as $d$, the same conversion formula is used ([Borenstein et al., 2009](#ref-borenstein-2009), p. 48):
+
+$$r = \frac{g}{\sqrt{g^2 + \frac{(n_1 + n_2)^2}{n_1 n_2}}}$$
+
+*Note: If sample sizes are equal ($n_1 = n_2$), this simplifies to $r = \frac{g}{\sqrt{g^2 + 4}}$.*
 
 ---
 
@@ -252,9 +281,72 @@ $$r = \sqrt{\frac{\chi^2}{N}}$$
 
 ---
 
+## Glass' delta
+
+Glass's $\Delta$ (delta) is a standardized mean difference that uses only the **control group's** standard deviation as the denominator, rather than the pooled SD used by Cohen's $d$ ([Glass, 1976](#ref-glass-1976)).
+
+$$\Delta = \frac{M_1 - M_2}{SD_{control}}$$
+
+**Where:**
+* $M_1, M_2$: The means of the two groups.
+* $SD_{control}$: The standard deviation of the control group only.
+
+**Why not converted to $r$:** The standard $d$-to-$r$ conversion assumes a pooled standard deviation. Using only one group's SD introduces asymmetry that makes the conversion unreliable without additional information about group variance ratios.
+
+---
+
+## Cliff's delta
+
+Cliff's $\delta$ is a non-parametric effect size that measures the degree of overlap between two distributions ([Cliff, 1993](#ref-cliff-1993)). It represents the probability that a randomly selected observation from one group is larger than a randomly selected observation from the other, minus the reverse probability.
+
+$$\delta = \frac{\#(x_i > y_j) - \#(x_i < y_j)}{n_1 \cdot n_2}$$
+
+**Where:**
+* $x_i$: Observations from group 1.
+* $y_j$: Observations from group 2.
+* $n_1, n_2$: The sample sizes of the two groups.
+* $\#(x_i > y_j)$: The count of all pairwise comparisons where $x_i$ exceeds $y_j$.
+
+*Range: $-1$ to $+1$, where $0$ indicates complete overlap.*
+
+**Why not converted to $r$:** Cliff's delta is a non-parametric, ordinal-level measure with no distributional assumptions. Converting it to Pearson's $r$ (a parametric measure) would require assumptions about the underlying distributions that the statistic was specifically designed to avoid.
+
+---
+
+## Cohen's w
+
+Cohen's $w$ is an effect size measure for chi-squared tests of goodness-of-fit or independence ([Cohen, 1988](#ref-cohen-1988)). It quantifies the discrepancy between observed and expected proportions.
+
+$$w = \sqrt{\sum_{i=1}^{m} \frac{(P_{1i} - P_{0i})^2}{P_{0i}}}$$
+
+**Where:**
+* $P_{1i}$: The observed (or alternative hypothesis) proportion in category $i$.
+* $P_{0i}$: The expected (or null hypothesis) proportion in category $i$.
+* $m$: The number of categories.
+
+**Why not converted to $r$:** Cohen's $w$ applies to multi-category frequency comparisons and does not map onto the two-variable linear association that Pearson's $r$ measures. While $w = \phi$ in the special case of a $2 \times 2$ table, the general case involves tables of arbitrary size.
+
+---
+
+## Spearman's rank correlation
+
+Spearman's $r_s$ (rho) measures the monotonic relationship between two variables using their ranks rather than raw values ([Spearman, 1904](#ref-spearman-1904)).
+
+$$r_s = 1 - \frac{6 \sum d_i^2}{n(n^2 - 1)}$$
+
+**Where:**
+* $d_i$: The difference between the ranks of the $i$-th paired observation.
+* $n$: The number of paired observations.
+
+*Range: $-1$ to $+1$, identical to Pearson's $r$.*
+
+**Why not converted to $r$:** Although Spearman's $r_s$ is on the same numerical scale as Pearson's $r$, it measures monotonic (not linear) association and is computed on ranks rather than raw values. Treating it as interchangeable with Pearson's $r$ in meta-analytic comparisons would conflate two distinct constructs.
+
+---
+
 ## Non-Convertible Effect Sizes
 
-The following effect sizes cannot be reliably converted to $r$ and are returned as missing values:
+The following effect sizes cannot be reliably converted to $r$ and thus will not have an entry computed for the *replication_es_r* and *original_es_r* columns:
 
 * Incidence Rate Difference (IRD) — raw percentage-point differences between groups, on a scale of roughly −100 to +100, incompatible with the standardized 0–1 scale
 * Partial eta-squared ($\eta^2_p$)
@@ -270,39 +362,25 @@ The following effect sizes cannot be reliably converted to $r$ and are returned 
 
 ---
 
-## Effect Size Types in the Database
-
-The table below lists all effect size types present in the database, their abbreviations, and whether they can be converted to Pearson's $r$.
-
-| Effect Size | Abbreviation | Convertible to $r$? |
-|---|---|---|
-| Cohen's d | d | Yes |
-| Pearson correlation | r | Yes (already $r$) |
-| Incidence Rate Difference | IRD | No |
-| Glass' delta | Glass' delta | No |
-| Odds Ratio | OR | Yes |
-| Cliff's delta | Cliff's delta | No |
-| Cohen's w | w | No |
-| Regression coefficient (standardized) | beta | No |
-| Eta squared | etasq, η² | Yes |
-| Hazard Ratio | HR | Yes |
-| Probability Difference | PD | No |
-| Cohen's $d_z$ (paired) | dz | No |
-| Regression coefficient (unstandardized) | b | No |
-| Spearman's rank correlation | Spearman's r | No |
-
----
-
 ## References
 
 <span id="ref-borenstein-2009"></span>
 Borenstein, M., Hedges, L. V., Higgins, J. P. T., & Rothstein, H. R. (2009). [*Introduction to meta-analysis*](https://doi.org/10.1002/9780470743386). John Wiley & Sons.
+
+<span id="ref-cliff-1993"></span>
+Cliff, N. (1993). [Dominance statistics: Ordinal analyses to answer ordinal questions](https://doi.org/10.1037/0033-2909.114.3.494). *Psychological Bulletin*, 114(3), 494–509.
 
 <span id="ref-cohen-1988"></span>
 Cohen, J. (1988). [*Statistical power analysis for the behavioral sciences*](https://doi.org/10.4324/9780203771587) (2nd ed.). Lawrence Erlbaum Associates.
 
 <span id="ref-cramer-1946"></span>
 Cramér, H. (1946). [*Mathematical methods of statistics*](https://archive.org/details/mathematicalmeth0000cram). Princeton University Press.
+
+<span id="ref-glass-1976"></span>
+Glass, G. V. (1976). [Primary, secondary, and meta-analysis of research](https://doi.org/10.3102/0013189X005010003). *Educational Researcher*, 5(10), 3–8.
+
+<span id="ref-hedges-1981"></span>
+Hedges, L. V. (1981). [Distribution theory for Glass's estimator of effect size and related estimators](https://doi.org/10.3102/10769986006002107). *Journal of Educational Statistics*, 6(2), 107–128.
 
 <span id="ref-lakens-2013"></span>
 Lakens, D. (2013). [Calculating and reporting effect sizes to facilitate cumulative science: A practical primer for t-tests and ANOVAs](https://doi.org/10.3389/fpsyg.2013.00863). *Frontiers in Psychology*, 4, 863.
@@ -315,3 +393,6 @@ Rosenthal, R. (1991). [*Meta-analytic procedures for social research*](https://d
 
 <span id="ref-sanchez-meca-2003"></span>
 Sánchez-Meca, J., Marín-Martínez, F., & Chacón-Moscoso, S. (2003). [Effect-size indices for dichotomized outcomes in meta-analysis](https://doi.org/10.1037/1082-989X.8.4.448). *Psychological Methods*, 8(4), 448–467.
+
+<span id="ref-spearman-1904"></span>
+Spearman, C. (1904). [The proof and measurement of association between two things](https://doi.org/10.2307/1412159). *The American Journal of Psychology*, 15(1), 72–101.
