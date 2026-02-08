@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkMath from "remark-math";
 import remarkGfm from "remark-gfm";
 import rehypeKatex from "rehype-katex";
+import rehypeRaw from "rehype-raw";
 import rehypeSlug from "rehype-slug";
 import "katex/dist/katex.min.css";
 
@@ -20,7 +21,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
     <article className="markdown-content">
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkMath]}
-        rehypePlugins={[rehypeSlug, rehypeKatex]}
+        rehypePlugins={[rehypeRaw, rehypeSlug, rehypeKatex]}
         components={{
           h1: ({ children, id }) => (
             <h1 id={id} className="text-4xl font-bold mb-6 mt-0 text-foreground leading-tight">

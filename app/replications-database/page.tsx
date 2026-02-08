@@ -829,11 +829,10 @@ function ReplicationsDatabaseContent() {
       const end = start + 4;
       const inBin = entries.filter(e => e.year >= start && e.year <= end);
       const total = inBin.length;
-      if (total < 20) continue;
       const success = inBin.filter(e => e.result === "success").length;
       const failure = inBin.filter(e => e.result === "failure").length;
       const inconclusive = total - success - failure;
-      const rate = Math.round((success / total) * 1000) / 10;
+      const rate = total >= 20 ? Math.round((success / total) * 1000) / 10 : -1;
       bins.push({
         label: `${start}-${String(end).slice(2)}`,
         total,
@@ -843,7 +842,11 @@ function ReplicationsDatabaseContent() {
         rate,
       });
     }
-    return bins;
+    // Trim leading and trailing bins that lack sufficient data
+    const firstValid = bins.findIndex(b => b.rate >= 0);
+    const lastValid = bins.length - 1 - [...bins].reverse().findIndex(b => b.rate >= 0);
+    if (firstValid < 0) return [];
+    return bins.slice(firstValid, lastValid + 1);
   }, [filteredRows]);
 
   if (loading) {
@@ -1056,7 +1059,7 @@ function ReplicationsDatabaseContent() {
           </div>
         </div>
         <div className="border rounded p-4">
-          <div className="text-xs font-medium mb-2">Replication Success Rate by Year of Original Publication <span className="font-bold">({yearBins.reduce((s, b) => s + b.total, 0)} effect replications)</span></div>
+          <div className="text-xs font-medium mb-2">Replication Success Rate by Year of Original Publication <span className="font-bold">({yearBins.filter(b => b.rate >= 0).reduce((s, b) => s + b.total, 0)} effect replications)</span></div>
           <div className="mt-2">
             <InlineYearBars bins={yearBins} />
           </div>
@@ -1539,13 +1542,24 @@ function InlineYearBars({ bins }: { bins: YearBin[] }) {
           ))}
           {bins.map((bin, i) => {
             const bx = offsetX + i * (barWidth + barGap);
-            const barH = (bin.rate / 100) * innerH;
+            const insufficientData = bin.rate < 0;
+            const barH = insufficientData ? 0 : (bin.rate / 100) * innerH;
             const by = innerH - barH;
             return (
               <g key={bin.label}>
-                <title>{`${bin.label}: ${bin.rate}% success (${bin.success}/${bin.total})`}</title>
-                <rect x={bx} y={by} width={barWidth} height={barH} fill="#10b981" fillOpacity={0.85} rx={1} />
-                <text x={bx + barWidth / 2} y={by - 4} textAnchor="middle" className="fill-current" style={{ fontSize: 9, opacity: 0.7 }}>{bin.total}</text>
+                <title>{insufficientData ? `${bin.label}: insufficient data (${bin.total} replications)` : `${bin.label}: ${bin.rate}% success (${bin.success}/${bin.total})`}</title>
+                {insufficientData ? (
+                  <text x={bx + barWidth / 2} y={innerH - 24} textAnchor="middle" className="fill-current" style={{ fontSize: 7, opacity: 0.4 }}>
+                    <tspan x={bx + barWidth / 2} dy="0">not</tspan>
+                    <tspan x={bx + barWidth / 2} dy="9">enough</tspan>
+                    <tspan x={bx + barWidth / 2} dy="9">data</tspan>
+                  </text>
+                ) : (
+                  <>
+                    <rect x={bx} y={by} width={barWidth} height={Math.max(barH, 2)} fill="#10b981" fillOpacity={0.85} rx={1} />
+                    <text x={bx + barWidth / 2} y={by - 4} textAnchor="middle" className="fill-current" style={{ fontSize: 9, opacity: 0.7 }}>{bin.total}</text>
+                  </>
+                )}
                 <text x={bx + barWidth / 2} y={innerH + 12} textAnchor="end" transform={`rotate(-45, ${bx + barWidth / 2}, ${innerH + 12})`} className="fill-current" style={{ fontSize: 9, opacity: 0.7 }}>{bin.label}</text>
               </g>
             );

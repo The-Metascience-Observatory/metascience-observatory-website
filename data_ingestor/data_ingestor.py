@@ -98,7 +98,7 @@ def get_latest_master_database():
     return None
 
 def extract_doi_from_url(url):
-    """Extract DOI from URL like 'http://doi.org/10.1234/xyz'"""
+    """Extract DOI from URL like 'https://doi.org/10.1234/xyz'"""
     if not isinstance(url, str) or not url.strip():
         return None
     url = url.strip()
@@ -694,7 +694,7 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
                 normalized_doi = normalize_doi(metadata['doi'])
                 if normalized_doi:
                     print(f"  ✓ Found and verified DOI: {normalized_doi}")
-                    row['original_url'] = f"http://doi.org/{normalized_doi}"
+                    row['original_url'] = f"https://doi.org/{normalized_doi}"
                     row = enrich_from_metadata(row, 'original', metadata)
                 else:
                     print(f"  ✗ Could not normalize DOI: {metadata['doi']}")
@@ -747,7 +747,7 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
                 normalized_doi = normalize_doi(metadata['doi'])
                 if normalized_doi:
                     print(f"  ✓ Found and verified DOI: {normalized_doi}")
-                    row['replication_url'] = f"http://doi.org/{normalized_doi}"
+                    row['replication_url'] = f"https://doi.org/{normalized_doi}"
                     row = enrich_from_metadata(row, 'replication', metadata)
                 else:
                     print(f"  ✗ Could not normalize DOI: {metadata['doi']}")
@@ -1074,22 +1074,25 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, workers=2, no_
         url = url.rstrip('.')
         return url
 
-    # Convert bare DOIs (starting with "10.") to http://doi.org/ URLs
+    # Convert bare DOIs (starting with "10.") to https://doi.org/ URLs
+    # Also normalize http:// to https://
     def normalize_url_to_doi_url(url):
         if not isinstance(url, str) or not url.strip():
             return url
         url = url.strip()
-        if url.startswith("http://") or url.startswith("https://"):
+        if url.startswith("http://"):
+            url = "https://" + url[7:]
+        if url.startswith("https://"):
             return url
         if url.startswith("10."):
-            return f"http://doi.org/{url}"
+            return f"https://doi.org/{url}"
         return url
 
     for col in ['original_url', 'replication_url']:
         if col in input_df.columns:
             input_df[col] = input_df[col].apply(clean_doi_url)
             input_df[col] = input_df[col].apply(normalize_url_to_doi_url)
-            print(f"  Cleaned and normalized {col} (bare DOIs → http://doi.org/ URLs)")
+            print(f"  Cleaned and normalized {col} (bare DOIs → https://doi.org/ URLs, http → https)")
 
     # Apply discipline to all rows if specified
     if discipline:
@@ -1098,6 +1101,16 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, workers=2, no_
 
     # Find latest master database from version_history.txt
     latest_master = get_latest_master_database()
+    if not latest_master:
+        # Fallback: find newest replications_database_*.csv in data dir
+        import glob as _glob
+        candidates = sorted(_glob.glob(os.path.join(DATA_DIR, 'replications_database_*.csv')))
+        if candidates:
+            latest_master = os.path.basename(candidates[-1])
+            print(f"\n⚠ version_history.txt missing/empty — falling back to newest file: {latest_master}")
+        else:
+            print(f"\nNo master database found, will create new one")
+
     if latest_master:
         master_csv = os.path.join(DATA_DIR, latest_master)
         print(f"\nLoading master database: {master_csv}")
@@ -1108,8 +1121,14 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, workers=2, no_
             print(f"  Master database not found at {master_csv}, will create new one")
             master_df = pd.DataFrame()
     else:
-        print(f"\nNo master database found in version_history.txt, will create new one")
         master_df = pd.DataFrame()
+
+    if master_df.empty:
+        print("\n⚠ WARNING: Master database is empty — all rows will be treated as new!")
+        resp = input("  Continue? (y/n): ").strip().lower()
+        if resp != 'y':
+            print("  Aborted.")
+            return
 
     # Back up the current master database before modifying
     if latest_master:
@@ -1190,6 +1209,7 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, workers=2, no_
     print(f"\n{'='*60}")
     print(f"STEP 5: CHECKING DUPLICATES AND APPENDING")
     print(f"{'='*60}")
+    print(f"  Master: {len(master_df)} rows | Incoming: {len(processed_df)} rows")
 
     # Pre-scan: classify each row as new, auto-duplicate, or potential duplicate
     auto_skipped = []   # list of (processed_df idx, match_indices)
@@ -1349,13 +1369,15 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, workers=2, no_
 
     # Update version history
     print(f"\nUpdating {VERSION_HISTORY_PATH}...")
-    # Ensure the file ends with a newline before appending
-    with open(VERSION_HISTORY_PATH, 'r') as f:
-        content = f.read()
-    with open(VERSION_HISTORY_PATH, 'w') as f:
-        # Strip trailing whitespace and ensure single newline at end
-        input_basename = os.path.basename(input_csv)
-        f.write(content.rstrip() + '\n' + output_filename + f' # added {input_basename}' + '\n')
+    input_basename = os.path.basename(input_csv)
+    if os.path.exists(VERSION_HISTORY_PATH):
+        with open(VERSION_HISTORY_PATH, 'r') as f:
+            content = f.read()
+        with open(VERSION_HISTORY_PATH, 'w') as f:
+            f.write(content.rstrip() + '\n' + output_filename + f' # added {input_basename}' + '\n')
+    else:
+        with open(VERSION_HISTORY_PATH, 'w') as f:
+            f.write(output_filename + f' # added {input_basename}' + '\n')
     print(f"✓ Added {output_filename} to version_history.txt")
 
     print(f"\n{'='*60}")
