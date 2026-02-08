@@ -220,7 +220,7 @@ $$r = \frac{\sum(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum(x_i - \bar{x})^2 \sum
 * $\bar{x}, \bar{y}$: The sample means.
 
 ### Normalization to 0–1 Scale
-This metric serves as the **target scale** for the database. No conversion is needed. To maintain the "0 to 1" magnitude scale required by the database's coding scheme, original effect sizes are taken as their absolute value:
+This metric serves as the target scale for the database, so no conversion is needed. As mentioned above, to maintain the "0 to 1" magnitude scale required by the database's coding scheme, original effect sizes are taken as their absolute value:
 
 $$r_{coded} = |r_{reported}|$$
 
