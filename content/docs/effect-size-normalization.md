@@ -17,15 +17,15 @@
 | [z-test](#z-test) | z | Yes |
 | [Chi-squared](#chi-squared-df--1-only) | χ² | Yes |
 | Incidence Rate Difference | IRD | No |
-| Glass' delta | Glass' delta | No |
-| Cliff's delta | Cliff's delta | No |
-| Cohen's w | w | No |
+| [Glass' delta](#glass-delta) | Glass' delta | No |
+| [Cliff's delta](#cliffs-delta) | Cliff's delta | No |
+| [Cohen's w](#cohens-w) | w | No |
 | Regression coefficient (standardized) | β | No |
 | Regression coefficient (unstandardized) | b | No |
 | Probability Difference | PD | No |
 | Cohen's $d_z$ (paired) | dz | No |
 | Log Ratio of Means (signed) | log ROM | No |
-| Spearman's rank correlation | Spearman's r | No |
+| [Spearman's rank correlation](#spearmans-rank-correlation) | Spearman's r | No |
 
 The Metascience Observatory's [replications database](https://metascienceobservatory.org/replications-database) contains a wide variety of reported effect size types. To achieve commensurability between these types we convert them into an equivalent or approximate **Pearson correlation coefficient ($r$)** when possible. This converts effect sizes to a 0 to 1 scale. Not all effect size types can be converted this way, but many can. 
 
