@@ -839,7 +839,7 @@ function ReplicationsDatabaseContent() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[90%] grid md:grid-cols-3 gap-4 mt-6">
+      <section className="mx-auto max-w-[90%] grid md:grid-cols-2 gap-4 mt-6">
         <div className="border rounded p-4">
           <div className="text-sm font-medium mb-3">Outcome mix -- human or AI judgement <span className="font-bold">({resultStat.n} Effect replications)</span></div>
           <div className="space-y-2">

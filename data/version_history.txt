@@ -12,3 +12,4 @@ replications_database_2026_02_07_154347.csv # added soto_personality_data_to_ing
 replications_database_2026_02_07_154619.csv # added 2_soto_rows.csv
 replications_database_2026_02_07_161022.csv # added 2_soto_rows.csv
 replications_database_2026_02_07_165234.csv # added new_row_experiment_repeated_less_than_7_times.csv
+replications_database_2026_02_07_215241.csv # added collated_results_direct_replications_sonnet_02_07_2026.csv

@@ -17,6 +17,7 @@ import os
 import re
 import math
 import logging
+import shutil
 import concurrent.futures
 import threading
 from datetime import datetime
@@ -36,6 +37,7 @@ logger = logging.getLogger(__name__)
 # Get the directory where this script lives
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(SCRIPT_DIR, '..', 'data')
+BACKUP_DIR = os.path.join(DATA_DIR, 'backup')
 VERSION_HISTORY_PATH = os.path.join(DATA_DIR, 'version_history.txt')
 
 
@@ -810,6 +812,27 @@ def reorder_columns(df, data_dict_path=None):
     
     return df[final_column_order]
 
+def _normalize_val(v):
+    """Normalize a cell value to a comparable string (nan/None/empty → '')."""
+    if v is None or (isinstance(v, float) and math.isnan(v)):
+        return ''
+    s = str(v).strip()
+    return '' if s.lower() == 'nan' else s
+
+
+def is_identical_row(incoming_row, master_row):
+    """Check if incoming row is fully identical to a master row.
+    Returns True if every non-empty field in the incoming row matches the master."""
+    for col in incoming_row.index:
+        inc_val = _normalize_val(incoming_row.get(col))
+        if not inc_val:
+            continue  # incoming has nothing for this field, skip
+        mst_val = _normalize_val(master_row.get(col)) if col in master_row.index else ''
+        if inc_val != mst_val:
+            return False
+    return True
+
+
 def find_duplicate_matches(row, master_df):
     """
     Find potential duplicate rows in master based on original_url + replication_url match.
@@ -847,99 +870,120 @@ def prompt_duplicate_action(new_row, master_df, match_indices, ingest_idx, total
                             dup_number=None, total_dups=None):
     """
     Display comparison between new row and existing master row(s) and prompt user for action.
-    Returns: 'add', 'replace', 'skip', 'merge', 'add_all', 'skip_all', or 'merge_all'
+    Returns: (action, target_master_row_index_or_None)
+      action: 'add', 'replace', 'skip', 'merge', 'add_all', 'skip_all', or 'merge_all'
+      target: specific master row index for merge/replace, None for skip/add/batch actions
     """
-    # Description shown separately (full width, not truncated)
     table_fields = ['original_es', 'replication_es', 'original_es_type',
                      'replication_es_type', 'result', 'original_n', 'replication_n',
                      'original_es_r', 'replication_es_r', 'discipline', 'subdiscipline',
                      'original_title', 'original_authors', 'original_year',
                      'replication_title', 'replication_authors', 'replication_year']
 
+    n_matches = len(match_indices)
     dup_label = ""
     if dup_number is not None and total_dups is not None:
         dup_label = f"  [duplicate {dup_number}/{total_dups}]"
 
     print(f"\n{'='*120}")
     print(f"  POSSIBLE DUPLICATE: Ingest row {ingest_idx + 1}/{total_ingest}{dup_label}")
+    print(f"  Matches {n_matches} existing row{'s' if n_matches > 1 else ''} in master")
     print(f"{'='*120}")
-    print(f"  original_url:    {str(new_row.get('original_url', '')).strip()}")
-    print(f"  replication_url: {str(new_row.get('replication_url', '')).strip()}")
 
-    for mi in match_indices:
+    # Show incoming row info
+    new_desc = _normalize_val(new_row.get('description'))
+    print(f"  INCOMING ROW:")
+    print(f"    original_url:    {_normalize_val(new_row.get('original_url'))}")
+    print(f"    replication_url: {_normalize_val(new_row.get('replication_url'))}")
+    print(f"    description:     {new_desc if new_desc else '(empty)'}")
+    print(f"    result: {_normalize_val(new_row.get('result'))}  |  "
+          f"orig_es: {_normalize_val(new_row.get('original_es'))} ({_normalize_val(new_row.get('original_es_type'))})  |  "
+          f"rep_es: {_normalize_val(new_row.get('replication_es'))} ({_normalize_val(new_row.get('replication_es_type'))})")
+
+    # Show each match with a number
+    for i, mi in enumerate(match_indices, 1):
         master_row = master_df.loc[mi]
+        existing_desc = _normalize_val(master_row.get('description'))
 
-        # Show descriptions in full (wrapped, not truncated)
-        existing_desc = str(master_row.get('description', '')).strip()
-        new_desc = str(new_row.get('description', '')).strip()
-        if existing_desc.lower() == 'nan':
-            existing_desc = ''
-        if new_desc.lower() == 'nan':
-            new_desc = ''
-
-        print(f"\n  ── Match: master row {mi} ──")
-        print(f"  EXISTING description: {existing_desc if existing_desc else '(empty)'}")
-        print(f"  NEW description:      {new_desc if new_desc else '(empty)'}")
+        print(f"\n  ── [{i}] master row {mi} ──")
+        print(f"  description: {existing_desc if existing_desc else '(empty)'}")
         if existing_desc and new_desc and existing_desc == new_desc:
-            print(f"  (descriptions are identical)")
+            print(f"  (description identical to incoming)")
 
-        # Table for other fields
-        print(f"\n  {'FIELD':<24} {'EXISTING':<45} {'NEW':<45} NOTE")
+        # Diff table
+        print(f"  {'FIELD':<24} {'EXISTING':<45} {'NEW':<45} NOTE")
         print(f"  {'─'*24} {'─'*45} {'─'*45} {'─'*20}")
         for field in table_fields:
-            existing_val = str(master_row.get(field, '')).strip()
-            new_val = str(new_row.get(field, '')).strip()
-            if existing_val.lower() == 'nan':
-                existing_val = ''
-            if new_val.lower() == 'nan':
-                new_val = ''
-            # Truncate long values for table columns
-            if len(existing_val) > 42:
-                existing_val = existing_val[:42] + "..."
-            if len(new_val) > 42:
-                new_val = new_val[:42] + "..."
-            # Determine note
+            existing_val = _normalize_val(master_row.get(field))
+            new_val = _normalize_val(new_row.get(field))
+            # Truncate for table columns
+            ev_display = (existing_val[:42] + "...") if len(existing_val) > 42 else existing_val
+            nv_display = (new_val[:42] + "...") if len(new_val) > 42 else new_val
             if existing_val == new_val:
-                marker = " "
-                note = ""
+                marker, note = " ", ""
             elif not existing_val and new_val:
-                marker = "+"
-                note = "← merge would fill"
+                marker, note = "+", "← merge would fill"
             elif existing_val and not new_val:
-                marker = " "
-                note = "(incoming empty)"
+                marker, note = " ", "(incoming empty)"
             else:
-                marker = "*"
-                note = "DIFFERS"
-            print(f" {marker}{field:<23} {existing_val:<45} {new_val:<45} {note}")
+                marker, note = "*", "DIFFERS"
+            print(f" {marker}{field:<23} {ev_display:<45} {nv_display:<45} {note}")
 
+    # Options
     print(f"\n  What would you like to do?")
-    print(f"    [s] Skip (do not add this row)")
-    print(f"    [m] Merge (fill empty fields in existing row with incoming data)")
-    print(f"    [a] Add as new row (not a duplicate — different effect)")
-    print(f"    [r] Replace existing row(s) with this new row")
-    print(f"    [S] Skip ALL remaining duplicates")
-    print(f"    [M] Merge ALL remaining duplicates")
-    print(f"    [A] Add ALL remaining duplicates as new rows")
+    print(f"    [s]  Skip (do not add this row)")
+    print(f"    [a]  Add as new row (different effect, not a duplicate)")
+    if n_matches == 1:
+        print(f"    [m]  Merge into existing row {match_indices[0]} (fill empty fields)")
+        print(f"    [r]  Replace existing row {match_indices[0]} with this row")
+    else:
+        for i, mi in enumerate(match_indices, 1):
+            print(f"    [m{i}] Merge into master row {mi}")
+        for i, mi in enumerate(match_indices, 1):
+            print(f"    [r{i}] Replace master row {mi}")
+    print(f"    [S]  Skip ALL remaining duplicates")
+    print(f"    [M]  Merge ALL remaining (into first match)")
+    print(f"    [A]  Add ALL remaining as new rows")
+
+    # Build set of valid choices
+    valid_single = {'s', 'a', 'S', 'M', 'A'}
+    if n_matches == 1:
+        valid_single.update({'m', 'r'})
 
     while True:
         choice = input("  > ").strip()
-        if choice == 's':
-            return 'skip'
-        elif choice == 'm':
-            return 'merge'
-        elif choice == 'a':
-            return 'add'
-        elif choice == 'r':
-            return 'replace'
-        elif choice == 'S':
-            return 'skip_all'
-        elif choice == 'M':
-            return 'merge_all'
-        elif choice == 'A':
-            return 'add_all'
+
+        if choice in valid_single:
+            if choice == 's':
+                return ('skip', None)
+            elif choice == 'a':
+                return ('add', None)
+            elif choice == 'm':
+                return ('merge', match_indices[0])
+            elif choice == 'r':
+                return ('replace', match_indices[0])
+            elif choice == 'S':
+                return ('skip_all', None)
+            elif choice == 'M':
+                return ('merge_all', None)
+            elif choice == 'A':
+                return ('add_all', None)
+
+        # Handle numbered merge/replace (m1, m2, r1, r2, etc.)
+        num_match = re.match(r'^([mr])(\d+)$', choice)
+        if num_match and n_matches > 1:
+            action_char = num_match.group(1)
+            num = int(num_match.group(2))
+            if 1 <= num <= n_matches:
+                target_idx = match_indices[num - 1]
+                action = 'merge' if action_char == 'm' else 'replace'
+                return (action, target_idx)
+
+        # Invalid input
+        if n_matches == 1:
+            print("  Invalid choice. Enter s, a, m, r, S, M, or A.")
         else:
-            print("  Invalid choice. Enter s, m, a, r, S, M, or A.")
+            print(f"  Invalid choice. Enter s, a, m1-m{n_matches}, r1-r{n_matches}, S, M, or A.")
 
 def ingest_data(input_csv, skip_api_calls=False, discipline=None, workers=2):
     """Main ingestion function"""
@@ -1026,6 +1070,16 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, workers=2):
         print(f"\nNo master database found in version_history.txt, will create new one")
         master_df = pd.DataFrame()
 
+    # Back up the current master database before modifying
+    if latest_master:
+        os.makedirs(BACKUP_DIR, exist_ok=True)
+        backup_path = os.path.join(BACKUP_DIR, latest_master)
+        if not os.path.exists(backup_path):
+            shutil.copy2(master_csv, backup_path)
+            print(f"  ✓ Backed up {latest_master} → data/backup/")
+        else:
+            print(f"  Backup already exists: data/backup/{latest_master}")
+
     # Process each row (skip API calls if flag is set)
     if skip_api_calls:
         print(f"\n{'='*60}")
@@ -1080,31 +1134,36 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, workers=2):
     print(f"STEP 5: CHECKING DUPLICATES AND APPENDING")
     print(f"{'='*60}")
 
-    # Pre-scan to count total potential duplicates
-    dup_indices = []
+    # Pre-scan: classify each row as new, identical, or potential duplicate
+    identical_count = 0
+    potential_dups = []  # list of (processed_df idx, match_indices)
+    new_row_indices = []
+
     for idx, row in processed_df.iterrows():
-        if find_duplicate_matches(row, master_df):
-            dup_indices.append(idx)
-    total_dups = len(dup_indices)
-    non_dup_count = len(processed_df) - total_dups
-    print(f"\n  {non_dup_count} new rows (no match in master)")
+        match_indices = find_duplicate_matches(row, master_df)
+        if not match_indices:
+            new_row_indices.append(idx)
+            continue
+        # Check if any existing match is fully identical
+        if any(is_identical_row(row, master_df.loc[mi]) for mi in match_indices):
+            identical_count += 1
+        else:
+            potential_dups.append((idx, match_indices))
+
+    total_dups = len(potential_dups)
+    print(f"\n  {len(new_row_indices)} new rows (no match in master)")
+    print(f"  {identical_count} identical rows (will be auto-skipped)")
     print(f"  {total_dups} potential duplicate(s) to review")
 
-    rows_to_append = []
+    # Add all genuinely new rows
+    rows_to_append = [processed_df.loc[i] for i in new_row_indices]
     duplicates_found = 0
     replaced_count = 0
     merged_count = 0
     batch_decision = None  # None, 'add_all', 'skip_all', or 'merge_all'
-    dup_counter = 0
 
-    for idx, row in processed_df.iterrows():
-        match_indices = find_duplicate_matches(row, master_df)
-
-        if not match_indices:
-            rows_to_append.append(row)
-            continue
-
-        dup_counter += 1
+    for dup_counter, (idx, match_indices) in enumerate(potential_dups, 1):
+        row = processed_df.loc[idx]
 
         # Apply batch decision if set
         if batch_decision == 'add_all':
@@ -1121,29 +1180,36 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, workers=2):
             continue
 
         # Interactive prompt
-        action = prompt_duplicate_action(row, master_df, match_indices, idx, len(processed_df),
-                                         dup_number=dup_counter, total_dups=total_dups)
+        action, target_idx = prompt_duplicate_action(
+            row, master_df, match_indices, idx, len(processed_df),
+            dup_number=dup_counter, total_dups=total_dups)
 
-        if action in ('add', 'add_all'):
+        if action == 'add':
             rows_to_append.append(row)
-            if action == 'add_all':
-                batch_decision = 'add_all'
+        elif action == 'add_all':
+            rows_to_append.append(row)
+            batch_decision = 'add_all'
         elif action == 'replace':
-            master_df = master_df.drop(match_indices)
+            master_df = master_df.drop([target_idx])
             rows_to_append.append(row)
             replaced_count += 1
-        elif action in ('merge', 'merge_all'):
+        elif action == 'merge':
+            filled = merge_into_master(master_df, target_idx, row)
+            merged_count += 1
+            print(f"  ✓ Merged into master row {target_idx} ({filled} fields filled)")
+        elif action == 'merge_all':
             filled = merge_into_master(master_df, match_indices[0], row)
             merged_count += 1
             print(f"  ✓ Merged into master row {match_indices[0]} ({filled} fields filled)")
-            if action == 'merge_all':
-                batch_decision = 'merge_all'
-        elif action in ('skip', 'skip_all'):
+            batch_decision = 'merge_all'
+        elif action == 'skip':
             duplicates_found += 1
-            if action == 'skip_all':
-                batch_decision = 'skip_all'
+        elif action == 'skip_all':
+            duplicates_found += 1
+            batch_decision = 'skip_all'
 
-    print(f"\n  Duplicates skipped: {duplicates_found}")
+    print(f"\n  Identical rows auto-skipped: {identical_count}")
+    print(f"  Duplicates skipped: {duplicates_found}")
     print(f"  Existing rows merged: {merged_count}")
     print(f"  Existing rows replaced: {replaced_count}")
     print(f"  New rows to add: {len(rows_to_append)}")
@@ -1199,6 +1265,7 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, workers=2):
     print(f"{'='*60}")
     print(f"Summary:")
     print(f"  - Input rows: {len(input_df)}")
+    print(f"  - Identical rows auto-skipped: {identical_count}")
     print(f"  - Duplicates skipped: {duplicates_found}")
     print(f"  - Existing rows merged: {merged_count}")
     print(f"  - Existing rows replaced: {replaced_count}")
