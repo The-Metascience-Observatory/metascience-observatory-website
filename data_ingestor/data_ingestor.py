@@ -18,13 +18,14 @@ import re
 import math
 import logging
 import shutil
+import json
 import concurrent.futures
 import threading
 from datetime import datetime
 from difflib import SequenceMatcher
 from fetch_metadata_from_doi import fetch_metadata_from_doi
 from fetch_metadata_from_title import fetch_metadata_from_title
-from generate_citation_html_for_website import generate_citation_html_for_website
+
 
 # Configure logging for the ingestion pipeline
 logging.basicConfig(
@@ -39,6 +40,32 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(SCRIPT_DIR, '..', 'data')
 BACKUP_DIR = os.path.join(DATA_DIR, 'backup')
 VERSION_HISTORY_PATH = os.path.join(DATA_DIR, 'version_history.txt')
+API_CACHE_PATH = os.path.join(SCRIPT_DIR, 'api_cache.json')
+CHECKPOINT_PATH = os.path.join(SCRIPT_DIR, 'ingestion_checkpoint.csv')
+
+
+def load_api_cache():
+    """Load persistent API cache from disk. Returns (doi_cache, title_cache) dicts."""
+    doi_cache = {}
+    title_cache = {}
+    if os.path.exists(API_CACHE_PATH):
+        try:
+            with open(API_CACHE_PATH, 'r') as f:
+                data = json.load(f)
+            doi_cache = data.get('doi', {})
+            title_cache = data.get('title', {})
+            logger.info(f"Loaded API cache: {len(doi_cache)} DOIs, {len(title_cache)} titles")
+        except (json.JSONDecodeError, KeyError) as e:
+            logger.warning(f"Could not load API cache: {e}")
+    return doi_cache, title_cache
+
+
+def save_api_cache(doi_cache, title_cache):
+    """Save API caches to disk as JSON."""
+    data = {'doi': doi_cache, 'title': title_cache}
+    with open(API_CACHE_PATH, 'w') as f:
+        json.dump(data, f, indent=2, default=str)
+    logger.info(f"Saved API cache: {len(doi_cache)} DOIs, {len(title_cache)} titles")
 
 
 def get_latest_master_database():
@@ -734,36 +761,6 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
 
     return row
 
-def generate_citations(df):
-    """Generate HTML citations for display on website"""
-    print("\nGenerating HTML citations...")
-
-    # Extract DOI from URL for citation generation
-    def get_doi_for_citation(url):
-        doi = extract_doi_from_url(url)
-        return doi if doi else ""
-
-    df["replication_citation_html"] = df.apply(
-        lambda row: generate_citation_html_for_website(
-            row.get("replication_authors"),
-            row.get("replication_journal"),
-            row.get("replication_year"),
-            get_doi_for_citation(row.get("replication_url")),
-        ),
-        axis=1
-    )
-
-    df["original_citation_html"] = df.apply(
-        lambda row: generate_citation_html_for_website(
-            row.get("original_authors"),
-            row.get("original_journal"),
-            row.get("original_year"),
-            get_doi_for_citation(row.get("original_url")),
-        ),
-        axis=1
-    )
-
-    return df
 
 def filter_columns(df, data_dict_path=None):
     """Keep only columns that appear in data_dictionary.csv, preserving order from data dictionary"""
@@ -813,21 +810,48 @@ def reorder_columns(df, data_dict_path=None):
     return df[final_column_order]
 
 def _normalize_val(v):
-    """Normalize a cell value to a comparable string (nan/None/empty → '')."""
+    """Normalize a cell value to a comparable string (nan/None/empty → '').
+    Strips trailing .0 from floats so 123.0 == 123 after CSV round-tripping."""
     if v is None or (isinstance(v, float) and math.isnan(v)):
         return ''
-    s = str(v).strip()
-    return '' if s.lower() == 'nan' else s
+    if isinstance(v, float) and v == int(v):
+        s = str(int(v))
+    else:
+        s = str(v).strip()
+    if s.lower() == 'nan':
+        return ''
+    # Also handle string "123.0" → "123"
+    if s.endswith('.0') and s[:-2].lstrip('-').isdigit():
+        s = s[:-2]
+    return s
 
 
-def is_identical_row(incoming_row, master_row):
-    """Check if incoming row is fully identical to a master row.
-    Returns True if every non-empty field in the incoming row matches the master."""
-    for col in incoming_row.index:
-        inc_val = _normalize_val(incoming_row.get(col))
-        if not inc_val:
-            continue  # incoming has nothing for this field, skip
-        mst_val = _normalize_val(master_row.get(col)) if col in master_row.index else ''
+def _normalize_url_to_doi(url_val):
+    """Extract DOI from a URL for comparison, falling back to stripped string."""
+    s = _normalize_val(url_val)
+    if not s:
+        return ''
+    doi = extract_doi_from_url(s)
+    return doi.lower() if doi else s.lower()
+
+
+AUTO_DUP_FIELDS = ['original_url', 'replication_url', 'description',
+                    'replication_n', 'replication_es', 'replication_es_type']
+
+# Fields where we compare by DOI rather than raw string
+_DOI_FIELDS = {'original_url', 'replication_url'}
+
+
+def is_auto_duplicate(incoming_row, master_row):
+    """Check if incoming row is an automatic duplicate of a master row.
+    Returns True if all 6 key fields match (same effect, same replication data)."""
+    for col in AUTO_DUP_FIELDS:
+        if col in _DOI_FIELDS:
+            inc_val = _normalize_url_to_doi(incoming_row.get(col))
+            mst_val = _normalize_url_to_doi(master_row.get(col)) if col in master_row.index else ''
+        else:
+            inc_val = _normalize_val(incoming_row.get(col))
+            mst_val = _normalize_val(master_row.get(col)) if col in master_row.index else ''
         if inc_val != mst_val:
             return False
     return True
@@ -835,32 +859,49 @@ def is_identical_row(incoming_row, master_row):
 
 def find_duplicate_matches(row, master_df):
     """
-    Find potential duplicate rows in master based on original_url + replication_url match.
+    Find potential duplicate rows in master based on DOI match.
+    Extracts DOIs from original_url and replication_url for comparison,
+    so http://doi.org/... and https://doi.org/... are treated as identical.
     Returns list of matching master row indices.
     """
     if master_df.empty:
         return []
-    orig = str(row.get('original_url', '')).strip()
-    rep = str(row.get('replication_url', '')).strip()
-    if not orig and not rep:
+    orig_doi = _normalize_url_to_doi(row.get('original_url', ''))
+    rep_doi = _normalize_url_to_doi(row.get('replication_url', ''))
+    if not orig_doi and not rep_doi:
         return []
     matches = master_df[
-        (master_df['original_url'].fillna('').str.strip() == orig) &
-        (master_df['replication_url'].fillna('').str.strip() == rep)
+        (master_df['original_url'].fillna('').apply(_normalize_url_to_doi) == orig_doi) &
+        (master_df['replication_url'].fillna('').apply(_normalize_url_to_doi) == rep_doi)
     ]
     return matches.index.tolist()
 
 
-def merge_into_master(master_df, match_idx, incoming_row):
+def merge_into_master(master_df, match_idx, incoming_row, force_replace_fields=None):
     """Merge incoming row into an existing master row, filling empty fields.
-    Returns the number of fields that were filled."""
+    For 'description', keeps whichever is longer.
+    For 'result', keeps existing unless 'result' is in force_replace_fields.
+    Returns the number of fields that were filled/updated."""
+    if force_replace_fields is None:
+        force_replace_fields = set()
     filled = 0
     for col in incoming_row.index:
         if col not in master_df.columns:
             continue
         incoming_val = incoming_row[col]
         existing_val = master_df.at[match_idx, col]
-        if not is_empty(incoming_val) and is_empty(existing_val):
+        if col in force_replace_fields and not is_empty(incoming_val):
+            master_df.at[match_idx, col] = incoming_val
+            filled += 1
+        elif col == 'result' and not is_empty(existing_val):
+            continue  # keep existing result unless force-replaced
+        elif col == 'description':
+            inc_len = len(str(incoming_val).strip()) if not is_empty(incoming_val) else 0
+            ext_len = len(str(existing_val).strip()) if not is_empty(existing_val) else 0
+            if inc_len > ext_len:
+                master_df.at[match_idx, col] = incoming_val
+                filled += 1
+        elif not is_empty(incoming_val) and is_empty(existing_val):
             master_df.at[match_idx, col] = incoming_val
             filled += 1
     return filled
@@ -985,7 +1026,7 @@ def prompt_duplicate_action(new_row, master_df, match_indices, ingest_idx, total
         else:
             print(f"  Invalid choice. Enter s, a, m1-m{n_matches}, r1-r{n_matches}, S, M, or A.")
 
-def ingest_data(input_csv, skip_api_calls=False, discipline=None, workers=2):
+def ingest_data(input_csv, skip_api_calls=False, discipline=None, workers=2, no_gui=False):
     """Main ingestion function"""
     print(f"\n{'='*60}")
     print(f"REPLICATIONS DATABASE INGESTION ENGINE")
@@ -1080,62 +1121,78 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, workers=2):
         else:
             print(f"  Backup already exists: data/backup/{latest_master}")
 
-    # Process each row (skip API calls if flag is set)
-    if skip_api_calls:
-        print(f"\n{'='*60}")
-        print(f"STEP 1: SKIPPING METADATA ENRICHMENT (--skip-api-calls flag set)")
-        print(f"{'='*60}")
-        processed_df = input_df.copy()
+    # Check for checkpoint from a previous interrupted run
+    if os.path.exists(CHECKPOINT_PATH):
+        print(f"\n  Found checkpoint from previous run: {CHECKPOINT_PATH}")
+        print(f"  Loading checkpoint (skipping steps 1-4)...")
+        processed_df = pd.read_csv(CHECKPOINT_PATH)
+        print(f"  ✓ Loaded {len(processed_df)} processed rows from checkpoint")
     else:
+        # Process each row (skip API calls if flag is set)
+        if skip_api_calls:
+            print(f"\n{'='*60}")
+            print(f"STEP 1: SKIPPING METADATA ENRICHMENT (--skip-api-calls flag set)")
+            print(f"{'='*60}")
+            processed_df = input_df.copy()
+        else:
+            print(f"\n{'='*60}")
+            print(f"STEP 1: ENRICHING METADATA")
+            print(f"{'='*60}")
+
+            doi_cache, title_cache = load_api_cache()
+            cache_lock = threading.Lock()
+            total = len(input_df)
+            completed_count = 0
+
+            try:
+                with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
+                    futures = {
+                        executor.submit(process_row, row, idx, total, doi_cache, title_cache, cache_lock): idx
+                        for idx, row in input_df.iterrows()
+                    }
+                    processed_rows = [None] * total
+                    for future in concurrent.futures.as_completed(futures):
+                        idx = futures[future]
+                        processed_rows[idx] = future.result()
+                        completed_count += 1
+                        if completed_count % 50 == 0:
+                            save_api_cache(doi_cache, title_cache)
+                            logger.info(f"API cache saved ({completed_count}/{total} rows done)")
+            except (KeyboardInterrupt, SystemExit):
+                logger.warning("Interrupted — saving API cache before exit...")
+                save_api_cache(doi_cache, title_cache)
+                print(f"\nAPI cache saved to {API_CACHE_PATH} ({len(doi_cache)} DOIs, {len(title_cache)} titles cached)")
+                raise
+            finally:
+                save_api_cache(doi_cache, title_cache)
+            processed_df = pd.DataFrame(processed_rows)
+
+        # Calculate effect sizes (convert to r)
         print(f"\n{'='*60}")
-        print(f"STEP 1: ENRICHING METADATA")
+        print(f"STEP 2: CALCULATING EFFECT SIZES (converting to r)")
         print(f"{'='*60}")
+        processed_df = calculate_effect_sizes(processed_df)
 
-        doi_cache = {}  # Cache to avoid redundant API calls for same DOI
-        title_cache = {}  # Cache to avoid redundant API calls for same title
-        cache_lock = threading.Lock()
-        total = len(input_df)
+        # Filter columns
+        print(f"\n{'='*60}")
+        print(f"STEP 3: FILTERING COLUMNS")
+        print(f"{'='*60}")
+        processed_df = filter_columns(processed_df)
 
-        with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
-            futures = {
-                executor.submit(process_row, row, idx, total, doi_cache, title_cache, cache_lock): idx
-                for idx, row in input_df.iterrows()
-            }
-            processed_rows = [None] * total
-            for future in concurrent.futures.as_completed(futures):
-                idx = futures[future]
-                processed_rows[idx] = future.result()
+        # Normalize discipline column
+        processed_df = normalize_discipline_column(processed_df)
 
-        processed_df = pd.DataFrame(processed_rows)
-
-    # Calculate effect sizes (convert to r)
-    print(f"\n{'='*60}")
-    print(f"STEP 2: CALCULATING EFFECT SIZES (converting to r)")
-    print(f"{'='*60}")
-    processed_df = calculate_effect_sizes(processed_df)
-
-    # Generate citations
-    print(f"\n{'='*60}")
-    print(f"STEP 3: GENERATING CITATIONS HTML")
-    print(f"{'='*60}")
-    processed_df = generate_citations(processed_df)
-
-    # Filter columns
-    print(f"\n{'='*60}")
-    print(f"STEP 4: FILTERING COLUMNS")
-    print(f"{'='*60}")
-    processed_df = filter_columns(processed_df)
-
-    # Normalize discipline column
-    processed_df = normalize_discipline_column(processed_df)
+        # Save checkpoint so restarts skip straight to step 5
+        processed_df.to_csv(CHECKPOINT_PATH, index=False)
+        print(f"  ✓ Checkpoint saved — restart will skip to duplicate review")
 
     # Check for duplicates and append
     print(f"\n{'='*60}")
     print(f"STEP 5: CHECKING DUPLICATES AND APPENDING")
     print(f"{'='*60}")
 
-    # Pre-scan: classify each row as new, identical, or potential duplicate
-    identical_count = 0
+    # Pre-scan: classify each row as new, auto-duplicate, or potential duplicate
+    auto_skipped = []   # list of (processed_df idx, match_indices)
     potential_dups = []  # list of (processed_df idx, match_indices)
     new_row_indices = []
 
@@ -1144,15 +1201,16 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, workers=2):
         if not match_indices:
             new_row_indices.append(idx)
             continue
-        # Check if any existing match is fully identical
-        if any(is_identical_row(row, master_df.loc[mi]) for mi in match_indices):
-            identical_count += 1
+        # Check if any existing match is an auto-duplicate (6 key fields match)
+        if any(is_auto_duplicate(row, master_df.loc[mi]) for mi in match_indices):
+            auto_skipped.append((idx, match_indices))
         else:
             potential_dups.append((idx, match_indices))
 
+    identical_count = len(auto_skipped)
     total_dups = len(potential_dups)
     print(f"\n  {len(new_row_indices)} new rows (no match in master)")
-    print(f"  {identical_count} identical rows (will be auto-skipped)")
+    print(f"  {identical_count} auto-duplicate rows (will be skipped)")
     print(f"  {total_dups} potential duplicate(s) to review")
 
     # Add all genuinely new rows
@@ -1160,55 +1218,95 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, workers=2):
     duplicates_found = 0
     replaced_count = 0
     merged_count = 0
-    batch_decision = None  # None, 'add_all', 'skip_all', or 'merge_all'
 
-    for dup_counter, (idx, match_indices) in enumerate(potential_dups, 1):
-        row = processed_df.loc[idx]
+    if (potential_dups or auto_skipped) and not no_gui:
+        # ── GUI duplicate review ──
+        from duplicate_review_gui import launch_duplicate_review
+        print(f"\n  Launching GUI for duplicate review...")
+        gui_results = launch_duplicate_review(potential_dups, auto_skipped, processed_df, master_df)
 
-        # Apply batch decision if set
-        if batch_decision == 'add_all':
-            rows_to_append.append(row)
-            continue
-        elif batch_decision == 'skip_all':
-            duplicates_found += 1
-            continue
-        elif batch_decision == 'merge_all':
-            filled = merge_into_master(master_df, match_indices[0], row)
-            merged_count += 1
-            if filled:
-                print(f"  Merged row {idx + 1} → master row {match_indices[0]} ({filled} fields filled)")
-            continue
+        if gui_results:
+            # Handle auto-skip overrides
+            override_set = set(gui_results.get('auto_skip_overrides', []))
+            for idx, match_indices in auto_skipped:
+                if idx in override_set:
+                    rows_to_append.append(processed_df.loc[idx])
+                    print(f"  Override: importing auto-skipped row {idx + 1}")
 
-        # Interactive prompt
-        action, target_idx = prompt_duplicate_action(
-            row, master_df, match_indices, idx, len(processed_df),
-            dup_number=dup_counter, total_dups=total_dups)
+            # Handle potential duplicate decisions
+            for decision in gui_results.get('potential_dups', []):
+                idx = decision['incoming_idx']
+                action = decision['action']
+                target = decision.get('target_master_idx')
+                force_replace = decision.get('force_replace_fields', set())
+                row = processed_df.loc[idx]
 
-        if action == 'add':
-            rows_to_append.append(row)
-        elif action == 'add_all':
-            rows_to_append.append(row)
-            batch_decision = 'add_all'
-        elif action == 'replace':
-            master_df = master_df.drop([target_idx])
-            rows_to_append.append(row)
-            replaced_count += 1
-        elif action == 'merge':
-            filled = merge_into_master(master_df, target_idx, row)
-            merged_count += 1
-            print(f"  ✓ Merged into master row {target_idx} ({filled} fields filled)")
-        elif action == 'merge_all':
-            filled = merge_into_master(master_df, match_indices[0], row)
-            merged_count += 1
-            print(f"  ✓ Merged into master row {match_indices[0]} ({filled} fields filled)")
-            batch_decision = 'merge_all'
-        elif action == 'skip':
-            duplicates_found += 1
-        elif action == 'skip_all':
-            duplicates_found += 1
-            batch_decision = 'skip_all'
+                if action == 'add':
+                    rows_to_append.append(row)
+                elif action == 'replace' and target is not None:
+                    master_df = master_df.drop([target])
+                    rows_to_append.append(row)
+                    replaced_count += 1
+                elif action == 'merge' and target is not None:
+                    filled = merge_into_master(master_df, target, row, force_replace)
+                    merged_count += 1
+                    print(f"  ✓ Merged row {idx + 1} into master row {target} ({filled} fields filled)")
+                else:
+                    duplicates_found += 1
+        else:
+            # User closed window without applying — skip all potential dups
+            print("  GUI closed without applying — skipping all potential duplicates")
+            duplicates_found = total_dups
 
-    print(f"\n  Identical rows auto-skipped: {identical_count}")
+    elif potential_dups:
+        # ── CLI fallback (--no-gui) ──
+        batch_decision = None
+
+        for dup_counter, (idx, match_indices) in enumerate(potential_dups, 1):
+            row = processed_df.loc[idx]
+
+            if batch_decision == 'add_all':
+                rows_to_append.append(row)
+                continue
+            elif batch_decision == 'skip_all':
+                duplicates_found += 1
+                continue
+            elif batch_decision == 'merge_all':
+                filled = merge_into_master(master_df, match_indices[0], row)
+                merged_count += 1
+                if filled:
+                    print(f"  Merged row {idx + 1} → master row {match_indices[0]} ({filled} fields filled)")
+                continue
+
+            action, target_idx = prompt_duplicate_action(
+                row, master_df, match_indices, idx, len(processed_df),
+                dup_number=dup_counter, total_dups=total_dups)
+
+            if action == 'add':
+                rows_to_append.append(row)
+            elif action == 'add_all':
+                rows_to_append.append(row)
+                batch_decision = 'add_all'
+            elif action == 'replace':
+                master_df = master_df.drop([target_idx])
+                rows_to_append.append(row)
+                replaced_count += 1
+            elif action == 'merge':
+                filled = merge_into_master(master_df, target_idx, row)
+                merged_count += 1
+                print(f"  ✓ Merged into master row {target_idx} ({filled} fields filled)")
+            elif action == 'merge_all':
+                filled = merge_into_master(master_df, match_indices[0], row)
+                merged_count += 1
+                print(f"  ✓ Merged into master row {match_indices[0]} ({filled} fields filled)")
+                batch_decision = 'merge_all'
+            elif action == 'skip':
+                duplicates_found += 1
+            elif action == 'skip_all':
+                duplicates_found += 1
+                batch_decision = 'skip_all'
+
+    print(f"\n  Auto-duplicates skipped: {identical_count}")
     print(f"  Duplicates skipped: {duplicates_found}")
     print(f"  Existing rows merged: {merged_count}")
     print(f"  Existing rows replaced: {replaced_count}")
@@ -1265,7 +1363,7 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, workers=2):
     print(f"{'='*60}")
     print(f"Summary:")
     print(f"  - Input rows: {len(input_df)}")
-    print(f"  - Identical rows auto-skipped: {identical_count}")
+    print(f"  - Auto-duplicates skipped: {identical_count}")
     print(f"  - Duplicates skipped: {duplicates_found}")
     print(f"  - Existing rows merged: {merged_count}")
     print(f"  - Existing rows replaced: {replaced_count}")
@@ -1291,8 +1389,18 @@ Examples:
                        help='Set discipline value for all rows (e.g., "cancer biology")')
     parser.add_argument('--workers', type=int, default=2,
                        help='Number of parallel workers for metadata enrichment (default: 2)')
+    parser.add_argument('--no-gui', action='store_true',
+                       help='Use CLI prompts instead of GUI for duplicate review')
+    parser.add_argument('--fresh', action='store_true',
+                       help='Clear checkpoint and re-run steps 1-3 from scratch')
 
     args = parser.parse_args()
 
+    if args.fresh:
+        for f in [CHECKPOINT_PATH, API_CACHE_PATH]:
+            if os.path.exists(f):
+                os.remove(f)
+                print(f"  Cleared {f}")
+
     ingest_data(args.input_csv, skip_api_calls=args.skip_api_calls,
-                discipline=args.discipline, workers=args.workers)
+                discipline=args.discipline, workers=args.workers, no_gui=args.no_gui)

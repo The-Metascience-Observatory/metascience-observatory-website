@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { generateCitationHtml, transformCitationHtmlToExplorer, citationSearchText } from "@/lib/citations";
 import { jStat } from "jstat";
 import INITIATIVE_TAG_NAMES from "@/data/initiative_tag_names.json";
+import TOPIC_ONTOLOGY from "@/data/metascience_observatory_topic_ontology.json";
 
 type AnyRecord = Record<string, unknown>;
 
@@ -497,6 +498,7 @@ function ReplicationsDatabaseContent() {
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
 
+  const [field, setField] = useState<string>("");
   const [discipline, setDiscipline] = useState<string>("");
   const [subdiscipline, setSubdiscipline] = useState<string>("");
   const [result, setResult] = useState<string>("");
@@ -537,53 +539,99 @@ function ReplicationsDatabaseContent() {
     router.replace(newUrl, { scroll: false });
   }, [initiative, searchParams, router]);
 
+  // Build ontology lookup maps
+  const ontologyMaps = useMemo(() => {
+    const disciplineToField = new Map<string, string>();
+    const fieldToDisciplines = new Map<string, string[]>();
+    const disciplineToSubs = new Map<string, string[]>();
+
+    const ont = TOPIC_ONTOLOGY as Record<string, Record<string, string[]>>;
+    for (const [fieldName, disciplines] of Object.entries(ont)) {
+      const discNames: string[] = [];
+      for (const [discName, subs] of Object.entries(disciplines)) {
+        disciplineToField.set(discName, fieldName);
+        disciplineToSubs.set(discName, subs);
+        discNames.push(discName);
+      }
+      fieldToDisciplines.set(fieldName, discNames);
+    }
+    return { disciplineToField, fieldToDisciplines, disciplineToSubs };
+  }, []);
+
+  // Field options: count rows per field, only show fields with data
+  const fieldOptions: Option[] = useMemo(() => {
+    if (!data) return [];
+    const counts = new Map<string, number>();
+    for (const r of data.rows) {
+      const disc = String(r.discipline ?? "").trim();
+      const f = ontologyMaps.disciplineToField.get(disc);
+      if (f) counts.set(f, (counts.get(f) || 0) + 1);
+    }
+    const entries = Array.from(counts.entries()).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+    return [
+      { value: "", label: "All fields" },
+      ...entries.map(([k, c]) => ({ value: k, label: `${k} (${c})` })),
+    ];
+  }, [data, ontologyMaps]);
+
+  // Discipline options: constrained by selected field, count from data
   const disciplineOptions: Option[] = useMemo(() => {
     if (!data) return [];
+    const allowedDiscs = field
+      ? new Set(ontologyMaps.fieldToDisciplines.get(field) || [])
+      : null;
     const counts = new Map<string, number>();
     for (const r of data.rows) {
-      const raw = String(r.discipline ?? "");
-      const parts = raw.split(",").map((s) => s.trim()).filter(Boolean);
-      for (const part of parts) {
-        counts.set(part, (counts.get(part) || 0) + 1);
-      }
+      const disc = String(r.discipline ?? "").trim();
+      if (!disc) continue;
+      if (allowedDiscs && !allowedDiscs.has(disc)) continue;
+      counts.set(disc, (counts.get(disc) || 0) + 1);
     }
-    const entries = Array.from(counts.entries());
-    entries.sort((a, b) => {
-      if (b[1] !== a[1]) return b[1] - a[1];
-      return a[0].localeCompare(b[0]);
-    });
-    const sortedValues = entries.map(([k]) => k);
-    const values = ["", ...sortedValues];
-    return values.map((v) => {
-      if (v === "") return { value: v, label: "All disciplines" };
-      const c = counts.get(v) || 0;
-      return { value: v, label: `${v} (${c})` };
-    });
-  }, [data]);
+    const entries = Array.from(counts.entries()).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+    return [
+      { value: "", label: "All disciplines" },
+      ...entries.map(([k, c]) => ({ value: k, label: `${k} (${c})` })),
+    ];
+  }, [data, field, ontologyMaps]);
 
+  // Subdiscipline options: constrained by selected discipline (or field), count from data
   const subdisciplineOptions: Option[] = useMemo(() => {
     if (!data) return [];
+    // Determine allowed subdisciplines from ontology
+    let allowedSubs: Set<string> | null = null;
+    if (discipline) {
+      allowedSubs = new Set(ontologyMaps.disciplineToSubs.get(discipline) || []);
+    } else if (field) {
+      const discs = ontologyMaps.fieldToDisciplines.get(field) || [];
+      const subs = new Set<string>();
+      for (const d of discs) {
+        for (const s of ontologyMaps.disciplineToSubs.get(d) || []) subs.add(s);
+      }
+      allowedSubs = subs;
+    }
+    // Also filter rows by field/discipline to get accurate counts
     const counts = new Map<string, number>();
     for (const r of data.rows) {
-      const raw = String(r.subdiscipline ?? "");
+      const rowDisc = String(r.discipline ?? "").trim();
+      if (field) {
+        const rowField = ontologyMaps.disciplineToField.get(rowDisc);
+        if (rowField !== field) continue;
+      }
+      if (discipline && rowDisc !== discipline) continue;
+      const raw = String(r.subdiscipline ?? "").trim();
+      if (!raw) continue;
       const parts = raw.split(",").map((s) => s.trim()).filter(Boolean);
       for (const part of parts) {
+        if (allowedSubs && !allowedSubs.has(part)) continue;
         counts.set(part, (counts.get(part) || 0) + 1);
       }
     }
-    const entries = Array.from(counts.entries());
-    entries.sort((a, b) => {
-      if (b[1] !== a[1]) return b[1] - a[1];
-      return a[0].localeCompare(b[0]);
-    });
-    const sortedValues = entries.map(([k]) => k);
-    const values = ["", ...sortedValues];
-    return values.map((v) => {
-      if (v === "") return { value: v, label: "All subdisciplines" };
-      const c = counts.get(v) || 0;
-      return { value: v, label: `${v} (${c})` };
-    });
-  }, [data]);
+    const entries = Array.from(counts.entries()).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+    return [
+      { value: "", label: "All subdisciplines" },
+      ...entries.map(([k, c]) => ({ value: k, label: `${k} (${c})` })),
+    ];
+  }, [data, field, discipline, ontologyMaps]);
 
   const resultOptions: Option[] = useMemo(() => {
     if (!data) return [];
@@ -615,6 +663,11 @@ function ReplicationsDatabaseContent() {
   const filteredRows = useMemo(() => {
     if (!data) return [] as AnyRecord[];
     return data.rows.filter((r) => {
+      if (field) {
+        const rowDisc = String(r.discipline ?? "").trim();
+        const rowField = ontologyMaps.disciplineToField.get(rowDisc);
+        if (rowField !== field) return false;
+      }
       if (discipline && !String(r.discipline ?? "").split(",").map((s) => s.trim()).includes(discipline)) return false;
       if (subdiscipline && !String(r.subdiscipline ?? "").split(",").map((s) => s.trim()).includes(subdiscipline)) return false;
       if (result && String(r.result ?? "") !== result) return false;
@@ -626,7 +679,7 @@ function ReplicationsDatabaseContent() {
       }
       return true;
     });
-  }, [data, discipline, subdiscipline, result, initiative, search]);
+  }, [data, field, discipline, subdiscipline, result, initiative, search, ontologyMaps]);
 
   // Compute outcomes once and share between stats and scatterplot
   // Includes rows with es_r (plottable on scatterplot) AND rows with only raw ES (stats only)
@@ -721,28 +774,76 @@ function ReplicationsDatabaseContent() {
 
   // Stat for result column-based display
   const resultStat = useMemo(() => {
-    const n = filteredRows.length;
+    let n = 0;
     let success = 0;
     let failure = 0;
+    let reversal = 0;
     let inconclusive = 0;
-    
+
     for (const r of filteredRows) {
       const result = String(r.result ?? "").trim();
-      // Check exact matches (case-sensitive based on data)
+      // Skip rows with no result — they should not count in outcome mix
+      if (!result) continue;
+      n++;
       if (result === "success") {
         success++;
       } else if (result === "failure") {
         failure++;
-      } else if (result === "inconclusive" || result === "") {
-        // Empty result counts as inconclusive
-        inconclusive++;
+      } else if (result === "reversal") {
+        reversal++;
       } else {
-        // Any other non-empty value counts as inconclusive
         inconclusive++;
       }
     }
     const pct = (v: number) => (n > 0 ? Math.round((v / n) * 1000) / 10 : 0);
-    return { n, success, failure, inconclusive, pctSuccess: pct(success), pctFailure: pct(failure), pctInconclusive: pct(inconclusive) };
+    return { n, success, failure, reversal, inconclusive, pctSuccess: pct(success), pctFailure: pct(failure), pctReversal: pct(reversal), pctInconclusive: pct(inconclusive) };
+  }, [filteredRows]);
+
+  const yearBins = useMemo(() => {
+    const entries: Array<{ year: number; result: string }> = [];
+    for (const r of filteredRows) {
+      const yearRaw = toNumber(r.original_year);
+      if (yearRaw == null || yearRaw < 1900 || yearRaw > 2030) continue;
+      const year = Math.floor(yearRaw);
+      const res = String(r.result ?? "").trim();
+      if (!res) continue;
+      entries.push({ year, result: res });
+    }
+    if (entries.length === 0) return [];
+
+    const minYear = Math.min(...entries.map(e => e.year));
+    const maxYear = Math.max(...entries.map(e => e.year));
+    const binStart = Math.floor(minYear / 5) * 5;
+    const binEnd = Math.floor(maxYear / 5) * 5;
+
+    const bins: Array<{
+      label: string;
+      total: number;
+      success: number;
+      failure: number;
+      inconclusive: number;
+      rate: number;
+    }> = [];
+
+    for (let start = binStart; start <= binEnd; start += 5) {
+      const end = start + 4;
+      const inBin = entries.filter(e => e.year >= start && e.year <= end);
+      const total = inBin.length;
+      if (total < 20) continue;
+      const success = inBin.filter(e => e.result === "success").length;
+      const failure = inBin.filter(e => e.result === "failure").length;
+      const inconclusive = total - success - failure;
+      const rate = Math.round((success / total) * 1000) / 10;
+      bins.push({
+        label: `${start}-${String(end).slice(2)}`,
+        total,
+        success,
+        failure,
+        inconclusive,
+        rate,
+      });
+    }
+    return bins;
   }, [filteredRows]);
 
   if (loading) {
@@ -783,11 +884,36 @@ function ReplicationsDatabaseContent() {
       <section className="mx-auto max-w-[90%] mt-6">
         <div className="grid gap-3 md:grid-cols-6 items-end">
           <div className="md:col-span-1">
+            <label htmlFor="field" className="block text-sm font-medium opacity-80 mb-1">Field</label>
+            <select
+              id="field"
+              value={field}
+              onChange={(e) => {
+                setField(e.target.value);
+                setDiscipline("");
+                setSubdiscipline("");
+              }}
+              className="w-full h-10 rounded-md border border-border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            >
+              {fieldOptions.map((opt) => (
+                <option key={opt.value || "__all"} value={opt.value}>{opt.label}</option>
+              ))}
+            </select>
+          </div>
+          <div className="md:col-span-1">
             <label htmlFor="discipline" className="block text-sm font-medium opacity-80 mb-1">Discipline</label>
             <select
               id="discipline"
               value={discipline}
-              onChange={(e) => setDiscipline(e.target.value)}
+              onChange={(e) => {
+                const val = e.target.value;
+                setDiscipline(val);
+                setSubdiscipline("");
+                if (val) {
+                  const parentField = ontologyMaps.disciplineToField.get(val);
+                  if (parentField) setField(parentField);
+                }
+              }}
               className="w-full h-10 rounded-md border border-border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
             >
               {disciplineOptions.map((opt) => (
@@ -800,7 +926,21 @@ function ReplicationsDatabaseContent() {
             <select
               id="subdiscipline"
               value={subdiscipline}
-              onChange={(e) => setSubdiscipline(e.target.value)}
+              onChange={(e) => {
+                const val = e.target.value;
+                setSubdiscipline(val);
+                if (val) {
+                  // Find parent discipline and field from ontology
+                  for (const [discName, subs] of ontologyMaps.disciplineToSubs.entries()) {
+                    if (subs.includes(val)) {
+                      setDiscipline(discName);
+                      const parentField = ontologyMaps.disciplineToField.get(discName);
+                      if (parentField) setField(parentField);
+                      break;
+                    }
+                  }
+                }
+              }}
               className="w-full h-10 rounded-md border border-border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
             >
               {subdisciplineOptions.map((opt) => (
@@ -823,89 +963,102 @@ function ReplicationsDatabaseContent() {
           </div>
           <div className="md:col-span-2">
             <label htmlFor="search" className="block text-sm font-medium opacity-80 mb-1">Search description, tags, or references</label>
-            <Input
-              id="search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search description, tags, or references"
-              className="h-10"
-            />
-          </div>
-          <div className="md:col-span-1 flex items-end">
-            <a href="/replications-database/by-discipline" className="text-sm underline hover:opacity-80 h-10 flex items-center">
-              Breakdown by discipline →
-            </a>
+            <div className="flex items-center gap-3">
+              <Input
+                id="search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search description, tags, or references"
+                className="h-10 flex-1"
+              />
+              <a href="/replications-database/by-discipline" className="text-sm underline hover:opacity-80 h-10 flex items-center whitespace-nowrap">
+                Detailed breakdown by field
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-[90%] grid md:grid-cols-2 gap-4 mt-6">
+      <section className="mx-auto max-w-[90%] grid md:grid-cols-3 gap-4 mt-6">
         <div className="border rounded p-4">
-          <div className="text-sm font-medium mb-3">Outcome mix -- human or AI judgement <span className="font-bold">({resultStat.n} Effect replications)</span></div>
-          <div className="space-y-2">
-            <div className="flex items-center gap-3">
-              <div className="w-24 text-sm">Success</div>
+          <div className="text-xs font-medium mb-2">Outcome mix -- human or AI judgement <span className="font-bold">({resultStat.n} effect replications)</span></div>
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <div className="w-20 text-xs">Success</div>
               <div className="flex-1"><MiniBar value={resultStat.pctSuccess} max={100} color="#10b981" /></div>
-              <div className="w-24 text-right text-sm">{resultStat.success} ({resultStat.pctSuccess}%)</div>
+              <div className="w-20 text-right text-xs">{resultStat.success} ({resultStat.pctSuccess}%)</div>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="w-24 text-sm">Inconclusive</div>
+            <div className="flex items-center gap-2">
+              <div className="w-20 text-xs">Inconclusive</div>
               <div className="flex-1"><MiniBar value={resultStat.pctInconclusive} max={100} color="#9ca3af" /></div>
-              <div className="w-24 text-right text-sm">{resultStat.inconclusive} ({resultStat.pctInconclusive}%)</div>
+              <div className="w-20 text-right text-xs">{resultStat.inconclusive} ({resultStat.pctInconclusive}%)</div>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="w-24 text-sm">Failure</div>
+            <div className="flex items-center gap-2">
+              <div className="w-20 text-xs">Failure</div>
               <div className="flex-1"><MiniBar value={resultStat.pctFailure} max={100} color="#f87171" /></div>
-              <div className="w-24 text-right text-sm">{resultStat.failure} ({resultStat.pctFailure}%)</div>
+              <div className="w-20 text-right text-xs">{resultStat.failure} ({resultStat.pctFailure}%)</div>
             </div>
-          </div>
-        </div>
-        <div className="border rounded p-4">
-          <div className="text-sm font-medium mb-3">Outcome mix - computed from stats when available <span className="font-bold">({outcomeStat.n} Effect replications)</span></div>
-          <div className="space-y-2">
-            <div className="flex items-center gap-3">
-              <div className="w-24 text-sm">Success</div>
-              <div className="flex-1"><MiniBar value={outcomeStat.pctSuccess} max={100} color="#10b981" /></div>
-              <div className="w-24 text-right text-sm">{outcomeStat.success} ({outcomeStat.pctSuccess}%)</div>
+            {resultStat.reversal > 0 && (
+            <div className="flex items-center gap-2">
+              <div className="w-20 text-xs">Reversal</div>
+              <div className="flex-1"><MiniBar value={resultStat.pctReversal} max={100} color="#b91c1c" /></div>
+              <div className="w-20 text-right text-xs">{resultStat.reversal} ({resultStat.pctReversal}%)</div>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="w-24 text-sm">Failure</div>
-              <div className="flex-1"><MiniBar value={outcomeStat.pctFailure} max={100} color="#f87171" /></div>
-              <div className="w-24 text-right text-sm">{outcomeStat.failure} ({outcomeStat.pctFailure}%)</div>
-            </div>
-            {outcomeMethod === "significance" && (
-              <div className="flex items-center gap-3">
-                <div className="w-24 text-sm">Reversal</div>
-                <div className="flex-1"><MiniBar value={outcomeStat.pctReversal} max={100} color="#b91c1c" /></div>
-                <div className="w-24 text-right text-sm">{outcomeStat.reversal} ({outcomeStat.pctReversal}%)</div>
-              </div>
             )}
           </div>
-          <div className="mt-3">
-            <label className="block text-sm font-medium opacity-80 mb-1">
-              Method{" "}
-              <a
-                href="/docs/replication-outcome-classification"
-                className="text-xs opacity-60 hover:opacity-80 underline"
+          <div className="border-t mt-3 pt-3">
+            <div className="text-xs font-medium mb-2">Outcome mix - computed from stats when available <span className="font-bold">({outcomeStat.n} effect replications)</span></div>
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <div className="w-20 text-xs">Success</div>
+                <div className="flex-1"><MiniBar value={outcomeStat.pctSuccess} max={100} color="#10b981" /></div>
+                <div className="w-20 text-right text-xs">{outcomeStat.success} ({outcomeStat.pctSuccess}%)</div>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-20 text-xs">Failure</div>
+                <div className="flex-1"><MiniBar value={outcomeStat.pctFailure} max={100} color="#f87171" /></div>
+                <div className="w-20 text-right text-xs">{outcomeStat.failure} ({outcomeStat.pctFailure}%)</div>
+              </div>
+              {outcomeMethod === "significance" && (
+                <div className="flex items-center gap-2">
+                  <div className="w-20 text-xs">Reversal</div>
+                  <div className="flex-1"><MiniBar value={outcomeStat.pctReversal} max={100} color="#b91c1c" /></div>
+                  <div className="w-20 text-right text-xs">{outcomeStat.reversal} ({outcomeStat.pctReversal}%)</div>
+                </div>
+              )}
+            </div>
+            <div className="mt-2">
+              <label className="block text-xs font-medium opacity-80 mb-1">
+                Method{" "}
+                <a
+                  href="/docs/replication-outcome-classification"
+                  className="text-[10px] opacity-60 hover:opacity-80 underline"
+                >
+                  more info
+                </a>
+              </label>
+              <select
+                value={outcomeMethod}
+                onChange={(e) => setOutcomeMethod(e.target.value as "significance" | "orig_in_rep_ci" | "rep_in_orig_ci")}
+                className="w-full h-6 text-[9px] rounded-md border border-border bg-background px-1.5 focus:outline-none focus:ring-1 focus:ring-primary"
               >
-                more info
-              </a>
-            </label>
-            <select
-              value={outcomeMethod}
-              onChange={(e) => setOutcomeMethod(e.target.value as "significance" | "orig_in_rep_ci" | "rep_in_orig_ci")}
-              className="w-full h-8 text-xs rounded-md border border-border bg-background px-2 focus:outline-none focus:ring-1 focus:ring-primary"
-            >
-              <option value="significance">Statistically significant effect in the same direction?</option>
-              <option value="orig_in_rep_ci">Original effect size in replication 95% confidence interval?</option>
-              <option value="rep_in_orig_ci">Replication effect size in original 95% confidence interval?</option>
-            </select>
+                <option value="significance">Statistically significant effect in the same direction?</option>
+                <option value="orig_in_rep_ci">Original effect size in replication 95% confidence interval?</option>
+                <option value="rep_in_orig_ci">Replication effect size in original 95% confidence interval?</option>
+              </select>
+            </div>
           </div>
         </div>
         <div className="border rounded p-4">
-          <div className="text-sm opacity-70">Replication Effect Size vs Original Effect Size - Converted to Standard Scale ({computedOutcomes.filter(p => p.outcome !== "inconclusive" && Number.isFinite(p.oAdj)).length} replications)</div>
+          <div className="text-xs font-medium mb-2">Replication Effect Size vs Original Effect Size - Converted to Standard Scale <span className="font-bold">({computedOutcomes.filter(p => p.outcome !== "inconclusive" && Number.isFinite(p.oAdj)).length} effect replications)</span></div>
           <div className="mt-2">
             <InlineScatter points={computedOutcomes.filter(p => p.outcome !== "inconclusive" && Number.isFinite(p.oAdj) && Number.isFinite(p.rAdj))} showReversal={outcomeMethod === "significance"} />
+          </div>
+        </div>
+        <div className="border rounded p-4">
+          <div className="text-xs font-medium mb-2">Replication Success Rate by Year of Original Publication <span className="font-bold">({yearBins.reduce((s, b) => s + b.total, 0)} effect replications)</span></div>
+          <div className="mt-2">
+            <InlineYearBars bins={yearBins} />
           </div>
         </div>
         {/* Raw effect sizes scatterplot - hidden for now
@@ -1223,11 +1376,8 @@ function ReplicationsDatabaseContent() {
       </section>
 
       <section className="mx-auto max-w-[90%] mt-6 space-y-3">
-        <p className="opacity-80">
-          Data shown here are derived from the <a className="underline" href="https://forrt.org/apps/fred_explorer.html" target="_blank" rel="noreferrer">FReD replication dataset</a> as described in <a className="underline" href="https://openpsychologydata.metajnl.com/articles/10.5334/jopd.101" target="_blank" rel="noreferrer">Röseler et al., <em>Journal of Open Psychology Data</em>, 12: 8, pp. 1–23</a>.  Repository link: <a className="underline" href="https://osf.io/9r62x" target="_blank" rel="noreferrer">https://osf.io/9r62x</a> .
-        </p>
-        <p className="opacity-80">
-          Data is © 2024 The Author(s) and licensed under <a className="underline" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International (CC‑BY 4.0)</a>. You must credit the original authors and source if you use these data.
+        <p className="opacity-80 text-xs">
+          Some data shown here is derived from the <a className="underline" href="https://forrt.org/apps/fred_explorer.html" target="_blank" rel="noreferrer">FReD replication dataset</a>. If you use that data, please cite <a className="underline" href="https://openpsychologydata.metajnl.com/articles/10.5334/jopd.101" target="_blank" rel="noreferrer">Röseler et al., <em>Journal of Open Psychology Data</em>, 12: 8, pp. 1–23 (2024)</a> and their <a className="underline" href="https://osf.io/preprints/metaarxiv/me2ub_v1" target="_blank" rel="noreferrer">more recent preprint</a>. For more info on the original FReD dataset, see this OSF repository: <a className="underline" href="https://osf.io/9r62x" target="_blank" rel="noreferrer">https://osf.io/9r62x</a>. That data is © 2024 The Author(s) and licensed under <a className="underline" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International (CC‑BY 4.0)</a>. You must credit the original authors and source if you use that data. Data that comes from FReD is tagged in the "Validated Person" column as "FoRRT FReD team", "forrt.org team: LK", "FReD_API_team", or similarly. 
         </p>
       </section>
       </main>
@@ -1327,22 +1477,83 @@ function InlineScatter({ points, showReversal = true }: { points: ScatterPoint[]
           })}
         </g>
       </svg>
-      <div className="mt-2 flex flex-wrap items-center gap-4 text-xs">
-        <div className="flex items-center gap-2">
-          <span className="inline-block w-3 h-3 rounded" style={{ background: "#10b981" }} />
+      <div className="mt-1 flex flex-wrap items-center gap-3 text-[10px]">
+        <div className="flex items-center gap-1.5">
+          <span className="inline-block w-2.5 h-2.5 rounded" style={{ background: "#10b981" }} />
           <span>Success</span>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="inline-block w-3 h-3 rounded" style={{ background: "#f87171" }} />
+        <div className="flex items-center gap-1.5">
+          <span className="inline-block w-2.5 h-2.5 rounded" style={{ background: "#f87171" }} />
           <span>Failure</span>
         </div>
         {showReversal && (
-          <div className="flex items-center gap-2">
-            <span className="inline-block w-3 h-3 rounded" style={{ background: "#b91c1c" }} />
+          <div className="flex items-center gap-1.5">
+            <span className="inline-block w-2.5 h-2.5 rounded" style={{ background: "#b91c1c" }} />
             <span>Reversal</span>
           </div>
         )}
       </div>
+    </div>
+  );
+}
+
+type YearBin = {
+  label: string;
+  total: number;
+  success: number;
+  failure: number;
+  inconclusive: number;
+  rate: number;
+};
+
+function InlineYearBars({ bins }: { bins: YearBin[] }) {
+  const width = 600;
+  const height = 240;
+  const margin = { top: 10, right: 10, bottom: 45, left: 45 };
+  const innerW = width - margin.left - margin.right;
+  const innerH = height - margin.top - margin.bottom;
+
+  if (bins.length === 0) {
+    return <div className="text-sm opacity-50">No data with valid years and results</div>;
+  }
+
+  const barGap = 4;
+  const barWidth = Math.max(12, Math.min(50, (innerW - barGap * (bins.length - 1)) / bins.length));
+  const totalBarsWidth = bins.length * barWidth + (bins.length - 1) * barGap;
+  const offsetX = (innerW - totalBarsWidth) / 2;
+
+  const yScale = (v: number) => innerH - (v / 100) * innerH;
+  const yTicks = [0, 20, 40, 60, 80, 100];
+
+  return (
+    <div className="relative">
+      <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet" className="max-w-full h-auto">
+        <g transform={`translate(${margin.left},${margin.top})`}>
+          <rect x={0} y={0} width={innerW} height={innerH} fill="#f3f4f6" />
+          {yTicks.map((t) => (
+            <g key={`y-${t}`}>
+              <line x1={0} y1={yScale(t)} x2={innerW} y2={yScale(t)} stroke="#d1d5db" strokeWidth={0.5} />
+              <line x1={-6} x2={0} y1={yScale(t)} y2={yScale(t)} stroke="#111827" strokeWidth={1} />
+              <text x={-10} y={yScale(t)} dy="0.32em" textAnchor="end" className="text-xs fill-current" style={{ opacity: 0.7 }}>{t}%</text>
+            </g>
+          ))}
+          {bins.map((bin, i) => {
+            const bx = offsetX + i * (barWidth + barGap);
+            const barH = (bin.rate / 100) * innerH;
+            const by = innerH - barH;
+            return (
+              <g key={bin.label}>
+                <title>{`${bin.label}: ${bin.rate}% success (${bin.success}/${bin.total})`}</title>
+                <rect x={bx} y={by} width={barWidth} height={barH} fill="#10b981" fillOpacity={0.85} rx={1} />
+                <text x={bx + barWidth / 2} y={by - 4} textAnchor="middle" className="fill-current" style={{ fontSize: 9, opacity: 0.7 }}>{bin.total}</text>
+                <text x={bx + barWidth / 2} y={innerH + 12} textAnchor="end" transform={`rotate(-45, ${bx + barWidth / 2}, ${innerH + 12})`} className="fill-current" style={{ fontSize: 9, opacity: 0.7 }}>{bin.label}</text>
+              </g>
+            );
+          })}
+          <text x={-innerH / 2} y={-38} textAnchor="middle" transform="rotate(-90)" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 10 }}>Replication Success Rate (%)</text>
+          <text x={innerW / 2} y={innerH + 44} textAnchor="middle" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 10 }}>Year of Original Publication (5-year bins)</text>
+        </g>
+      </svg>
     </div>
   );
 }

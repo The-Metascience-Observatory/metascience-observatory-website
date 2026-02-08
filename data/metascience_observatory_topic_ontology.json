@@ -1,0 +1,159 @@
+{
+  "social sciences": {
+    "psychology": [
+      "social psychology",
+      "personality psychology",
+      "cognitive psychology",
+      "consumer psychology / marketing",
+      "clinical psychology",
+      "developmental psychology",
+      "experimental philosophy",
+      "psychophysics",
+      "neuropsychology",
+      "educational psychology",
+      "sports psychology",
+      "psychophysiology",
+      "human factors and ergonomics",
+      "criminology" 
+    ],
+    "economics": [
+      "development economics",
+      "behavioral economics",
+      "macroeconomics",
+      "labor economics",
+      "econometric methods",
+      "political economy",
+      "finance",
+      "energy & environmental economics",
+      "economic history"
+    ],
+    "business & management": [
+      "management",
+      "operations management",
+      "human resource management"
+    ],
+    "political science": [
+      "political economy",
+      "experimental philosophy"
+    ],
+    "sociology": [
+      "anthropology",
+      "metascience"
+    ],
+    "education": [
+      "special education",
+      "nursing education",
+      "medical education"
+    ],
+    "linguistics": [
+      "second language acquisition",
+      "applied linguistics",
+      "conversation analysis",
+      "phonetics and phonology"
+    ]
+  },
+  "biological sciences": {
+    "neuroscience": [
+      "cognitive neuroscience",
+      "behavioral neuroscience",
+      "neuroanatomy",
+      "neurophysiology",
+      "psychoneuroimmunology"
+    ],
+    "biology": [
+      "cellular biology",
+      "molecular biology",
+      "genetics",
+      "physiology",
+      "cancer biology",
+      "immunology"
+    ],
+    "medical fields": [
+      "psychiatry",
+      "cardiovascular medicine",
+      "nephrology",
+      "rheumatology",
+      "geriatric care",
+      "rehabilitation medicine",
+      "psychosomatic medicine",
+      "nursing",
+      "veterinary science",
+      "pharmacology and toxicology"
+    ]
+  },
+  "physical sciences": {
+    "physics and astronomy": [
+      "acoustics and ultrasonics",
+      "experimental physics and instrumentation",
+      "statistical mechanics",
+      "atomic, molecular, and optical physics",
+      "condensed matter physics",
+      "astronomy and astrophysics",
+      "nuclear physics",
+      "particle and high-energy physics"
+    ],
+    "engineering": [
+      "building and construction",
+      "architecture",
+      "control and systems engineering",
+      "media technology",
+      "safety, risk, reliability and quality",
+      "biomedical engineering",
+      "general engineering",
+      "aerospace engineering",
+      "mechanical engineering",
+      "electrical and electronic engineering",
+      "industrial and manufacturing engineering",
+      "computational mechanics",
+      "ocean engineering",
+      "automotive engineering",
+      "mechanics of materials",
+      "civil and structural engineering",
+      "environmental engineering"
+    ],
+    "environmental science": [
+      "water science and technology",
+      "ecology",
+      "management, monitoring, policy and law",
+      "nature and landscape conservation",
+      "environmental chemistry",
+      "health, pollution, and toxicology ",
+      "global and planetary change",
+      "industrial and manufacturing engineering",
+      "ecological modeling"
+    ],
+    "materials science": [
+      "metals and alloys",
+      "ceramics and composites",
+      "electronic, optical and magnetic materials",
+      "general materials science",
+      "surfaces, coatings and films",
+      "biomaterials",
+      "polymers and plastics",
+      "materials chemistry"
+    ],
+    "earth and planetary sciences": [
+      "paleontology",
+      "earth‑surface processes",
+      "geochemistry and petrology",
+      "oceanography",
+      "geophysics",
+      "space and planetary science",
+      "atmospheric science",
+      "geology"
+    ],
+    "chemistry": [
+      "electrochemistry",
+      "spectroscopy",
+      "physical and theoretical chemistry",
+      "inorganic chemistry",
+      "analytical chemistry",
+      "organic chemistry"
+    ]
+  },
+  "computer science": {
+    "AI and machine learning": [],
+    "software engineering": [],
+    "algorithms": []
+  }
+}

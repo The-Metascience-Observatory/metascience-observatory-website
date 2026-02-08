@@ -8,7 +8,7 @@
 
 ## Side projects
 
-* The Metascience Observatory explorer
+* [The Metascience Observatory explorer](https://explore.metascienceobservatory.org/)
 * z-curve analysis
 
 

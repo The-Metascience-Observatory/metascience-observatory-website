@@ -13,6 +13,7 @@ const PROJECT_TO_TAG: Record<string, string> = {
   "Camerer et al. (2018) – Nature/Science Social Science Replication Project": "SSRP",
   "Many Labs 1": "ML1",
   "Many Labs 2": "ML2",
+  "Many Labs 5": "ML5",
   "Experimental Philosophy – Reproducibility Project": "XPHIR",
   "Brazilian Reproducibility Initiative": "BRI",
   "Reproducibility Project: Cancer Biology": "RP:CB",

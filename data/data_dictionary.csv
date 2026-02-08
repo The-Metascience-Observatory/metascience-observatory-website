@@ -33,8 +33,9 @@ replication_es_95_CI,"[float, float]",no,no,95% confidence interval for the effe
 replication_p_value,float,no,no,replication p value
 replication_p_value_type,string,no,no,"statistic the replication p value was calculated for (t, z, chi-squared, F, rho, etc)"
 replication_p_value_tails,“one” OR “two” OR “”,no,no,whether the replication p value had one or two tails
-discipline,string,yes,no,discipline category labels - mostly manually curated
-subdiscipline,string,no,no,subdiscipline category labels - mostly manually curated
+field,string,no,yes - can be auto-generated from discipline,field categorization from our ontology
+discipline,string,yes,no,discipline categorization from our ontology
+subdiscipline,string,no,no,subdiscipline categorization from our ontology
 tags,semicolon separated list,no,no,set of tags to enable search
 validated,"“yes"" OR ""no""",yes,no,has the core required data been validated by a human at least once?
 validated_person,string,no,no,"name of the person and/or organization who did the validation, if applicable"

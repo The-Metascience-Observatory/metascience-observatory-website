@@ -76,6 +76,10 @@ const documentation: DocMeta[] = [
     href: "/docs/defining-replication",
     title: "Defining replication",
   },
+  {
+    href: "/docs/ontology",
+    title: "Our Ontology for Classifying Papers",
+  },
 ];
 
 export default function DocsPage() {
