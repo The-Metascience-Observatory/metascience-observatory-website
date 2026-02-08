@@ -27,9 +27,9 @@
 | Log Ratio of Means (signed) | log ROM | No |
 | Spearman's rank correlation | Spearman's r | No |
 
-The **Replication Database** handles a wide variety of effect sizes. It achieves commensurability by converting effect sizes into an equivalent or approximate **Pearson correlation coefficient ($r$)** when possible. 
+The Metascience Observatory's [replications database](https://metascienceobservatory.org/replications-database) contains a wide variety of reported effect size types. To achieve commensurability between these types we convert them into an equivalent or approximate **Pearson correlation coefficient ($r$)** when possible. This converts effect sizes to a 0 to 1 scale. Not all effect size types can be converted this way, but many can. 
 
-To ensure a consistent magnitude scale for comparison (effectively acting as a 0–1 scale), the database codes **original** effect sizes as positive values. **Replication** effect sizes are then coded with a sign reflecting whether the entry matches the original direction (positive) or reverses it (negative).
+To consistently show reversals in effect magnitude as negatives, we always report the original effect as being positive. The replication effect sizes are then coded with a sign reflecting whether they match the original direction (positive) or reverse it (negative).
 
 ---
 
