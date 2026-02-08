@@ -29,12 +29,12 @@ export const Navbar = () => {
             <Link href="/roadmap" className="text-foreground/80 hover:text-foreground transition-colors">Roadmap</Link>
             <Link href="/docs" className="text-foreground/80 hover:text-foreground transition-colors">Docs</Link>
             <Link href="/#donate" className="text-foreground/80 hover:text-foreground transition-colors">Donate</Link>
-            <Button variant="hero" size="sm" asChild>
+            <Button variant="outline-gradient" size="sm" asChild>
               <Link href="https://explore.metascienceobservatory.org/" target="_blank" rel="noopener noreferrer">
                 Explorer
               </Link>
             </Button>
-            <Button variant="hero" size="sm" asChild>
+            <Button variant="outline-gradient" size="sm" asChild>
               <Link href="/replications-database">
                 Replications Database
               </Link>
@@ -104,12 +104,12 @@ export const Navbar = () => {
               >
                 Donate
               </Link>
-              <Button variant="hero" size="sm" asChild className="w-full justify-center">
+              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center">
                 <Link href="https://explore.metascienceobservatory.org/" target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)}>
                   Explorer
                 </Link>
               </Button>
-              <Button variant="hero" size="sm" asChild className="w-full justify-center">
+              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center">
                 <Link href="/replications-database" onClick={() => setIsMobileMenuOpen(false)}>
                   Replications Database
                 </Link>
