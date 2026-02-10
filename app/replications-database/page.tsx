@@ -1133,7 +1133,7 @@ function ReplicationsDatabaseContent() {
             </div>
             <div className="flex flex-col items-end gap-1 ml-4 shrink-0">
               <div className="flex items-center gap-1">
-                <label className="text-[10px] opacity-60 cursor-help" title="A paper is considered successfully replicated if the chosen threshold of effect replications for effects reported in the paper have been replicated. This threshold can be shifted with the dropdown below.">Level of analysis:</label>
+                <label className="text-[10px] opacity-60 cursor-help" title="A paper is considered successfully replicated if X% of effect replications for effects reported in that paper were successful. The threshold X can be shifted with the dropdown below.">Level of analysis:</label>
                 <select
                   value={yearAnalysisLevel}
                   onChange={(e) => setYearAnalysisLevel(e.target.value as "effect" | "paper")}
