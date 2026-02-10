@@ -1037,9 +1037,14 @@ function ReplicationsDatabaseContent() {
                 placeholder="Search description, tags, or references"
                 className="h-10 flex-1"
               />
-              <a href="/replications-database/by-discipline" className="text-sm underline hover:opacity-80 h-10 flex items-center whitespace-nowrap">
-                Detailed breakdown by field
-              </a>
+              <div className="flex flex-col items-end shrink-0">
+                <a href="/replications-database/by-discipline" className="text-sm underline hover:opacity-80 whitespace-nowrap">
+                  Detailed breakdown by field
+                </a>
+                <a href="/replications-database/by-journal" className="text-sm underline hover:opacity-80 whitespace-nowrap">
+                  Detailed breakdown by journal
+                </a>
+              </div>
             </div>
           </div>
         </div>

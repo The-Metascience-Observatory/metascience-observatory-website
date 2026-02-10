@@ -13,19 +13,27 @@ type FredResponse = {
 
 type DisciplineRow = {
   discipline: string;
-  success: number;
-  failure: number;
-  inconclusive: number;
+  replicated: number;
+  notReplicated: number;
   total: number;
-  successPct: number;
-  failurePct: number;
-  inconclusivePct: number;
+  replicatedPct: number;
+  notReplicatedPct: number;
 };
+
+const MIN_PAPERS = 10;
+
+const THRESHOLD_OPTIONS = [
+  { value: 0.5, label: "50%" },
+  { value: 0.75, label: "75%" },
+  { value: 0.9, label: "90%" },
+  { value: 1.0, label: "100%" },
+];
 
 export default function ByDisciplinePage() {
   const [data, setData] = useState<FredResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [threshold, setThreshold] = useState(0.75);
 
   useEffect(() => {
     async function fetchData() {
@@ -45,39 +53,83 @@ export default function ByDisciplinePage() {
 
   const byDiscipline: DisciplineRow[] = useMemo(() => {
     if (!data) return [];
-    const counts = new Map<string, { success: number; failure: number; inconclusive: number }>();
+
+    // Step 1: Group rows by original_url (paper), collect discipline + results
+    const papers = new Map<
+      string,
+      { disciplines: string[]; successCount: number; totalCount: number }
+    >();
 
     for (const r of data.rows) {
+      const url = String(r.original_url ?? "").trim();
       const raw = String(r.discipline ?? "");
       const parts = raw.split(",").map((s) => s.trim()).filter(Boolean);
       const disciplines = parts.length > 0 ? parts : ["Unspecified"];
-      const res = String(r.result ?? "").toLowerCase();
+      const result = String(r.result ?? "").toLowerCase();
 
-      for (const d of disciplines) {
-        const entry = counts.get(d) || { success: 0, failure: 0, inconclusive: 0 };
-        if (res.includes("success")) entry.success++;
-        else if (res.includes("failure")) entry.failure++;
-        else entry.inconclusive++;
-        counts.set(d, entry);
+      if (!url) continue;
+
+      const hasOutcome =
+        result.includes("success") || result.includes("failure");
+      if (!hasOutcome) continue;
+
+      let paper = papers.get(url);
+      if (!paper) {
+        paper = { disciplines, successCount: 0, totalCount: 0 };
+        papers.set(url, paper);
+      }
+
+      paper.totalCount++;
+      if (result.includes("success")) {
+        paper.successCount++;
       }
     }
 
-    return Array.from(counts.entries())
+    // Step 2: Classify each paper at the current threshold, group by discipline
+    const disciplineCounts = new Map<
+      string,
+      { replicated: number; notReplicated: number }
+    >();
+
+    for (const paper of papers.values()) {
+      if (paper.totalCount === 0) continue;
+
+      const rate = paper.successCount / paper.totalCount;
+      const isReplicated = rate >= threshold;
+
+      for (const d of paper.disciplines) {
+        const entry = disciplineCounts.get(d) || {
+          replicated: 0,
+          notReplicated: 0,
+        };
+
+        if (isReplicated) {
+          entry.replicated++;
+        } else {
+          entry.notReplicated++;
+        }
+
+        disciplineCounts.set(d, entry);
+      }
+    }
+
+    // Step 3: Compute percentages and sort
+    return Array.from(disciplineCounts.entries())
       .map(([discipline, v]) => {
-        const total = v.success + v.failure + v.inconclusive;
+        const total = v.replicated + v.notReplicated;
         return {
           discipline,
           ...v,
           total,
-          successPct: total > 0 ? (v.success / total) * 100 : 0,
-          failurePct: total > 0 ? (v.failure / total) * 100 : 0,
-          inconclusivePct: total > 0 ? (v.inconclusive / total) * 100 : 0,
+          replicatedPct: total > 0 ? (v.replicated / total) * 100 : 0,
+          notReplicatedPct: total > 0 ? (v.notReplicated / total) * 100 : 0,
         };
       })
+      .filter((d) => d.total >= MIN_PAPERS)
       .sort((a, b) => b.total - a.total);
-  }, [data]);
+  }, [data, threshold]);
 
-  const totalRows = data?.rows.length ?? 0;
+  const totalPapers = byDiscipline.reduce((sum, d) => sum + d.total, 0);
 
   if (loading) return <main className="min-h-screen px-6 py-10">Loading…</main>;
   if (error || !data) return <main className="min-h-screen px-6 py-10">Failed to load: {error || "No data"}</main>;
@@ -89,20 +141,47 @@ export default function ByDisciplinePage() {
         <div className="max-w-4xl mx-auto space-y-8">
           <div>
             <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
-              Replication Success by Discipline
+              Paper Replication Success by Discipline
             </h1>
+            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              Paper-level analysis: a paper is considered &ldquo;replicated&rdquo; if at
+              least {Math.round(threshold * 100)}% of its effect replications
+              were successful. Only disciplines with {MIN_PAPERS}+ papers shown.
+            </p>
           </div>
 
-          {/* Legend */}
-          <div className="flex gap-6 text-sm">
-            <span className="flex items-center gap-2">
-              <span className="inline-block w-3 h-3 rounded" style={{ background: "#10b981" }} /> Success
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="inline-block w-3 h-3 rounded" style={{ background: "#f87171" }} /> Failure
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="inline-block w-3 h-3 rounded" style={{ background: "#9ca3af" }} /> Inconclusive
+          {/* Controls row */}
+          <div className="flex flex-wrap items-center gap-6">
+            {/* Threshold selector */}
+            <label className="flex items-center gap-2 text-sm">
+              <span className="text-gray-600 dark:text-gray-300">
+                Success threshold:
+              </span>
+              <select
+                value={threshold}
+                onChange={(e) => setThreshold(Number(e.target.value))}
+                className="border border-gray-300 dark:border-gray-600 rounded px-2 py-1 bg-white dark:bg-gray-800 text-sm"
+              >
+                {THRESHOLD_OPTIONS.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            {/* Legend */}
+            <div className="flex gap-6 text-sm">
+              <span className="flex items-center gap-2">
+                <span className="inline-block w-3 h-3 rounded" style={{ background: "#10b981" }} /> Replicated
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="inline-block w-3 h-3 rounded" style={{ background: "#f87171" }} /> Not replicated
+              </span>
+            </div>
+
+            <span className="text-sm text-gray-500 dark:text-gray-400">
+              {byDiscipline.length} disciplines &middot; {totalPapers} papers
             </span>
           </div>
 
@@ -110,40 +189,31 @@ export default function ByDisciplinePage() {
           <div className="space-y-3">
             {byDiscipline.map((d) => (
               <div key={d.discipline} className="flex items-center gap-3">
-                <span className="w-48 text-sm text-right truncate shrink-0" title={d.discipline}>
+                <span className="w-48 text-sm text-right shrink-0" title={d.discipline}>
                   {d.discipline}
                 </span>
                 <div className="flex-1 h-7 flex rounded overflow-hidden bg-gray-100 dark:bg-gray-800 text-xs font-medium text-white">
-                  {d.successPct > 0 && (
+                  {d.replicatedPct > 0 && (
                     <div
                       className="h-full transition-all flex items-center justify-center overflow-hidden"
-                      style={{ width: `${d.successPct}%`, background: "#10b981" }}
-                      title={`Success: ${d.success} (${d.successPct.toFixed(1)}%)`}
+                      style={{ width: `${d.replicatedPct}%`, background: "#10b981" }}
+                      title={`Replicated: ${d.replicated} (${d.replicatedPct.toFixed(1)}%)`}
                     >
-                      {d.successPct >= 10 && `${d.successPct.toFixed(0)}%`}
+                      {d.replicatedPct >= 10 && `${d.replicatedPct.toFixed(0)}%`}
                     </div>
                   )}
-                  {d.failurePct > 0 && (
+                  {d.notReplicatedPct > 0 && (
                     <div
                       className="h-full transition-all flex items-center justify-center overflow-hidden"
-                      style={{ width: `${d.failurePct}%`, background: "#f87171" }}
-                      title={`Failure: ${d.failure} (${d.failurePct.toFixed(1)}%)`}
+                      style={{ width: `${d.notReplicatedPct}%`, background: "#f87171" }}
+                      title={`Not replicated: ${d.notReplicated} (${d.notReplicatedPct.toFixed(1)}%)`}
                     >
-                      {d.failurePct >= 10 && `${d.failurePct.toFixed(0)}%`}
-                    </div>
-                  )}
-                  {d.inconclusivePct > 0 && (
-                    <div
-                      className="h-full transition-all flex items-center justify-center overflow-hidden"
-                      style={{ width: `${d.inconclusivePct}%`, background: "#9ca3af" }}
-                      title={`Inconclusive: ${d.inconclusive} (${d.inconclusivePct.toFixed(1)}%)`}
-                    >
-                      {d.inconclusivePct >= 10 && `${d.inconclusivePct.toFixed(0)}%`}
+                      {d.notReplicatedPct >= 10 && `${d.notReplicatedPct.toFixed(0)}%`}
                     </div>
                   )}
                 </div>
-                <span className="w-28 text-sm text-right tabular-nums shrink-0">
-                  {d.total} ({totalRows > 0 ? (d.total / totalRows * 100).toFixed(0) : 0}%)
+                <span className="w-20 text-sm text-right tabular-nums shrink-0">
+                  {d.total} papers
                 </span>
               </div>
             ))}
