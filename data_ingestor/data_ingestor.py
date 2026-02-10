@@ -1,12 +1,14 @@
 """
 Ingestion Engine for Replications Database
 
-This script processes spreadsheets containing replication experiment data
+This script processes CSV or JSON files containing replication experiment data
 and adds them to the master replications database.
 
 Usage:
-    python ingestion_engine.py <input_csv_file> <master_database_csv>
-    python ingestion_engine.py --skip-api-calls <input_csv_file> <master_database_csv>
+    python data_ingestor.py <input_file.csv|input_file.json>
+    python data_ingestor.py --skip-api-calls <input_file.csv>
+
+JSON format: {"replications": [{"original_url": "...", "replication_url": "...", ...}, ...]}
 """
 
 import pandas as pd
@@ -1037,10 +1039,24 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, workers=2, no_
         print(f"  [Parallel enrichment with {workers} worker(s)]")
     print(f"{'='*60}")
 
-    # Load input data
+    # Load input data (support both CSV and JSON)
     print(f"\nLoading input file: {input_csv}")
-    input_df = pd.read_csv(input_csv)
-    print(f"  Loaded {len(input_df)} rows")
+
+    if input_csv.lower().endswith('.json'):
+        # Load JSON file
+        with open(input_csv, 'r') as f:
+            data = json.load(f)
+
+        # Extract replications list
+        if 'replications' in data and isinstance(data['replications'], list):
+            input_df = pd.DataFrame(data['replications'])
+            print(f"  Loaded {len(input_df)} replication rows from JSON")
+        else:
+            raise ValueError("JSON file must contain a 'replications' array")
+    else:
+        # Load CSV file
+        input_df = pd.read_csv(input_csv)
+        print(f"  Loaded {len(input_df)} rows from CSV")
 
     # Skip rows where contains_replications is NO or False
     if 'contains_replications' in input_df.columns:
@@ -1402,9 +1418,10 @@ if __name__ == "__main__":
 Examples:
   python data_ingestor.py cancer_biology_replications_data.csv --discipline "cancer biology"
   python data_ingestor.py --skip-api-calls psych_file_drawer_data_to_ingest.csv
+  python data_ingestor.py 10.1073--pnas.2402315121_result_full.json
         """
     )
-    parser.add_argument('input_csv', help='Input CSV file to ingest')
+    parser.add_argument('input_csv', help='Input CSV or JSON file to ingest (JSON must have "replications" array)')
     parser.add_argument('--skip-api-calls', action='store_true',
                        help='Skip metadata enrichment API calls (faster but no metadata updates)')
     parser.add_argument('--discipline', type=str, default=None,

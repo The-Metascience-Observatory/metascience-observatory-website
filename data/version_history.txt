@@ -19,6 +19,8 @@ replications_database_2026_02_08_100336.csv # added ML5_from_fred.csv
 replications_database_2026_02_08_100454.csv # added ML5_from_fred.csv
 replications_database_2026_02_08_100948.csv # added ML2_from_fred.csv
 replications_database_2026_02_08_111234.csv # added ml4_processed.csv
-
 replications_database_2026_02_08_111626.csv # removed 26 exact full-row duplicates
 replications_database_2026_02_08_111731.csv # added removed_exact_duplicates.csv
+replications_database_2026_02_09_211810.csv # added 10.1073--pnas.2402315121_result_full.json
+replications_database_2026_02_09_211922.csv # added 10.1073--pnas.2402315121_result_full.json
+replications_database_2026_02_10_070006.csv # added collated_results_sonnet_v3_run.csv
