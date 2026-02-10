@@ -509,6 +509,8 @@ function ReplicationsDatabaseContent() {
   );
   const [showColumnSelector, setShowColumnSelector] = useState(false);
   const [outcomeMethod, setOutcomeMethod] = useState<"significance" | "orig_in_rep_ci" | "rep_in_orig_ci">("rep_in_orig_ci");
+  const [yearAnalysisLevel, setYearAnalysisLevel] = useState<"effect" | "paper">("paper");
+  const [paperThreshold, setPaperThreshold] = useState<number>(0.75);
 
   useEffect(() => {
     async function fetchData() {
@@ -849,6 +851,67 @@ function ReplicationsDatabaseContent() {
     return bins.slice(firstValid, lastValid + 1);
   }, [filteredRows]);
 
+  // Paper-level year bins: group by original_url, success if >= threshold of effects succeeded
+  const yearBinsPaper = useMemo(() => {
+    const paperMap = new Map<string, { year: number; results: string[] }>();
+    for (const r of filteredRows) {
+      const url = String(r.original_url ?? "").trim();
+      if (!url) continue;
+      const yearRaw = toNumber(r.original_year);
+      if (yearRaw == null || yearRaw < 1900 || yearRaw > 2030) continue;
+      const year = Math.floor(yearRaw);
+      const res = String(r.result ?? "").trim();
+      if (!res) continue;
+      if (!paperMap.has(url)) {
+        paperMap.set(url, { year, results: [] });
+      }
+      paperMap.get(url)!.results.push(res);
+    }
+
+    const entries: Array<{ year: number; result: string }> = [];
+    for (const [, paper] of paperMap) {
+      const successes = paper.results.filter(r => r === "success").length;
+      const paperResult = successes / paper.results.length >= paperThreshold ? "success" : "failure";
+      entries.push({ year: paper.year, result: paperResult });
+    }
+    if (entries.length === 0) return [];
+
+    const minYear = Math.min(...entries.map(e => e.year));
+    const maxYear = Math.max(...entries.map(e => e.year));
+    const binStart = Math.floor(minYear / 5) * 5;
+    const binEnd = Math.floor(maxYear / 5) * 5;
+
+    const bins: YearBin[] = [];
+    for (let start = binStart; start <= binEnd; start += 5) {
+      const end = start + 4;
+      const inBin = entries.filter(e => e.year >= start && e.year <= end);
+      const total = inBin.length;
+      const success = inBin.filter(e => e.result === "success").length;
+      const failure = inBin.filter(e => e.result === "failure").length;
+      const inconclusive = total - success - failure;
+      const rate = total >= 10 ? Math.round((success / total) * 1000) / 10 : -1;
+      bins.push({ label: `${start}-${String(end).slice(2)}`, total, success, failure, inconclusive, rate });
+    }
+    const firstValid = bins.findIndex(b => b.rate >= 0);
+    const lastValid = bins.length - 1 - [...bins].reverse().findIndex(b => b.rate >= 0);
+    if (firstValid < 0) return [];
+    return bins.slice(firstValid, lastValid + 1);
+  }, [filteredRows, paperThreshold]);
+
+  // Count unique papers for the subtitle
+  const uniquePaperCount = useMemo(() => {
+    const urls = new Set<string>();
+    for (const r of filteredRows) {
+      const url = String(r.original_url ?? "").trim();
+      const res = String(r.result ?? "").trim();
+      const yearRaw = toNumber(r.original_year);
+      if (url && res && yearRaw != null && yearRaw >= 1900 && yearRaw <= 2030) {
+        urls.add(url);
+      }
+    }
+    return urls.size;
+  }, [filteredRows]);
+
   if (loading) {
     return (
       <div className="min-h-screen">
@@ -1059,9 +1122,46 @@ function ReplicationsDatabaseContent() {
           </div>
         </div>
         <div className="border rounded p-4">
-          <div className="text-xs font-medium mb-2">Replication Success Rate by Year of Original Publication <span className="font-bold">({yearBins.filter(b => b.rate >= 0).reduce((s, b) => s + b.total, 0)} effect replications)</span></div>
+          <div className="flex items-start justify-between mb-2">
+            <div className="text-xs font-medium">
+              Replication Success Rate by Year of Original Publication{" "}
+              <span className="font-bold">
+                ({yearAnalysisLevel === "effect"
+                  ? `${yearBins.filter(b => b.rate >= 0).reduce((s, b) => s + b.total, 0)} effect replications from ${uniquePaperCount} original papers`
+                  : `${yearBinsPaper.filter(b => b.rate >= 0).reduce((s, b) => s + b.total, 0)} original papers`})
+              </span>
+            </div>
+            <div className="flex flex-col items-end gap-1 ml-4 shrink-0">
+              <div className="flex items-center gap-1">
+                <label className="text-[10px] opacity-60 cursor-help" title="A paper is considered successfully replicated if the chosen threshold of effect replications for effects reported in the paper have been replicated. This threshold can be shifted with the dropdown below.">Level of analysis:</label>
+                <select
+                  value={yearAnalysisLevel}
+                  onChange={(e) => setYearAnalysisLevel(e.target.value as "effect" | "paper")}
+                  className="text-[10px] border rounded px-1 py-0.5 bg-background"
+                >
+                  <option value="effect">Effect</option>
+                  <option value="paper">Paper</option>
+                </select>
+              </div>
+              {yearAnalysisLevel === "paper" && (
+                <div className="flex items-center gap-1">
+                  <label className="text-[10px] opacity-60">Threshold for success:</label>
+                  <select
+                    value={paperThreshold}
+                    onChange={(e) => setPaperThreshold(Number(e.target.value))}
+                    className="text-[10px] border rounded px-1 py-0.5 bg-background"
+                  >
+                    <option value={0.5}>50%</option>
+                    <option value={0.75}>75%</option>
+                    <option value={0.9}>90%</option>
+                    <option value={1}>100%</option>
+                  </select>
+                </div>
+              )}
+            </div>
+          </div>
           <div className="mt-2">
-            <InlineYearBars bins={yearBins} />
+            <InlineYearBars bins={yearAnalysisLevel === "effect" ? yearBins : yearBinsPaper} />
           </div>
         </div>
         {/* Raw effect sizes scatterplot - hidden for now
