@@ -24,3 +24,5 @@ replications_database_2026_02_08_111731.csv # added removed_exact_duplicates.csv
 replications_database_2026_02_09_211810.csv # added 10.1073--pnas.2402315121_result_full.json
 replications_database_2026_02_09_211922.csv # added 10.1073--pnas.2402315121_result_full.json
 replications_database_2026_02_10_070006.csv # added collated_results_sonnet_v3_run.csv
+replications_database_2026_02_12_141533.csv # added collated_results_sonnet_v4.csv
+replications_database_2026_02_12_141729.csv # added collated_results_sonnet_v4.csv

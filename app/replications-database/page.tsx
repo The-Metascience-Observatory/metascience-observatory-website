@@ -1039,7 +1039,7 @@ function ReplicationsDatabaseContent() {
               />
               <div className="flex flex-col items-end shrink-0">
                 <a href="/replications-database/by-discipline" className="text-sm underline hover:opacity-80 whitespace-nowrap">
-                  Detailed breakdown by field
+                  Detailed breakdown by discipline
                 </a>
                 <a href="/replications-database/by-journal" className="text-sm underline hover:opacity-80 whitespace-nowrap">
                   Detailed breakdown by journal

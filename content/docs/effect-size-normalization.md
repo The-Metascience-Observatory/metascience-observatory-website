@@ -125,7 +125,7 @@ $$\eta^2 = \frac{SS_{effect}}{SS_{total}}$$
 * $SS_{total}$: The total sum of squares.
 
 ### Normalization to 0–1 Scale (Conversion to $r$)
-The conversion is a two-step process, first converting to Cohen's $d$, then to $r$ ([Cohen, 1988](#ref-cohen-1988); [Lakens, 2013](#ref-lakens-2013)):
+The conversion is a two-step process, first converting to Cohen's $d$, then to $r$ ([Cohen, 1988](#ref-cohen-1988);
 
 1.  **Convert to $d$:**
     $$d = 2\sqrt{\frac{\eta^2}{1 - \eta^2}}$$
@@ -381,9 +381,6 @@ Glass, G. V. (1976). [Primary, secondary, and meta-analysis of research](https:/
 
 <span id="ref-hedges-1981"></span>
 Hedges, L. V. (1981). [Distribution theory for Glass's estimator of effect size and related estimators](https://doi.org/10.3102/10769986006002107). *Journal of Educational Statistics*, 6(2), 107–128.
-
-<span id="ref-lakens-2013"></span>
-Lakens, D. (2013). [Calculating and reporting effect sizes to facilitate cumulative science: A practical primer for t-tests and ANOVAs](https://doi.org/10.3389/fpsyg.2013.00863). *Frontiers in Psychology*, 4, 863.
 
 <span id="ref-pearson-1895"></span>
 Pearson, K. (1895). [Notes on regression and inheritance in the case of two parents](https://doi.org/10.1098/rspl.1895.0041). *Proceedings of the Royal Society of London*, 58, 240–242.

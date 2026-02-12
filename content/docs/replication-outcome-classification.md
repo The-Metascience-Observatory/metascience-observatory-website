@@ -248,7 +248,7 @@ Since $p > 0.05$, this correlation is **not statistically significant** at the c
 
 ## References
 
-LeBel, E. P., Vanpaemel, W., Cheung, I., & Campbell, L. (2019). [A brief guide to evaluate replications](https://doi.org/10.1037/met0000255). *Meta-Psychology*, 3.
+LeBel, E. P., Vanpaemel, W., Cheung, I., & Campbell, L. (2019). [A brief guide to evaluate replications](https://open.lnu.se/index.php/metapsychology/article/view/843). *Meta-Psychology*, 3.
 
 Röseler, L., & Kühberger, A. (2025). [FReD: The Framework for Replication Databases](https://osf.io/preprints/metaarxiv/me2ub_v1). *MetaArXiv Preprints*.
 
