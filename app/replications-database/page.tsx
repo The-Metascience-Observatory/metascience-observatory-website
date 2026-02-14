@@ -1477,7 +1477,17 @@ function ReplicationsDatabaseContent() {
               })}
               {filteredRows.length === 0 && (
                 <tr>
-                  <td colSpan={visibleColumns.size} className="p-6 text-center opacity-70">No rows</td>
+                  <td colSpan={visibleColumns.size} className="p-6 text-center opacity-70">
+                    No rows matching{" "}
+                    {[
+                      field && `Field = "${field}"`,
+                      discipline && `Discipline = "${discipline}"`,
+                      subdiscipline && `Subdiscipline = "${subdiscipline}"`,
+                      result && `Result = "${result}"`,
+                      initiative && `Initiative = "${initiative}"`,
+                      search && `Search = "${search}"`,
+                    ].filter(Boolean).join(", ") || "current filters"}
+                  </td>
                 </tr>
               )}
             </tbody>

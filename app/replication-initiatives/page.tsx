@@ -168,7 +168,7 @@ export default function ReplicationProjectsPage() {
       <main className="pt-20 pb-16">
         <div className="container mx-auto px-4 py-12 max-w-5xl">
           <h1 className="text-4xl font-bold mb-4 text-foreground">
-            Previous replication initiatives
+            Replication initiatives
           </h1>
           <p className="text-foreground/70 leading-relaxed mb-8">
           </p>
