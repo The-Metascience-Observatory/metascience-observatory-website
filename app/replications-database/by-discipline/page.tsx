@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { ReplicationsNavbar } from "@/components/ReplicationsNavbar";
+import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
 type AnyRecord = Record<string, unknown>;
@@ -136,7 +136,7 @@ export default function ByDisciplinePage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <ReplicationsNavbar />
+      <Navbar />
       <main className="pt-24 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-24 py-10 flex-1">
         <div className="max-w-4xl mx-auto space-y-8">
           <div>
