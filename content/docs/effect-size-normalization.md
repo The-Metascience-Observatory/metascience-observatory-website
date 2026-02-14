@@ -7,6 +7,7 @@
 | [Odds Ratio](#odds-ratio-or) | OR | Yes |
 | [Hazard Ratio](#hazard-ratio-hr) | HR | Yes |
 | [Eta Squared](#eta-squared-eta2) | etasq | Yes |
+| [Partial Eta Squared](#partial-eta-squared-eta2_p) | partial etasq | Yes (approximate) |
 | [Cohen's f](#cohens-f) | f | Yes |
 | [Cohen's f²](#cohens-f2-f2) | f² | Yes |
 | [R Squared](#r-squared-r2) | R² | Yes |
@@ -133,6 +134,31 @@ The conversion is a two-step process, first converting to Cohen's $d$, then to $
     $$r = \frac{d}{\sqrt{d^2 + 4}}$$
 
 *Note: This is algebraically equivalent to $r = \sqrt{\eta^2}$, but the code implements the two-step conversion.*
+
+---
+
+## Partial Eta Squared ($\eta^2_p$)
+
+Partial eta squared is a variant of eta squared commonly reported by statistical software (e.g., SPSS) in factorial ANOVA designs. Unlike eta squared, which divides by the total sum of squares, partial eta squared divides only by the sum of squares for the effect plus the error sum of squares, excluding variance attributable to other factors in the design.
+
+$$\eta^2_p = \frac{SS_{effect}}{SS_{effect} + SS_{error}}$$
+
+**Where:**
+* $SS_{effect}$: The sum of squares for the effect of interest.
+* $SS_{error}$: The sum of squares for the error term.
+
+### Normalization to 0–1 Scale (Conversion to $r$)
+
+The same conversion formula used for eta squared is applied:
+
+1.  **Convert to $d$:**
+    $$d = 2\sqrt{\frac{\eta^2_p}{1 - \eta^2_p}}$$
+2.  **Convert to $r$:**
+    $$r = \frac{d}{\sqrt{d^2 + 4}}$$
+
+This is algebraically equivalent to $r = \sqrt{\eta^2_p}$.
+
+**Important Caveats:** For effects with 1 numerator degree of freedom (i.e., two-group comparisons, which covers most replication studies), partial eta squared equals eta squared and the conversion is exact. In multi-factor ANOVA designs with more than 1 numerator df, partial eta squared removes variance from other factors from the denominator, so the resulting $r$ can be inflated compared to what a one-way design would yield. However, the [Cambridge MRC Cognition and Brain Sciences Unit statistics wiki](https://imaging.mrc-cbu.cam.ac.uk/statswiki/FAQ/Escomp) says that one can "convert a partial eta-squared to a Cohen's d by regarding the partial eta-squared as a squared correlation." At least for direct replication comparisons — where both the original and replication use the same design — this conversion is appropriate because any inflation applies equally to both studies, preserving the relative comparison.
 
 ---
 
@@ -349,7 +375,6 @@ $$r_s = 1 - \frac{6 \sum d_i^2}{n(n^2 - 1)}$$
 The following effect sizes cannot be reliably converted to $r$ and thus will not have an entry computed for the *replication_es_r* and *original_es_r* columns:
 
 * Incidence Rate Difference (IRD) — raw percentage-point differences between groups, on a scale of roughly −100 to +100, incompatible with the standardized 0–1 scale
-* Partial eta-squared ($\eta^2_p$)
 * Cramér's V
 * Cohen's h
 * Cohen's $d_z$ (standardized mean difference for paired designs)

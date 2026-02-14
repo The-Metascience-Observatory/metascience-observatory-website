@@ -9,17 +9,19 @@ type CsvRow = Record<string, string>;
 // Map project names to their database initiative tags
 const PROJECT_TO_TAG: Record<string, string> = {
   "Reproducibility Project: Psychology": "RP:P",
-  "Camerer et al. (2016) – Experimental Economics Replication Project": "ExECON",
-  "Camerer et al. (2018) – Nature/Science Social Science Replication Project": "SSRP",
+  "Camerer et al. – Experimental Economics Replication Project": "ExECON",
+  "Camerer et al. – Nature/Science Social Science Replication Project": "SSRP",
   "Many Labs 1": "ML1",
   "Many Labs 2": "ML2",
   "Many Labs 5": "ML5",
   "Experimental Philosophy – Reproducibility Project": "XPHIR",
   "Brazilian Reproducibility Initiative": "BRI",
   "Reproducibility Project: Cancer Biology": "RP:CB",
-  "Boyce et al. (2023) – Student Replication Projects": "SRP",
-  "Motoki and Iseki (2022) – Sensory Marketing Replication": "SMR",
-  "Soto (2019) – Life Outcomes of Personality Replication Project": "Soto et al LOPPRP",
+  "Boyce et al. – Student Replication Projects": "SRP",
+  "Motoki and Iseki – Sensory Marketing Replication": "SMR",
+  "Soto – Life Outcomes of Personality Replication Project": "Soto et al LOPPRP",
+  "Estimating the Replicability of Sports and Exercise Science Research": "RSESR",
+  "Social Psychology Special Issue on Registered Replication Reports": "SPRRR",
 };
 
 interface Project {
@@ -55,8 +57,7 @@ function inferColumn(headers: string[], patterns: RegExp[]): string | undefined 
 function loadProjects(): FieldGroup[] {
   const csvPath = path.join(
     process.cwd(),
-    "public",
-    "assets",
+    "data",
     "previous_replication_initiatives.csv"
   );
 

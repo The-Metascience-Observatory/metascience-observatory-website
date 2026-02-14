@@ -18,7 +18,12 @@ const nextConfig = {
     return [
       {
         source: '/replication-projectsnew',
-        destination: '/replication-projects',
+        destination: '/replication-initiatives',
+        permanent: true,
+      },
+      {
+        source: '/replication-projects',
+        destination: '/replication-initiatives',
         permanent: true,
       },
       {

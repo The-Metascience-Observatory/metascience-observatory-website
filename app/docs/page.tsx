@@ -65,7 +65,7 @@ const documentation: DocMeta[] = [
     title: "Mathematical methods for classifying replication outcomes",
   },
   {
-    href: "/replication-projects",
+    href: "/replication-initiatives",
     title: "Large-scale replication initiatives",
   },
   {

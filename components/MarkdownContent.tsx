@@ -24,17 +24,17 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
         rehypePlugins={[rehypeRaw, rehypeSlug, rehypeKatex]}
         components={{
           h1: ({ children, id }) => (
-            <h1 id={id} className="text-4xl font-bold mb-6 mt-0 text-foreground leading-tight">
+            <h1 id={id} className="text-4xl font-bold mb-6 mt-0 text-foreground leading-tight scroll-mt-20">
               {children}
             </h1>
           ),
           h2: ({ children, id }) => (
-            <h2 id={id} className="text-2xl font-semibold mb-4 mt-10 text-foreground border-b border-border pb-2">
+            <h2 id={id} className="text-2xl font-semibold mb-4 mt-10 text-foreground border-b border-border pb-2 scroll-mt-20">
               {children}
             </h2>
           ),
           h3: ({ children, id }) => (
-            <h3 id={id} className="text-xl font-semibold mb-3 mt-6 text-foreground">
+            <h3 id={id} className="text-xl font-semibold mb-3 mt-6 text-foreground scroll-mt-20">
               {children}
             </h3>
           ),

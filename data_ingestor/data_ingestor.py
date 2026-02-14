@@ -149,10 +149,10 @@ def is_empty(value):
 
 # Effect size types that cannot be reliably converted to r
 CANNOT_CONVERT = {
-    "beta (std)", "partial etasq", "χ2", "b (unstd)", "b", "etasq (partial)",
+    "beta (std)", "χ2", "b (unstd)", "b",
     "cramer's v", "dz", "beta", "percentage",
     "squared seminpartial correlation (sr2)", "regression coefficient",
-    "unstandardized coefficient", "cohen's h", "h", "partial eta-squared",
+    "unstandardized coefficient", "cohen's h", "h",
     "semi-partial correlation", "cliff's delta", "w", "cohen's w"
 }
 
@@ -178,12 +178,18 @@ ESTYPE_MAP = {
     "glass's delta": "d",
     "glass delta": "d",
 
-    # Eta-squared (η²)
+    # Eta-squared (η²) and partial eta-squared (η²_p)
     "etasq": "eta2",
     "etaq": "eta2",
     "eta^2": "eta2",
     "η²": "eta2",
     "eta-squared": "eta2",
+    "partial etasq": "eta2",
+    "etasq (partial)": "eta2",
+    "partial eta-squared": "eta2",
+    "partial eta squared": "eta2",
+    "partial η²": "eta2",
+    "partial eta^2": "eta2",
 
     # Cohen's f
     "f": "f",
@@ -1028,7 +1034,7 @@ def prompt_duplicate_action(new_row, master_df, match_indices, ingest_idx, total
         else:
             print(f"  Invalid choice. Enter s, a, m1-m{n_matches}, r1-r{n_matches}, S, M, or A.")
 
-def ingest_data(input_csv, skip_api_calls=False, discipline=None, workers=2, no_gui=False):
+def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag=None, workers=2, no_gui=False):
     """Main ingestion function"""
     print(f"\n{'='*60}")
     print(f"REPLICATIONS DATABASE INGESTION ENGINE")
@@ -1114,6 +1120,11 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, workers=2, no_
     if discipline:
         input_df['discipline'] = discipline.lower()
         print(f"  Applied discipline '{discipline.lower()}' to all rows")
+
+    # Apply initiative tag to all rows if specified
+    if initiative_tag:
+        input_df['replication_initiative_tag'] = initiative_tag
+        print(f"  Applied initiative tag '{initiative_tag}' to all rows")
 
     # Find latest master database from version_history.txt
     latest_master = get_latest_master_database()
@@ -1426,6 +1437,8 @@ Examples:
                        help='Skip metadata enrichment API calls (faster but no metadata updates)')
     parser.add_argument('--discipline', type=str, default=None,
                        help='Set discipline value for all rows (e.g., "cancer biology")')
+    parser.add_argument('--initiative_tag', type=str, default=None,
+                       help='Set replication_initiative_tag for all rows (e.g., "SMR", "RRR")')
     parser.add_argument('--workers', type=int, default=2,
                        help='Number of parallel workers for metadata enrichment (default: 2)')
     parser.add_argument('--no-gui', action='store_true',
@@ -1442,4 +1455,5 @@ Examples:
                 print(f"  Cleared {f}")
 
     ingest_data(args.input_csv, skip_api_calls=args.skip_api_calls,
-                discipline=args.discipline, workers=args.workers, no_gui=args.no_gui)
+                discipline=args.discipline, initiative_tag=args.initiative_tag,
+                workers=args.workers, no_gui=args.no_gui)

@@ -2,6 +2,7 @@
 
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import Link from "next/link";
 import { ReplicationsNavbar } from "@/components/ReplicationsNavbar";
 import { Footer } from "@/components/Footer";
 import { Input } from "@/components/ui/input";
@@ -648,11 +649,12 @@ function ReplicationsDatabaseContent() {
       if (tag) counts.set(tag, (counts.get(tag) || 0) + 1);
     }
     const entries = Array.from(counts.entries());
-    entries.sort((a, b) => {
-      if (b[1] !== a[1]) return b[1] - a[1];
-      return a[0].localeCompare(b[0]);
-    });
     const tagNames: Record<string, string> = INITIATIVE_TAG_NAMES;
+    entries.sort((a, b) => {
+      const nameA = tagNames[a[0]] || a[0];
+      const nameB = tagNames[b[0]] || b[0];
+      return nameA.localeCompare(nameB);
+    });
     return [
       { value: "", label: "All initiatives" },
       ...entries.map(([tag, count]) => ({
@@ -1015,7 +1017,9 @@ function ReplicationsDatabaseContent() {
             </select>
           </div>
           <div className="md:col-span-1">
-            <label htmlFor="initiative" className="block text-sm font-medium opacity-80 mb-1">Replication Initiative</label>
+            <label htmlFor="initiative" className="block text-sm font-medium opacity-80 mb-1">
+              Replication Initiative <Link href="/replication-initiatives" className="text-xs opacity-60 hover:opacity-80 underline">(more info)</Link>
+            </label>
             <select
               id="initiative"
               value={initiative}
@@ -1166,7 +1170,11 @@ function ReplicationsDatabaseContent() {
             </div>
           </div>
           <div className="mt-2">
-            <InlineYearBars bins={yearAnalysisLevel === "effect" ? yearBins : yearBinsPaper} />
+            <InlineYearBars
+              bins={yearAnalysisLevel === "effect" ? yearBins : yearBinsPaper}
+              threshold={yearAnalysisLevel === "effect" ? 20 : 10}
+              binSize={5}
+            />
           </div>
         </div>
         {/* Raw effect sizes scatterplot - hidden for now
@@ -1614,7 +1622,7 @@ type YearBin = {
   rate: number;
 };
 
-function InlineYearBars({ bins }: { bins: YearBin[] }) {
+function InlineYearBars({ bins, threshold, binSize }: { bins: YearBin[]; threshold: number; binSize: number }) {
   const width = 600;
   const height = 240;
   const margin = { top: 10, right: 10, bottom: 45, left: 45 };
@@ -1622,7 +1630,7 @@ function InlineYearBars({ bins }: { bins: YearBin[] }) {
   const innerH = height - margin.top - margin.bottom;
 
   if (bins.length === 0) {
-    return <div className="text-sm opacity-50">No data with valid years and results</div>;
+    return <div className="text-sm opacity-50">Not enough data -- need at least {threshold} papers in a {binSize} year time interval</div>;
   }
 
   const barGap = 4;

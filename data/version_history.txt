@@ -26,3 +26,10 @@ replications_database_2026_02_09_211922.csv # added 10.1073--pnas.2402315121_res
 replications_database_2026_02_10_070006.csv # added collated_results_sonnet_v3_run.csv
 replications_database_2026_02_12_141533.csv # added collated_results_sonnet_v4.csv
 replications_database_2026_02_12_141729.csv # added collated_results_sonnet_v4.csv
+replications_database_2026_02_13_194149.csv # added result.json
+replications_database_2026_02_14_073908.csv # fixed RSESR replication_url format and enriched replication metadata
+replications_database_2026_02_14_085858.csv # added motoki_sensory_marketing_replications.json
+replications_database_2026_02_14_092643.csv # added motoki_sensory_marketing_replications.json
+replications_database_2026_02_14_093341.csv # added motoki_sensory_marketing_replications.json
+replications_database_2026_02_14_093449.csv # added motoki_sensory_marketing_replications.json
+replications_database_2026_02_14_094820.csv # converted partial eta squared rows to es_r
