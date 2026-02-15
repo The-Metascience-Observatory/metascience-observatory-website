@@ -33,3 +33,9 @@ replications_database_2026_02_14_092643.csv # added motoki_sensory_marketing_rep
 replications_database_2026_02_14_093341.csv # added motoki_sensory_marketing_replications.json
 replications_database_2026_02_14_093449.csv # added motoki_sensory_marketing_replications.json
 replications_database_2026_02_14_094820.csv # converted partial eta squared rows to es_r
+replications_database_2026_02_15_081304.csv # removed 18 economics replication rows (replication_url: 10.1126/science.aaf0918)
+replications_database_2026_02_15_081358.csv # added econ_rep_study.json
+replications_database_2026_02_15_081503.csv # added ai_version column (18 rows with ai_version=6 for 10.1126/science.aaf0918)
+replications_database_2026_02_15_081634.csv # set ai_version=4 for 81 rows matching collated_results_sonnet_v4.csv
+replications_database_2026_02_15_082454.csv # expanded abbreviated journal names and standardized PLOS One variants
+replications_database_2026_02_15_084408.csv # set replication_initiative_tag=ExECON for 18 rows with replication_url=10.1126/science.aaf0918

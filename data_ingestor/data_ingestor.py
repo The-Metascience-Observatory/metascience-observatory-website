@@ -44,6 +44,59 @@ BACKUP_DIR = os.path.join(DATA_DIR, 'backup')
 VERSION_HISTORY_PATH = os.path.join(DATA_DIR, 'version_history.txt')
 API_CACHE_PATH = os.path.join(SCRIPT_DIR, 'api_cache.json')
 CHECKPOINT_PATH = os.path.join(SCRIPT_DIR, 'ingestion_checkpoint.csv')
+CHECKPOINT_META_PATH = os.path.join(SCRIPT_DIR, 'ingestion_checkpoint_meta.json')
+
+
+def save_checkpoint_metadata(input_file, row_count):
+    """Save metadata about the checkpoint for validation on next run"""
+    metadata = {
+        'input_file': os.path.basename(input_file),
+        'input_file_abspath': os.path.abspath(input_file),
+        'row_count': row_count,
+        'timestamp': datetime.now().isoformat()
+    }
+    with open(CHECKPOINT_META_PATH, 'w') as f:
+        json.dump(metadata, f, indent=2)
+
+
+def is_checkpoint_valid(input_file, row_count):
+    """Check if checkpoint is valid for the current input file"""
+    if not os.path.exists(CHECKPOINT_PATH):
+        return False
+    if not os.path.exists(CHECKPOINT_META_PATH):
+        logger.warning("Checkpoint found but no metadata - treating as stale")
+        return False
+
+    try:
+        with open(CHECKPOINT_META_PATH, 'r') as f:
+            metadata = json.load(f)
+
+        # Check if input file matches (by basename or absolute path)
+        current_basename = os.path.basename(input_file)
+        current_abspath = os.path.abspath(input_file)
+
+        if (metadata.get('input_file') != current_basename and
+            metadata.get('input_file_abspath') != current_abspath):
+            logger.warning(f"Checkpoint is for different file: {metadata.get('input_file')} vs {current_basename}")
+            return False
+
+        # Row count should match (allow some tolerance for header differences)
+        if metadata.get('row_count') != row_count:
+            logger.warning(f"Checkpoint row count mismatch: {metadata.get('row_count')} vs {row_count}")
+            return False
+
+        return True
+    except Exception as e:
+        logger.error(f"Error validating checkpoint: {e}")
+        return False
+
+
+def clear_checkpoint():
+    """Remove checkpoint and metadata files"""
+    for path in [CHECKPOINT_PATH, CHECKPOINT_META_PATH]:
+        if os.path.exists(path):
+            os.remove(path)
+            logger.info(f"Removed stale checkpoint: {path}")
 
 
 def load_api_cache():
@@ -548,13 +601,43 @@ def calculate_effect_sizes(df):
 
     return df
 
+def is_abbreviated_journal(journal_name):
+    """
+    Detect if a journal name is likely abbreviated.
+
+    Criteria:
+    - Contains periods (excluding trailing period only)
+    - This catches patterns like "Dev. Sci", "J. Exp. Psychol.", "Psychol. Sci"
+
+    Returns True if likely abbreviated, False otherwise.
+    """
+    if not isinstance(journal_name, str) or not journal_name.strip():
+        return False
+
+    name = journal_name.strip()
+
+    # Remove trailing period for analysis
+    if name.endswith('.'):
+        name = name[:-1]
+
+    # Check for periods inside the name (strong indicator of abbreviation)
+    # e.g., "Dev. Sci" or "J. Exp. Psychol"
+    if '.' in name:
+        return True
+
+    return False
+
+
 def needs_enrichment(row, prefix):
-    """Check if any key metadata fields are missing"""
+    """Check if any key metadata fields are missing or abbreviated"""
     fields_to_check = ['authors', 'title', 'journal', 'volume', 'issue', 'pages', 'year']
 
     for field in fields_to_check:
         col_name = f"{prefix}_{field}"
         if col_name not in row.index or is_empty(row.get(col_name)):
+            return True
+        # Special handling for journal field - check if abbreviated
+        if field == 'journal' and is_abbreviated_journal(row.get(col_name)):
             return True
 
     return False
@@ -576,7 +659,15 @@ def enrich_from_metadata(row, prefix, metadata):
 
     for meta_key, col_name in field_mapping.items():
         # Fill if column doesn't exist or current value is empty
-        if col_name not in row.index or is_empty(row.get(col_name)):
+        # OR if it's journal field and current value is abbreviated
+        current_val = row.get(col_name) if col_name in row.index else None
+        should_fill = (
+            col_name not in row.index
+            or is_empty(current_val)
+            or (meta_key == 'journal' and is_abbreviated_journal(current_val))
+        )
+
+        if should_fill:
             value = metadata.get(meta_key)
             if value:
                 # Normalize year to int and validate range
@@ -686,10 +777,20 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
     # If no DOI URL but title exists, try to fetch DOI from title
     elif is_empty(original_url) and not is_empty(row.get('original_title')):
         original_title = row.get('original_title')
+        original_authors = row.get('original_authors')
+        original_journal = row.get('original_journal')
+        original_year = row.get('original_year')
+        original_volume = row.get('original_volume')
         title_key = original_title.lower().strip()
         metadata, was_cached = _cache_get_or_fetch(
             title_cache, title_key,
-            lambda: fetch_metadata_from_title(original_title),
+            lambda: fetch_metadata_from_title(
+                original_title,
+                authors=original_authors,
+                journal=original_journal,
+                year=original_year,
+                volume=original_volume
+            ),
             cache_lock
         )
         if was_cached:
@@ -739,10 +840,20 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
     # If no DOI URL but title exists, try to fetch DOI from title
     elif is_empty(replication_url) and not is_empty(row.get('replication_title')):
         replication_title = row.get('replication_title')
+        replication_authors = row.get('replication_authors')
+        replication_journal = row.get('replication_journal')
+        replication_year = row.get('replication_year')
+        replication_volume = row.get('replication_volume')
         title_key = replication_title.lower().strip()
         metadata, was_cached = _cache_get_or_fetch(
             title_cache, title_key,
-            lambda: fetch_metadata_from_title(replication_title),
+            lambda: fetch_metadata_from_title(
+                replication_title,
+                authors=replication_authors,
+                journal=replication_journal,
+                year=replication_year,
+                volume=replication_volume
+            ),
             cache_lock
         )
         if was_cached:
@@ -796,6 +907,77 @@ def normalize_discipline_column(df):
             lambda x: x.lower() if pd.notna(x) and isinstance(x, str) else x
         )
         print(f"  ✓ Converted discipline values to lowercase")
+    return df
+
+def normalize_journal_names(df):
+    """Normalize journal names using journal_name_mappings.json
+
+    Applies in order:
+    1. Abbreviation expansion (e.g., "Dev. Sci" → "Developmental Science")
+    2. Variant form standardization (e.g., "PLOS ONE" → "PLOS One")
+    3. HTML entity fixes (e.g., "&amp;" → "&")
+    """
+    mappings_path = os.path.join(DATA_DIR, 'journal_name_mappings.json')
+
+    if not os.path.exists(mappings_path):
+        print(f"  ⚠ Journal name mappings file not found: {mappings_path}")
+        return df
+
+    try:
+        with open(mappings_path, 'r') as f:
+            mappings = json.load(f)
+    except (json.JSONDecodeError, IOError) as e:
+        print(f"  ⚠ Could not load journal name mappings: {e}")
+        return df
+
+    abbreviations = mappings.get('abbreviations', {})
+    variant_forms = mappings.get('variant_forms', {})
+
+    print("\nNormalizing journal names...")
+
+    total_replacements = 0
+
+    for col in ['replication_journal', 'original_journal']:
+        if col not in df.columns:
+            continue
+
+        col_replacements = 0
+
+        # Apply mappings to each value
+        def apply_mappings(journal_name):
+            nonlocal col_replacements
+
+            if pd.isna(journal_name) or not isinstance(journal_name, str):
+                return journal_name
+
+            original = journal_name.strip()
+
+            # Step 1: Apply abbreviations (exact match)
+            if original in abbreviations:
+                col_replacements += 1
+                return abbreviations[original]
+
+            # Step 2: Apply variant forms (exact match)
+            if original in variant_forms:
+                col_replacements += 1
+                return variant_forms[original]
+
+            # Step 3: Apply HTML entity fixes
+            if '&amp;' in original:
+                col_replacements += 1
+                return original.replace('&amp;', '&')
+
+            return original
+
+        df[col] = df[col].apply(apply_mappings)
+
+        if col_replacements > 0:
+            print(f"  ✓ Normalized {col_replacements} journal names in {col}")
+            total_replacements += col_replacements
+
+    if total_replacements == 0:
+        print(f"  No journal names required normalization")
+
     return df
 
 def reorder_columns(df, data_dict_path=None):
@@ -1034,7 +1216,7 @@ def prompt_duplicate_action(new_row, master_df, match_indices, ingest_idx, total
         else:
             print(f"  Invalid choice. Enter s, a, m1-m{n_matches}, r1-r{n_matches}, S, M, or A.")
 
-def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag=None, workers=2, no_gui=False):
+def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag=None, workers=2, no_gui=False, skip_duplication_check=False):
     """Main ingestion function"""
     print(f"\n{'='*60}")
     print(f"REPLICATIONS DATABASE INGESTION ENGINE")
@@ -1168,12 +1350,20 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
             print(f"  Backup already exists: data/backup/{latest_master}")
 
     # Check for checkpoint from a previous interrupted run
-    if os.path.exists(CHECKPOINT_PATH):
-        print(f"\n  Found checkpoint from previous run: {CHECKPOINT_PATH}")
+    if is_checkpoint_valid(input_csv, len(input_df)):
+        print(f"\n  Found valid checkpoint from previous run: {CHECKPOINT_PATH}")
         print(f"  Loading checkpoint (skipping steps 1-4)...")
         processed_df = pd.read_csv(CHECKPOINT_PATH)
         print(f"  ✓ Loaded {len(processed_df)} processed rows from checkpoint")
+    elif os.path.exists(CHECKPOINT_PATH):
+        print(f"\n  ⚠ Found stale checkpoint (different input file or row count)")
+        print(f"  Clearing stale checkpoint and processing from scratch...")
+        clear_checkpoint()
+        processed_df = None
     else:
+        processed_df = None
+
+    if processed_df is None:
         # Process each row (skip API calls if flag is set)
         if skip_api_calls:
             print(f"\n{'='*60}")
@@ -1228,8 +1418,12 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
         # Normalize discipline column
         processed_df = normalize_discipline_column(processed_df)
 
+        # Normalize journal names
+        processed_df = normalize_journal_names(processed_df)
+
         # Save checkpoint so restarts skip straight to step 5
         processed_df.to_csv(CHECKPOINT_PATH, index=False)
+        save_checkpoint_metadata(input_csv, len(input_df))
         print(f"  ✓ Checkpoint saved — restart will skip to duplicate review")
 
     # Check for duplicates and append
@@ -1238,35 +1432,46 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
     print(f"{'='*60}")
     print(f"  Master: {len(master_df)} rows | Incoming: {len(processed_df)} rows")
 
-    # Pre-scan: classify each row as new, auto-duplicate, or potential duplicate
-    auto_skipped = []   # list of (processed_df idx, match_indices)
-    potential_dups = []  # list of (processed_df idx, match_indices)
-    new_row_indices = []
+    if skip_duplication_check:
+        # Skip all duplication checking - add all rows directly
+        print(f"\n  ⚠ Skipping duplication check (--skip-duplication-check flag set)")
+        print(f"  Adding all {len(processed_df)} rows directly to master")
+        rows_to_append = [processed_df.loc[i] for i in processed_df.index]
+        duplicates_found = 0
+        replaced_count = 0
+        merged_count = 0
+        identical_count = 0
+        total_dups = 0
+    else:
+        # Pre-scan: classify each row as new, auto-duplicate, or potential duplicate
+        auto_skipped = []   # list of (processed_df idx, match_indices)
+        potential_dups = []  # list of (processed_df idx, match_indices)
+        new_row_indices = []
 
-    for idx, row in processed_df.iterrows():
-        match_indices = find_duplicate_matches(row, master_df)
-        if not match_indices:
-            new_row_indices.append(idx)
-            continue
-        # Check if any existing match is an auto-duplicate (6 key fields match)
-        if any(is_auto_duplicate(row, master_df.loc[mi]) for mi in match_indices):
-            auto_skipped.append((idx, match_indices))
-        else:
-            potential_dups.append((idx, match_indices))
+        for idx, row in processed_df.iterrows():
+            match_indices = find_duplicate_matches(row, master_df)
+            if not match_indices:
+                new_row_indices.append(idx)
+                continue
+            # Check if any existing match is an auto-duplicate (6 key fields match)
+            if any(is_auto_duplicate(row, master_df.loc[mi]) for mi in match_indices):
+                auto_skipped.append((idx, match_indices))
+            else:
+                potential_dups.append((idx, match_indices))
 
-    identical_count = len(auto_skipped)
-    total_dups = len(potential_dups)
-    print(f"\n  {len(new_row_indices)} new rows (no match in master)")
-    print(f"  {identical_count} auto-duplicate rows (will be skipped)")
-    print(f"  {total_dups} potential duplicate(s) to review")
+        identical_count = len(auto_skipped)
+        total_dups = len(potential_dups)
+        print(f"\n  {len(new_row_indices)} new rows (no match in master)")
+        print(f"  {identical_count} auto-duplicate rows (will be skipped)")
+        print(f"  {total_dups} potential duplicate(s) to review")
 
-    # Add all genuinely new rows
-    rows_to_append = [processed_df.loc[i] for i in new_row_indices]
-    duplicates_found = 0
-    replaced_count = 0
-    merged_count = 0
+        # Add all genuinely new rows
+        rows_to_append = [processed_df.loc[i] for i in new_row_indices]
+        duplicates_found = 0
+        replaced_count = 0
+        merged_count = 0
 
-    if (potential_dups or auto_skipped) and not no_gui:
+    if not skip_duplication_check and (potential_dups or auto_skipped) and not no_gui:
         # ── GUI duplicate review ──
         from duplicate_review_gui import launch_duplicate_review
         print(f"\n  Launching GUI for duplicate review...")
@@ -1305,7 +1510,7 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
             print("  GUI closed without applying — skipping all potential duplicates")
             duplicates_found = total_dups
 
-    elif potential_dups:
+    elif not skip_duplication_check and potential_dups:
         # ── CLI fallback (--no-gui) ──
         batch_decision = None
 
@@ -1379,6 +1584,12 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
     print(f"{'='*60}")
     updated_master_df = calculate_effect_sizes(updated_master_df)
 
+    # Normalize journal names for ALL rows (including existing ones)
+    print(f"\n{'='*60}")
+    print(f"STEP 5c: NORMALIZING JOURNAL NAMES FOR ALL ROWS")
+    print(f"{'='*60}")
+    updated_master_df = normalize_journal_names(updated_master_df)
+
     # Reorder columns according to data_dictionary.csv
     updated_master_df = reorder_columns(updated_master_df)
 
@@ -1407,6 +1618,9 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
             f.write(output_filename + f' # added {input_basename}' + '\n')
     print(f"✓ Added {output_filename} to version_history.txt")
 
+    # Clear checkpoint files after successful completion
+    clear_checkpoint()
+
     print(f"\n{'='*60}")
     print(f"INGESTION COMPLETE!")
     print(f"{'='*60}")
@@ -1430,6 +1644,7 @@ Examples:
   python data_ingestor.py cancer_biology_replications_data.csv --discipline "cancer biology"
   python data_ingestor.py --skip-api-calls psych_file_drawer_data_to_ingest.csv
   python data_ingestor.py 10.1073--pnas.2402315121_result_full.json
+  python data_ingestor.py --skip-duplication-check large_dataset.csv
         """
     )
     parser.add_argument('input_csv', help='Input CSV or JSON file to ingest (JSON must have "replications" array)')
@@ -1443,17 +1658,20 @@ Examples:
                        help='Number of parallel workers for metadata enrichment (default: 2)')
     parser.add_argument('--no-gui', action='store_true',
                        help='Use CLI prompts instead of GUI for duplicate review')
+    parser.add_argument('--skip-duplication-check', action='store_true',
+                       help='Skip all duplication checking and add all rows directly (for manual review later)')
     parser.add_argument('--fresh', action='store_true',
                        help='Clear checkpoint and re-run steps 1-3 from scratch')
 
     args = parser.parse_args()
 
     if args.fresh:
-        for f in [CHECKPOINT_PATH, API_CACHE_PATH]:
+        for f in [CHECKPOINT_PATH, CHECKPOINT_META_PATH, API_CACHE_PATH]:
             if os.path.exists(f):
                 os.remove(f)
                 print(f"  Cleared {f}")
 
     ingest_data(args.input_csv, skip_api_calls=args.skip_api_calls,
                 discipline=args.discipline, initiative_tag=args.initiative_tag,
-                workers=args.workers, no_gui=args.no_gui)
+                workers=args.workers, no_gui=args.no_gui,
+                skip_duplication_check=args.skip_duplication_check)

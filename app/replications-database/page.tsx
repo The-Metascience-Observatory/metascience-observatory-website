@@ -375,6 +375,7 @@ type ColumnKey =
   | "original_citation_html"
   | "replication_citation_html"
   | "description"
+  | "field"
   | "discipline"
   | "subdiscipline"
   | "result"
@@ -414,15 +415,16 @@ type ColumnKey =
   | "validated"
   | "validated_person"
   | "replication_initiative_tag"
-  | "openalex_field"
-  | "openalex_subfield"
-  | "source";
+  | "source"
+  | "explanation"
+  | "ai_version";
 
 const ALL_COLUMNS: Array<{ key: ColumnKey; label: string }> = [
   { key: "index", label: "#" },
   { key: "original_citation_html", label: "Original publication" },
   { key: "replication_citation_html", label: "Replication publication" },
   { key: "description", label: "Description of the original effect" },
+  { key: "field", label: "Field" },
   { key: "discipline", label: "Discipline" },
   { key: "subdiscipline", label: "Subdiscipline" },
   { key: "result", label: "Result" },
@@ -462,9 +464,9 @@ const ALL_COLUMNS: Array<{ key: ColumnKey; label: string }> = [
   { key: "validated", label: "Human Validated" },
   { key: "validated_person", label: "Validated Person" },
   { key: "replication_initiative_tag", label: "Replication Initiative" },
-  { key: "openalex_field", label: "OpenAlex Field" },
-  { key: "openalex_subfield", label: "OpenAlex Subfield" },
   { key: "source", label: "Source" },
+  { key: "explanation", label: "Explanation" },
+  { key: "ai_version", label: "AI Version" },
 ];
 
 const DEFAULT_COLUMNS: ColumnKey[] = [
@@ -1251,6 +1253,7 @@ function ReplicationsDatabaseContent() {
                 {visibleColumns.has("original_citation_html") && <th className="text-left p-2">Original publication</th>}
                 {visibleColumns.has("replication_citation_html") && <th className="text-left p-2">Replication publication</th>}
                 {visibleColumns.has("description") && <th className="text-left p-2">Description of the original effect</th>}
+                {visibleColumns.has("field") && <th className="text-left p-2">Field</th>}
                 {visibleColumns.has("discipline") && <th className="text-left p-2">Discipline</th>}
                 {visibleColumns.has("subdiscipline") && <th className="text-left p-2">Subdiscipline</th>}
                 {visibleColumns.has("result") && <th className="text-left p-2">Result</th>}
@@ -1290,9 +1293,9 @@ function ReplicationsDatabaseContent() {
                 {visibleColumns.has("validated") && <th className="text-left p-2">Human Validated</th>}
                 {visibleColumns.has("validated_person") && <th className="text-left p-2">Validated Person</th>}
                 {visibleColumns.has("replication_initiative_tag") && <th className="text-left p-2">Replication Initiative</th>}
-                {visibleColumns.has("openalex_field") && <th className="text-left p-2">OpenAlex Field</th>}
-                {visibleColumns.has("openalex_subfield") && <th className="text-left p-2">OpenAlex Subfield</th>}
                 {visibleColumns.has("source") && <th className="text-left p-2">Source</th>}
+                {visibleColumns.has("explanation") && <th className="text-left p-2">Explanation</th>}
+                {visibleColumns.has("ai_version") && <th className="text-left p-2">AI Version</th>}
               </tr>
             </thead>
             <tbody>
@@ -1341,6 +1344,9 @@ function ReplicationsDatabaseContent() {
                     <td className="align-top p-2">
                       <div className="font-medium">{String(r.description || r.tags || "—")}</div>
                     </td>
+                    )}
+                    {visibleColumns.has("field") && (
+                      <td className="align-top p-2">{String(r.field || "")}</td>
                     )}
                     {visibleColumns.has("discipline") && (
                     <td className="align-top p-2">{String(r.discipline || "")}</td>
@@ -1463,14 +1469,14 @@ function ReplicationsDatabaseContent() {
                     {visibleColumns.has("replication_initiative_tag") && (
                       <td className="align-top p-2">{(INITIATIVE_TAG_NAMES as Record<string, string>)[String(r.replication_initiative_tag || "")] || String(r.replication_initiative_tag || "")}</td>
                     )}
-                    {visibleColumns.has("openalex_field") && (
-                      <td className="align-top p-2">{String(r.openalex_field || "")}</td>
-                    )}
-                    {visibleColumns.has("openalex_subfield") && (
-                      <td className="align-top p-2">{String(r.openalex_subfield || "")}</td>
-                    )}
                     {visibleColumns.has("source") && (
                       <td className="align-top p-2">{String(r.source || "")}</td>
+                    )}
+                    {visibleColumns.has("explanation") && (
+                      <td className="align-top p-2">{String(r.explanation || "")}</td>
+                    )}
+                    {visibleColumns.has("ai_version") && (
+                      <td className="align-top p-2">{String(r.ai_version || "")}</td>
                     )}
                   </tr>
                 );

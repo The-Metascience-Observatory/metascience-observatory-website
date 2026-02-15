@@ -1,8 +1,30 @@
 import requests
 import time
 import logging
+import os
+from pathlib import Path
 
 logger = logging.getLogger(__name__)
+
+# Load OpenAlex API key from environment
+def _get_openalex_api_key():
+    """Load OpenAlex API key from .env.local or environment"""
+    api_key = os.getenv('OPENALEXAPIKEY')
+    if not api_key:
+        # Try to load from .env.local in parent directory
+        try:
+            env_path = Path(__file__).parent.parent / '.env.local'
+            if env_path.exists():
+                with open(env_path) as f:
+                    for line in f:
+                        if line.startswith('OPENALEXAPIKEY='):
+                            api_key = line.strip().split('=', 1)[1]
+                            break
+        except Exception:
+            pass
+    return api_key
+
+OPENALEX_API_KEY = _get_openalex_api_key()
 
 
 def _request_with_retry(url, headers=None, timeout=10, max_retries=3):
@@ -60,7 +82,10 @@ def fetch_metadata_from_doi(doi, email="your_email@example.com", delay=0.2):
 
     # ---------- 1️⃣ OpenAlex ----------
     try:
-        r = _request_with_retry(f"https://api.openalex.org/works/https://doi.org/{doi}", headers=headers)
+        openalex_url = f"https://api.openalex.org/works/https://doi.org/{doi}"
+        if OPENALEX_API_KEY:
+            openalex_url += f"?api_key={OPENALEX_API_KEY}"
+        r = _request_with_retry(openalex_url, headers=headers)
         if r and r.status_code == 200:
             data = r.json()
             oa = {
