@@ -41,3 +41,5 @@ replications_database_2026_02_15_082454.csv # expanded abbreviated journal names
 replications_database_2026_02_15_084408.csv # set replication_initiative_tag=ExECON for 18 rows with replication_url=10.1126/science.aaf0918
 replications_database_2026_02_15_103418.csv # standardized author names via CrossRef API (1507 rows updated)
 replications_database_2026_02_15_211705.csv # added pot_rep_studies_batch_collated_results_sonnetv6.csv
+replications_database_2026_02_16_075047.csv # added batch_5_collated_results_sonnetv6.csv
+replications_database_2026_02_16_101735.csv # added collated_results_transparent_reports_2.csv

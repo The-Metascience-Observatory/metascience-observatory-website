@@ -66,7 +66,7 @@ const documentation: DocMeta[] = [
   },
   {
     href: "/replication-initiatives",
-    title: "Large-scale replication initiatives",
+    title: "Replication initiatives",
   },
   {
     href: "/docs/previous-initiatives",

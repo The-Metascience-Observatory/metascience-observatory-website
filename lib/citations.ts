@@ -1,6 +1,7 @@
 /**
  * Generate a short citation HTML string from discrete metadata fields.
- * Format: "LastName I. et al. Journal Year" linked to the DOI/URL.
+ * Format: "Firstname Lastname et al. Journal Year" linked to the DOI/URL.
+ * Two authors: "First1 Last1 and First2 Last2". Three+: "First1 Last1 et al."
  *
  * This replaces the pre-computed `*_citation_html` CSV columns,
  * producing equivalent output from the structured fields.
@@ -18,22 +19,18 @@ export function generateCitationHtml(
   // Nothing useful to display
   if (!authorStr && !journalStr && !yearStr) return "";
 
-  // Extract first author: "Firstname Lastname" or "F. Lastname" etc.
-  const firstAuthor = authorStr.split(";")[0]?.trim() ?? "";
+  // Extract authors: split by semicolon, comma, or " and "
+  const authorList = authorStr
+    .split(/;|,|\band\b/)
+    .map((a) => a.trim())
+    .filter(Boolean);
   let shortAuthor = "";
-  if (firstAuthor) {
-    const parts = firstAuthor.split(/\s+/);
-    if (parts.length >= 2) {
-      // Last name is the last token, first initial from the first token
-      const lastName = parts[parts.length - 1];
-      const firstInitial = parts[0].charAt(0).toUpperCase();
-      shortAuthor = `${lastName} ${firstInitial}.`;
-    } else {
-      shortAuthor = parts[0];
-    }
-    if (authorStr.includes(";")) {
-      shortAuthor += " <i>et al.</i>";
-    }
+  if (authorList.length === 1) {
+    shortAuthor = authorList[0];
+  } else if (authorList.length === 2) {
+    shortAuthor = `${authorList[0]} and ${authorList[1]}`;
+  } else if (authorList.length > 2) {
+    shortAuthor = `${authorList[0]} <i>et al.</i>`;
   }
 
   const journalPart = journalStr ? ` <i>${journalStr}</i>` : "";

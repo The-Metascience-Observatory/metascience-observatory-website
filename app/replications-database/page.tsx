@@ -507,6 +507,8 @@ function ReplicationsDatabaseContent() {
   const [result, setResult] = useState<string>("");
   const [initiative, setInitiative] = useState<string>(searchParams.get("initiative") || "");
   const [search, setSearch] = useState<string>("");
+  const [originalAuthorSearch, setOriginalAuthorSearch] = useState<string>(searchParams.get("original_author_search") || "");
+  const [originalJournalSearch, setOriginalJournalSearch] = useState<string>(searchParams.get("original_journal_search") || "");
   const [visibleColumns, setVisibleColumns] = useState<Set<ColumnKey>>(
     new Set(DEFAULT_COLUMNS)
   );
@@ -683,9 +685,19 @@ function ReplicationsDatabaseContent() {
         const hay = `${r.description ?? ""} ${r.tags ?? ""} ${citationSearchText(r.original_authors as string, r.original_journal as string, r.original_year as string)} ${citationSearchText(r.replication_authors as string, r.replication_journal as string, r.replication_year as string)}`.toLowerCase();
         if (!hay.includes(s)) return false;
       }
+      if (originalAuthorSearch) {
+        const s = originalAuthorSearch.toLowerCase();
+        const authors = String(r.original_authors ?? "").toLowerCase();
+        if (!authors.includes(s)) return false;
+      }
+      if (originalJournalSearch) {
+        const s = originalJournalSearch.toLowerCase();
+        const journal = String(r.original_journal ?? "").toLowerCase();
+        if (journal !== s) return false;
+      }
       return true;
     });
-  }, [data, field, discipline, subdiscipline, result, initiative, search, ontologyMaps]);
+  }, [data, field, discipline, subdiscipline, result, initiative, search, originalAuthorSearch, originalJournalSearch, ontologyMaps]);
 
   // Compute outcomes once and share between stats and scatterplot
   // Includes rows with es_r (plottable on scatterplot) AND rows with only raw ES (stats only)
@@ -1055,6 +1067,33 @@ function ReplicationsDatabaseContent() {
           </div>
         </div>
       </section>
+
+      {(originalAuthorSearch || originalJournalSearch) && (
+        <section className="mx-auto max-w-[90%] mt-4 space-y-2">
+          {originalAuthorSearch && (
+            <div className="flex items-center gap-2 text-sm bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded px-3 py-2">
+              <span>Filtered to original author: <strong>{originalAuthorSearch}</strong></span>
+              <button
+                onClick={() => setOriginalAuthorSearch("")}
+                className="ml-1 text-blue-600 dark:text-blue-400 hover:underline"
+              >
+                Clear
+              </button>
+            </div>
+          )}
+          {originalJournalSearch && (
+            <div className="flex items-center gap-2 text-sm bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded px-3 py-2">
+              <span>Filtered to original journal: <strong>{originalJournalSearch}</strong></span>
+              <button
+                onClick={() => setOriginalJournalSearch("")}
+                className="ml-1 text-blue-600 dark:text-blue-400 hover:underline"
+              >
+                Clear
+              </button>
+            </div>
+          )}
+        </section>
+      )}
 
       <section className="mx-auto max-w-[90%] grid md:grid-cols-3 gap-4 mt-6">
         <div className="border rounded p-4">
@@ -1446,10 +1485,10 @@ function ReplicationsDatabaseContent() {
                       <td className="align-top p-2">{String(r.replication_pages || "")}</td>
                     )}
                     {visibleColumns.has("original_year") && (
-                      <td className="align-top p-2 text-right">{String(r.original_year || "")}</td>
+                      <td className="align-top p-2 text-right">{String(r.original_year || "").replace(/\.0$/, "")}</td>
                     )}
                     {visibleColumns.has("replication_year") && (
-                      <td className="align-top p-2 text-right">{String(r.replication_year || "")}</td>
+                      <td className="align-top p-2 text-right">{String(r.replication_year || "").replace(/\.0$/, "")}</td>
                     )}
                     {visibleColumns.has("original_url") && (
                       <td className="align-top p-2">{String(r.original_url || "")}</td>

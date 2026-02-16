@@ -47,6 +47,9 @@ def _get_env_key(key_name):
 
 CORE_API_KEY = _get_env_key('COREAPIKEY')
 DIMENSIONS_API_KEY = _get_env_key('DIMENSIONS_API_KEY')
+SEMANTIC_SCHOLAR_API_KEY = _get_env_key('SEMANTIC_SCHOLAR_API_KEY')
+CROSSREF_API_KEY = _get_env_key('CROSSREF_API_KEY')
+ENTREZ_API_KEY = _get_env_key('ENTREZ_EUTILS_API_KEY')
 CONTACT_EMAIL = _get_env_key('CONTACT_EMAIL') or 'your_email@example.com'
 
 
@@ -188,7 +191,12 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
 
     # ---------- 3️⃣ Crossref ----------
     try:
-        r = _request_with_retry(f"https://api.crossref.org/works/{doi}", headers=headers)
+        # Add Crossref Plus API key if available (provides higher rate limits)
+        crossref_headers = headers.copy()
+        crossref_url = f"https://api.crossref.org/works/{doi}"
+        if CROSSREF_API_KEY:
+            crossref_headers['Crossref-Plus-API-Token'] = f'Bearer {CROSSREF_API_KEY}'
+        r = _request_with_retry(crossref_url, headers=crossref_headers)
         if r and r.status_code == 200:
             m = r.json()["message"]
             authors = []
@@ -277,9 +285,11 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
 
     # ---------- 6️⃣ NCBI/PubMed ----------
     try:
+        # Add API key if available (increases rate limit from 3/s to 10/s)
+        api_key_param = f"&api_key={ENTREZ_API_KEY}" if ENTREZ_API_KEY else ""
         search_url = (
             f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
-            f"?db=pubmed&term={doi}[AID]&retmode=json&email={email}"
+            f"?db=pubmed&term={doi}[AID]&retmode=json&email={email}{api_key_param}"
         )
         r = _request_with_retry(search_url, headers=headers)
         if r and r.status_code == 200:
@@ -288,7 +298,7 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
                 time.sleep(delay)
                 summary_url = (
                     f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi"
-                    f"?db=pubmed&id={pmids[0]}&retmode=json&email={email}"
+                    f"?db=pubmed&id={pmids[0]}&retmode=json&email={email}{api_key_param}"
                 )
                 r2 = _request_with_retry(summary_url, headers=headers)
                 if r2 and r2.status_code == 200:
@@ -489,25 +499,40 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
         except Exception as e:
             logger.warning(f"Dimensions.ai error: {e}")
 
-    # ---------- 1️⃣1️⃣ OpenCitations ----------
+    # ---------- 1️⃣1️⃣ OpenCitations Meta ----------
     try:
         r = _request_with_retry(
-            f"https://opencitations.net/index/api/v1/metadata/doi:{doi}",
+            f"https://api.opencitations.net/meta/v1/metadata/doi:{doi}",
             headers=headers,
         )
         if r and r.status_code == 200:
-            oc_data = r.json()
+            try:
+                oc_data = r.json()
+            except (json.JSONDecodeError, ValueError):
+                oc_data = None
             if oc_data and len(oc_data) > 0:
                 oc = oc_data[0]
-                # OpenCitations returns author as "surname, given name; surname, given name"
-                author_str = oc.get("author")
-                # Parse year from publication date (format: YYYY-MM-DD or YYYY)
-                pub_date = oc.get("year")
-                year_val = None
-                if pub_date:
-                    year_val = pub_date.split("-")[0] if "-" in pub_date else pub_date
+                # Parse author: "Surname, Given [orcid:... omid:...]; ..." → clean names
+                raw_author = oc.get("author", "")
+                if raw_author:
+                    author_str = "; ".join(
+                        re.sub(r'\s*\[.*?\]', '', a).strip()
+                        for a in raw_author.split(";")
+                        if a.strip()
+                    )
+                else:
+                    author_str = None
+                # Parse year from pub_date (format: YYYY-MM-DD or YYYY)
+                pub_date = oc.get("pub_date", "")
+                year_val = pub_date.split("-")[0] if pub_date else None
+                # Parse DOI from id field: "doi:10.xxx omid:... pmid:..."
+                oc_doi = None
+                for part in oc.get("id", "").split():
+                    if part.startswith("doi:"):
+                        oc_doi = part[4:]
+                        break
                 oc_meta = {
-                    "doi": oc.get("doi"),
+                    "doi": oc_doi or doi,
                     "title": oc.get("title"),
                     "authors": author_str,
                     "journal": oc.get("source_title"),
@@ -524,10 +549,13 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
 
     # ---------- 1️⃣2️⃣ Semantic Scholar ----------
     try:
+        s2_headers = headers.copy()
+        if SEMANTIC_SCHOLAR_API_KEY:
+            s2_headers['x-api-key'] = SEMANTIC_SCHOLAR_API_KEY
         r = _request_with_retry(
             f"https://api.semanticscholar.org/graph/v1/paper/DOI:{doi}"
             "?fields=title,year,venue,url,authors",
-            headers=headers,
+            headers=s2_headers,
             max_retries=2,
         )
         if r and r.status_code == 200:

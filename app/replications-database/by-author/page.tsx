@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
@@ -20,6 +21,9 @@ type AuthorRow = {
   notReplicatedPct: number;
 };
 
+type SortKey = "author" | "replicatedPct" | "total";
+type SortDir = "asc" | "desc";
+
 const THRESHOLD_OPTIONS = [
   { value: 0.5, label: "50%" },
   { value: 0.75, label: "75%" },
@@ -35,6 +39,17 @@ export default function ByAuthorPage() {
   const [error, setError] = useState<string | null>(null);
   const [threshold, setThreshold] = useState(0.75);
   const [minPapers, setMinPapers] = useState(5);
+  const [sortKey, setSortKey] = useState<SortKey>("total");
+  const [sortDir, setSortDir] = useState<SortDir>("desc");
+
+  function toggleSort(key: SortKey) {
+    if (sortKey === key) {
+      setSortDir(d => d === "asc" ? "desc" : "asc");
+    } else {
+      setSortKey(key);
+      setSortDir(key === "author" ? "asc" : "desc");
+    }
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -129,9 +144,19 @@ export default function ByAuthorPage() {
           notReplicatedPct: total > 0 ? (v.notReplicated / total) * 100 : 0,
         };
       })
-      .filter((d) => d.total >= minPapers)
-      .sort((a, b) => b.total - a.total);
+      .filter((d) => d.total >= minPapers);
   }, [data, threshold, minPapers]);
+
+  const sortedAuthors = useMemo(() => {
+    const sorted = [...byAuthor].sort((a, b) => {
+      if (sortKey === "author") {
+        return a.author.localeCompare(b.author);
+      }
+      return a[sortKey] - b[sortKey];
+    });
+    if (sortDir === "desc") sorted.reverse();
+    return sorted;
+  }, [byAuthor, sortKey, sortDir]);
 
   const totalPaperAuthorships = byAuthor.reduce((sum, d) => sum + d.total, 0);
 
@@ -225,50 +250,84 @@ export default function ByAuthorPage() {
             </span>
           </div>
 
-          {/* Bars */}
-          <div className="space-y-3">
-            {byAuthor.map((d) => (
-              <div key={d.author} className="flex items-center gap-3">
-                <span className="text-sm text-right shrink-0" style={{ minWidth: "20rem" }}>
-                  {d.author}
-                </span>
-                <div className="flex-1 h-7 flex rounded overflow-hidden bg-gray-100 dark:bg-gray-800 text-xs font-medium text-white">
-                  {d.replicatedPct > 0 && (
-                    <div
-                      className="h-full transition-all flex items-center justify-center overflow-hidden"
-                      style={{
-                        width: `${d.replicatedPct}%`,
-                        background: "#10b981",
-                      }}
-                      title={`Replicated: ${d.replicated} (${d.replicatedPct.toFixed(1)}%)`}
-                    >
-                      {d.replicatedPct >= 10 &&
-                        `${d.replicatedPct.toFixed(0)}%`}
-                    </div>
-                  )}
-                  {d.notReplicatedPct > 0 && (
-                    <div
-                      className="h-full transition-all flex items-center justify-center overflow-hidden"
-                      style={{
-                        width: `${d.notReplicatedPct}%`,
-                        background: "#f87171",
-                      }}
-                      title={`Not replicated: ${d.notReplicated} (${d.notReplicatedPct.toFixed(1)}%)`}
-                    >
-                      {d.notReplicatedPct >= 10 &&
-                        `${d.notReplicatedPct.toFixed(0)}%`}
-                    </div>
-                  )}
-                </div>
-                <span className="w-20 text-sm text-right tabular-nums shrink-0">
-                  {d.total} papers
-                </span>
-              </div>
-            ))}
+          {/* Table */}
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-gray-200 dark:border-gray-700">
+                  <SortHeader label="Author" sortKey="author" currentKey={sortKey} dir={sortDir} onSort={toggleSort} align="left" />
+                  <SortHeader label="Breakdown" sortKey="replicatedPct" currentKey={sortKey} dir={sortDir} onSort={toggleSort} align="left" style={{ minWidth: "12rem" }} />
+                  <SortHeader label="Total Papers" sortKey="total" currentKey={sortKey} dir={sortDir} onSort={toggleSort} align="right" />
+                </tr>
+              </thead>
+              <tbody>
+                {sortedAuthors.map((d) => {
+                  return (
+                    <tr key={d.author} className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900/40">
+                      <td className="p-2 text-left">
+                        <Link
+                          href={`/replications-database?original_author_search=${encodeURIComponent(d.author)}`}
+                          className="text-blue-600 dark:text-blue-400 hover:underline"
+                        >
+                          {d.author}
+                        </Link>
+                      </td>
+                      <td className="p-2">
+                        <div className="h-5 flex rounded overflow-hidden bg-gray-100 dark:bg-gray-800 text-xs font-medium text-white">
+                          {d.replicatedPct > 0 && (
+                            <div
+                              className="h-full flex items-center justify-center overflow-hidden"
+                              style={{ width: `${d.replicatedPct}%`, background: "#10b981" }}
+                              title={`Replicated: ${d.replicated} (${d.replicatedPct.toFixed(1)}%)`}
+                            >
+                              {d.replicatedPct >= 15 && `${d.replicatedPct.toFixed(0)}%`}
+                            </div>
+                          )}
+                          {d.notReplicatedPct > 0 && (
+                            <div
+                              className="h-full flex items-center justify-center overflow-hidden"
+                              style={{ width: `${d.notReplicatedPct}%`, background: "#f87171" }}
+                              title={`Not replicated: ${d.notReplicated} (${d.notReplicatedPct.toFixed(1)}%)`}
+                            >
+                              {d.notReplicatedPct >= 15 && `${d.notReplicatedPct.toFixed(0)}%`}
+                            </div>
+                          )}
+                        </div>
+                      </td>
+                      <td className="p-2 text-right tabular-nums">{d.total}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         </div>
       </main>
       <Footer />
     </div>
+  );
+}
+
+function SortHeader({ label, sortKey: key, currentKey, dir, onSort, align, style }: {
+  label: string;
+  sortKey: SortKey;
+  currentKey: SortKey;
+  dir: SortDir;
+  onSort: (k: SortKey) => void;
+  align: "left" | "right";
+  style?: React.CSSProperties;
+}) {
+  const active = key === currentKey;
+  return (
+    <th
+      className={`p-2 font-medium text-gray-600 dark:text-gray-300 cursor-pointer select-none hover:text-gray-900 dark:hover:text-white whitespace-nowrap ${align === "right" ? "text-right" : "text-left"}`}
+      onClick={() => onSort(key)}
+      style={style}
+    >
+      {label}{" "}
+      <span className={`inline-block w-3 ${active ? "opacity-100" : "opacity-30"}`}>
+        {active ? (dir === "asc" ? "\u25B2" : "\u25BC") : "\u25BC"}
+      </span>
+    </th>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
@@ -199,7 +200,12 @@ export default function ByJournalPage() {
             {byJournal.map((d) => (
               <div key={d.journal} className="flex items-center gap-3">
                 <span className="text-sm italic text-right shrink-0" style={{ minWidth: "24rem" }}>
-                  {d.journal}
+                  <Link
+                    href={`/replications-database?original_journal_search=${encodeURIComponent(d.journal)}`}
+                    className="text-blue-600 dark:text-blue-400 hover:underline"
+                  >
+                    {d.journal}
+                  </Link>
                 </span>
                 <div className="flex-1 h-7 flex rounded overflow-hidden bg-gray-100 dark:bg-gray-800 text-xs font-medium text-white">
                   {d.replicatedPct > 0 && (

@@ -22,6 +22,7 @@ const PROJECT_TO_TAG: Record<string, string> = {
   "Soto – Life Outcomes of Personality Replication Project": "Soto et al LOPPRP",
   "Estimating the Replicability of Sports and Exercise Science Research": "RSESR",
   "Social Psychology Special Issue on Registered Replication Reports": "SPRRR",
+  "Clearer Thinking's Transparent Replication Project": "TRs",
 };
 
 interface Project {

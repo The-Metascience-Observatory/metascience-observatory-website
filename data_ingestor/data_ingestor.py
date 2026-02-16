@@ -1584,6 +1584,37 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
         input_df['replication_initiative_tag'] = initiative_tag
         print(f"  Applied initiative tag '{initiative_tag}' to all rows")
 
+    # Rename "version" column to "ai_version" and validate integer values
+    if 'version' in input_df.columns:
+        print(f"\n  Found 'version' column, renaming to 'ai_version'...")
+        input_df = input_df.rename(columns={'version': 'ai_version'})
+
+        # Validate that all values are integers
+        non_integer_rows = []
+        for idx, val in input_df['ai_version'].items():
+            if pd.notna(val):
+                try:
+                    # Try to convert to int
+                    int_val = int(float(val))
+                    # Check if conversion changed the value (e.g., 1.5 → 1)
+                    if float(val) != float(int_val):
+                        non_integer_rows.append((idx, val))
+                except (ValueError, TypeError):
+                    non_integer_rows.append((idx, val))
+
+        if non_integer_rows:
+            print(f"\n  \033[93m{'='*80}")
+            print(f"  ⚠️  WARNING: Found {len(non_integer_rows)} non-integer values in 'ai_version' column!")
+            print(f"  {'='*80}\033[0m")
+            print(f"\n  \033[93mRows with non-integer ai_version values:\033[0m")
+            for idx, val in non_integer_rows[:10]:  # Show first 10
+                print(f"    Row {idx + 1}: ai_version = {val}")
+            if len(non_integer_rows) > 10:
+                print(f"    ... and {len(non_integer_rows) - 10} more")
+            print(f"\n  \033[93m{'='*80}\033[0m\n")
+        else:
+            print(f"  ✓ All ai_version values are valid integers")
+
     # Find latest master database from version_history.txt
     latest_master = get_latest_master_database()
     if not latest_master:
