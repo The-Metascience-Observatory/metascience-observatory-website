@@ -157,11 +157,15 @@ def extract_doi_from_url(url):
     if not isinstance(url, str) or not url.strip():
         return None
     url = url.strip()
+    doi = None
     if url.startswith("http://doi.org/"):
-        return url.replace("http://doi.org/", "")
+        doi = url.replace("http://doi.org/", "")
     elif url.startswith("https://doi.org/"):
-        return url.replace("https://doi.org/", "")
-    return None
+        doi = url.replace("https://doi.org/", "")
+    # Ensure DOI starts with 10. (fix malformed DOIs like 0.1037/... → 10.1037/...)
+    if doi and not doi.startswith("10."):
+        doi = "10." + doi.lstrip("0.")
+    return doi
 
 def normalize_doi(doi):
     """
@@ -181,6 +185,9 @@ def normalize_doi(doi):
         doi = doi.replace("http://dx.doi.org/", "")
     elif doi.startswith("https://dx.doi.org/"):
         doi = doi.replace("https://dx.doi.org/", "")
+    # Ensure DOI starts with 10. (fix malformed DOIs like 0.1037/... → 10.1037/...)
+    if doi and not doi.startswith("10."):
+        doi = "10." + doi.lstrip("0.")
     return doi if doi else None
 
 def is_valid_doi(doi):
@@ -601,6 +608,34 @@ def calculate_effect_sizes(df):
 
     return df
 
+def format_author_initial(name):
+    """
+    Add periods after single-letter initials in an author name.
+    e.g., "Jonathan W Schooler" → "Jonathan W. Schooler"
+         "J Lukas Thürmer" → "J. Lukas Thürmer"
+    """
+    if not isinstance(name, str) or not name.strip():
+        return name
+    parts = name.strip().split()
+    formatted_parts = []
+    for part in parts:
+        if len(part) == 1 and part.isalpha():
+            formatted_parts.append(part + '.')
+        else:
+            formatted_parts.append(part)
+    return ' '.join(formatted_parts)
+
+
+def format_authors_string(authors_str):
+    """
+    Format a semicolon-separated authors string, adding periods after single-letter initials.
+    """
+    if not isinstance(authors_str, str) or not authors_str.strip():
+        return authors_str
+    authors = [format_author_initial(a.strip()) for a in authors_str.split(';')]
+    return '; '.join(authors)
+
+
 def is_abbreviated_journal(journal_name):
     """
     Detect if a journal name is likely abbreviated.
@@ -670,6 +705,9 @@ def enrich_from_metadata(row, prefix, metadata):
         if should_fill:
             value = metadata.get(meta_key)
             if value:
+                # Format author names (add periods after single-letter initials)
+                if meta_key == 'authors':
+                    value = format_authors_string(value)
                 # Normalize year to int and validate range
                 if meta_key == 'year':
                     try:
@@ -686,28 +724,47 @@ def enrich_from_metadata(row, prefix, metadata):
 
     return row
 
+def _authors_overlap(existing_authors, fetched_authors):
+    """Check if at least one author surname appears in both author strings.
+    Handles formats like 'Given Family' and 'Family, Given'."""
+    if not existing_authors or not fetched_authors:
+        return False
+    existing_str = str(existing_authors).lower()
+    fetched_str = str(fetched_authors).lower()
+    # Extract surnames: split by semicolon, take last word of each name
+    def get_surnames(s):
+        surnames = set()
+        for name in s.split(';'):
+            name = name.strip()
+            if not name:
+                continue
+            # Handle "Family, Given" format
+            if ',' in name:
+                surnames.add(name.split(',')[0].strip())
+            else:
+                # "Given Family" format - take last word
+                parts = name.split()
+                if parts:
+                    surnames.add(parts[-1].strip().rstrip('.'))
+        return surnames
+    existing_surnames = get_surnames(existing_str)
+    fetched_surnames = get_surnames(fetched_str)
+    return bool(existing_surnames & fetched_surnames)
+
+
 def sanity_check_metadata(row, prefix, metadata):
     """
     Check if fetched metadata matches existing data.
     Returns True if metadata is likely correct, False otherwise.
     Checks year field and title similarity when available.
+    Allows a year window of +/- 5 years if title and authors align
+    (common for working papers published later as journal articles).
     """
     if not metadata:
         return False
 
-    # Check year field
-    year_col = f"{prefix}_year"
-    if year_col in row.index and not is_empty(row[year_col]):
-        existing_value = str(row[year_col]).strip()
-        fetched_value = str(metadata.get('year', "")).strip()
-
-        if fetched_value:
-            # Handle float values like "2020.0" vs "2020"
-            if existing_value.replace(".0", "") != fetched_value.replace(".0", ""):
-                logger.warning(f"Year mismatch for {prefix}: existing={existing_value}, fetched={fetched_value}")
-                return False
-
     # Check title similarity when both exist
+    title_match = False
     title_col = f"{prefix}_title"
     if title_col in row.index and not is_empty(row[title_col]) and metadata.get('title'):
         existing_title = str(row[title_col]).lower().strip()
@@ -717,18 +774,70 @@ def sanity_check_metadata(row, prefix, metadata):
             logger.warning(f"Title mismatch for {prefix} (similarity={similarity:.2f}): "
                            f"existing='{existing_title[:60]}' vs fetched='{fetched_title[:60]}'")
             return False
+        title_match = similarity >= 0.6
+
+    # Check author overlap
+    authors_col = f"{prefix}_authors"
+    authors_match = False
+    if authors_col in row.index and not is_empty(row[authors_col]) and metadata.get('authors'):
+        authors_match = _authors_overlap(row[authors_col], metadata['authors'])
+
+    # Check year field
+    year_col = f"{prefix}_year"
+    if year_col in row.index and not is_empty(row[year_col]):
+        existing_value = str(row[year_col]).strip()
+        fetched_value = str(metadata.get('year', "")).strip()
+
+        if fetched_value:
+            existing_year = existing_value.replace(".0", "")
+            fetched_year = fetched_value.replace(".0", "")
+
+            if existing_year != fetched_year:
+                # Allow +/- 5 year window if title AND authors match
+                # (working papers often published years later as journal articles)
+                try:
+                    year_diff = abs(int(existing_year) - int(fetched_year))
+                    if year_diff <= 5 and (title_match and authors_match):
+                        logger.info(f"Year differs by {year_diff}y for {prefix} "
+                                    f"(existing={existing_year}, fetched={fetched_year}) "
+                                    f"but title+authors match — accepting")
+                    elif year_diff <= 5 and title_match:
+                        logger.info(f"Year differs by {year_diff}y for {prefix} "
+                                    f"(existing={existing_year}, fetched={fetched_year}) "
+                                    f"title matches but no author data to confirm — accepting")
+                    else:
+                        logger.warning(f"Year mismatch for {prefix}: existing={existing_value}, fetched={fetched_value}")
+                        return False
+                except ValueError:
+                    logger.warning(f"Year mismatch for {prefix}: existing={existing_value}, fetched={fetched_value}")
+                    return False
 
     return True
 
-def _cache_get_or_fetch(cache, key, fetch_fn, cache_lock=None):
+def _cache_result_is_good(result, require_doi=False):
+    """Check if a cached result is worth keeping or should be re-fetched.
+    Returns True if the result has enough data to skip re-fetching."""
+    if result is None:
+        return False
+    if not isinstance(result, dict):
+        return False
+    if require_doi and not result.get('doi'):
+        return False
+    # Count how many fields have real values
+    filled = sum(1 for k, v in result.items() if v not in [None, "", "NaN"])
+    # Re-fetch if less than 3 fields filled (too sparse to be useful)
+    return filled >= 3
+
+
+def _cache_get_or_fetch(cache, key, fetch_fn, cache_lock=None, require_doi=False):
     """Thread-safe cache lookup. On miss, calls fetch_fn() outside the lock,
-    then stores the result. Occasional duplicate fetches under contention are
-    harmless and keep lock hold-time short."""
+    then stores the result. Re-fetches if cached result is incomplete
+    (missing DOI when require_doi=True, or too few fields filled)."""
     if cache_lock:
         with cache_lock:
-            if key in cache:
+            if key in cache and _cache_result_is_good(cache[key], require_doi):
                 return cache[key], True  # (result, was_cached)
-    elif key in cache:
+    elif key in cache and _cache_result_is_good(cache[key], require_doi):
         return cache[key], True
 
     # Fetch outside the lock so other threads aren't blocked on I/O
@@ -791,7 +900,8 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
                 year=original_year,
                 volume=original_volume
             ),
-            cache_lock
+            cache_lock,
+            require_doi=True
         )
         if was_cached:
             print(f"  Using cached metadata for original title: {original_title[:50]}...")
@@ -809,8 +919,68 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
                     print(f"  ✗ Could not normalize DOI: {metadata['doi']}")
             else:
                 print(f"  ✗ DOI failed sanity check, not using: {metadata['doi']}")
+        elif metadata and metadata.get('pmid'):
+            if sanity_check_metadata(row, 'original', metadata):
+                pmid = metadata['pmid']
+                pmid_url = f"https://pubmed.ncbi.nlm.nih.gov/{pmid}/"
+                print(f"  ✓ No DOI but found PMID: {pmid_url}")
+                row['original_url'] = pmid_url
+                row = enrich_from_metadata(row, 'original', metadata)
+            else:
+                print(f"  ✗ PMID failed sanity check, not using: {metadata['pmid']}")
+        elif metadata and metadata.get('url'):
+            if sanity_check_metadata(row, 'original', metadata):
+                print(f"  ✓ No DOI/PMID but found URL: {metadata['url']}")
+                row['original_url'] = metadata['url']
+                row = enrich_from_metadata(row, 'original', metadata)
+            else:
+                print(f"  ✗ URL failed sanity check")
         else:
-            print(f"  ✗ Could not find DOI from title")
+            print(f"  ✗ Could not find DOI/PMID from title")
+
+            # Retry with first part of title before colon (e.g., subtitles often cause search failures)
+            if ':' in original_title:
+                short_title = original_title.split(':')[0].strip()
+                if len(short_title) >= 15:  # Only retry if the first part is meaningful
+                    print(f"  ↻ Retrying with shortened title: {short_title[:50]}...")
+                    short_key = short_title.lower().strip()
+                    metadata2, was_cached2 = _cache_get_or_fetch(
+                        title_cache, short_key,
+                        lambda: fetch_metadata_from_title(
+                            short_title,
+                            authors=original_authors,
+                            journal=original_journal,
+                            year=original_year,
+                            volume=original_volume
+                        ),
+                        cache_lock,
+                        require_doi=True
+                    )
+                    if metadata2 and metadata2.get('doi'):
+                        if sanity_check_metadata(row, 'original', metadata2):
+                            normalized_doi = normalize_doi(metadata2['doi'])
+                            if normalized_doi:
+                                print(f"  ✓ Found DOI via shortened title: {normalized_doi}")
+                                row['original_url'] = f"https://doi.org/{normalized_doi}"
+                                row = enrich_from_metadata(row, 'original', metadata2)
+                            else:
+                                print(f"  ✗ Could not normalize DOI: {metadata2['doi']}")
+                        else:
+                            print(f"  ✗ DOI from shortened title failed sanity check")
+                    elif metadata2 and metadata2.get('pmid'):
+                        if sanity_check_metadata(row, 'original', metadata2):
+                            pmid = metadata2['pmid']
+                            pmid_url = f"https://pubmed.ncbi.nlm.nih.gov/{pmid}/"
+                            print(f"  ✓ Found PMID via shortened title: {pmid_url}")
+                            row['original_url'] = pmid_url
+                            row = enrich_from_metadata(row, 'original', metadata2)
+                    elif metadata2 and metadata2.get('url'):
+                        if sanity_check_metadata(row, 'original', metadata2):
+                            print(f"  ✓ Found URL via shortened title: {metadata2['url']}")
+                            row['original_url'] = metadata2['url']
+                            row = enrich_from_metadata(row, 'original', metadata2)
+                    else:
+                        print(f"  ✗ Shortened title also failed")
 
         if not was_cached:
             time.sleep(0.3)  # Rate limiting
@@ -854,7 +1024,8 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
                 year=replication_year,
                 volume=replication_volume
             ),
-            cache_lock
+            cache_lock,
+            require_doi=True
         )
         if was_cached:
             print(f"  Using cached metadata for replication title: {replication_title[:50]}...")
@@ -872,8 +1043,68 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
                     print(f"  ✗ Could not normalize DOI: {metadata['doi']}")
             else:
                 print(f"  ✗ DOI failed sanity check, not using: {metadata['doi']}")
+        elif metadata and metadata.get('pmid'):
+            if sanity_check_metadata(row, 'replication', metadata):
+                pmid = metadata['pmid']
+                pmid_url = f"https://pubmed.ncbi.nlm.nih.gov/{pmid}/"
+                print(f"  ✓ No DOI but found PMID: {pmid_url}")
+                row['replication_url'] = pmid_url
+                row = enrich_from_metadata(row, 'replication', metadata)
+            else:
+                print(f"  ✗ PMID failed sanity check, not using: {metadata['pmid']}")
+        elif metadata and metadata.get('url'):
+            if sanity_check_metadata(row, 'replication', metadata):
+                print(f"  ✓ No DOI/PMID but found URL: {metadata['url']}")
+                row['replication_url'] = metadata['url']
+                row = enrich_from_metadata(row, 'replication', metadata)
+            else:
+                print(f"  ✗ URL failed sanity check")
         else:
-            print(f"  ✗ Could not find DOI from title")
+            print(f"  ✗ Could not find DOI/PMID from title")
+
+            # Retry with first part of title before colon
+            if ':' in replication_title:
+                short_title = replication_title.split(':')[0].strip()
+                if len(short_title) >= 15:
+                    print(f"  ↻ Retrying with shortened title: {short_title[:50]}...")
+                    short_key = short_title.lower().strip()
+                    metadata2, was_cached2 = _cache_get_or_fetch(
+                        title_cache, short_key,
+                        lambda: fetch_metadata_from_title(
+                            short_title,
+                            authors=replication_authors,
+                            journal=replication_journal,
+                            year=replication_year,
+                            volume=replication_volume
+                        ),
+                        cache_lock,
+                        require_doi=True
+                    )
+                    if metadata2 and metadata2.get('doi'):
+                        if sanity_check_metadata(row, 'replication', metadata2):
+                            normalized_doi = normalize_doi(metadata2['doi'])
+                            if normalized_doi:
+                                print(f"  ✓ Found DOI via shortened title: {normalized_doi}")
+                                row['replication_url'] = f"https://doi.org/{normalized_doi}"
+                                row = enrich_from_metadata(row, 'replication', metadata2)
+                            else:
+                                print(f"  ✗ Could not normalize DOI: {metadata2['doi']}")
+                        else:
+                            print(f"  ✗ DOI from shortened title failed sanity check")
+                    elif metadata2 and metadata2.get('pmid'):
+                        if sanity_check_metadata(row, 'replication', metadata2):
+                            pmid = metadata2['pmid']
+                            pmid_url = f"https://pubmed.ncbi.nlm.nih.gov/{pmid}/"
+                            print(f"  ✓ Found PMID via shortened title: {pmid_url}")
+                            row['replication_url'] = pmid_url
+                            row = enrich_from_metadata(row, 'replication', metadata2)
+                    elif metadata2 and metadata2.get('url'):
+                        if sanity_check_metadata(row, 'replication', metadata2):
+                            print(f"  ✓ Found URL via shortened title: {metadata2['url']}")
+                            row['replication_url'] = metadata2['url']
+                            row = enrich_from_metadata(row, 'replication', metadata2)
+                    else:
+                        print(f"  ✗ Shortened title also failed")
 
         if not was_cached:
             time.sleep(0.3)  # Rate limiting
@@ -909,8 +1140,18 @@ def normalize_discipline_column(df):
         print(f"  ✓ Converted discipline values to lowercase")
     return df
 
+def _normalize_journal_key(s):
+    """Normalize a journal name for lookup: lowercase, strip periods, collapse spaces."""
+    s = s.lower().replace('.', '').strip()
+    return re.sub(r'\s+', ' ', s)
+
+
 def normalize_journal_names(df):
     """Normalize journal names using journal_name_mappings.json
+
+    Keys in the JSON are normalized (lowercase, no periods, single spaces).
+    Input journal names are normalized the same way before lookup, making
+    matching case-insensitive and period-insensitive.
 
     Applies in order:
     1. Abbreviation expansion (e.g., "Dev. Sci" → "Developmental Science")
@@ -933,6 +1174,17 @@ def normalize_journal_names(df):
     abbreviations = mappings.get('abbreviations', {})
     variant_forms = mappings.get('variant_forms', {})
 
+    # Build set of known full names (values) to avoid false-positive expansions.
+    # A journal that is already a canonical full name should not be re-expanded
+    # even if its normalized form collides with an abbreviation key for a
+    # different journal (e.g., "Social Psychology" is a real journal, not an
+    # abbreviation for "Social Psychology Quarterly").
+    known_full_names = set()
+    for v in abbreviations.values():
+        known_full_names.add(_normalize_journal_key(v))
+    for v in variant_forms.values():
+        known_full_names.add(_normalize_journal_key(v))
+
     print("\nNormalizing journal names...")
 
     total_replacements = 0
@@ -952,15 +1204,39 @@ def normalize_journal_names(df):
 
             original = journal_name.strip()
 
-            # Step 1: Apply abbreviations (exact match)
-            if original in abbreviations:
-                col_replacements += 1
-                return abbreviations[original]
+            # Normalize for lookup (lowercase, strip periods, collapse spaces)
+            normalized = _normalize_journal_key(original)
 
-            # Step 2: Apply variant forms (exact match)
-            if original in variant_forms:
+            # Skip abbreviation expansion if the name is already a known full name.
+            # This prevents false positives where a full journal name collides
+            # with an abbreviation key for a different journal.
+            if normalized not in known_full_names:
+                # Step 1: Apply abbreviations (normalized key match)
+                if normalized in abbreviations:
+                    expansion = abbreviations[normalized]
+                    # Guard against NLM entries that merely add a location qualifier
+                    # or subtitle to what is already the full name, e.g.:
+                    #   "AIDS" → "AIDS (London, England)"
+                    #   "BMJ"  → "BMJ (Clinical research ed.)"
+                    # If the expansion starts with the original text followed by a
+                    # separator (space, paren, semicolon, colon), the input is
+                    # already the canonical name and should not be changed.
+                    # But allow cases where a truncated word gets completed, e.g.:
+                    #   "Death Stud" → "Death Studies" (word continues, not a qualifier)
+                    exp_norm = _normalize_journal_key(expansion)
+                    is_qualifier_expansion = (
+                        exp_norm.startswith(normalized) and
+                        len(exp_norm) > len(normalized) and
+                        exp_norm[len(normalized)] in ' ;:,('
+                    )
+                    if not is_qualifier_expansion:
+                        col_replacements += 1
+                        return expansion
+
+            # Step 2: Apply variant forms (normalized key match)
+            if normalized in variant_forms:
                 col_replacements += 1
-                return variant_forms[original]
+                return variant_forms[normalized]
 
             # Step 3: Apply HTML entity fixes
             if '&amp;' in original:
@@ -1654,8 +1930,8 @@ Examples:
                        help='Set discipline value for all rows (e.g., "cancer biology")')
     parser.add_argument('--initiative_tag', type=str, default=None,
                        help='Set replication_initiative_tag for all rows (e.g., "SMR", "RRR")')
-    parser.add_argument('--workers', type=int, default=2,
-                       help='Number of parallel workers for metadata enrichment (default: 2)')
+    parser.add_argument('--workers', type=int, default=4,
+                       help='Number of parallel workers for metadata enrichment (default: 4)')
     parser.add_argument('--no-gui', action='store_true',
                        help='Use CLI prompts instead of GUI for duplicate review')
     parser.add_argument('--skip-duplication-check', action='store_true',

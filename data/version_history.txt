@@ -39,3 +39,5 @@ replications_database_2026_02_15_081503.csv # added ai_version column (18 rows w
 replications_database_2026_02_15_081634.csv # set ai_version=4 for 81 rows matching collated_results_sonnet_v4.csv
 replications_database_2026_02_15_082454.csv # expanded abbreviated journal names and standardized PLOS One variants
 replications_database_2026_02_15_084408.csv # set replication_initiative_tag=ExECON for 18 rows with replication_url=10.1126/science.aaf0918
+replications_database_2026_02_15_103418.csv # standardized author names via CrossRef API (1507 rows updated)
+replications_database_2026_02_15_211705.csv # added pot_rep_studies_batch_collated_results_sonnetv6.csv

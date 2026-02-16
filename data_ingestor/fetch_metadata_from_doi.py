@@ -2,7 +2,9 @@ import requests
 import time
 import logging
 import os
+import urllib.parse
 from pathlib import Path
+from difflib import SequenceMatcher
 
 logger = logging.getLogger(__name__)
 
@@ -27,13 +29,60 @@ def _get_openalex_api_key():
 OPENALEX_API_KEY = _get_openalex_api_key()
 
 
+def _get_env_key(key_name):
+    """Load an API key from environment or .env.local"""
+    val = os.getenv(key_name)
+    if not val:
+        try:
+            env_path = Path(__file__).parent.parent / '.env.local'
+            if env_path.exists():
+                with open(env_path) as f:
+                    for line in f:
+                        if line.startswith(f'{key_name}='):
+                            val = line.strip().split('=', 1)[1]
+                            break
+        except Exception:
+            pass
+    return val
+
+CORE_API_KEY = _get_env_key('COREAPIKEY')
+DIMENSIONS_API_KEY = _get_env_key('DIMENSIONS_API_KEY')
+CONTACT_EMAIL = _get_env_key('CONTACT_EMAIL') or 'your_email@example.com'
+
+
+def _format_initial(name):
+    """Add periods after single-letter initials in an author name.
+    e.g., 'J Lukas' → 'J. Lukas', 'Jonathan W Schooler' → 'Jonathan W. Schooler'"""
+    if not name:
+        return name
+    parts = name.split()
+    formatted = []
+    for part in parts:
+        if len(part) == 1 and part.isalpha():
+            formatted.append(part + '.')
+        else:
+            formatted.append(part)
+    return ' '.join(formatted)
+
+
 def _request_with_retry(url, headers=None, timeout=10, max_retries=3):
-    """Make an HTTP GET request with exponential backoff on transient failures."""
+    """Make an HTTP GET request with exponential backoff on transient failures.
+    Uses Retry-After header when available, with longer waits for 429 rate limits."""
     for attempt in range(max_retries):
         try:
             r = requests.get(url, timeout=timeout, headers=headers)
             if r.status_code == 429 or r.status_code >= 500:
-                wait = 2 ** attempt
+                # Use Retry-After header if present, otherwise exponential backoff
+                retry_after = r.headers.get('Retry-After')
+                if retry_after:
+                    try:
+                        wait = min(int(retry_after), 60)  # cap at 60s
+                    except ValueError:
+                        wait = 5 * (2 ** attempt)  # fallback
+                elif r.status_code == 429:
+                    wait = 5 * (2 ** attempt)  # 5s, 10s, 20s for rate limits
+                else:
+                    wait = 2 ** attempt  # 1s, 2s, 4s for server errors
                 logger.warning(f"HTTP {r.status_code} from {url}, retrying in {wait}s (attempt {attempt+1}/{max_retries})")
                 time.sleep(wait)
                 continue
@@ -45,10 +94,12 @@ def _request_with_retry(url, headers=None, timeout=10, max_retries=3):
     return None
 
 
-def fetch_metadata_from_doi(doi, email="your_email@example.com", delay=0.2):
+def fetch_metadata_from_doi(doi, email=None, delay=0.2):
+    if email is None:
+        email = CONTACT_EMAIL
     """
     Progressive multi-API metadata enrichment:
-    OpenAlex → DataCite → Crossref → Unpaywall → EuropePMC → Semantic Scholar
+    OpenAlex → DataCite → Crossref → Unpaywall → EuropePMC → PubMed → DBLP → BASE → CORE → Dimensions.ai → OpenCitations → Semantic Scholar
     Stops early if all fields are filled.
     """
     if not isinstance(doi, str) or not doi.strip():
@@ -116,7 +167,7 @@ def fetch_metadata_from_doi(doi, email="your_email@example.com", delay=0.2):
             for a in d.get("creators", []):
                 name = a.get("name") or f"{a.get('givenName','')} {a.get('familyName','')}".strip()
                 if name:
-                    authors.append(name)
+                    authors.append(_format_initial(name))
             # Use container title if available; publisher is not the journal
             container = d.get("container", {}) or {}
             journal = container.get("title") or None
@@ -145,7 +196,7 @@ def fetch_metadata_from_doi(doi, email="your_email@example.com", delay=0.2):
                 parts = []
                 if "given" in a: parts.append(a["given"])
                 if "family" in a: parts.append(a["family"])
-                name = " ".join(parts).strip()
+                name = _format_initial(" ".join(parts).strip())
                 if name:
                     authors.append(name)
             year = (
@@ -177,7 +228,7 @@ def fetch_metadata_from_doi(doi, email="your_email@example.com", delay=0.2):
             u = r.json()
             best_loc = u.get("best_oa_location") or {}
             authors = "; ".join(
-                [f"{a.get('given','')} {a.get('family','')}".strip() for a in u.get("z_authors", [])]
+                [_format_initial(f"{a.get('given','')} {a.get('family','')}".strip()) for a in u.get("z_authors", [])]
             ) or None
             up = {
                 "authors": authors,
@@ -224,12 +275,260 @@ def fetch_metadata_from_doi(doi, email="your_email@example.com", delay=0.2):
     except Exception as e:
         logger.warning(f"Europe PMC error for DOI {doi}: {e}")
 
-    # ---------- 6️⃣ Semantic Scholar ----------
+    # ---------- 6️⃣ NCBI/PubMed ----------
+    try:
+        search_url = (
+            f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
+            f"?db=pubmed&term={doi}[AID]&retmode=json&email={email}"
+        )
+        r = _request_with_retry(search_url, headers=headers)
+        if r and r.status_code == 200:
+            pmids = r.json().get("esearchresult", {}).get("idlist", [])
+            if pmids:
+                time.sleep(delay)
+                summary_url = (
+                    f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi"
+                    f"?db=pubmed&id={pmids[0]}&retmode=json&email={email}"
+                )
+                r2 = _request_with_retry(summary_url, headers=headers)
+                if r2 and r2.status_code == 200:
+                    result = r2.json().get("result", {})
+                    d = result.get(pmids[0], {})
+                    if d and isinstance(d, dict):
+                        authors = "; ".join(
+                            _format_initial(a.get("name", ""))
+                            for a in d.get("authors", [])
+                            if a.get("authtype") == "Author"
+                        ) or None
+                        pub_year = None
+                        pubdate = d.get("pubdate", "")
+                        if pubdate and len(pubdate) >= 4 and pubdate[:4].isdigit():
+                            pub_year = int(pubdate[:4])
+                        pm = {
+                            "authors": authors,
+                            "title": d.get("title"),
+                            "journal": d.get("fulljournalname"),
+                            "volume": d.get("volume"),
+                            "issue": d.get("issue"),
+                            "pages": d.get("pages"),
+                            "year": pub_year,
+                            "url": f"https://doi.org/{doi}",
+                        }
+                        meta = enrich(meta, pm)
+                        if is_complete(meta):
+                            return meta
+        elif r:
+            logger.warning(f"PubMed returned HTTP {r.status_code} for DOI {doi}")
+    except Exception as e:
+        logger.warning(f"PubMed error for DOI {doi}: {e}")
+    time.sleep(delay)
+
+    # ---------- 7️⃣ DBLP ----------
+    try:
+        search_title = meta.get("title") or ""
+        if search_title:
+            q = urllib.parse.quote(search_title)
+            r = _request_with_retry(
+                f"https://dblp.org/search/publ/api?q={q}&format=json&h=5",
+                headers=headers,
+            )
+            if r and r.status_code == 200:
+                hits = r.json().get("result", {}).get("hits", {}).get("hit", [])
+                for hit in hits[:5]:
+                    info = hit.get("info", {})
+                    fetched_title = (info.get("title") or "").rstrip(".")
+                    ratio = SequenceMatcher(None, search_title.lower(), fetched_title.lower()).ratio()
+                    if ratio >= 0.6:
+                        authors_data = info.get("authors", {}).get("author", [])
+                        if isinstance(authors_data, dict):
+                            authors_data = [authors_data]
+                        authors = "; ".join(
+                            _format_initial(a.get("text", "") if isinstance(a, dict) else str(a))
+                            for a in authors_data
+                        ) or None
+                        db = {
+                            "authors": authors,
+                            "title": fetched_title,
+                            "journal": info.get("venue"),
+                            "volume": info.get("volume"),
+                            "pages": info.get("pages"),
+                            "year": int(info["year"]) if info.get("year", "").isdigit() else None,
+                            "url": info.get("ee") or info.get("url"),
+                        }
+                        meta = enrich(meta, db)
+                        break
+                if is_complete(meta):
+                    return meta
+            elif r:
+                logger.warning(f"DBLP returned HTTP {r.status_code}")
+    except Exception as e:
+        logger.warning(f"DBLP error: {e}")
+
+    # ---------- 8️⃣ BASE (Bielefeld Academic Search Engine) ----------
+    try:
+        search_title = meta.get("title") or ""
+        if search_title:
+            q = urllib.parse.quote(search_title)
+            r = _request_with_retry(
+                f"https://api.base-search.net/cgi-bin/BaseHttpSearchInterface.fcgi"
+                f"?func=PerformSearch&query=dctitle:{q}&format=json&hits=5",
+                headers=headers,
+            )
+            if r and r.status_code == 200:
+                results = r.json().get("response", {}).get("docs", [])
+                for doc in results[:5]:
+                    fetched_title = doc.get("dctitle", "")
+                    if isinstance(fetched_title, list):
+                        fetched_title = fetched_title[0] if fetched_title else ""
+                    ratio = SequenceMatcher(None, search_title.lower(), fetched_title.lower()).ratio()
+                    if ratio >= 0.6:
+                        authors_raw = doc.get("dcCreator") or doc.get("dccreator") or []
+                        if isinstance(authors_raw, str):
+                            authors_raw = [authors_raw]
+                        authors = "; ".join(_format_initial(a) for a in authors_raw) or None
+                        base_year = None
+                        dcdate = doc.get("dcyear") or doc.get("dcdate", "")
+                        if isinstance(dcdate, list):
+                            dcdate = dcdate[0] if dcdate else ""
+                        dcdate = str(dcdate)
+                        if dcdate and len(dcdate) >= 4 and dcdate[:4].isdigit():
+                            base_year = int(dcdate[:4])
+                        ba = {
+                            "authors": authors,
+                            "title": fetched_title,
+                            "journal": doc.get("dcsource") or doc.get("dcpublisher"),
+                            "year": base_year,
+                            "url": doc.get("dclink") or doc.get("dcidentifier"),
+                        }
+                        meta = enrich(meta, ba)
+                        break
+                if is_complete(meta):
+                    return meta
+            elif r:
+                logger.warning(f"BASE returned HTTP {r.status_code}")
+    except Exception as e:
+        logger.warning(f"BASE error: {e}")
+
+    # ---------- 9️⃣ CORE ----------
+    if CORE_API_KEY:
+        try:
+            search_title = meta.get("title") or ""
+            if search_title:
+                q = urllib.parse.quote(f'title:"{search_title}"')
+                core_headers = {**headers, "Authorization": f"Bearer {CORE_API_KEY}"}
+                r = _request_with_retry(
+                    f"https://api.core.ac.uk/v3/search/works?q={q}&limit=5",
+                    headers=core_headers,
+                )
+                if r and r.status_code == 200:
+                    results = r.json().get("results", [])
+                    for doc in results[:5]:
+                        fetched_title = doc.get("title", "")
+                        ratio = SequenceMatcher(None, search_title.lower(), fetched_title.lower()).ratio()
+                        if ratio >= 0.6:
+                            authors_list = doc.get("authors", [])
+                            authors = "; ".join(
+                                _format_initial(a.get("name", "") if isinstance(a, dict) else str(a))
+                                for a in authors_list
+                            ) or None
+                            journals = doc.get("journals") or []
+                            journal_title = journals[0].get("title") if journals else None
+                            co = {
+                                "authors": authors,
+                                "title": fetched_title,
+                                "journal": journal_title or doc.get("publisher"),
+                                "year": doc.get("yearPublished"),
+                                "url": doc.get("downloadUrl") or doc.get("sourceFulltextUrls", [None])[0],
+                            }
+                            meta = enrich(meta, co)
+                            break
+                    if is_complete(meta):
+                        return meta
+                elif r:
+                    logger.warning(f"CORE returned HTTP {r.status_code}")
+        except Exception as e:
+            logger.warning(f"CORE error: {e}")
+
+    # ---------- 🔟 Dimensions.ai ----------
+    if DIMENSIONS_API_KEY:
+        try:
+            import json as json_lib
+            dim_headers = {**headers, "Authorization": f"Bearer {DIMENSIONS_API_KEY}"}
+            query = f'search publications where doi="{doi}" return publications[doi+title+authors+journal+year+volume+issue+pages]'
+            r = requests.post(
+                "https://app.dimensions.ai/api/dsl.json",
+                headers=dim_headers,
+                json={"query": query},
+                timeout=10
+            )
+            if r and r.status_code == 200:
+                data = r.json()
+                pubs = data.get("publications", [])
+                if pubs:
+                    p = pubs[0]
+                    authors_list = p.get("authors", [])
+                    author_str = "; ".join(
+                        f"{a.get('last_name', '')}, {a.get('first_name', '')}".strip(", ")
+                        for a in authors_list
+                    ) if authors_list else None
+                    journal_obj = p.get("journal", {})
+                    journal_name = journal_obj.get("title") if isinstance(journal_obj, dict) else None
+                    dim = {
+                        "doi": p.get("doi"),
+                        "title": p.get("title"),
+                        "authors": author_str,
+                        "journal": journal_name,
+                        "year": p.get("year"),
+                        "volume": p.get("volume"),
+                        "issue": p.get("issue"),
+                        "pages": p.get("pages"),
+                    }
+                    meta = enrich(meta, dim)
+            elif r:
+                logger.warning(f"Dimensions.ai returned HTTP {r.status_code}")
+        except Exception as e:
+            logger.warning(f"Dimensions.ai error: {e}")
+
+    # ---------- 1️⃣1️⃣ OpenCitations ----------
+    try:
+        r = _request_with_retry(
+            f"https://opencitations.net/index/api/v1/metadata/doi:{doi}",
+            headers=headers,
+        )
+        if r and r.status_code == 200:
+            oc_data = r.json()
+            if oc_data and len(oc_data) > 0:
+                oc = oc_data[0]
+                # OpenCitations returns author as "surname, given name; surname, given name"
+                author_str = oc.get("author")
+                # Parse year from publication date (format: YYYY-MM-DD or YYYY)
+                pub_date = oc.get("year")
+                year_val = None
+                if pub_date:
+                    year_val = pub_date.split("-")[0] if "-" in pub_date else pub_date
+                oc_meta = {
+                    "doi": oc.get("doi"),
+                    "title": oc.get("title"),
+                    "authors": author_str,
+                    "journal": oc.get("source_title"),
+                    "year": year_val,
+                    "volume": oc.get("volume"),
+                    "issue": oc.get("issue"),
+                    "pages": oc.get("page"),
+                }
+                meta = enrich(meta, oc_meta)
+        elif r:
+            logger.warning(f"OpenCitations returned HTTP {r.status_code}")
+    except Exception as e:
+        logger.warning(f"OpenCitations error: {e}")
+
+    # ---------- 1️⃣2️⃣ Semantic Scholar ----------
     try:
         r = _request_with_retry(
             f"https://api.semanticscholar.org/graph/v1/paper/DOI:{doi}"
             "?fields=title,year,venue,url,authors",
             headers=headers,
+            max_retries=2,
         )
         if r and r.status_code == 200:
             s = r.json()

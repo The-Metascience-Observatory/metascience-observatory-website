@@ -31,13 +31,45 @@ def _get_openalex_api_key():
 OPENALEX_API_KEY = _get_openalex_api_key()
 
 
+def _get_env_key(key_name):
+    """Load an API key from environment or .env.local"""
+    val = os.getenv(key_name)
+    if not val:
+        try:
+            env_path = Path(__file__).parent.parent / '.env.local'
+            if env_path.exists():
+                with open(env_path) as f:
+                    for line in f:
+                        if line.startswith(f'{key_name}='):
+                            val = line.strip().split('=', 1)[1]
+                            break
+        except Exception:
+            pass
+    return val
+
+CORE_API_KEY = _get_env_key('COREAPIKEY')
+DIMENSIONS_API_KEY = _get_env_key('DIMENSIONS_API_KEY')
+CONTACT_EMAIL = _get_env_key('CONTACT_EMAIL') or 'your_email@example.com'
+
+
 def _request_with_retry(url, headers=None, timeout=10, max_retries=3):
-    """Make an HTTP GET request with exponential backoff on transient failures."""
+    """Make an HTTP GET request with exponential backoff on transient failures.
+    Uses Retry-After header when available, with longer waits for 429 rate limits."""
     for attempt in range(max_retries):
         try:
             r = requests.get(url, timeout=timeout, headers=headers)
             if r.status_code == 429 or r.status_code >= 500:
-                wait = 2 ** attempt
+                # Use Retry-After header if present, otherwise exponential backoff
+                retry_after = r.headers.get('Retry-After')
+                if retry_after:
+                    try:
+                        wait = min(int(retry_after), 60)  # cap at 60s
+                    except ValueError:
+                        wait = 5 * (2 ** attempt)  # fallback
+                elif r.status_code == 429:
+                    wait = 5 * (2 ** attempt)  # 5s, 10s, 20s for rate limits
+                else:
+                    wait = 2 ** attempt  # 1s, 2s, 4s for server errors
                 logger.warning(f"HTTP {r.status_code} from {url}, retrying in {wait}s (attempt {attempt+1}/{max_retries})")
                 time.sleep(wait)
                 continue
@@ -163,11 +195,13 @@ def normalize_doi(doi):
         doi = doi.replace("https://dx.doi.org/", "")
     return doi if doi else None
 
-def fetch_metadata_from_title(title, email="your_email@example.com", delay=0.2, authors=None,
+def fetch_metadata_from_title(title, email=None, delay=0.2, authors=None,
                              journal=None, year=None, volume=None):
+    if email is None:
+        email = CONTACT_EMAIL
     """
     Progressive multi-API metadata enrichment starting from a title.
-    OpenAlex → Crossref → EuropePMC → Entrez/PubMed → DataCite → Semantic Scholar
+    OpenAlex → Crossref → EuropePMC → Entrez/PubMed → DataCite → DBLP → BASE → CORE → Dimensions.ai → OpenCitations → Semantic Scholar
     Attempts to find the DOI first, then uses DOI-based lookups to fill metadata.
 
     Args:
@@ -194,7 +228,7 @@ def fetch_metadata_from_title(title, email="your_email@example.com", delay=0.2, 
     }
 
 
-    meta = {k: None for k in ["doi", "authors", "title", "journal", "volume", "issue", "pages", "year", "url"]}
+    meta = {k: None for k in ["doi", "pmid", "authors", "title", "journal", "volume", "issue", "pages", "year", "url"]}
 
     def enrich(current, new):
         if not new:
@@ -348,8 +382,13 @@ def fetch_metadata_from_title(title, email="your_email@example.com", delay=0.2, 
                 if best_d:
                     fetched_title = best_d.get("title")
                     normalized_doi = normalize_doi(best_d.get("doi"))
+                    epmc_pmid = best_d.get("pmid")
+                    epmc_url = best_d.get("fullTextUrlList", {}).get("fullTextUrl", [{}])[0].get("url")
+                    if not epmc_url and epmc_pmid:
+                        epmc_url = f"https://pubmed.ncbi.nlm.nih.gov/{epmc_pmid}/"
                     ep = {
                         "doi": normalized_doi,
+                        "pmid": epmc_pmid,
                         "authors": best_d.get("authorString"),
                         "title": fetched_title,
                         "journal": best_d.get("journalTitle"),
@@ -357,7 +396,7 @@ def fetch_metadata_from_title(title, email="your_email@example.com", delay=0.2, 
                         "issue": best_d.get("issue"),
                         "pages": best_d.get("pageInfo"),
                         "year": best_d.get("pubYear"),
-                        "url": best_d.get("fullTextUrlList", {}).get("fullTextUrl", [{}])[0].get("url"),
+                        "url": epmc_url,
                     }
                     meta = enrich(meta, ep)
                     doi = meta.get("doi")
@@ -407,8 +446,10 @@ def fetch_metadata_from_title(title, email="your_email@example.com", delay=0.2, 
                         fore = author.get("ForeName", "")
                         if last:
                             authors_list.append(f"{fore} {last}".strip())
+                    entrez_pmid = str(pmids[0])
                     ez = {
                         "doi": entrez_doi,
+                        "pmid": entrez_pmid,
                         "authors": "; ".join(authors_list) or None,
                         "title": fetched_title,
                         "journal": journal_info.get("Title"),
@@ -416,7 +457,7 @@ def fetch_metadata_from_title(title, email="your_email@example.com", delay=0.2, 
                         "issue": journal_info.get("JournalIssue", {}).get("Issue"),
                         "pages": article.get("Pagination", {}).get("StartPage") or article.get("Pagination", {}).get("MedlinePgn"),
                         "year": pub_date.get("Year"),
-                        "url": f"https://doi.org/{entrez_doi}" if entrez_doi else None,
+                        "url": f"https://doi.org/{entrez_doi}" if entrez_doi else f"https://pubmed.ncbi.nlm.nih.gov/{entrez_pmid}/",
                     }
                     meta = enrich(meta, ez)
                     doi = meta.get("doi")
@@ -457,11 +498,265 @@ def fetch_metadata_from_title(title, email="your_email@example.com", delay=0.2, 
         except Exception as e:
             logger.warning(f"DataCite error for DOI {doi}: {e}")
 
-    # ---------- 6️⃣ Semantic Scholar (if DOI or title available) ----------
+    # ---------- 6️⃣ DBLP ----------
+    try:
+        search_title = meta.get("title") or title
+        q = urllib.parse.quote(search_title)
+        r = _request_with_retry(
+            f"https://dblp.org/search/publ/api?q={q}&format=json&h=5",
+            headers=headers,
+        )
+        if r and r.status_code == 200:
+            hits = r.json().get("result", {}).get("hits", {}).get("hit", [])
+            best_sim, best_info = 0.0, None
+            for hit in hits[:5]:
+                info = hit.get("info", {})
+                fetched_title = (info.get("title") or "").rstrip(".")
+                candidate_meta = {
+                    'journal': info.get("venue"),
+                    'year': info.get("year"),
+                    'volume': info.get("volume"),
+                }
+                if not _validate_metadata(candidate_meta, journal, year, volume):
+                    continue
+                sim = _title_similarity(search_title, fetched_title)
+                if sim > best_sim:
+                    best_sim, best_info = sim, info
+            if best_info:
+                fetched_title = (best_info.get("title") or "").rstrip(".")
+                fetched_doi = normalize_doi(best_info.get("doi"))
+                if not doi and fetched_doi:
+                    doi = fetched_doi
+                authors_data = best_info.get("authors", {}).get("author", [])
+                if isinstance(authors_data, dict):
+                    authors_data = [authors_data]
+                authors = "; ".join(
+                    a.get("text", "") if isinstance(a, dict) else str(a)
+                    for a in authors_data
+                ) or None
+                db = {
+                    "doi": fetched_doi,
+                    "authors": authors,
+                    "title": fetched_title,
+                    "journal": best_info.get("venue"),
+                    "volume": best_info.get("volume"),
+                    "pages": best_info.get("pages"),
+                    "year": int(best_info["year"]) if best_info.get("year", "").isdigit() else None,
+                    "url": best_info.get("ee") or best_info.get("url") or (f"https://doi.org/{fetched_doi}" if fetched_doi else None),
+                }
+                meta = enrich(meta, db)
+                if is_complete(meta):
+                    return meta
+        elif r:
+            logger.warning(f"DBLP returned HTTP {r.status_code} for title search")
+    except Exception as e:
+        logger.warning(f"DBLP title search error: {e}")
+
+    # ---------- 7️⃣ BASE (Bielefeld Academic Search Engine) ----------
+    try:
+        search_title = meta.get("title") or title
+        q = urllib.parse.quote(search_title)
+        r = _request_with_retry(
+            f"https://api.base-search.net/cgi-bin/BaseHttpSearchInterface.fcgi"
+            f"?func=PerformSearch&query=dctitle:{q}&format=json&hits=5",
+            headers=headers,
+        )
+        if r and r.status_code == 200:
+            results = r.json().get("response", {}).get("docs", [])
+            best_sim, best_doc = 0.0, None
+            for doc in results[:5]:
+                fetched_title = doc.get("dctitle", "")
+                if isinstance(fetched_title, list):
+                    fetched_title = fetched_title[0] if fetched_title else ""
+                candidate_meta = {
+                    'journal': doc.get("dcsource"),
+                    'year': str(doc.get("dcyear", "")),
+                }
+                if not _validate_metadata(candidate_meta, journal, year, volume):
+                    continue
+                sim = _title_similarity(search_title, fetched_title)
+                if sim > best_sim:
+                    best_sim, best_doc = sim, doc
+            if best_doc:
+                fetched_title = best_doc.get("dctitle", "")
+                if isinstance(fetched_title, list):
+                    fetched_title = fetched_title[0] if fetched_title else ""
+                fetched_doi = normalize_doi(best_doc.get("dcdoi"))
+                if not doi and fetched_doi:
+                    doi = fetched_doi
+                authors_raw = best_doc.get("dcCreator") or best_doc.get("dccreator") or []
+                if isinstance(authors_raw, str):
+                    authors_raw = [authors_raw]
+                authors = "; ".join(a for a in authors_raw if a) or None
+                base_year = None
+                dcdate = best_doc.get("dcyear") or best_doc.get("dcdate", "")
+                if isinstance(dcdate, list):
+                    dcdate = dcdate[0] if dcdate else ""
+                dcdate = str(dcdate)
+                if dcdate and len(dcdate) >= 4 and dcdate[:4].isdigit():
+                    base_year = int(dcdate[:4])
+                ba = {
+                    "doi": fetched_doi,
+                    "authors": authors,
+                    "title": fetched_title,
+                    "journal": best_doc.get("dcsource") or best_doc.get("dcpublisher"),
+                    "year": base_year,
+                    "url": best_doc.get("dclink") or best_doc.get("dcidentifier") or (f"https://doi.org/{fetched_doi}" if fetched_doi else None),
+                }
+                meta = enrich(meta, ba)
+                if is_complete(meta):
+                    return meta
+        elif r:
+            logger.warning(f"BASE returned HTTP {r.status_code} for title search")
+    except Exception as e:
+        logger.warning(f"BASE title search error: {e}")
+
+    # ---------- 8️⃣ CORE ----------
+    if CORE_API_KEY:
+        try:
+            search_title = meta.get("title") or title
+            q = urllib.parse.quote(f'title:"{search_title}"')
+            core_headers = {**headers, "Authorization": f"Bearer {CORE_API_KEY}"}
+            r = _request_with_retry(
+                f"https://api.core.ac.uk/v3/search/works?q={q}&limit=5",
+                headers=core_headers,
+            )
+            if r and r.status_code == 200:
+                results = r.json().get("results", [])
+                best_sim, best_doc = 0.0, None
+                for doc in results[:5]:
+                    fetched_title = doc.get("title", "")
+                    candidate_meta = {
+                        'journal': doc.get("publisher"),
+                        'year': doc.get("yearPublished"),
+                    }
+                    if not _validate_metadata(candidate_meta, journal, year, volume):
+                        continue
+                    sim = _title_similarity(search_title, fetched_title)
+                    if sim > best_sim:
+                        best_sim, best_doc = sim, doc
+                if best_doc:
+                    fetched_doi = normalize_doi(best_doc.get("doi"))
+                    if not doi and fetched_doi:
+                        doi = fetched_doi
+                    authors_list = best_doc.get("authors", [])
+                    authors = "; ".join(
+                        a.get("name", "") if isinstance(a, dict) else str(a)
+                        for a in authors_list
+                    ) or None
+                    journals = best_doc.get("journals") or []
+                    journal_title = journals[0].get("title") if journals else None
+                    co = {
+                        "doi": fetched_doi,
+                        "authors": authors,
+                        "title": best_doc.get("title"),
+                        "journal": journal_title or best_doc.get("publisher"),
+                        "year": best_doc.get("yearPublished"),
+                        "url": best_doc.get("downloadUrl") or (best_doc.get("sourceFulltextUrls", [None])[0]) or (f"https://doi.org/{fetched_doi}" if fetched_doi else None),
+                    }
+                    meta = enrich(meta, co)
+                    if is_complete(meta):
+                        return meta
+            elif r:
+                logger.warning(f"CORE returned HTTP {r.status_code} for title search")
+        except Exception as e:
+            logger.warning(f"CORE title search error: {e}")
+
+    # ---------- 9️⃣ Dimensions.ai ----------
+    if DIMENSIONS_API_KEY:
+        try:
+            import json as json_lib
+            dim_headers = {**headers, "Authorization": f"Bearer {DIMENSIONS_API_KEY}"}
+            # Search by title (and optionally year/authors for better matching)
+            search_parts = [f'title="{title}"']
+            if year:
+                search_parts.append(f'year={year}')
+            search_clause = " and ".join(search_parts)
+            query = f'search publications where {search_clause} return publications[doi+title+authors+journal+year+volume+issue+pages] limit 5'
+            r = requests.post(
+                "https://app.dimensions.ai/api/dsl.json",
+                headers=dim_headers,
+                json={"query": query},
+                timeout=10
+            )
+            if r and r.status_code == 200:
+                data = r.json()
+                pubs = data.get("publications", [])
+                if pubs:
+                    # Find best title match
+                    best_sim = 0.0
+                    best_p = None
+                    for p in pubs:
+                        p_title = p.get("title", "")
+                        if p_title:
+                            sim = _title_similarity(title, p_title)
+                            if sim > best_sim:
+                                best_sim = sim
+                                best_p = p
+                    if best_p and best_sim >= 0.75:
+                        authors_list = best_p.get("authors", [])
+                        author_str = "; ".join(
+                            f"{a.get('last_name', '')}, {a.get('first_name', '')}".strip(", ")
+                            for a in authors_list
+                        ) if authors_list else None
+                        journal_obj = best_p.get("journal", {})
+                        journal_name = journal_obj.get("title") if isinstance(journal_obj, dict) else None
+                        dim = {
+                            "doi": best_p.get("doi"),
+                            "title": best_p.get("title"),
+                            "authors": author_str,
+                            "journal": journal_name,
+                            "year": best_p.get("year"),
+                            "volume": best_p.get("volume"),
+                            "issue": best_p.get("issue"),
+                            "pages": best_p.get("pages"),
+                        }
+                        if _validate_metadata(dim, title, year, authors):
+                            meta = enrich(meta, dim)
+            elif r:
+                logger.warning(f"Dimensions.ai returned HTTP {r.status_code} for title search")
+        except Exception as e:
+            logger.warning(f"Dimensions.ai title search error: {e}")
+
+    # ---------- 🔟 OpenCitations ----------
+    # OpenCitations only works if we already have a DOI
+    if doi:
+        try:
+            r = _request_with_retry(
+                f"https://opencitations.net/index/api/v1/metadata/doi:{doi}",
+                headers=headers,
+            )
+            if r and r.status_code == 200:
+                oc_data = r.json()
+                if oc_data and len(oc_data) > 0:
+                    oc = oc_data[0]
+                    author_str = oc.get("author")
+                    pub_date = oc.get("year")
+                    year_val = None
+                    if pub_date:
+                        year_val = pub_date.split("-")[0] if "-" in pub_date else pub_date
+                    oc_meta = {
+                        "doi": oc.get("doi"),
+                        "title": oc.get("title"),
+                        "authors": author_str,
+                        "journal": oc.get("source_title"),
+                        "year": year_val,
+                        "volume": oc.get("volume"),
+                        "issue": oc.get("issue"),
+                        "pages": oc.get("page"),
+                    }
+                    if _validate_metadata(oc_meta, title, year, authors):
+                        meta = enrich(meta, oc_meta)
+            elif r:
+                logger.warning(f"OpenCitations returned HTTP {r.status_code}")
+        except Exception as e:
+            logger.warning(f"OpenCitations error: {e}")
+
+    # ---------- 1️⃣1️⃣ Semantic Scholar (if DOI or title available) ----------
     try:
         if doi:
             url = f"https://api.semanticscholar.org/graph/v1/paper/DOI:{doi}?fields=title,year,venue,url,authors"
-            r = _request_with_retry(url, headers=headers)
+            r = _request_with_retry(url, headers=headers, max_retries=2)
             if r and r.status_code == 200:
                 s = r.json()
                 fetched_title = s.get("title")
@@ -479,7 +774,7 @@ def fetch_metadata_from_title(title, email="your_email@example.com", delay=0.2, 
         else:
             q = urllib.parse.quote(title)
             url = f"https://api.semanticscholar.org/graph/v1/paper/search?query={q}&limit=5&fields=title,year,venue,url,authors,externalIds"
-            r = _request_with_retry(url, headers=headers)
+            r = _request_with_retry(url, headers=headers, max_retries=2)
             if r and r.status_code == 200:
                 data = r.json()
                 best_sim, best_s = 0.0, None
@@ -488,15 +783,24 @@ def fetch_metadata_from_title(title, email="your_email@example.com", delay=0.2, 
                     if sim > best_sim:
                         best_sim, best_s = sim, s
                 if best_s:
-                    fetched_doi = normalize_doi((best_s.get("externalIds", {}) or {}).get("DOI"))
+                    ext_ids = best_s.get("externalIds", {}) or {}
+                    fetched_doi = normalize_doi(ext_ids.get("DOI"))
+                    s2_pmid = ext_ids.get("PubMed")
                     doi = fetched_doi
+                    s2_url = best_s.get("url")
+                    if not s2_url:
+                        if doi:
+                            s2_url = f"https://doi.org/{doi}"
+                        elif s2_pmid:
+                            s2_url = f"https://pubmed.ncbi.nlm.nih.gov/{s2_pmid}/"
                     ss = {
                         "doi": doi,
+                        "pmid": s2_pmid,
                         "authors": "; ".join(a.get("name", "") for a in best_s.get("authors", [])) or None,
                         "title": best_s.get("title"),
                         "journal": best_s.get("venue"),
                         "year": best_s.get("year"),
-                        "url": best_s.get("url") or (f"https://doi.org/{doi}" if doi else None),
+                        "url": s2_url,
                     }
                     meta = enrich(meta, ss)
             elif r:
@@ -505,6 +809,9 @@ def fetch_metadata_from_title(title, email="your_email@example.com", delay=0.2, 
         logger.warning(f"Semantic Scholar error: {e}")
 
     # ---------- Default fallback ----------
-    if meta.get("doi") and not meta.get("url"):
-        meta["url"] = f"https://doi.org/{meta['doi']}"
+    if not meta.get("url"):
+        if meta.get("doi"):
+            meta["url"] = f"https://doi.org/{meta['doi']}"
+        elif meta.get("pmid"):
+            meta["url"] = f"https://pubmed.ncbi.nlm.nih.gov/{meta['pmid']}/"
     return meta
