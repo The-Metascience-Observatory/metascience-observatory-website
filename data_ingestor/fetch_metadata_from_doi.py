@@ -2,6 +2,8 @@ import requests
 import time
 import logging
 import os
+import re
+import json
 import urllib.parse
 from pathlib import Path
 from difflib import SequenceMatcher
@@ -46,9 +48,11 @@ def _get_env_key(key_name):
     return val
 
 CORE_API_KEY = _get_env_key('COREAPIKEY')
+SCOPUS_API_KEY = _get_env_key('SCOPUS_API_KEY')
 DIMENSIONS_API_KEY = _get_env_key('DIMENSIONS_API_KEY')
 SEMANTIC_SCHOLAR_API_KEY = _get_env_key('SEMANTIC_SCHOLAR_API_KEY')
 CROSSREF_API_KEY = _get_env_key('CROSSREF_API_KEY')
+CROSSREF_EMAIL = _get_env_key('CROSSREFEMAIL')
 ENTREZ_API_KEY = _get_env_key('ENTREZ_EUTILS_API_KEY')
 CONTACT_EMAIL = _get_env_key('CONTACT_EMAIL') or 'your_email@example.com'
 
@@ -66,6 +70,66 @@ def _format_initial(name):
         else:
             formatted.append(part)
     return ' '.join(formatted)
+
+
+def _is_initial_token(token):
+    """Check if a token is an initial or compound initials.
+    Matches: 'J', 'J.', 'A.C.', 'J.L.', 'AC', etc."""
+    stripped = token.replace('.', '')
+    if not stripped:
+        return True
+    # All single uppercase letters (possibly with periods between)
+    return all(c.isupper() for c in stripped) and len(stripped) <= 3
+
+
+def _count_full_first_names(authors_str):
+    """Count how many authors have full (non-abbreviated) first names.
+    Returns (full_count, total_count)."""
+    if not authors_str or authors_str in (None, "", "NaN"):
+        return 0, 0
+    names = str(authors_str).split(';')
+    full = 0
+    total = 0
+    for name in names:
+        name = name.strip()
+        if not name:
+            continue
+        # Handle "Last, First" format
+        if ',' in name:
+            parts = name.split(',', 1)
+            first = parts[1].strip() if len(parts) > 1 else ''
+        else:
+            parts = name.split()
+            first = parts[0] if parts else ''
+        first_token = first.split()[0] if first.split() else ''
+        total += 1
+        if first_token and not _is_initial_token(first_token):
+            full += 1
+    return full, total
+
+
+def _authors_have_abbreviations(authors_str):
+    """Check if the author string has abbreviated first names."""
+    if not authors_str or authors_str in (None, "", "NaN"):
+        return False
+    full, total = _count_full_first_names(authors_str)
+    if total == 0:
+        return False
+    return full < total
+
+
+def _new_authors_are_better(current, new):
+    """Check if new authors string has more full first names than current."""
+    if not new or new in (None, "", "NaN"):
+        return False
+    if not current or current in (None, "", "NaN"):
+        return True
+    cur_full, cur_total = _count_full_first_names(current)
+    new_full, new_total = _count_full_first_names(new)
+    # Don't accept if we lost many authors (likely wrong paper)
+    if new_total < cur_total * 0.7:
+        return False
+    return new_full > cur_full
 
 
 def _request_with_retry(url, headers=None, timeout=10, max_retries=3):
@@ -102,8 +166,9 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
         email = CONTACT_EMAIL
     """
     Progressive multi-API metadata enrichment:
-    OpenAlex → DataCite → Crossref → Unpaywall → EuropePMC → PubMed → DBLP → BASE → CORE → Dimensions.ai → OpenCitations → Semantic Scholar
-    Stops early if all fields are filled.
+    OpenAlex → DataCite → Crossref → Unpaywall → PubMed → DBLP → BASE → Scopus → Dimensions.ai → Semantic Scholar → CORE → OpenCitations → Europe PMC
+    Stops early if all fields are filled (authors must have full first names to count as complete).
+    Europe PMC is last because it only returns abbreviated initials for author names.
     """
     if not isinstance(doi, str) or not doi.strip():
         return None
@@ -122,17 +187,29 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
     meta = {k: None for k in ["authors", "title", "journal", "volume", "issue", "pages", "year", "url"]}
 
     def enrich(current, new):
-        """Fill missing fields in current dict with non-empty values from new dict."""
+        """Fill missing fields in current dict with non-empty values from new dict.
+        For authors: also replace if new has more full (non-abbreviated) first names."""
         if not new:
             return current
         for k, v in new.items():
-            if (current.get(k) in [None, "", "NaN"]) and (v not in [None, "", "NaN"]):
+            if v in [None, "", "NaN"]:
+                continue
+            if current.get(k) in [None, "", "NaN"]:
+                current[k] = v
+            elif k == "authors" and _new_authors_are_better(current[k], v):
                 current[k] = v
         return current
 
     def is_complete(m):
-        """Check if all metadata fields are filled."""
-        return all(m.get(k) not in [None, "", "NaN"] for k in m)
+        """Check if all metadata fields are filled.
+        Authors with abbreviated first names don't count as complete."""
+        for k in m:
+            val = m.get(k)
+            if val in [None, "", "NaN"]:
+                return False
+            if k == "authors" and _authors_have_abbreviations(val):
+                return False
+        return True
 
     # ---------- 1️⃣ OpenAlex ----------
     try:
@@ -194,6 +271,8 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
         # Add Crossref Plus API key if available (provides higher rate limits)
         crossref_headers = headers.copy()
         crossref_url = f"https://api.crossref.org/works/{doi}"
+        if CROSSREF_EMAIL:
+            crossref_url += f"?mailto={CROSSREF_EMAIL}"
         if CROSSREF_API_KEY:
             crossref_headers['Crossref-Plus-API-Token'] = f'Bearer {CROSSREF_API_KEY}'
         r = _request_with_retry(crossref_url, headers=crossref_headers)
@@ -256,34 +335,7 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
     except Exception as e:
         logger.warning(f"Unpaywall error for DOI {doi}: {e}")
 
-    # ---------- 5️⃣ Europe PMC ----------
-    try:
-        r = _request_with_retry(
-            f"https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI:{doi}&format=json",
-        )
-        if r and r.status_code == 200:
-            data = r.json().get("resultList", {}).get("result", [])
-            if data:
-                d = data[0]
-                ep = {
-                    "authors": d.get("authorString"),
-                    "title": d.get("title"),
-                    "journal": d.get("journalTitle"),
-                    "volume": d.get("journalVolume"),
-                    "issue": d.get("issue"),
-                    "pages": d.get("pageInfo"),
-                    "year": d.get("pubYear"),
-                    "url": d.get("fullTextUrlList", {}).get("fullTextUrl", [{}])[0].get("url", f"https://doi.org/{doi}"),
-                }
-                meta = enrich(meta, ep)
-                if is_complete(meta):
-                    return meta
-        elif r:
-            logger.warning(f"Europe PMC returned HTTP {r.status_code} for DOI {doi}")
-    except Exception as e:
-        logger.warning(f"Europe PMC error for DOI {doi}: {e}")
-
-    # ---------- 6️⃣ NCBI/PubMed ----------
+    # ---------- 5️⃣ PubMed ----------
     try:
         # Add API key if available (increases rate limit from 3/s to 10/s)
         api_key_param = f"&api_key={ENTREZ_API_KEY}" if ENTREZ_API_KEY else ""
@@ -333,7 +385,7 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
         logger.warning(f"PubMed error for DOI {doi}: {e}")
     time.sleep(delay)
 
-    # ---------- 7️⃣ DBLP ----------
+    # ---------- 6️⃣ DBLP ----------
     try:
         search_title = meta.get("title") or ""
         if search_title:
@@ -374,7 +426,7 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
     except Exception as e:
         logger.warning(f"DBLP error: {e}")
 
-    # ---------- 8️⃣ BASE (Bielefeld Academic Search Engine) ----------
+    # ---------- 7️⃣ BASE (Bielefeld Academic Search Engine) ----------
     try:
         search_title = meta.get("title") or ""
         if search_title:
@@ -419,45 +471,49 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
     except Exception as e:
         logger.warning(f"BASE error: {e}")
 
-    # ---------- 9️⃣ CORE ----------
-    if CORE_API_KEY:
+    # ---------- 8️⃣ Scopus / Elsevier ----------
+    if SCOPUS_API_KEY:
         try:
-            search_title = meta.get("title") or ""
-            if search_title:
-                q = urllib.parse.quote(f'title:"{search_title}"')
-                core_headers = {**headers, "Authorization": f"Bearer {CORE_API_KEY}"}
-                r = _request_with_retry(
-                    f"https://api.core.ac.uk/v3/search/works?q={q}&limit=5",
-                    headers=core_headers,
-                )
-                if r and r.status_code == 200:
-                    results = r.json().get("results", [])
-                    for doc in results[:5]:
-                        fetched_title = doc.get("title", "")
-                        ratio = SequenceMatcher(None, search_title.lower(), fetched_title.lower()).ratio()
-                        if ratio >= 0.6:
-                            authors_list = doc.get("authors", [])
-                            authors = "; ".join(
-                                _format_initial(a.get("name", "") if isinstance(a, dict) else str(a))
-                                for a in authors_list
-                            ) or None
-                            journals = doc.get("journals") or []
-                            journal_title = journals[0].get("title") if journals else None
-                            co = {
-                                "authors": authors,
-                                "title": fetched_title,
-                                "journal": journal_title or doc.get("publisher"),
-                                "year": doc.get("yearPublished"),
-                                "url": doc.get("downloadUrl") or doc.get("sourceFulltextUrls", [None])[0],
-                            }
-                            meta = enrich(meta, co)
-                            break
-                    if is_complete(meta):
-                        return meta
-                elif r:
-                    logger.warning(f"CORE returned HTTP {r.status_code}")
+            scopus_headers = {**headers, "X-ELS-APIKey": SCOPUS_API_KEY, "Accept": "application/json"}
+            r = _request_with_retry(
+                f"https://api.elsevier.com/content/abstract/doi/{doi}",
+                headers=scopus_headers,
+            )
+            if r and r.status_code == 200:
+                data = r.json()
+                resp = data.get("abstracts-retrieval-response", {})
+                coredata = resp.get("coredata", {})
+                # Authors
+                authors_obj = resp.get("authors", {}).get("author", [])
+                if isinstance(authors_obj, dict):
+                    authors_obj = [authors_obj]
+                authors = "; ".join(
+                    _format_initial(
+                        f"{a.get('ce:given-name', '')} {a.get('ce:surname', '')}".strip()
+                    )
+                    for a in authors_obj
+                    if a.get('ce:surname')
+                ) or None
+                # Year from coverDate (YYYY-MM-DD)
+                cover_date = coredata.get("prism:coverDate", "")
+                year_val = int(cover_date[:4]) if cover_date and len(cover_date) >= 4 and cover_date[:4].isdigit() else None
+                sc = {
+                    "authors": authors,
+                    "title": coredata.get("dc:title"),
+                    "journal": coredata.get("prism:publicationName"),
+                    "volume": coredata.get("prism:volume"),
+                    "issue": coredata.get("prism:issueIdentifier"),
+                    "pages": coredata.get("prism:pageRange"),
+                    "year": year_val,
+                    "url": coredata.get("prism:url") or f"https://doi.org/{doi}",
+                }
+                meta = enrich(meta, sc)
+                if is_complete(meta):
+                    return meta
+            elif r:
+                logger.warning(f"Scopus returned HTTP {r.status_code} for DOI {doi}")
         except Exception as e:
-            logger.warning(f"CORE error: {e}")
+            logger.warning(f"Scopus error for DOI {doi}: {e}")
 
     # ---------- 🔟 Dimensions.ai ----------
     if DIMENSIONS_API_KEY:
@@ -499,7 +555,75 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
         except Exception as e:
             logger.warning(f"Dimensions.ai error: {e}")
 
-    # ---------- 1️⃣1️⃣ OpenCitations Meta ----------
+    # ---------- 🔟 Semantic Scholar ----------
+    try:
+        s2_headers = headers.copy()
+        if SEMANTIC_SCHOLAR_API_KEY:
+            s2_headers['x-api-key'] = SEMANTIC_SCHOLAR_API_KEY
+        r = _request_with_retry(
+            f"https://api.semanticscholar.org/graph/v1/paper/DOI:{doi}"
+            "?fields=title,year,venue,url,authors",
+            headers=s2_headers,
+            max_retries=2,
+        )
+        if r and r.status_code == 200:
+            s = r.json()
+            ss = {
+                "authors": "; ".join(a.get("name", "") for a in s.get("authors", [])) or None,
+                "title": s.get("title"),
+                "journal": s.get("venue"),
+                "year": s.get("year"),
+                "url": s.get("url") or f"https://doi.org/{doi}",
+            }
+            meta = enrich(meta, ss)
+            if is_complete(meta):
+                return meta
+        elif r:
+            logger.warning(f"Semantic Scholar returned HTTP {r.status_code} for DOI {doi}")
+    except Exception as e:
+        logger.warning(f"Semantic Scholar error for DOI {doi}: {e}")
+
+    # ---------- 1️⃣1️⃣ CORE ----------
+    if CORE_API_KEY:
+        try:
+            search_title = meta.get("title") or ""
+            if search_title:
+                q = urllib.parse.quote(f'title:"{search_title}"')
+                core_headers = {**headers, "Authorization": f"Bearer {CORE_API_KEY}"}
+                r = _request_with_retry(
+                    f"https://api.core.ac.uk/v3/search/works?q={q}&limit=5",
+                    headers=core_headers,
+                )
+                if r and r.status_code == 200:
+                    results = r.json().get("results", [])
+                    for doc in results[:5]:
+                        fetched_title = doc.get("title", "")
+                        ratio = SequenceMatcher(None, search_title.lower(), fetched_title.lower()).ratio()
+                        if ratio >= 0.6:
+                            authors_list = doc.get("authors", [])
+                            authors = "; ".join(
+                                _format_initial(a.get("name", "") if isinstance(a, dict) else str(a))
+                                for a in authors_list
+                            ) or None
+                            journals = doc.get("journals") or []
+                            journal_title = journals[0].get("title") if journals else None
+                            co = {
+                                "authors": authors,
+                                "title": fetched_title,
+                                "journal": journal_title or doc.get("publisher"),
+                                "year": doc.get("yearPublished"),
+                                "url": doc.get("downloadUrl") or (doc.get("sourceFulltextUrls") or [None])[0],
+                            }
+                            meta = enrich(meta, co)
+                            break
+                    if is_complete(meta):
+                        return meta
+                elif r:
+                    logger.warning(f"CORE returned HTTP {r.status_code}")
+        except Exception as e:
+            logger.warning(f"CORE error: {e}")
+
+    # ---------- 1️⃣2️⃣ OpenCitations Meta ----------
     try:
         r = _request_with_retry(
             f"https://api.opencitations.net/meta/v1/metadata/doi:{doi}",
@@ -547,33 +671,32 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
     except Exception as e:
         logger.warning(f"OpenCitations error: {e}")
 
-    # ---------- 1️⃣2️⃣ Semantic Scholar ----------
+    # ---------- 1️⃣3️⃣ Europe PMC (last: only returns abbreviated author initials) ----------
     try:
-        s2_headers = headers.copy()
-        if SEMANTIC_SCHOLAR_API_KEY:
-            s2_headers['x-api-key'] = SEMANTIC_SCHOLAR_API_KEY
         r = _request_with_retry(
-            f"https://api.semanticscholar.org/graph/v1/paper/DOI:{doi}"
-            "?fields=title,year,venue,url,authors",
-            headers=s2_headers,
-            max_retries=2,
+            f"https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI:{doi}&format=json",
         )
         if r and r.status_code == 200:
-            s = r.json()
-            ss = {
-                "authors": "; ".join(a.get("name", "") for a in s.get("authors", [])) or None,
-                "title": s.get("title"),
-                "journal": s.get("venue"),
-                "year": s.get("year"),
-                "url": s.get("url") or f"https://doi.org/{doi}",
-            }
-            meta = enrich(meta, ss)
-            if is_complete(meta):
-                return meta
+            data = r.json().get("resultList", {}).get("result", [])
+            if data:
+                d = data[0]
+                ep = {
+                    "authors": d.get("authorString"),
+                    "title": d.get("title"),
+                    "journal": d.get("journalTitle"),
+                    "volume": d.get("journalVolume"),
+                    "issue": d.get("issue"),
+                    "pages": d.get("pageInfo"),
+                    "year": d.get("pubYear"),
+                    "url": d.get("fullTextUrlList", {}).get("fullTextUrl", [{}])[0].get("url", f"https://doi.org/{doi}"),
+                }
+                meta = enrich(meta, ep)
+                if is_complete(meta):
+                    return meta
         elif r:
-            logger.warning(f"Semantic Scholar returned HTTP {r.status_code} for DOI {doi}")
+            logger.warning(f"Europe PMC returned HTTP {r.status_code} for DOI {doi}")
     except Exception as e:
-        logger.warning(f"Semantic Scholar error for DOI {doi}: {e}")
+        logger.warning(f"Europe PMC error for DOI {doi}: {e}")
 
     # ---------- Default fallback ----------
     if not meta["url"]:

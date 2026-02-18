@@ -6,6 +6,7 @@ import logging
 import os
 from pathlib import Path
 from difflib import SequenceMatcher
+from fetch_metadata_from_doi import _authors_have_abbreviations, _new_authors_are_better
 
 logger = logging.getLogger(__name__)
 
@@ -48,9 +49,11 @@ def _get_env_key(key_name):
     return val
 
 CORE_API_KEY = _get_env_key('COREAPIKEY')
+SCOPUS_API_KEY = _get_env_key('SCOPUS_API_KEY')
 DIMENSIONS_API_KEY = _get_env_key('DIMENSIONS_API_KEY')
 SEMANTIC_SCHOLAR_API_KEY = _get_env_key('SEMANTIC_SCHOLAR_API_KEY')
 CROSSREF_API_KEY = _get_env_key('CROSSREF_API_KEY')
+CROSSREF_EMAIL = _get_env_key('CROSSREFEMAIL')
 ENTREZ_API_KEY = _get_env_key('ENTREZ_EUTILS_API_KEY')
 CONTACT_EMAIL = _get_env_key('CONTACT_EMAIL') or 'your_email@example.com'
 
@@ -204,7 +207,7 @@ def fetch_metadata_from_title(title, email=None, delay=0.2, authors=None,
         email = CONTACT_EMAIL
     """
     Progressive multi-API metadata enrichment starting from a title.
-    OpenAlex → Crossref → EuropePMC → Entrez/PubMed → DataCite → DBLP → BASE → CORE → Dimensions.ai → OpenCitations → Semantic Scholar
+    OpenAlex → Crossref → Entrez/PubMed → DataCite → DBLP → BASE → Scopus → Dimensions.ai → Semantic Scholar → CORE → OpenCitations → Europe PMC
     Attempts to find the DOI first, then uses DOI-based lookups to fill metadata.
 
     Args:
@@ -237,12 +240,22 @@ def fetch_metadata_from_title(title, email=None, delay=0.2, authors=None,
         if not new:
             return current
         for k, v in new.items():
-            if (current.get(k) in [None, "", "NaN"]) and (v not in [None, "", "NaN"]):
+            if v in [None, "", "NaN"]:
+                continue
+            if current.get(k) in [None, "", "NaN"]:
+                current[k] = v
+            elif k == "authors" and _new_authors_are_better(current[k], v):
                 current[k] = v
         return current
 
     def is_complete(m):
-        return all(m.get(k) not in [None, "", "NaN"] for k in m)
+        for k in m:
+            val = m.get(k)
+            if val in [None, "", "NaN"]:
+                return False
+            if k == "authors" and _authors_have_abbreviations(val):
+                return False
+        return True
 
     # ---------- 1️⃣ OpenAlex search by title ----------
     try:
@@ -296,6 +309,8 @@ def fetch_metadata_from_title(title, email=None, delay=0.2, authors=None,
         try:
             q = urllib.parse.quote(title)
             cr_url = f"https://api.crossref.org/works?query.title={q}&rows=5"
+            if CROSSREF_EMAIL:
+                cr_url += f"&mailto={CROSSREF_EMAIL}"
             # Add author filter if available (extract first surname)
             if authors:
                 first_author = re.split(r"[;,]", authors)[0].strip()
@@ -364,58 +379,7 @@ def fetch_metadata_from_title(title, email=None, delay=0.2, authors=None,
             logger.warning(f"Crossref title search error: {e}")
 
     if not doi:
-        # ---------- 3️⃣ Europe PMC fallback ----------
-        try:
-            q = urllib.parse.quote(title)
-            r = _request_with_retry(
-                f"https://www.ebi.ac.uk/europepmc/webservices/rest/search?query={q}&format=json&pageSize=5",
-            )
-            if r and r.status_code == 200:
-                results = r.json().get("resultList", {}).get("result", [])
-                best_sim, best_d = 0.0, None
-                for d in results[:5]:
-                    # Extract metadata for validation
-                    candidate_meta = {
-                        'journal': d.get("journalTitle"),
-                        'year': d.get("pubYear"),
-                        'volume': d.get("journalVolume"),
-                    }
-                    # Skip if validation fails
-                    if not _validate_metadata(candidate_meta, journal, year, volume):
-                        continue
-                    sim = _title_similarity(title, d.get("title"))
-                    if sim > best_sim:
-                        best_sim, best_d = sim, d
-                if best_d:
-                    fetched_title = best_d.get("title")
-                    normalized_doi = normalize_doi(best_d.get("doi"))
-                    epmc_pmid = best_d.get("pmid")
-                    epmc_url = best_d.get("fullTextUrlList", {}).get("fullTextUrl", [{}])[0].get("url")
-                    if not epmc_url and epmc_pmid:
-                        epmc_url = f"https://pubmed.ncbi.nlm.nih.gov/{epmc_pmid}/"
-                    ep = {
-                        "doi": normalized_doi,
-                        "pmid": epmc_pmid,
-                        "authors": best_d.get("authorString"),
-                        "title": fetched_title,
-                        "journal": best_d.get("journalTitle"),
-                        "volume": best_d.get("journalVolume"),
-                        "issue": best_d.get("issue"),
-                        "pages": best_d.get("pageInfo"),
-                        "year": best_d.get("pubYear"),
-                        "url": epmc_url,
-                    }
-                    meta = enrich(meta, ep)
-                    doi = meta.get("doi")
-                    if is_complete(meta):
-                        return meta
-            elif r:
-                logger.warning(f"Europe PMC returned HTTP {r.status_code} for title search")
-        except Exception as e:
-            logger.warning(f"Europe PMC title search error: {e}")
-
-    if not doi:
-        # ---------- 4️⃣ NCBI Entrez/PubMed ----------
+        # ---------- 3️⃣ NCBI Entrez/PubMed ----------
         try:
             from Bio import Entrez
             Entrez.email = email
@@ -621,58 +585,83 @@ def fetch_metadata_from_title(title, email=None, delay=0.2, authors=None,
     except Exception as e:
         logger.warning(f"BASE title search error: {e}")
 
-    # ---------- 8️⃣ CORE ----------
-    if CORE_API_KEY:
+    # ---------- 8️⃣ Scopus / Elsevier ----------
+    if SCOPUS_API_KEY:
         try:
-            search_title = meta.get("title") or title
-            q = urllib.parse.quote(f'title:"{search_title}"')
-            core_headers = {**headers, "Authorization": f"Bearer {CORE_API_KEY}"}
-            r = _request_with_retry(
-                f"https://api.core.ac.uk/v3/search/works?q={q}&limit=5",
-                headers=core_headers,
-            )
+            scopus_headers = {**headers, "X-ELS-APIKey": SCOPUS_API_KEY, "Accept": "application/json"}
+            q = urllib.parse.quote(title)
+            scopus_url = f"https://api.elsevier.com/content/search/scopus?query=TITLE({q})&count=5"
+            if year:
+                scopus_url += f"+AND+PUBYEAR+IS+{year}"
+            r = _request_with_retry(scopus_url, headers=scopus_headers)
             if r and r.status_code == 200:
-                results = r.json().get("results", [])
-                best_sim, best_doc = 0.0, None
-                for doc in results[:5]:
-                    fetched_title = doc.get("title", "")
-                    candidate_meta = {
-                        'journal': doc.get("publisher"),
-                        'year': doc.get("yearPublished"),
-                    }
-                    if not _validate_metadata(candidate_meta, journal, year, volume):
-                        continue
-                    sim = _title_similarity(search_title, fetched_title)
-                    if sim > best_sim:
-                        best_sim, best_doc = sim, doc
-                if best_doc:
-                    fetched_doi = normalize_doi(best_doc.get("doi"))
-                    if not doi and fetched_doi:
-                        doi = fetched_doi
-                    authors_list = best_doc.get("authors", [])
-                    authors = "; ".join(
-                        a.get("name", "") if isinstance(a, dict) else str(a)
-                        for a in authors_list
-                    ) or None
-                    journals = best_doc.get("journals") or []
-                    journal_title = journals[0].get("title") if journals else None
-                    co = {
-                        "doi": fetched_doi,
-                        "authors": authors,
-                        "title": best_doc.get("title"),
-                        "journal": journal_title or best_doc.get("publisher"),
-                        "year": best_doc.get("yearPublished"),
-                        "url": best_doc.get("downloadUrl") or (best_doc.get("sourceFulltextUrls", [None])[0]) or (f"https://doi.org/{fetched_doi}" if fetched_doi else None),
-                    }
-                    meta = enrich(meta, co)
-                    if is_complete(meta):
-                        return meta
+                results = r.json().get("search-results", {}).get("entry", [])
+                for entry in results[:5]:
+                    fetched_title = entry.get("dc:title", "")
+                    sim = _title_similarity(title, fetched_title)
+                    if sim >= 0.6:
+                        # Get DOI
+                        entry_doi = entry.get("prism:doi")
+                        # Get full metadata via abstract retrieval if DOI available
+                        if entry_doi:
+                            r2 = _request_with_retry(
+                                f"https://api.elsevier.com/content/abstract/doi/{entry_doi}",
+                                headers=scopus_headers,
+                            )
+                            if r2 and r2.status_code == 200:
+                                resp = r2.json().get("abstracts-retrieval-response", {})
+                                coredata = resp.get("coredata", {})
+                                authors_obj = resp.get("authors", {}).get("author", [])
+                                if isinstance(authors_obj, dict):
+                                    authors_obj = [authors_obj]
+                                author_str = "; ".join(
+                                    f"{a.get('ce:given-name', '')} {a.get('ce:surname', '')}".strip()
+                                    for a in authors_obj
+                                    if a.get('ce:surname')
+                                ) or None
+                                cover_date = coredata.get("prism:coverDate", "")
+                                year_val = int(cover_date[:4]) if cover_date and len(cover_date) >= 4 and cover_date[:4].isdigit() else None
+                                sc = {
+                                    "doi": entry_doi,
+                                    "title": coredata.get("dc:title") or fetched_title,
+                                    "authors": author_str,
+                                    "journal": coredata.get("prism:publicationName"),
+                                    "volume": coredata.get("prism:volume"),
+                                    "issue": coredata.get("prism:issueIdentifier"),
+                                    "pages": coredata.get("prism:pageRange"),
+                                    "year": year_val,
+                                    "url": f"https://doi.org/{entry_doi}",
+                                }
+                                if _validate_metadata(sc, journal, year, volume):
+                                    meta = enrich(meta, sc)
+                                    if not doi and entry_doi:
+                                        doi = entry_doi
+                                    if is_complete(meta):
+                                        return meta
+                        else:
+                            # Fallback: use search result metadata
+                            cover_date = entry.get("prism:coverDate", "")
+                            year_val = int(cover_date[:4]) if cover_date and len(cover_date) >= 4 and cover_date[:4].isdigit() else None
+                            sc = {
+                                "title": fetched_title,
+                                "authors": entry.get("dc:creator"),
+                                "journal": entry.get("prism:publicationName"),
+                                "volume": entry.get("prism:volume"),
+                                "issue": entry.get("prism:issueIdentifier"),
+                                "pages": entry.get("prism:pageRange"),
+                                "year": year_val,
+                            }
+                            if _validate_metadata(sc, journal, year, volume):
+                                meta = enrich(meta, sc)
+                                if is_complete(meta):
+                                    return meta
+                        break
             elif r:
-                logger.warning(f"CORE returned HTTP {r.status_code} for title search")
+                logger.warning(f"Scopus returned HTTP {r.status_code} for title search")
         except Exception as e:
-            logger.warning(f"CORE title search error: {e}")
+            logger.warning(f"Scopus title search error: {e}")
 
-    # ---------- 9️⃣ Dimensions.ai ----------
+    # ---------- 🔟 Dimensions.ai ----------
     if DIMENSIONS_API_KEY:
         try:
             import json as json_lib
@@ -721,65 +710,14 @@ def fetch_metadata_from_title(title, email=None, delay=0.2, authors=None,
                             "issue": best_p.get("issue"),
                             "pages": best_p.get("pages"),
                         }
-                        if _validate_metadata(dim, title, year, authors):
+                        if _validate_metadata(dim, journal, year, volume):
                             meta = enrich(meta, dim)
             elif r:
                 logger.warning(f"Dimensions.ai returned HTTP {r.status_code} for title search")
         except Exception as e:
             logger.warning(f"Dimensions.ai title search error: {e}")
 
-    # ---------- 🔟 OpenCitations Meta ----------
-    # OpenCitations only works if we already have a DOI
-    if doi:
-        try:
-            r = _request_with_retry(
-                f"https://api.opencitations.net/meta/v1/metadata/doi:{doi}",
-                headers=headers,
-            )
-            if r and r.status_code == 200:
-                try:
-                    oc_data = r.json()
-                except (json.JSONDecodeError, ValueError):
-                    oc_data = None
-                if oc_data and len(oc_data) > 0:
-                    oc = oc_data[0]
-                    # Parse author: "Surname, Given [orcid:... omid:...]; ..." → clean names
-                    raw_author = oc.get("author", "")
-                    if raw_author:
-                        author_str = "; ".join(
-                            re.sub(r'\s*\[.*?\]', '', a).strip()
-                            for a in raw_author.split(";")
-                            if a.strip()
-                        )
-                    else:
-                        author_str = None
-                    # Parse year from pub_date (format: YYYY-MM-DD or YYYY)
-                    pub_date = oc.get("pub_date", "")
-                    year_val = pub_date.split("-")[0] if pub_date else None
-                    # Parse DOI from id field: "doi:10.xxx omid:... pmid:..."
-                    oc_doi = None
-                    for part in oc.get("id", "").split():
-                        if part.startswith("doi:"):
-                            oc_doi = part[4:]
-                            break
-                    oc_meta = {
-                        "doi": oc_doi or doi,
-                        "title": oc.get("title"),
-                        "authors": author_str,
-                        "journal": oc.get("source_title"),
-                        "year": year_val,
-                        "volume": oc.get("volume"),
-                        "issue": oc.get("issue"),
-                        "pages": oc.get("page"),
-                    }
-                    if _validate_metadata(oc_meta, title, year, authors):
-                        meta = enrich(meta, oc_meta)
-            elif r:
-                logger.warning(f"OpenCitations returned HTTP {r.status_code}")
-        except Exception as e:
-            logger.warning(f"OpenCitations error: {e}")
-
-    # ---------- 1️⃣1️⃣ Semantic Scholar (if DOI or title available) ----------
+    # ---------- 🔟 Semantic Scholar (if DOI or title available) ----------
     try:
         s2_headers = headers.copy()
         if SEMANTIC_SCHOLAR_API_KEY:
@@ -837,6 +775,155 @@ def fetch_metadata_from_title(title, email=None, delay=0.2, authors=None,
                 logger.warning(f"Semantic Scholar returned HTTP {r.status_code} for title query")
     except Exception as e:
         logger.warning(f"Semantic Scholar error: {e}")
+
+    # ---------- 1️⃣1️⃣ CORE ----------
+    if CORE_API_KEY:
+        try:
+            search_title = meta.get("title") or title
+            q = urllib.parse.quote(f'title:"{search_title}"')
+            core_headers = {**headers, "Authorization": f"Bearer {CORE_API_KEY}"}
+            r = _request_with_retry(
+                f"https://api.core.ac.uk/v3/search/works?q={q}&limit=5",
+                headers=core_headers,
+            )
+            if r and r.status_code == 200:
+                results = r.json().get("results", [])
+                best_sim, best_doc = 0.0, None
+                for doc in results[:5]:
+                    fetched_title = doc.get("title", "")
+                    candidate_meta = {
+                        'journal': doc.get("publisher"),
+                        'year': doc.get("yearPublished"),
+                    }
+                    if not _validate_metadata(candidate_meta, journal, year, volume):
+                        continue
+                    sim = _title_similarity(search_title, fetched_title)
+                    if sim > best_sim:
+                        best_sim, best_doc = sim, doc
+                if best_doc:
+                    fetched_doi = normalize_doi(best_doc.get("doi"))
+                    if not doi and fetched_doi:
+                        doi = fetched_doi
+                    authors_list = best_doc.get("authors", [])
+                    authors = "; ".join(
+                        a.get("name", "") if isinstance(a, dict) else str(a)
+                        for a in authors_list
+                    ) or None
+                    journals = best_doc.get("journals") or []
+                    journal_title = journals[0].get("title") if journals else None
+                    co = {
+                        "doi": fetched_doi,
+                        "authors": authors,
+                        "title": best_doc.get("title"),
+                        "journal": journal_title or best_doc.get("publisher"),
+                        "year": best_doc.get("yearPublished"),
+                        "url": best_doc.get("downloadUrl") or (best_doc.get("sourceFulltextUrls") or [None])[0] or (f"https://doi.org/{fetched_doi}" if fetched_doi else None),
+                    }
+                    meta = enrich(meta, co)
+                    if is_complete(meta):
+                        return meta
+            elif r:
+                logger.warning(f"CORE returned HTTP {r.status_code} for title search")
+        except Exception as e:
+            logger.warning(f"CORE title search error: {e}")
+
+    # ---------- 1️⃣2️⃣ OpenCitations Meta ----------
+    # OpenCitations only works if we already have a DOI
+    if doi:
+        try:
+            r = _request_with_retry(
+                f"https://api.opencitations.net/meta/v1/metadata/doi:{doi}",
+                headers=headers,
+            )
+            if r and r.status_code == 200:
+                try:
+                    oc_data = r.json()
+                except (json.JSONDecodeError, ValueError):
+                    oc_data = None
+                if oc_data and len(oc_data) > 0:
+                    oc = oc_data[0]
+                    # Parse author: "Surname, Given [orcid:... omid:...]; ..." → clean names
+                    raw_author = oc.get("author", "")
+                    if raw_author:
+                        author_str = "; ".join(
+                            re.sub(r'\s*\[.*?\]', '', a).strip()
+                            for a in raw_author.split(";")
+                            if a.strip()
+                        )
+                    else:
+                        author_str = None
+                    # Parse year from pub_date (format: YYYY-MM-DD or YYYY)
+                    pub_date = oc.get("pub_date", "")
+                    year_val = pub_date.split("-")[0] if pub_date else None
+                    # Parse DOI from id field: "doi:10.xxx omid:... pmid:..."
+                    oc_doi = None
+                    for part in oc.get("id", "").split():
+                        if part.startswith("doi:"):
+                            oc_doi = part[4:]
+                            break
+                    oc_meta = {
+                        "doi": oc_doi or doi,
+                        "title": oc.get("title"),
+                        "authors": author_str,
+                        "journal": oc.get("source_title"),
+                        "year": year_val,
+                        "volume": oc.get("volume"),
+                        "issue": oc.get("issue"),
+                        "pages": oc.get("page"),
+                    }
+                    if _validate_metadata(oc_meta, journal, year, volume):
+                        meta = enrich(meta, oc_meta)
+            elif r:
+                logger.warning(f"OpenCitations returned HTTP {r.status_code}")
+        except Exception as e:
+            logger.warning(f"OpenCitations error: {e}")
+
+    # ---------- 1️⃣3️⃣ Europe PMC (last: only returns abbreviated author initials) ----------
+    try:
+        q = urllib.parse.quote(meta.get("title") or title)
+        r = _request_with_retry(
+            f"https://www.ebi.ac.uk/europepmc/webservices/rest/search?query={q}&format=json&pageSize=5",
+        )
+        if r and r.status_code == 200:
+            results = r.json().get("resultList", {}).get("result", [])
+            best_sim, best_d = 0.0, None
+            for d in results[:5]:
+                candidate_meta = {
+                    'journal': d.get("journalTitle"),
+                    'year': d.get("pubYear"),
+                    'volume': d.get("journalVolume"),
+                }
+                if not _validate_metadata(candidate_meta, journal, year, volume):
+                    continue
+                sim = _title_similarity(title, d.get("title"))
+                if sim > best_sim:
+                    best_sim, best_d = sim, d
+            if best_d:
+                fetched_title = best_d.get("title")
+                normalized_doi = normalize_doi(best_d.get("doi"))
+                epmc_pmid = best_d.get("pmid")
+                epmc_url = best_d.get("fullTextUrlList", {}).get("fullTextUrl", [{}])[0].get("url")
+                if not epmc_url and epmc_pmid:
+                    epmc_url = f"https://pubmed.ncbi.nlm.nih.gov/{epmc_pmid}/"
+                ep = {
+                    "doi": normalized_doi,
+                    "pmid": epmc_pmid,
+                    "authors": best_d.get("authorString"),
+                    "title": fetched_title,
+                    "journal": best_d.get("journalTitle"),
+                    "volume": best_d.get("journalVolume"),
+                    "issue": best_d.get("issue"),
+                    "pages": best_d.get("pageInfo"),
+                    "year": best_d.get("pubYear"),
+                    "url": epmc_url,
+                }
+                meta = enrich(meta, ep)
+                if is_complete(meta):
+                    return meta
+        elif r:
+            logger.warning(f"Europe PMC returned HTTP {r.status_code} for title search")
+    except Exception as e:
+        logger.warning(f"Europe PMC title search error: {e}")
 
     # ---------- Default fallback ----------
     if not meta.get("url"):

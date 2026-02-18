@@ -25,7 +25,7 @@ import concurrent.futures
 import threading
 from datetime import datetime
 from difflib import SequenceMatcher
-from fetch_metadata_from_doi import fetch_metadata_from_doi
+from fetch_metadata_from_doi import fetch_metadata_from_doi, _new_authors_are_better, _authors_have_abbreviations
 from fetch_metadata_from_title import fetch_metadata_from_title
 
 
@@ -674,6 +674,9 @@ def needs_enrichment(row, prefix):
         # Special handling for journal field - check if abbreviated
         if field == 'journal' and is_abbreviated_journal(row.get(col_name)):
             return True
+        # Special handling for authors - check if first names are abbreviated
+        if field == 'authors' and _authors_have_abbreviations(row.get(col_name)):
+            return True
 
     return False
 
@@ -696,31 +699,34 @@ def enrich_from_metadata(row, prefix, metadata):
         # Fill if column doesn't exist or current value is empty
         # OR if it's journal field and current value is abbreviated
         current_val = row.get(col_name) if col_name in row.index else None
+        value = metadata.get(meta_key)
+        if not value:
+            continue
+
         should_fill = (
             col_name not in row.index
             or is_empty(current_val)
             or (meta_key == 'journal' and is_abbreviated_journal(current_val))
+            or (meta_key == 'authors' and _new_authors_are_better(current_val, format_authors_string(value)))
         )
 
         if should_fill:
-            value = metadata.get(meta_key)
-            if value:
-                # Format author names (add periods after single-letter initials)
-                if meta_key == 'authors':
-                    value = format_authors_string(value)
-                # Normalize year to int and validate range
-                if meta_key == 'year':
-                    try:
-                        year_int = int(float(value))
-                        if 1800 <= year_int <= 2030:
-                            value = year_int
-                        else:
-                            logger.warning(f"Year {year_int} out of range for {col_name}, skipping")
-                            continue
-                    except (ValueError, TypeError):
-                        logger.warning(f"Could not parse year '{value}' for {col_name}, skipping")
+            # Format author names (add periods after single-letter initials)
+            if meta_key == 'authors':
+                value = format_authors_string(value)
+            # Normalize year to int and validate range
+            if meta_key == 'year':
+                try:
+                    year_int = int(float(value))
+                    if 1800 <= year_int <= 2030:
+                        value = year_int
+                    else:
+                        logger.warning(f"Year {year_int} out of range for {col_name}, skipping")
                         continue
-                row[col_name] = value
+                except (ValueError, TypeError):
+                    logger.warning(f"Could not parse year '{value}' for {col_name}, skipping")
+                    continue
+            row[col_name] = value
 
     return row
 
@@ -904,9 +910,9 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
             require_doi=True
         )
         if was_cached:
-            print(f"  Using cached metadata for original title: {original_title[:50]}...")
+            print(f"  Using cached metadata for original title: {original_title}")
         else:
-            print(f"  Searched by title: {original_title[:50]}...")
+            print(f"  Searched by title: {original_title}")
 
         if metadata and metadata.get('doi'):
             if sanity_check_metadata(row, 'original', metadata):
@@ -942,7 +948,7 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
             if ':' in original_title:
                 short_title = original_title.split(':')[0].strip()
                 if len(short_title) >= 15:  # Only retry if the first part is meaningful
-                    print(f"  ↻ Retrying with shortened title: {short_title[:50]}...")
+                    print(f"  ↻ Retrying with shortened title: {short_title}")
                     short_key = short_title.lower().strip()
                     metadata2, was_cached2 = _cache_get_or_fetch(
                         title_cache, short_key,
@@ -1028,9 +1034,9 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
             require_doi=True
         )
         if was_cached:
-            print(f"  Using cached metadata for replication title: {replication_title[:50]}...")
+            print(f"  Using cached metadata for replication title: {replication_title}")
         else:
-            print(f"  Searched by title: {replication_title[:50]}...")
+            print(f"  Searched by title: {replication_title}")
 
         if metadata and metadata.get('doi'):
             if sanity_check_metadata(row, 'replication', metadata):
@@ -1066,7 +1072,7 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
             if ':' in replication_title:
                 short_title = replication_title.split(':')[0].strip()
                 if len(short_title) >= 15:
-                    print(f"  ↻ Retrying with shortened title: {short_title[:50]}...")
+                    print(f"  ↻ Retrying with shortened title: {short_title}")
                     short_key = short_title.lower().strip()
                     metadata2, was_cached2 = _cache_get_or_fetch(
                         title_cache, short_key,
