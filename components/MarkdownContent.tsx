@@ -136,6 +136,14 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
               {children}
             </td>
           ),
+          img: ({ src, alt }) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={src}
+              alt={alt || ""}
+              className="my-4 max-w-full rounded shadow"
+            />
+          ),
         }}
       >
         {content}

@@ -20,7 +20,7 @@ The pipeline classifies each replication as success, failure, or inconclusive. A
 
 The main difference here is that the pipeline tends to commit to success or failure where human annotators are more likely to go with inconclusive.
 
-![Confusion Matrix](/docs/v8_feb2026_confusion_matrix.png)
+![Confusion Matrix](/docs/v6_feb2026_confusion_matrix.png)
 
 ## Statistical data extraction
 
