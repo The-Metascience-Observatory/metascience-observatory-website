@@ -8,7 +8,7 @@ The Metascience Observatory uses an automated pipeline to extract structured rep
 
 The pipeline extracted 260 entries total versus 189 in the ground truth. The pipeline got 163 of 189 ground truth entries correct in terms of identifying the reference for the original experiment, a recall of 86%. The pipeline was much more granular than the ground truth, resulting in many extra entries. We believe most of the  extra entries were legitimate, but were reporting subanalyses the ground truth annotators decided not to cover. The rest of the extra entries were due to either trouble matching the ground truth rows or due to the pipeline finding a different original study than the ground truth for the same replication.
 
-After a very careful investigation, we determined that the rate of identifying the original study wrongly was 15/260 = 5.8%. We consider identification of the original study reference incorrectly to be a very serious error, and lowering that is a focus going forward. 10/15 of those failure where were the V6 pipeline picked a different paper with some of the same authors as the correct original study. 
+After a very careful investigation, we determined that the rate of identifying the original study wrongly was 15/260 = 5.8%. We consider identification of the original study reference incorrectly to be a very serious error, and lowering that is a focus going forward. 10/15 of those failures where were the V6 pipeline picked a different paper with some of the same authors as the correct original study. 
 
 The pipeline classifies each replication as success, failure, or inconclusive. Among the 163 replications it found that matched the ground truth:
 
