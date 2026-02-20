@@ -1585,16 +1585,23 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
         url = url.rstrip('.')
         return url
 
-    # Convert bare DOIs (starting with "10.") to https://doi.org/ URLs
-    # Also normalize http:// to https://
+    # Convert bare DOIs and various URL forms to canonical https://doi.org/ URLs.
     def normalize_url_to_doi_url(url):
         if not isinstance(url, str) or not url.strip():
             return url
         url = url.strip()
+        # Add missing scheme (e.g. "doi.org/10.xxx")
+        if url.startswith("doi.org/"):
+            url = "https://" + url
+        # Upgrade http to https
         if url.startswith("http://"):
             url = "https://" + url[7:]
+        # Normalize dx.doi.org → doi.org
+        if url.startswith("https://dx.doi.org/"):
+            url = "https://doi.org/" + url[len("https://dx.doi.org/"):]
         if url.startswith("https://"):
             return url
+        # Convert bare DOIs (starting with "10.") to full URL
         if url.startswith("10."):
             return f"https://doi.org/{url}"
         return url
