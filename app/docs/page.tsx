@@ -53,6 +53,10 @@ interface DocMeta {
 
 const documentation: DocMeta[] = [
   {
+    href: "/docs/defining-replication",
+    title: "Defining replication",
+  },
+  {
     href: "/docs/data-dictionary",
     title: "Replications database data dictionary",
   },
@@ -73,12 +77,12 @@ const documentation: DocMeta[] = [
     title: "Previous replication database initiatives",
   },
   {
-    href: "/docs/defining-replication",
-    title: "Defining replication",
-  },
-  {
     href: "/docs/ontology",
     title: "Our ontology for classifying papers",
+  },
+  {
+    href: "/docs/pipeline-evaluation",
+    title: "V6 extraction pipeline evaluation",
   },
 ];
 

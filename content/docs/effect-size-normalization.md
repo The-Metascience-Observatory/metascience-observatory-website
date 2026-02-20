@@ -6,6 +6,7 @@
 | [Hedges' g](#hedges-g) | g | Yes |
 | [Odds Ratio](#odds-ratio-or) | OR | Yes |
 | [Hazard Ratio](#hazard-ratio-hr) | HR | Yes |
+| [Risk Ratio](#risk-ratio-rr) | RR | Yes (approximate) |
 | [Eta Squared](#eta-squared-eta2) | etasq | Yes |
 | [Partial Eta Squared](#partial-eta-squared-eta2_p) | partial etasq | Yes (approximate) |
 | [Cohen's f](#cohens-f) | f | Yes |
@@ -40,7 +41,7 @@ Cohen's $d$ gives a standardized measure of the difference between two group's m
 
 $$d = \frac{M_1 - M_2}{SD_{pooled}}$$
 
-**Where:**
+Where:
 * $M_1, M_2$: The means of the two groups.
 * $SD_{pooled}$: The pooled standard deviation of the two groups.
 
@@ -59,7 +60,7 @@ Hedges' $g$ is a bias-corrected version of Cohen's $d$ that adjusts for the slig
 
 $$g = J \cdot d$$
 
-**Where:**
+Where:
 * $d$: Cohen's $d$.
 * $J$: The correction factor, $J = 1 - \frac{3}{4 \cdot df - 1}$, where $df = n_1 + n_2 - 2$.
 
@@ -78,12 +79,12 @@ The Odds Ratio measures the association between an exposure and an outcome, repr
 
 $$OR = \frac{p_1 / (1 - p_1)}{p_2 / (1 - p_2)}$$
 
-**Where:**
+Where:
 * $p_1$: The probability of the event in the first group (e.g., treatment group).
 * $p_2$: The probability of the event in the second group (e.g., control group).
 
 ### Normalization to 0–1 scale
-This is a two-step process where the Log Odds Ratio is first converted to Cohen's $d$, and then to $r$ ([Sánchez-Meca et al., 2003](#ref-sanchez-meca-2003)):
+This is a two-step process where the Log Odds Ratio is first converted to Cohen's $d$, and then to $r$ ([Chinn, 2000](#ref-chinn-2000)):
 
 1.  **Convert to $d$:**
     $$d = \frac{\ln(OR) \cdot \sqrt{3}}{\pi}$$
@@ -98,13 +99,13 @@ The Hazard Ratio is a measure of effect size commonly used in survival analysis 
 
 $$HR = \frac{h_1(t)}{h_2(t)}$$
 
-**Where:**
+Where:
 * $h_1(t)$: The hazard rate in the first group (e.g., treatment group) at time $t$.
 * $h_2(t)$: The hazard rate in the second group (e.g., control group) at time $t$.
 
 ### Normalization to 0–1 Scale (Conversion to $r$)
 
-The Hazard Ratio is converted using the same formula as the Odds Ratio. This approximation is most accurate when the event rate is low (< 10-15%) or follow-up time is short, conditions under which HR ≈ OR ([Sánchez-Meca et al., 2003](#ref-sanchez-meca-2003)):
+The Hazard Ratio is converted using the same formula as the Odds Ratio. This approximation is most accurate when the event rate is low (< 10-15%) or follow-up time is short, conditions under which HR ≈ OR ([Chinn, 2000](#ref-chinn-2000)):
 
 1.  **Convert to $d$:**
     $$d = \frac{\ln(HR) \cdot \sqrt{3}}{\pi}$$
@@ -115,13 +116,36 @@ The Hazard Ratio is converted using the same formula as the Odds Ratio. This app
 
 ---
 
+## Risk Ratio (RR)
+
+The Risk Ratio (also called Relative Risk) measures the ratio of the probability of an event occurring in an exposed group versus the probability in an unexposed group. It is commonly estimated from cohort studies or count-based regression models (e.g., Poisson or negative binomial regression).
+
+$$RR = \frac{p_1}{p_2}$$
+
+Where:
+* $p_1$: The probability (or rate) of the event in the first group (e.g., exposed group).
+* $p_2$: The probability (or rate) of the event in the second group (e.g., unexposed group).
+
+### Normalization to 0–1 Scale (Conversion to $r$)
+
+The Risk Ratio is converted using the same log-based formula as the Odds Ratio and Hazard Ratio. This approximation is most accurate when event rates are low, a condition under which RR ≈ OR.
+
+1.  **Convert to $d$:**
+    $$d = \frac{\ln(RR) \cdot \sqrt{3}}{\pi}$$
+2.  **Convert to $r$:**
+    $$r = \frac{d}{\sqrt{d^2 + 4}}$$
+
+Note: When event rates are high, RR and OR diverge (RR is always closer to 1.0 than OR for the same data), making the conversion less precise. For rare events (< 10%), RR ≈ OR and the approximation is good.
+
+---
+
 ## Eta Squared ($\eta^2$)
 
 Eta squared is a measure of effect size in analysis of variance (ANOVA) that represents the proportion of total variance in the dependent variable that is associated with the membership of different groups defined by an independent variable ([Cohen, 1988](#ref-cohen-1988)).
 
 $$\eta^2 = \frac{SS_{effect}}{SS_{total}}$$
 
-**Where:**
+Where:
 * $SS_{effect}$: The sum of squares for the effect (between-groups).
 * $SS_{total}$: The total sum of squares.
 
@@ -143,7 +167,7 @@ Partial eta squared is a variant of eta squared commonly reported by statistical
 
 $$\eta^2_p = \frac{SS_{effect}}{SS_{effect} + SS_{error}}$$
 
-**Where:**
+Where:
 * $SS_{effect}$: The sum of squares for the effect of interest.
 * $SS_{error}$: The sum of squares for the error term.
 
@@ -168,7 +192,7 @@ Cohen's $f$ is an effect size measure used commonly in the context of F-tests (A
 
 $$f = \sqrt{\frac{\eta^2}{1 - \eta^2}}$$
 
-**Where:**
+Where:
 * $\eta^2$: Eta squared (the proportion of variance explained).
 
 ### Normalization to 0–1 Scale (Conversion to $r$)
@@ -189,7 +213,7 @@ Cohen's $f^2$ is the squared version of Cohen's $f$, commonly used in regression
 
 $$f^2 = \frac{R^2}{1 - R^2}$$
 
-**Where:**
+Where:
 * $R^2$: The coefficient of determination.
 
 ### Normalization to 0–1 Scale (Conversion to $r$)
@@ -208,7 +232,7 @@ $R^2$ (the coefficient of determination) represents the proportion of the varian
 
 $$R^2 = 1 - \frac{SS_{res}}{SS_{total}}$$
 
-**Where:**
+Where:
 * $SS_{res}$: The sum of squares of residuals (unexplained variance).
 * $SS_{total}$: The total sum of squares (total variance).
 
@@ -225,7 +249,7 @@ The Phi coefficient is a measure of association for two binary variables ([Cram�
 
 $$\phi = \frac{ad - bc}{\sqrt{(a+b)(c+d)(a+c)(b+d)}}$$
 
-**Where:**
+Where:
 * $a, b, c, d$: The frequencies in a $2 \times 2$ contingency table.
 
 ### Normalization to 0–1 Scale (Conversion to $r$)
@@ -241,7 +265,7 @@ The Pearson correlation coefficient measures the linear correlation between two 
 
 $$r = \frac{\sum(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum(x_i - \bar{x})^2 \sum(y_i - \bar{y})^2}}$$
 
-**Where:**
+Where:
 * $x_i, y_i$: Individual sample points.
 * $\bar{x}, \bar{y}$: The sample means.
 
@@ -313,7 +337,7 @@ Glass's $\Delta$ (delta) is a standardized mean difference that uses only the **
 
 $$\Delta = \frac{M_1 - M_2}{SD_{control}}$$
 
-**Where:**
+Where:
 * $M_1, M_2$: The means of the two groups.
 * $SD_{control}$: The standard deviation of the control group only.
 
@@ -327,7 +351,7 @@ Cliff's $\delta$ is a non-parametric effect size that measures the degree of ove
 
 $$\delta = \frac{\#(x_i > y_j) - \#(x_i < y_j)}{n_1 \cdot n_2}$$
 
-**Where:**
+Where:
 * $x_i$: Observations from group 1.
 * $y_j$: Observations from group 2.
 * $n_1, n_2$: The sample sizes of the two groups.
@@ -345,7 +369,7 @@ Cohen's $w$ is an effect size measure for chi-squared tests of goodness-of-fit o
 
 $$w = \sqrt{\sum_{i=1}^{m} \frac{(P_{1i} - P_{0i})^2}{P_{0i}}}$$
 
-**Where:**
+Where:
 * $P_{1i}$: The observed (or alternative hypothesis) proportion in category $i$.
 * $P_{0i}$: The expected (or null hypothesis) proportion in category $i$.
 * $m$: The number of categories.
@@ -360,7 +384,7 @@ Spearman's $r_s$ (rho) measures the monotonic relationship between two variables
 
 $$r_s = 1 - \frac{6 \sum d_i^2}{n(n^2 - 1)}$$
 
-**Where:**
+Where:
 * $d_i$: The difference between the ranks of the $i$-th paired observation.
 * $n$: The number of paired observations.
 
@@ -413,8 +437,8 @@ Pearson, K. (1895). [Notes on regression and inheritance in the case of two pare
 <span id="ref-rosenthal-1991"></span>
 Rosenthal, R. (1991). [*Meta-analytic procedures for social research*](https://doi.org/10.4135/9781412984997) (Rev. ed.). Sage Publications.
 
-<span id="ref-sanchez-meca-2003"></span>
-Sánchez-Meca, J., Marín-Martínez, F., & Chacón-Moscoso, S. (2003). [Effect-size indices for dichotomized outcomes in meta-analysis](https://doi.org/10.1037/1082-989X.8.4.448). *Psychological Methods*, 8(4), 448–467.
+<span id="ref-chinn-2000"></span>
+Chinn, S. (2000). [A simple method for converting an odds ratio to effect size for use in meta-analysis](https://doi.org/10.1002/1097-0258(20001130)19:22<3127::aid-sim784>3.0.co;2-m). *Statistics in Medicine*, 19(22), 3127–3131.
 
 <span id="ref-spearman-1904"></span>
 Spearman, C. (1904). [The proof and measurement of association between two things](https://doi.org/10.2307/1412159). *The American Journal of Psychology*, 15(1), 72–101.

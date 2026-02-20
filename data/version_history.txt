@@ -7,12 +7,12 @@ replications_database_2026_01_28_151337.csv
 replications_database_2026_02_02_123012.csv
 replications_database_2026_02_02_142359.csv # added ground_truth_dan_elton.csv
 replications_database_2026_02_05_101830.csv # added bri_45_appended_updated.csv
-replications_database_2026_02_07_125937.csv # added collated_results_econ_replications_sonnet_02_06_2026.csv
+replications_database_2026_02_07_125937.csv # added collated_results_econ_replications_02_06_2026.csv
 replications_database_2026_02_07_154347.csv # added soto_personality_data_to_ingest.csv
 replications_database_2026_02_07_154619.csv # added 2_soto_rows.csv
 replications_database_2026_02_07_161022.csv # added 2_soto_rows.csv
 replications_database_2026_02_07_165234.csv # added new_row_experiment_repeated_less_than_7_times.csv
-replications_database_2026_02_07_215241.csv # added collated_results_direct_replications_sonnet_02_07_2026.csv
+replications_database_2026_02_07_215241.csv # added collated_results_direct_replications_02_07_2026.csv
 replications_database_2026_02_08_092649.csv # added new_row_experiment_repeated_less_than_7_times.csv
 replications_database_2026_02_08_094147.csv # added new_row_experiment_repeated_less_than_7_times.csv
 replications_database_2026_02_08_100336.csv # added ML5_from_fred.csv
@@ -23,9 +23,9 @@ replications_database_2026_02_08_111626.csv # removed 26 exact full-row duplicat
 replications_database_2026_02_08_111731.csv # added removed_exact_duplicates.csv
 replications_database_2026_02_09_211810.csv # added 10.1073--pnas.2402315121_result_full.json
 replications_database_2026_02_09_211922.csv # added 10.1073--pnas.2402315121_result_full.json
-replications_database_2026_02_10_070006.csv # added collated_results_sonnet_v3_run.csv
-replications_database_2026_02_12_141533.csv # added collated_results_sonnet_v4.csv
-replications_database_2026_02_12_141729.csv # added collated_results_sonnet_v4.csv
+replications_database_2026_02_10_070006.csv # added collated_results_v3_run.csv
+replications_database_2026_02_12_141533.csv # added collated_results_v4.csv
+replications_database_2026_02_12_141729.csv # added collated_results_v4.csv
 replications_database_2026_02_13_194149.csv # added result.json
 replications_database_2026_02_14_073908.csv # fixed RSESR replication_url format and enriched replication metadata
 replications_database_2026_02_14_085858.csv # added motoki_sensory_marketing_replications.json
@@ -36,10 +36,19 @@ replications_database_2026_02_14_094820.csv # converted partial eta squared rows
 replications_database_2026_02_15_081304.csv # removed 18 economics replication rows (replication_url: 10.1126/science.aaf0918)
 replications_database_2026_02_15_081358.csv # added econ_rep_study.json
 replications_database_2026_02_15_081503.csv # added ai_version column (18 rows with ai_version=6 for 10.1126/science.aaf0918)
-replications_database_2026_02_15_081634.csv # set ai_version=4 for 81 rows matching collated_results_sonnet_v4.csv
+replications_database_2026_02_15_081634.csv # set ai_version=4 for 81 rows matching collated_results_v4.csv
 replications_database_2026_02_15_082454.csv # expanded abbreviated journal names and standardized PLOS One variants
 replications_database_2026_02_15_084408.csv # set replication_initiative_tag=ExECON for 18 rows with replication_url=10.1126/science.aaf0918
 replications_database_2026_02_15_103418.csv # standardized author names via CrossRef API (1507 rows updated)
-replications_database_2026_02_15_211705.csv # added pot_rep_studies_batch_collated_results_sonnetv6.csv
-replications_database_2026_02_16_075047.csv # added batch_5_collated_results_sonnetv6.csv
+replications_database_2026_02_15_211705.csv # added pot_rep_studies_batch_collated_results_v6.csv
+replications_database_2026_02_16_075047.csv # added batch_5_collated_results_v6.csv
 replications_database_2026_02_16_101735.csv # added collated_results_transparent_reports_2.csv
+replications_database_2026_02_18_091958.csv # added v7_pipeline_6th_batch_collated_results.csv
+replications_database_2026_02_18_093113.csv # filled 16 missing URLs (16 original_url, 0 replication_url)
+replications_database_2026_02_18_103051.csv # expanded author names (117 original, 101 replication)
+replications_database_2026_02_18_103844.csv # expanded author names (1 original, 0 replication)
+replications_database_2026_02_18_105329.csv # added result.json
+replications_database_2026_02_18_105847.csv # normalized 7 author name variants (Errington, Wagenmakers, van t Veer, IJzerman, Teck-Hua Ho)
+replications_database_2026_02_18_110359.csv # standardized 4 author names to middle-initial form (Grahe, Klein, Levitan, Skorinko)
+replications_database_2026_02_19_182123.csv # added probably_conceptual_replications_collated_results_v7.csv
+replications_database_2026_02_20_072016.csv # added possible_conceptual_2_collated_results_v8.csv

@@ -134,7 +134,8 @@ def _new_authors_are_better(current, new):
 
 def _request_with_retry(url, headers=None, timeout=10, max_retries=3):
     """Make an HTTP GET request with exponential backoff on transient failures.
-    Uses Retry-After header when available, with longer waits for 429 rate limits."""
+    Uses Retry-After header when available, with longer waits for 429 rate limits.
+    Timeouts and connection errors skip retries to avoid wasting time on unresponsive APIs."""
     for attempt in range(max_retries):
         try:
             r = requests.get(url, timeout=timeout, headers=headers)
@@ -154,6 +155,9 @@ def _request_with_retry(url, headers=None, timeout=10, max_retries=3):
                 time.sleep(wait)
                 continue
             return r
+        except (requests.exceptions.Timeout, requests.exceptions.ConnectionError) as e:
+            logger.warning(f"Connection/timeout error for {url}: {e}, skipping")
+            return None
         except requests.exceptions.RequestException as e:
             wait = 2 ** attempt
             logger.warning(f"Request error for {url}: {e}, retrying in {wait}s (attempt {attempt+1}/{max_retries})")

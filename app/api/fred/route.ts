@@ -48,6 +48,8 @@ async function loadCsv(filePath: string): Promise<{ rows: AnyRecord[]; columns: 
     obj.n_original = obj.original_n ?? null;
     obj.n_replication = obj.replication_n ?? null;
     // Keep original citation HTML columns
+    // Strip heavy text columns not needed by frontend pages
+    delete obj.explanation;
     return obj;
   });
   const filtered = normalized.filter((r: AnyRecord) => {

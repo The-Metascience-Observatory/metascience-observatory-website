@@ -682,7 +682,7 @@ function ReplicationsDatabaseContent() {
       if (initiative && String(r.replication_initiative_tag ?? "").trim() !== initiative) return false;
       if (search) {
         const s = search.toLowerCase();
-        const hay = `${r.description ?? ""} ${r.tags ?? ""} ${citationSearchText(r.original_authors as string, r.original_journal as string, r.original_year as string)} ${citationSearchText(r.replication_authors as string, r.replication_journal as string, r.replication_year as string)}`.toLowerCase();
+        const hay = `${r.original_title ?? ""} ${r.replication_title ?? ""} ${r.description ?? ""} ${r.tags ?? ""} ${citationSearchText(r.original_authors as string, r.original_journal as string, r.original_year as string)} ${citationSearchText(r.replication_authors as string, r.replication_journal as string, r.replication_year as string)}`.toLowerCase();
         if (!hay.includes(s)) return false;
       }
       if (originalAuthorSearch) {
@@ -1046,13 +1046,13 @@ function ReplicationsDatabaseContent() {
             </select>
           </div>
           <div className="md:col-span-2">
-            <label htmlFor="search" className="block text-sm font-medium opacity-80 mb-1">Search description, tags, or references</label>
+            <label htmlFor="search" className="block text-sm font-medium opacity-80 mb-1">Search titles, authors, description, tags, or references</label>
             <div className="flex items-center gap-3">
               <Input
                 id="search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search description, tags, or references"
+                placeholder="Search titles, authors, description, tags, or references"
                 className="h-10 flex-1"
               />
               <div className="flex flex-col items-end shrink-0">
@@ -1099,28 +1099,39 @@ function ReplicationsDatabaseContent() {
         <div className="border rounded p-4">
           <div className="text-xs font-medium mb-2">Outcome mix -- human or AI judgement <span className="font-bold">({resultStat.n} effect replications)</span></div>
           <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <div className="w-20 text-xs">Success</div>
-              <div className="flex-1"><MiniBar value={resultStat.pctSuccess} max={100} color="#10b981" /></div>
-              <div className="w-20 text-right text-xs">{resultStat.success} ({resultStat.pctSuccess}%)</div>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-20 text-xs">Inconclusive</div>
-              <div className="flex-1"><MiniBar value={resultStat.pctInconclusive} max={100} color="#9ca3af" /></div>
-              <div className="w-20 text-right text-xs">{resultStat.inconclusive} ({resultStat.pctInconclusive}%)</div>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-20 text-xs">Failure</div>
-              <div className="flex-1"><MiniBar value={resultStat.pctFailure} max={100} color="#f87171" /></div>
-              <div className="w-20 text-right text-xs">{resultStat.failure} ({resultStat.pctFailure}%)</div>
-            </div>
-            {resultStat.reversal > 0 && (
-            <div className="flex items-center gap-2">
-              <div className="w-20 text-xs">Reversal</div>
-              <div className="flex-1"><MiniBar value={resultStat.pctReversal} max={100} color="#b91c1c" /></div>
-              <div className="w-20 text-right text-xs">{resultStat.reversal} ({resultStat.pctReversal}%)</div>
-            </div>
-            )}
+            {(["success", "inconclusive", "failure"] as const).map((outcome) => {
+              const label = outcome.charAt(0).toUpperCase() + outcome.slice(1);
+              const color = outcome === "success" ? "#10b981" : outcome === "inconclusive" ? "#9ca3af" : "#f87171";
+              const pct = outcome === "success" ? resultStat.pctSuccess : outcome === "inconclusive" ? resultStat.pctInconclusive : resultStat.pctFailure;
+              const count = outcome === "success" ? resultStat.success : outcome === "inconclusive" ? resultStat.inconclusive : resultStat.failure;
+              const isActive = result === outcome;
+              return (
+                <button
+                  key={outcome}
+                  onClick={() => setResult(isActive ? "" : outcome)}
+                  className={`flex items-center gap-2 w-full rounded px-1 py-0.5 text-left transition-colors ${isActive ? "bg-black/10 dark:bg-white/10 ring-1 ring-inset ring-black/20 dark:ring-white/20" : "hover:bg-black/5 dark:hover:bg-white/5"}`}
+                  title={isActive ? `Clear filter` : `Filter table to ${label} replications`}
+                >
+                  <div className="w-20 text-xs">{label}</div>
+                  <div className="flex-1"><MiniBar value={pct} max={100} color={color} /></div>
+                  <div className="w-20 text-right text-xs">{count} ({pct}%)</div>
+                </button>
+              );
+            })}
+            {resultStat.reversal > 0 && (() => {
+              const isActive = result === "reversal";
+              return (
+                <button
+                  onClick={() => setResult(isActive ? "" : "reversal")}
+                  className={`flex items-center gap-2 w-full rounded px-1 py-0.5 text-left transition-colors ${isActive ? "bg-black/10 dark:bg-white/10 ring-1 ring-inset ring-black/20 dark:ring-white/20" : "hover:bg-black/5 dark:hover:bg-white/5"}`}
+                  title={isActive ? `Clear filter` : `Filter table to Reversal replications`}
+                >
+                  <div className="w-20 text-xs">Reversal</div>
+                  <div className="flex-1"><MiniBar value={resultStat.pctReversal} max={100} color="#b91c1c" /></div>
+                  <div className="w-20 text-right text-xs">{resultStat.reversal} ({resultStat.pctReversal}%)</div>
+                </button>
+              );
+            })()}
           </div>
           <div className="border-t mt-3 pt-3">
             <div className="text-xs font-medium mb-2">Outcome mix - computed from stats when available <span className="font-bold">({outcomeStat.n} effect replications)</span></div>
