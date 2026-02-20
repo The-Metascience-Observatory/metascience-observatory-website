@@ -26,13 +26,13 @@ The main difference here is that the pipeline tends to commit to success or fail
 
 The ground truth dataset did not have full coverage of the statistical data in the papers. However, where we had statistical data in the ground truth, the pipeline's extracted values were compared:
 
-| Field | Coverage | Exact match |
+| Field | Coverage | Achieved exact match |
 |-------|----------|-------------|
-| Replication sample size | 100.0% (159/159) | 88.7% (141/159) |
+| Replication sample size | 100.0% (159/159) | 88.1% (140/159) |
 | Replication p-value | 100.0% (124/124) | 96.8% (120/124) |
-| Replication effect size | 93.6% (102/109) | 93.1% (95/102) |
-| Original effect size | 96.9% (93/96) | 93.5% (86/92) |
-| Original p-value | 102.3% (45/44) | 100.0% (43/43) |
-| Original sample size | 92.0% (103/112) | 87.4% (90/103) |
+| Replication effect size | 93.6% (102/109) | 87.2% (95/109) |
+| Original effect size | 96.9% (93/96) | 89.6% (86/96) |
+| Original p-value | 102.3% (45/44) | 97.7% (43/44) |
+| Original sample size | 92.0% (103/112) | 80.4% (90/112) |
 
 To improve the pipeline, we designed the V8 pipeline to use more tokens and do a more careful job. Our initial evaluation of the V8 pipeline showed mixed performance compared with V6 - better in some areas, worse in others. Unfortunately, with the creation of our V8 pipeline we created a new type of replication which we call "close - extension". These are replications that attempt to see if an effect generalizes by making a small changes, for instance studying the effect in an Asian population instead of an American population, or studying the effect in children instead of adults. This complicates matching with the ground truth since the ground truth annotators generally did not consider those sort of extensions to be replications, although they did in some cases.  
