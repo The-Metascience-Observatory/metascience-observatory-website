@@ -143,7 +143,7 @@ def _request_with_retry(url, headers=None, timeout=10, max_retries=3):
                 retry_after = r.headers.get('Retry-After')
                 if retry_after:
                     try:
-                        wait = min(int(retry_after), 60)  # cap at 60s
+                        wait = min(int(retry_after), 10)  # cap at 10s
                     except ValueError:
                         wait = 5 * (2 ** attempt)  # fallback
                 elif r.status_code == 429:
@@ -166,7 +166,7 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
         email = CONTACT_EMAIL
     """
     Progressive multi-API metadata enrichment:
-    OpenAlex → DataCite → Crossref → Unpaywall → PubMed → DBLP → BASE → Scopus → Dimensions.ai → Semantic Scholar → CORE → OpenCitations → Europe PMC
+    DataCite → arXiv (10.48550/ DOIs only) → Crossref → Unpaywall → PubMed → BASE → Scopus → Dimensions.ai → Semantic Scholar → CORE → DBLP → OpenCitations → Europe PMC → OpenAlex → doi.org BibTeX
     Stops early if all fields are filled (authors must have full first names to count as complete).
     Europe PMC is last because it only returns abbreviated initials for author names.
     """
@@ -211,34 +211,7 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
                 return False
         return True
 
-    # ---------- 1️⃣ OpenAlex ----------
-    try:
-        openalex_url = f"https://api.openalex.org/works/https://doi.org/{doi}"
-        if OPENALEX_API_KEY:
-            openalex_url += f"?api_key={OPENALEX_API_KEY}"
-        r = _request_with_retry(openalex_url, headers=headers)
-        if r and r.status_code == 200:
-            data = r.json()
-            oa = {
-                "authors": "; ".join([a["author"]["display_name"] for a in data.get("authorships", [])]) or None,
-                "title": data.get("title"),
-                "journal": data.get("host_venue", {}).get("display_name"),
-                "volume": data.get("biblio", {}).get("volume"),
-                "issue": data.get("biblio", {}).get("issue"),
-                "pages": data.get("biblio", {}).get("first_page"),
-                "year": data.get("publication_year"),
-                "url": data.get("host_venue", {}).get("url") or f"https://doi.org/{doi}",
-            }
-            meta = enrich(meta, oa)
-            if is_complete(meta):
-                return meta
-        elif r:
-            logger.warning(f"OpenAlex returned HTTP {r.status_code} for DOI {doi}")
-    except Exception as e:
-        logger.warning(f"OpenAlex error for DOI {doi}: {e}")
-    time.sleep(delay)
-
-    # ---------- 2️⃣ DataCite ----------
+    # ---------- 1️⃣ DataCite ----------
     try:
         r = _request_with_retry(f"https://api.datacite.org/dois/{doi.lower()}", headers=headers)
         if r and r.status_code == 200:
@@ -266,7 +239,42 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
     except Exception as e:
         logger.warning(f"DataCite error for DOI {doi}: {e}")
 
-    # ---------- 3️⃣ Crossref ----------
+    # ---------- 1️⃣b arXiv (for 10.48550/ DOIs only) ----------
+    if doi.startswith("10.48550/") and "arXiv." in doi:
+        try:
+            import xml.etree.ElementTree as ET
+            arxiv_id = doi.split("arXiv.", 1)[-1]
+            r = _request_with_retry(
+                f"https://export.arxiv.org/api/query?id_list={arxiv_id}",
+                headers=headers,
+            )
+            if r and r.status_code == 200:
+                ns = {'a': 'http://www.w3.org/2005/Atom'}
+                root = ET.fromstring(r.text)
+                entry = root.find('a:entry', ns)
+                if entry is not None:
+                    title_el = entry.find('a:title', ns)
+                    published_el = entry.find('a:published', ns)
+                    authors = "; ".join(
+                        el.find('a:name', ns).text
+                        for el in entry.findall('a:author', ns)
+                        if el.find('a:name', ns) is not None
+                    ) or None
+                    ax = {
+                        "authors": authors,
+                        "title": title_el.text.strip() if title_el is not None else None,
+                        "year": int(published_el.text[:4]) if published_el is not None else None,
+                        "url": f"https://arxiv.org/abs/{arxiv_id}",
+                    }
+                    meta = enrich(meta, ax)
+                    if is_complete(meta):
+                        return meta
+            elif r:
+                logger.warning(f"arXiv API returned HTTP {r.status_code} for {arxiv_id}")
+        except Exception as e:
+            logger.warning(f"arXiv API error for DOI {doi}: {e}")
+
+    # ---------- 2️⃣ Crossref ----------
     try:
         # Add Crossref Plus API key if available (provides higher rate limits)
         crossref_headers = headers.copy()
@@ -308,7 +316,7 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
     except Exception as e:
         logger.warning(f"Crossref error for DOI {doi}: {e}")
 
-    # ---------- 4️⃣ Unpaywall ----------
+    # ---------- 3️⃣ Unpaywall ----------
     try:
         r = _request_with_retry(f"https://api.unpaywall.org/v2/{doi}?email={email}", headers=headers)
         if r and r.status_code == 200:
@@ -335,7 +343,7 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
     except Exception as e:
         logger.warning(f"Unpaywall error for DOI {doi}: {e}")
 
-    # ---------- 5️⃣ PubMed ----------
+    # ---------- 4️⃣ PubMed ----------
     try:
         # Add API key if available (increases rate limit from 3/s to 10/s)
         api_key_param = f"&api_key={ENTREZ_API_KEY}" if ENTREZ_API_KEY else ""
@@ -385,47 +393,6 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
         logger.warning(f"PubMed error for DOI {doi}: {e}")
     time.sleep(delay)
 
-    # ---------- 6️⃣ DBLP ----------
-    try:
-        search_title = meta.get("title") or ""
-        if search_title:
-            q = urllib.parse.quote(search_title)
-            r = _request_with_retry(
-                f"https://dblp.org/search/publ/api?q={q}&format=json&h=5",
-                headers=headers,
-            )
-            if r and r.status_code == 200:
-                hits = r.json().get("result", {}).get("hits", {}).get("hit", [])
-                for hit in hits[:5]:
-                    info = hit.get("info", {})
-                    fetched_title = (info.get("title") or "").rstrip(".")
-                    ratio = SequenceMatcher(None, search_title.lower(), fetched_title.lower()).ratio()
-                    if ratio >= 0.6:
-                        authors_data = info.get("authors", {}).get("author", [])
-                        if isinstance(authors_data, dict):
-                            authors_data = [authors_data]
-                        authors = "; ".join(
-                            _format_initial(a.get("text", "") if isinstance(a, dict) else str(a))
-                            for a in authors_data
-                        ) or None
-                        db = {
-                            "authors": authors,
-                            "title": fetched_title,
-                            "journal": info.get("venue"),
-                            "volume": info.get("volume"),
-                            "pages": info.get("pages"),
-                            "year": int(info["year"]) if info.get("year", "").isdigit() else None,
-                            "url": info.get("ee") or info.get("url"),
-                        }
-                        meta = enrich(meta, db)
-                        break
-                if is_complete(meta):
-                    return meta
-            elif r:
-                logger.warning(f"DBLP returned HTTP {r.status_code}")
-    except Exception as e:
-        logger.warning(f"DBLP error: {e}")
-
     # ---------- 7️⃣ BASE (Bielefeld Academic Search Engine) ----------
     try:
         search_title = meta.get("title") or ""
@@ -443,7 +410,7 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
                     if isinstance(fetched_title, list):
                         fetched_title = fetched_title[0] if fetched_title else ""
                     ratio = SequenceMatcher(None, search_title.lower(), fetched_title.lower()).ratio()
-                    if ratio >= 0.6:
+                    if ratio >= 0.9:
                         authors_raw = doc.get("dcCreator") or doc.get("dccreator") or []
                         if isinstance(authors_raw, str):
                             authors_raw = [authors_raw]
@@ -590,16 +557,17 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
             if search_title:
                 q = urllib.parse.quote(f'title:"{search_title}"')
                 core_headers = {**headers, "Authorization": f"Bearer {CORE_API_KEY}"}
-                r = _request_with_retry(
+                r = requests.get(
                     f"https://api.core.ac.uk/v3/search/works?q={q}&limit=5",
                     headers=core_headers,
+                    timeout=10,
                 )
-                if r and r.status_code == 200:
+                if r.status_code == 200:
                     results = r.json().get("results", [])
                     for doc in results[:5]:
                         fetched_title = doc.get("title", "")
                         ratio = SequenceMatcher(None, search_title.lower(), fetched_title.lower()).ratio()
-                        if ratio >= 0.6:
+                        if ratio >= 0.9:
                             authors_list = doc.get("authors", [])
                             authors = "; ".join(
                                 _format_initial(a.get("name", "") if isinstance(a, dict) else str(a))
@@ -618,10 +586,52 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
                             break
                     if is_complete(meta):
                         return meta
-                elif r:
+                else:
                     logger.warning(f"CORE returned HTTP {r.status_code}")
         except Exception as e:
             logger.warning(f"CORE error: {e}")
+
+    # ---------- 5️⃣ DBLP ----------
+    try:
+        search_title = meta.get("title") or ""
+        if search_title:
+            q = urllib.parse.quote(search_title)
+            r = requests.get(
+                f"https://dblp.org/search/publ/api?q={q}&format=json&h=5",
+                headers=headers,
+                timeout=5,
+            )
+            if r.status_code == 200:
+                hits = r.json().get("result", {}).get("hits", {}).get("hit", [])
+                for hit in hits[:5]:
+                    info = hit.get("info", {})
+                    fetched_title = (info.get("title") or "").rstrip(".")
+                    ratio = SequenceMatcher(None, search_title.lower(), fetched_title.lower()).ratio()
+                    if ratio >= 0.9:
+                        authors_data = info.get("authors", {}).get("author", [])
+                        if isinstance(authors_data, dict):
+                            authors_data = [authors_data]
+                        authors = "; ".join(
+                            _format_initial(a.get("text", "") if isinstance(a, dict) else str(a))
+                            for a in authors_data
+                        ) or None
+                        db = {
+                            "authors": authors,
+                            "title": fetched_title,
+                            "journal": info.get("venue"),
+                            "volume": info.get("volume"),
+                            "pages": info.get("pages"),
+                            "year": int(info["year"]) if info.get("year", "").isdigit() else None,
+                            "url": info.get("ee") or info.get("url"),
+                        }
+                        meta = enrich(meta, db)
+                        break
+                if is_complete(meta):
+                    return meta
+            else:
+                logger.warning(f"DBLP returned HTTP {r.status_code}")
+    except Exception as e:
+        logger.warning(f"DBLP error: {e}")
 
     # ---------- 1️⃣2️⃣ OpenCitations Meta ----------
     try:
@@ -697,6 +707,74 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
             logger.warning(f"Europe PMC returned HTTP {r.status_code} for DOI {doi}")
     except Exception as e:
         logger.warning(f"Europe PMC error for DOI {doi}: {e}")
+
+    # ---------- 1️⃣1️⃣ OpenAlex ----------
+    try:
+        openalex_url = f"https://api.openalex.org/works/https://doi.org/{doi}"
+        if OPENALEX_API_KEY:
+            openalex_url += f"?api_key={OPENALEX_API_KEY}"
+        r = requests.get(openalex_url, headers=headers, timeout=10)
+        if r.status_code == 200:
+            data = r.json()
+            oa = {
+                "authors": "; ".join([a["author"]["display_name"] for a in data.get("authorships", [])]) or None,
+                "title": data.get("title"),
+                "journal": data.get("host_venue", {}).get("display_name"),
+                "volume": data.get("biblio", {}).get("volume"),
+                "issue": data.get("biblio", {}).get("issue"),
+                "pages": data.get("biblio", {}).get("first_page"),
+                "year": data.get("publication_year"),
+                "url": data.get("host_venue", {}).get("url") or f"https://doi.org/{doi}",
+            }
+            meta = enrich(meta, oa)
+            if is_complete(meta):
+                return meta
+        else:
+            logger.warning(f"OpenAlex returned HTTP {r.status_code} for DOI {doi}")
+    except Exception as e:
+        logger.warning(f"OpenAlex error for DOI {doi}: {e}")
+    time.sleep(delay)
+
+    # ---------- 1️⃣5️⃣ doi.org BibTeX content negotiation (catches non-Crossref registrars) ----------
+    try:
+        import bibtexparser
+        bib_headers = {**headers, "Accept": "application/x-bibtex; charset=utf-8"}
+        r = _request_with_retry(f"https://doi.org/{doi}", headers=bib_headers)
+        if r and r.status_code == 200 and r.text.strip().startswith("@"):
+            db = bibtexparser.loads(r.text)
+            if db.entries:
+                e = db.entries[0]
+                # BibTeX uses "and" between authors; convert to "; " separator
+                raw_authors = e.get("author", "")
+                if raw_authors:
+                    bib_authors = "; ".join(
+                        _format_initial(a.strip()) for a in raw_authors.split(" and ") if a.strip()
+                    ) or None
+                else:
+                    bib_authors = None
+                # BibTeX uses "number" for issue
+                bib_year = e.get("year")
+                # Normalize en-dash/em-dash in pages to simple hyphen
+                bib_pages = e.get("pages", "")
+                if bib_pages:
+                    bib_pages = bib_pages.replace("\u2013", "-").replace("\u2014", "-")
+                bx = {
+                    "authors": bib_authors,
+                    "title": e.get("title", "").rstrip(".") or None,
+                    "journal": e.get("journal"),
+                    "volume": e.get("volume"),
+                    "issue": e.get("number"),
+                    "pages": bib_pages or None,
+                    "year": int(bib_year) if bib_year and bib_year.isdigit() else None,
+                    "url": e.get("url") or f"https://doi.org/{doi}",
+                }
+                meta = enrich(meta, bx)
+        elif r:
+            logger.warning(f"doi.org BibTeX returned HTTP {r.status_code} for DOI {doi}")
+    except ImportError:
+        logger.debug("bibtexparser not installed, skipping doi.org BibTeX fallback")
+    except Exception as e:
+        logger.warning(f"doi.org BibTeX error for DOI {doi}: {e}")
 
     # ---------- Default fallback ----------
     if not meta["url"]:

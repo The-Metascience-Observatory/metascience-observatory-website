@@ -23,6 +23,7 @@ import shutil
 import json
 import concurrent.futures
 import threading
+import random
 from datetime import datetime
 from difflib import SequenceMatcher
 from fetch_metadata_from_doi import fetch_metadata_from_doi, _new_authors_are_better, _authors_have_abbreviations
@@ -865,6 +866,18 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
         doi_cache = {}
     if title_cache is None:
         title_cache = {}
+
+    def _evict_title_cache(key):
+        """Remove a bad result from the title cache so it's re-fetched next run."""
+        if cache_lock:
+            with cache_lock:
+                title_cache.pop(key, None)
+        else:
+            title_cache.pop(key, None)
+
+    # Stagger worker startup to avoid simultaneous API bursts — skip if no enrichment needed
+    if needs_enrichment(row, 'original') or needs_enrichment(row, 'replication'):
+        time.sleep(random.uniform(0, 2))
     print(f"\nProcessing row {row_idx + 1}/{total_rows}...")
 
     # ===== PROCESS ORIGINAL STUDY =====
@@ -896,7 +909,10 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
         original_journal = row.get('original_journal')
         original_year = row.get('original_year')
         original_volume = row.get('original_volume')
-        title_key = original_title.lower().strip()
+        # Include year in cache key so same title with different expected years
+        # gets separate cache entries (avoids returning a 2025 paper for a 2020 query)
+        year_suffix = f"|{str(original_year).replace('.0', '')}" if original_year and str(original_year).strip() not in ('', 'nan', 'NaN') else ""
+        title_key = original_title.lower().strip() + year_suffix
         metadata, was_cached = _cache_get_or_fetch(
             title_cache, title_key,
             lambda: fetch_metadata_from_title(
@@ -925,6 +941,7 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
                     print(f"  ✗ Could not normalize DOI: {metadata['doi']}")
             else:
                 print(f"  ✗ DOI failed sanity check, not using: {metadata['doi']}")
+                _evict_title_cache(title_key)
         elif metadata and metadata.get('pmid'):
             if sanity_check_metadata(row, 'original', metadata):
                 pmid = metadata['pmid']
@@ -934,6 +951,7 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
                 row = enrich_from_metadata(row, 'original', metadata)
             else:
                 print(f"  ✗ PMID failed sanity check, not using: {metadata['pmid']}")
+                _evict_title_cache(title_key)
         elif metadata and metadata.get('url'):
             if sanity_check_metadata(row, 'original', metadata):
                 print(f"  ✓ No DOI/PMID but found URL: {metadata['url']}")
@@ -941,6 +959,7 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
                 row = enrich_from_metadata(row, 'original', metadata)
             else:
                 print(f"  ✗ URL failed sanity check")
+                _evict_title_cache(title_key)
         else:
             print(f"  ✗ Could not find DOI/PMID from title")
 
@@ -949,7 +968,7 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
                 short_title = original_title.split(':')[0].strip()
                 if len(short_title) >= 15:  # Only retry if the first part is meaningful
                     print(f"  ↻ Retrying with shortened title: {short_title}")
-                    short_key = short_title.lower().strip()
+                    short_key = short_title.lower().strip() + year_suffix
                     metadata2, was_cached2 = _cache_get_or_fetch(
                         title_cache, short_key,
                         lambda: fetch_metadata_from_title(
@@ -973,6 +992,7 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
                                 print(f"  ✗ Could not normalize DOI: {metadata2['doi']}")
                         else:
                             print(f"  ✗ DOI from shortened title failed sanity check")
+                            _evict_title_cache(short_key)
                     elif metadata2 and metadata2.get('pmid'):
                         if sanity_check_metadata(row, 'original', metadata2):
                             pmid = metadata2['pmid']
@@ -1020,7 +1040,8 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
         replication_journal = row.get('replication_journal')
         replication_year = row.get('replication_year')
         replication_volume = row.get('replication_volume')
-        title_key = replication_title.lower().strip()
+        year_suffix = f"|{str(replication_year).replace('.0', '')}" if replication_year and str(replication_year).strip() not in ('', 'nan', 'NaN') else ""
+        title_key = replication_title.lower().strip() + year_suffix
         metadata, was_cached = _cache_get_or_fetch(
             title_cache, title_key,
             lambda: fetch_metadata_from_title(
@@ -1049,6 +1070,7 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
                     print(f"  ✗ Could not normalize DOI: {metadata['doi']}")
             else:
                 print(f"  ✗ DOI failed sanity check, not using: {metadata['doi']}")
+                _evict_title_cache(title_key)
         elif metadata and metadata.get('pmid'):
             if sanity_check_metadata(row, 'replication', metadata):
                 pmid = metadata['pmid']
@@ -1058,6 +1080,7 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
                 row = enrich_from_metadata(row, 'replication', metadata)
             else:
                 print(f"  ✗ PMID failed sanity check, not using: {metadata['pmid']}")
+                _evict_title_cache(title_key)
         elif metadata and metadata.get('url'):
             if sanity_check_metadata(row, 'replication', metadata):
                 print(f"  ✓ No DOI/PMID but found URL: {metadata['url']}")
@@ -1065,6 +1088,7 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
                 row = enrich_from_metadata(row, 'replication', metadata)
             else:
                 print(f"  ✗ URL failed sanity check")
+                _evict_title_cache(title_key)
         else:
             print(f"  ✗ Could not find DOI/PMID from title")
 
@@ -1073,7 +1097,7 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
                 short_title = replication_title.split(':')[0].strip()
                 if len(short_title) >= 15:
                     print(f"  ↻ Retrying with shortened title: {short_title}")
-                    short_key = short_title.lower().strip()
+                    short_key = short_title.lower().strip() + year_suffix
                     metadata2, was_cached2 = _cache_get_or_fetch(
                         title_cache, short_key,
                         lambda: fetch_metadata_from_title(
@@ -1097,6 +1121,7 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
                                 print(f"  ✗ Could not normalize DOI: {metadata2['doi']}")
                         else:
                             print(f"  ✗ DOI from shortened title failed sanity check")
+                            _evict_title_cache(short_key)
                     elif metadata2 and metadata2.get('pmid'):
                         if sanity_check_metadata(row, 'replication', metadata2):
                             pmid = metadata2['pmid']

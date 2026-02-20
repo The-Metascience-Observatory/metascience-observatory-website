@@ -4,6 +4,8 @@ import urllib.parse
 import re
 import logging
 import os
+import html
+import unicodedata
 from pathlib import Path
 from difflib import SequenceMatcher
 from fetch_metadata_from_doi import _authors_have_abbreviations, _new_authors_are_better
@@ -69,7 +71,7 @@ def _request_with_retry(url, headers=None, timeout=10, max_retries=3):
                 retry_after = r.headers.get('Retry-After')
                 if retry_after:
                     try:
-                        wait = min(int(retry_after), 60)  # cap at 60s
+                        wait = min(int(retry_after), 10)  # cap at 10s
                     except ValueError:
                         wait = 5 * (2 ** attempt)  # fallback
                 elif r.status_code == 429:
@@ -87,36 +89,38 @@ def _request_with_retry(url, headers=None, timeout=10, max_retries=3):
     return None
 
 
-def _title_similarity(query_title, fetched_title, threshold=0.6):
+def _title_similarity(query_title, fetched_title, threshold=0.9):
     """Return a similarity score (0-1) if titles match, or 0.0 if below threshold.
 
-    Uses SequenceMatcher ratio as the primary metric, with secondary
-    checks for substring containment and exact main-title matching.
+    Uses strict SequenceMatcher ratio with a high threshold (0.9) to avoid
+    false positives from near-duplicate titles that differ in a single key word
+    (e.g. "unit test" vs "system test"). Secondary checks handle subtitle
+    variants ("Title" vs "Title: Subtitle") common in replications.
     """
     if not query_title or not fetched_title:
         return 0.0
-    a = query_title.lower().strip()
-    b = fetched_title.lower().strip()
-    ratio = SequenceMatcher(None, a, b).ratio()
-    if ratio >= threshold:
-        return ratio
-    # Secondary check: if the main title (before colon/subtitle) of one
-    # is contained in the other, accept it (handles "Title" vs "Title: Subtitle"
-    # and "Title again" vs "Title" patterns common in replications)
+    a = _normalize_title(query_title)
+    b = _normalize_title(fetched_title)
+    score = SequenceMatcher(None, a, b).ratio()
+    if score >= threshold:
+        return score
+    # Secondary check: if one title is the main part (before colon) of the other,
+    # this handles "Title" vs "Title: A Subtitle" patterns.
+    # Require exact containment of the main title, not fuzzy matching.
     a_main = a.split(":")[0].strip()
     b_main = b.split(":")[0].strip()
+    if len(a_main) >= 10 and a_main == b_main:
+        logger.info(f"Title match via exact main title (score={score:.2f}): '{query_title[:60]}'")
+        return max(score, threshold)
     if len(a_main) >= 10 and len(b_main) >= 10:
-        if a_main in b or b_main in a:
-            logger.info(f"Title match via substring (ratio={ratio:.2f}): query='{query_title[:60]}' vs fetched='{fetched_title[:60]}'")
-            return max(ratio, threshold)  # at least threshold so it qualifies
-    # Exact match of main title (before colon)
-    if a_main == b_main and len(a_main) >= 8:
-        logger.info(f"Title match via exact main title: '{query_title[:60]}'")
-        return max(ratio, threshold)
+        # One full title equals the other's main title (before subtitle)
+        if a == b_main or b == a_main:
+            logger.info(f"Title match via subtitle containment (score={score:.2f}): query='{query_title[:60]}' vs fetched='{fetched_title[:60]}'")
+            return max(score, threshold)
     return 0.0
 
 
-def _titles_match(query_title, fetched_title, threshold=0.6):
+def _titles_match(query_title, fetched_title, threshold=0.9):
     """Check if a fetched title is similar enough to the query title."""
     return _title_similarity(query_title, fetched_title, threshold) > 0.0
 
@@ -201,13 +205,26 @@ def normalize_doi(doi):
         doi = doi.replace("https://dx.doi.org/", "")
     return doi if doi else None
 
+
+def _normalize_title(title):
+    """Normalize a title for comparison: decode HTML entities, NFKD unicode, collapse whitespace."""
+    if not title:
+        return ""
+    t = html.unescape(title)
+    t = unicodedata.normalize("NFKD", t)
+    t = re.sub(r"\s+", " ", t).strip().lower()
+    return t
+
+
+
+
 def fetch_metadata_from_title(title, email=None, delay=0.2, authors=None,
                              journal=None, year=None, volume=None):
     if email is None:
         email = CONTACT_EMAIL
     """
     Progressive multi-API metadata enrichment starting from a title.
-    OpenAlex → Crossref → Entrez/PubMed → DataCite → DBLP → BASE → Scopus → Dimensions.ai → Semantic Scholar → CORE → OpenCitations → Europe PMC
+    Crossref → Entrez/PubMed → DataCite → Zenodo → BASE → Scopus → Dimensions.ai → Semantic Scholar → DBLP → CORE → OpenCitations → Europe PMC → OpenAlex
     Attempts to find the DOI first, then uses DOI-based lookups to fill metadata.
 
     Args:
@@ -256,52 +273,6 @@ def fetch_metadata_from_title(title, email=None, delay=0.2, authors=None,
             if k == "authors" and _authors_have_abbreviations(val):
                 return False
         return True
-
-    # ---------- 1️⃣ OpenAlex search by title ----------
-    try:
-        q = urllib.parse.quote(title)
-        openalex_url = f"https://api.openalex.org/works?filter=title.search:{q}&per_page=5"
-        if OPENALEX_API_KEY:
-            openalex_url += f"&api_key={OPENALEX_API_KEY}"
-        r = _request_with_retry(openalex_url, headers=headers)
-        if r and r.status_code == 200:
-            results = r.json().get("results", [])
-            best_sim, best_data = 0.0, None
-            for data in results[:5]:
-                # Extract metadata for validation
-                candidate_meta = {
-                    'journal': data.get("host_venue", {}).get("display_name"),
-                    'year': data.get("publication_year"),
-                    'volume': data.get("biblio", {}).get("volume"),
-                }
-                # Skip if validation fails (journal/year/volume mismatch)
-                if not _validate_metadata(candidate_meta, journal, year, volume):
-                    continue
-                sim = _title_similarity(title, data.get("title"))
-                if sim > best_sim:
-                    best_sim, best_data = sim, data
-            if best_data:
-                fetched_title = best_data.get("title")
-                doi = normalize_doi(best_data.get("doi"))
-                oa = {
-                    "doi": doi,
-                    "authors": "; ".join([a["author"]["display_name"] for a in best_data.get("authorships", [])]) or None,
-                    "title": fetched_title,
-                    "journal": best_data.get("host_venue", {}).get("display_name"),
-                    "volume": best_data.get("biblio", {}).get("volume"),
-                    "issue": best_data.get("biblio", {}).get("issue"),
-                    "pages": best_data.get("biblio", {}).get("first_page"),
-                    "year": best_data.get("publication_year"),
-                    "url": f"https://doi.org/{doi}" if doi else best_data.get("host_venue", {}).get("url"),
-                }
-                meta = enrich(meta, oa)
-                if is_complete(meta):
-                    return meta
-        elif r:
-            logger.warning(f"OpenAlex returned HTTP {r.status_code} for title search")
-    except Exception as e:
-        logger.warning(f"OpenAlex title search error: {e}")
-    time.sleep(delay)
 
     doi = meta.get("doi")
     if not doi:
@@ -472,59 +443,54 @@ def fetch_metadata_from_title(title, email=None, delay=0.2, authors=None,
         except Exception as e:
             logger.warning(f"DataCite error for DOI {doi}: {e}")
 
-    # ---------- 6️⃣ DBLP ----------
+    # ---------- 5️⃣b Zenodo ----------
+    # Covers preprints, conference papers, software, datasets — corpus not in other APIs
     try:
         search_title = meta.get("title") or title
-        q = urllib.parse.quote(search_title)
+        q = urllib.parse.quote(f'title:"{search_title}"')
         r = _request_with_retry(
-            f"https://dblp.org/search/publ/api?q={q}&format=json&h=5",
+            f"https://zenodo.org/api/records?q={q}&size=5&sort=bestmatch",
             headers=headers,
         )
         if r and r.status_code == 200:
-            hits = r.json().get("result", {}).get("hits", {}).get("hit", [])
-            best_sim, best_info = 0.0, None
+            hits = r.json().get("hits", {}).get("hits", [])
+            best_sim, best_hit = 0.0, None
             for hit in hits[:5]:
-                info = hit.get("info", {})
-                fetched_title = (info.get("title") or "").rstrip(".")
+                fetched_title = hit.get("metadata", {}).get("title", "")
                 candidate_meta = {
-                    'journal': info.get("venue"),
-                    'year': info.get("year"),
-                    'volume': info.get("volume"),
+                    'year': hit.get("metadata", {}).get("publication_date", "")[:4] or None,
                 }
                 if not _validate_metadata(candidate_meta, journal, year, volume):
                     continue
                 sim = _title_similarity(search_title, fetched_title)
                 if sim > best_sim:
-                    best_sim, best_info = sim, info
-            if best_info:
-                fetched_title = (best_info.get("title") or "").rstrip(".")
-                fetched_doi = normalize_doi(best_info.get("doi"))
-                if not doi and fetched_doi:
-                    doi = fetched_doi
-                authors_data = best_info.get("authors", {}).get("author", [])
-                if isinstance(authors_data, dict):
-                    authors_data = [authors_data]
-                authors = "; ".join(
-                    a.get("text", "") if isinstance(a, dict) else str(a)
-                    for a in authors_data
-                ) or None
-                db = {
-                    "doi": fetched_doi,
-                    "authors": authors,
-                    "title": fetched_title,
-                    "journal": best_info.get("venue"),
-                    "volume": best_info.get("volume"),
-                    "pages": best_info.get("pages"),
-                    "year": int(best_info["year"]) if best_info.get("year", "").isdigit() else None,
-                    "url": best_info.get("ee") or best_info.get("url") or (f"https://doi.org/{fetched_doi}" if fetched_doi else None),
+                    best_sim, best_hit = sim, hit
+            if best_hit:
+                md = best_hit.get("metadata", {})
+                creators = md.get("creators", [])
+                zen_authors = "; ".join(c.get("name", "") for c in creators if c.get("name")) or None
+                zen_doi = normalize_doi(md.get("doi") or best_hit.get("doi"))
+                if not doi and zen_doi:
+                    doi = zen_doi
+                pub_date = md.get("publication_date", "")
+                zen_year = int(pub_date[:4]) if pub_date and len(pub_date) >= 4 and pub_date[:4].isdigit() else None
+                journal_obj = md.get("journal", {})
+                zen_journal = journal_obj.get("title") if isinstance(journal_obj, dict) else None
+                zn = {
+                    "doi": zen_doi,
+                    "authors": zen_authors,
+                    "title": md.get("title"),
+                    "journal": zen_journal,
+                    "year": zen_year,
+                    "url": f"https://doi.org/{zen_doi}" if zen_doi else best_hit.get("links", {}).get("html"),
                 }
-                meta = enrich(meta, db)
+                meta = enrich(meta, zn)
                 if is_complete(meta):
                     return meta
         elif r:
-            logger.warning(f"DBLP returned HTTP {r.status_code} for title search")
+            logger.warning(f"Zenodo returned HTTP {r.status_code} for title search")
     except Exception as e:
-        logger.warning(f"DBLP title search error: {e}")
+        logger.warning(f"Zenodo title search error: {e}")
 
     # ---------- 7️⃣ BASE (Bielefeld Academic Search Engine) ----------
     try:
@@ -599,7 +565,7 @@ def fetch_metadata_from_title(title, email=None, delay=0.2, authors=None,
                 for entry in results[:5]:
                     fetched_title = entry.get("dc:title", "")
                     sim = _title_similarity(title, fetched_title)
-                    if sim >= 0.6:
+                    if sim > 0:  # _title_similarity already enforces 0.9 threshold
                         # Get DOI
                         entry_doi = entry.get("prism:doi")
                         # Get full metadata via abstract retrieval if DOI available
@@ -692,7 +658,7 @@ def fetch_metadata_from_title(title, email=None, delay=0.2, authors=None,
                             if sim > best_sim:
                                 best_sim = sim
                                 best_p = p
-                    if best_p and best_sim >= 0.75:
+                    if best_p and best_sim > 0:  # _title_similarity already enforces 0.85 threshold
                         authors_list = best_p.get("authors", [])
                         author_str = "; ".join(
                             f"{a.get('last_name', '')}, {a.get('first_name', '')}".strip(", ")
@@ -776,17 +742,73 @@ def fetch_metadata_from_title(title, email=None, delay=0.2, authors=None,
     except Exception as e:
         logger.warning(f"Semantic Scholar error: {e}")
 
+    # ---------- 6️⃣ DBLP ----------
+    try:
+        search_title = meta.get("title") or title
+        q = urllib.parse.quote(search_title)
+        r = requests.get(
+            f"https://dblp.org/search/publ/api?q={q}&format=json&h=5",
+            headers=headers,
+            timeout=5,
+        )
+        if r.status_code == 200:
+            hits = r.json().get("result", {}).get("hits", {}).get("hit", [])
+            best_sim, best_info = 0.0, None
+            for hit in hits[:5]:
+                info = hit.get("info", {})
+                fetched_title = (info.get("title") or "").rstrip(".")
+                candidate_meta = {
+                    'journal': info.get("venue"),
+                    'year': info.get("year"),
+                    'volume': info.get("volume"),
+                }
+                if not _validate_metadata(candidate_meta, journal, year, volume):
+                    continue
+                sim = _title_similarity(search_title, fetched_title)
+                if sim > best_sim:
+                    best_sim, best_info = sim, info
+            if best_info:
+                fetched_title = (best_info.get("title") or "").rstrip(".")
+                fetched_doi = normalize_doi(best_info.get("doi"))
+                if not doi and fetched_doi:
+                    doi = fetched_doi
+                authors_data = best_info.get("authors", {}).get("author", [])
+                if isinstance(authors_data, dict):
+                    authors_data = [authors_data]
+                authors = "; ".join(
+                    a.get("text", "") if isinstance(a, dict) else str(a)
+                    for a in authors_data
+                ) or None
+                db = {
+                    "doi": fetched_doi,
+                    "authors": authors,
+                    "title": fetched_title,
+                    "journal": best_info.get("venue"),
+                    "volume": best_info.get("volume"),
+                    "pages": best_info.get("pages"),
+                    "year": int(best_info["year"]) if best_info.get("year", "").isdigit() else None,
+                    "url": best_info.get("ee") or best_info.get("url") or (f"https://doi.org/{fetched_doi}" if fetched_doi else None),
+                }
+                meta = enrich(meta, db)
+                if is_complete(meta):
+                    return meta
+        else:
+            logger.warning(f"DBLP returned HTTP {r.status_code} for title search")
+    except Exception as e:
+        logger.warning(f"DBLP title search error: {e}")
+
     # ---------- 1️⃣1️⃣ CORE ----------
     if CORE_API_KEY:
         try:
             search_title = meta.get("title") or title
             q = urllib.parse.quote(f'title:"{search_title}"')
             core_headers = {**headers, "Authorization": f"Bearer {CORE_API_KEY}"}
-            r = _request_with_retry(
+            r = requests.get(
                 f"https://api.core.ac.uk/v3/search/works?q={q}&limit=5",
                 headers=core_headers,
+                timeout=10,
             )
-            if r and r.status_code == 200:
+            if r.status_code == 200:
                 results = r.json().get("results", [])
                 best_sim, best_doc = 0.0, None
                 for doc in results[:5]:
@@ -822,7 +844,7 @@ def fetch_metadata_from_title(title, email=None, delay=0.2, authors=None,
                     meta = enrich(meta, co)
                     if is_complete(meta):
                         return meta
-            elif r:
+            else:
                 logger.warning(f"CORE returned HTTP {r.status_code} for title search")
         except Exception as e:
             logger.warning(f"CORE title search error: {e}")
@@ -924,6 +946,54 @@ def fetch_metadata_from_title(title, email=None, delay=0.2, authors=None,
             logger.warning(f"Europe PMC returned HTTP {r.status_code} for title search")
     except Exception as e:
         logger.warning(f"Europe PMC title search error: {e}")
+
+    # ---------- 1️⃣0️⃣ OpenAlex search by title ----------
+    try:
+        q = urllib.parse.quote(title)
+        openalex_url = f"https://api.openalex.org/works?filter=title.search:{q}&per_page=5"
+        if OPENALEX_API_KEY:
+            openalex_url += f"&api_key={OPENALEX_API_KEY}"
+        r = requests.get(openalex_url, headers=headers, timeout=10)
+        if r.status_code == 200:
+            results = r.json().get("results", [])
+            best_sim, best_data = 0.0, None
+            for data in results[:5]:
+                # Extract metadata for validation
+                candidate_meta = {
+                    'journal': data.get("host_venue", {}).get("display_name"),
+                    'year': data.get("publication_year"),
+                    'volume': data.get("biblio", {}).get("volume"),
+                }
+                # Skip if validation fails (journal/year/volume mismatch)
+                if not _validate_metadata(candidate_meta, journal, year, volume):
+                    continue
+                sim = _title_similarity(title, data.get("title"))
+                if sim > best_sim:
+                    best_sim, best_data = sim, data
+            if best_data:
+                fetched_title = best_data.get("title")
+                oa_doi = normalize_doi(best_data.get("doi"))
+                if oa_doi and not doi:
+                    doi = oa_doi
+                oa = {
+                    "doi": oa_doi,
+                    "authors": "; ".join([a["author"]["display_name"] for a in best_data.get("authorships", [])]) or None,
+                    "title": fetched_title,
+                    "journal": best_data.get("host_venue", {}).get("display_name"),
+                    "volume": best_data.get("biblio", {}).get("volume"),
+                    "issue": best_data.get("biblio", {}).get("issue"),
+                    "pages": best_data.get("biblio", {}).get("first_page"),
+                    "year": best_data.get("publication_year"),
+                    "url": f"https://doi.org/{oa_doi}" if oa_doi else best_data.get("host_venue", {}).get("url"),
+                }
+                meta = enrich(meta, oa)
+                if is_complete(meta):
+                    return meta
+        else:
+            logger.warning(f"OpenAlex returned HTTP {r.status_code} for title search")
+    except Exception as e:
+        logger.warning(f"OpenAlex title search error: {e}")
+    time.sleep(delay)
 
     # ---------- Default fallback ----------
     if not meta.get("url"):
