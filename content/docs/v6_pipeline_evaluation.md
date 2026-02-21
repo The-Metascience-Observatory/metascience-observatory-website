@@ -1,8 +1,8 @@
-# V6 Extraction Pipeline Evaluation
+# V6 AI Extraction Pipeline Evaluation
 
 February 2026
 
-The Metascience Observatory uses an automated pipeline to extract structured replication data from academic papers. We evaluated it against a hand-validated ground truth of 189 effect replication entries across 143 papers, primarily from psychology and related social sciences.
+The Metascience Observatory uses a custom pipeline to extract structured replication data from academic papers using AI. We evaluated it against a hand-validated ground truth of 189 effect replication entries across 143 papers, primarily from psychology and related social sciences.
 
 ## Key results
 
