@@ -3,17 +3,15 @@
 
 Generally speaking, we define a replication as "an experiment which is done to test an effect claim made in prior research." (following [Nosek & Errington, 2020](https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.3000691))
 
-In our [replications database](/replications-database) we distinguish four types of replications: 
+In our [replications database](/replications-database) we distinguish three types of replications: 
 
 **direct** — This is when a previously published experimental procedure is repeated as closely as possible to see if the same result can be obtained. Of course, there are always some unavoidable differences (different participants, different lab, different time period).
 
-**close experiment** — The scientists are testing for the same effect observed in a previous experiment, but they make one or more deliberate methodological changes. The experiment is similar, but altered a bit. 
-
-**close extension** — Here the scientists are testing whether an observed effect generalizes to a different setting. Typically there is a theoretical reason for suspecting the effect will generalize. 
+**close** — when possible we also distinguish two subtypes - **close experiment** and **close extension**. In a "close experiment", the scientists are testing for the same effect observed in a previous experiment, but they make one or more deliberate changes to the experimental procedure. In a "close extension", scientists are testing whether an observed effect generalizes to a different setting. Typically, there is a theoretical reason for suspecting the effect will generalize. Some close replications may have minor changes to both experiment and setting, and therefore can't be neatly categorized as either a close experiment or close extension.
 
 **conceptual** — The scientists are testing for the same effect observed in a previous experiment, but using a fundamentally different experimental procedure. 
 
-There is no clear boundary between these categories. Rather, there is a spectrum from direct to conceptual. 
+There are no clear boundaries between these categories. Rather, there is a spectrum from direct to conceptual. 
 
 ## Classifying the results of replication experiments
 
