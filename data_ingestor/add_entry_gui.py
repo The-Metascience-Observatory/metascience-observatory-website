@@ -7,6 +7,7 @@ Usage:
 """
 
 import csv
+import json
 import os
 import subprocess
 import sys
@@ -22,6 +23,27 @@ from PyQt5.QtWidgets import (
 )
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
+ONTOLOGY_PATH = os.path.join(PROJECT_ROOT, "data", "metascience_observatory_topic_ontology.json")
+
+
+def _load_ontology():
+    """Load ontology and return (disciplines, discipline_to_subdisciplines)."""
+    with open(ONTOLOGY_PATH, encoding="utf-8") as f:
+        ontology = json.load(f)
+    disciplines = []
+    discipline_to_subdisciplines = {}
+    for _domain, disciplines_dict in ontology.items():
+        for discipline, subdisciplines in disciplines_dict.items():
+            disciplines.append(discipline)
+            discipline_to_subdisciplines[discipline] = subdisciplines
+    disciplines.sort(key=str.lower)
+    return disciplines, discipline_to_subdisciplines
+
+
+DISCIPLINE_OPTIONS, DISCIPLINE_TO_SUBDISCIPLINES = _load_ontology()
+# Prepend empty option for optional field
+DISCIPLINE_OPTIONS = [""] + DISCIPLINE_OPTIONS
 
 RESULT_OPTIONS = [
     "", "success", "failure", "replicated", "not replicated",
@@ -38,29 +60,10 @@ DISCIPLINE_OPTIONS = [
     "sociology", "software engineering",
 ]
 
-SUBDISCIPLINE_OPTIONS = [
-    "",
-    "AI and machine learning", "anthropology", "applied linguistics",
-    "behavioral economics", "behavioral genetics", "behavioral neuroscience",
-    "biomedical engineering", "cancer biology", "cardiovascular medicine",
-    "cell biology", "clinical neuropsychology", "clinical psychology",
-    "cognitive neuroscience", "cognitive psychology", "criminology",
-    "developmental psychology", "ecology", "econometric methods",
-    "economics", "education", "educational psychology",
-    "experimental philosophy", "experimental psychology",
-    "finance", "genetics", "health psychology",
-    "judgment and decision making", "labor economics",
-    "macroeconomics", "management", "medical education",
-    "metascience", "molecular biology", "neuroscience",
-    "neuropsychology", "nursing", "other",
-    "personality psychology", "pharmacology and toxicology",
-    "political economy", "psychiatry", "psycholinguistics",
-    "psychology", "psychopharmacology", "psychophysiology",
-    "public health", "rehabilitation medicine",
-    "social psychology", "sociology", "software engineering",
-    "special education", "speech-language pathology",
-    "sports and exercise science", "sports psychology",
-    "veterinary medicine",
+VALIDATED_OPTIONS = ["", "no", "partial", "partially", "yes"]
+
+VALIDATED_PERSON_OPTIONS = [
+    "", "Dan Elton", "Curate Science team", "FReD_API_team",
 ]
 
 ES_TYPE_OPTIONS = [
@@ -197,14 +200,20 @@ class AddEntryWindow(QMainWindow):
 
         # ── Classification ────────────────────────────────────────────
         box, form = _group("Classification")
-        self.result         = _styled_combo(RESULT_OPTIONS)
-        self.discipline     = _styled_combo(DISCIPLINE_OPTIONS)
-        self.subdiscipline  = _styled_combo(SUBDISCIPLINE_OPTIONS)
-        self.initiative_tag = _line_edit("e.g. RP:P, ML1, XPHIR")
+        self.result            = _styled_combo(RESULT_OPTIONS)
+        self.discipline        = _styled_combo(DISCIPLINE_OPTIONS)
+        self.subdiscipline     = _styled_combo([""])  # Populated from ontology when discipline is selected
+        self.discipline.currentTextChanged.connect(self._on_discipline_changed)
+        self._on_discipline_changed()  # Initial population
+        self.initiative_tag    = _line_edit("e.g. RP:P, ML1, XPHIR")
+        self.validated         = _styled_combo(VALIDATED_OPTIONS, editable=False)
+        self.validated_person  = _styled_combo(VALIDATED_PERSON_OPTIONS)
         form.addRow(_label("Result"),              self.result)
         form.addRow(_label("Discipline"),          self.discipline)
         form.addRow(_label("Subdiscipline"),       self.subdiscipline)
         form.addRow(_label("Initiative Tag"),      self.initiative_tag)
+        form.addRow(_label("Validated"),           self.validated)
+        form.addRow(_label("Validated by"),        self.validated_person)
         form_layout.addWidget(box)
 
         # ── Effect Size — Original ────────────────────────────────────
@@ -295,6 +304,21 @@ class AddEntryWindow(QMainWindow):
 
     # ── helpers ───────────────────────────────────────────────────────
 
+    def _on_discipline_changed(self):
+        """Update subdiscipline dropdown to show only options for the selected discipline."""
+        discipline = self.discipline.currentText().strip()
+        subdisciplines = DISCIPLINE_TO_SUBDISCIPLINES.get(discipline, [])
+        options = [""] + sorted(subdisciplines, key=str.lower)
+        current = self.subdiscipline.currentText().strip()
+        self.subdiscipline.clear()
+        self.subdiscipline.addItems(options)
+        # Restore selection if still valid
+        idx = self.subdiscipline.findText(current)
+        if idx >= 0:
+            self.subdiscipline.setCurrentIndex(idx)
+        else:
+            self.subdiscipline.setCurrentIndex(0)
+
     def _get(self, widget) -> str:
         if isinstance(widget, QTextEdit):
             return widget.toPlainText().strip()
@@ -329,6 +353,7 @@ class AddEntryWindow(QMainWindow):
         for w in (
             self.result, self.discipline, self.subdiscipline,
             self.original_es_type, self.replication_es_type,
+            self.validated, self.validated_person,
         ):
             w.setCurrentIndex(0)
         self.description.clear()
@@ -354,6 +379,8 @@ class AddEntryWindow(QMainWindow):
             "replication_es":             self._get(self.replication_es),
             "replication_es_type":        self._get(self.replication_es_type),
             "replication_n":              self._get(self.replication_n),
+            "validated":                  self._get(self.validated),
+            "validated_person":           self._get(self.validated_person),
         }
 
         tmp = tempfile.NamedTemporaryFile(
