@@ -28,6 +28,7 @@ export const Navbar = () => {
             <Link href="/#team" className="text-foreground/80 hover:text-foreground transition-colors">Team</Link>
             <Link href="/roadmap" className="text-foreground/80 hover:text-foreground transition-colors">Roadmap</Link>
             <Link href="/docs" className="text-foreground/80 hover:text-foreground transition-colors">Docs</Link>
+            <Link href="/birds-eye-reviews" className="text-foreground/80 hover:text-foreground transition-colors">Reviews</Link>
             <Link href="/#donate" className="text-foreground/80 hover:text-foreground transition-colors">Donate</Link>
             <Button variant="outline-gradient" size="sm" asChild>
               <Link href="https://explore.metascienceobservatory.org/" target="_blank" rel="noopener noreferrer">
@@ -96,6 +97,13 @@ export const Navbar = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Docs
+              </Link>
+              <Link
+                href="/birds-eye-reviews"
+                className="text-foreground/80 hover:text-foreground transition-colors py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Reviews
               </Link>
               <Link
                 href="/#donate"
