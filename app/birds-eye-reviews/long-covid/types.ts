@@ -38,6 +38,7 @@ export interface YearBar {
 
 export interface ForestRow {
   paper_id: string;
+  is_rct: boolean;
   intervention_name: string;
   intervention_category: string;
   symptom_domain: string;
@@ -63,8 +64,25 @@ export interface LcDefinitionBin {
   count: number;
 }
 
+/** Lightweight per-record metadata for client-side re-aggregation when RCT filter is toggled */
+export interface TrialMeta {
+  paper_id: string;
+  is_rct: boolean;
+  countries: string[];
+  interventionArms: { category: string; name: string }[];
+  primarySymptomDomains: string[];
+  rob_overall: string;
+  blinding: string;
+  n_randomized: number | null;
+  min_weeks: number | null;
+  year: number | null;
+  n_instruments: number;
+  primary_p_value: number | null;
+}
+
 export interface TrialTableRow {
   paper_id: string;
+  is_rct: boolean;
   doi_url: string;
   design_type: string;
   intervention_name: string;
@@ -87,6 +105,7 @@ export interface TrialTableRow {
   n_positive: number;
   n_negative_ns: number;
   n_unknown: number;
+  year: number | null;
 }
 
 export interface DashboardProps {
@@ -95,10 +114,13 @@ export interface DashboardProps {
   bySymptom: SymptomBar[];
   heatmapData: HeatmapCell[];
   topCountries: CountryBar[];
+  allCountries: CountryBar[];
   byYear: YearBar[];
   forestData: ForestRow[];
   blindingBySignificance: BlindingSignificanceBar[];
   lcDefinitionHist: LcDefinitionBin[];
   lcDefPct12Plus: number;
   tableRows: TrialTableRow[];
+  trialMetas: TrialMeta[];
 }
+

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import {
   BarChart,
   Bar,
@@ -17,7 +17,22 @@ import {
   ZAxis,
 } from "recharts";
 import { ChevronDown, ChevronRight, ExternalLink } from "lucide-react";
-import type { DashboardProps, ForestRow, InterventionBar, TrialTableRow } from "./types";
+import {
+  ComposableMap,
+  Geographies,
+  Geography,
+  ZoomableGroup,
+  Marker,
+} from "react-simple-maps";
+import { geoCentroid } from "d3-geo";
+import type { DashboardProps, ForestRow, InterventionBar, TrialTableRow, TrialMeta, SummaryStats, SymptomBar, HeatmapCell, CountryBar, YearBar, BlindingSignificanceBar, LcDefinitionBin } from "./types";
+
+const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
+
+const COUNTRY_NAME_MAPPING: Record<string, string> = {
+  "United States": "United States of America",
+  "Czech Republic": "Czechia",
+};
 
 // ── Color constants ──────────────────────────────────────────────────
 const ROB_COLORS = {
@@ -52,10 +67,182 @@ const ROB_LABELS: Record<string, string> = {
 const formatCategory = (s: string) =>
   s.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
+// ── Re-aggregation helper ────────────────────────────────────────────
+function recomputeFromMetas(metas: TrialMeta[]) {
+  // Summary stats
+  const allCountriesSet = new Set<string>();
+  const allCategories = new Set<string>();
+  let totalParticipants = 0;
+  let nInstruments = 0;
+  for (const m of metas) {
+    for (const c of m.countries) allCountriesSet.add(c);
+    for (const a of m.interventionArms) allCategories.add(a.category);
+    if (m.n_randomized) totalParticipants += m.n_randomized;
+    nInstruments += m.n_instruments;
+  }
+  const summaryStats: SummaryStats = {
+    totalTrials: metas.length,
+    totalParticipants,
+    nCountries: allCountriesSet.size,
+    nInterventionCategories: allCategories.size,
+    nInstruments,
+  };
+
+  // By intervention
+  const interventionMap = new Map<string, Map<string, number>>();
+  for (const m of metas) {
+    for (const a of m.interventionArms) {
+      if (!interventionMap.has(a.category)) interventionMap.set(a.category, new Map());
+      const nameMap = interventionMap.get(a.category)!;
+      nameMap.set(a.name, (nameMap.get(a.name) ?? 0) + 1);
+    }
+  }
+  const byIntervention: InterventionBar[] = [...interventionMap.entries()]
+    .map(([category, nameMap]) => ({
+      category,
+      count: [...nameMap.values()].reduce((a, b) => a + b, 0),
+      interventions: [...nameMap.entries()]
+        .map(([name, count]) => ({ name, count }))
+        .sort((a, b) => b.count - a.count),
+    }))
+    .sort((a, b) => b.count - a.count);
+
+  // By symptom
+  const symptomMap = new Map<string, number>();
+  for (const m of metas) {
+    for (const d of m.primarySymptomDomains) symptomMap.set(d, (symptomMap.get(d) ?? 0) + 1);
+  }
+  const bySymptom: SymptomBar[] = [...symptomMap.entries()]
+    .map(([domain, count]) => ({ domain, count }))
+    .sort((a, b) => b.count - a.count);
+
+  // Heatmap
+  const heatMap = new Map<string, { count: number; low: number; some_concerns: number; high: number }>();
+  for (const m of metas) {
+    const cats = new Set(m.interventionArms.map((a) => a.category));
+    for (const cat of cats) {
+      for (const dom of m.primarySymptomDomains) {
+        const k = `${cat}|||${dom}`;
+        const entry = heatMap.get(k) ?? { count: 0, low: 0, some_concerns: 0, high: 0 };
+        entry.count++;
+        if (m.rob_overall === "low") entry.low++;
+        else if (m.rob_overall === "some_concerns") entry.some_concerns++;
+        else if (m.rob_overall === "high") entry.high++;
+        heatMap.set(k, entry);
+      }
+    }
+  }
+  const heatmapData: HeatmapCell[] = [...heatMap.entries()].map(([k, d]) => {
+    const [intervention, symptom] = k.split("|||");
+    return { intervention, symptom, ...d };
+  });
+
+  // Countries
+  const countryMap = new Map<string, number>();
+  for (const m of metas) {
+    for (const c of m.countries) countryMap.set(c, (countryMap.get(c) ?? 0) + 1);
+  }
+  const allCountries: CountryBar[] = [...countryMap.entries()]
+    .map(([country, count]) => ({ country, count }))
+    .sort((a, b) => b.count - a.count);
+
+  // By year
+  const yearMap = new Map<number, number>();
+  for (const m of metas) {
+    if (m.year && m.year >= 2020) yearMap.set(m.year, (yearMap.get(m.year) ?? 0) + 1);
+  }
+  const byYear: YearBar[] = [...yearMap.entries()]
+    .map(([year, count]) => ({ year, count }))
+    .sort((a, b) => a.year - b.year);
+
+  // Blinding × significance
+  const blindSigMap = new Map<string, { significant: number; not_significant: number }>();
+  for (const m of metas) {
+    if (m.primary_p_value != null) {
+      const entry = blindSigMap.get(m.blinding) ?? { significant: 0, not_significant: 0 };
+      if (m.primary_p_value < 0.05) entry.significant++;
+      else entry.not_significant++;
+      blindSigMap.set(m.blinding, entry);
+    }
+  }
+  const blindingBySignificance: BlindingSignificanceBar[] = [
+    "double-blind", "single-blind", "open-label",
+  ]
+    .filter((b) => blindSigMap.has(b))
+    .map((blinding) => ({ blinding, ...blindSigMap.get(blinding)! }));
+
+  // LC definition histogram
+  const weeksBins = [0, 4, 8, 12, 16, 24, 52, Infinity];
+  const binLabels = ["0–4", "4–8", "8–12", "12–16", "16–24", "24–52", "52+"];
+  const binCounts = new Array(binLabels.length).fill(0);
+  let lcDefTotal = 0;
+  let lcDef12Plus = 0;
+  for (const m of metas) {
+    if (m.min_weeks != null) {
+      lcDefTotal++;
+      if (m.min_weeks >= 12) lcDef12Plus++;
+      for (let i = 0; i < weeksBins.length - 1; i++) {
+        if (m.min_weeks >= weeksBins[i] && m.min_weeks < weeksBins[i + 1]) {
+          binCounts[i]++;
+          break;
+        }
+      }
+    }
+  }
+  const lcDefinitionHist: LcDefinitionBin[] = binLabels.map((label, i) => ({
+    label,
+    count: binCounts[i],
+  }));
+  const lcDefPct12Plus = lcDefTotal > 0 ? Math.round((lcDef12Plus / lcDefTotal) * 100) : 0;
+
+  return { summaryStats, byIntervention, bySymptom, heatmapData, allCountries, byYear, blindingBySignificance, lcDefinitionHist, lcDefPct12Plus };
+}
+
 // ── Main Dashboard ───────────────────────────────────────────────────
 export function LongCovidDashboard(props: DashboardProps) {
   const [activeTab, setActiveTab] = useState<"overview" | "effects">(
     "overview"
+  );
+  const [yearFilter, setYearFilter] = useState<number | null>(null);
+  const tableRef = useRef<HTMLDivElement>(null);
+
+  const handleYearClick = (year: number) => {
+    setYearFilter(year);
+    if (tableRef.current) {
+      tableRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+  const [rctOnly, setRctOnly] = useState(false);
+
+  // Recompute aggregated data when RCT filter is toggled
+  const filteredMetas = useMemo(
+    () => (rctOnly ? props.trialMetas.filter((m) => m.is_rct) : props.trialMetas),
+    [rctOnly, props.trialMetas]
+  );
+  const recomputed = useMemo(() => recomputeFromMetas(filteredMetas), [filteredMetas]);
+
+  const effectiveProps: DashboardProps = useMemo(() => {
+    if (!rctOnly) return props;
+    return {
+      ...props,
+      summaryStats: recomputed.summaryStats,
+      byIntervention: recomputed.byIntervention,
+      bySymptom: recomputed.bySymptom,
+      heatmapData: recomputed.heatmapData,
+      allCountries: recomputed.allCountries,
+      topCountries: recomputed.allCountries,
+      byYear: recomputed.byYear,
+      blindingBySignificance: recomputed.blindingBySignificance,
+      lcDefinitionHist: recomputed.lcDefinitionHist,
+      lcDefPct12Plus: recomputed.lcDefPct12Plus,
+      forestData: props.forestData.filter((d) => d.is_rct),
+      tableRows: props.tableRows.filter((r) => r.is_rct),
+    };
+  }, [rctOnly, props, recomputed]);
+
+  const rctCount = useMemo(
+    () => props.trialMetas.filter((m) => m.is_rct).length,
+    [props.trialMetas]
   );
 
   const tabs = [
@@ -67,10 +254,36 @@ export function LongCovidDashboard(props: DashboardProps) {
     <div>
       {/* Hero */}
       <h1 className="font-clarendon font-bold text-3xl mb-2">Long Covid Clinical Trials</h1>
-      <p className="text-foreground/70 text-lg mb-8">
-        A bird&apos;s eye view of {props.summaryStats.totalTrials} clinical trials testing
+      <p className="text-foreground/70 text-lg mb-4">
+        A bird&apos;s eye view of {effectiveProps.summaryStats.totalTrials} clinical trials testing
         interventions for Long Covid.
       </p>
+
+      {/* RCT Filter Toggle */}
+      <div className="mb-6">
+        <button
+          onClick={() => setRctOnly((v) => !v)}
+          className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all border ${rctOnly
+            ? "bg-blue-600 text-white border-blue-600 shadow-md"
+            : "bg-background text-foreground/70 border-border hover:border-foreground/30 hover:text-foreground"
+            }`}
+        >
+          <span
+            className={`inline-flex items-center justify-center w-4 h-4 rounded border transition-colors ${rctOnly ? "bg-white border-white" : "border-foreground/30"
+              }`}
+          >
+            {rctOnly && (
+              <svg viewBox="0 0 12 12" className="w-3 h-3 text-blue-600">
+                <path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            )}
+          </span>
+          Filter to RCTs only
+          <span className={`text-xs ${rctOnly ? "text-blue-200" : "text-foreground/40"}`}>
+            ({rctCount} of {props.summaryStats.totalTrials})
+          </span>
+        </button>
+      </div>
 
       {/* Tabs */}
       <div className="border-b border-border mb-6">
@@ -79,11 +292,10 @@ export function LongCovidDashboard(props: DashboardProps) {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
-                activeTab === tab.id
-                  ? "border-foreground text-foreground"
-                  : "border-transparent text-foreground/50 hover:text-foreground/70"
-              }`}
+              className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${activeTab === tab.id
+                ? "border-foreground text-foreground"
+                : "border-transparent text-foreground/50 hover:text-foreground/70"
+                }`}
             >
               {tab.label}
             </button>
@@ -92,30 +304,56 @@ export function LongCovidDashboard(props: DashboardProps) {
       </div>
 
       {/* Tab content */}
-      {activeTab === "overview" && <OverviewTab {...props} />}
-      {activeTab === "effects" && <EffectSizesTab forestData={props.forestData} />}
+      {activeTab === "overview" && (
+        <OverviewTab {...effectiveProps} onYearClick={handleYearClick} />
+      )}
+      {activeTab === "effects" && <EffectSizesTab forestData={effectiveProps.forestData} />}
       {/* Trial table — always visible at the bottom */}
-      <div className="mt-12 border-t border-border pt-8">
+      <div className="mt-12 border-t border-border pt-8" ref={tableRef}>
         <h2 className="font-clarendon font-bold text-2xl mb-4">All Trials</h2>
-        <TrialTableTab tableRows={props.tableRows} />
+        <TrialTableTab
+          tableRows={effectiveProps.tableRows}
+          yearFilter={yearFilter}
+          onYearClear={() => setYearFilter(null)}
+        />
       </div>
     </div>
   );
 }
 
-function StatCard({ label, value }: { label: string; value: string | number }) {
-  return (
-    <div className="border border-border rounded-lg p-4 text-center">
-      <div className="text-2xl font-bold text-foreground">{value}</div>
-      <div className="text-sm text-foreground/60">{label}</div>
-    </div>
-  );
-}
-
 // ── OVERVIEW TAB ─────────────────────────────────────────────────────
-function OverviewTab(props: DashboardProps) {
+function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => void }) {
   return (
     <div className="space-y-10">
+      {/* Timeline + Country map side by side */}
+      <div className="grid md:grid-cols-2 gap-8">
+        <ChartSection title="Trials by publication year">
+          <ResponsiveContainer width="100%" height={280}>
+            <BarChart data={props.byYear} margin={{ left: 10, right: 20, top: 5, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
+              <XAxis dataKey="year" />
+              <YAxis />
+              <Tooltip cursor={{ fill: 'transparent' }} />
+              <Bar
+                dataKey="count"
+                fill="#8b5cf6"
+                radius={[4, 4, 0, 0]}
+                style={{ cursor: "pointer" }}
+                onClick={(data) => {
+                  if (data && data.year && props.onYearClick) {
+                    props.onYearClick(data.year);
+                  }
+                }}
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartSection>
+
+        <ChartSection title="Trials by country">
+          <CountryMap topCountries={props.allCountries} />
+        </ChartSection>
+      </div>
+
       {/* LC definition variability */}
       <ChartSection
         title="Long Covid definition variability"
@@ -182,23 +420,6 @@ function OverviewTab(props: DashboardProps) {
         <Heatmap data={props.heatmapData} />
       </ChartSection>
 
-      {/* Top countries */}
-      <ChartSection title="Country where trial took place">
-        <ResponsiveContainer width="100%" height={400}>
-          <BarChart
-            data={props.topCountries}
-            layout="vertical"
-            margin={{ left: 130, right: 20, top: 5, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-            <XAxis type="number" />
-            <YAxis type="category" dataKey="country" width={130} fontSize={12} />
-            <Tooltip />
-            <Bar dataKey="count" fill="#6366f1" radius={[0, 4, 4, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
-      </ChartSection>
-
       {/* Blinding × Significance */}
       <ChartSection
         title="Blinding type vs. statistical significance"
@@ -226,19 +447,6 @@ function OverviewTab(props: DashboardProps) {
             />
             <Bar dataKey="significant" fill="#ef4444" />
             <Bar dataKey="not_significant" fill="#94a3b8" />
-          </BarChart>
-        </ResponsiveContainer>
-      </ChartSection>
-
-      {/* Timeline */}
-      <ChartSection title="Trials by publication year">
-        <ResponsiveContainer width="100%" height={250}>
-          <BarChart data={props.byYear} margin={{ left: 10, right: 20, top: 5, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-            <XAxis dataKey="year" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="count" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </ChartSection>
@@ -329,7 +537,7 @@ function Heatmap({ data }: { data: DashboardProps["heatmapData"] }) {
 function EffectSizesTab({ forestData }: { forestData: ForestRow[] }) {
   const [symptomFilter, setSymptomFilter] = useState<string>("all");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
-  const [measureFilter, setMeasureFilter] = useState<string>("mean_difference");
+  const [measureFilter, setMeasureFilter] = useState<string>("all");
 
   const symptomDomains = useMemo(
     () => [...new Set(forestData.map((d) => d.symptom_domain))].sort(),
@@ -532,12 +740,20 @@ function EffectSizesTab({ forestData }: { forestData: ForestRow[] }) {
 }
 
 // ── TRIAL TABLE TAB ──────────────────────────────────────────────────
-function TrialTableTab({ tableRows }: { tableRows: TrialTableRow[] }) {
+function TrialTableTab({
+  tableRows,
+  yearFilter,
+  onYearClear,
+}: {
+  tableRows: TrialTableRow[];
+  yearFilter: number | null;
+  onYearClear: () => void;
+}) {
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [symptomFilter, setSymptomFilter] = useState("all");
   const [robFilter, setRobFilter] = useState("all");
-  const [sortField, setSortField] = useState<"n_randomized" | "paper_id" | "intervention_name" | "pct_positive">(
+  const [sortField, setSortField] = useState<"n_randomized" | "paper_id" | "intervention_name" | "pct_positive" | "outcome">(
     "n_randomized"
   );
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
@@ -567,10 +783,28 @@ function TrialTableTab({ tableRows }: { tableRows: TrialTableRow[] }) {
     if (categoryFilter !== "all") rows = rows.filter((r) => r.intervention_category === categoryFilter);
     if (symptomFilter !== "all") rows = rows.filter((r) => r.primary_symptom_domain === symptomFilter);
     if (robFilter !== "all") rows = rows.filter((r) => r.rob_overall === robFilter);
+    if (yearFilter !== null) rows = rows.filter((r) => r.year === yearFilter);
+    const outcomeRank = (r: typeof rows[0]): number => {
+      const { primary_effect_value: ev, primary_p_value: p, primary_higher_is_better: hib } = r;
+      if (ev == null && p == null) return -1;
+      const sig = p != null ? p < 0.05 : null;
+      let favors: boolean | null = null;
+      if (ev != null && hib != null) favors = hib ? ev > 0 : ev < 0;
+      if (sig === true && favors === true) return 3;   // Favors intervention
+      if (sig === true && favors == null) return 2;    // Significant, direction unknown
+      if (sig === false || sig === null) return 1;     // No sig. diff.
+      if (sig === true && favors === false) return 0;  // Favors control
+      return -1;
+    };
     rows = [...rows].sort((a, b) => {
       if (sortField === "pct_positive") {
         const va = a.n_outcomes > 0 ? a.n_positive / a.n_outcomes : -1;
         const vb = b.n_outcomes > 0 ? b.n_positive / b.n_outcomes : -1;
+        return sortDir === "asc" ? va - vb : vb - va;
+      }
+      if (sortField === "outcome") {
+        const va = outcomeRank(a);
+        const vb = outcomeRank(b);
         return sortDir === "asc" ? va - vb : vb - va;
       }
       const va = a[sortField] ?? 0;
@@ -580,7 +814,7 @@ function TrialTableTab({ tableRows }: { tableRows: TrialTableRow[] }) {
       return sortDir === "asc" ? (va as number) - (vb as number) : (vb as number) - (va as number);
     });
     return rows;
-  }, [tableRows, search, categoryFilter, symptomFilter, robFilter, sortField, sortDir]);
+  }, [tableRows, search, categoryFilter, symptomFilter, robFilter, yearFilter, sortField, sortDir]);
 
   const toggleExpand = (id: string) => {
     setExpanded((prev) => {
@@ -638,6 +872,18 @@ function TrialTableTab({ tableRows }: { tableRows: TrialTableRow[] }) {
             { value: "high", label: "High" },
           ]}
         />
+        {yearFilter !== null && (
+          <div className="flex flex-col justify-end">
+            <span className="text-xs text-foreground/50 block mb-1">Year</span>
+            <button
+              onClick={onYearClear}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded border border-blue-100 text-sm hover:bg-blue-100 transition-colors"
+            >
+              {yearFilter}
+              <span className="text-blue-400 font-bold">&times;</span>
+            </button>
+          </div>
+        )}
       </div>
 
       <p className="text-sm text-foreground/50">{filtered.length} trials match</p>
@@ -667,7 +913,12 @@ function TrialTableTab({ tableRows }: { tableRows: TrialTableRow[] }) {
               >
                 N {sortField === "n_randomized" ? (sortDir === "asc" ? "↑" : "↓") : ""}
               </th>
-              <th className="p-2">Outcome</th>
+              <th
+                className="p-2 cursor-pointer hover:text-foreground"
+                onClick={() => handleSort("outcome")}
+              >
+                Outcome {sortField === "outcome" ? (sortDir === "asc" ? "↑" : "↓") : ""}
+              </th>
               <th className="p-2 text-right"># Out</th>
               <th className="p-2 text-right" title="Significant in positive direction">+ Sig</th>
               <th className="p-2 text-right" title="Negative or non-significant">− / NS</th>
@@ -824,13 +1075,132 @@ const INTERVENTION_PALETTE = [
   "#fca5a5", "#f0abfc", "#a5b4fc", "#67e8f9", "#6ee7b7", "#bef264",
 ];
 
-function hashColor(name: string, index: number): string {
+function hashColor(_name: string, index: number): string {
   return INTERVENTION_PALETTE[index % INTERVENTION_PALETTE.length];
+}
+
+// ── Country Map ─────────────────────────────────────────────────────
+function CountryMap({ topCountries }: { topCountries: DashboardProps["topCountries"] }) {
+  const [tooltip, setTooltip] = useState<{ name: string; count: number; x: number; y: number } | null>(null);
+
+  // Build name → count lookup from ALL countries (topCountries includes "Other" bucket, but we need per-country)
+  // topCountries already has individual country names (except the "Other" aggregate)
+  const countByName = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const c of topCountries) {
+      if (c.country === "Other") continue;
+      const mapName = COUNTRY_NAME_MAPPING[c.country] ?? c.country;
+      m.set(mapName, c.count);
+    }
+    return m;
+  }, [topCountries]);
+
+  const maxCount = useMemo(() => Math.max(...countByName.values(), 1), [countByName]);
+
+  const getColor = (count: number) => {
+    if (count === 0) return "#e2e8f0";
+    const t = Math.pow(count / maxCount, 0.5); // sqrt scale for better spread
+    const r = Math.round(219 - t * (219 - 30));
+    const g = Math.round(234 - t * (234 - 64));
+    const b = Math.round(254 - t * (254 - 175));
+    return `rgb(${r},${g},${b})`;
+  };
+
+  return (
+    <div className="relative">
+      <ComposableMap
+        projectionConfig={{ scale: 140, center: [10, 10] }}
+        width={700}
+        height={380}
+        style={{ width: "100%", height: "auto" }}
+      >
+        <ZoomableGroup>
+          <Geographies geography={GEO_URL}>
+            {({ geographies }) => (
+              <>
+                {geographies.map((geo) => {
+                  const name = geo.properties.name;
+                  const count = countByName.get(name) ?? 0;
+                  return (
+                    <Geography
+                      key={geo.rsmKey}
+                      geography={geo}
+                      fill={getColor(count)}
+                      stroke="#fff"
+                      strokeWidth={0.5}
+                      onMouseEnter={(e) => {
+                        if (count > 0) {
+                          const rect = (e.target as SVGElement).closest("svg")!.getBoundingClientRect();
+                          setTooltip({
+                            name: geo.properties.name,
+                            count,
+                            x: e.clientX - rect.left,
+                            y: e.clientY - rect.top,
+                          });
+                        }
+                      }}
+                      onMouseLeave={() => setTooltip(null)}
+                      style={{
+                        default: { outline: "none" },
+                        hover: { outline: "none", fill: count > 0 ? "#2563eb" : "#e2e8f0" },
+                        pressed: { outline: "none" },
+                      }}
+                    />
+                  );
+                })}
+                {geographies.map((geo) => {
+                  const name = geo.properties.name;
+                  const count = countByName.get(name) ?? 0;
+                  if (count === 0) return null;
+                  const centroid = geoCentroid(geo);
+                  return (
+                    <Marker key={geo.rsmKey + "-label"} coordinates={centroid}>
+                      <text
+                        textAnchor="middle"
+                        y={2}
+                        style={{
+                          fontFamily: "system-ui, sans-serif",
+                          fill: "#fff",
+                          fontSize: "8px",
+                          fontWeight: "bold",
+                          pointerEvents: "none",
+                          stroke: "rgba(0,0,0,0.5)",
+                          strokeWidth: "1.5px",
+                          paintOrder: "stroke",
+                        }}
+                      >
+                        {count}
+                      </text>
+                    </Marker>
+                  );
+                })}
+              </>
+            )}
+          </Geographies>
+        </ZoomableGroup>
+      </ComposableMap>
+      {tooltip && (
+        <div
+          className="absolute bg-background border border-border rounded px-2 py-1 text-xs shadow-lg pointer-events-none z-10"
+          style={{ left: tooltip.x, top: tooltip.y, transform: "translate(-50%, -120%)" }}
+        >
+          <div className="font-semibold">{tooltip.name}</div>
+          <div className="text-foreground/60">{tooltip.count} trial{tooltip.count !== 1 ? "s" : ""}</div>
+        </div>
+      )}
+      <div className="flex items-center gap-2 text-xs text-foreground/50 mt-1">
+        <span>0</span>
+        <div className="h-2 w-32 rounded" style={{ background: `linear-gradient(to right, #e2e8f0, #1e40af)` }} />
+        <span>{maxCount}</span>
+        <span className="ml-1">trials</span>
+      </div>
+    </div>
+  );
 }
 
 function InterventionStackedBar({ data }: { data: InterventionBar[] }) {
   const [tooltip, setTooltip] = useState<{ x: number; y: number; name: string; count: number; category: string } | null>(null);
-  const maxCount = Math.max(...data.map((d) => d.count));
+  const maxCount = data.length ? Math.max(...data.map((d) => d.count)) : 0;
   const barHeight = 28;
   const labelWidth = 130;
   const chartWidth = 600;
@@ -868,7 +1238,6 @@ function InterventionStackedBar({ data }: { data: InterventionBar[] }) {
                     height={barHeight}
                     fill={hashColor(intv.name, i)}
                     opacity={0.8}
-                    rx={i === 0 ? 0 : 0}
                     onMouseEnter={(e) => {
                       const rect = e.currentTarget.getBoundingClientRect();
                       const parent = e.currentTarget.closest(".relative")!.getBoundingClientRect();

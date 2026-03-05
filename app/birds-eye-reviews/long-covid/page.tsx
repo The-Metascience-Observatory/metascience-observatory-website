@@ -15,6 +15,7 @@ import type {
   BlindingSignificanceBar,
   LcDefinitionBin,
   TrialTableRow,
+  TrialMeta,
 } from "./types";
 
 export const metadata = {
@@ -141,6 +142,7 @@ function processData() {
   const topCountries: CountryBar[] = otherCount > 0
     ? [...top15, { country: "Other", count: otherCount }]
     : top15;
+  const allCountryCounts: CountryBar[] = sortedCountries;
 
   // ── 6. By year ───────────────────────────────────────────────────
   const yearMap = new Map<number, number>();
@@ -170,6 +172,7 @@ function processData() {
         if (bge.effect_value != null && bge.ci_95_low != null && bge.ci_95_high != null) {
           forestData.push({
             paper_id: r.paper_id,
+            is_rct: r.is_rct ?? false,
             intervention_name: interventionName,
             intervention_category: interventionCategory,
             symptom_domain: o.symptom_domain ?? "unknown",
@@ -258,7 +261,7 @@ function processData() {
     let nUnknown = 0;
 
     for (const o of r.outcomes ?? []) {
-      outcomesSummary.push(o.name);
+      outcomesSummary.push(o.name ?? "Unnamed");
       if (o.is_primary && !primaryOutcomeName) {
         primarySymptomDomain = o.symptom_domain ?? "";
         primaryOutcomeName = o.name ?? "";
@@ -291,6 +294,7 @@ function processData() {
 
     return {
       paper_id: r.paper_id,
+      is_rct: r.is_rct ?? false,
       doi_url: `https://doi.org/${r.paper_id}`,
       design_type: r.study_design.design_type,
       intervention_name: interventionName,
@@ -313,6 +317,41 @@ function processData() {
       n_positive: nPositive,
       n_negative_ns: nNegativeNs,
       n_unknown: nUnknown,
+      year: (() => { const m = r.paper_id.match(/20[12]\d/); return m ? parseInt(m[0]) : null; })(),
+    };
+  });
+
+  // ── 11. Trial metadata (lightweight per-record for client-side RCT filtering) ─
+  const trialMetas: TrialMeta[] = records.map((r) => {
+    const interventionArms = r.study_design.arms
+      .filter((a: any) => a.type === "intervention")
+      .map((a: any) => ({ category: a.intervention_category, name: a.intervention_name }));
+    const primarySymptomDomains: string[] = [];
+    let primaryPValue: number | null = null;
+    for (const o of r.outcomes ?? []) {
+      if (o.is_primary && o.symptom_domain) primarySymptomDomains.push(o.symptom_domain);
+      if (o.is_primary && !primaryPValue) {
+        primaryPValue = o.between_group_effects?.[0]?.p_value ?? null;
+      }
+    }
+    const instruments = new Set<string>();
+    for (const o of r.outcomes ?? []) {
+      if (o.measurement_instrument) instruments.add(o.measurement_instrument);
+    }
+    const m = r.paper_id.match(/20[12]\d/);
+    return {
+      paper_id: r.paper_id,
+      is_rct: r.is_rct ?? false,
+      countries: r.study_design.countries ?? [],
+      interventionArms,
+      primarySymptomDomains: [...new Set(primarySymptomDomains)],
+      rob_overall: r.risk_of_bias?.overall_judgment ?? "unknown",
+      blinding: r.study_design.blinding ?? "unknown",
+      n_randomized: r.sample_sizes?.n_randomized_total ?? null,
+      min_weeks: r.participants?.min_time_since_infection_weeks ?? null,
+      year: m ? parseInt(m[0]) : null,
+      n_instruments: instruments.size,
+      primary_p_value: primaryPValue,
     };
   });
 
@@ -322,12 +361,14 @@ function processData() {
     bySymptom,
     heatmapData,
     topCountries,
+    allCountries: allCountryCounts,
     byYear,
     forestData,
     blindingBySignificance,
     lcDefinitionHist,
     lcDefPct12Plus,
     tableRows,
+    trialMetas,
   };
 }
 

@@ -1576,6 +1576,22 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
             print(f"  Skipped {skipped} rows where original_url is 'na'")
         input_df = input_df.reset_index(drop=True)
 
+    # Hard requirement: all rows must have a non-empty description
+    if 'description' not in input_df.columns:
+        print("\n\033[91m❌ ERROR: Input file is missing the 'description' column.")
+        print("  'description' is required for all rows. Add descriptions and retry.\033[0m")
+        return
+    missing_desc = [i for i, v in input_df['description'].items() if is_empty(v)]
+    if missing_desc:
+        print(f"\n\033[91m❌ ERROR: {len(missing_desc)} row(s) are missing a 'description':")
+        for i in missing_desc[:10]:
+            orig_url = _normalize_val(input_df.loc[i].get('original_url', ''))
+            print(f"  Row {i + 1}: original_url = {orig_url or '(empty)'}")
+        if len(missing_desc) > 10:
+            print(f"  ... and {len(missing_desc) - 10} more")
+        print("  All rows must have a 'description'. Add descriptions and retry.\033[0m")
+        return
+
     # Clean Unicode artifacts (zero-width spaces, trailing periods) from URL columns
     def clean_doi_url(url):
         if not isinstance(url, str):
