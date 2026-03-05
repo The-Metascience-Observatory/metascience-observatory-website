@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Bird's Eye Reviews | The Metascience Observatory",
-  description: "Interactive dashboards into publication data on specific research subjects.",
+  description: "Pioneering a new type of large-scale systematic review, using interactive dashboards to convey information..",
 };
 
 interface ReviewMeta {
