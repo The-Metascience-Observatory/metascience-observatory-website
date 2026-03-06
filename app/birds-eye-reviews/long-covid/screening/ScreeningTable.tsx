@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { ChevronDown, ChevronRight, ExternalLink } from "lucide-react";
 
 interface ScreeningRow {
@@ -13,12 +13,40 @@ interface ScreeningRow {
   exclusion_reason: string;
   topics: string[];
   summary: string;
+  title: string;
+  authors: string;
+  journal: string;
+  volume: string;
+  issue: string;
+  pages: string;
+  year: string;
 }
 
 function formatLabel(s: string): string {
   return s
     .replace(/_/g, " ")
     .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function formatReference(row: ScreeningRow): string {
+  const authors = row.authors?.trim();
+  const journal = row.journal?.trim();
+  const year = row.year?.trim();
+
+  if (!authors) return row.doi;
+
+  // Extract last name of first author from "First Last; ..." format
+  const firstAuthor = authors.split(";")[0].trim();
+  const nameParts = firstAuthor.split(/\s+/);
+  const lastName = nameParts[nameParts.length - 1];
+  const authorCount = authors.split(";").length;
+  const authorStr = authorCount > 1 ? `${lastName} et al.` : lastName;
+
+  const parts = [authorStr];
+  if (journal) parts.push(journal);
+  if (year) parts.push(year);
+
+  return parts.join(", ");
 }
 
 function FilterSelect({
@@ -50,45 +78,70 @@ function FilterSelect({
   );
 }
 
-export function ScreeningTable({ rows }: { rows: ScreeningRow[] }) {
+export function ScreeningTable({ initialRows, totalCount }: { initialRows: ScreeningRow[]; totalCount: number }) {
+  const [rows, setRows] = useState<ScreeningRow[]>(initialRows);
+  const [filteredTotal, setFilteredTotal] = useState(totalCount);
   const [search, setSearch] = useState("");
   const [sourceFilter, setSourceFilter] = useState("all");
   const [longCovidFilter, setLongCovidFilter] = useState("all");
   const [treatmentFilter, setTreatmentFilter] = useState("all");
   const [trialTypeFilter, setTrialTypeFilter] = useState("all");
   const [excludedFilter, setExcludedFilter] = useState("all");
-  const [showCount, setShowCount] = useState(100);
+  const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
 
   const sources = useMemo(
-    () => [...new Set(rows.map((r) => r.source_folder))].sort(),
-    [rows]
+    () => ["Observational_Cohort_Study", "Original_Research", "Cross-Sectional_Study", "Qualitative_Study", "Clinical_Trial", "Case-Control_Study", "Case_Report", "Mixed_Methods_Study"],
+    []
   );
   const trialTypes = useMemo(
-    () => [...new Set(rows.map((r) => r.trial_type))].filter(Boolean).sort(),
-    [rows]
+    () => ["cross_sectional", "observational_cohort", "retrospective_cohort", "other", "case_series", "case_control", "non_randomized_trial", "rct", "prospective_cohort"],
+    []
   );
 
-  const filtered = useMemo(() => {
-    let result = rows;
-    if (search) {
-      const s = search.toLowerCase();
-      result = result.filter(
-        (r) =>
-          r.doi.toLowerCase().includes(s) ||
-          r.summary.toLowerCase().includes(s) ||
-          r.topics.some((t) => t.toLowerCase().includes(s))
-      );
-    }
-    if (sourceFilter !== "all") result = result.filter((r) => r.source_folder === sourceFilter);
-    if (longCovidFilter !== "all") result = result.filter((r) => r.is_long_covid === longCovidFilter);
-    if (treatmentFilter !== "all") result = result.filter((r) => r.studies_treatment === treatmentFilter);
-    if (trialTypeFilter !== "all") result = result.filter((r) => r.trial_type === trialTypeFilter);
-    if (excludedFilter !== "all") result = result.filter((r) => r.is_excluded === excludedFilter);
-    return result;
-  }, [rows, search, sourceFilter, longCovidFilter, treatmentFilter, trialTypeFilter, excludedFilter]);
+  const buildParams = useCallback(() => {
+    const p = new URLSearchParams();
+    if (search) p.set("search", search);
+    if (sourceFilter !== "all") p.set("source", sourceFilter);
+    if (longCovidFilter !== "all") p.set("longCovid", longCovidFilter);
+    if (treatmentFilter !== "all") p.set("treatment", treatmentFilter);
+    if (trialTypeFilter !== "all") p.set("trialType", trialTypeFilter);
+    if (excludedFilter !== "all") p.set("excluded", excludedFilter);
+    return p;
+  }, [search, sourceFilter, longCovidFilter, treatmentFilter, trialTypeFilter, excludedFilter]);
 
-  const visible = filtered.slice(0, showCount);
+  const fetchRows = useCallback(async (offset: number, append: boolean) => {
+    setLoading(true);
+    try {
+      const p = buildParams();
+      p.set("offset", String(offset));
+      p.set("limit", "100");
+      const res = await fetch(`/api/screening?${p.toString()}`);
+      const data = await res.json();
+      setFilteredTotal(data.total);
+      if (append) {
+        setRows((prev) => [...prev, ...data.rows]);
+      } else {
+        setRows(data.rows);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, [buildParams]);
+
+  // Refetch when filters change
+  const applyFilters = useCallback(() => {
+    fetchRows(0, false);
+  }, [fetchRows]);
+
+  const isInitialMount = useRef(true);
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    fetchRows(0, false);
+  }, [sourceFilter, longCovidFilter, treatmentFilter, trialTypeFilter, excludedFilter]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const toggleExpand = (doi: string) => {
     setExpanded((prev) => {
@@ -107,9 +160,10 @@ export function ScreeningTable({ rows }: { rows: ScreeningRow[] }) {
           <label className="text-xs text-foreground/50 block mb-1">Search</label>
           <input
             type="text"
-            placeholder="DOI, topic, summary..."
+            placeholder="DOI, topic, summary... (press Enter)"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => { if (e.key === "Enter") applyFilters(); }}
             className="border border-border rounded px-3 py-1.5 text-sm bg-background w-64"
           />
         </div>
@@ -157,7 +211,10 @@ export function ScreeningTable({ rows }: { rows: ScreeningRow[] }) {
         />
       </div>
 
-      <p className="text-sm text-foreground/50">{filtered.length.toLocaleString()} articles match</p>
+      <p className="text-sm text-foreground/50">
+        Showing {rows.length.toLocaleString()} of {filteredTotal.toLocaleString()} articles
+        {loading && " — loading..."}
+      </p>
 
       {/* Table */}
       <div className="overflow-x-auto">
@@ -165,20 +222,19 @@ export function ScreeningTable({ rows }: { rows: ScreeningRow[] }) {
           <thead>
             <tr className="border-b border-border text-left">
               <th className="p-2 w-8" />
-              <th className="p-2">DOI</th>
+              <th className="p-2">Reference</th>
               <th className="p-2">Source</th>
               <th className="p-2">Trial Type</th>
               <th className="p-2">Long Covid</th>
               <th className="p-2">Treatment</th>
-              <th className="p-2">Status</th>
               <th className="p-2">Topics</th>
             </tr>
           </thead>
           <tbody>
-            {visible.map((row) => {
+            {rows.map((row) => {
               const isExpanded = expanded.has(row.doi);
               return (
-                <ScreeningRow
+                <ScreeningRowItem
                   key={row.doi}
                   row={row}
                   isExpanded={isExpanded}
@@ -190,19 +246,20 @@ export function ScreeningTable({ rows }: { rows: ScreeningRow[] }) {
         </table>
       </div>
 
-      {filtered.length > showCount && (
+      {rows.length < filteredTotal && (
         <button
-          onClick={() => setShowCount((c) => c + 100)}
-          className="w-full py-2 text-sm text-foreground/60 hover:text-foreground border border-border rounded"
+          onClick={() => fetchRows(rows.length, true)}
+          disabled={loading}
+          className="w-full py-2 text-sm text-foreground/60 hover:text-foreground border border-border rounded disabled:opacity-50"
         >
-          Show more ({filtered.length - showCount} remaining)
+          {loading ? "Loading..." : `Show more (${(filteredTotal - rows.length).toLocaleString()} remaining)`}
         </button>
       )}
     </div>
   );
 }
 
-function ScreeningRow({
+function ScreeningRowItem({
   row,
   isExpanded,
   onToggle,
@@ -211,7 +268,6 @@ function ScreeningRow({
   isExpanded: boolean;
   onToggle: () => void;
 }) {
-  const excluded = row.is_excluded === "yes";
   return (
     <>
       <tr
@@ -226,10 +282,10 @@ function ScreeningRow({
             href={`https://doi.org/${row.doi}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 hover:text-blue-700 inline-flex items-center gap-1"
+            className="text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 text-xs"
             onClick={(e) => e.stopPropagation()}
           >
-            {row.doi.length > 35 ? row.doi.slice(0, 35) + "…" : row.doi}
+            {formatReference(row)}
             <ExternalLink size={10} />
           </a>
         </td>
@@ -257,29 +313,33 @@ function ScreeningRow({
             {row.studies_treatment === "yes" ? "Yes" : "No"}
           </span>
         </td>
-        <td className="p-2">
-          <span
-            className="inline-block px-2 py-0.5 rounded text-xs font-medium"
-            style={{
-              backgroundColor: excluded ? "#ef444420" : "#22c55e20",
-              color: excluded ? "#dc2626" : "#16a34a",
-            }}
-          >
-            {excluded ? "Excluded" : "Included"}
-          </span>
-        </td>
         <td className="p-2 text-xs max-w-[250px]">
           <span className="line-clamp-1">{row.topics.join(", ")}</span>
         </td>
       </tr>
       {isExpanded && (
         <tr className="border-b border-border/50">
-          <td colSpan={8} className="p-4 bg-foreground/[0.02]">
+          <td colSpan={7} className="p-4 bg-foreground/[0.02]">
             <div className="space-y-3 text-xs">
+              {/* Reference */}
+              {(row.title || row.authors || row.journal) && (
+                <div>
+                  {row.title && (
+                    <p className="text-foreground font-medium leading-snug">{row.title}</p>
+                  )}
+                  <p className="text-foreground/70 mt-0.5">
+                    {[
+                      row.authors,
+                      [row.journal, row.volume && `${row.volume}${row.issue ? `(${row.issue})` : ""}`, row.pages].filter(Boolean).join(" "),
+                      row.year && `(${row.year})`,
+                    ].filter(Boolean).join(". ")}
+                  </p>
+                </div>
+              )}
               {row.summary && (
                 <div>
                   <div className="text-foreground font-medium uppercase tracking-wide text-[10px] mb-0.5">
-                    Summary
+                    AI Summary
                   </div>
                   <p className="text-foreground leading-relaxed">{row.summary}</p>
                 </div>

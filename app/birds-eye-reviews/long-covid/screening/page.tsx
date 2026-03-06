@@ -22,6 +22,13 @@ interface ScreeningRow {
   exclusion_reason: string;
   topics: string[];
   summary: string;
+  title: string;
+  authors: string;
+  journal: string;
+  volume: string;
+  issue: string;
+  pages: string;
+  year: string;
 }
 
 function loadData(): ScreeningRow[] {
@@ -45,8 +52,15 @@ function loadData(): ScreeningRow[] {
       trial_type: row.trial_type ?? "",
       is_excluded: row.is_excluded ?? "",
       exclusion_reason: row.exclusion_reason ?? "",
-      topics: (row.topics ?? "").split("|").map((t) => t.trim()).filter(Boolean),
-      summary: row.summary ?? "",
+      topics: (row.topics ?? "").split("|").map((t) => t.trim()).filter(Boolean).slice(0, 5),
+      summary: (row.summary ?? "").slice(0, 400),
+      title: (row.paper_title ?? "").slice(0, 250),
+      authors: (row.paper_authors ?? "").slice(0, 200),
+      journal: (row.paper_journal ?? "").slice(0, 100),
+      volume: row.paper_volume ?? "",
+      issue: row.paper_issue ?? "",
+      pages: row.paper_pages ?? "",
+      year: row.paper_year ?? "",
     };
   });
 }
@@ -77,7 +91,8 @@ function parseCSVLine(line: string): string[] {
 }
 
 export default function ScreeningPage() {
-  const rows = loadData();
+  const allRows = loadData();
+  const initialRows = allRows.slice(0, 100);
 
   return (
     <>
@@ -96,7 +111,7 @@ export default function ScreeningPage() {
           Trial Screening
         </h1>
         <p className="text-foreground/70 text-lg mb-6">
-          {rows.length.toLocaleString()} articles on Long Covid were found for the Long Covid Bird&apos;s Eye Review.
+          {allRows.length.toLocaleString()} articles on Long Covid were found for the Long Covid Bird&apos;s Eye Review.
         </p>
 
         <div className="mb-8 border border-border rounded-lg overflow-hidden bg-white">
@@ -110,7 +125,7 @@ export default function ScreeningPage() {
           />
         </div>
 
-        <ScreeningTable rows={rows} />
+        <ScreeningTable initialRows={initialRows} totalCount={allRows.length} />
       </main>
       <Footer />
     </>
