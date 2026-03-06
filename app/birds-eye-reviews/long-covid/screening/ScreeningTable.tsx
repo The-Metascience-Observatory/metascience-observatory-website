@@ -227,7 +227,6 @@ export function ScreeningTable({ initialRows, totalCount }: { initialRows: Scree
               <th className="p-2">Trial Type</th>
               <th className="p-2">Long Covid</th>
               <th className="p-2">Treatment</th>
-              <th className="p-2">Topics</th>
             </tr>
           </thead>
           <tbody>
