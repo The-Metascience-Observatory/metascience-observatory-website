@@ -25,12 +25,25 @@ export const Hero = () => {
       return;
     }
     setIsSubmitting(true);
-    setTimeout(() => {
-      setInlineToastMessage("Thank you for subscribing!");
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setInlineToastMessage(data.error ?? "Something went wrong. Please try again.");
+      } else {
+        setInlineToastMessage("Thank you! Please check your email to confirm.");
+        setEmail("");
+      }
+    } catch {
+      setInlineToastMessage("Network error. Please try again.");
+    } finally {
       setShowInlineToast(true);
-      setEmail("");
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -79,8 +92,6 @@ export const Hero = () => {
                 </div>
               </form>
             </div>
-
-            
           </div>
 
           <div className="flex justify-center md:justify-end">
@@ -97,5 +108,3 @@ export const Hero = () => {
     </section>
   );
 };
-
-

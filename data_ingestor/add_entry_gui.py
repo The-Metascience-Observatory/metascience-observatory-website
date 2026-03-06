@@ -50,16 +50,6 @@ RESULT_OPTIONS = [
     "mixed", "inconclusive", "reversal",
 ]
 
-DISCIPLINE_OPTIONS = [
-    "",
-    "biology", "business & management", "computer science",
-    "earth and planetary sciences", "economics", "education",
-    "engineering", "environmental science", "linguistics",
-    "medical fields", "neuroscience", "physics and astronomy",
-    "political science", "psychology", "social sciences",
-    "sociology", "software engineering",
-]
-
 VALIDATED_OPTIONS = ["", "no", "partial", "partially", "yes"]
 
 VALIDATED_PERSON_OPTIONS = [
@@ -201,8 +191,8 @@ class AddEntryWindow(QMainWindow):
         # ── Classification ────────────────────────────────────────────
         box, form = _group("Classification")
         self.result            = _styled_combo(RESULT_OPTIONS)
-        self.discipline        = _styled_combo(DISCIPLINE_OPTIONS)
-        self.subdiscipline     = _styled_combo([""])  # Populated from ontology when discipline is selected
+        self.discipline        = _styled_combo(DISCIPLINE_OPTIONS, editable=False)
+        self.subdiscipline     = _styled_combo([""], editable=False)  # Populated from ontology when discipline is selected
         self.discipline.currentTextChanged.connect(self._on_discipline_changed)
         self._on_discipline_changed()  # Initial population
         self.initiative_tag    = _line_edit("e.g. RP:P, ML1, XPHIR")

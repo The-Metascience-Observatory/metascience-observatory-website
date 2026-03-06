@@ -373,7 +373,26 @@ function processData() {
 }
 
 export default function LongCovidReviewPage() {
-  const data = processData();
+  let data;
+  try {
+    data = processData();
+  } catch (err) {
+    console.error("Failed to load Long Covid data:", err);
+    return (
+      <div className="min-h-screen">
+        <BirdsEyeNavbar />
+        <main className="pt-20 pb-16">
+          <div className="container mx-auto px-4 py-12 max-w-7xl text-center">
+            <h1 className="text-2xl font-bold mb-4">Data Unavailable</h1>
+            <p className="text-muted-foreground">
+              The Long Covid trial data could not be loaded. Please try again later.
+            </p>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">

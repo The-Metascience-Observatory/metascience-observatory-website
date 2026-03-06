@@ -61,5 +61,3 @@ export const Footer = () => {
     </footer>
   );
 };
-
-

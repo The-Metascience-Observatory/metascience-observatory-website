@@ -184,4 +184,4 @@ Always run `npm run build` before pushing to verify there are no TypeScript or c
 
 ## Sanity CMS
 
-`next-sanity` is installed but **not actively used**. `sanity.config.ts` and `check-sanity-setup.js` have been deleted. Ignore any Sanity references.
+Sanity CMS is **not used**. The `next-sanity` dependency, `sanity.config.ts`, and `check-sanity-setup.js` have all been removed. Ignore any Sanity references.

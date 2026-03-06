@@ -48,7 +48,7 @@ export const Team = () => {
                       <span className="ml-2 font-normal text-foreground/80">- Prompt Engineer and meta-analysis expert</span>
                     </h3>
                   <p className="text-foreground/90 leading-relaxed">
-                    Greg Fitzgerald is a neuroscience Ph.D. student at the State Univerity of New York, Albany. 
+                    Greg Fitzgerald is a neuroscience Ph.D. student at the State University of New York, Albany. 
                   </p>
                 </div>
               </div>

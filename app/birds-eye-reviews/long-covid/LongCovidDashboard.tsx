@@ -204,6 +204,8 @@ export function LongCovidDashboard(props: DashboardProps) {
     "overview"
   );
   const [yearFilter, setYearFilter] = useState<number | null>(null);
+  const [landscapeCategory, setLandscapeCategory] = useState<string | null>(null);
+  const [landscapeSymptom, setLandscapeSymptom] = useState<string | null>(null);
   const tableRef = useRef<HTMLDivElement>(null);
 
   const handleYearClick = (year: number) => {
@@ -212,7 +214,15 @@ export function LongCovidDashboard(props: DashboardProps) {
       tableRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
-  const [rctOnly, setRctOnly] = useState(false);
+
+  const handleCellClick = (category: string, symptom: string) => {
+    setLandscapeCategory(category);
+    setLandscapeSymptom(symptom);
+    if (tableRef.current) {
+      tableRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+  const [rctOnly, setRctOnly] = useState(true);
 
   // Recompute aggregated data when RCT filter is toggled
   const filteredMetas = useMemo(
@@ -305,7 +315,7 @@ export function LongCovidDashboard(props: DashboardProps) {
 
       {/* Tab content */}
       {activeTab === "overview" && (
-        <OverviewTab {...effectiveProps} onYearClick={handleYearClick} />
+        <OverviewTab {...effectiveProps} onYearClick={handleYearClick} onCellClick={handleCellClick} />
       )}
       {activeTab === "effects" && <EffectSizesTab forestData={effectiveProps.forestData} />}
       {/* Trial table — always visible at the bottom */}
@@ -315,6 +325,10 @@ export function LongCovidDashboard(props: DashboardProps) {
           tableRows={effectiveProps.tableRows}
           yearFilter={yearFilter}
           onYearClear={() => setYearFilter(null)}
+          landscapeCategory={landscapeCategory}
+          landscapeSymptom={landscapeSymptom}
+          onLandscapeCategoryClear={() => setLandscapeCategory(null)}
+          onLandscapeSymptomClear={() => setLandscapeSymptom(null)}
         />
       </div>
     </div>
@@ -322,7 +336,7 @@ export function LongCovidDashboard(props: DashboardProps) {
 }
 
 // ── OVERVIEW TAB ─────────────────────────────────────────────────────
-function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => void }) {
+function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => void; onCellClick?: (category: string, symptom: string) => void }) {
   return (
     <div className="space-y-10">
       {/* Timeline + Country map side by side */}
@@ -414,10 +428,10 @@ function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => v
 
       {/* Heatmap */}
       <ChartSection
-        title="Evidence landscape"
+        title="Trial landscape"
         subtitle="Intervention category × symptom domain (cell = number of trials)"
       >
-        <Heatmap data={props.heatmapData} />
+        <Heatmap data={props.heatmapData} onCellClick={props.onCellClick} />
       </ChartSection>
 
       {/* Blinding × Significance */}
@@ -455,7 +469,7 @@ function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => v
 }
 
 // ── Heatmap ──────────────────────────────────────────────────────────
-function Heatmap({ data }: { data: DashboardProps["heatmapData"] }) {
+function Heatmap({ data, onCellClick }: { data: DashboardProps["heatmapData"]; onCellClick?: (category: string, symptom: string) => void }) {
   const interventions = useMemo(
     () => [...new Set(data.map((d) => d.intervention))].sort(),
     [data]
@@ -505,15 +519,18 @@ function Heatmap({ data }: { data: DashboardProps["heatmapData"] }) {
                 return (
                   <td
                     key={sym}
-                    className="p-2 text-center border border-border/30"
+                    className={`p-2 text-center border border-border/30${count > 0 && onCellClick ? " cursor-pointer hover:ring-2 hover:ring-blue-400 hover:ring-inset" : ""}`}
                     style={{
                       backgroundColor: count > 0 ? `rgba(59, 130, 246, ${opacity})` : undefined,
                     }}
                     title={
                       count > 0
-                        ? `${count} trials, ${highPct}% high RoB`
+                        ? `${count} trials, ${highPct}% high RoB — click to filter table`
                         : "No trials"
                     }
+                    onClick={() => {
+                      if (count > 0 && onCellClick) onCellClick(intv, sym);
+                    }}
                   >
                     {count > 0 ? (
                       <span className={count > 0 ? "font-semibold text-foreground" : ""}>
@@ -744,10 +761,18 @@ function TrialTableTab({
   tableRows,
   yearFilter,
   onYearClear,
+  landscapeCategory,
+  landscapeSymptom,
+  onLandscapeCategoryClear,
+  onLandscapeSymptomClear,
 }: {
   tableRows: TrialTableRow[];
   yearFilter: number | null;
   onYearClear: () => void;
+  landscapeCategory: string | null;
+  landscapeSymptom: string | null;
+  onLandscapeCategoryClear: () => void;
+  onLandscapeSymptomClear: () => void;
 }) {
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
@@ -784,6 +809,8 @@ function TrialTableTab({
     if (symptomFilter !== "all") rows = rows.filter((r) => r.primary_symptom_domain === symptomFilter);
     if (robFilter !== "all") rows = rows.filter((r) => r.rob_overall === robFilter);
     if (yearFilter !== null) rows = rows.filter((r) => r.year === yearFilter);
+    if (landscapeCategory !== null) rows = rows.filter((r) => r.intervention_category === landscapeCategory);
+    if (landscapeSymptom !== null) rows = rows.filter((r) => r.primary_symptom_domain === landscapeSymptom);
     const outcomeRank = (r: typeof rows[0]): number => {
       const { primary_effect_value: ev, primary_p_value: p, primary_higher_is_better: hib } = r;
       if (ev == null && p == null) return -1;
@@ -814,7 +841,7 @@ function TrialTableTab({
       return sortDir === "asc" ? (va as number) - (vb as number) : (vb as number) - (va as number);
     });
     return rows;
-  }, [tableRows, search, categoryFilter, symptomFilter, robFilter, yearFilter, sortField, sortDir]);
+  }, [tableRows, search, categoryFilter, symptomFilter, robFilter, yearFilter, landscapeCategory, landscapeSymptom, sortField, sortDir]);
 
   const toggleExpand = (id: string) => {
     setExpanded((prev) => {
@@ -884,6 +911,30 @@ function TrialTableTab({
             </button>
           </div>
         )}
+        {landscapeCategory !== null && (
+          <div className="flex flex-col justify-end">
+            <span className="text-xs text-foreground/50 block mb-1">Intervention (landscape)</span>
+            <button
+              onClick={onLandscapeCategoryClear}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded border border-blue-100 text-sm hover:bg-blue-100 transition-colors"
+            >
+              {formatCategory(landscapeCategory)}
+              <span className="text-blue-400 font-bold">&times;</span>
+            </button>
+          </div>
+        )}
+        {landscapeSymptom !== null && (
+          <div className="flex flex-col justify-end">
+            <span className="text-xs text-foreground/50 block mb-1">Symptom (landscape)</span>
+            <button
+              onClick={onLandscapeSymptomClear}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded border border-blue-100 text-sm hover:bg-blue-100 transition-colors"
+            >
+              {formatCategory(landscapeSymptom)}
+              <span className="text-blue-400 font-bold">&times;</span>
+            </button>
+          </div>
+        )}
       </div>
 
       <p className="text-sm text-foreground/50">{filtered.length} trials match</p>
@@ -930,7 +981,7 @@ function TrialTableTab({
               >
                 % Pos {sortField === "pct_positive" ? (sortDir === "asc" ? "↑" : "↓") : ""}
               </th>
-              <th className="p-2">RoB</th>
+              <th className="p-2" title="Risk of Bias — assessed using the Cochrane RoB 2 tool, which evaluates potential biases in randomization, deviations from interventions, missing data, outcome measurement, and selective reporting">Risk of Bias</th>
             </tr>
           </thead>
           <tbody>
