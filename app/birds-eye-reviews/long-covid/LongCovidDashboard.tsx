@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useRef } from "react";
+import Link from "next/link";
 import {
   BarChart,
   Bar,
@@ -9,12 +10,8 @@ import {
   Tooltip,
   ResponsiveContainer,
   Legend,
-  ScatterChart,
-  Scatter,
-  ReferenceLine,
   Cell,
   CartesianGrid,
-  ZAxis,
 } from "recharts";
 import { ChevronDown, ChevronRight, ExternalLink } from "lucide-react";
 import {
@@ -25,7 +22,7 @@ import {
   Marker,
 } from "react-simple-maps";
 import { geoCentroid } from "d3-geo";
-import type { DashboardProps, ForestRow, InterventionBar, TrialTableRow, TrialMeta, SummaryStats, SymptomBar, HeatmapCell, CountryBar, YearBar, BlindingSignificanceBar, LcDefinitionBin } from "./types";
+import type { DashboardProps, InterventionBar, TrialTableRow, TrialMeta, SummaryStats, SymptomBar, HeatmapCell, CountryBar, YearBar, BlindingSignificanceBar, LcDefinitionBin } from "./types";
 
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
@@ -200,9 +197,6 @@ function recomputeFromMetas(metas: TrialMeta[]) {
 
 // ── Main Dashboard ───────────────────────────────────────────────────
 export function LongCovidDashboard(props: DashboardProps) {
-  const [activeTab, setActiveTab] = useState<"overview" | "effects">(
-    "overview"
-  );
   const [yearFilter, setYearFilter] = useState<number | null>(null);
   const [landscapeCategory, setLandscapeCategory] = useState<string | null>(null);
   const [landscapeSymptom, setLandscapeSymptom] = useState<string | null>(null);
@@ -245,7 +239,6 @@ export function LongCovidDashboard(props: DashboardProps) {
       blindingBySignificance: recomputed.blindingBySignificance,
       lcDefinitionHist: recomputed.lcDefinitionHist,
       lcDefPct12Plus: recomputed.lcDefPct12Plus,
-      forestData: props.forestData.filter((d) => d.is_rct),
       tableRows: props.tableRows.filter((r) => r.is_rct),
     };
   }, [rctOnly, props, recomputed]);
@@ -255,19 +248,20 @@ export function LongCovidDashboard(props: DashboardProps) {
     [props.trialMetas]
   );
 
-  const tabs = [
-    { id: "overview" as const, label: "Overview" },
-    { id: "effects" as const, label: "Effect Sizes" },
-  ];
-
   return (
     <div>
       {/* Hero */}
       <h1 className="font-clarendon font-bold text-3xl mb-2">Long Covid Clinical Trials</h1>
-      <p className="text-foreground/70 text-lg mb-4">
+      <p className="text-foreground/70 text-lg mb-2">
         A bird&apos;s eye view of {effectiveProps.summaryStats.totalTrials} clinical trials testing
         interventions for Long Covid.
       </p>
+      <Link
+        href="/birds-eye-reviews/long-covid/screening"
+        className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
+      >
+        View full breakdown of Long COVID articles &rarr;
+      </Link>
 
       {/* RCT Filter Toggle */}
       <div className="mb-6">
@@ -295,29 +289,7 @@ export function LongCovidDashboard(props: DashboardProps) {
         </button>
       </div>
 
-      {/* Tabs */}
-      <div className="border-b border-border mb-6">
-        <div className="flex gap-1 -mb-px overflow-x-auto">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${activeTab === tab.id
-                ? "border-foreground text-foreground"
-                : "border-transparent text-foreground/50 hover:text-foreground/70"
-                }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Tab content */}
-      {activeTab === "overview" && (
-        <OverviewTab {...effectiveProps} onYearClick={handleYearClick} onCellClick={handleCellClick} />
-      )}
-      {activeTab === "effects" && <EffectSizesTab forestData={effectiveProps.forestData} />}
+      <OverviewTab {...effectiveProps} onYearClick={handleYearClick} onCellClick={handleCellClick} />
       {/* Trial table — always visible at the bottom */}
       <div className="mt-12 border-t border-border pt-8" ref={tableRef}>
         <h2 className="font-clarendon font-bold text-2xl mb-4">All Trials</h2>
@@ -550,212 +522,6 @@ function Heatmap({ data, onCellClick }: { data: DashboardProps["heatmapData"]; o
   );
 }
 
-// ── EFFECT SIZES TAB ─────────────────────────────────────────────────
-function EffectSizesTab({ forestData }: { forestData: ForestRow[] }) {
-  const [symptomFilter, setSymptomFilter] = useState<string>("all");
-  const [categoryFilter, setCategoryFilter] = useState<string>("all");
-  const [measureFilter, setMeasureFilter] = useState<string>("all");
-
-  const symptomDomains = useMemo(
-    () => [...new Set(forestData.map((d) => d.symptom_domain))].sort(),
-    [forestData]
-  );
-  const categories = useMemo(
-    () => [...new Set(forestData.map((d) => d.intervention_category))].sort(),
-    [forestData]
-  );
-  const measures = useMemo(
-    () => [...new Set(forestData.map((d) => d.effect_measure))].sort(),
-    [forestData]
-  );
-
-  const filtered = useMemo(() => {
-    let d = forestData;
-    if (symptomFilter !== "all") d = d.filter((r) => r.symptom_domain === symptomFilter);
-    if (categoryFilter !== "all") d = d.filter((r) => r.intervention_category === categoryFilter);
-    if (measureFilter !== "all") d = d.filter((r) => r.effect_measure === measureFilter);
-    d = d.filter((r) => r.effect_value >= -10 && r.effect_value <= 55);
-    return d.slice(0, 80); // cap for readability
-  }, [forestData, symptomFilter, categoryFilter, measureFilter]);
-
-  // Pooled estimate (inverse-variance weighted)
-  const pooled = useMemo(() => {
-    if (filtered.length < 2) return null;
-    // Only pool if all same measure
-    const uniqueMeasures = new Set(filtered.map((d) => d.effect_measure));
-    if (uniqueMeasures.size > 1) return null;
-
-    let sumW = 0;
-    let sumWx = 0;
-    for (const d of filtered) {
-      const se = (d.ci_95_high - d.ci_95_low) / (2 * 1.96);
-      if (se <= 0) continue;
-      const w = 1 / (se * se);
-      sumW += w;
-      sumWx += w * d.effect_value;
-    }
-    if (sumW === 0) return null;
-    const mean = sumWx / sumW;
-    const seMean = Math.sqrt(1 / sumW);
-    return {
-      mean,
-      ci_low: mean - 1.96 * seMean,
-      ci_high: mean + 1.96 * seMean,
-    };
-  }, [filtered]);
-
-  // Prepare data for horizontal forest plot
-  const chartData = useMemo(
-    () =>
-      filtered.map((d, i) => ({
-        index: i,
-        label: d.intervention_name.slice(0, 30),
-        effect: d.effect_value,
-        ciLow: d.ci_95_low,
-        ciHigh: d.ci_95_high,
-        category: d.intervention_category,
-        rob: d.rob_overall,
-        n: d.n_randomized,
-        paper_id: d.paper_id,
-      })),
-    [filtered]
-  );
-
-  const chartHeight = Math.max(400, chartData.length * 28 + 60);
-
-  return (
-    <div className="space-y-6">
-      {/* Filters */}
-      <div className="flex flex-wrap gap-3">
-        <FilterSelect
-          label="Symptom"
-          value={symptomFilter}
-          onChange={setSymptomFilter}
-          options={[{ value: "all", label: "All domains" }, ...symptomDomains.map((d) => ({ value: d, label: formatCategory(d) }))]}
-        />
-        <FilterSelect
-          label="Intervention"
-          value={categoryFilter}
-          onChange={setCategoryFilter}
-          options={[{ value: "all", label: "All categories" }, ...categories.map((c) => ({ value: c, label: formatCategory(c) }))]}
-        />
-        <FilterSelect
-          label="Effect measure"
-          value={measureFilter}
-          onChange={setMeasureFilter}
-          options={[{ value: "all", label: "All measures" }, ...measures.map((m) => ({ value: m, label: m.replace(/_/g, " ") }))]}
-        />
-      </div>
-
-      <p className="text-sm text-foreground/50">
-        Showing {filtered.length} trial effects
-        {filtered.length === 80 ? " (capped at 80 for readability)" : ""}.
-        Each point is one trial&apos;s primary outcome; horizontal bars are 95% CIs.
-      </p>
-
-      {filtered.length === 0 ? (
-        <p className="text-foreground/60 py-12 text-center">No trials match these filters.</p>
-      ) : (
-        <div className="overflow-x-auto">
-          <ResponsiveContainer width="100%" height={chartHeight}>
-            <ScatterChart margin={{ left: 180, right: 40, top: 10, bottom: 30 }}>
-              <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-              <XAxis
-                type="number"
-                dataKey="effect"
-                name="Effect"
-                domain={[-10, 55]}
-                allowDataOverflow
-                label={{ value: "Effect size", position: "bottom", offset: 10, fontSize: 12 }}
-              />
-              <YAxis
-                type="number"
-                dataKey="index"
-                name="Trial"
-                reversed
-                tick={({ x, y, payload }: any) => {
-                  const d = chartData[payload.value];
-                  if (!d) return <g />;
-                  return (
-                    <g>
-                      <text x={x - 5} y={y} textAnchor="end" dominantBaseline="middle" fontSize={11} fill="currentColor">
-                        {d.label}
-                      </text>
-                    </g>
-                  );
-                }}
-                domain={[-0.5, chartData.length - 0.5]}
-                interval={0}
-                width={175}
-              />
-              <ZAxis range={[40, 40]} />
-              <ReferenceLine x={0} stroke="#888" strokeDasharray="3 3" />
-              <Tooltip
-                content={({ payload }) => {
-                  if (!payload?.[0]) return null;
-                  const d = payload[0].payload;
-                  return (
-                    <div className="bg-background border border-border rounded p-2 text-xs shadow-lg">
-                      <div className="font-semibold">{d.label}</div>
-                      <div>Effect: {d.effect.toFixed(2)} [{d.ciLow.toFixed(2)}, {d.ciHigh.toFixed(2)}]</div>
-                      <div>N = {d.n} | RoB: {ROB_LABELS[d.rob] ?? d.rob}</div>
-                      <div className="text-foreground/50">{d.paper_id}</div>
-                    </div>
-                  );
-                }}
-              />
-              {/* CI bars as custom shapes */}
-              <Scatter
-                data={chartData}
-                shape={(shapeProps: any) => {
-                  const { cx, cy, payload } = shapeProps;
-                  if (!payload || cx == null || cy == null) return <g />;
-                  // Calculate CI endpoints in pixels
-                  const xScale = shapeProps.xAxis?.scale;
-                  if (!xScale) return <circle cx={cx} cy={cy} r={4} fill={CATEGORY_COLORS[payload.category] ?? "#888"} />;
-                  const x1 = xScale(payload.ciLow);
-                  const x2 = xScale(payload.ciHigh);
-                  const color = CATEGORY_COLORS[payload.category] ?? "#888";
-                  return (
-                    <g>
-                      <line x1={x1} y1={cy} x2={x2} y2={cy} stroke={color} strokeWidth={2} opacity={0.6} />
-                      <circle cx={cx} cy={cy} r={4} fill={color} stroke="#fff" strokeWidth={1} />
-                    </g>
-                  );
-                }}
-              />
-            </ScatterChart>
-          </ResponsiveContainer>
-        </div>
-      )}
-
-      {/* Pooled estimate */}
-      {pooled && (
-        <div className="border border-border rounded-lg p-4 bg-foreground/5">
-          <div className="text-sm font-medium mb-1">
-            Pooled estimate (inverse-variance weighted, fixed-effect)
-          </div>
-          <div className="text-lg font-bold">
-            {pooled.mean.toFixed(3)}{" "}
-            <span className="text-sm font-normal text-foreground/60">
-              95% CI [{pooled.ci_low.toFixed(3)}, {pooled.ci_high.toFixed(3)}]
-            </span>
-          </div>
-          <p className="text-xs text-foreground/50 mt-1">
-            Caution: trials use different outcome instruments and scales. This pooled estimate is
-            only meaningful when comparing trials using the same measurement instrument.
-          </p>
-        </div>
-      )}
-
-      <div className="text-xs text-foreground/40 border-t border-border pt-3">
-        Note: Different trials use different outcome instruments even within the same symptom domain.
-        Raw effect sizes are shown — they are not directly comparable across instruments.
-      </div>
-    </div>
-  );
-}
-
 // ── TRIAL TABLE TAB ──────────────────────────────────────────────────
 function TrialTableTab({
   tableRows,
@@ -778,8 +544,8 @@ function TrialTableTab({
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [symptomFilter, setSymptomFilter] = useState("all");
   const [robFilter, setRobFilter] = useState("all");
-  const [sortField, setSortField] = useState<"n_randomized" | "paper_id" | "intervention_name" | "pct_positive" | "outcome">(
-    "n_randomized"
+  const [sortField, setSortField] = useState<"n_randomized" | "paper_id" | "intervention_name" | "pct_positive" | "outcome" | "promise_score">(
+    "promise_score"
   );
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
@@ -877,7 +643,7 @@ function TrialTableTab({
           />
         </div>
         <FilterSelect
-          label="Intervention"
+          label="Category"
           value={categoryFilter}
           onChange={setCategoryFilter}
           options={[{ value: "all", label: "All" }, ...categories.map((c) => ({ value: c, label: formatCategory(c) }))]}
@@ -941,7 +707,7 @@ function TrialTableTab({
 
       {/* Table */}
       <div className="overflow-x-auto">
-        <table className="w-full text-sm border-collapse">
+        <table className="w-full text-sm text-foreground border-collapse">
           <thead>
             <tr className="border-b border-border text-left">
               <th className="p-2 w-8" />
@@ -957,7 +723,6 @@ function TrialTableTab({
               >
                 Intervention {sortField === "intervention_name" ? (sortDir === "asc" ? "↑" : "↓") : ""}
               </th>
-              <th className="p-2">Category</th>
               <th
                 className="p-2 cursor-pointer hover:text-foreground text-right"
                 onClick={() => handleSort("n_randomized")}
@@ -968,7 +733,7 @@ function TrialTableTab({
                 className="p-2 cursor-pointer hover:text-foreground"
                 onClick={() => handleSort("outcome")}
               >
-                Outcome {sortField === "outcome" ? (sortDir === "asc" ? "↑" : "↓") : ""}
+                Primary Outcome {sortField === "outcome" ? (sortDir === "asc" ? "↑" : "↓") : ""}
               </th>
               <th className="p-2 text-right"># Out</th>
               <th className="p-2 text-right" title="Significant in positive direction">+ Sig</th>
@@ -976,10 +741,10 @@ function TrialTableTab({
               <th className="p-2 text-right" title="Unknown significance">Unk</th>
               <th
                 className="p-2 cursor-pointer hover:text-foreground text-right"
-                onClick={() => handleSort("pct_positive")}
-                title="% positive significant outcomes"
+                onClick={() => handleSort("promise_score")}
+                title="AI-generated promise score (0–1) based on effect strength, study quality, and source credibility"
               >
-                % Pos {sortField === "pct_positive" ? (sortDir === "asc" ? "↑" : "↓") : ""}
+                Promise Score {sortField === "promise_score" ? (sortDir === "asc" ? "↑" : "↓") : ""}
               </th>
               <th className="p-2" title="Risk of Bias — assessed using the Cochrane RoB 2 tool, which evaluates potential biases in randomization, deviations from interventions, missing data, outcome measurement, and selective reporting">Risk of Bias</th>
             </tr>
@@ -1027,7 +792,7 @@ function TrialRow({
         className="border-b border-border/50 hover:bg-foreground/5 cursor-pointer"
         onClick={onToggle}
       >
-        <td className="p-2 text-foreground/40">
+        <td className="p-2">
           {isExpanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
         </td>
         <td className="p-2">
@@ -1042,30 +807,32 @@ function TrialRow({
             <ExternalLink size={10} />
           </a>
         </td>
-        <td className="p-2 max-w-[200px] truncate" title={row.intervention_name}>
-          {row.intervention_name}
-        </td>
-        <td className="p-2">
-          <span
-            className="inline-block px-2 py-0.5 rounded text-xs"
-            style={{
-              backgroundColor: (CATEGORY_COLORS[row.intervention_category] ?? "#888") + "20",
-              color: CATEGORY_COLORS[row.intervention_category] ?? "#888",
-            }}
-          >
-            {formatCategory(row.intervention_category)}
-          </span>
+        <td className="p-2 max-w-[180px]" title={row.intervention_name}>
+          <span className="text-xs leading-tight line-clamp-3">{row.intervention_name}</span>
         </td>
         <td className="p-2 text-right tabular-nums">{row.n_randomized ?? "—"}</td>
         <td className="p-2">
-          <OutcomeBadge row={row} />
+          <div className="flex flex-col gap-0.5 items-start">
+            <span className="text-xs text-foreground leading-tight">{row.primary_outcome_name || "—"}</span>
+            <OutcomeBadge row={row} />
+          </div>
         </td>
         <td className="p-2 text-right tabular-nums text-xs">{row.n_outcomes}</td>
         <td className="p-2 text-right tabular-nums text-xs text-green-600">{row.n_positive || "—"}</td>
-        <td className="p-2 text-right tabular-nums text-xs text-foreground/60">{row.n_negative_ns || "—"}</td>
-        <td className="p-2 text-right tabular-nums text-xs text-foreground/40">{row.n_unknown || "—"}</td>
+        <td className="p-2 text-right tabular-nums text-xs">{row.n_negative_ns || "—"}</td>
+        <td className="p-2 text-right tabular-nums text-xs">{row.n_unknown || "—"}</td>
         <td className="p-2 text-right tabular-nums text-xs">
-          {row.n_outcomes > 0 ? `${Math.round((row.n_positive / row.n_outcomes) * 100)}%` : "—"}
+          {row.promise_score != null ? (
+            <span
+              className="inline-block px-2 py-0.5 rounded font-medium"
+              style={{
+                backgroundColor: row.promise_score >= 0.6 ? "#22c55e20" : row.promise_score >= 0.3 ? "#f59e0b20" : "#94a3b820",
+                color: row.promise_score >= 0.6 ? "#16a34a" : row.promise_score >= 0.3 ? "#d97706" : "#64748b",
+              }}
+            >
+              {row.promise_score.toFixed(1)}
+            </span>
+          ) : "—"}
         </td>
         <td className="p-2">
           <RobBadge rob={row.rob_overall} />
@@ -1073,14 +840,27 @@ function TrialRow({
       </tr>
       {isExpanded && (
         <tr className="border-b border-border/50">
-          <td colSpan={12} className="p-4 bg-foreground/[0.02]">
+          <td colSpan={11} className="p-4 bg-foreground/[0.02]">
             <div className="grid md:grid-cols-2 gap-4 text-xs">
+              <div className="md:col-span-2">
+                <DetailLabel>Long Covid definition</DetailLabel>
+                <p className="text-foreground/70">{row.long_covid_definition || "Not specified"}</p>
+              </div>
+              {row.summary && (
+                <div className="md:col-span-2">
+                  <DetailLabel>AI Summary (Sonnet 4.6)</DetailLabel>
+                  <p className="text-foreground leading-relaxed">{row.summary}</p>
+                </div>
+              )}
               <div>
                 <DetailLabel>Primary outcome</DetailLabel>
                 <p>{row.primary_outcome_name || "Not specified"}</p>
                 {row.primary_effect_value != null && (
                   <p className="mt-1">
-                    Effect: <strong>{row.primary_effect_value.toFixed(2)}</strong>
+                    {row.primary_effect_measure
+                      ? row.primary_effect_measure === "smd" ? "SMD"
+                      : formatCategory(row.primary_effect_measure)
+                      : "Effect"}: <strong>{row.primary_effect_value.toFixed(2)}</strong>
                     {row.primary_ci_low != null && row.primary_ci_high != null && (
                       <> [95% CI: {row.primary_ci_low.toFixed(2)}, {row.primary_ci_high.toFixed(2)}]</>
                     )}
@@ -1090,23 +870,73 @@ function TrialRow({
                   </p>
                 )}
               </div>
-              <div>
-                <DetailLabel>Blinding</DetailLabel>
-                <p>{formatCategory(row.blinding)}</p>
-                <DetailLabel className="mt-2">Follow-up</DetailLabel>
-                <p>{row.follow_up_weeks != null ? `${row.follow_up_weeks} weeks` : "Not reported"}</p>
-              </div>
-              <div className="md:col-span-2">
-                <DetailLabel>Long Covid definition</DetailLabel>
-                <p className="text-foreground/70">{row.long_covid_definition || "Not specified"}</p>
+              <div className="flex gap-6 flex-wrap">
+                <div>
+                  <DetailLabel>Blinding</DetailLabel>
+                  <p>{formatCategory(row.blinding)}</p>
+                </div>
+                <div>
+                  <DetailLabel>Follow-up</DetailLabel>
+                  <p>{row.follow_up_weeks != null ? `${row.follow_up_weeks} weeks` : "Not reported"}</p>
+                </div>
+                {(() => {
+                  const treatment = row.arm_samples.filter((a) => !a.is_control);
+                  const control = row.arm_samples.filter((a) => a.is_control);
+                  return (
+                    <>
+                      {treatment.length > 0 && (
+                        <div className="flex gap-4">
+                          {treatment.map((a, i) => (
+                            <div key={i}>
+                              <DetailLabel>N {treatment.length > 1 ? a.label : "Treatment"}</DetailLabel>
+                              <p>{a.n_randomized ?? "—"}</p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      {control.length > 0 && (
+                        <div>
+                          <DetailLabel>N Control</DetailLabel>
+                          <p>{control.map((a) => a.n_randomized ?? "—").join(" + ")}</p>
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
               </div>
               {row.outcomes_summary.length > 1 && (
                 <div className="md:col-span-2">
                   <DetailLabel>All outcomes ({row.outcomes_summary.length})</DetailLabel>
-                  <p className="text-foreground/50">
-                    {row.outcomes_summary.slice(0, 8).join(" · ")}
-                    {row.outcomes_summary.length > 8 && ` · +${row.outcomes_summary.length - 8} more`}
-                  </p>
+                  <div className="space-y-1 mt-1">
+                    {row.outcomes_summary.slice(0, 12).map((o, i) => {
+                      const pStr = o.p_value != null ? (o.p_value < 0.001 ? "p<.001" : `p=${o.p_value.toFixed(2)}`) : null;
+                      let direction = "";
+                      if (o.effect_value != null && o.higher_is_better != null) {
+                        const favors = o.higher_is_better ? o.effect_value > 0 : o.effect_value < 0;
+                        direction = favors ? "↑" : "↓";
+                      }
+                      const sig = o.p_value != null ? o.p_value < 0.05 : null;
+                      const color = sig === true && direction === "↑" ? "#16a34a" : sig === true && direction === "↓" ? "#dc2626" : sig === true ? "#d97706" : "#64748b";
+                      return (
+                        <div key={i} className="flex items-baseline gap-2">
+                          <span className="text-foreground">{o.name}</span>
+                          {o.symptom_domain && <span className="text-foreground/40">({formatCategory(o.symptom_domain)})</span>}
+                          {(pStr || o.effect_value != null) && (
+                            <span style={{ color }} className="whitespace-nowrap font-medium">
+                              {direction}
+                              {o.effect_value != null && (
+                                <>{" "}{o.effect_measure ? (o.effect_measure === "smd" ? "SMD" : formatCategory(o.effect_measure)) + " " : ""}{o.effect_value.toFixed(2)}</>
+                              )}
+                              {pStr ? ` ${pStr}` : ""}
+                            </span>
+                          )}
+                        </div>
+                      );
+                    })}
+                    {row.outcomes_summary.length > 12 && (
+                      <p className="text-foreground/40">+{row.outcomes_summary.length - 12} more</p>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
@@ -1425,7 +1255,7 @@ function OutcomeBadge({ row }: { row: TrialTableRow }) {
   }
   // Not significant
   return (
-    <span className="inline-block px-2 py-0.5 rounded text-xs font-medium whitespace-nowrap" style={{ backgroundColor: "#94a3b820", color: "#64748b" }}>
+    <span className="inline-block px-2 py-0.5 rounded text-xs font-medium whitespace-nowrap" style={{ backgroundColor: "#94a3b840", color: "#64748b" }}>
       No sig. diff.{pStr && <span className="opacity-70"> (p{pStr})</span>}
     </span>
   );
@@ -1445,7 +1275,7 @@ function RobBadge({ rob }: { rob: string }) {
 
 function DetailLabel({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={`text-foreground/50 font-medium uppercase tracking-wide text-[10px] mb-0.5 ${className}`}>
+    <div className={`text-foreground font-medium uppercase tracking-wide text-[10px] mb-0.5 ${className}`}>
       {children}
     </div>
   );

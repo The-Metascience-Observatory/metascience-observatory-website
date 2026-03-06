@@ -36,23 +36,6 @@ export interface YearBar {
   count: number;
 }
 
-export interface ForestRow {
-  paper_id: string;
-  is_rct: boolean;
-  intervention_name: string;
-  intervention_category: string;
-  symptom_domain: string;
-  instrument: string;
-  effect_measure: string;
-  effect_value: number;
-  ci_95_low: number;
-  ci_95_high: number;
-  rob_overall: string;
-  n_randomized: number;
-  blinding: string;
-  higher_is_better: boolean | null;
-}
-
 export interface BlindingSignificanceBar {
   blinding: string;
   significant: number;
@@ -80,6 +63,21 @@ export interface TrialMeta {
   primary_p_value: number | null;
 }
 
+export interface ArmSample {
+  label: string;
+  n_randomized: number | null;
+  is_control: boolean;
+}
+
+export interface OutcomeSummaryItem {
+  name: string;
+  symptom_domain: string;
+  effect_value: number | null;
+  p_value: number | null;
+  higher_is_better: boolean | null;
+  effect_measure: string;
+}
+
 export interface TrialTableRow {
   paper_id: string;
   is_rct: boolean;
@@ -91,6 +89,7 @@ export interface TrialTableRow {
   n_randomized: number | null;
   primary_symptom_domain: string;
   primary_outcome_name: string;
+  primary_effect_measure: string;
   primary_effect_value: number | null;
   primary_ci_low: number | null;
   primary_ci_high: number | null;
@@ -99,13 +98,16 @@ export interface TrialTableRow {
   countries: string[];
   rob_overall: string;
   follow_up_weeks: number | null;
+  arm_samples: ArmSample[];
   long_covid_definition: string;
-  outcomes_summary: string[];
+  outcomes_summary: OutcomeSummaryItem[];
   n_outcomes: number;
   n_positive: number;
   n_negative_ns: number;
   n_unknown: number;
   year: number | null;
+  summary: string;
+  promise_score: number | null;
 }
 
 export interface DashboardProps {
@@ -116,7 +118,6 @@ export interface DashboardProps {
   topCountries: CountryBar[];
   allCountries: CountryBar[];
   byYear: YearBar[];
-  forestData: ForestRow[];
   blindingBySignificance: BlindingSignificanceBar[];
   lcDefinitionHist: LcDefinitionBin[];
   lcDefPct12Plus: number;

@@ -11,7 +11,6 @@ import type {
   HeatmapCell,
   CountryBar,
   YearBar,
-  ForestRow,
   BlindingSignificanceBar,
   LcDefinitionBin,
   TrialTableRow,
@@ -29,7 +28,7 @@ export const metadata = {
 function processData() {
   const filePath = path.join(
     process.cwd(),
-    "data/birds_eye_reviews/long_covid_trial_extractions.jsonl"
+    "data/birds_eye_reviews/long_covid/long_covid_trial_extractions.jsonl"
   );
   const raw = fs.readFileSync(filePath, "utf-8");
   const records: any[] = raw
@@ -158,42 +157,7 @@ function processData() {
     .map(([year, count]) => ({ year, count }))
     .sort((a, b) => a.year - b.year);
 
-  // ── 7. Forest data (primary outcomes with between-group effects) ─
-  const forestData: ForestRow[] = [];
-  for (const r of records) {
-    const rob = r.risk_of_bias?.overall_judgment ?? "unknown";
-    const interventionArms = r.study_design.arms.filter((a: any) => a.type === "intervention");
-    const interventionName = interventionArms[0]?.intervention_name ?? "unknown";
-    const interventionCategory = interventionArms[0]?.intervention_category ?? "unknown";
-
-    for (const o of r.outcomes ?? []) {
-      if (!o.is_primary) continue;
-      for (const bge of o.between_group_effects ?? []) {
-        if (bge.effect_value != null && bge.ci_95_low != null && bge.ci_95_high != null) {
-          forestData.push({
-            paper_id: r.paper_id,
-            is_rct: r.is_rct ?? false,
-            intervention_name: interventionName,
-            intervention_category: interventionCategory,
-            symptom_domain: o.symptom_domain ?? "unknown",
-            instrument: o.measurement_instrument ?? "unknown",
-            effect_measure: bge.effect_measure ?? "unknown",
-            effect_value: bge.effect_value,
-            ci_95_low: bge.ci_95_low,
-            ci_95_high: bge.ci_95_high,
-            rob_overall: rob,
-            n_randomized: r.sample_sizes?.n_randomized_total ?? 0,
-            blinding: r.study_design.blinding ?? "unknown",
-            higher_is_better: o.higher_is_better ?? null,
-          });
-          break; // take first valid effect per outcome
-        }
-      }
-      break; // only primary outcome
-    }
-  }
-
-  // ── 8. Blinding × significance ────────────────────────────────
+  // ── 7. Blinding × significance ────────────────────────────────
   const blindSigMap = new Map<string, { significant: number; not_significant: number }>();
   for (const r of records) {
     const blind = r.study_design.blinding ?? "unknown";
@@ -250,24 +214,34 @@ function processData() {
 
     let primarySymptomDomain = "";
     let primaryOutcomeName = "";
+    let primaryEffectMeasure = "";
     let primaryEffectValue: number | null = null;
     let primaryCiLow: number | null = null;
     let primaryCiHigh: number | null = null;
     let primaryPValue: number | null = null;
     let primaryHigherIsBetter: boolean | null = null;
-    const outcomesSummary: string[] = [];
+    const outcomesSummary: { name: string; symptom_domain: string; effect_value: number | null; p_value: number | null; higher_is_better: boolean | null; effect_measure: string }[] = [];
     let nPositive = 0;
     let nNegativeNs = 0;
     let nUnknown = 0;
 
     for (const o of r.outcomes ?? []) {
-      outcomesSummary.push(o.name ?? "Unnamed");
+      const oBge = o.between_group_effects?.[0];
+      outcomesSummary.push({
+        name: o.name ?? "Unnamed",
+        symptom_domain: o.symptom_domain ?? "",
+        effect_value: oBge?.effect_value ?? null,
+        p_value: oBge?.p_value ?? null,
+        higher_is_better: o.higher_is_better ?? null,
+        effect_measure: oBge?.effect_measure ?? "",
+      });
       if (o.is_primary && !primaryOutcomeName) {
         primarySymptomDomain = o.symptom_domain ?? "";
         primaryOutcomeName = o.name ?? "";
         primaryHigherIsBetter = o.higher_is_better ?? null;
         const bge = o.between_group_effects?.[0];
         if (bge) {
+          primaryEffectMeasure = bge.effect_measure ?? "";
           primaryEffectValue = bge.effect_value ?? null;
           primaryCiLow = bge.ci_95_low ?? null;
           primaryCiHigh = bge.ci_95_high ?? null;
@@ -303,6 +277,7 @@ function processData() {
       n_randomized: r.sample_sizes?.n_randomized_total ?? null,
       primary_symptom_domain: primarySymptomDomain,
       primary_outcome_name: primaryOutcomeName,
+      primary_effect_measure: primaryEffectMeasure,
       primary_effect_value: primaryEffectValue,
       primary_ci_low: primaryCiLow,
       primary_ci_high: primaryCiHigh,
@@ -311,6 +286,17 @@ function processData() {
       countries: r.study_design.countries ?? [],
       rob_overall: r.risk_of_bias?.overall_judgment ?? "unknown",
       follow_up_weeks: r.follow_up?.total_duration_weeks ?? null,
+      arm_samples: (() => {
+        const arms = r.study_design?.arms ?? [];
+        const perArm = r.sample_sizes?.per_arm ?? [];
+        const controlKeywords = ["placebo", "control", "usual care", "standard care", "waitlist", "wait-list", "sham", "no treatment", "no intervention"];
+        return arms.map((a: { arm_id: number; label: string; is_control?: boolean | null }) => {
+          const pa = perArm.find((p: { arm_id: number }) => p.arm_id === a.arm_id);
+          const labelLower = (a.label ?? "").toLowerCase();
+          const isControl = a.is_control === true || controlKeywords.some((kw) => labelLower.includes(kw));
+          return { label: a.label ?? `Arm ${a.arm_id}`, n_randomized: pa?.n_randomized ?? null, is_control: isControl };
+        });
+      })(),
       long_covid_definition: r.participants?.long_covid_definition ?? "",
       outcomes_summary: outcomesSummary,
       n_outcomes: nOutcomes,
@@ -318,6 +304,8 @@ function processData() {
       n_negative_ns: nNegativeNs,
       n_unknown: nUnknown,
       year: (() => { const m = r.paper_id.match(/20[12]\d/); return m ? parseInt(m[0]) : null; })(),
+      summary: r.summary ?? "",
+      promise_score: r.trial_rating?.promise_score ?? null,
     };
   });
 
@@ -363,7 +351,6 @@ function processData() {
     topCountries,
     allCountries: allCountryCounts,
     byYear,
-    forestData,
     blindingBySignificance,
     lcDefinitionHist,
     lcDefPct12Plus,

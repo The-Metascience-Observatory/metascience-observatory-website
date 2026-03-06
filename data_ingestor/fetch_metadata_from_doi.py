@@ -165,7 +165,7 @@ def _request_with_retry(url, headers=None, timeout=10, max_retries=3):
     return None
 
 
-def fetch_metadata_from_doi(doi, email=None, delay=0.2):
+def fetch_metadata_from_doi(doi, email=None, delay=0.2, enable_base=False, enable_core=False):
     if email is None:
         email = CONTACT_EMAIL
     """
@@ -398,49 +398,52 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
     time.sleep(delay)
 
     # ---------- 7️⃣ BASE (Bielefeld Academic Search Engine) ----------
-    try:
-        search_title = meta.get("title") or ""
-        if search_title:
-            q = urllib.parse.quote(search_title)
-            r = _request_with_retry(
-                f"https://api.base-search.net/cgi-bin/BaseHttpSearchInterface.fcgi"
-                f"?func=PerformSearch&query=dctitle:{q}&format=json&hits=5",
-                headers=headers,
-            )
-            if r and r.status_code == 200:
-                results = r.json().get("response", {}).get("docs", [])
-                for doc in results[:5]:
-                    fetched_title = doc.get("dctitle", "")
-                    if isinstance(fetched_title, list):
-                        fetched_title = fetched_title[0] if fetched_title else ""
-                    ratio = SequenceMatcher(None, search_title.lower(), fetched_title.lower()).ratio()
-                    if ratio >= 0.9:
-                        authors_raw = doc.get("dcCreator") or doc.get("dccreator") or []
-                        if isinstance(authors_raw, str):
-                            authors_raw = [authors_raw]
-                        authors = "; ".join(_format_initial(a) for a in authors_raw) or None
-                        base_year = None
-                        dcdate = doc.get("dcyear") or doc.get("dcdate", "")
-                        if isinstance(dcdate, list):
-                            dcdate = dcdate[0] if dcdate else ""
-                        dcdate = str(dcdate)
-                        if dcdate and len(dcdate) >= 4 and dcdate[:4].isdigit():
-                            base_year = int(dcdate[:4])
-                        ba = {
-                            "authors": authors,
-                            "title": fetched_title,
-                            "journal": doc.get("dcsource") or doc.get("dcpublisher"),
-                            "year": base_year,
-                            "url": doc.get("dclink") or doc.get("dcidentifier"),
-                        }
-                        meta = enrich(meta, ba)
-                        break
-                if is_complete(meta):
-                    return meta
-            elif r:
-                logger.warning(f"BASE returned HTTP {r.status_code}")
-    except Exception as e:
-        logger.warning(f"BASE error: {e}")
+    # Disabled by default: title-based search is slow and frequently times out
+    # Pass enable_base=True to re-enable
+    if enable_base:
+        try:
+            search_title = meta.get("title") or ""
+            if search_title:
+                q = urllib.parse.quote(search_title)
+                r = _request_with_retry(
+                    f"https://api.base-search.net/cgi-bin/BaseHttpSearchInterface.fcgi"
+                    f"?func=PerformSearch&query=dctitle:{q}&format=json&hits=5",
+                    headers=headers,
+                )
+                if r and r.status_code == 200:
+                    results = r.json().get("response", {}).get("docs", [])
+                    for doc in results[:5]:
+                        fetched_title = doc.get("dctitle", "")
+                        if isinstance(fetched_title, list):
+                            fetched_title = fetched_title[0] if fetched_title else ""
+                        ratio = SequenceMatcher(None, search_title.lower(), fetched_title.lower()).ratio()
+                        if ratio >= 0.9:
+                            authors_raw = doc.get("dcCreator") or doc.get("dccreator") or []
+                            if isinstance(authors_raw, str):
+                                authors_raw = [authors_raw]
+                            authors = "; ".join(_format_initial(a) for a in authors_raw) or None
+                            base_year = None
+                            dcdate = doc.get("dcyear") or doc.get("dcdate", "")
+                            if isinstance(dcdate, list):
+                                dcdate = dcdate[0] if dcdate else ""
+                            dcdate = str(dcdate)
+                            if dcdate and len(dcdate) >= 4 and dcdate[:4].isdigit():
+                                base_year = int(dcdate[:4])
+                            ba = {
+                                "authors": authors,
+                                "title": fetched_title,
+                                "journal": doc.get("dcsource") or doc.get("dcpublisher"),
+                                "year": base_year,
+                                "url": doc.get("dclink") or doc.get("dcidentifier"),
+                            }
+                            meta = enrich(meta, ba)
+                            break
+                    if is_complete(meta):
+                        return meta
+                elif r:
+                    logger.warning(f"BASE returned HTTP {r.status_code}")
+        except Exception as e:
+            logger.warning(f"BASE error: {e}")
 
     # ---------- 8️⃣ Scopus / Elsevier ----------
     if SCOPUS_API_KEY:
@@ -555,7 +558,9 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2):
         logger.warning(f"Semantic Scholar error for DOI {doi}: {e}")
 
     # ---------- 1️⃣1️⃣ CORE ----------
-    if CORE_API_KEY:
+    # Disabled by default: title-based search is slow and frequently times out
+    # Pass enable_core=True to re-enable
+    if enable_core and CORE_API_KEY:
         try:
             search_title = meta.get("title") or ""
             if search_title:
