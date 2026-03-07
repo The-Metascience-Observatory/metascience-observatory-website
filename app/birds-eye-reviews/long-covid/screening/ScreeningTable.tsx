@@ -312,13 +312,10 @@ function ScreeningRowItem({
             {row.studies_treatment === "yes" ? "Yes" : "No"}
           </span>
         </td>
-        <td className="p-2 text-xs max-w-[250px]">
-          <span className="line-clamp-1">{row.topics.join(", ")}</span>
-        </td>
       </tr>
       {isExpanded && (
         <tr className="border-b border-border/50">
-          <td colSpan={7} className="p-4 bg-foreground/[0.02]">
+          <td colSpan={6} className="p-4 bg-foreground/[0.02]">
             <div className="space-y-3 text-xs">
               {/* Reference */}
               {(row.title || row.authors || row.journal) && (
@@ -352,21 +349,6 @@ function ScreeningRowItem({
                     <p>{formatLabel(row.exclusion_reason)}</p>
                   </div>
                 )}
-                <div>
-                  <div className="text-foreground font-medium uppercase tracking-wide text-[10px] mb-0.5">
-                    Topics
-                  </div>
-                  <div className="flex flex-wrap gap-1 mt-0.5">
-                    {row.topics.map((t, i) => (
-                      <span
-                        key={i}
-                        className="inline-block px-2 py-0.5 rounded bg-foreground/5 text-foreground/80"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
               </div>
             </div>
           </td>
