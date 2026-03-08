@@ -28,12 +28,12 @@ function formatLabel(s: string): string {
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-function formatReference(row: ScreeningRow): string {
+function ReferenceLabel({ row }: { row: ScreeningRow }) {
   const authors = row.authors?.trim();
   const journal = row.journal?.trim();
   const year = row.year?.trim();
 
-  if (!authors) return row.doi;
+  if (!authors) return <span>{row.doi}</span>;
 
   // Extract last name of first author from "First Last; ..." format
   const firstAuthor = authors.split(";")[0].trim();
@@ -42,11 +42,15 @@ function formatReference(row: ScreeningRow): string {
   const authorCount = authors.split(";").length;
   const authorStr = authorCount > 1 ? `${lastName} et al.` : lastName;
 
-  const parts = [authorStr];
-  if (journal) parts.push(journal);
-  if (year) parts.push(year);
-
-  return parts.join(", ");
+  return (
+    <span>
+      {authorStr}
+      {(journal || year) && ", "}
+      {journal && <em>{journal}</em>}
+      {journal && year && ", "}
+      {year && year}
+    </span>
+  );
 }
 
 function FilterSelect({
@@ -222,7 +226,7 @@ export function ScreeningTable({ initialRows, totalCount }: { initialRows: Scree
           <thead>
             <tr className="border-b border-border text-left">
               <th className="p-2 w-8" />
-              <th className="p-2">Reference</th>
+              <th className="p-2 w-[30%]">Reference</th>
               <th className="p-2">Source</th>
               <th className="p-2">Trial Type</th>
               <th className="p-2">Long Covid</th>
@@ -281,11 +285,11 @@ function ScreeningRowItem({
             href={`https://doi.org/${row.doi}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 text-xs"
+            className="text-blue-600 hover:text-blue-700 text-xs"
             onClick={(e) => e.stopPropagation()}
           >
-            {formatReference(row)}
-            <ExternalLink size={10} />
+            <ReferenceLabel row={row} />
+            {" "}<ExternalLink size={10} className="inline align-baseline ml-0.5" />
           </a>
         </td>
         <td className="p-2 text-xs">{formatLabel(row.source_folder)}</td>
@@ -335,7 +339,7 @@ function ScreeningRowItem({
               {row.summary && (
                 <div>
                   <div className="text-foreground font-medium uppercase tracking-wide text-[10px] mb-0.5">
-                    AI Summary
+                    AI Summary of Abstract
                   </div>
                   <p className="text-foreground leading-relaxed">{row.summary}</p>
                 </div>

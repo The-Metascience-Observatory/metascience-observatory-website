@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export const About = () => {
   return (
-    <section id="about" className="py-12 scroll-mt-1 bg-gradient-to-b from-background to-muted/30">
+    <section id="about" className="pt-8 pb-8 scroll-mt-1">
       <div className="container px-4">
         <div className="max-w-6xl mx-auto space-y-6">
           <div className="text-center space-y-4">

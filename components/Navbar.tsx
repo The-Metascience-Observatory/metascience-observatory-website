@@ -23,21 +23,32 @@ export const Navbar = () => {
             </h1>
           </Link>
 
-          <div className="hidden md:flex items-center gap-6 text-xs">
+          <div className="hidden md:flex items-center gap-3 text-xs">
             <Link href="/#about" className="text-foreground/80 hover:text-foreground transition-colors">About</Link>
             <Link href="/#team" className="text-foreground/80 hover:text-foreground transition-colors">Team</Link>
-            <Link href="/roadmap" className="text-foreground/80 hover:text-foreground transition-colors">Roadmap</Link>
-            <Link href="/docs" className="text-foreground/80 hover:text-foreground transition-colors">Docs</Link>
-            <Link href="/birds-eye-reviews" className="text-foreground/80 hover:text-foreground transition-colors">Reviews</Link>
-            <Link href="/#donate" className="text-foreground/80 hover:text-foreground transition-colors">Donate</Link>
-            <Button variant="outline-gradient" size="sm" asChild>
+            <Button variant="outline-gradient" size="sm" asChild className="border-gray-400 text-gray-600 dark:text-gray-400 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+              <Link href="/docs">
+                Docs
+              </Link>
+            </Button>
+            <Button variant="outline-gradient" size="sm" asChild className="border-teal-500 text-teal-700 dark:text-teal-400 bg-gradient-to-r from-teal-50 to-teal-100 dark:from-teal-950 dark:to-teal-900">
+              <Link href="/birds-eye-reviews">
+                Reviews
+              </Link>
+            </Button>
+            <Button variant="outline-gradient" size="sm" asChild className="border-violet-500 text-violet-700 dark:text-violet-400 bg-gradient-to-r from-violet-50 to-violet-100 dark:from-violet-950 dark:to-violet-900">
               <Link href="https://explore.metascienceobservatory.org/" target="_blank" rel="noopener noreferrer">
                 Explorer
               </Link>
             </Button>
-            <Button variant="outline-gradient" size="sm" asChild>
+            <Button variant="outline-gradient" size="sm" asChild className="border-sky-500 text-sky-700 dark:text-sky-400 bg-gradient-to-r from-sky-50 to-sky-100 dark:from-sky-950 dark:to-sky-900">
               <Link href="/replications-database">
                 Replications Database
+              </Link>
+            </Button>
+            <Button variant="outline-gradient" size="sm" asChild className="ml-auto border-red-500 text-red-700 dark:text-red-400 bg-gradient-to-r from-red-50 to-red-100 dark:from-red-950 dark:to-red-900">
+              <Link href="/#donate">
+                Donate
               </Link>
             </Button>
           </div>
@@ -84,42 +95,29 @@ export const Navbar = () => {
               >
                 Team
               </Link>
-              <Link
-                href="/roadmap"
-                className="text-foreground/80 hover:text-foreground transition-colors py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Roadmap
-              </Link>
-              <Link
-                href="/docs"
-                className="text-foreground/80 hover:text-foreground transition-colors py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Docs
-              </Link>
-              <Link
-                href="/birds-eye-reviews"
-                className="text-foreground/80 hover:text-foreground transition-colors py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Reviews
-              </Link>
-              <Link
-                href="/#donate"
-                className="text-foreground/80 hover:text-foreground transition-colors py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Donate
-              </Link>
-              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center">
+              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-gray-400 text-gray-600 dark:text-gray-400 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+                <Link href="/docs" onClick={() => setIsMobileMenuOpen(false)}>
+                  Docs
+                </Link>
+              </Button>
+              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-teal-500 text-teal-700 dark:text-teal-400 bg-gradient-to-r from-teal-50 to-teal-100 dark:from-teal-950 dark:to-teal-900">
+                <Link href="/birds-eye-reviews" onClick={() => setIsMobileMenuOpen(false)}>
+                  Reviews
+                </Link>
+              </Button>
+              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-violet-500 text-violet-700 dark:text-violet-400 bg-gradient-to-r from-violet-50 to-violet-100 dark:from-violet-950 dark:to-violet-900">
                 <Link href="https://explore.metascienceobservatory.org/" target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)}>
                   Explorer
                 </Link>
               </Button>
-              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center">
+              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-sky-500 text-sky-700 dark:text-sky-400 bg-gradient-to-r from-sky-50 to-sky-100 dark:from-sky-950 dark:to-sky-900">
                 <Link href="/replications-database" onClick={() => setIsMobileMenuOpen(false)}>
                   Replications Database
+                </Link>
+              </Button>
+              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-red-500 text-red-700 dark:text-red-400 bg-gradient-to-r from-red-50 to-red-100 dark:from-red-950 dark:to-red-900">
+                <Link href="/#donate" onClick={() => setIsMobileMenuOpen(false)}>
+                  Donate
                 </Link>
               </Button>
             </div>

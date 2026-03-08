@@ -1,10 +1,10 @@
 import fs from "fs";
 import path from "path";
-import Image from "next/image";
 import { BirdsEyeNavbar } from "@/components/BirdsEyeNavbar";
 import { Footer } from "@/components/Footer";
 import Link from "next/link";
 import { ScreeningTable } from "./ScreeningTable";
+import { ScreeningFunnelChart } from "./ScreeningFunnelChart";
 
 export const metadata = {
   title: "Trial Screening | Long Covid | Bird's Eye Reviews | The Metascience Observatory",
@@ -38,10 +38,10 @@ function loadData(): ScreeningRow[] {
   );
   const raw = fs.readFileSync(filePath, "utf-8");
   const lines = raw.split("\n").filter((l) => l.trim());
-  const header = parseCSVLine(lines[0]);
+  const header = parseCSVLine(lines[0]).map((h) => h.trim());
 
   return lines.slice(1).map((line) => {
-    const vals = parseCSVLine(line);
+    const vals = parseCSVLine(line).map((v) => v.trim());
     const row: Record<string, string> = {};
     header.forEach((h, i) => (row[h] = vals[i] ?? ""));
     return {
@@ -90,9 +90,26 @@ function parseCSVLine(line: string): string[] {
   return result;
 }
 
+function computeFunnel(rows: ScreeningRow[]) {
+  const total = rows.length;
+  const longCovid = rows.filter((r) => r.is_long_covid === "yes");
+  const lcTreatment = longCovid.filter((r) => r.studies_treatment === "yes");
+  const lcTreatmentIncluded = lcTreatment.filter((r) => r.is_excluded === "no");
+  const lcTreatmentIncludedRCT = lcTreatmentIncluded.filter((r) => r.trial_type === "rct");
+
+  return [
+    { label: "Articles screened", count: total, color: "#6366f1" },
+    { label: "About Long Covid", count: longCovid.length, color: "#8b5cf6" },
+    { label: "Study a treatment", count: lcTreatment.length, color: "#3b82f6" },
+    { label: "Passed screening", count: lcTreatmentIncluded.length, color: "#14b8a6" },
+    { label: "Randomized controlled trials", count: lcTreatmentIncludedRCT.length, color: "#22c55e" },
+  ];
+}
+
 export default function ScreeningPage() {
   const allRows = loadData();
   const initialRows = allRows.slice(0, 100);
+  const funnelData = computeFunnel(allRows);
 
   return (
     <>
@@ -114,16 +131,7 @@ export default function ScreeningPage() {
           {allRows.length.toLocaleString()} articles on Long Covid were found for the Long Covid Bird&apos;s Eye Review.
         </p>
 
-        <div className="mb-8 border border-border rounded-lg overflow-hidden bg-white">
-          <Image
-            src="/assets/birds_eye_reviews/long_covid/papers_by_folder_bar.png"
-            alt="Long COVID Papers by Article Type (n = 20,267)"
-            width={1400}
-            height={600}
-            className="w-full h-auto"
-            priority
-          />
-        </div>
+        <ScreeningFunnelChart data={funnelData} />
 
         <ScreeningTable initialRows={initialRows} totalCount={allRows.length} />
       </main>

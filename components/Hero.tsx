@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
@@ -47,56 +48,58 @@ export const Hero = () => {
   };
 
   return (
-    <section className="pt-20 pb-10 md:pt-24 md:pb-16">
+    <section className="pt-20 pb-2 md:pt-24 md:pb-2">
       <div className="container px-4">
-        <div className="grid md:grid-cols-2 gap-6 items-center">
-          <div className="space-y-8">
-            <div className="space-y-4 text-base text-muted-foreground">
-              <p className="font-medium text-foreground">
-                Is science healthy? How do rigor and reproducibility vary across fields, journals, and institutions?
-              </p>
-              <p>
-                At The Metascience Observatory, we are using AI to analyze scientific papers at scale to help answer these questions.
-              </p>
-            </div>
+        <div className="grid md:grid-cols-2 gap-3 items-center">
+          <Card className="p-6 md:p-8 shadow-lg">
+            <div className="space-y-6">
+              <div className="space-y-4 text-base text-muted-foreground">
+                <p className="font-medium text-foreground">
+                  Is science healthy? How do rigor and reproducibility vary across fields, journals, and institutions?
+                </p>
+                <p>
+                  At The Metascience Observatory, we are using AI to analyze scientific papers at scale to help answer these questions.
+                </p>
+              </div>
 
-            <div ref={formWrapperRef} className="relative max-w-md">
-              {showInlineToast && inlineToastMessage ? (
-                <div className="absolute -top-12 left-0 right-0 z-20 flex justify-center">
-                  <div className="rounded-md border bg-background px-4 py-2 text-xs text-foreground shadow-lg">
-                    {inlineToastMessage}
+              <div ref={formWrapperRef} className="relative max-w-md">
+                {showInlineToast && inlineToastMessage ? (
+                  <div className="absolute -top-12 left-0 right-0 z-20 flex justify-center">
+                    <div className="rounded-md border bg-background px-4 py-2 text-xs text-foreground shadow-lg">
+                      {inlineToastMessage}
+                    </div>
                   </div>
-                </div>
-              ) : null}
+                ) : null}
 
-              <form onSubmit={handleSubmit}>
-                <p className="text-xs text-muted-foreground mt-3">Subscribe to our newsletter: </p>
-                <div className="flex flex-col sm:flex-row gap-3">
-                <Input
-                  type="email"
-                  placeholder="you@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="flex-1 h-12 text-sm"
-                  disabled={isSubmitting}
-                />
-                <Button
-                  type="submit"
-                  variant="hero"
-                  size="lg"
-                  disabled={isSubmitting}
-                  className="h-12 px-8"
-                >
-                  {isSubmitting ? "Submitting..." : "Subscribe"}
-                </Button>
-                </div>
-              </form>
+                <form onSubmit={handleSubmit}>
+                  <p className="text-xs text-muted-foreground mt-3">Subscribe to our newsletter: </p>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                  <Input
+                    type="email"
+                    placeholder="you@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="flex-1 h-12 text-sm"
+                    disabled={isSubmitting}
+                  />
+                  <Button
+                    type="submit"
+                    variant="hero"
+                    size="lg"
+                    disabled={isSubmitting}
+                    className="h-12 px-8"
+                  >
+                    {isSubmitting ? "Submitting..." : "Subscribe"}
+                  </Button>
+                  </div>
+                </form>
+              </div>
             </div>
-          </div>
+          </Card>
 
           <div className="flex justify-center md:justify-end">
             <Image
-              src="/assets/herschel-observatory.jpeg"
+              src="/assets/herschel-observatory-cropped.png"
               alt="Historical observatory with telescope"
               width={323}
               height={404}

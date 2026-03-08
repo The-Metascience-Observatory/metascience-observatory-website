@@ -25,6 +25,26 @@ export const metadata = {
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+function parseCSVLine(line: string): string[] {
+  const result: string[] = [];
+  let current = "";
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (inQuotes) {
+      if (ch === '"' && line[i + 1] === '"') { current += '"'; i++; }
+      else if (ch === '"') inQuotes = false;
+      else current += ch;
+    } else {
+      if (ch === '"') inQuotes = true;
+      else if (ch === ",") { result.push(current); current = ""; }
+      else current += ch;
+    }
+  }
+  result.push(current);
+  return result;
+}
+
 function processData() {
   const filePath = path.join(
     process.cwd(),
@@ -35,6 +55,35 @@ function processData() {
     .trim()
     .split("\n")
     .map((l) => JSON.parse(l));
+
+  // ── Load screening CSV for author/journal metadata ────────────────
+  const screeningPath = path.join(
+    process.cwd(),
+    "data/birds_eye_reviews/long_covid/trial_screening.csv"
+  );
+  const citationLookup = new Map<string, { authors: string; journal: string; year: string }>();
+  try {
+    const screeningRaw = fs.readFileSync(screeningPath, "utf-8");
+    const screeningLines = screeningRaw.split("\n").filter((l) => l.trim());
+    const header = parseCSVLine(screeningLines[0]);
+    const doiIdx = header.indexOf("doi");
+    const authorsIdx = header.indexOf("paper_authors");
+    const journalIdx = header.indexOf("paper_journal");
+    const yearIdx = header.indexOf("paper_year");
+    for (let i = 1; i < screeningLines.length; i++) {
+      const cols = parseCSVLine(screeningLines[i]);
+      const doi = (cols[doiIdx] ?? "").trim().toLowerCase();
+      if (doi) {
+        citationLookup.set(doi, {
+          authors: (cols[authorsIdx] ?? "").trim(),
+          journal: (cols[journalIdx] ?? "").trim(),
+          year: (cols[yearIdx] ?? "").trim(),
+        });
+      }
+    }
+  } catch {
+    // screening CSV not available — citations will fall back to DOI
+  }
 
   // ── 1. Summary stats ─────────────────────────────────────────────
   const allCountries = new Set<string>();
@@ -182,8 +231,8 @@ function processData() {
     .map((blinding) => ({ blinding, ...blindSigMap.get(blinding)! }));
 
   // ── 9. LC definition histogram ────────────────────────────────
-  const weeksBins = [0, 4, 8, 12, 16, 24, 52, Infinity];
-  const binLabels = ["0–4", "4–8", "8–12", "12–16", "16–24", "24–52", "52+"];
+  const weeksBins = [0, 4, 8, 12, 16, 20, 24, 36, 52, Infinity];
+  const binLabels = ["0–4", "4–8", "8–12", "12–16", "16–20", "20–24", "24–36", "36–52", "52+"];
   const binCounts = new Array(binLabels.length).fill(0);
   let lcDefTotal = 0;
   let lcDef12Plus = 0;
@@ -270,8 +319,17 @@ function processData() {
       paper_id: r.paper_id,
       is_rct: r.is_rct ?? false,
       doi_url: `https://doi.org/${r.paper_id}`,
+      first_author: (() => {
+        const cite = citationLookup.get(r.paper_id.toLowerCase());
+        if (!cite?.authors) return "";
+        const first = cite.authors.split(";")[0].trim();
+        const parts = first.split(/\s+/);
+        return parts[parts.length - 1];
+      })(),
+      journal: citationLookup.get(r.paper_id.toLowerCase())?.journal ?? "",
       design_type: r.study_design.design_type,
       intervention_name: interventionName,
+      all_intervention_names: interventionArms.map((a: any) => a.intervention_name as string),
       intervention_category: interventionCategory,
       blinding: r.study_design.blinding ?? "unknown",
       n_randomized: r.sample_sizes?.n_randomized_total ?? null,
@@ -304,6 +362,7 @@ function processData() {
       n_negative_ns: nNegativeNs,
       n_unknown: nUnknown,
       year: (() => { const m = r.paper_id.match(/20[12]\d/); return m ? parseInt(m[0]) : null; })(),
+      min_weeks: r.participants?.min_time_since_infection_weeks ?? null,
       summary: r.summary ?? "",
       promise_score: r.trial_rating?.promise_score ?? null,
     };
@@ -367,7 +426,7 @@ export default function LongCovidReviewPage() {
     console.error("Failed to load Long Covid data:", err);
     return (
       <div className="min-h-screen">
-        <BirdsEyeNavbar />
+        <BirdsEyeNavbar subtitle="Long Covid" />
         <main className="pt-20 pb-16">
           <div className="container mx-auto px-4 py-12 max-w-7xl text-center">
             <h1 className="text-2xl font-bold mb-4">Data Unavailable</h1>
@@ -383,7 +442,7 @@ export default function LongCovidReviewPage() {
 
   return (
     <div className="min-h-screen">
-      <BirdsEyeNavbar />
+      <BirdsEyeNavbar subtitle="Long Covid" />
       <main className="pt-20 pb-16">
         <div className="container mx-auto px-4 py-8 max-w-7xl">
           <Link

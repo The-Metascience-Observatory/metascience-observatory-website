@@ -55,10 +55,10 @@ function loadRows(): ScreeningRow[] {
   );
   const raw = fs.readFileSync(filePath, "utf-8");
   const lines = raw.split("\n").filter((l) => l.trim());
-  const header = parseCSVLine(lines[0]);
+  const header = parseCSVLine(lines[0]).map((h) => h.trim());
 
   cachedRows = lines.slice(1).map((line) => {
-    const vals = parseCSVLine(line);
+    const vals = parseCSVLine(line).map((v) => v.trim());
     const row: Record<string, string> = {};
     header.forEach((h, i) => (row[h] = vals[i] ?? ""));
     return {

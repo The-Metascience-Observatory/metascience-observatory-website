@@ -31,6 +31,11 @@ const COUNTRY_NAME_MAPPING: Record<string, string> = {
   "Czech Republic": "Czechia",
 };
 
+// Reverse: map geo name → data name (for click filtering)
+const REVERSE_COUNTRY_MAPPING: Record<string, string> = Object.fromEntries(
+  Object.entries(COUNTRY_NAME_MAPPING).map(([data, geo]) => [geo, data])
+);
+
 // ── Color constants ──────────────────────────────────────────────────
 const ROB_COLORS = {
   low: "#22c55e",
@@ -169,8 +174,8 @@ function recomputeFromMetas(metas: TrialMeta[]) {
     .map((blinding) => ({ blinding, ...blindSigMap.get(blinding)! }));
 
   // LC definition histogram
-  const weeksBins = [0, 4, 8, 12, 16, 24, 52, Infinity];
-  const binLabels = ["0–4", "4–8", "8–12", "12–16", "16–24", "24–52", "52+"];
+  const weeksBins = [0, 4, 8, 12, 16, 20, 24, 36, 52, Infinity];
+  const binLabels = ["0–4", "4–8", "8–12", "12–16", "16–20", "20–24", "24–36", "36–52", "52+"];
   const binCounts = new Array(binLabels.length).fill(0);
   let lcDefTotal = 0;
   let lcDef12Plus = 0;
@@ -200,22 +205,65 @@ export function LongCovidDashboard(props: DashboardProps) {
   const [yearFilter, setYearFilter] = useState<number | null>(null);
   const [landscapeCategory, setLandscapeCategory] = useState<string | null>(null);
   const [landscapeSymptom, setLandscapeSymptom] = useState<string | null>(null);
+  const [interventionCategoryFilter, setInterventionCategoryFilter] = useState<string | null>(null);
+  const [interventionNameFilter, setInterventionNameFilter] = useState<string | null>(null);
+  const [lcDefFilter, setLcDefFilter] = useState<string | null>(null);
+  const [countryFilter, setCountryFilter] = useState<string | null>(null);
   const tableRef = useRef<HTMLDivElement>(null);
 
-  const handleYearClick = (year: number) => {
-    setYearFilter(year);
+  const clearAllFilters = () => {
+    setYearFilter(null);
+    setLandscapeCategory(null);
+    setLandscapeSymptom(null);
+    setInterventionCategoryFilter(null);
+    setInterventionNameFilter(null);
+    setLcDefFilter(null);
+    setCountryFilter(null);
+  };
+
+  const scrollToTable = () => {
     if (tableRef.current) {
       tableRef.current.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const handleYearClick = (year: number) => {
+    clearAllFilters();
+    setYearFilter(year);
+    scrollToTable();
   };
 
   const handleCellClick = (category: string, symptom: string) => {
+    clearAllFilters();
     setLandscapeCategory(category);
     setLandscapeSymptom(symptom);
-    if (tableRef.current) {
-      tableRef.current.scrollIntoView({ behavior: "smooth" });
-    }
+    scrollToTable();
   };
+
+  const handleInterventionClick = (interventionName: string) => {
+    clearAllFilters();
+    setInterventionNameFilter(interventionName);
+    scrollToTable();
+  };
+
+  const handleCategoryClick = (category: string) => {
+    clearAllFilters();
+    setInterventionCategoryFilter(category);
+    scrollToTable();
+  };
+
+  const handleLcDefClick = (binLabel: string) => {
+    clearAllFilters();
+    setLcDefFilter(binLabel);
+    scrollToTable();
+  };
+
+  const handleCountryClick = (country: string) => {
+    clearAllFilters();
+    setCountryFilter(country);
+    scrollToTable();
+  };
+
   const [rctOnly, setRctOnly] = useState(true);
 
   // Recompute aggregated data when RCT filter is toggled
@@ -289,7 +337,7 @@ export function LongCovidDashboard(props: DashboardProps) {
         </button>
       </div>
 
-      <OverviewTab {...effectiveProps} onYearClick={handleYearClick} onCellClick={handleCellClick} />
+      <OverviewTab {...effectiveProps} onYearClick={handleYearClick} onCellClick={handleCellClick} onInterventionClick={handleInterventionClick} onCategoryClick={handleCategoryClick} onLcDefClick={handleLcDefClick} onCountryClick={handleCountryClick} />
       {/* Trial table — always visible at the bottom */}
       <div className="mt-12 border-t border-border pt-8" ref={tableRef}>
         <h2 className="font-clarendon font-bold text-2xl mb-4">All Trials</h2>
@@ -297,6 +345,14 @@ export function LongCovidDashboard(props: DashboardProps) {
           tableRows={effectiveProps.tableRows}
           yearFilter={yearFilter}
           onYearClear={() => setYearFilter(null)}
+          interventionCategoryFilter={interventionCategoryFilter}
+          onInterventionCategoryClear={() => setInterventionCategoryFilter(null)}
+          interventionNameFilter={interventionNameFilter}
+          onInterventionNameClear={() => setInterventionNameFilter(null)}
+          lcDefFilter={lcDefFilter}
+          onLcDefClear={() => setLcDefFilter(null)}
+          countryFilter={countryFilter}
+          onCountryClear={() => setCountryFilter(null)}
           landscapeCategory={landscapeCategory}
           landscapeSymptom={landscapeSymptom}
           onLandscapeCategoryClear={() => setLandscapeCategory(null)}
@@ -308,7 +364,7 @@ export function LongCovidDashboard(props: DashboardProps) {
 }
 
 // ── OVERVIEW TAB ─────────────────────────────────────────────────────
-function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => void; onCellClick?: (category: string, symptom: string) => void }) {
+function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => void; onCellClick?: (category: string, symptom: string) => void; onInterventionClick?: (interventionName: string) => void; onCategoryClick?: (category: string) => void; onLcDefClick?: (binLabel: string) => void; onCountryClick?: (country: string) => void }) {
   return (
     <div className="space-y-10">
       {/* Timeline + Country map side by side */}
@@ -336,7 +392,7 @@ function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => v
         </ChartSection>
 
         <ChartSection title="Trials by country">
-          <CountryMap topCountries={props.allCountries} />
+          <CountryMap topCountries={props.allCountries} onCountryClick={props.onCountryClick} />
         </ChartSection>
       </div>
 
@@ -348,7 +404,7 @@ function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => v
         <ResponsiveContainer width="100%" height={280}>
           <BarChart
             data={props.lcDefinitionHist}
-            margin={{ left: 10, right: 20, top: 5, bottom: 5 }}
+            margin={{ left: 25, right: 20, top: 5, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
             <XAxis
@@ -356,15 +412,28 @@ function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => v
               label={{ value: "Min weeks since infection", position: "bottom", offset: 0, fontSize: 12 }}
             />
             <YAxis label={{ value: "Trials", angle: -90, position: "insideLeft", fontSize: 12 }} />
-            <Tooltip />
-            <Bar dataKey="count" fill="#6366f1" radius={[4, 4, 0, 0]}>
-              {props.lcDefinitionHist.map((entry, i) => (
-                <Cell
-                  key={i}
-                  fill={entry.label === "12–16" || entry.label === "16–24" || entry.label === "24–52" || entry.label === "52+" ? "#22c55e" : "#ef4444"}
-                  opacity={0.8}
-                />
-              ))}
+            <Tooltip cursor={{ fill: 'transparent' }} />
+            <Bar
+              dataKey="count"
+              fill="#6366f1"
+              radius={[4, 4, 0, 0]}
+              style={{ cursor: "pointer" }}
+              onClick={(data) => {
+                if (data && data.label && props.onLcDefClick) {
+                  props.onLcDefClick(data.label);
+                }
+              }}
+            >
+              {props.lcDefinitionHist.map((entry, i) => {
+                const meetsWho = ["12–16", "16–20", "20–24", "24–36", "36–52", "52+"].includes(entry.label);
+                return (
+                  <Cell
+                    key={i}
+                    fill={meetsWho ? "#22c55e" : "#ef4444"}
+                    opacity={0.8}
+                  />
+                );
+              })}
             </Bar>
           </BarChart>
         </ResponsiveContainer>
@@ -377,8 +446,8 @@ function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => v
       </ChartSection>
 
       {/* Trials by intervention category */}
-      <ChartSection title="Trials by intervention category" subtitle="Each segment is one intervention — hover for name">
-        <InterventionStackedBar data={props.byIntervention} />
+      <ChartSection title="Trials by intervention category" subtitle="Each segment is one intervention — hover for name, click to filter table">
+        <InterventionStackedBar data={props.byIntervention} onInterventionClick={props.onInterventionClick} onCategoryClick={props.onCategoryClick} />
       </ChartSection>
 
       {/* Trials by symptom domain */}
@@ -527,6 +596,14 @@ function TrialTableTab({
   tableRows,
   yearFilter,
   onYearClear,
+  interventionCategoryFilter,
+  onInterventionCategoryClear,
+  interventionNameFilter,
+  onInterventionNameClear,
+  lcDefFilter,
+  onLcDefClear,
+  countryFilter,
+  onCountryClear,
   landscapeCategory,
   landscapeSymptom,
   onLandscapeCategoryClear,
@@ -535,6 +612,14 @@ function TrialTableTab({
   tableRows: TrialTableRow[];
   yearFilter: number | null;
   onYearClear: () => void;
+  interventionCategoryFilter: string | null;
+  onInterventionCategoryClear: () => void;
+  interventionNameFilter: string | null;
+  onInterventionNameClear: () => void;
+  lcDefFilter: string | null;
+  onLcDefClear: () => void;
+  countryFilter: string | null;
+  onCountryClear: () => void;
   landscapeCategory: string | null;
   landscapeSymptom: string | null;
   onLandscapeCategoryClear: () => void;
@@ -575,6 +660,17 @@ function TrialTableTab({
     if (symptomFilter !== "all") rows = rows.filter((r) => r.primary_symptom_domain === symptomFilter);
     if (robFilter !== "all") rows = rows.filter((r) => r.rob_overall === robFilter);
     if (yearFilter !== null) rows = rows.filter((r) => r.year === yearFilter);
+    if (interventionCategoryFilter !== null) rows = rows.filter((r) => r.intervention_category === interventionCategoryFilter);
+    if (interventionNameFilter !== null) rows = rows.filter((r) => r.all_intervention_names.includes(interventionNameFilter));
+    if (lcDefFilter !== null) {
+      const lcBins: [string, number, number][] = [
+        ["0–4", 0, 4], ["4–8", 4, 8], ["8–12", 8, 12], ["12–16", 12, 16],
+        ["16–20", 16, 20], ["20–24", 20, 24], ["24–36", 24, 36], ["36–52", 36, 52], ["52+", 52, Infinity],
+      ];
+      const bin = lcBins.find(([l]) => l === lcDefFilter);
+      if (bin) rows = rows.filter((r) => r.min_weeks != null && r.min_weeks >= bin[1] && r.min_weeks < bin[2]);
+    }
+    if (countryFilter !== null) rows = rows.filter((r) => r.countries.includes(countryFilter));
     if (landscapeCategory !== null) rows = rows.filter((r) => r.intervention_category === landscapeCategory);
     if (landscapeSymptom !== null) rows = rows.filter((r) => r.primary_symptom_domain === landscapeSymptom);
     const outcomeRank = (r: typeof rows[0]): number => {
@@ -607,7 +703,7 @@ function TrialTableTab({
       return sortDir === "asc" ? (va as number) - (vb as number) : (vb as number) - (va as number);
     });
     return rows;
-  }, [tableRows, search, categoryFilter, symptomFilter, robFilter, yearFilter, landscapeCategory, landscapeSymptom, sortField, sortDir]);
+  }, [tableRows, search, categoryFilter, symptomFilter, robFilter, yearFilter, interventionCategoryFilter, interventionNameFilter, lcDefFilter, countryFilter, landscapeCategory, landscapeSymptom, sortField, sortDir]);
 
   const toggleExpand = (id: string) => {
     setExpanded((prev) => {
@@ -677,6 +773,54 @@ function TrialTableTab({
             </button>
           </div>
         )}
+        {lcDefFilter !== null && (
+          <div className="flex flex-col justify-end">
+            <span className="text-xs text-foreground/50 block mb-1">LC definition (weeks)</span>
+            <button
+              onClick={onLcDefClear}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded border border-blue-100 text-sm hover:bg-blue-100 transition-colors"
+            >
+              {lcDefFilter}
+              <span className="text-blue-400 font-bold">&times;</span>
+            </button>
+          </div>
+        )}
+        {countryFilter !== null && (
+          <div className="flex flex-col justify-end">
+            <span className="text-xs text-foreground/50 block mb-1">Country</span>
+            <button
+              onClick={onCountryClear}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded border border-blue-100 text-sm hover:bg-blue-100 transition-colors"
+            >
+              {countryFilter}
+              <span className="text-blue-400 font-bold">&times;</span>
+            </button>
+          </div>
+        )}
+        {interventionCategoryFilter !== null && (
+          <div className="flex flex-col justify-end">
+            <span className="text-xs text-foreground/50 block mb-1">Intervention category</span>
+            <button
+              onClick={onInterventionCategoryClear}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded border border-blue-100 text-sm hover:bg-blue-100 transition-colors"
+            >
+              {formatCategory(interventionCategoryFilter)}
+              <span className="text-blue-400 font-bold">&times;</span>
+            </button>
+          </div>
+        )}
+        {interventionNameFilter !== null && (
+          <div className="flex flex-col justify-end">
+            <span className="text-xs text-foreground/50 block mb-1">Intervention</span>
+            <button
+              onClick={onInterventionNameClear}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded border border-blue-100 text-sm hover:bg-blue-100 transition-colors"
+            >
+              {formatCategory(interventionNameFilter)}
+              <span className="text-blue-400 font-bold">&times;</span>
+            </button>
+          </div>
+        )}
         {landscapeCategory !== null && (
           <div className="flex flex-col justify-end">
             <span className="text-xs text-foreground/50 block mb-1">Intervention (landscape)</span>
@@ -715,7 +859,7 @@ function TrialTableTab({
                 className="p-2 cursor-pointer hover:text-foreground"
                 onClick={() => handleSort("paper_id")}
               >
-                Paper {sortField === "paper_id" ? (sortDir === "asc" ? "↑" : "↓") : ""}
+                Reference {sortField === "paper_id" ? (sortDir === "asc" ? "↑" : "↓") : ""}
               </th>
               <th
                 className="p-2 cursor-pointer hover:text-foreground"
@@ -800,11 +944,21 @@ function TrialRow({
             href={row.doi_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 hover:text-blue-700 inline-flex items-center gap-1"
+            className="text-blue-600 hover:text-blue-700 text-xs"
             onClick={(e) => e.stopPropagation()}
           >
-            {row.paper_id.length > 30 ? row.paper_id.slice(0, 30) + "…" : row.paper_id}
-            <ExternalLink size={10} />
+            {row.first_author ? (
+              <span>
+                {row.first_author} et al.
+                {(row.journal || row.year) && ", "}
+                {row.journal && <em>{row.journal}</em>}
+                {row.journal && row.year ? ", " : ""}
+                {row.year && row.year}
+              </span>
+            ) : (
+              <span>{row.paper_id}</span>
+            )}
+            {" "}<ExternalLink size={10} className="inline align-baseline ml-0.5" />
           </a>
         </td>
         <td className="p-2 max-w-[180px]" title={row.intervention_name}>
@@ -961,7 +1115,7 @@ function hashColor(_name: string, index: number): string {
 }
 
 // ── Country Map ─────────────────────────────────────────────────────
-function CountryMap({ topCountries }: { topCountries: DashboardProps["topCountries"] }) {
+function CountryMap({ topCountries, onCountryClick }: { topCountries: DashboardProps["topCountries"]; onCountryClick?: (country: string) => void }) {
   const [tooltip, setTooltip] = useState<{ name: string; count: number; x: number; y: number } | null>(null);
 
   // Build name → count lookup from ALL countries (topCountries includes "Other" bucket, but we need per-country)
@@ -1021,9 +1175,15 @@ function CountryMap({ topCountries }: { topCountries: DashboardProps["topCountri
                         }
                       }}
                       onMouseLeave={() => setTooltip(null)}
+                      onClick={() => {
+                        if (count > 0 && onCountryClick) {
+                          const dataName = REVERSE_COUNTRY_MAPPING[name] ?? name;
+                          onCountryClick(dataName);
+                        }
+                      }}
                       style={{
-                        default: { outline: "none" },
-                        hover: { outline: "none", fill: count > 0 ? "#2563eb" : "#e2e8f0" },
+                        default: { outline: "none", cursor: count > 0 ? "pointer" : "default" },
+                        hover: { outline: "none", fill: count > 0 ? "#2563eb" : "#e2e8f0", cursor: count > 0 ? "pointer" : "default" },
                         pressed: { outline: "none" },
                       }}
                     />
@@ -1079,19 +1239,19 @@ function CountryMap({ topCountries }: { topCountries: DashboardProps["topCountri
   );
 }
 
-function InterventionStackedBar({ data }: { data: InterventionBar[] }) {
+function InterventionStackedBar({ data, onInterventionClick, onCategoryClick }: { data: InterventionBar[]; onInterventionClick?: (interventionName: string) => void; onCategoryClick?: (category: string) => void }) {
   const [tooltip, setTooltip] = useState<{ x: number; y: number; name: string; count: number; category: string } | null>(null);
   const maxCount = data.length ? Math.max(...data.map((d) => d.count)) : 0;
-  const barHeight = 28;
+  const barHeight = 24;
   const labelWidth = 130;
   const chartWidth = 600;
   const rightPad = 40;
 
   return (
     <div className="relative">
-      <svg width="100%" viewBox={`0 0 ${labelWidth + chartWidth + rightPad} ${data.length * (barHeight + 8) + 10}`}>
+      <svg width="100%" viewBox={`0 0 ${labelWidth + chartWidth + rightPad} ${data.length * (barHeight + 6) + 10}`}>
         {data.map((cat, rowIdx) => {
-          const y = rowIdx * (barHeight + 8) + 4;
+          const y = rowIdx * (barHeight + 6) + 4;
           let xOffset = labelWidth;
           return (
             <g key={cat.category}>
@@ -1103,6 +1263,8 @@ function InterventionStackedBar({ data }: { data: InterventionBar[] }) {
                 fontSize={12}
                 fill="currentColor"
                 opacity={0.8}
+                className="cursor-pointer hover:underline"
+                onClick={() => onCategoryClick?.(cat.category)}
               >
                 {formatCategory(cat.category)}
               </text>
@@ -1131,6 +1293,7 @@ function InterventionStackedBar({ data }: { data: InterventionBar[] }) {
                       });
                     }}
                     onMouseLeave={() => setTooltip(null)}
+                    onClick={() => onInterventionClick?.(intv.name)}
                     className="cursor-pointer"
                   />
                 );

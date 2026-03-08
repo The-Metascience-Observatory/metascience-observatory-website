@@ -1,17 +1,13 @@
 import { Card } from "@/components/ui/card";
-import { Users } from "lucide-react";
 import Image from "next/image";
 
 export const Team = () => {
   return (
-    <section id="team" className="py-12 scroll-mt-24">
+    <section id="team" className="py-8 scroll-mt-24">
       <div className="container px-4">
         <div className="max-w-4xl mx-auto space-y-6">
           <div className="text-center space-y-4">
-            <div className="flex items-center justify-center gap-3">
-              <Users className="w-10 h-10 text-primary" />
-              <h2 className="font-clarendon text-2xl md:text-3xl font-bold">Team</h2>
-            </div>
+            <h2 className="font-clarendon text-2xl md:text-3xl font-bold">Team</h2>
           </div>
 
           <Card className="p-8 md:p-10 shadow-lg">

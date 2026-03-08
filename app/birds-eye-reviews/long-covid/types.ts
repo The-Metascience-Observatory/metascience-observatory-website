@@ -82,8 +82,11 @@ export interface TrialTableRow {
   paper_id: string;
   is_rct: boolean;
   doi_url: string;
+  first_author: string;
+  journal: string;
   design_type: string;
   intervention_name: string;
+  all_intervention_names: string[];
   intervention_category: string;
   blinding: string;
   n_randomized: number | null;
@@ -106,6 +109,7 @@ export interface TrialTableRow {
   n_negative_ns: number;
   n_unknown: number;
   year: number | null;
+  min_weeks: number | null;
   summary: string;
   promise_score: number | null;
 }

@@ -41,6 +41,10 @@ const documentation: DocMeta[] = [
     href: "/docs/pipeline-evaluation",
     title: "V6 extraction pipeline evaluation",
   },
+  {
+    href: "/roadmap",
+    title: "Roadmap",
+  },
 ];
 
 export default function DocsPage() {
