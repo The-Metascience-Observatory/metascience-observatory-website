@@ -47,6 +47,11 @@ export interface LcDefinitionBin {
   count: number;
 }
 
+export interface DesignTypeBar {
+  design_type: string;
+  count: number;
+}
+
 /** Lightweight per-record metadata for client-side re-aggregation when RCT filter is toggled */
 export interface TrialMeta {
   paper_id: string;
@@ -56,6 +61,7 @@ export interface TrialMeta {
   primarySymptomDomains: string[];
   rob_overall: string;
   blinding: string;
+  design_type: string;
   n_randomized: number | null;
   min_weeks: number | null;
   year: number | null;
@@ -112,6 +118,11 @@ export interface TrialTableRow {
   min_weeks: number | null;
   summary: string;
   promise_score: number | null;
+  title: string;
+  authors: string;
+  volume: string;
+  issue: string;
+  pages: string;
 }
 
 export interface DashboardProps {
@@ -123,6 +134,7 @@ export interface DashboardProps {
   allCountries: CountryBar[];
   byYear: YearBar[];
   blindingBySignificance: BlindingSignificanceBar[];
+  byDesignType: DesignTypeBar[];
   lcDefinitionHist: LcDefinitionBin[];
   lcDefPct12Plus: number;
   tableRows: TrialTableRow[];

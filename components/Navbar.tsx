@@ -26,7 +26,7 @@ export const Navbar = () => {
           <div className="hidden md:flex items-center gap-3 text-xs">
             <Link href="/#about" className="text-foreground/80 hover:text-foreground transition-colors">About</Link>
             <Link href="/#team" className="text-foreground/80 hover:text-foreground transition-colors">Team</Link>
-            <Button variant="outline-gradient" size="sm" asChild className="border-gray-400 text-gray-600 dark:text-gray-400 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+            <Button variant="outline-gradient" size="sm" asChild className="border-gray-400 text-gray-600 dark:text-gray-400 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800">
               <Link href="/docs">
                 Docs
               </Link>
@@ -95,7 +95,7 @@ export const Navbar = () => {
               >
                 Team
               </Link>
-              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-gray-400 text-gray-600 dark:text-gray-400 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-gray-400 text-gray-600 dark:text-gray-400 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800">
                 <Link href="/docs" onClick={() => setIsMobileMenuOpen(false)}>
                   Docs
                 </Link>

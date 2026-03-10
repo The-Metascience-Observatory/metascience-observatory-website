@@ -3,6 +3,7 @@ import path from "path";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  allowedDevOrigins: ["http://10.0.0.16:3000"],
   experimental: {
     externalDir: true
   },

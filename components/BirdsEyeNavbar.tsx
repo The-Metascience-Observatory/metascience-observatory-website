@@ -39,7 +39,7 @@ export const BirdsEyeNavbar = ({ subtitle }: { subtitle?: string }) => {
                 Replications Database
               </Link>
             </Button>
-            <Button variant="outline-gradient" size="sm" asChild className="ml-auto border-teal-500 text-teal-700 dark:text-teal-400 bg-gradient-to-r from-teal-50 to-teal-100 dark:from-teal-950 dark:to-teal-900">
+            <Button variant="outline-gradient" size="sm" asChild className="ml-auto border-red-500 text-red-700 dark:text-red-400 bg-gradient-to-r from-red-50 to-red-100 dark:from-red-950 dark:to-red-900">
               <Link href="/#donate">
                 Donate
               </Link>
@@ -89,7 +89,7 @@ export const BirdsEyeNavbar = ({ subtitle }: { subtitle?: string }) => {
                   Replications Database
                 </Link>
               </Button>
-              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-teal-500 text-teal-700 dark:text-teal-400 bg-gradient-to-r from-teal-50 to-teal-100 dark:from-teal-950 dark:to-teal-900">
+              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-red-500 text-red-700 dark:text-red-400 bg-gradient-to-r from-red-50 to-red-100 dark:from-red-950 dark:to-red-900">
                 <Link href="/#donate" onClick={() => setIsMobileMenuOpen(false)}>
                   Donate
                 </Link>

@@ -82,22 +82,28 @@ function FilterSelect({
   );
 }
 
-export function ScreeningTable({ initialRows, totalCount }: { initialRows: ScreeningRow[]; totalCount: number }) {
+export function ScreeningTable({
+  initialRows,
+  totalCount,
+  externalSourceFilter,
+  sourceFolders,
+}: {
+  initialRows: ScreeningRow[];
+  totalCount: number;
+  externalSourceFilter?: string;
+  sourceFolders?: string[];
+}) {
+  const tableRef = useRef<HTMLDivElement>(null);
   const [rows, setRows] = useState<ScreeningRow[]>(initialRows);
   const [filteredTotal, setFilteredTotal] = useState(totalCount);
   const [search, setSearch] = useState("");
-  const [sourceFilter, setSourceFilter] = useState("all");
-  const [longCovidFilter, setLongCovidFilter] = useState("all");
+  const [sourceFilter, setSourceFilter] = useState(externalSourceFilter ?? "all");
   const [treatmentFilter, setTreatmentFilter] = useState("all");
   const [trialTypeFilter, setTrialTypeFilter] = useState("all");
-  const [excludedFilter, setExcludedFilter] = useState("all");
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
 
-  const sources = useMemo(
-    () => ["Observational_Cohort_Study", "Original_Research", "Cross-Sectional_Study", "Qualitative_Study", "Clinical_Trial", "Case-Control_Study", "Case_Report", "Mixed_Methods_Study"],
-    []
-  );
+  const sources = sourceFolders ?? [];
   const trialTypes = useMemo(
     () => ["cross_sectional", "observational_cohort", "retrospective_cohort", "other", "case_series", "case_control", "non_randomized_trial", "rct", "prospective_cohort"],
     []
@@ -107,12 +113,10 @@ export function ScreeningTable({ initialRows, totalCount }: { initialRows: Scree
     const p = new URLSearchParams();
     if (search) p.set("search", search);
     if (sourceFilter !== "all") p.set("source", sourceFilter);
-    if (longCovidFilter !== "all") p.set("longCovid", longCovidFilter);
     if (treatmentFilter !== "all") p.set("treatment", treatmentFilter);
     if (trialTypeFilter !== "all") p.set("trialType", trialTypeFilter);
-    if (excludedFilter !== "all") p.set("excluded", excludedFilter);
     return p;
-  }, [search, sourceFilter, longCovidFilter, treatmentFilter, trialTypeFilter, excludedFilter]);
+  }, [search, sourceFilter, treatmentFilter, trialTypeFilter]);
 
   const fetchRows = useCallback(async (offset: number, append: boolean) => {
     setLoading(true);
@@ -142,10 +146,17 @@ export function ScreeningTable({ initialRows, totalCount }: { initialRows: Scree
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
+      // If mounted with an external filter, fetch immediately and scroll
+      if (externalSourceFilter) {
+        fetchRows(0, false);
+        setTimeout(() => {
+          tableRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 100);
+      }
       return;
     }
     fetchRows(0, false);
-  }, [sourceFilter, longCovidFilter, treatmentFilter, trialTypeFilter, excludedFilter]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [sourceFilter, treatmentFilter, trialTypeFilter]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const toggleExpand = (doi: string) => {
     setExpanded((prev) => {
@@ -157,7 +168,7 @@ export function ScreeningTable({ initialRows, totalCount }: { initialRows: Scree
   };
 
   return (
-    <div className="space-y-4">
+    <div ref={tableRef} className="space-y-4">
       {/* Filters */}
       <div className="flex flex-wrap gap-3">
         <div>
@@ -178,16 +189,6 @@ export function ScreeningTable({ initialRows, totalCount }: { initialRows: Scree
           options={[{ value: "all", label: "All" }, ...sources.map((s) => ({ value: s, label: formatLabel(s) }))]}
         />
         <FilterSelect
-          label="Long Covid"
-          value={longCovidFilter}
-          onChange={setLongCovidFilter}
-          options={[
-            { value: "all", label: "All" },
-            { value: "yes", label: "Yes" },
-            { value: "no", label: "No" },
-          ]}
-        />
-        <FilterSelect
           label="Studies Treatment"
           value={treatmentFilter}
           onChange={setTreatmentFilter}
@@ -203,22 +204,29 @@ export function ScreeningTable({ initialRows, totalCount }: { initialRows: Scree
           onChange={setTrialTypeFilter}
           options={[{ value: "all", label: "All" }, ...trialTypes.map((t) => ({ value: t, label: formatLabel(t) }))]}
         />
-        <FilterSelect
-          label="Excluded"
-          value={excludedFilter}
-          onChange={setExcludedFilter}
-          options={[
-            { value: "all", label: "All" },
-            { value: "yes", label: "Excluded" },
-            { value: "no", label: "Included" },
-          ]}
-        />
       </div>
 
-      <p className="text-sm text-foreground/50">
-        Showing {rows.length.toLocaleString()} of {filteredTotal.toLocaleString()} articles
-        {loading && " — loading..."}
-      </p>
+      <div className="flex items-center gap-4 text-sm text-foreground/50">
+        <p>
+          Showing {rows.length.toLocaleString()} of {filteredTotal.toLocaleString()} articles
+          {loading && " — loading..."}
+        </p>
+        <label className="flex items-center gap-1.5 cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={expanded.size > 0 && expanded.size === rows.length}
+            onChange={(e) => {
+              if (e.target.checked) {
+                setExpanded(new Set(rows.map((r) => r.doi)));
+              } else {
+                setExpanded(new Set());
+              }
+            }}
+            className="accent-blue-600"
+          />
+          Expand all
+        </label>
+      </div>
 
       {/* Table */}
       <div className="overflow-x-auto">
@@ -229,7 +237,6 @@ export function ScreeningTable({ initialRows, totalCount }: { initialRows: Scree
               <th className="p-2 w-[30%]">Reference</th>
               <th className="p-2">Source</th>
               <th className="p-2">Trial Type</th>
-              <th className="p-2">Long Covid</th>
               <th className="p-2">Treatment</th>
             </tr>
           </thead>
@@ -298,17 +305,6 @@ function ScreeningRowItem({
           <span
             className="inline-block px-2 py-0.5 rounded text-xs font-medium"
             style={{
-              backgroundColor: row.is_long_covid === "yes" ? "#22c55e20" : "#94a3b840",
-              color: row.is_long_covid === "yes" ? "#16a34a" : "#64748b",
-            }}
-          >
-            {row.is_long_covid === "yes" ? "Yes" : "No"}
-          </span>
-        </td>
-        <td className="p-2">
-          <span
-            className="inline-block px-2 py-0.5 rounded text-xs font-medium"
-            style={{
               backgroundColor: row.studies_treatment === "yes" ? "#3b82f620" : "#94a3b840",
               color: row.studies_treatment === "yes" ? "#2563eb" : "#64748b",
             }}
@@ -319,7 +315,7 @@ function ScreeningRowItem({
       </tr>
       {isExpanded && (
         <tr className="border-b border-border/50">
-          <td colSpan={6} className="p-4 bg-foreground/[0.02]">
+          <td colSpan={5} className="p-4 bg-foreground/[0.02]">
             <div className="space-y-3 text-xs">
               {/* Reference */}
               {(row.title || row.authors || row.journal) && (
@@ -344,16 +340,6 @@ function ScreeningRowItem({
                   <p className="text-foreground leading-relaxed">{row.summary}</p>
                 </div>
               )}
-              <div className="flex gap-6 flex-wrap">
-                {row.exclusion_reason && (
-                  <div>
-                    <div className="text-foreground font-medium uppercase tracking-wide text-[10px] mb-0.5">
-                      Exclusion Reason
-                    </div>
-                    <p>{formatLabel(row.exclusion_reason)}</p>
-                  </div>
-                )}
-              </div>
             </div>
           </td>
         </tr>

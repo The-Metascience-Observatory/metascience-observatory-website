@@ -5,44 +5,32 @@ import { Footer } from "@/components/Footer";
 import Link from "next/link";
 import { LongCovidDashboard } from "./LongCovidDashboard";
 import type {
-  SummaryStats,
-  InterventionBar,
-  SymptomBar,
-  HeatmapCell,
-  CountryBar,
-  YearBar,
-  BlindingSignificanceBar,
-  LcDefinitionBin,
   TrialTableRow,
   TrialMeta,
 } from "./types";
+import {
+  extractYearFromDOI,
+  CONTROL_KEYWORDS,
+  TOP_COUNTRIES_LIMIT,
+  aggregateFromMetas,
+} from "./constants";
 
 export const metadata = {
   title: "Long Covid Clinical Trials | Bird's Eye Reviews | The Metascience Observatory",
   description:
-    "Interactive dashboard of 339 clinical trials on Long Covid interventions — evidence landscape, effect sizes, metascience analysis, and trial-level detail.",
+    "Interactive dashboard of clinical trials on Long Covid interventions — evidence landscape, effect sizes, metascience analysis, and trial-level detail.",
 };
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
-function parseCSVLine(line: string): string[] {
-  const result: string[] = [];
-  let current = "";
-  let inQuotes = false;
-  for (let i = 0; i < line.length; i++) {
-    const ch = line[i];
-    if (inQuotes) {
-      if (ch === '"' && line[i + 1] === '"') { current += '"'; i++; }
-      else if (ch === '"') inQuotes = false;
-      else current += ch;
-    } else {
-      if (ch === '"') inQuotes = true;
-      else if (ch === ",") { result.push(current); current = ""; }
-      else current += ch;
-    }
+/** Coerce p_value to a number or null (some records store it as a string like "<0.05") */
+function numericOrNull(v: unknown): number | null {
+  if (v == null) return null;
+  if (typeof v === "number") return v;
+  if (typeof v === "string") {
+    const n = parseFloat(v.replace(/[<>]/g, ""));
+    return Number.isFinite(n) ? n : null;
   }
-  result.push(current);
-  return result;
+  return null;
 }
 
 function processData() {
@@ -51,49 +39,34 @@ function processData() {
     "data/birds_eye_reviews/long_covid/long_covid_trial_extractions.jsonl"
   );
   const raw = fs.readFileSync(filePath, "utf-8");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const records: any[] = raw
     .trim()
     .split("\n")
     .map((l) => JSON.parse(l));
 
-  // ── Load screening CSV for author/journal metadata ────────────────
-  const screeningPath = path.join(
+  // ── Load DOI metadata for author/journal citations ────────────────
+  const doiMetaPath = path.join(
     process.cwd(),
-    "data/birds_eye_reviews/long_covid/trial_screening.csv"
+    "data/birds_eye_reviews/long_covid/doi_metadata.json"
   );
-  const citationLookup = new Map<string, { authors: string; journal: string; year: string }>();
+  let doiMetadata: Record<string, { first_author: string; author_count: number; journal: string; year: number | null }> = {};
   try {
-    const screeningRaw = fs.readFileSync(screeningPath, "utf-8");
-    const screeningLines = screeningRaw.split("\n").filter((l) => l.trim());
-    const header = parseCSVLine(screeningLines[0]);
-    const doiIdx = header.indexOf("doi");
-    const authorsIdx = header.indexOf("paper_authors");
-    const journalIdx = header.indexOf("paper_journal");
-    const yearIdx = header.indexOf("paper_year");
-    for (let i = 1; i < screeningLines.length; i++) {
-      const cols = parseCSVLine(screeningLines[i]);
-      const doi = (cols[doiIdx] ?? "").trim().toLowerCase();
-      if (doi) {
-        citationLookup.set(doi, {
-          authors: (cols[authorsIdx] ?? "").trim(),
-          journal: (cols[journalIdx] ?? "").trim(),
-          year: (cols[yearIdx] ?? "").trim(),
-        });
-      }
-    }
+    doiMetadata = JSON.parse(fs.readFileSync(doiMetaPath, "utf-8"));
   } catch {
-    // screening CSV not available — citations will fall back to DOI
+    // metadata file not available — citations will fall back to DOI
   }
 
-  // ── 1. Summary stats ─────────────────────────────────────────────
+  // ── 1. Summary stats (uses raw records for accurate instrument count) ─
   const allCountries = new Set<string>();
   const allCategories = new Set<string>();
   const allInstruments = new Set<string>();
   let totalParticipants = 0;
 
   for (const r of records) {
+    if (!r.study_design) continue;
     for (const c of r.study_design.countries ?? []) allCountries.add(c);
-    for (const arm of r.study_design.arms) {
+    for (const arm of r.study_design.arms ?? []) {
       if (arm.type === "intervention") allCategories.add(arm.intervention_category);
     }
     for (const o of r.outcomes ?? []) {
@@ -102,7 +75,7 @@ function processData() {
     if (r.sample_sizes?.n_randomized_total) totalParticipants += r.sample_sizes.n_randomized_total;
   }
 
-  const summaryStats: SummaryStats = {
+  const summaryStats = {
     totalTrials: records.length,
     totalParticipants,
     nCountries: allCountries.size,
@@ -110,153 +83,9 @@ function processData() {
     nInstruments: allInstruments.size,
   };
 
-  // ── 2. By intervention (stacked by individual intervention names) ─
-  const interventionMap = new Map<string, Map<string, number>>();
-  for (const r of records) {
-    for (const arm of r.study_design.arms) {
-      if (arm.type !== "intervention") continue;
-      const cat = arm.intervention_category;
-      const name = arm.intervention_name;
-      if (!interventionMap.has(cat)) interventionMap.set(cat, new Map());
-      const nameMap = interventionMap.get(cat)!;
-      nameMap.set(name, (nameMap.get(name) ?? 0) + 1);
-    }
-  }
-  const byIntervention: InterventionBar[] = [...interventionMap.entries()]
-    .map(([category, nameMap]) => ({
-      category,
-      count: [...nameMap.values()].reduce((a, b) => a + b, 0),
-      interventions: [...nameMap.entries()]
-        .map(([name, count]) => ({ name, count }))
-        .sort((a, b) => b.count - a.count),
-    }))
-    .sort((a, b) => b.count - a.count);
-
-  // ── 3. By symptom domain (primary outcomes) ──────────────────────
-  const symptomMap = new Map<string, number>();
-  for (const r of records) {
-    const domains = new Set<string>();
-    for (const o of r.outcomes ?? []) {
-      if (o.is_primary && o.symptom_domain) domains.add(o.symptom_domain);
-    }
-    for (const d of domains) symptomMap.set(d, (symptomMap.get(d) ?? 0) + 1);
-  }
-  const bySymptom: SymptomBar[] = [...symptomMap.entries()]
-    .map(([domain, count]) => ({ domain, count }))
-    .sort((a, b) => b.count - a.count);
-
-  // ── 4. Heatmap (intervention × symptom) ──────────────────────────
-  const heatKey = (i: string, s: string) => `${i}|||${s}`;
-  const heatMap = new Map<string, { count: number; low: number; some_concerns: number; high: number }>();
-  for (const r of records) {
-    const rob = r.risk_of_bias?.overall_judgment ?? "unknown";
-    const cats = new Set<string>();
-    for (const arm of r.study_design.arms) {
-      if (arm.type === "intervention") cats.add(arm.intervention_category);
-    }
-    const domains = new Set<string>();
-    for (const o of r.outcomes ?? []) {
-      if (o.is_primary && o.symptom_domain) domains.add(o.symptom_domain);
-    }
-    for (const cat of cats) {
-      for (const dom of domains) {
-        const k = heatKey(cat, dom);
-        const entry = heatMap.get(k) ?? { count: 0, low: 0, some_concerns: 0, high: 0 };
-        entry.count++;
-        if (rob === "low") entry.low++;
-        else if (rob === "some_concerns") entry.some_concerns++;
-        else if (rob === "high") entry.high++;
-        heatMap.set(k, entry);
-      }
-    }
-  }
-  const heatmapData: HeatmapCell[] = [...heatMap.entries()].map(([k, d]) => {
-    const [intervention, symptom] = k.split("|||");
-    return { intervention, symptom, ...d };
-  });
-
-  // ── 5. Top countries ─────────────────────────────────────────────
-  const countryMap = new Map<string, number>();
-  for (const r of records) {
-    for (const c of r.study_design.countries ?? []) {
-      countryMap.set(c, (countryMap.get(c) ?? 0) + 1);
-    }
-  }
-  const sortedCountries = [...countryMap.entries()]
-    .map(([country, count]) => ({ country, count }))
-    .sort((a, b) => b.count - a.count);
-  const top15 = sortedCountries.slice(0, 15);
-  const otherCount = sortedCountries.slice(15).reduce((s, c) => s + c.count, 0);
-  const topCountries: CountryBar[] = otherCount > 0
-    ? [...top15, { country: "Other", count: otherCount }]
-    : top15;
-  const allCountryCounts: CountryBar[] = sortedCountries;
-
-  // ── 6. By year ───────────────────────────────────────────────────
-  const yearMap = new Map<number, number>();
-  for (const r of records) {
-    const m = r.paper_id.match(/20[12]\d/);
-    if (m) {
-      const y = parseInt(m[0]);
-      yearMap.set(y, (yearMap.get(y) ?? 0) + 1);
-    }
-  }
-  const byYear: YearBar[] = [...yearMap.entries()]
-    .filter(([y]) => y >= 2020)
-    .map(([year, count]) => ({ year, count }))
-    .sort((a, b) => a.year - b.year);
-
-  // ── 7. Blinding × significance ────────────────────────────────
-  const blindSigMap = new Map<string, { significant: number; not_significant: number }>();
-  for (const r of records) {
-    const blind = r.study_design.blinding ?? "unknown";
-    for (const o of r.outcomes ?? []) {
-      if (!o.is_primary) continue;
-      const bge = o.between_group_effects?.[0];
-      if (bge?.p_value != null) {
-        const entry = blindSigMap.get(blind) ?? { significant: 0, not_significant: 0 };
-        if (bge.p_value < 0.05) entry.significant++;
-        else entry.not_significant++;
-        blindSigMap.set(blind, entry);
-      }
-      break;
-    }
-  }
-  const blindingBySignificance: BlindingSignificanceBar[] = [
-    "double-blind",
-    "single-blind",
-    "open-label",
-  ]
-    .filter((b) => blindSigMap.has(b))
-    .map((blinding) => ({ blinding, ...blindSigMap.get(blinding)! }));
-
-  // ── 9. LC definition histogram ────────────────────────────────
-  const weeksBins = [0, 4, 8, 12, 16, 20, 24, 36, 52, Infinity];
-  const binLabels = ["0–4", "4–8", "8–12", "12–16", "16–20", "20–24", "24–36", "36–52", "52+"];
-  const binCounts = new Array(binLabels.length).fill(0);
-  let lcDefTotal = 0;
-  let lcDef12Plus = 0;
-  for (const r of records) {
-    const minW = r.participants?.min_time_since_infection_weeks;
-    if (minW != null) {
-      lcDefTotal++;
-      if (minW >= 12) lcDef12Plus++;
-      for (let i = 0; i < weeksBins.length - 1; i++) {
-        if (minW >= weeksBins[i] && minW < weeksBins[i + 1]) {
-          binCounts[i]++;
-          break;
-        }
-      }
-    }
-  }
-  const lcDefinitionHist: LcDefinitionBin[] = binLabels.map((label, i) => ({
-    label,
-    count: binCounts[i],
-  }));
-  const lcDefPct12Plus = lcDefTotal > 0 ? Math.round((lcDef12Plus / lcDefTotal) * 100) : 0;
-
-  // ── 10. Trial table rows ───────────────────────────────────────
+  // ── 2. Trial table rows ───────────────────────────────────────
   const tableRows: TrialTableRow[] = records.map((r) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const interventionArms = r.study_design.arms.filter((a: any) => a.type === "intervention");
     const interventionName = interventionArms[0]?.intervention_name ?? "unknown";
     const interventionCategory = interventionArms[0]?.intervention_category ?? "unknown";
@@ -279,8 +108,8 @@ function processData() {
       outcomesSummary.push({
         name: o.name ?? "Unnamed",
         symptom_domain: o.symptom_domain ?? "",
-        effect_value: oBge?.effect_value ?? null,
-        p_value: oBge?.p_value ?? null,
+        effect_value: numericOrNull(oBge?.effect_value),
+        p_value: numericOrNull(oBge?.p_value),
         higher_is_better: o.higher_is_better ?? null,
         effect_measure: oBge?.effect_measure ?? "",
       });
@@ -291,21 +120,23 @@ function processData() {
         const bge = o.between_group_effects?.[0];
         if (bge) {
           primaryEffectMeasure = bge.effect_measure ?? "";
-          primaryEffectValue = bge.effect_value ?? null;
-          primaryCiLow = bge.ci_95_low ?? null;
-          primaryCiHigh = bge.ci_95_high ?? null;
-          primaryPValue = bge.p_value ?? null;
+          primaryEffectValue = numericOrNull(bge.effect_value);
+          primaryCiLow = numericOrNull(bge.ci_95_low);
+          primaryCiHigh = numericOrNull(bge.ci_95_high);
+          primaryPValue = numericOrNull(bge.p_value);
         }
       }
       // Classify outcome significance
       const bge = o.between_group_effects?.[0];
-      if (!bge || bge.p_value == null || bge.effect_value == null) {
+      const bgePVal = numericOrNull(bge?.p_value);
+      const bgeEVal = numericOrNull(bge?.effect_value);
+      if (!bge || bgePVal == null || bgeEVal == null) {
         nUnknown++;
-      } else if (bge.p_value < 0.05) {
+      } else if (bgePVal < 0.05) {
         // Significant — check direction
         const hib = o.higher_is_better;
-        if (hib === true && bge.effect_value > 0) nPositive++;
-        else if (hib === false && bge.effect_value < 0) nPositive++;
+        if (hib === true && bgeEVal > 0) nPositive++;
+        else if (hib === false && bgeEVal < 0) nPositive++;
         else if (hib == null) nPositive++; // assume significant = positive if direction unknown
         else nNegativeNs++;
       } else {
@@ -319,16 +150,11 @@ function processData() {
       paper_id: r.paper_id,
       is_rct: r.is_rct ?? false,
       doi_url: `https://doi.org/${r.paper_id}`,
-      first_author: (() => {
-        const cite = citationLookup.get(r.paper_id.toLowerCase());
-        if (!cite?.authors) return "";
-        const first = cite.authors.split(";")[0].trim();
-        const parts = first.split(/\s+/);
-        return parts[parts.length - 1];
-      })(),
-      journal: citationLookup.get(r.paper_id.toLowerCase())?.journal ?? "",
+      first_author: doiMetadata[r.paper_id]?.first_author ?? "",
+      journal: doiMetadata[r.paper_id]?.journal ?? "",
       design_type: r.study_design.design_type,
-      intervention_name: interventionName,
+      intervention_name: r.interventions ?? interventionName,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       all_intervention_names: interventionArms.map((a: any) => a.intervention_name as string),
       intervention_category: interventionCategory,
       blinding: r.study_design.blinding ?? "unknown",
@@ -347,11 +173,10 @@ function processData() {
       arm_samples: (() => {
         const arms = r.study_design?.arms ?? [];
         const perArm = r.sample_sizes?.per_arm ?? [];
-        const controlKeywords = ["placebo", "control", "usual care", "standard care", "waitlist", "wait-list", "sham", "no treatment", "no intervention"];
         return arms.map((a: { arm_id: number; label: string; is_control?: boolean | null }) => {
           const pa = perArm.find((p: { arm_id: number }) => p.arm_id === a.arm_id);
           const labelLower = (a.label ?? "").toLowerCase();
-          const isControl = a.is_control === true || controlKeywords.some((kw) => labelLower.includes(kw));
+          const isControl = a.is_control === true || CONTROL_KEYWORDS.some((kw) => labelLower.includes(kw));
           return { label: a.label ?? `Arm ${a.arm_id}`, n_randomized: pa?.n_randomized ?? null, is_control: isControl };
         });
       })(),
@@ -361,31 +186,55 @@ function processData() {
       n_positive: nPositive,
       n_negative_ns: nNegativeNs,
       n_unknown: nUnknown,
-      year: (() => { const m = r.paper_id.match(/20[12]\d/); return m ? parseInt(m[0]) : null; })(),
+      year: r.year ?? extractYearFromDOI(r.paper_id),
       min_weeks: r.participants?.min_time_since_infection_weeks ?? null,
       summary: r.summary ?? "",
       promise_score: r.trial_rating?.promise_score ?? null,
+      title: r.title ?? "",
+      authors: r.authors ?? "",
+      volume: r.volume ?? "",
+      issue: r.issue ?? "",
+      pages: r.pages ?? "",
     };
   });
 
-  // ── 11. Trial metadata (lightweight per-record for client-side RCT filtering) ─
+  // ── 3. Trial metadata (lightweight per-record for client-side RCT filtering) ─
   const trialMetas: TrialMeta[] = records.map((r) => {
-    const interventionArms = r.study_design.arms
-      .filter((a: any) => a.type === "intervention")
-      .map((a: any) => ({ category: a.intervention_category, name: a.intervention_name }));
+    const rawArms = r.study_design.arms
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .filter((a: any) => a.type === "intervention");
+    // Use the consolidated `interventions` field, splitting comma-separated lists
+    const rawLabel = r.interventions;
+    const defaultCategory = rawArms[0]?.intervention_category ?? "unknown";
+    let interventionArms: { category: string; name: string }[];
+    if (rawLabel && rawLabel !== "Unknown") {
+      const names = rawLabel.split(",").map((s: string) => s.trim()).filter(Boolean);
+      interventionArms = names.map((name: string) => {
+        // Try to match to an arm by name similarity for category
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const matchedArm = rawArms.find((a: any) =>
+          a.intervention_name?.toLowerCase().includes(name.toLowerCase().split(" ")[0])
+        );
+        return { category: matchedArm?.intervention_category ?? defaultCategory, name };
+      });
+    } else {
+      interventionArms = rawArms.length > 0
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ? rawArms.map((a: any) => ({ category: a.intervention_category ?? "unknown", name: a.intervention_name ?? "unknown" }))
+        : [{ category: "unknown", name: "unknown" }];
+    }
     const primarySymptomDomains: string[] = [];
     let primaryPValue: number | null = null;
     for (const o of r.outcomes ?? []) {
       if (o.is_primary && o.symptom_domain) primarySymptomDomains.push(o.symptom_domain);
       if (o.is_primary && !primaryPValue) {
-        primaryPValue = o.between_group_effects?.[0]?.p_value ?? null;
+        primaryPValue = numericOrNull(o.between_group_effects?.[0]?.p_value);
       }
     }
     const instruments = new Set<string>();
     for (const o of r.outcomes ?? []) {
       if (o.measurement_instrument) instruments.add(o.measurement_instrument);
     }
-    const m = r.paper_id.match(/20[12]\d/);
     return {
       paper_id: r.paper_id,
       is_rct: r.is_rct ?? false,
@@ -394,25 +243,39 @@ function processData() {
       primarySymptomDomains: [...new Set(primarySymptomDomains)],
       rob_overall: r.risk_of_bias?.overall_judgment ?? "unknown",
       blinding: r.study_design.blinding ?? "unknown",
+      design_type: r.study_design.design_type ?? "unknown",
       n_randomized: r.sample_sizes?.n_randomized_total ?? null,
       min_weeks: r.participants?.min_time_since_infection_weeks ?? null,
-      year: m ? parseInt(m[0]) : null,
+      year: r.year ?? extractYearFromDOI(r.paper_id),
       n_instruments: instruments.size,
       primary_p_value: primaryPValue,
     };
   });
 
+  // ── 4. Aggregate charts from trialMetas ──────────────────────────
+  const aggregated = aggregateFromMetas(trialMetas);
+
+  // Top countries (uses server-accurate summary stats for the initial view)
+  const sortedCountries = aggregated.allCountries;
+  const top15 = sortedCountries.slice(0, TOP_COUNTRIES_LIMIT);
+  const otherCount = sortedCountries.slice(TOP_COUNTRIES_LIMIT).reduce((s, c) => s + c.count, 0);
+  const topCountries = otherCount > 0
+    ? [...top15, { country: "Other", count: otherCount }]
+    : top15;
+
   return {
+    // Use server-accurate summary stats (instrument count uses Set dedup)
     summaryStats,
-    byIntervention,
-    bySymptom,
-    heatmapData,
+    byIntervention: aggregated.byIntervention,
+    bySymptom: aggregated.bySymptom,
+    heatmapData: aggregated.heatmapData,
     topCountries,
-    allCountries: allCountryCounts,
-    byYear,
-    blindingBySignificance,
-    lcDefinitionHist,
-    lcDefPct12Plus,
+    allCountries: aggregated.allCountries,
+    byYear: aggregated.byYear,
+    blindingBySignificance: aggregated.blindingBySignificance,
+    byDesignType: aggregated.byDesignType,
+    lcDefinitionHist: aggregated.lcDefinitionHist,
+    lcDefPct12Plus: aggregated.lcDefPct12Plus,
     tableRows,
     trialMetas,
   };

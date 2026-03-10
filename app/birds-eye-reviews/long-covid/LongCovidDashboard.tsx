@@ -22,7 +22,8 @@ import {
   Marker,
 } from "react-simple-maps";
 import { geoCentroid } from "d3-geo";
-import type { DashboardProps, InterventionBar, TrialTableRow, TrialMeta, SummaryStats, SymptomBar, HeatmapCell, CountryBar, YearBar, BlindingSignificanceBar, LcDefinitionBin } from "./types";
+import type { DashboardProps, InterventionBar, TrialTableRow } from "./types";
+import { aggregateFromMetas, getPromiseScoreColors, LC_WEEKS_BINS, LC_BIN_LABELS, LC_WHO_BIN_LABELS } from "./constants";
 
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
@@ -69,136 +70,28 @@ const ROB_LABELS: Record<string, string> = {
 const formatCategory = (s: string) =>
   s.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
-// ── Re-aggregation helper ────────────────────────────────────────────
-function recomputeFromMetas(metas: TrialMeta[]) {
-  // Summary stats
-  const allCountriesSet = new Set<string>();
-  const allCategories = new Set<string>();
-  let totalParticipants = 0;
-  let nInstruments = 0;
-  for (const m of metas) {
-    for (const c of m.countries) allCountriesSet.add(c);
-    for (const a of m.interventionArms) allCategories.add(a.category);
-    if (m.n_randomized) totalParticipants += m.n_randomized;
-    nInstruments += m.n_instruments;
-  }
-  const summaryStats: SummaryStats = {
-    totalTrials: metas.length,
-    totalParticipants,
-    nCountries: allCountriesSet.size,
-    nInterventionCategories: allCategories.size,
-    nInstruments,
-  };
+/** Format a p-value with enough digits so it doesn't show as 0.00 */
+const formatPValue = (p: number): string => {
+  if (p < 0.001) return "<0.001";
+  if (p < 0.01) return p.toFixed(3);
+  return p.toFixed(2);
+};
 
-  // By intervention
-  const interventionMap = new Map<string, Map<string, number>>();
-  for (const m of metas) {
-    for (const a of m.interventionArms) {
-      if (!interventionMap.has(a.category)) interventionMap.set(a.category, new Map());
-      const nameMap = interventionMap.get(a.category)!;
-      nameMap.set(a.name, (nameMap.get(a.name) ?? 0) + 1);
-    }
-  }
-  const byIntervention: InterventionBar[] = [...interventionMap.entries()]
-    .map(([category, nameMap]) => ({
-      category,
-      count: [...nameMap.values()].reduce((a, b) => a + b, 0),
-      interventions: [...nameMap.entries()]
-        .map(([name, count]) => ({ name, count }))
-        .sort((a, b) => b.count - a.count),
-    }))
-    .sort((a, b) => b.count - a.count);
+const DESIGN_TYPE_LABELS: Record<string, string> = {
+  RCT: "RCT",
+  crossover: "Crossover RCT",
+  "quasi-experimental": "Quasi-Experimental",
+  prospective_cohort: "Prospective Cohort",
+  retrospective_cohort: "Retrospective Cohort",
+  before_after: "Before–After",
+  case_series: "Case Series",
+  cross_sectional: "Cross-Sectional",
+  case_control: "Case–Control",
+  interrupted_time_series: "Interrupted Time Series",
+};
+const formatDesignType = (s: string) => DESIGN_TYPE_LABELS[s] ?? formatCategory(s);
 
-  // By symptom
-  const symptomMap = new Map<string, number>();
-  for (const m of metas) {
-    for (const d of m.primarySymptomDomains) symptomMap.set(d, (symptomMap.get(d) ?? 0) + 1);
-  }
-  const bySymptom: SymptomBar[] = [...symptomMap.entries()]
-    .map(([domain, count]) => ({ domain, count }))
-    .sort((a, b) => b.count - a.count);
-
-  // Heatmap
-  const heatMap = new Map<string, { count: number; low: number; some_concerns: number; high: number }>();
-  for (const m of metas) {
-    const cats = new Set(m.interventionArms.map((a) => a.category));
-    for (const cat of cats) {
-      for (const dom of m.primarySymptomDomains) {
-        const k = `${cat}|||${dom}`;
-        const entry = heatMap.get(k) ?? { count: 0, low: 0, some_concerns: 0, high: 0 };
-        entry.count++;
-        if (m.rob_overall === "low") entry.low++;
-        else if (m.rob_overall === "some_concerns") entry.some_concerns++;
-        else if (m.rob_overall === "high") entry.high++;
-        heatMap.set(k, entry);
-      }
-    }
-  }
-  const heatmapData: HeatmapCell[] = [...heatMap.entries()].map(([k, d]) => {
-    const [intervention, symptom] = k.split("|||");
-    return { intervention, symptom, ...d };
-  });
-
-  // Countries
-  const countryMap = new Map<string, number>();
-  for (const m of metas) {
-    for (const c of m.countries) countryMap.set(c, (countryMap.get(c) ?? 0) + 1);
-  }
-  const allCountries: CountryBar[] = [...countryMap.entries()]
-    .map(([country, count]) => ({ country, count }))
-    .sort((a, b) => b.count - a.count);
-
-  // By year
-  const yearMap = new Map<number, number>();
-  for (const m of metas) {
-    if (m.year && m.year >= 2020) yearMap.set(m.year, (yearMap.get(m.year) ?? 0) + 1);
-  }
-  const byYear: YearBar[] = [...yearMap.entries()]
-    .map(([year, count]) => ({ year, count }))
-    .sort((a, b) => a.year - b.year);
-
-  // Blinding × significance
-  const blindSigMap = new Map<string, { significant: number; not_significant: number }>();
-  for (const m of metas) {
-    if (m.primary_p_value != null) {
-      const entry = blindSigMap.get(m.blinding) ?? { significant: 0, not_significant: 0 };
-      if (m.primary_p_value < 0.05) entry.significant++;
-      else entry.not_significant++;
-      blindSigMap.set(m.blinding, entry);
-    }
-  }
-  const blindingBySignificance: BlindingSignificanceBar[] = [
-    "double-blind", "single-blind", "open-label",
-  ]
-    .filter((b) => blindSigMap.has(b))
-    .map((blinding) => ({ blinding, ...blindSigMap.get(blinding)! }));
-
-  // LC definition histogram
-  const weeksBins = [0, 4, 8, 12, 16, 20, 24, 36, 52, Infinity];
-  const binLabels = ["0–4", "4–8", "8–12", "12–16", "16–20", "20–24", "24–36", "36–52", "52+"];
-  const binCounts = new Array(binLabels.length).fill(0);
-  let lcDefTotal = 0;
-  let lcDef12Plus = 0;
-  for (const m of metas) {
-    if (m.min_weeks != null) {
-      lcDefTotal++;
-      if (m.min_weeks >= 12) lcDef12Plus++;
-      for (let i = 0; i < weeksBins.length - 1; i++) {
-        if (m.min_weeks >= weeksBins[i] && m.min_weeks < weeksBins[i + 1]) {
-          binCounts[i]++;
-          break;
-        }
-      }
-    }
-  }
-  const lcDefinitionHist: LcDefinitionBin[] = binLabels.map((label, i) => ({
-    label,
-    count: binCounts[i],
-  }));
-  const lcDefPct12Plus = lcDefTotal > 0 ? Math.round((lcDef12Plus / lcDefTotal) * 100) : 0;
-
-  return { summaryStats, byIntervention, bySymptom, heatmapData, allCountries, byYear, blindingBySignificance, lcDefinitionHist, lcDefPct12Plus };
-}
+// recomputeFromMetas is now shared — see constants.ts aggregateFromMetas
 
 // ── Main Dashboard ───────────────────────────────────────────────────
 export function LongCovidDashboard(props: DashboardProps) {
@@ -209,6 +102,8 @@ export function LongCovidDashboard(props: DashboardProps) {
   const [interventionNameFilter, setInterventionNameFilter] = useState<string | null>(null);
   const [lcDefFilter, setLcDefFilter] = useState<string | null>(null);
   const [countryFilter, setCountryFilter] = useState<string | null>(null);
+  const [blindingFilter, setBlindingFilter] = useState<string | null>(null);
+  const [symptomDomainFilter, setSymptomDomainFilter] = useState<string | null>(null);
   const tableRef = useRef<HTMLDivElement>(null);
 
   const clearAllFilters = () => {
@@ -219,6 +114,8 @@ export function LongCovidDashboard(props: DashboardProps) {
     setInterventionNameFilter(null);
     setLcDefFilter(null);
     setCountryFilter(null);
+    setBlindingFilter(null);
+    setSymptomDomainFilter(null);
   };
 
   const scrollToTable = () => {
@@ -227,11 +124,19 @@ export function LongCovidDashboard(props: DashboardProps) {
     }
   };
 
-  const handleYearClick = (year: number) => {
+  const makeFilterHandler = <T,>(setter: (v: T) => void) => (value: T) => {
     clearAllFilters();
-    setYearFilter(year);
+    setter(value);
     scrollToTable();
   };
+
+  const handleYearClick = makeFilterHandler(setYearFilter);
+  const handleInterventionClick = makeFilterHandler(setInterventionNameFilter);
+  const handleCategoryClick = makeFilterHandler(setInterventionCategoryFilter);
+  const handleLcDefClick = makeFilterHandler(setLcDefFilter);
+  const handleCountryClick = makeFilterHandler(setCountryFilter);
+  const handleBlindingClick = makeFilterHandler(setBlindingFilter);
+  const handleSymptomDomainClick = makeFilterHandler(setSymptomDomainFilter);
 
   const handleCellClick = (category: string, symptom: string) => {
     clearAllFilters();
@@ -240,41 +145,68 @@ export function LongCovidDashboard(props: DashboardProps) {
     scrollToTable();
   };
 
-  const handleInterventionClick = (interventionName: string) => {
-    clearAllFilters();
-    setInterventionNameFilter(interventionName);
-    scrollToTable();
-  };
+  // Long Covid definition filter (top-level dashboard filter)
+  const [lcDefWho, setLcDefWho] = useState(true);
+  const [lcDefBelow, setLcDefBelow] = useState(false);
 
-  const handleCategoryClick = (category: string) => {
-    clearAllFilters();
-    setInterventionCategoryFilter(category);
-    scrollToTable();
-  };
+  const lcDefFilteredMetas = useMemo(() => {
+    if (lcDefWho && lcDefBelow) return props.trialMetas;
+    if (lcDefWho) return props.trialMetas.filter((m) => m.min_weeks != null && m.min_weeks >= 12);
+    if (lcDefBelow) return props.trialMetas.filter((m) => m.min_weeks != null && m.min_weeks < 12);
+    return [];
+  }, [lcDefWho, lcDefBelow, props.trialMetas]);
 
-  const handleLcDefClick = (binLabel: string) => {
-    clearAllFilters();
-    setLcDefFilter(binLabel);
-    scrollToTable();
-  };
-
-  const handleCountryClick = (country: string) => {
-    clearAllFilters();
-    setCountryFilter(country);
-    scrollToTable();
-  };
-
-  const [rctOnly, setRctOnly] = useState(true);
-
-  // Recompute aggregated data when RCT filter is toggled
-  const filteredMetas = useMemo(
-    () => (rctOnly ? props.trialMetas.filter((m) => m.is_rct) : props.trialMetas),
-    [rctOnly, props.trialMetas]
+  const whoCount = useMemo(
+    () => props.trialMetas.filter((m) => m.min_weeks != null && m.min_weeks >= 12).length,
+    [props.trialMetas]
   );
-  const recomputed = useMemo(() => recomputeFromMetas(filteredMetas), [filteredMetas]);
+  const belowCount = useMemo(
+    () => props.trialMetas.filter((m) => m.min_weeks != null && m.min_weeks < 12).length,
+    [props.trialMetas]
+  );
+
+  // Design type checkboxes — compute counts and default to all selected
+  const designTypeCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const m of lcDefFilteredMetas) {
+      const dt = m.design_type || "unknown";
+      counts.set(dt, (counts.get(dt) ?? 0) + 1);
+    }
+    return [...counts.entries()].sort((a, b) => b[1] - a[1]);
+  }, [lcDefFilteredMetas]);
+
+  const allDesignTypes = useMemo(
+    () => new Set(designTypeCounts.map(([dt]) => dt)),
+    [designTypeCounts]
+  );
+
+  const [selectedDesignTypes, setSelectedDesignTypes] = useState<Set<string>>(
+    () => new Set(["RCT", "crossover"])
+  );
+
+  const toggleDesignType = (dt: string) => {
+    setSelectedDesignTypes((prev) => {
+      const next = new Set(prev);
+      if (next.has(dt)) next.delete(dt);
+      else next.add(dt);
+      return next;
+    });
+  };
+
+  const selectAll = () => setSelectedDesignTypes(new Set(allDesignTypes));
+  const selectNone = () => setSelectedDesignTypes(new Set());
+
+  const isFiltered = selectedDesignTypes.size < allDesignTypes.size || !(lcDefWho && lcDefBelow);
+
+  // Recompute aggregated data when filters change
+  const filteredMetas = useMemo(
+    () => lcDefFilteredMetas.filter((m) => selectedDesignTypes.has(m.design_type || "unknown")),
+    [selectedDesignTypes, lcDefFilteredMetas]
+  );
+  const recomputed = useMemo(() => aggregateFromMetas(filteredMetas), [filteredMetas]);
 
   const effectiveProps: DashboardProps = useMemo(() => {
-    if (!rctOnly) return props;
+    if (!isFiltered) return props;
     return {
       ...props,
       summaryStats: recomputed.summaryStats,
@@ -285,59 +217,91 @@ export function LongCovidDashboard(props: DashboardProps) {
       topCountries: recomputed.allCountries,
       byYear: recomputed.byYear,
       blindingBySignificance: recomputed.blindingBySignificance,
+      byDesignType: recomputed.byDesignType,
       lcDefinitionHist: recomputed.lcDefinitionHist,
       lcDefPct12Plus: recomputed.lcDefPct12Plus,
-      tableRows: props.tableRows.filter((r) => r.is_rct),
+      tableRows: props.tableRows.filter((r) => {
+        if (!selectedDesignTypes.has(r.design_type || "unknown")) return false;
+        if (lcDefWho && !lcDefBelow) return r.min_weeks != null && r.min_weeks >= 12;
+        if (!lcDefWho && lcDefBelow) return r.min_weeks != null && r.min_weeks < 12;
+        if (!lcDefWho && !lcDefBelow) return false;
+        return true;
+      }),
     };
-  }, [rctOnly, props, recomputed]);
+  }, [isFiltered, props, recomputed, selectedDesignTypes, lcDefWho, lcDefBelow]);
 
-  const rctCount = useMemo(
-    () => props.trialMetas.filter((m) => m.is_rct).length,
-    [props.trialMetas]
-  );
 
   return (
     <div>
       {/* Hero */}
       <h1 className="font-clarendon font-bold text-3xl mb-2">Long Covid Clinical Trials</h1>
-      <p className="text-foreground/70 text-lg mb-2">
-        A bird&apos;s eye view of {effectiveProps.summaryStats.totalTrials} clinical trials testing
-        interventions for Long Covid.
-      </p>
       <Link
         href="/birds-eye-reviews/long-covid/screening"
         className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
       >
-        View full breakdown of Long COVID articles &rarr;
+        View breakdown of all Long COVID articles &rarr;
       </Link>
 
-      {/* RCT Filter Toggle */}
-      <div className="mb-6">
-        <button
-          onClick={() => setRctOnly((v) => !v)}
-          className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all border ${rctOnly
-            ? "bg-blue-600 text-white border-blue-600 shadow-md"
-            : "bg-background text-foreground/70 border-border hover:border-foreground/30 hover:text-foreground"
-            }`}
-        >
-          <span
-            className={`inline-flex items-center justify-center w-4 h-4 rounded border transition-colors ${rctOnly ? "bg-white border-white" : "border-foreground/30"
-              }`}
-          >
-            {rctOnly && (
-              <svg viewBox="0 0 12 12" className="w-3 h-3 text-blue-600">
-                <path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            )}
-          </span>
-          Filter to RCTs only
-          <span className={`text-xs ${rctOnly ? "text-blue-200" : "text-foreground/40"}`}>
-            ({rctCount} of {props.summaryStats.totalTrials})
-          </span>
-        </button>
+      {/* Long Covid definition filter */}
+      <div className="mb-3 border border-border rounded-lg p-4 bg-foreground/[0.02]">
+        <div className="flex items-center gap-4">
+          <span className="text-sm font-medium text-foreground">Filter by Long Covid definition</span>
+          <label className="inline-flex items-center gap-1.5 cursor-pointer text-sm">
+            <input
+              type="checkbox"
+              checked={lcDefWho}
+              onChange={() => setLcDefWho((v) => !v)}
+              className="rounded border-foreground/30 text-blue-600 focus:ring-blue-500"
+            />
+            <span className={lcDefWho ? "text-foreground" : "text-foreground/50"}>
+              Meets WHO definition (symptom duration ≥12 weeks)
+            </span>
+            <span className="text-xs text-foreground/40">({whoCount})</span>
+          </label>
+          <label className="inline-flex items-center gap-1.5 cursor-pointer text-sm">
+            <input
+              type="checkbox"
+              checked={lcDefBelow}
+              onChange={() => setLcDefBelow((v) => !v)}
+              className="rounded border-foreground/30 text-blue-600 focus:ring-blue-500"
+            />
+            <span className={lcDefBelow ? "text-foreground" : "text-foreground/50"}>
+              Below WHO threshold
+            </span>
+            <span className="text-xs text-foreground/40">({belowCount})</span>
+          </label>
+        </div>
       </div>
 
-      <OverviewTab {...effectiveProps} onYearClick={handleYearClick} onCellClick={handleCellClick} onInterventionClick={handleInterventionClick} onCategoryClick={handleCategoryClick} onLcDefClick={handleLcDefClick} onCountryClick={handleCountryClick} />
+      {/* Design type filter checkboxes */}
+      <div className="mb-6 border border-border rounded-lg p-4 bg-foreground/[0.02]">
+        <div className="flex items-center gap-3 mb-2">
+          <span className="text-sm font-medium text-foreground">Filter by trial type</span>
+          <span className="text-xs text-foreground/50">
+            ({filteredMetas.length} of {props.summaryStats.totalTrials} trials selected)
+          </span>
+          <button onClick={selectAll} className="text-xs text-blue-600 hover:text-blue-700 ml-auto">Select all</button>
+          <button onClick={selectNone} className="text-xs text-blue-600 hover:text-blue-700">Clear all</button>
+        </div>
+        <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+          {designTypeCounts.map(([dt, count]) => (
+            <label key={dt} className="inline-flex items-center gap-1.5 cursor-pointer text-sm">
+              <input
+                type="checkbox"
+                checked={selectedDesignTypes.has(dt)}
+                onChange={() => toggleDesignType(dt)}
+                className="rounded border-foreground/30 text-blue-600 focus:ring-blue-500"
+              />
+              <span className={selectedDesignTypes.has(dt) ? "text-foreground" : "text-foreground/50"}>
+                {formatDesignType(dt)}
+              </span>
+              <span className="text-xs text-foreground/40">({count})</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <OverviewTab {...effectiveProps} onYearClick={handleYearClick} onCellClick={handleCellClick} onInterventionClick={handleInterventionClick} onCategoryClick={handleCategoryClick} onLcDefClick={handleLcDefClick} onCountryClick={handleCountryClick} onBlindingClick={handleBlindingClick} onSymptomDomainClick={handleSymptomDomainClick} />
       {/* Trial table — always visible at the bottom */}
       <div className="mt-12 border-t border-border pt-8" ref={tableRef}>
         <h2 className="font-clarendon font-bold text-2xl mb-4">All Trials</h2>
@@ -353,10 +317,14 @@ export function LongCovidDashboard(props: DashboardProps) {
           onLcDefClear={() => setLcDefFilter(null)}
           countryFilter={countryFilter}
           onCountryClear={() => setCountryFilter(null)}
+          blindingFilter={blindingFilter}
+          onBlindingClear={() => setBlindingFilter(null)}
           landscapeCategory={landscapeCategory}
           landscapeSymptom={landscapeSymptom}
           onLandscapeCategoryClear={() => setLandscapeCategory(null)}
           onLandscapeSymptomClear={() => setLandscapeSymptom(null)}
+          symptomDomainFilter={symptomDomainFilter}
+          onSymptomDomainClear={() => setSymptomDomainFilter(null)}
         />
       </div>
     </div>
@@ -364,21 +332,21 @@ export function LongCovidDashboard(props: DashboardProps) {
 }
 
 // ── OVERVIEW TAB ─────────────────────────────────────────────────────
-function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => void; onCellClick?: (category: string, symptom: string) => void; onInterventionClick?: (interventionName: string) => void; onCategoryClick?: (category: string) => void; onLcDefClick?: (binLabel: string) => void; onCountryClick?: (country: string) => void }) {
+function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => void; onCellClick?: (category: string, symptom: string) => void; onInterventionClick?: (interventionName: string) => void; onCategoryClick?: (category: string) => void; onLcDefClick?: (binLabel: string) => void; onCountryClick?: (country: string) => void; onBlindingClick?: (blinding: string) => void; onSymptomDomainClick?: (domain: string) => void }) {
   return (
     <div className="space-y-10">
       {/* Timeline + Country map side by side */}
       <div className="grid md:grid-cols-2 gap-8">
         <ChartSection title="Trials by publication year">
-          <ResponsiveContainer width="100%" height={280}>
-            <BarChart data={props.byYear} margin={{ left: 10, right: 20, top: 5, bottom: 5 }}>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={props.byYear} margin={{ left: 25, right: 20, top: 5, bottom: 25 }} barCategoryGap="30%">
               <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-              <XAxis dataKey="year" />
-              <YAxis />
+              <XAxis dataKey="year" label={{ value: "Year", position: "bottom", offset: 0, fontSize: 12 }} />
+              <YAxis label={{ value: "# Trials", angle: -90, position: "insideLeft", fontSize: 12 }} />
               <Tooltip cursor={{ fill: 'transparent' }} />
               <Bar
                 dataKey="count"
-                fill="#8b5cf6"
+                fill="#3b82f6"
                 radius={[4, 4, 0, 0]}
                 style={{ cursor: "pointer" }}
                 onClick={(data) => {
@@ -391,81 +359,136 @@ function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => v
           </ResponsiveContainer>
         </ChartSection>
 
+        <ChartSection title="Trials by Long Covid definition">
+          <div className="relative">
+            <div className="absolute top-2 right-2 z-10 text-xs text-foreground/50 flex flex-col gap-1">
+              <div
+                className="flex items-center cursor-pointer hover:text-foreground transition-colors"
+                onClick={() => props.onLcDefClick?.("≥12")}
+              >
+                <span className="inline-block w-3 h-3 rounded-sm mr-1" style={{ backgroundColor: "#22c55e" }} />
+                Meets WHO definition (≥12 weeks) ({props.lcDefPct12Plus}%)
+              </div>
+              <div
+                className="flex items-center cursor-pointer hover:text-foreground transition-colors"
+                onClick={() => props.onLcDefClick?.("<12")}
+              >
+                <span className="inline-block w-3 h-3 rounded-sm mr-1" style={{ backgroundColor: "#ef4444" }} />
+                Below WHO threshold ({100 - props.lcDefPct12Plus}%)
+              </div>
+            </div>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart
+                data={props.lcDefinitionHist}
+                margin={{ left: 25, right: 20, top: 5, bottom: 25 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
+                <XAxis
+                  dataKey="label"
+                  label={{ value: "Min weeks since infection", position: "bottom", offset: 0, fontSize: 12 }}
+                />
+                <YAxis label={{ value: "# Trials", angle: -90, position: "insideLeft", fontSize: 12 }} />
+                <Tooltip cursor={{ fill: 'transparent' }} />
+                <Bar
+                  dataKey="count"
+                  fill="#6366f1"
+                  radius={[4, 4, 0, 0]}
+                  style={{ cursor: "pointer" }}
+                  onClick={(data) => {
+                    if (data && data.label && props.onLcDefClick) {
+                      props.onLcDefClick(data.label);
+                    }
+                  }}
+                >
+                  {props.lcDefinitionHist.map((entry, i) => {
+                    const meetsWho = LC_WHO_BIN_LABELS.includes(entry.label);
+                    return (
+                      <Cell
+                        key={i}
+                        fill={meetsWho ? "#22c55e" : "#ef4444"}
+                        opacity={0.8}
+                      />
+                    );
+                  })}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </ChartSection>
+      </div>
+
+      {/* Trial type + Country map side by side */}
+      <div className="grid md:grid-cols-2 gap-8">
+        <ChartSection title="Trial type">
+          <ResponsiveContainer width="100%" height={350}>
+            <BarChart data={props.byDesignType} layout="vertical" margin={{ left: 10, right: 20, top: 5, bottom: 5 }} barCategoryGap="30%">
+              <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
+              <XAxis type="number" label={{ value: "# Trials", position: "insideBottom", offset: -2, fontSize: 12 }} />
+              <YAxis type="category" dataKey="design_type" tickFormatter={formatDesignType} width={140} fontSize={12} interval={0} />
+              <Tooltip formatter={(value: number) => [value, "Trials"]} labelFormatter={formatDesignType} />
+              <Bar dataKey="count" fill="#3b82f6" radius={[0, 4, 4, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartSection>
+
         <ChartSection title="Trials by country">
           <CountryMap topCountries={props.allCountries} onCountryClick={props.onCountryClick} />
         </ChartSection>
       </div>
 
-      {/* LC definition variability */}
-      <ChartSection
-        title="Long Covid definition variability"
-        subtitle={`Only ${props.lcDefPct12Plus}% of trials require symptoms persisting ≥12 weeks (WHO standard)`}
-      >
-        <ResponsiveContainer width="100%" height={280}>
-          <BarChart
-            data={props.lcDefinitionHist}
-            margin={{ left: 25, right: 20, top: 5, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-            <XAxis
-              dataKey="label"
-              label={{ value: "Min weeks since infection", position: "bottom", offset: 0, fontSize: 12 }}
-            />
-            <YAxis label={{ value: "Trials", angle: -90, position: "insideLeft", fontSize: 12 }} />
-            <Tooltip cursor={{ fill: 'transparent' }} />
-            <Bar
-              dataKey="count"
-              fill="#6366f1"
-              radius={[4, 4, 0, 0]}
-              style={{ cursor: "pointer" }}
-              onClick={(data) => {
-                if (data && data.label && props.onLcDefClick) {
-                  props.onLcDefClick(data.label);
-                }
-              }}
-            >
-              {props.lcDefinitionHist.map((entry, i) => {
-                const meetsWho = ["12–16", "16–20", "20–24", "24–36", "36–52", "52+"].includes(entry.label);
-                return (
-                  <Cell
-                    key={i}
-                    fill={meetsWho ? "#22c55e" : "#ef4444"}
-                    opacity={0.8}
-                  />
-                );
-              })}
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
-        <div className="text-xs text-foreground/50 mt-2">
-          <span className="inline-block w-3 h-3 rounded-sm mr-1" style={{ backgroundColor: "#22c55e" }} />
-          Meets WHO definition (≥12 weeks)
-          <span className="inline-block w-3 h-3 rounded-sm mr-1 ml-3" style={{ backgroundColor: "#ef4444" }} />
-          Below WHO threshold
-        </div>
-      </ChartSection>
-
-      {/* Trials by intervention category */}
-      <ChartSection title="Trials by intervention category" subtitle="Each segment is one intervention — hover for name, click to filter table">
+      {/* Trials by intervention */}
+      <ChartSection title="Trials by intervention" subtitle="Each segment is one intervention — hover for name, click to filter table">
         <InterventionStackedBar data={props.byIntervention} onInterventionClick={props.onInterventionClick} onCategoryClick={props.onCategoryClick} />
       </ChartSection>
 
-      {/* Trials by symptom domain */}
-      <ChartSection title="Trials by primary symptom domain">
-        <ResponsiveContainer width="100%" height={350}>
-          <BarChart
-            data={props.bySymptom}
-            layout="vertical"
-            margin={{ left: 120, right: 20, top: 5, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-            <XAxis type="number" />
-            <YAxis type="category" dataKey="domain" tickFormatter={formatCategory} width={115} fontSize={12} />
-            <Tooltip labelFormatter={formatCategory} />
-            <Bar dataKey="count" fill="#3b82f6" radius={[0, 4, 4, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
-      </ChartSection>
+      {/* Symptom domain + Blinding side by side */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <ChartSection title="Trials by primary symptom domain">
+          <ResponsiveContainer width="100%" height={350}>
+            <BarChart
+              data={props.bySymptom}
+              layout="vertical"
+              margin={{ left: 120, right: 20, top: 5, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
+              <XAxis type="number" />
+              <YAxis type="category" dataKey="domain" tickFormatter={formatCategory} width={115} fontSize={12} />
+              <Tooltip labelFormatter={formatCategory} />
+              <Bar dataKey="count" fill="#3b82f6" radius={[0, 4, 4, 0]} cursor="pointer" onClick={(data: { domain: string }) => props.onSymptomDomainClick?.(data.domain)} />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartSection>
+
+        <ChartSection
+          title="Blinding type vs. statistical significance"
+          subtitle="Open-label trials tend to report more positive results"
+        >
+          <ResponsiveContainer width="100%" height={350}>
+            <BarChart
+              data={props.blindingBySignificance}
+              margin={{ left: 20, right: 20, top: 5, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
+              <XAxis dataKey="blinding" tickFormatter={formatCategory} />
+              <YAxis />
+              <Tooltip
+                labelFormatter={formatCategory}
+                formatter={(val: number, name: string) => {
+                  const label = name === "significant" ? "Significant (p < 0.05)" : "Not significant";
+                  return [val, label];
+                }}
+              />
+              <Legend
+                formatter={(v) =>
+                  v === "significant" ? "Significant (p < 0.05)" : "Not significant"
+                }
+              />
+              <Bar dataKey="significant" fill="#ef4444" style={{ cursor: "pointer" }} onClick={(data) => { if (data && data.blinding && props.onBlindingClick) props.onBlindingClick(data.blinding); }} />
+              <Bar dataKey="not_significant" fill="#94a3b8" style={{ cursor: "pointer" }} onClick={(data) => { if (data && data.blinding && props.onBlindingClick) props.onBlindingClick(data.blinding); }} />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartSection>
+      </div>
 
       {/* Heatmap */}
       <ChartSection
@@ -473,37 +496,6 @@ function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => v
         subtitle="Intervention category × symptom domain (cell = number of trials)"
       >
         <Heatmap data={props.heatmapData} onCellClick={props.onCellClick} />
-      </ChartSection>
-
-      {/* Blinding × Significance */}
-      <ChartSection
-        title="Blinding type vs. statistical significance"
-        subtitle="Open-label trials tend to report more positive results"
-      >
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart
-            data={props.blindingBySignificance}
-            margin={{ left: 20, right: 20, top: 5, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-            <XAxis dataKey="blinding" tickFormatter={formatCategory} />
-            <YAxis />
-            <Tooltip
-              labelFormatter={formatCategory}
-              formatter={(val: number, name: string) => {
-                const label = name === "significant" ? "Significant (p < 0.05)" : "Not significant";
-                return [val, label];
-              }}
-            />
-            <Legend
-              formatter={(v) =>
-                v === "significant" ? "Significant (p < 0.05)" : "Not significant"
-              }
-            />
-            <Bar dataKey="significant" fill="#ef4444" />
-            <Bar dataKey="not_significant" fill="#94a3b8" />
-          </BarChart>
-        </ResponsiveContainer>
       </ChartSection>
     </div>
   );
@@ -527,7 +519,7 @@ function Heatmap({ data, onCellClick }: { data: DashboardProps["heatmapData"]; o
   const maxCount = useMemo(() => Math.max(...data.map((d) => d.count), 1), [data]);
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto flex justify-center">
       <table className="text-xs border-collapse">
         <thead>
           <tr>
@@ -604,10 +596,14 @@ function TrialTableTab({
   onLcDefClear,
   countryFilter,
   onCountryClear,
+  blindingFilter,
+  onBlindingClear,
   landscapeCategory,
   landscapeSymptom,
   onLandscapeCategoryClear,
   onLandscapeSymptomClear,
+  symptomDomainFilter,
+  onSymptomDomainClear,
 }: {
   tableRows: TrialTableRow[];
   yearFilter: number | null;
@@ -620,15 +616,20 @@ function TrialTableTab({
   onLcDefClear: () => void;
   countryFilter: string | null;
   onCountryClear: () => void;
+  blindingFilter: string | null;
+  onBlindingClear: () => void;
   landscapeCategory: string | null;
   landscapeSymptom: string | null;
   onLandscapeCategoryClear: () => void;
   onLandscapeSymptomClear: () => void;
+  symptomDomainFilter: string | null;
+  onSymptomDomainClear: () => void;
 }) {
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [symptomFilter, setSymptomFilter] = useState("all");
   const [robFilter, setRobFilter] = useState("all");
+  const [blindingDropdown, setBlindingDropdown] = useState("all");
   const [sortField, setSortField] = useState<"n_randomized" | "paper_id" | "intervention_name" | "pct_positive" | "outcome" | "promise_score">(
     "promise_score"
   );
@@ -642,6 +643,10 @@ function TrialTableTab({
   );
   const symptoms = useMemo(
     () => [...new Set(tableRows.map((r) => r.primary_symptom_domain).filter(Boolean))].sort(),
+    [tableRows]
+  );
+  const blindingValues = useMemo(
+    () => [...new Set(tableRows.map((r) => r.blinding).filter(Boolean))].sort(),
     [tableRows]
   );
 
@@ -659,20 +664,32 @@ function TrialTableTab({
     if (categoryFilter !== "all") rows = rows.filter((r) => r.intervention_category === categoryFilter);
     if (symptomFilter !== "all") rows = rows.filter((r) => r.primary_symptom_domain === symptomFilter);
     if (robFilter !== "all") rows = rows.filter((r) => r.rob_overall === robFilter);
+    if (blindingDropdown !== "all") rows = rows.filter((r) => r.blinding === blindingDropdown);
     if (yearFilter !== null) rows = rows.filter((r) => r.year === yearFilter);
     if (interventionCategoryFilter !== null) rows = rows.filter((r) => r.intervention_category === interventionCategoryFilter);
-    if (interventionNameFilter !== null) rows = rows.filter((r) => r.all_intervention_names.includes(interventionNameFilter));
+    if (interventionNameFilter !== null) rows = rows.filter((r) => {
+      const names = r.intervention_name.split(",").map((s) => s.trim());
+      return names.includes(interventionNameFilter) || r.all_intervention_names.includes(interventionNameFilter);
+    });
     if (lcDefFilter !== null) {
-      const lcBins: [string, number, number][] = [
-        ["0–4", 0, 4], ["4–8", 4, 8], ["8–12", 8, 12], ["12–16", 12, 16],
-        ["16–20", 16, 20], ["20–24", 20, 24], ["24–36", 24, 36], ["36–52", 36, 52], ["52+", 52, Infinity],
-      ];
-      const bin = lcBins.find(([l]) => l === lcDefFilter);
-      if (bin) rows = rows.filter((r) => r.min_weeks != null && r.min_weeks >= bin[1] && r.min_weeks < bin[2]);
+      if (lcDefFilter === "≥12") {
+        rows = rows.filter((r) => r.min_weeks != null && r.min_weeks >= 12);
+      } else if (lcDefFilter === "<12") {
+        rows = rows.filter((r) => r.min_weeks != null && r.min_weeks < 12);
+      } else {
+        const binIdx = LC_BIN_LABELS.indexOf(lcDefFilter);
+        if (binIdx >= 0) {
+          const low = LC_WEEKS_BINS[binIdx];
+          const high = LC_WEEKS_BINS[binIdx + 1];
+          rows = rows.filter((r) => r.min_weeks != null && r.min_weeks >= low && r.min_weeks < high);
+        }
+      }
     }
     if (countryFilter !== null) rows = rows.filter((r) => r.countries.includes(countryFilter));
+    if (blindingFilter !== null) rows = rows.filter((r) => r.blinding === blindingFilter);
     if (landscapeCategory !== null) rows = rows.filter((r) => r.intervention_category === landscapeCategory);
     if (landscapeSymptom !== null) rows = rows.filter((r) => r.primary_symptom_domain === landscapeSymptom);
+    if (symptomDomainFilter !== null) rows = rows.filter((r) => r.primary_symptom_domain === symptomDomainFilter);
     const outcomeRank = (r: typeof rows[0]): number => {
       const { primary_effect_value: ev, primary_p_value: p, primary_higher_is_better: hib } = r;
       if (ev == null && p == null) return -1;
@@ -703,7 +720,7 @@ function TrialTableTab({
       return sortDir === "asc" ? (va as number) - (vb as number) : (vb as number) - (va as number);
     });
     return rows;
-  }, [tableRows, search, categoryFilter, symptomFilter, robFilter, yearFilter, interventionCategoryFilter, interventionNameFilter, lcDefFilter, countryFilter, landscapeCategory, landscapeSymptom, sortField, sortDir]);
+  }, [tableRows, search, categoryFilter, symptomFilter, robFilter, blindingDropdown, yearFilter, interventionCategoryFilter, interventionNameFilter, lcDefFilter, countryFilter, blindingFilter, landscapeCategory, landscapeSymptom, symptomDomainFilter, sortField, sortDir]);
 
   const toggleExpand = (id: string) => {
     setExpanded((prev) => {
@@ -761,93 +778,41 @@ function TrialTableTab({
             { value: "high", label: "High" },
           ]}
         />
-        {yearFilter !== null && (
-          <div className="flex flex-col justify-end">
-            <span className="text-xs text-foreground/50 block mb-1">Year</span>
-            <button
-              onClick={onYearClear}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded border border-blue-100 text-sm hover:bg-blue-100 transition-colors"
-            >
-              {yearFilter}
-              <span className="text-blue-400 font-bold">&times;</span>
-            </button>
-          </div>
-        )}
-        {lcDefFilter !== null && (
-          <div className="flex flex-col justify-end">
-            <span className="text-xs text-foreground/50 block mb-1">LC definition (weeks)</span>
-            <button
-              onClick={onLcDefClear}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded border border-blue-100 text-sm hover:bg-blue-100 transition-colors"
-            >
-              {lcDefFilter}
-              <span className="text-blue-400 font-bold">&times;</span>
-            </button>
-          </div>
-        )}
-        {countryFilter !== null && (
-          <div className="flex flex-col justify-end">
-            <span className="text-xs text-foreground/50 block mb-1">Country</span>
-            <button
-              onClick={onCountryClear}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded border border-blue-100 text-sm hover:bg-blue-100 transition-colors"
-            >
-              {countryFilter}
-              <span className="text-blue-400 font-bold">&times;</span>
-            </button>
-          </div>
-        )}
-        {interventionCategoryFilter !== null && (
-          <div className="flex flex-col justify-end">
-            <span className="text-xs text-foreground/50 block mb-1">Intervention category</span>
-            <button
-              onClick={onInterventionCategoryClear}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded border border-blue-100 text-sm hover:bg-blue-100 transition-colors"
-            >
-              {formatCategory(interventionCategoryFilter)}
-              <span className="text-blue-400 font-bold">&times;</span>
-            </button>
-          </div>
-        )}
-        {interventionNameFilter !== null && (
-          <div className="flex flex-col justify-end">
-            <span className="text-xs text-foreground/50 block mb-1">Intervention</span>
-            <button
-              onClick={onInterventionNameClear}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded border border-blue-100 text-sm hover:bg-blue-100 transition-colors"
-            >
-              {formatCategory(interventionNameFilter)}
-              <span className="text-blue-400 font-bold">&times;</span>
-            </button>
-          </div>
-        )}
-        {landscapeCategory !== null && (
-          <div className="flex flex-col justify-end">
-            <span className="text-xs text-foreground/50 block mb-1">Intervention (landscape)</span>
-            <button
-              onClick={onLandscapeCategoryClear}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded border border-blue-100 text-sm hover:bg-blue-100 transition-colors"
-            >
-              {formatCategory(landscapeCategory)}
-              <span className="text-blue-400 font-bold">&times;</span>
-            </button>
-          </div>
-        )}
-        {landscapeSymptom !== null && (
-          <div className="flex flex-col justify-end">
-            <span className="text-xs text-foreground/50 block mb-1">Symptom (landscape)</span>
-            <button
-              onClick={onLandscapeSymptomClear}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded border border-blue-100 text-sm hover:bg-blue-100 transition-colors"
-            >
-              {formatCategory(landscapeSymptom)}
-              <span className="text-blue-400 font-bold">&times;</span>
-            </button>
-          </div>
-        )}
+        <FilterSelect
+          label="Blinding"
+          value={blindingDropdown}
+          onChange={setBlindingDropdown}
+          options={[{ value: "all", label: "All" }, ...blindingValues.map((b) => ({ value: b, label: formatCategory(b) }))]}
+        />
+        <FilterBadge label="Year" value={yearFilter} onClear={onYearClear} />
+        <FilterBadge label="LC definition (weeks)" value={lcDefFilter} onClear={onLcDefClear} />
+        <FilterBadge label="Country" value={countryFilter} onClear={onCountryClear} />
+        <FilterBadge label="Blinding" value={blindingFilter} onClear={onBlindingClear} format={formatCategory} />
+        <FilterBadge label="Intervention category" value={interventionCategoryFilter} onClear={onInterventionCategoryClear} format={formatCategory} />
+        <FilterBadge label="Intervention" value={interventionNameFilter} onClear={onInterventionNameClear} format={formatCategory} />
+        <FilterBadge label="Intervention (landscape)" value={landscapeCategory} onClear={onLandscapeCategoryClear} format={formatCategory} />
+        <FilterBadge label="Symptom (landscape)" value={landscapeSymptom} onClear={onLandscapeSymptomClear} format={formatCategory} />
+        <FilterBadge label="Symptom domain" value={symptomDomainFilter} onClear={onSymptomDomainClear} format={formatCategory} />
       </div>
 
-      <p className="text-sm text-foreground/50">{filtered.length} trials match</p>
+      <div className="flex items-center gap-4 text-sm text-foreground/50">
+        <p>{filtered.length} trials match</p>
+        <label className="flex items-center gap-1.5 cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={expanded.size > 0 && expanded.size === filtered.length}
+            onChange={(e) => {
+              if (e.target.checked) {
+                setExpanded(new Set(filtered.map((r) => r.paper_id)));
+              } else {
+                setExpanded(new Set());
+              }
+            }}
+            className="accent-blue-600"
+          />
+          Expand all
+        </label>
+      </div>
 
       {/* Table */}
       <div className="overflow-x-auto">
@@ -879,7 +844,7 @@ function TrialTableTab({
               >
                 Primary Outcome {sortField === "outcome" ? (sortDir === "asc" ? "↑" : "↓") : ""}
               </th>
-              <th className="p-2 text-right"># Out</th>
+              <th className="p-2 text-right" title="# Outcomes"># Out</th>
               <th className="p-2 text-right" title="Significant in positive direction">+ Sig</th>
               <th className="p-2 text-right" title="Negative or non-significant">− / NS</th>
               <th className="p-2 text-right" title="Unknown significance">Unk</th>
@@ -976,17 +941,17 @@ function TrialRow({
         <td className="p-2 text-right tabular-nums text-xs">{row.n_negative_ns || "—"}</td>
         <td className="p-2 text-right tabular-nums text-xs">{row.n_unknown || "—"}</td>
         <td className="p-2 text-right tabular-nums text-xs">
-          {row.promise_score != null ? (
-            <span
-              className="inline-block px-2 py-0.5 rounded font-medium"
-              style={{
-                backgroundColor: row.promise_score >= 0.6 ? "#22c55e20" : row.promise_score >= 0.3 ? "#f59e0b20" : "#94a3b820",
-                color: row.promise_score >= 0.6 ? "#16a34a" : row.promise_score >= 0.3 ? "#d97706" : "#64748b",
-              }}
-            >
-              {row.promise_score.toFixed(1)}
-            </span>
-          ) : "—"}
+          {row.promise_score != null ? (() => {
+            const psc = getPromiseScoreColors(row.promise_score);
+            return (
+              <span
+                className="inline-block px-2 py-0.5 rounded font-medium"
+                style={{ backgroundColor: psc.bg, color: psc.text }}
+              >
+                {row.promise_score.toFixed(1)}
+              </span>
+            );
+          })() : "—"}
         </td>
         <td className="p-2">
           <RobBadge rob={row.rob_overall} />
@@ -996,6 +961,41 @@ function TrialRow({
         <tr className="border-b border-border/50">
           <td colSpan={11} className="p-4 bg-foreground/[0.02]">
             <div className="grid md:grid-cols-2 gap-4 text-xs">
+              {/* Reference */}
+              <div className="md:col-span-2">
+                <p className="text-foreground leading-snug">
+                  {row.first_author && (
+                    <span className="font-medium">
+                      {row.first_author}
+                      {row.authors && row.authors.includes(";") ? " et al." : ""}
+                      {". "}
+                    </span>
+                  )}
+                  {row.title ? (
+                    <a href={row.doi_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 hover:underline">
+                      {row.title}
+                    </a>
+                  ) : (
+                    <a href={row.doi_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 hover:underline">
+                      {row.paper_id}
+                    </a>
+                  )}
+                  {row.journal && <>{". "}<em>{row.journal.replace(/&amp;/g, "&")}</em></>}
+                  {row.volume && <>{" "}{row.volume}</>}
+                  {row.issue && <>({row.issue})</>}
+                  {row.pages && <>, {row.pages}</>}
+                  {row.year && <> ({row.year})</>}
+                  .
+                </p>
+                <a
+                  href={`https://explore.metascienceobservatory.org/doi/${row.paper_id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-violet-600 hover:text-violet-700 hover:underline text-[11px] mt-1 inline-block"
+                >
+                  View in Metascience Observatory Explorer →
+                </a>
+              </div>
               <div className="md:col-span-2">
                 <DetailLabel>Long Covid definition</DetailLabel>
                 <p className="text-foreground/70">{row.long_covid_definition || "Not specified"}</p>
@@ -1019,7 +1019,7 @@ function TrialRow({
                       <> [95% CI: {row.primary_ci_low.toFixed(2)}, {row.primary_ci_high.toFixed(2)}]</>
                     )}
                     {row.primary_p_value != null && (
-                      <>, p = {row.primary_p_value < 0.001 ? "<0.001" : row.primary_p_value.toFixed(3)}</>
+                      <>, p = {formatPValue(row.primary_p_value)}</>
                     )}
                   </p>
                 )}
@@ -1062,8 +1062,8 @@ function TrialRow({
                 <div className="md:col-span-2">
                   <DetailLabel>All outcomes ({row.outcomes_summary.length})</DetailLabel>
                   <div className="space-y-1 mt-1">
-                    {row.outcomes_summary.slice(0, 12).map((o, i) => {
-                      const pStr = o.p_value != null ? (o.p_value < 0.001 ? "p<.001" : `p=${o.p_value.toFixed(2)}`) : null;
+                    {row.outcomes_summary.map((o, i) => {
+                      const pStr = o.p_value != null ? (o.p_value < 0.001 ? "p<0.001" : `p=${formatPValue(o.p_value)}`) : null;
                       let direction = "";
                       if (o.effect_value != null && o.higher_is_better != null) {
                         const favors = o.higher_is_better ? o.effect_value > 0 : o.effect_value < 0;
@@ -1087,9 +1087,6 @@ function TrialRow({
                         </div>
                       );
                     })}
-                    {row.outcomes_summary.length > 12 && (
-                      <p className="text-foreground/40">+{row.outcomes_summary.length - 12} more</p>
-                    )}
                   </div>
                 </div>
               )}
@@ -1144,12 +1141,12 @@ function CountryMap({ topCountries, onCountryClick }: { topCountries: DashboardP
   return (
     <div className="relative">
       <ComposableMap
-        projectionConfig={{ scale: 140, center: [10, 10] }}
-        width={700}
-        height={380}
+        projectionConfig={{ scale: 150, center: [10, 5] }}
+        width={800}
+        height={400}
         style={{ width: "100%", height: "auto" }}
       >
-        <ZoomableGroup>
+        <ZoomableGroup center={[0, 0]} zoom={1} minZoom={0.5} maxZoom={5}>
           <Geographies geography={GEO_URL}>
             {({ geographies }) => (
               <>
@@ -1229,12 +1226,6 @@ function CountryMap({ topCountries, onCountryClick }: { topCountries: DashboardP
           <div className="text-foreground/60">{tooltip.count} trial{tooltip.count !== 1 ? "s" : ""}</div>
         </div>
       )}
-      <div className="flex items-center gap-2 text-xs text-foreground/50 mt-1">
-        <span>0</span>
-        <div className="h-2 w-32 rounded" style={{ background: `linear-gradient(to right, #e2e8f0, #1e40af)` }} />
-        <span>{maxCount}</span>
-        <span className="ml-1">trials</span>
-      </div>
     </div>
   );
 }
@@ -1378,6 +1369,32 @@ function FilterSelect({
   );
 }
 
+function FilterBadge({
+  label,
+  value,
+  onClear,
+  format,
+}: {
+  label: string;
+  value: string | number | null;
+  onClear: () => void;
+  format?: (v: string) => string;
+}) {
+  if (value === null) return null;
+  return (
+    <div className="flex flex-col justify-end">
+      <span className="text-xs text-foreground/50 block mb-1">{label}</span>
+      <button
+        onClick={onClear}
+        className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded border border-blue-100 text-sm hover:bg-blue-100 transition-colors"
+      >
+        {format ? format(String(value)) : String(value)}
+        <span className="text-blue-400 font-bold">&times;</span>
+      </button>
+    </div>
+  );
+}
+
 function OutcomeBadge({ row }: { row: TrialTableRow }) {
   const { primary_effect_value: ev, primary_p_value: p, primary_higher_is_better: hib } = row;
 
@@ -1393,7 +1410,7 @@ function OutcomeBadge({ row }: { row: TrialTableRow }) {
   }
 
   const sig = p != null ? p < 0.05 : null;
-  const pStr = p != null ? (p < 0.001 ? "<.001" : `=${p.toFixed(2)}`) : "";
+  const pStr = p != null ? (p < 0.001 ? "<0.001" : `=${formatPValue(p)}`) : "";
 
   if (sig === true && favorsIntervention === true) {
     return (
