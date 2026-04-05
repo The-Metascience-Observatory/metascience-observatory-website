@@ -13,6 +13,7 @@
 | [Cohen's f²](#cohens-f2-f2) | f² | Yes |
 | [R Squared](#r-squared-r2) | R² | Yes |
 | [Phi Coefficient](#phi-coefficient-phi) | phi | Yes |
+| [Cramér's V](#cramers-v) | V | Conditional (2×2 tables only) |
 | [Pearson Correlation](#pearson-correlation-r) | r | Yes (already $r$) |
 | [t-test](#t-test) | t | Yes |
 | [F-test](#f-test-df1--1-only) | F | Yes |
@@ -259,6 +260,50 @@ $$r = \phi$$
 
 ---
 
+## Cramér's V
+
+Cramér's $V$ is a measure of association between two nominal (categorical) variables, derived from the chi-squared statistic ([Cramér, 1946](#ref-cramer-1946)).
+
+$$V = \sqrt{\frac{\chi^2}{N \cdot (k - 1)}}$$
+
+Where:
+* $\chi^2$: The chi-squared test statistic.
+* $N$: The total sample size.
+* $k$: The smaller of the number of rows and columns in the contingency table.
+
+$V$ ranges from 0 (no association) to 1 (perfect association) and is always non-negative.
+
+### Relationship to Phi ($\phi$) and Pearson's $r$
+
+For a **2×2 contingency table** (two binary variables), $k = 2$, so:
+
+$$V = \sqrt{\frac{\chi^2}{N}} = \phi$$
+
+In this special case, Cramér's $V$ equals the phi coefficient, which is in turn equal to the absolute value of the Pearson correlation coefficient computed on the two binary variables:
+
+$$V = \phi = |r| \quad \text{(2×2 tables only)}$$
+
+No conversion formula is needed — the value can be used directly as $r$.
+
+### Why general conversion is not valid
+
+For contingency tables larger than 2×2, $V$ and $r$ are not equivalent:
+
+- $V$ is bounded [0, 1] and is always non-negative; it cannot represent directional associations.
+- The scaling of $V$ depends on the table dimensions (via $k − 1$), so values are not comparable across tables of different sizes.
+- There is no agreed conversion formula that recovers a meaningful $r$ for the general case ([Rosenberg, 2010](#ref-rosenberg-2010)).
+
+### Practice in the database
+
+When a study reports Cramér's $V$:
+
+- If the underlying table is **2×2**, the value is passed through directly as $r$ (i.e., $r = V$).
+- If the table is **larger than 2×2**, no conversion is attempted and `original_es_r` / `replication_es_r` are left blank.
+
+Where the SCORE replication project (Tyner et al., 2026) pre-computed Pearson's $r$ equivalents from the original contingency tables using the `effectsize` R package, those values are used directly and no further conversion is applied.
+
+---
+
 ## Pearson Correlation ($r$)
 
 The Pearson correlation coefficient measures the linear correlation between two sets of data ([Pearson, 1895](#ref-pearson-1895)).
@@ -399,7 +444,7 @@ Where:
 The following effect sizes cannot be reliably converted to $r$ and thus will not have an entry computed for the *replication_es_r* and *original_es_r* columns:
 
 * Incidence Rate Difference (IRD) — raw percentage-point differences between groups, on a scale of roughly −100 to +100, incompatible with the standardized 0–1 scale
-* Cramér's V
+* Cramér's V — **except for 2×2 contingency tables**, where $V = \phi = |r|$ and the value is used directly; see the [Cramér's V section](#cramers-v) above
 * Cohen's h
 * Cohen's $d_z$ (standardized mean difference for paired designs)
 * Cliff's delta
@@ -439,6 +484,9 @@ Rosenthal, R. (1991). [*Meta-analytic procedures for social research*](https://d
 
 <span id="ref-chinn-2000"></span>
 Chinn, S. (2000). [A simple method for converting an odds ratio to effect size for use in meta-analysis](https://doi.org/10.1002/1097-0258(20001130)19:22<3127::aid-sim784>3.0.co;2-m). *Statistics in Medicine*, 19(22), 3127–3131.
+
+<span id="ref-rosenberg-2010"></span>
+Rosenberg, M. S. (2010). [A generalized formula for converting chi-square tests to effect sizes for meta-analysis](https://doi.org/10.1371/journal.pone.0010059). *PLOS ONE*, 5(4), e10059.
 
 <span id="ref-spearman-1904"></span>
 Spearman, C. (1904). [The proof and measurement of association between two things](https://doi.org/10.2307/1412159). *The American Journal of Psychology*, 15(1), 72–101.

@@ -23,6 +23,7 @@ const PROJECT_TO_TAG: Record<string, string> = {
   "Estimating the Replicability of Sports and Exercise Science Research": "RSESR",
   "Social Psychology Special Issue on Registered Replication Reports": "SPRRR",
   "Clearer Thinking's Transparent Replication Project": "TRs",
+  "Tyner et al. – DARPA SCORE Social & Behavioural Sciences Replication Project": "socsci_2026",
 };
 
 interface Project {

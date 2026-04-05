@@ -130,7 +130,6 @@ export interface DashboardProps {
   byIntervention: InterventionBar[];
   bySymptom: SymptomBar[];
   heatmapData: HeatmapCell[];
-  topCountries: CountryBar[];
   allCountries: CountryBar[];
   byYear: YearBar[];
   blindingBySignificance: BlindingSignificanceBar[];

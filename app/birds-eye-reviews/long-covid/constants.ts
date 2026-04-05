@@ -21,8 +21,6 @@ export const LC_WHO_BIN_LABELS = ["12–16", "16–20", "20–24", "24–36", "3
 
 export const BLINDING_ORDER = ["double-blind", "single-blind", "open-label"];
 
-export const TOP_COUNTRIES_LIMIT = 15;
-
 /** Keywords identifying control arms */
 export const CONTROL_KEYWORDS = [
   "placebo", "control", "usual care", "standard care",

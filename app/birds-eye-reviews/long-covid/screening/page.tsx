@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import Link from "next/link";
 import { ArticleTypeBar } from "./ScreeningFunnelChart";
 import { ScreeningClientWrapper } from "./ScreeningClientWrapper";
+import { parseCSV, stripTags } from "./csv-utils";
 
 export const metadata = {
   title: "Trial Screening | Long Covid | Bird's Eye Reviews | The Metascience Observatory",
@@ -30,8 +31,6 @@ interface ScreeningRow {
   pages: string;
   year: string;
 }
-
-const stripTags = (s: string) => s.replace(/<[^>]*>/g, "");
 
 function loadData(): ScreeningRow[] {
   const filePath = path.join(
@@ -64,42 +63,6 @@ function loadData(): ScreeningRow[] {
       year: row.paper_year ?? "",
     };
   });
-}
-
-/** Full CSV parser that handles quoted fields with commas and newlines */
-function parseCSV(text: string): string[][] {
-  const records: string[][] = [];
-  let current = "";
-  let inQuotes = false;
-  let row: string[] = [];
-
-  for (let i = 0; i < text.length; i++) {
-    const ch = text[i];
-    if (ch === '"') {
-      if (inQuotes && text[i + 1] === '"') {
-        current += '"';
-        i++;
-      } else {
-        inQuotes = !inQuotes;
-      }
-    } else if (ch === "," && !inQuotes) {
-      row.push(current);
-      current = "";
-    } else if ((ch === "\n" || (ch === "\r" && text[i + 1] === "\n")) && !inQuotes) {
-      if (ch === "\r") i++; // skip \n in \r\n
-      row.push(current);
-      current = "";
-      if (row.some((v) => v.trim())) records.push(row);
-      row = [];
-    } else {
-      current += ch;
-    }
-  }
-  // Last row
-  row.push(current);
-  if (row.some((v) => v.trim())) records.push(row);
-
-  return records;
 }
 
 function computeArticleTypeBars(rows: ScreeningRow[]): { bars: ArticleTypeBar[]; totalTreatment: number } {

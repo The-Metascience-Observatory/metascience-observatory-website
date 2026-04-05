@@ -91,8 +91,6 @@ const DESIGN_TYPE_LABELS: Record<string, string> = {
 };
 const formatDesignType = (s: string) => DESIGN_TYPE_LABELS[s] ?? formatCategory(s);
 
-// recomputeFromMetas is now shared — see constants.ts aggregateFromMetas
-
 // ── Main Dashboard ───────────────────────────────────────────────────
 export function LongCovidDashboard(props: DashboardProps) {
   const [yearFilter, setYearFilter] = useState<number | null>(null);
@@ -214,7 +212,6 @@ export function LongCovidDashboard(props: DashboardProps) {
       bySymptom: recomputed.bySymptom,
       heatmapData: recomputed.heatmapData,
       allCountries: recomputed.allCountries,
-      topCountries: recomputed.allCountries,
       byYear: recomputed.byYear,
       blindingBySignificance: recomputed.blindingBySignificance,
       byDesignType: recomputed.byDesignType,
@@ -432,7 +429,7 @@ function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => v
         </ChartSection>
 
         <ChartSection title="Trials by country">
-          <CountryMap topCountries={props.allCountries} onCountryClick={props.onCountryClick} />
+          <CountryMap allCountries={props.allCountries} onCountryClick={props.onCountryClick} />
         </ChartSection>
       </div>
 
@@ -566,7 +563,7 @@ function Heatmap({ data, onCellClick }: { data: DashboardProps["heatmapData"]; o
                     }}
                   >
                     {count > 0 ? (
-                      <span className={count > 0 ? "font-semibold text-foreground" : ""}>
+                      <span className="font-semibold text-foreground">
                         {count}
                       </span>
                     ) : (
@@ -1112,20 +1109,17 @@ function hashColor(_name: string, index: number): string {
 }
 
 // ── Country Map ─────────────────────────────────────────────────────
-function CountryMap({ topCountries, onCountryClick }: { topCountries: DashboardProps["topCountries"]; onCountryClick?: (country: string) => void }) {
+function CountryMap({ allCountries, onCountryClick }: { allCountries: DashboardProps["allCountries"]; onCountryClick?: (country: string) => void }) {
   const [tooltip, setTooltip] = useState<{ name: string; count: number; x: number; y: number } | null>(null);
 
-  // Build name → count lookup from ALL countries (topCountries includes "Other" bucket, but we need per-country)
-  // topCountries already has individual country names (except the "Other" aggregate)
   const countByName = useMemo(() => {
     const m = new Map<string, number>();
-    for (const c of topCountries) {
-      if (c.country === "Other") continue;
+    for (const c of allCountries) {
       const mapName = COUNTRY_NAME_MAPPING[c.country] ?? c.country;
       m.set(mapName, c.count);
     }
     return m;
-  }, [topCountries]);
+  }, [allCountries]);
 
   const maxCount = useMemo(() => Math.max(...countByName.values(), 1), [countByName]);
 

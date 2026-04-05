@@ -11,7 +11,6 @@ import type {
 import {
   extractYearFromDOI,
   CONTROL_KEYWORDS,
-  TOP_COUNTRIES_LIMIT,
   aggregateFromMetas,
 } from "./constants";
 
@@ -255,21 +254,12 @@ function processData() {
   // ── 4. Aggregate charts from trialMetas ──────────────────────────
   const aggregated = aggregateFromMetas(trialMetas);
 
-  // Top countries (uses server-accurate summary stats for the initial view)
-  const sortedCountries = aggregated.allCountries;
-  const top15 = sortedCountries.slice(0, TOP_COUNTRIES_LIMIT);
-  const otherCount = sortedCountries.slice(TOP_COUNTRIES_LIMIT).reduce((s, c) => s + c.count, 0);
-  const topCountries = otherCount > 0
-    ? [...top15, { country: "Other", count: otherCount }]
-    : top15;
-
   return {
     // Use server-accurate summary stats (instrument count uses Set dedup)
     summaryStats,
     byIntervention: aggregated.byIntervention,
     bySymptom: aggregated.bySymptom,
     heatmapData: aggregated.heatmapData,
-    topCountries,
     allCountries: aggregated.allCountries,
     byYear: aggregated.byYear,
     blindingBySignificance: aggregated.blindingBySignificance,
