@@ -35,7 +35,7 @@ const documentation: DocMeta[] = [
   },
   {
     href: "/docs/ontology",
-    title: "Our ontology for classifying papers",
+    title: "Our Ontology for Classifying Paper Subjects",
   },
   {
     href: "/docs/pipeline-evaluation",
