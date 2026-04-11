@@ -42,6 +42,10 @@ const documentation: DocMeta[] = [
     title: "V6 extraction pipeline evaluation",
   },
   {
+    href: "https://explore.metascienceobservatory.org/about",
+    title: "Metascience Observatory Explorer Data Sources",
+  },
+  {
     href: "/roadmap",
     title: "Roadmap",
   },
