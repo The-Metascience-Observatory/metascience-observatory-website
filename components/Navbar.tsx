@@ -24,8 +24,11 @@ export const Navbar = () => {
           </Link>
 
           <div className="hidden md:flex items-center gap-3 text-xs">
-            <Link href="/#about" className="text-foreground/80 hover:text-foreground transition-colors">About</Link>
-            <Link href="/#team" className="text-foreground/80 hover:text-foreground transition-colors">Team</Link>
+            <Button variant="outline-gradient" size="sm" asChild className="border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
+              <Link href="/#about">
+                About
+              </Link>
+            </Button>
             <Button variant="outline-gradient" size="sm" asChild className="border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
               <Link href="/docs">
                 Docs
@@ -81,20 +84,11 @@ export const Navbar = () => {
         {isMobileMenuOpen && (
           <div className="md:hidden border-t border-border mt-3 pt-3 pb-3">
             <div className="flex flex-col gap-3">
-              <Link
-                href="/#about"
-                className="text-foreground/80 hover:text-foreground transition-colors py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                About
-              </Link>
-              <Link
-                href="/#team"
-                className="text-foreground/80 hover:text-foreground transition-colors py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Team
-              </Link>
+              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
+                <Link href="/#about" onClick={() => setIsMobileMenuOpen(false)}>
+                  About
+                </Link>
+              </Button>
               <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
                 <Link href="/docs" onClick={() => setIsMobileMenuOpen(false)}>
                   Docs

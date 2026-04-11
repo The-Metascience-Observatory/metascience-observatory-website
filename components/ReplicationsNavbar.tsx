@@ -44,7 +44,7 @@ export const ReplicationsNavbar = () => {
                 Explorer
               </Link>
             </Button>
-            <Button variant="outline-gradient" size="sm" asChild className="border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
+            <Button variant="outline-gradient" size="sm" asChild className="border-blue-500 text-blue-700 dark:text-blue-400 bg-transparent">
               <Link href="/upload-bibliography">
                 Upload Bibliography
               </Link>
@@ -104,7 +104,7 @@ export const ReplicationsNavbar = () => {
                   Explorer
                 </Link>
               </Button>
-              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
+              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-blue-500 text-blue-700 dark:text-blue-400 bg-transparent">
                 <Link href="/upload-bibliography" onClick={() => setIsMobileMenuOpen(false)}>
                   Upload Bibliography
                 </Link>
