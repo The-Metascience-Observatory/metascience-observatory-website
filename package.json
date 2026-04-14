@@ -78,7 +78,6 @@
     "@types/d3-dsv": "^3.0.5",
     "@types/node": "24.9.2",
     "autoprefixer": "^10.4.21",
-    "baseline-browser-mapping": "^2.9.19",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.3"

@@ -55,3 +55,10 @@ replications_database_2026_02_20_072016.csv # added possible_conceptual_2_collat
 replications_database_2026_03_05_105655.csv # added add_entry_164tftcq.csv
 replications_database_2026_03_05_121737.csv # added add_entry_7e5he0uw.csv
 replications_database_2026_04_05_120219.csv # added score_ingestion_ready.csv
+replications_database_2026_04_13_125929.csv # stripped 394 rows with ai_version in {4.0, 6.0}
+replications_database_2026_04_13_130316.csv # added collated_results_rerun_v4v6.csv
+replications_database_2026_04_13_155725.csv # added collated_results_sonnet_rerun_2026_04_13.csv
+replications_database_2026_04_13_164258.csv # added collated_results_sonnet_v8_2.csv
+replications_database_2026_04_13_165222.csv # added collated_results_sonnet_v8_2.csv
+replications_database_2026_04_13_172909.csv # added collated_results_sonnet_v8_4.csv
+replications_database_2026_04_14_095248.csv # added collated_results_sonnet_v8_4.csv
