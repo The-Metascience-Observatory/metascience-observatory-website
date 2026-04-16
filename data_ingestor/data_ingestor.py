@@ -44,6 +44,7 @@ DATA_DIR = os.path.join(SCRIPT_DIR, '..', 'data')
 BACKUP_DIR = os.path.join(DATA_DIR, 'backup')
 VERSION_HISTORY_PATH = os.path.join(DATA_DIR, 'version_history.txt')
 API_CACHE_PATH = os.path.join(SCRIPT_DIR, 'api_cache.json')
+ONTOLOGY_PATH = os.path.join(DATA_DIR, 'metascience_observatory_topic_ontology.json')
 CHECKPOINT_PATH = os.path.join(SCRIPT_DIR, 'ingestion_checkpoint.csv')
 CHECKPOINT_META_PATH = os.path.join(SCRIPT_DIR, 'ingestion_checkpoint_meta.json')
 
@@ -1161,6 +1162,14 @@ def filter_columns(df, data_dict_path=None):
 
     return df[columns_to_keep]
 
+def normalize_year_columns(df):
+    """Convert original_year and replication_year from float strings (e.g. 2018.0) to integers."""
+    for col in ['original_year', 'replication_year']:
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors='coerce').astype('Int64')
+    return df
+
+
 def normalize_discipline_column(df):
     """Convert discipline column values to lowercase"""
     if 'discipline' in df.columns:
@@ -1170,6 +1179,54 @@ def normalize_discipline_column(df):
         )
         print(f"  ✓ Converted discipline values to lowercase")
     return df
+
+def populate_field_from_discipline(df):
+    """Fill empty 'field' values using the topic ontology and the 'discipline' column.
+
+    Expects discipline to already be lowercase (run after normalize_discipline_column).
+    Builds a lowercased discipline→field lookup from the ontology, then fills any
+    rows where 'field' is empty but 'discipline' matches a known ontology entry.
+    """
+    if 'discipline' not in df.columns:
+        return df
+
+    if not os.path.exists(ONTOLOGY_PATH):
+        print(f"  ⚠ Ontology file not found: {ONTOLOGY_PATH}, skipping field population")
+        return df
+
+    with open(ONTOLOGY_PATH, 'r') as f:
+        ontology = json.load(f)
+
+    disc_to_field = {
+        disc_name.lower(): field_name
+        for field_name, disciplines in ontology.items()
+        for disc_name in disciplines
+    }
+
+    if 'field' not in df.columns:
+        df['field'] = ''
+
+    filled = 0
+    unmatched = set()
+    for idx, row in df.iterrows():
+        if not is_empty(row.get('field')):
+            continue
+        disc = str(row.get('discipline') or '').strip().lower()
+        if not disc:
+            continue
+        if disc in disc_to_field:
+            df.at[idx, 'field'] = disc_to_field[disc]
+            filled += 1
+        else:
+            unmatched.add(disc)
+
+    print(f"\nPopulating 'field' from discipline (ontology lookup)...")
+    print(f"  ✓ Filled {filled} 'field' values")
+    if unmatched:
+        print(f"  ⚠ {len(unmatched)} discipline value(s) not found in ontology: {sorted(unmatched)}")
+
+    return df
+
 
 def _normalize_journal_key(s):
     """Normalize a journal name for lookup: lowercase, strip periods, collapse spaces."""
@@ -1779,13 +1836,37 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
         # Normalize discipline column
         processed_df = normalize_discipline_column(processed_df)
 
+        # Populate field from discipline using ontology
+        processed_df = populate_field_from_discipline(processed_df)
+
         # Normalize journal names
         processed_df = normalize_journal_names(processed_df)
+
+        # Normalize year columns (convert float strings like 2018.0 → 2018)
+        processed_df = normalize_year_columns(processed_df)
 
         # Save checkpoint so restarts skip straight to step 5
         processed_df.to_csv(CHECKPOINT_PATH, index=False)
         save_checkpoint_metadata(input_csv, len(input_df))
         print(f"  ✓ Checkpoint saved — restart will skip to duplicate review")
+
+    # Step 4b: Detect identical title pairs (likely self-paired / within-paper errors)
+    print(f"\n{'='*60}")
+    print(f"STEP 4b: CHECKING FOR IDENTICAL TITLE PAIRS")
+    print(f"{'='*60}")
+    identical_title_indices = set()
+    for idx, row in processed_df.iterrows():
+        orig_t = str(row.get('original_title', '') or '').strip().lower()
+        repl_t = str(row.get('replication_title', '') or '').strip().lower()
+        if orig_t and repl_t and orig_t == repl_t:
+            identical_title_indices.add(idx)
+    if identical_title_indices:
+        print(f"  ⚠ {len(identical_title_indices)} row(s) with identical original/replication titles:")
+        for idx in sorted(identical_title_indices):
+            row = processed_df.loc[idx]
+            print(f"    Row {idx + 1}: '{str(row.get('replication_title', ''))[:80]}'")
+    else:
+        print(f"  ✓ No identical title pairs found")
 
     # Check for duplicates and append
     print(f"\n{'='*60}")
@@ -1810,6 +1891,8 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
         new_row_indices = []
 
         for idx, row in processed_df.iterrows():
+            if idx in identical_title_indices:
+                continue  # handled separately in identical-titles GUI tab
             match_indices = find_duplicate_matches(row, master_df)
             if not match_indices:
                 new_row_indices.append(idx)
@@ -1823,6 +1906,7 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
         identical_count = len(auto_skipped)
         total_dups = len(potential_dups)
         print(f"\n  {len(new_row_indices)} new rows (no match in master)")
+        print(f"  {len(identical_title_indices)} identical-title rows (flagged for review)")
         print(f"  {identical_count} auto-duplicate rows (will be skipped)")
         print(f"  {total_dups} potential duplicate(s) to review")
 
@@ -1832,11 +1916,14 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
         replaced_count = 0
         merged_count = 0
 
-    if not skip_duplication_check and (potential_dups or auto_skipped) and not no_gui:
+    if not skip_duplication_check and (potential_dups or auto_skipped or identical_title_indices) and not no_gui:
         # ── GUI duplicate review ──
         from duplicate_review_gui import launch_duplicate_review
         print(f"\n  Launching GUI for duplicate review...")
-        gui_results = launch_duplicate_review(potential_dups, auto_skipped, processed_df, master_df)
+        gui_results = launch_duplicate_review(
+            potential_dups, auto_skipped, processed_df, master_df,
+            identical_title_list=sorted(identical_title_indices)
+        )
 
         if gui_results:
             # Handle auto-skip overrides
@@ -1866,10 +1953,37 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
                     print(f"  ✓ Merged row {idx + 1} into master row {target} ({filled} fields filled)")
                 else:
                     duplicates_found += 1
+
+            # Handle identical-title decisions
+            reviewed_identical = set()
+            for decision in gui_results.get('identical_titles', []):
+                idx = decision['incoming_idx']
+                reviewed_identical.add(idx)
+                action = decision['action']
+                if action == 'skip':
+                    duplicates_found += 1
+                    print(f"  Skipped identical-title row {idx + 1}")
+                elif action == 'correct':
+                    if decision.get('corrected_original_title'):
+                        processed_df.at[idx, 'original_title'] = decision['corrected_original_title']
+                    if decision.get('corrected_original_url'):
+                        processed_df.at[idx, 'original_url'] = decision['corrected_original_url']
+                    rows_to_append.append(processed_df.loc[idx])
+                    print(f"  Corrected and added identical-title row {idx + 1}")
+                else:  # 'add'
+                    rows_to_append.append(processed_df.loc[idx])
+                    print(f"  Added identical-title row {idx + 1} as-is")
+            # Unreviewed identical-title rows default to add as-is
+            for idx in sorted(identical_title_indices):
+                if idx not in reviewed_identical:
+                    rows_to_append.append(processed_df.loc[idx])
         else:
-            # User closed window without applying — skip all potential dups
+            # User closed window without applying — skip all potential dups,
+            # but add identical-title rows as-is so data is not silently lost
             print("  GUI closed without applying — skipping all potential duplicates")
             duplicates_found = total_dups
+            for idx in sorted(identical_title_indices):
+                rows_to_append.append(processed_df.loc[idx])
 
     elif not skip_duplication_check and potential_dups:
         # ── CLI fallback (--no-gui) ──
@@ -1919,6 +2033,41 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
                 duplicates_found += 1
                 batch_decision = 'skip_all'
 
+    # CLI path for identical-title rows (--no-gui or no GUI available)
+    if not skip_duplication_check and identical_title_indices and (no_gui or not (potential_dups or auto_skipped)):
+        print(f"\n{'='*60}")
+        print(f"IDENTICAL TITLE PAIRS — {len(identical_title_indices)} row(s) to review")
+        print(f"{'='*60}")
+        for idx in sorted(identical_title_indices):
+            row = processed_df.loc[idx]
+            title = str(row.get('replication_title', ''))[:80]
+            print(f"\n  Row {idx + 1}: '{title}'")
+            print(f"    original_url:    {row.get('original_url', '')}")
+            print(f"    replication_url: {row.get('replication_url', '')}")
+            while True:
+                choice = input("  [s]kip / [a]dd as-is / [c]orrect: ").strip().lower()
+                if choice == 's':
+                    duplicates_found += 1
+                    print(f"  Skipped row {idx + 1}")
+                    break
+                elif choice == 'a':
+                    rows_to_append.append(row)
+                    break
+                elif choice == 'c':
+                    new_title = input("  New original_title (Enter to keep current): ").strip()
+                    new_url = input("  New original_url (Enter to keep current): ").strip()
+                    if new_title:
+                        processed_df.at[idx, 'original_title'] = new_title
+                    if new_url:
+                        processed_df.at[idx, 'original_url'] = new_url
+                    rows_to_append.append(processed_df.loc[idx])
+                    print(f"  Corrected and added row {idx + 1}")
+                    break
+                else:
+                    print("  Invalid choice. Enter s, a, or c.")
+    elif not skip_duplication_check and identical_title_indices and not no_gui:
+        pass  # handled in GUI block above
+
     print(f"\n  Auto-duplicates skipped: {identical_count}")
     print(f"  Duplicates skipped: {duplicates_found}")
     print(f"  Existing rows merged: {merged_count}")
@@ -1953,6 +2102,9 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
 
     # Reorder columns according to data_dictionary.csv
     updated_master_df = reorder_columns(updated_master_df)
+
+    # Normalize year columns (convert float strings like 2018.0 → 2018)
+    updated_master_df = normalize_year_columns(updated_master_df)
 
     # Save with timestamp
     print(f"\n{'='*60}")

@@ -1,6 +1,7 @@
 import "./globals.css";
 import { ReactNode } from "react";
 import { Providers } from "@/components/Providers";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = {
   title: "The Metascience Observatory | Analyzing Scientific Reproducibility",
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Providers>
           {children}
         </Providers>
+        <Analytics />
       </body>
     </html>
   );

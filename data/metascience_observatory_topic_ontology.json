@@ -15,7 +15,13 @@
       "sports psychology",
       "psychophysiology",
       "human factors and ergonomics",
-      "criminology"
+      "criminology",
+      "evolutionary psychology",
+      "differential psychology",
+      "health psychology",
+      "organizational psychology",
+      "psychometrics",
+      "music therapy"
     ],
     "economics": [
       "development economics",
@@ -26,7 +32,8 @@
       "political economy",
       "finance",
       "energy & environmental economics",
-      "economic history"
+      "economic history",
+      "finance & financial economics"
     ],
     "business & management": [
       "management",
@@ -39,18 +46,22 @@
     ],
     "sociology": [
       "anthropology",
-      "metascience"
+      "metascience",
+      "sociology of religion"
     ],
     "education": [
       "special education",
       "nursing education",
-      "medical education"
+      "medical education",
+      "higher education",
+      "mathematics education"
     ],
     "linguistics": [
       "second language acquisition",
       "applied linguistics",
       "conversation analysis",
-      "phonetics and phonology"
+      "phonetics and phonology",
+      "psycholinguistics"
     ],
     "criminology": [],
     "marketing": []
@@ -61,16 +72,22 @@
       "behavioral neuroscience",
       "neuroanatomy",
       "neurophysiology",
-      "psychoneuroimmunology"
+      "psychoneuroimmunology",
+      "neurogenetics",
+      "computational neuroscience"
     ],
     "biology": [
       "cellular biology",
+      "cell biology",
       "molecular biology",
       "genetics",
       "physiology",
       "cancer biology",
-      "immunology"
+      "immunology",
+      "sports genetics",
+      "behavioral genetics"
     ],
+    "microbiology": [],
     "medical fields": [
       "psychiatry",
       "cardiovascular medicine",
@@ -82,7 +99,18 @@
       "psychosomatic medicine",
       "nursing",
       "veterinary science",
-      "pharmacology and toxicology"
+      "pharmacology and toxicology",
+      "neurology",
+      "sports and exercise science",
+      "ophthalmology",
+      "public health",
+      "pediatrics",
+      "oncology",
+      "dermatology",
+      "psychopharmacology",
+      "immunology",
+      "speech-language pathology",
+      "otorhinolaryngology"
     ]
   },
   "physical sciences": {
@@ -113,7 +141,8 @@
       "automotive engineering",
       "mechanics of materials",
       "civil and structural engineering",
-      "environmental engineering"
+      "environmental engineering",
+      "chemical engineering"
     ],
     "environmental science": [
       "water science and technology",
@@ -121,7 +150,7 @@
       "management, monitoring, policy and law",
       "nature and landscape conservation",
       "environmental chemistry",
-      "health, pollution, and toxicology",
+      "environmental health",
       "global and planetary change",
       "ecological modeling"
     ],
@@ -157,6 +186,9 @@
   "computer science": {
     "AI and machine learning": [],
     "software engineering": [],
-    "algorithms": []
+    "algorithms": ["number theory"],
+    "computer science education": [],
+    "human-computer interaction": [],
+    "computer networks and communications": []
   }
 }

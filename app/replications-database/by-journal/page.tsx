@@ -148,7 +148,7 @@ export default function ByJournalPage() {
               Paper-level analysis: a paper is considered &ldquo;replicated&rdquo; if at
               least {Math.round(threshold * 100)}% of its effect replications
               were successful. Only journals with {MIN_PAPERS}+ original papers
-              shown.
+              shown. Click a journal name to view corresponding entries in the database explorer.
             </p>
           </div>
 

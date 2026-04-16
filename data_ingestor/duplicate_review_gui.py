@@ -11,7 +11,7 @@ import pandas as pd
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QLabel, QComboBox, QPushButton, QScrollArea, QTabWidget,
-    QFrame, QCheckBox, QSizePolicy, QGroupBox, QStackedWidget
+    QFrame, QCheckBox, QSizePolicy, QGroupBox, QStackedWidget, QLineEdit
 )
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QColor, QPalette
@@ -289,10 +289,114 @@ class AutoSkipCard(QFrame):
         layout.addWidget(label, stretch=1)
 
 
+class IdenticalTitleCard(QFrame):
+    """Card for an incoming row where original_title == replication_title."""
+
+    def __init__(self, incoming_idx, incoming_row, parent=None):
+        super().__init__(parent)
+        self.incoming_idx = incoming_idx
+        self.setFrameShape(QFrame.StyledPanel)
+        self.setStyleSheet(
+            "IdenticalTitleCard { border: 2px solid #e07000; background: #fff8f0; }"
+        )
+
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(10, 8, 10, 8)
+        layout.setSpacing(6)
+
+        # Warning header
+        warning = QLabel(
+            "⚠  original_title == replication_title — likely self-paired or within-paper error"
+        )
+        warning.setStyleSheet("color: #b35900; font-weight: bold;")
+        layout.addWidget(warning)
+
+        # Shared title
+        title = _norm(incoming_row.get('replication_title', ''))
+        title_label = QLabel(f"<b>Shared title:</b> {title}")
+        title_label.setWordWrap(True)
+        title_label.setTextInteractionFlags(Qt.TextSelectableByMouse)
+        layout.addWidget(title_label)
+
+        # URLs
+        orig_url = _norm(incoming_row.get('original_url', ''))
+        repl_url = _norm(incoming_row.get('replication_url', ''))
+        url_label = QLabel(
+            f"<b>original_url:</b> {orig_url or '—'}<br>"
+            f"<b>replication_url:</b> {repl_url or '—'}"
+        )
+        url_label.setWordWrap(True)
+        url_label.setTextInteractionFlags(Qt.TextSelectableByMouse)
+        layout.addWidget(url_label)
+
+        # Description (abbreviated)
+        desc = _norm(incoming_row.get('description', ''))
+        if desc:
+            desc_label = QLabel(f"<i>{desc[:200]}{'…' if len(desc) > 200 else ''}</i>")
+            desc_label.setWordWrap(True)
+            desc_label.setTextInteractionFlags(Qt.TextSelectableByMouse)
+            layout.addWidget(desc_label)
+
+        # Discipline / field
+        disc = _norm(incoming_row.get('discipline', ''))
+        field = _norm(incoming_row.get('field', ''))
+        if disc or field:
+            layout.addWidget(QLabel(f"<b>discipline:</b> {disc or '—'}  |  <b>field:</b> {field or '—'}"))
+
+        # Action row
+        action_row = QHBoxLayout()
+        action_row.addWidget(QLabel("<b>Action:</b>"))
+        self.action_combo = QComboBox()
+        self.action_combo.addItems(["Add as-is", "Skip (don't import)", "Correct and import"])
+        self.action_combo.setMinimumWidth(200)
+        self.action_combo.currentIndexChanged.connect(self._on_action_changed)
+        action_row.addWidget(self.action_combo)
+        action_row.addStretch()
+        layout.addLayout(action_row)
+
+        # Correction fields (shown only when "Correct and import" is selected)
+        self.correction_widget = QWidget()
+        corr_layout = QVBoxLayout(self.correction_widget)
+        corr_layout.setContentsMargins(0, 4, 0, 0)
+        corr_layout.setSpacing(4)
+
+        corr_layout.addWidget(QLabel("Corrected <b>original_title</b>:"))
+        self.title_edit = QLineEdit()
+        self.title_edit.setPlaceholderText("Enter corrected original title…")
+        corr_layout.addWidget(self.title_edit)
+
+        corr_layout.addWidget(QLabel("Corrected <b>original_url</b>:"))
+        self.url_edit = QLineEdit()
+        self.url_edit.setPlaceholderText("e.g. https://doi.org/10.xxxx/…")
+        corr_layout.addWidget(self.url_edit)
+
+        self.correction_widget.setVisible(False)
+        layout.addWidget(self.correction_widget)
+
+    def _on_action_changed(self, index):
+        # Show correction fields only for "Correct and import" (index 2)
+        self.correction_widget.setVisible(index == 2)
+
+    def get_decision(self):
+        text = self.action_combo.currentText()
+        if "Skip" in text:
+            return {'incoming_idx': self.incoming_idx, 'action': 'skip'}
+        elif "Correct" in text:
+            return {
+                'incoming_idx': self.incoming_idx,
+                'action': 'correct',
+                'corrected_original_title': self.title_edit.text().strip() or None,
+                'corrected_original_url': self.url_edit.text().strip() or None,
+            }
+        else:
+            return {'incoming_idx': self.incoming_idx, 'action': 'add'}
+
+
 class DuplicateReviewWindow(QMainWindow):
     """Main window for reviewing duplicates during ingestion."""
 
-    def __init__(self, potential_dups, auto_skipped, processed_df, master_df):
+    def __init__(self, potential_dups, auto_skipped, processed_df, master_df,
+                 identical_title_list=None):
         """
         Args:
             potential_dups: list of (incoming_idx, match_indices) tuples
@@ -306,15 +410,22 @@ class DuplicateReviewWindow(QMainWindow):
         self.results = None
         self.current_dup_idx = 0
         self.visited_pages = {0}  # page 0 is visible on open
+        identical_title_list = identical_title_list or []
 
         central = QWidget()
         self.setCentralWidget(central)
         main_layout = QVBoxLayout(central)
 
         # Summary bar
-        summary = QLabel(
-            f"<b>{len(potential_dups)}</b> potential duplicate(s) to review  |  "
-            f"<b>{len(auto_skipped)}</b> auto-skipped (identical)")
+        parts = [
+            f"<b>{len(potential_dups)}</b> potential duplicate(s) to review",
+            f"<b>{len(auto_skipped)}</b> auto-skipped (identical)",
+        ]
+        if identical_title_list:
+            parts.append(
+                f"<b style='color:#b35900'>{len(identical_title_list)}</b> identical-title pair(s) flagged"
+            )
+        summary = QLabel("  |  ".join(parts))
         summary.setStyleSheet("font-size: 14px; padding: 6px;")
         main_layout.addWidget(summary)
 
@@ -386,6 +497,36 @@ class DuplicateReviewWindow(QMainWindow):
         skip_layout.addWidget(skip_scroll)
         self.tabs.addTab(skip_tab, f"Auto-Skipped ({len(auto_skipped)})")
 
+        # ── Tab 3: Identical Titles ──
+        self.identical_title_cards = []
+        if identical_title_list:
+            ident_tab = QWidget()
+            ident_layout = QVBoxLayout(ident_tab)
+
+            ident_header = QLabel(
+                "<b>⚠ Identical title pairs</b> — incoming rows where original_title == "
+                "replication_title. These are likely self-paired or within-paper errors. "
+                "Choose an action for each row."
+            )
+            ident_header.setWordWrap(True)
+            ident_header.setStyleSheet("color: #b35900; padding: 4px;")
+            ident_layout.addWidget(ident_header)
+
+            ident_scroll = QScrollArea()
+            ident_scroll.setWidgetResizable(True)
+            ident_scroll_widget = QWidget()
+            ident_scroll_layout = QVBoxLayout(ident_scroll_widget)
+
+            for idx in identical_title_list:
+                card = IdenticalTitleCard(idx, processed_df.loc[idx])
+                self.identical_title_cards.append(card)
+                ident_scroll_layout.addWidget(card)
+
+            ident_scroll_layout.addStretch()
+            ident_scroll.setWidget(ident_scroll_widget)
+            ident_layout.addWidget(ident_scroll)
+            self.tabs.addTab(ident_tab, f"⚠ Identical Titles ({len(identical_title_list)})")
+
         # ── Apply button ──
         button_bar = QHBoxLayout()
         button_bar.addStretch()
@@ -438,7 +579,10 @@ class DuplicateReviewWindow(QMainWindow):
             'auto_skip_overrides': [
                 card.incoming_idx for card in self.skip_cards
                 if card.override_cb.isChecked()
-            ]
+            ],
+            'identical_titles': [
+                card.get_decision() for card in self.identical_title_cards
+            ],
         }
         self.close()
 
@@ -446,13 +590,17 @@ class DuplicateReviewWindow(QMainWindow):
         return self.results
 
 
-def launch_duplicate_review(potential_dups, auto_skipped, processed_df, master_df):
+def launch_duplicate_review(potential_dups, auto_skipped, processed_df, master_df,
+                            identical_title_list=None):
     """Launch the GUI and return user decisions. Blocks until window is closed."""
     app = QApplication.instance()
     if app is None:
         app = QApplication(sys.argv)
 
-    window = DuplicateReviewWindow(potential_dups, auto_skipped, processed_df, master_df)
+    window = DuplicateReviewWindow(
+        potential_dups, auto_skipped, processed_df, master_df,
+        identical_title_list=identical_title_list or []
+    )
     window.show()
     app.exec_()
 

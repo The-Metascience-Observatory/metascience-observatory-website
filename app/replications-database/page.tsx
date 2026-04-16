@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useMemo, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ReplicationsNavbar } from "@/components/ReplicationsNavbar";
@@ -58,6 +58,87 @@ function formatSig4(value: unknown): string {
     return s.replace(/(\.\d*?[1-9])0+$/u, "$1").replace(/\.0+$/u, ".0").replace(/\.$/u, "");
   }
   return s;
+}
+
+function MultiSelectDropdown({
+  id,
+  label,
+  options,
+  selected,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  options: Option[];
+  selected: Set<string>;
+  onChange: (next: Set<string>) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = React.useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  const allSelected = selected.size === 0;
+  const buttonLabel = allSelected
+    ? label
+    : selected.size === 1
+    ? Array.from(selected)[0]
+    : `${selected.size} types selected`;
+
+  function toggle(value: string) {
+    const next = new Set(selected);
+    if (next.has(value)) next.delete(value);
+    else next.add(value);
+    onChange(next);
+  }
+
+  function selectAll() { onChange(new Set()); }
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        id={id}
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className="w-full h-10 rounded-md border border-border bg-background px-3 text-sm text-left flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-primary"
+      >
+        <span className={allSelected ? "opacity-60" : ""}>{buttonLabel}</span>
+        <svg className="w-4 h-4 opacity-50 shrink-0 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      {open && (
+        <div className="absolute z-50 mt-1 w-56 rounded-md border border-border bg-background shadow-lg max-h-72 overflow-y-auto">
+          <label className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted cursor-pointer border-b border-border">
+            <input
+              type="checkbox"
+              checked={allSelected}
+              onChange={selectAll}
+              className="shrink-0"
+            />
+            <span className="font-medium">All types</span>
+          </label>
+          {options.filter(o => o.value).map((opt) => (
+            <label key={opt.value} className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted cursor-pointer">
+              <input
+                type="checkbox"
+                checked={selected.has(opt.value)}
+                onChange={() => toggle(opt.value)}
+                className="shrink-0"
+              />
+              <span>{opt.label}</span>
+            </label>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 }
 
 function MiniBar({ value, max, color }: { value: number; max: number; color?: string }) {
@@ -506,6 +587,7 @@ function ReplicationsDatabaseContent() {
   const [subdiscipline, setSubdiscipline] = useState<string>("");
   const [result, setResult] = useState<string>("");
   const [initiative, setInitiative] = useState<string>(searchParams.get("initiative") || "");
+  const [replicationType, setReplicationType] = useState<Set<string>>(new Set());
   const [search, setSearch] = useState<string>("");
   const [originalAuthorSearch, setOriginalAuthorSearch] = useState<string>(searchParams.get("original_author_search") || "");
   const [originalJournalSearch, setOriginalJournalSearch] = useState<string>(searchParams.get("original_journal_search") || "");
@@ -549,20 +631,16 @@ function ReplicationsDatabaseContent() {
   // Build ontology lookup maps
   const ontologyMaps = useMemo(() => {
     const disciplineToField = new Map<string, string>();
-    const fieldToDisciplines = new Map<string, string[]>();
     const disciplineToSubs = new Map<string, string[]>();
 
     const ont = TOPIC_ONTOLOGY as Record<string, Record<string, string[]>>;
     for (const [fieldName, disciplines] of Object.entries(ont)) {
-      const discNames: string[] = [];
       for (const [discName, subs] of Object.entries(disciplines)) {
         disciplineToField.set(discName, fieldName);
         disciplineToSubs.set(discName, subs);
-        discNames.push(discName);
       }
-      fieldToDisciplines.set(fieldName, discNames);
     }
-    return { disciplineToField, fieldToDisciplines, disciplineToSubs };
+    return { disciplineToField, disciplineToSubs };
   }, []);
 
   // Field options: count rows per field, only show fields with data
@@ -570,8 +648,7 @@ function ReplicationsDatabaseContent() {
     if (!data) return [];
     const counts = new Map<string, number>();
     for (const r of data.rows) {
-      const disc = String(r.discipline ?? "").trim();
-      const f = ontologyMaps.disciplineToField.get(disc);
+      const f = String(r.field ?? "").trim();
       if (f) counts.set(f, (counts.get(f) || 0) + 1);
     }
     const entries = Array.from(counts.entries()).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
@@ -579,19 +656,16 @@ function ReplicationsDatabaseContent() {
       { value: "", label: "All fields" },
       ...entries.map(([k, c]) => ({ value: k, label: `${k} (${c})` })),
     ];
-  }, [data, ontologyMaps]);
+  }, [data]);
 
   // Discipline options: constrained by selected field, count from data
   const disciplineOptions: Option[] = useMemo(() => {
     if (!data) return [];
-    const allowedDiscs = field
-      ? new Set(ontologyMaps.fieldToDisciplines.get(field) || [])
-      : null;
     const counts = new Map<string, number>();
     for (const r of data.rows) {
       const disc = String(r.discipline ?? "").trim();
       if (!disc) continue;
-      if (allowedDiscs && !allowedDiscs.has(disc)) continue;
+      if (field && String(r.field ?? "").trim() !== field) continue;
       counts.set(disc, (counts.get(disc) || 0) + 1);
     }
     const entries = Array.from(counts.entries()).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
@@ -599,31 +673,20 @@ function ReplicationsDatabaseContent() {
       { value: "", label: "All disciplines" },
       ...entries.map(([k, c]) => ({ value: k, label: `${k} (${c})` })),
     ];
-  }, [data, field, ontologyMaps]);
+  }, [data, field]);
 
   // Subdiscipline options: constrained by selected discipline (or field), count from data
   const subdisciplineOptions: Option[] = useMemo(() => {
     if (!data) return [];
-    // Determine allowed subdisciplines from ontology
-    let allowedSubs: Set<string> | null = null;
-    if (discipline) {
-      allowedSubs = new Set(ontologyMaps.disciplineToSubs.get(discipline) || []);
-    } else if (field) {
-      const discs = ontologyMaps.fieldToDisciplines.get(field) || [];
-      const subs = new Set<string>();
-      for (const d of discs) {
-        for (const s of ontologyMaps.disciplineToSubs.get(d) || []) subs.add(s);
-      }
-      allowedSubs = subs;
-    }
-    // Also filter rows by field/discipline to get accurate counts
+    // Constrain to ontology-defined subs when a discipline is selected
+    const allowedSubs: Set<string> | null = discipline
+      ? new Set(ontologyMaps.disciplineToSubs.get(discipline) || [])
+      : null;
+    // Filter rows by field/discipline to get accurate counts
     const counts = new Map<string, number>();
     for (const r of data.rows) {
       const rowDisc = String(r.discipline ?? "").trim();
-      if (field) {
-        const rowField = ontologyMaps.disciplineToField.get(rowDisc);
-        if (rowField !== field) continue;
-      }
+      if (field && String(r.field ?? "").trim() !== field) continue;
       if (discipline && rowDisc !== discipline) continue;
       const raw = String(r.subdiscipline ?? "").trim();
       if (!raw) continue;
@@ -643,6 +706,20 @@ function ReplicationsDatabaseContent() {
   const resultOptions: Option[] = useMemo(() => {
     if (!data) return [];
     return ["", ...uniqueValues(data.rows, "result")].map((v) => ({ value: v, label: v || "All results" }));
+  }, [data]);
+
+  const replicationTypeOptions: Option[] = useMemo(() => {
+    if (!data) return [];
+    const counts = new Map<string, number>();
+    for (const r of data.rows) {
+      const v = String(r.replication_type ?? "").trim();
+      if (v) counts.set(v, (counts.get(v) || 0) + 1);
+    }
+    const entries = Array.from(counts.entries()).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+    return [
+      { value: "", label: "All types" },
+      ...entries.map(([k, c]) => ({ value: k, label: `${k} (${c})` })),
+    ];
   }, [data]);
 
   const initiativeOptions: Option[] = useMemo(() => {
@@ -671,15 +748,12 @@ function ReplicationsDatabaseContent() {
   const filteredRows = useMemo(() => {
     if (!data) return [] as AnyRecord[];
     return data.rows.filter((r) => {
-      if (field) {
-        const rowDisc = String(r.discipline ?? "").trim();
-        const rowField = ontologyMaps.disciplineToField.get(rowDisc);
-        if (rowField !== field) return false;
-      }
+      if (field && String(r.field ?? "").trim() !== field) return false;
       if (discipline && !String(r.discipline ?? "").split(",").map((s) => s.trim()).includes(discipline)) return false;
       if (subdiscipline && !String(r.subdiscipline ?? "").split(",").map((s) => s.trim()).includes(subdiscipline)) return false;
       if (result && String(r.result ?? "") !== result) return false;
       if (initiative && String(r.replication_initiative_tag ?? "").trim() !== initiative) return false;
+      if (replicationType.size > 0 && !replicationType.has(String(r.replication_type ?? "").trim())) return false;
       if (search) {
         const s = search.toLowerCase();
         const hay = `${r.original_title ?? ""} ${r.replication_title ?? ""} ${r.description ?? ""} ${r.tags ?? ""} ${citationSearchText(r.original_authors as string, r.original_journal as string, r.original_year as string)} ${citationSearchText(r.replication_authors as string, r.replication_journal as string, r.replication_year as string)}`.toLowerCase();
@@ -697,7 +771,7 @@ function ReplicationsDatabaseContent() {
       }
       return true;
     });
-  }, [data, field, discipline, subdiscipline, result, initiative, search, originalAuthorSearch, originalJournalSearch, ontologyMaps]);
+  }, [data, field, discipline, subdiscipline, result, initiative, replicationType, search, originalAuthorSearch, originalJournalSearch]);
 
   // Compute outcomes once and share between stats and scatterplot
   // Includes rows with es_r (plottable on scatterplot) AND rows with only raw ES (stats only)
@@ -964,7 +1038,7 @@ function ReplicationsDatabaseContent() {
 
       {/* Controls */}
       <section className="mx-auto max-w-[90%] mt-6">
-        <div className="grid gap-3 md:grid-cols-6 items-end">
+        <div className="grid gap-3 md:grid-cols-7 items-end">
           <div className="md:col-span-1">
             <label htmlFor="field" className="block text-sm font-medium opacity-80 mb-1">Field</label>
             <select
@@ -1044,6 +1118,18 @@ function ReplicationsDatabaseContent() {
                 <option key={opt.value || "__all"} value={opt.value}>{opt.label}</option>
               ))}
             </select>
+          </div>
+          <div className="md:col-span-1">
+            <label htmlFor="replication-type" className="block text-sm font-medium opacity-80 mb-1">
+              Replication Type <Link href="/docs/defining-replication" className="text-xs opacity-60 hover:opacity-80 underline">(more info)</Link>
+            </label>
+            <MultiSelectDropdown
+              id="replication-type"
+              label="All types"
+              options={replicationTypeOptions}
+              selected={replicationType}
+              onChange={setReplicationType}
+            />
           </div>
           <div className="md:col-span-2">
             <label htmlFor="search" className="block text-sm font-medium opacity-80 mb-1">Search titles, authors, description, tags, or references</label>
@@ -1541,6 +1627,7 @@ function ReplicationsDatabaseContent() {
                       subdiscipline && `Subdiscipline = "${subdiscipline}"`,
                       result && `Result = "${result}"`,
                       initiative && `Initiative = "${initiative}"`,
+                      replicationType.size > 0 && `Replication Type = "${Array.from(replicationType).join(", ")}"`,
                       search && `Search = "${search}"`,
                     ].filter(Boolean).join(", ") || "current filters"}
                   </td>

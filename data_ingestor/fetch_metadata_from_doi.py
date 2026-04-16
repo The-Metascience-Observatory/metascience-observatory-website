@@ -750,7 +750,26 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2, enable_base=False, enabl
         bib_headers = {**headers, "Accept": "application/x-bibtex; charset=utf-8"}
         r = _request_with_retry(f"https://doi.org/{doi}", headers=bib_headers)
         if r and r.status_code == 200 and r.text.strip().startswith("@"):
-            db = bibtexparser.loads(r.text)
+            # Normalize non-standard month strings before parsing.
+            # bibtexparser rejects variants like "july", "june", "sept", "january", etc.
+            _MONTH_MAP = {
+                "january": "jan", "february": "feb", "march": "mar",
+                "april": "apr", "june": "jun", "july": "jul",
+                "august": "aug", "september": "sep", "sept": "sep",
+                "october": "oct", "november": "nov", "december": "dec",
+            }
+            def _normalize_bib_months(text):
+                def _replace_month(m):
+                    val = m.group(1).strip().lower().rstrip(",")
+                    return f"month = {{{_MONTH_MAP.get(val, val)}}}"
+                return re.sub(
+                    r'\bmonth\s*=\s*\{?([a-zA-Z]+)\}?',
+                    _replace_month,
+                    text,
+                    flags=re.IGNORECASE,
+                )
+            bib_text = _normalize_bib_months(r.text)
+            db = bibtexparser.loads(bib_text)
             if db.entries:
                 e = db.entries[0]
                 # BibTeX uses "and" between authors; convert to "; " separator

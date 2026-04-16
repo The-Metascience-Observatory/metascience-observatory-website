@@ -62,3 +62,5 @@ replications_database_2026_04_13_164258.csv # added collated_results_sonnet_v8_2
 replications_database_2026_04_13_165222.csv # added collated_results_sonnet_v8_2.csv
 replications_database_2026_04_13_172909.csv # added collated_results_sonnet_v8_4.csv
 replications_database_2026_04_14_095248.csv # added collated_results_sonnet_v8_4.csv
+replications_database_2026_04_16_100533.csv # added batch8_round_2_collated_results_sonnet_v8_4.csv
+replications_database_2026_04_16_143640.csv # added missing_years_to_reingest.csv (88 new rows); QC fixes from 100533.csv preserved
