@@ -2,7 +2,6 @@ import path from "path";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  distDir: '/tmp/metascience-observatory-next',
   reactStrictMode: true,
   allowedDevOrigins: ["10.0.0.16"],
   experimental: {
