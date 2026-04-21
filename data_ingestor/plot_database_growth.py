@@ -70,7 +70,7 @@ def _draw_chart(ax: plt.Axes, dates: list, counts: list, title_fontsize: int = 1
     )
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
     ax.xaxis.set_major_locator(mdates.MonthLocator())
-    ax.set_title("Replications Database: Row Count Over Time", fontsize=title_fontsize, pad=12)
+    #ax.set_title("Replications Database: Row Count Over Time", fontsize=title_fontsize, pad=12)
     ax.set_ylabel("Number of rows")
     ax.set_xlabel("")
     ax.grid(axis="y", linestyle="--", alpha=0.4)
@@ -83,7 +83,7 @@ def plot(snapshots: list[tuple[datetime, int]]) -> None:
     counts = [s[1] for s in snapshots]
 
     # ── Wide figure (standard) ────────────────────────────────────────
-    fig, ax = plt.subplots(figsize=(12, 5))
+    fig, ax = plt.subplots(figsize=(10, 5))
     _draw_chart(ax, dates, counts)
     fig.autofmt_xdate(rotation=30, ha="right")
     fig.tight_layout()

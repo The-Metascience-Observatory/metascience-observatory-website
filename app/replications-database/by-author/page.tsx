@@ -19,7 +19,20 @@ type AuthorRow = {
   total: number;
   replicatedPct: number;
   notReplicatedPct: number;
+  ciLow: number;   // 0–100, Wilson score lower bound
+  ciHigh: number;  // 0–100, Wilson score upper bound
 };
+
+// Wilson score 95% CI for a proportion k/n
+function wilsonCI(k: number, n: number): [number, number] {
+  if (n === 0) return [0, 100];
+  const z = 1.96;
+  const p = k / n;
+  const denom = 1 + (z * z) / n;
+  const center = (p + (z * z) / (2 * n)) / denom;
+  const margin = (z * Math.sqrt((p * (1 - p)) / n + (z * z) / (4 * n * n))) / denom;
+  return [Math.max(0, center - margin) * 100, Math.min(1, center + margin) * 100];
+}
 
 type SortKey = "author" | "replicatedPct" | "total";
 type SortDir = "asc" | "desc";
@@ -31,14 +44,32 @@ const THRESHOLD_OPTIONS = [
   { value: 1.0, label: "100%" },
 ];
 
-const MIN_PAPERS_OPTIONS = [3, 5, 8, 10, 15];
+const MIN_PAPERS_OPTIONS = [8, 10, 15];
+
+// Consortium papers sometimes list organizational roles as author entries.
+// Filter these out using keyword patterns rather than an exact list.
+const ROLE_KEYWORDS = [
+  "team lead", "team member",
+  "group lead", "group member",
+  "collection lead", "collection member",
+  "admin lead", "admin member",
+  "project management", "scientific communication",
+  "writing group", "analysis group",
+  "study group", "cohort study",
+];
+
+function isOrgRole(name: string): boolean {
+  const lower = name.toLowerCase();
+  if (lower.startsWith("for the ") || lower.startsWith("and the ")) return true;
+  return ROLE_KEYWORDS.some((kw) => lower.includes(kw));
+}
 
 export default function ByAuthorPage() {
   const [data, setData] = useState<FredResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [threshold, setThreshold] = useState(0.75);
-  const [minPapers, setMinPapers] = useState(5);
+  const [minPapers, setMinPapers] = useState(10);
   const [sortKey, setSortKey] = useState<SortKey>("total");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
 
@@ -90,7 +121,7 @@ export default function ByAuthorPage() {
       const authorList = authorsStr
         .split(";")
         .map((a) => a.trim())
-        .filter(Boolean);
+        .filter((a) => a && !isOrgRole(a));
 
       let paper = papers.get(url);
       if (!paper) {
@@ -132,16 +163,19 @@ export default function ByAuthorPage() {
       }
     }
 
-    // Step 3: Filter to authors with minPapers+ papers, compute percentages
+    // Step 3: Filter to authors with minPapers+ papers, compute percentages + CI
     return Array.from(authorCounts.entries())
       .map(([author, v]) => {
         const total = v.replicated + v.notReplicated;
+        const [ciLow, ciHigh] = wilsonCI(v.replicated, total);
         return {
           author,
           ...v,
           total,
           replicatedPct: total > 0 ? (v.replicated / total) * 100 : 0,
           notReplicatedPct: total > 0 ? (v.notReplicated / total) * 100 : 0,
+          ciLow,
+          ciHigh,
         };
       })
       .filter((d) => d.total >= minPapers);
@@ -228,7 +262,7 @@ export default function ByAuthorPage() {
             </label>
 
             {/* Legend */}
-            <div className="flex gap-6 text-sm">
+            <div className="flex flex-wrap gap-4 text-sm items-center">
               <span className="flex items-center gap-2">
                 <span
                   className="inline-block w-3 h-3 rounded"
@@ -242,6 +276,14 @@ export default function ByAuthorPage() {
                   style={{ background: "#f87171" }}
                 />{" "}
                 Not replicated
+              </span>
+              <span className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                <span className="inline-flex items-center gap-0.5">
+                  <span className="inline-block w-0.5 h-3 bg-gray-400" />
+                  <span className="inline-block w-4 h-0.5 bg-gray-400" />
+                  <span className="inline-block w-0.5 h-3 bg-gray-400" />
+                </span>
+                95% Wilson CI (hover bar for exact values)
               </span>
             </div>
 
@@ -273,25 +315,75 @@ export default function ByAuthorPage() {
                         </Link>
                       </td>
                       <td className="p-2">
-                        <div className="h-5 flex rounded overflow-hidden bg-gray-100 dark:bg-gray-800 text-xs font-medium text-white">
-                          {d.replicatedPct > 0 && (
-                            <div
-                              className="h-full flex items-center justify-center overflow-hidden"
-                              style={{ width: `${d.replicatedPct}%`, background: "#10b981" }}
-                              title={`Replicated: ${d.replicated} (${d.replicatedPct.toFixed(1)}%)`}
-                            >
-                              {d.replicatedPct >= 15 && `${d.replicatedPct.toFixed(0)}%`}
-                            </div>
-                          )}
-                          {d.notReplicatedPct > 0 && (
-                            <div
-                              className="h-full flex items-center justify-center overflow-hidden"
-                              style={{ width: `${d.notReplicatedPct}%`, background: "#f87171" }}
-                              title={`Not replicated: ${d.notReplicated} (${d.notReplicatedPct.toFixed(1)}%)`}
-                            >
-                              {d.notReplicatedPct >= 15 && `${d.notReplicatedPct.toFixed(0)}%`}
-                            </div>
-                          )}
+                        <div
+                          className="relative h-7"
+                          title={`Replicated: ${d.replicated}/${d.total} (${d.replicatedPct.toFixed(1)}%) · 95% CI: [${d.ciLow.toFixed(1)}%–${d.ciHigh.toFixed(1)}%]`}
+                        >
+                          {/* Colored bar — clipped for rounded corners */}
+                          <div className="absolute inset-0 rounded overflow-hidden">
+                            <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800" />
+                            {d.replicatedPct > 0 && (
+                              <div
+                                className="absolute top-0 left-0 h-full"
+                                style={{ width: `${d.replicatedPct}%`, background: "#10b981" }}
+                              />
+                            )}
+                            {d.notReplicatedPct > 0 && (
+                              <div
+                                className="absolute top-0 h-full"
+                                style={{ left: `${d.replicatedPct}%`, width: `${d.notReplicatedPct}%`, background: "#f87171" }}
+                              />
+                            )}
+                          </div>
+                          {/* Error bar: thin horizontal line */}
+                          <div
+                            className="absolute bg-white"
+                            style={{
+                              top: "calc(50% - 1px)", height: "2px",
+                              left: `${d.ciLow}%`,
+                              width: `${d.ciHigh - d.ciLow}%`,
+                              zIndex: 9,
+                            }}
+                          />
+                          {/* Error bar: left serif */}
+                          <div
+                            className="absolute bg-white"
+                            style={{
+                              top: "25%", height: "50%", width: "2px",
+                              left: `${d.ciLow}%`,
+                              zIndex: 10,
+                            }}
+                          />
+                          {/* Error bar: right serif */}
+                          <div
+                            className="absolute bg-white"
+                            style={{
+                              top: "25%", height: "50%", width: "2px",
+                              left: `${d.ciHigh}%`,
+                              zIndex: 10,
+                            }}
+                          />
+                          {/* CI lower-bound label — just left of the left serif */}
+                          <div
+                            className="absolute top-0 h-full flex items-center text-xs font-semibold text-gray-900 dark:text-gray-100 pointer-events-none"
+                            style={{ left: `${d.ciLow}%`, transform: "translateX(-100%)", paddingRight: "4px", zIndex: 11 }}
+                          >
+                            {d.ciLow.toFixed(0)}%
+                          </div>
+                          {/* CI upper-bound label — just right of the right serif */}
+                          <div
+                            className="absolute top-0 h-full flex items-center text-xs font-semibold text-gray-900 dark:text-gray-100 pointer-events-none"
+                            style={{ left: `${d.ciHigh}%`, paddingLeft: "4px", zIndex: 11 }}
+                          >
+                            {d.ciHigh.toFixed(0)}%
+                          </div>
+                          {/* Point estimate label — pinned to the green/red boundary */}
+                          <div
+                            className="absolute top-0 h-full flex items-center text-base font-bold text-gray-900 dark:text-gray-100 pointer-events-none"
+                            style={{ left: `${d.replicatedPct}%`, transform: "translateX(-50%)", zIndex: 12, textShadow: "0 0 4px rgba(255,255,255,0.9), 0 0 8px rgba(255,255,255,0.7)" }}
+                          >
+                            {d.replicatedPct.toFixed(0)}%
+                          </div>
                         </div>
                       </td>
                       <td className="p-2 text-right tabular-nums">{d.total}</td>

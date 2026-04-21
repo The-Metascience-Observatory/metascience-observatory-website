@@ -19,7 +19,23 @@ type JournalRow = {
   total: number;
   replicatedPct: number;
   notReplicatedPct: number;
+  ciLow: number;
+  ciHigh: number;
 };
+
+// Wilson score 95% CI for a proportion k/n
+function wilsonCI(k: number, n: number): [number, number] {
+  if (n === 0) return [0, 100];
+  const z = 1.96;
+  const p = k / n;
+  const denom = 1 + (z * z) / n;
+  const center = (p + (z * z) / (2 * n)) / denom;
+  const margin = (z * Math.sqrt((p * (1 - p)) / n + (z * z) / (4 * n * n))) / denom;
+  return [Math.max(0, center - margin) * 100, Math.min(1, center + margin) * 100];
+}
+
+type SortKey = "journal" | "replicatedPct" | "total";
+type SortDir = "asc" | "desc";
 
 const THRESHOLD_OPTIONS = [
   { value: 0.5, label: "50%" },
@@ -35,6 +51,17 @@ export default function ByJournalPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [threshold, setThreshold] = useState(0.75);
+  const [sortKey, setSortKey] = useState<SortKey>("total");
+  const [sortDir, setSortDir] = useState<SortDir>("desc");
+
+  function toggleSort(key: SortKey) {
+    if (sortKey === key) {
+      setSortDir(d => d === "asc" ? "desc" : "asc");
+    } else {
+      setSortKey(key);
+      setSortDir(key === "journal" ? "asc" : "desc");
+    }
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -108,21 +135,32 @@ export default function ByJournalPage() {
       journalCounts.set(paper.journal, entry);
     }
 
-    // Step 3: Filter to journals with MIN_PAPERS+ papers, compute percentages
+    // Step 3: Filter to journals with MIN_PAPERS+ papers, compute percentages + CI
     return Array.from(journalCounts.entries())
       .map(([journal, v]) => {
         const total = v.replicated + v.notReplicated;
+        const [ciLow, ciHigh] = wilsonCI(v.replicated, total);
         return {
           journal,
           ...v,
           total,
           replicatedPct: total > 0 ? (v.replicated / total) * 100 : 0,
           notReplicatedPct: total > 0 ? (v.notReplicated / total) * 100 : 0,
+          ciLow,
+          ciHigh,
         };
       })
-      .filter((d) => d.total >= MIN_PAPERS)
-      .sort((a, b) => b.total - a.total);
+      .filter((d) => d.total >= MIN_PAPERS);
   }, [data, threshold]);
+
+  const sortedJournals = useMemo(() => {
+    const sorted = [...byJournal].sort((a, b) => {
+      if (sortKey === "journal") return a.journal.localeCompare(b.journal);
+      return a[sortKey] - b[sortKey];
+    });
+    if (sortDir === "desc") sorted.reverse();
+    return sorted;
+  }, [byJournal, sortKey, sortDir]);
 
   const totalPapers = byJournal.reduce((sum, d) => sum + d.total, 0);
 
@@ -195,55 +233,80 @@ export default function ByJournalPage() {
             </span>
           </div>
 
-          {/* Bars */}
-          <div className="space-y-3">
-            {byJournal.map((d) => (
-              <div key={d.journal} className="flex items-center gap-3">
-                <span className="text-sm italic text-right shrink-0" style={{ minWidth: "24rem" }}>
-                  <Link
-                    href={`/replications-database?original_journal_search=${encodeURIComponent(d.journal)}`}
-                    className="text-blue-600 dark:text-blue-400 hover:underline"
-                  >
-                    {d.journal}
-                  </Link>
-                </span>
-                <div className="flex-1 h-7 flex rounded overflow-hidden bg-gray-100 dark:bg-gray-800 text-xs font-medium text-white">
-                  {d.replicatedPct > 0 && (
-                    <div
-                      className="h-full transition-all flex items-center justify-center overflow-hidden"
-                      style={{
-                        width: `${d.replicatedPct}%`,
-                        background: "#10b981",
-                      }}
-                      title={`Replicated: ${d.replicated} (${d.replicatedPct.toFixed(1)}%)`}
-                    >
-                      {d.replicatedPct >= 10 &&
-                        `${d.replicatedPct.toFixed(0)}%`}
-                    </div>
-                  )}
-                  {d.notReplicatedPct > 0 && (
-                    <div
-                      className="h-full transition-all flex items-center justify-center overflow-hidden"
-                      style={{
-                        width: `${d.notReplicatedPct}%`,
-                        background: "#f87171",
-                      }}
-                      title={`Not replicated: ${d.notReplicated} (${d.notReplicatedPct.toFixed(1)}%)`}
-                    >
-                      {d.notReplicatedPct >= 10 &&
-                        `${d.notReplicatedPct.toFixed(0)}%`}
-                    </div>
-                  )}
-                </div>
-                <span className="w-20 text-sm text-right tabular-nums shrink-0">
-                  {d.total} papers
-                </span>
-              </div>
-            ))}
+          {/* Table */}
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-gray-200 dark:border-gray-700">
+                  <SortHeader label="Journal" sortKey="journal" currentKey={sortKey} dir={sortDir} onSort={toggleSort} align="left" />
+                  <SortHeader label="Replication Success Rate" sortKey="replicatedPct" currentKey={sortKey} dir={sortDir} onSort={toggleSort} align="left" style={{ minWidth: "12rem" }} />
+                  <SortHeader label="Total Papers" sortKey="total" currentKey={sortKey} dir={sortDir} onSort={toggleSort} align="right" />
+                </tr>
+              </thead>
+              <tbody>
+                {sortedJournals.map((d) => (
+                  <tr key={d.journal} className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900/40">
+                    <td className="p-2 text-left italic">
+                      <Link
+                        href={`/replications-database?original_journal_search=${encodeURIComponent(d.journal)}`}
+                        className="text-blue-600 dark:text-blue-400 hover:underline"
+                      >
+                        {d.journal}
+                      </Link>
+                    </td>
+                    <td className="p-2">
+                      <div
+                        className="relative h-7"
+                        title={`Replicated: ${d.replicated}/${d.total} (${d.replicatedPct.toFixed(1)}%) · 95% CI: [${d.ciLow.toFixed(1)}%–${d.ciHigh.toFixed(1)}%]`}
+                      >
+                        <div className="absolute inset-0 rounded overflow-hidden">
+                          <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800" />
+                          {d.replicatedPct > 0 && (
+                            <div className="absolute top-0 left-0 h-full" style={{ width: `${d.replicatedPct}%`, background: "#10b981" }} />
+                          )}
+                          {d.notReplicatedPct > 0 && (
+                            <div className="absolute top-0 h-full" style={{ left: `${d.replicatedPct}%`, width: `${d.notReplicatedPct}%`, background: "#f87171" }} />
+                          )}
+                        </div>
+                        <div className="absolute bg-white" style={{ top: "calc(50% - 1px)", height: "2px", left: `${d.ciLow}%`, width: `${d.ciHigh - d.ciLow}%`, zIndex: 9 }} />
+                        <div className="absolute bg-white" style={{ top: "25%", height: "50%", width: "2px", left: `${d.ciLow}%`, zIndex: 10 }} />
+                        <div className="absolute bg-white" style={{ top: "25%", height: "50%", width: "2px", left: `${d.ciHigh}%`, zIndex: 10 }} />
+                        <div className="absolute top-0 h-full flex items-center text-base font-bold text-gray-900 dark:text-gray-100 pointer-events-none" style={{ left: `${d.replicatedPct}%`, transform: "translateX(-50%)", zIndex: 12, textShadow: "0 0 4px rgba(255,255,255,0.9), 0 0 8px rgba(255,255,255,0.7)" }}>{d.replicatedPct.toFixed(0)}%</div>
+                      </div>
+                    </td>
+                    <td className="p-2 text-right tabular-nums">{d.total}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </main>
       <Footer />
     </div>
+  );
+}
+
+function SortHeader({ label, sortKey: key, currentKey, dir, onSort, align, style }: {
+  label: string;
+  sortKey: SortKey;
+  currentKey: SortKey;
+  dir: SortDir;
+  onSort: (k: SortKey) => void;
+  align: "left" | "right";
+  style?: React.CSSProperties;
+}) {
+  const active = key === currentKey;
+  return (
+    <th
+      className={`p-2 font-medium text-gray-600 dark:text-gray-300 cursor-pointer select-none hover:text-gray-900 dark:hover:text-white whitespace-nowrap ${align === "right" ? "text-right" : "text-left"}`}
+      onClick={() => onSort(key)}
+      style={style}
+    >
+      {label}{" "}
+      <span className={`inline-block w-3 ${active ? "opacity-100" : "opacity-30"}`}>
+        {active ? (dir === "asc" ? "\u25B2" : "\u25BC") : "\u25BC"}
+      </span>
+    </th>
   );
 }

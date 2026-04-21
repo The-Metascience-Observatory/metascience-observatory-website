@@ -24,6 +24,7 @@ const PROJECT_TO_TAG: Record<string, string> = {
   "Social Psychology Special Issue on Registered Replication Reports": "SPRRR",
   "Clearer Thinking's Transparent Replication Project": "TRs",
   "Tyner et al. – DARPA SCORE Social & Behavioural Sciences Replication Project": "socsci_2026",
+  "International Initiative for Impact Evaluation Replication Paper Series": "3ie",
 };
 
 interface Project {

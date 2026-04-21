@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
@@ -8,6 +9,13 @@ export default function NotFound() {
       <Navbar />
       <main className="pt-20 pb-16">
         <div className="container mx-auto px-4 py-16 max-w-2xl text-center">
+          <Image
+            src="/assets/metascience_observatory_Flammarion.jpg"
+            alt="Flammarion woodcut"
+            width={500}
+            height={375}
+            className="mx-auto mb-8 rounded-lg"
+          />
           <h1 className="font-clarendon font-bold text-4xl mb-4">Page not found</h1>
           <p className="text-foreground/70 mb-8">
             The page you&apos;re looking for doesn&apos;t exist or has been moved.

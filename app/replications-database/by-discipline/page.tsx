@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
@@ -18,9 +19,26 @@ type DisciplineRow = {
   total: number;
   replicatedPct: number;
   notReplicatedPct: number;
+  ciLow: number;
+  ciHigh: number;
 };
 
-const MIN_PAPERS = 10;
+// Wilson score 95% CI for a proportion k/n
+function wilsonCI(k: number, n: number): [number, number] {
+  if (n === 0) return [0, 100];
+  const z = 1.96;
+  const p = k / n;
+  const denom = 1 + (z * z) / n;
+  const center = (p + (z * z) / (2 * n)) / denom;
+  const margin = (z * Math.sqrt((p * (1 - p)) / n + (z * z) / (4 * n * n))) / denom;
+  return [Math.max(0, center - margin) * 100, Math.min(1, center + margin) * 100];
+}
+
+type SortKey = "discipline" | "replicatedPct" | "total";
+type SortDir = "asc" | "desc";
+
+const MIN_PAPERS = 20;
+const MIN_PAPERS_SUBDISCIPLINE = 20;
 
 const THRESHOLD_OPTIONS = [
   { value: 0.5, label: "50%" },
@@ -29,11 +47,82 @@ const THRESHOLD_OPTIONS = [
   { value: 1.0, label: "100%" },
 ];
 
+function BarCell({ d }: { d: DisciplineRow }) {
+  return (
+    <td className="p-2">
+      <div
+        className="relative h-7"
+        title={`Replicated: ${d.replicated}/${d.total} (${d.replicatedPct.toFixed(1)}%) · 95% CI: [${d.ciLow.toFixed(1)}%–${d.ciHigh.toFixed(1)}%]`}
+      >
+        <div className="absolute inset-0 rounded overflow-hidden">
+          <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800" />
+          {d.replicatedPct > 0 && (
+            <div className="absolute top-0 left-0 h-full" style={{ width: `${d.replicatedPct}%`, background: "#10b981" }} />
+          )}
+          {d.notReplicatedPct > 0 && (
+            <div className="absolute top-0 h-full" style={{ left: `${d.replicatedPct}%`, width: `${d.notReplicatedPct}%`, background: "#f87171" }} />
+          )}
+        </div>
+        <div className="absolute bg-white" style={{ top: "calc(50% - 1px)", height: "2px", left: `${d.ciLow}%`, width: `${d.ciHigh - d.ciLow}%`, zIndex: 9 }} />
+        <div className="absolute bg-white" style={{ top: "25%", height: "50%", width: "2px", left: `${d.ciLow}%`, zIndex: 10 }} />
+        <div className="absolute bg-white" style={{ top: "25%", height: "50%", width: "2px", left: `${d.ciHigh}%`, zIndex: 10 }} />
+        <div className="absolute top-0 h-full flex items-center text-base font-bold text-gray-900 dark:text-gray-100 pointer-events-none" style={{ left: `${d.replicatedPct}%`, transform: "translateX(-50%)", zIndex: 12, textShadow: "0 0 4px rgba(255,255,255,0.9), 0 0 8px rgba(255,255,255,0.7)" }}>{d.replicatedPct.toFixed(0)}%</div>
+      </div>
+    </td>
+  );
+}
+
+function SortHeader({ label, sortKey: key, currentKey, dir, onSort, align, style }: {
+  label: string;
+  sortKey: SortKey;
+  currentKey: SortKey;
+  dir: SortDir;
+  onSort: (k: SortKey) => void;
+  align: "left" | "right";
+  style?: React.CSSProperties;
+}) {
+  const active = key === currentKey;
+  return (
+    <th
+      className={`p-2 font-medium text-gray-600 dark:text-gray-300 cursor-pointer select-none hover:text-gray-900 dark:hover:text-white whitespace-nowrap ${align === "right" ? "text-right" : "text-left"}`}
+      onClick={() => onSort(key)}
+      style={style}
+    >
+      {label}{" "}
+      <span className={`inline-block w-3 ${active ? "opacity-100" : "opacity-30"}`}>
+        {active ? (dir === "asc" ? "\u25B2" : "\u25BC") : "\u25BC"}
+      </span>
+    </th>
+  );
+}
+
 export default function ByDisciplinePage() {
   const [data, setData] = useState<FredResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [threshold, setThreshold] = useState(0.75);
+  const [sortKey, setSortKey] = useState<SortKey>("total");
+  const [sortDir, setSortDir] = useState<SortDir>("desc");
+  const [subSortKey, setSubSortKey] = useState<SortKey>("total");
+  const [subSortDir, setSubSortDir] = useState<SortDir>("desc");
+
+  function toggleSort(key: SortKey) {
+    if (sortKey === key) {
+      setSortDir(d => d === "asc" ? "desc" : "asc");
+    } else {
+      setSortKey(key);
+      setSortDir(key === "discipline" ? "asc" : "desc");
+    }
+  }
+
+  function toggleSubSort(key: SortKey) {
+    if (subSortKey === key) {
+      setSubSortDir(d => d === "asc" ? "desc" : "asc");
+    } else {
+      setSubSortKey(key);
+      setSubSortDir(key === "discipline" ? "asc" : "desc");
+    }
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -54,7 +143,6 @@ export default function ByDisciplinePage() {
   const byDiscipline: DisciplineRow[] = useMemo(() => {
     if (!data) return [];
 
-    // Step 1: Group rows by original_url (paper), collect discipline + results
     const papers = new Map<
       string,
       { disciplines: string[]; successCount: number; totalCount: number }
@@ -85,7 +173,6 @@ export default function ByDisciplinePage() {
       }
     }
 
-    // Step 2: Classify each paper at the current threshold, group by discipline
     const disciplineCounts = new Map<
       string,
       { replicated: number; notReplicated: number }
@@ -113,23 +200,120 @@ export default function ByDisciplinePage() {
       }
     }
 
-    // Step 3: Compute percentages and sort
     return Array.from(disciplineCounts.entries())
       .map(([discipline, v]) => {
         const total = v.replicated + v.notReplicated;
+        const [ciLow, ciHigh] = wilsonCI(v.replicated, total);
         return {
           discipline,
           ...v,
           total,
           replicatedPct: total > 0 ? (v.replicated / total) * 100 : 0,
           notReplicatedPct: total > 0 ? (v.notReplicated / total) * 100 : 0,
+          ciLow,
+          ciHigh,
         };
       })
-      .filter((d) => d.total >= MIN_PAPERS)
-      .sort((a, b) => b.total - a.total);
+      .filter((d) => d.total >= MIN_PAPERS);
   }, [data, threshold]);
 
+  const bySubdiscipline: DisciplineRow[] = useMemo(() => {
+    if (!data) return [];
+
+    const papers = new Map<
+      string,
+      { subdisciplines: string[]; successCount: number; totalCount: number }
+    >();
+
+    for (const r of data.rows) {
+      const url = String(r.original_url ?? "").trim();
+      const raw = String(r.subdiscipline ?? "");
+      const parts = raw.split(",").map((s) => s.trim()).filter(Boolean);
+      const subdisciplines = parts.length > 0 ? parts : [];
+      const result = String(r.result ?? "").toLowerCase();
+
+      if (!url || subdisciplines.length === 0) continue;
+
+      const hasOutcome =
+        result.includes("success") || result.includes("failure");
+      if (!hasOutcome) continue;
+
+      let paper = papers.get(url);
+      if (!paper) {
+        paper = { subdisciplines, successCount: 0, totalCount: 0 };
+        papers.set(url, paper);
+      }
+
+      paper.totalCount++;
+      if (result.includes("success")) {
+        paper.successCount++;
+      }
+    }
+
+    const subdisciplineCounts = new Map<
+      string,
+      { replicated: number; notReplicated: number }
+    >();
+
+    for (const paper of papers.values()) {
+      if (paper.totalCount === 0) continue;
+
+      const rate = paper.successCount / paper.totalCount;
+      const isReplicated = rate >= threshold;
+
+      for (const s of paper.subdisciplines) {
+        const entry = subdisciplineCounts.get(s) || {
+          replicated: 0,
+          notReplicated: 0,
+        };
+
+        if (isReplicated) {
+          entry.replicated++;
+        } else {
+          entry.notReplicated++;
+        }
+
+        subdisciplineCounts.set(s, entry);
+      }
+    }
+
+    return Array.from(subdisciplineCounts.entries())
+      .map(([discipline, v]) => {
+        const total = v.replicated + v.notReplicated;
+        const [ciLow, ciHigh] = wilsonCI(v.replicated, total);
+        return {
+          discipline,
+          ...v,
+          total,
+          replicatedPct: total > 0 ? (v.replicated / total) * 100 : 0,
+          notReplicatedPct: total > 0 ? (v.notReplicated / total) * 100 : 0,
+          ciLow,
+          ciHigh,
+        };
+      })
+      .filter((d) => d.total >= MIN_PAPERS_SUBDISCIPLINE);
+  }, [data, threshold]);
+
+  const sortedDisciplines = useMemo(() => {
+    const sorted = [...byDiscipline].sort((a, b) => {
+      if (sortKey === "discipline") return a.discipline.localeCompare(b.discipline);
+      return a[sortKey] - b[sortKey];
+    });
+    if (sortDir === "desc") sorted.reverse();
+    return sorted;
+  }, [byDiscipline, sortKey, sortDir]);
+
+  const sortedSubdisciplines = useMemo(() => {
+    const sorted = [...bySubdiscipline].sort((a, b) => {
+      if (subSortKey === "discipline") return a.discipline.localeCompare(b.discipline);
+      return a[subSortKey] - b[subSortKey];
+    });
+    if (subSortDir === "desc") sorted.reverse();
+    return sorted;
+  }, [bySubdiscipline, subSortKey, subSortDir]);
+
   const totalPapers = byDiscipline.reduce((sum, d) => sum + d.total, 0);
+  const totalSubdisciplinePapers = bySubdiscipline.reduce((sum, d) => sum + d.total, 0);
 
   if (loading) return <main className="min-h-screen px-6 py-10">Loading…</main>;
   if (error || !data) return <main className="min-h-screen px-6 py-10">Failed to load: {error || "No data"}</main>;
@@ -147,6 +331,7 @@ export default function ByDisciplinePage() {
               Paper-level analysis: a paper is considered &ldquo;replicated&rdquo; if at
               least {Math.round(threshold * 100)}% of its effect replications
               were successful. Only disciplines with {MIN_PAPERS}+ papers shown.
+              Click a discipline name to view its entries in the database explorer.
             </p>
           </div>
 
@@ -185,38 +370,88 @@ export default function ByDisciplinePage() {
             </span>
           </div>
 
-          {/* Bars */}
-          <div className="space-y-3">
-            {byDiscipline.map((d) => (
-              <div key={d.discipline} className="flex items-center gap-3">
-                <span className="w-48 text-sm text-right shrink-0" title={d.discipline}>
-                  {d.discipline}
-                </span>
-                <div className="flex-1 h-7 flex rounded overflow-hidden bg-gray-100 dark:bg-gray-800 text-xs font-medium text-white">
-                  {d.replicatedPct > 0 && (
-                    <div
-                      className="h-full transition-all flex items-center justify-center overflow-hidden"
-                      style={{ width: `${d.replicatedPct}%`, background: "#10b981" }}
-                      title={`Replicated: ${d.replicated} (${d.replicatedPct.toFixed(1)}%)`}
-                    >
-                      {d.replicatedPct >= 10 && `${d.replicatedPct.toFixed(0)}%`}
-                    </div>
-                  )}
-                  {d.notReplicatedPct > 0 && (
-                    <div
-                      className="h-full transition-all flex items-center justify-center overflow-hidden"
-                      style={{ width: `${d.notReplicatedPct}%`, background: "#f87171" }}
-                      title={`Not replicated: ${d.notReplicated} (${d.notReplicatedPct.toFixed(1)}%)`}
-                    >
-                      {d.notReplicatedPct >= 10 && `${d.notReplicatedPct.toFixed(0)}%`}
-                    </div>
-                  )}
-                </div>
-                <span className="w-20 text-sm text-right tabular-nums shrink-0">
-                  {d.total} papers
-                </span>
-              </div>
-            ))}
+          {/* Table */}
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-gray-200 dark:border-gray-700">
+                  <SortHeader label="Discipline" sortKey="discipline" currentKey={sortKey} dir={sortDir} onSort={toggleSort} align="left" />
+                  <SortHeader label="Replication Success Rate" sortKey="replicatedPct" currentKey={sortKey} dir={sortDir} onSort={toggleSort} align="left" style={{ minWidth: "12rem" }} />
+                  <SortHeader label="Total Papers" sortKey="total" currentKey={sortKey} dir={sortDir} onSort={toggleSort} align="right" />
+                </tr>
+              </thead>
+              <tbody>
+                {sortedDisciplines.map((d) => (
+                  <tr key={d.discipline} className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900/40">
+                    <td className="p-2 text-left">
+                      <Link
+                        href={`/replications-database?discipline=${encodeURIComponent(d.discipline)}`}
+                        className="text-blue-600 dark:text-blue-400 hover:underline"
+                      >
+                        {d.discipline}
+                      </Link>
+                    </td>
+                    <BarCell d={d} />
+                    <td className="p-2 text-right tabular-nums">{d.total}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Subdiscipline section */}
+        <div className="max-w-4xl mx-auto space-y-8 mt-16">
+          <div>
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
+              Paper Replication Success by Subdiscipline
+            </h2>
+            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              Same paper-level methodology as above. Only subdisciplines with {MIN_PAPERS_SUBDISCIPLINE}+ papers shown.
+              Click a subdiscipline name to view its entries in the database explorer.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-6">
+            <div className="flex gap-6 text-sm">
+              <span className="flex items-center gap-2">
+                <span className="inline-block w-3 h-3 rounded" style={{ background: "#10b981" }} /> Replicated
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="inline-block w-3 h-3 rounded" style={{ background: "#f87171" }} /> Not replicated
+              </span>
+            </div>
+            <span className="text-sm text-gray-500 dark:text-gray-400">
+              {bySubdiscipline.length} subdisciplines &middot; {totalSubdisciplinePapers} papers
+            </span>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-gray-200 dark:border-gray-700">
+                  <SortHeader label="Subdiscipline" sortKey="discipline" currentKey={subSortKey} dir={subSortDir} onSort={toggleSubSort} align="left" />
+                  <SortHeader label="Replication Success Rate" sortKey="replicatedPct" currentKey={subSortKey} dir={subSortDir} onSort={toggleSubSort} align="left" style={{ minWidth: "12rem" }} />
+                  <SortHeader label="Total Papers" sortKey="total" currentKey={subSortKey} dir={subSortDir} onSort={toggleSubSort} align="right" />
+                </tr>
+              </thead>
+              <tbody>
+                {sortedSubdisciplines.map((d) => (
+                  <tr key={d.discipline} className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900/40">
+                    <td className="p-2 text-left">
+                      <Link
+                        href={`/replications-database?subdiscipline=${encodeURIComponent(d.discipline)}`}
+                        className="text-blue-600 dark:text-blue-400 hover:underline"
+                      >
+                        {d.discipline}
+                      </Link>
+                    </td>
+                    <BarCell d={d} />
+                    <td className="p-2 text-right tabular-nums">{d.total}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </main>

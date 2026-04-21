@@ -2,6 +2,8 @@ import path from "path";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Put build artifacts outside Dropbox to avoid sync race conditions
+  distDir: "/home/dan/.next-metascience",
   reactStrictMode: true,
   allowedDevOrigins: ["10.0.0.16"],
   experimental: {

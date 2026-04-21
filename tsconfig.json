@@ -34,8 +34,9 @@
     "**/*.tsx",
     ".next/dev/types/**/*.ts",
     ".next/types/**/*.ts",
+    "/tmp/metascience-observatory-next/types/**/*.ts",
     "next-env.d.ts",
-    "/tmp/metascience-observatory-next/types/**/*.ts"
+    "/home/dan/.next-metascience/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

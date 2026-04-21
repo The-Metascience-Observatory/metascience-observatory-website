@@ -583,8 +583,8 @@ function ReplicationsDatabaseContent() {
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
 
   const [field, setField] = useState<string>("");
-  const [discipline, setDiscipline] = useState<string>("");
-  const [subdiscipline, setSubdiscipline] = useState<string>("");
+  const [discipline, setDiscipline] = useState<string>(searchParams.get("discipline") || "");
+  const [subdiscipline, setSubdiscipline] = useState<string>(searchParams.get("subdiscipline") || "");
   const [result, setResult] = useState<string>("");
   const [initiative, setInitiative] = useState<string>(searchParams.get("initiative") || "");
   const [replicationType, setReplicationType] = useState<Set<string>>(new Set());
@@ -614,6 +614,33 @@ function ReplicationsDatabaseContent() {
       }
     }
     fetchData();
+  }, []);
+
+  // One-time effect: derive field (and discipline) from URL params on mount
+  useEffect(() => {
+    const initDisc = searchParams.get("discipline") || "";
+    const initSub = searchParams.get("subdiscipline") || "";
+    const ont = TOPIC_ONTOLOGY as Record<string, Record<string, string[]>>;
+
+    if (initSub) {
+      for (const [fieldName, disciplines] of Object.entries(ont)) {
+        for (const [discName, subs] of Object.entries(disciplines as Record<string, string[]>)) {
+          if ((subs as string[]).includes(initSub)) {
+            if (!initDisc) setDiscipline(discName);
+            setField(fieldName);
+            return;
+          }
+        }
+      }
+    } else if (initDisc) {
+      for (const [fieldName, disciplines] of Object.entries(ont)) {
+        if (initDisc in (disciplines as Record<string, string[]>)) {
+          setField(fieldName);
+          return;
+        }
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Sync initiative filter to URL

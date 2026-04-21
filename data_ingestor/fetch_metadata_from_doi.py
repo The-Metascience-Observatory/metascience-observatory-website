@@ -74,17 +74,35 @@ def _format_initial(name):
 
 def _is_initial_token(token):
     """Check if a token is an initial or compound initials.
-    Matches: 'J', 'J.', 'A.C.', 'J.L.', 'AC', etc."""
+    Matches: 'J', 'J.', 'A.C.', 'J.L.' etc.
+
+    Tokens WITH periods (e.g. 'J.', 'A.C.'): flagged as initial if all chars are
+    uppercase after stripping periods and length ≤ 3.
+
+    Tokens WITHOUT periods: only a single uppercase letter counts as an initial.
+    This prevents short real names like 'JAN', 'KIM', 'TOM' from being
+    misidentified as initials when stored in all-caps by some APIs.
+    """
     stripped = token.replace('.', '')
     if not stripped:
         return True
-    # All single uppercase letters (possibly with periods between)
-    return all(c.isupper() for c in stripped) and len(stripped) <= 3
+    if '.' in token:
+        # Dotted form: "J.", "A.C.", "J.K." — all-uppercase after stripping, ≤3 chars
+        return all(c.isupper() for c in stripped) and len(stripped) <= 3
+    # Undotted form: only a bare single uppercase letter is unambiguously an initial
+    return len(stripped) == 1 and stripped.isupper()
 
 
 def _count_full_first_names(authors_str):
     """Count how many authors have full (non-abbreviated) first names.
-    Returns (full_count, total_count)."""
+    Returns (full_count, total_count).
+
+    Handles three formats:
+    - "Last, First"  — comma-separated, take the part after the comma
+    - "First Last"   — no comma, take the first token
+    - "Last FI"      — no comma, last token is an initial (PubMed/EuropePMC style);
+                       detected when first token is NOT an initial but last token IS
+    """
     if not authors_str or authors_str in (None, "", "NaN"):
         return 0, 0
     names = str(authors_str).split(';')
@@ -94,14 +112,20 @@ def _count_full_first_names(authors_str):
         name = name.strip()
         if not name:
             continue
-        # Handle "Last, First" format
         if ',' in name:
+            # "Last, First" format — given name is after the comma
             parts = name.split(',', 1)
             first = parts[1].strip() if len(parts) > 1 else ''
+            first_token = first.split()[0] if first.split() else ''
         else:
-            parts = name.split()
-            first = parts[0] if parts else ''
-        first_token = first.split()[0] if first.split() else ''
+            tokens = name.split()
+            first_token = tokens[0] if tokens else ''
+            # Detect "Last FI" format (e.g. "Smith J.", "Williams LA"):
+            # first word is not an initial (it's the surname) but last word is.
+            if (len(tokens) >= 2
+                    and not _is_initial_token(first_token)
+                    and _is_initial_token(tokens[-1])):
+                first_token = tokens[-1]
         total += 1
         if first_token and not _is_initial_token(first_token):
             full += 1
@@ -119,16 +143,27 @@ def _authors_have_abbreviations(authors_str):
 
 
 def _new_authors_are_better(current, new):
-    """Check if new authors string has more full first names than current."""
+    """Check if new authors string has more full first names than current.
+
+    Rejects the new string if it lost too many authors (likely a wrong-paper match),
+    with a quality-based override: a result that is ≥90% full names is accepted even
+    if it has fewer authors, as long as it keeps at least half of them.
+    """
     if not new or new in (None, "", "NaN"):
         return False
     if not current or current in (None, "", "NaN"):
         return True
     cur_full, cur_total = _count_full_first_names(current)
     new_full, new_total = _count_full_first_names(new)
-    # Don't accept if we lost many authors (likely wrong paper)
-    if new_total < cur_total * 0.7:
+    if new_total == 0:
         return False
+    if new_total < cur_total * 0.7:
+        # Quality override: accept a smaller but near-complete author list
+        cur_rate = cur_full / cur_total if cur_total > 0 else 0.0
+        new_rate = new_full / new_total
+        if new_total < cur_total * 0.5 or new_rate < 0.9:
+            return False
+        # Fall through — new list is high-quality and large enough
     return new_full > cur_full
 
 
@@ -348,8 +383,9 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2, enable_base=False, enabl
         logger.warning(f"Unpaywall error for DOI {doi}: {e}")
 
     # ---------- 4️⃣ PubMed ----------
+    # Uses efetch (ForeName + LastName) for full given names.
+    # esummary only returns "LastName FI" format and is kept as a fallback.
     try:
-        # Add API key if available (increases rate limit from 3/s to 10/s)
         api_key_param = f"&api_key={ENTREZ_API_KEY}" if ENTREZ_API_KEY else ""
         search_url = (
             f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
@@ -360,37 +396,82 @@ def fetch_metadata_from_doi(doi, email=None, delay=0.2, enable_base=False, enabl
             pmids = r.json().get("esearchresult", {}).get("idlist", [])
             if pmids:
                 time.sleep(delay)
-                summary_url = (
-                    f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi"
-                    f"?db=pubmed&id={pmids[0]}&retmode=json&email={email}{api_key_param}"
-                )
-                r2 = _request_with_retry(summary_url, headers=headers)
-                if r2 and r2.status_code == 200:
-                    result = r2.json().get("result", {})
-                    d = result.get(pmids[0], {})
-                    if d and isinstance(d, dict):
-                        authors = "; ".join(
-                            _format_initial(a.get("name", ""))
-                            for a in d.get("authors", [])
-                            if a.get("authtype") == "Author"
-                        ) or None
-                        pub_year = None
-                        pubdate = d.get("pubdate", "")
-                        if pubdate and len(pubdate) >= 4 and pubdate[:4].isdigit():
-                            pub_year = int(pubdate[:4])
-                        pm = {
-                            "authors": authors,
-                            "title": d.get("title"),
-                            "journal": d.get("fulljournalname"),
-                            "volume": d.get("volume"),
-                            "issue": d.get("issue"),
-                            "pages": d.get("pages"),
-                            "year": pub_year,
-                            "url": f"https://doi.org/{doi}",
-                        }
-                        meta = enrich(meta, pm)
-                        if is_complete(meta):
-                            return meta
+                pm = None
+                # ── Primary: efetch with Biopython gives ForeName + LastName ──
+                try:
+                    from Bio import Entrez as _Entrez
+                    _Entrez.email = email
+                    if ENTREZ_API_KEY:
+                        _Entrez.api_key = ENTREZ_API_KEY
+                    handle = _Entrez.efetch(db="pubmed", id=pmids[0], rettype="xml")
+                    records = _Entrez.read(handle)
+                    handle.close()
+                    article = records["PubmedArticle"][0]["MedlineCitation"]["Article"]
+                    journal_info = article.get("Journal", {})
+                    issue_info = journal_info.get("JournalIssue", {})
+                    pub_date = issue_info.get("PubDate", {})
+                    pub_year = None
+                    for date_key in ("Year", "MedlineDate"):
+                        date_val = str(pub_date.get(date_key, ""))
+                        if date_val and len(date_val) >= 4 and date_val[:4].isdigit():
+                            pub_year = int(date_val[:4])
+                            break
+                    authors_list = []
+                    for author in article.get("AuthorList", []):
+                        last = str(author.get("LastName", "")).strip()
+                        fore = str(author.get("ForeName", "")).strip()
+                        if last:
+                            authors_list.append(_format_initial(f"{fore} {last}".strip()))
+                    pagination = article.get("Pagination", {})
+                    pages = pagination.get("StartPage") or pagination.get("MedlinePgn")
+                    pm = {
+                        "authors": "; ".join(authors_list) or None,
+                        "title": str(article.get("ArticleTitle", "") or "").strip() or None,
+                        "journal": journal_info.get("Title"),
+                        "volume": issue_info.get("Volume"),
+                        "issue": issue_info.get("Issue"),
+                        "pages": pages,
+                        "year": pub_year,
+                        "url": f"https://doi.org/{doi}",
+                    }
+                except Exception as efetch_err:
+                    logger.debug(f"PubMed efetch failed for {doi}, falling back to esummary: {efetch_err}")
+
+                # ── Fallback: esummary (returns "LastName FI" abbreviated format) ──
+                if pm is None:
+                    summary_url = (
+                        f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi"
+                        f"?db=pubmed&id={pmids[0]}&retmode=json&email={email}{api_key_param}"
+                    )
+                    r2 = _request_with_retry(summary_url, headers=headers)
+                    if r2 and r2.status_code == 200:
+                        result = r2.json().get("result", {})
+                        d = result.get(pmids[0], {})
+                        if d and isinstance(d, dict):
+                            authors = "; ".join(
+                                _format_initial(a.get("name", ""))
+                                for a in d.get("authors", [])
+                                if a.get("authtype") == "Author"
+                            ) or None
+                            pub_year = None
+                            pubdate = d.get("pubdate", "")
+                            if pubdate and len(pubdate) >= 4 and pubdate[:4].isdigit():
+                                pub_year = int(pubdate[:4])
+                            pm = {
+                                "authors": authors,
+                                "title": d.get("title"),
+                                "journal": d.get("fulljournalname"),
+                                "volume": d.get("volume"),
+                                "issue": d.get("issue"),
+                                "pages": d.get("pages"),
+                                "year": pub_year,
+                                "url": f"https://doi.org/{doi}",
+                            }
+
+                if pm:
+                    meta = enrich(meta, pm)
+                    if is_complete(meta):
+                        return meta
         elif r:
             logger.warning(f"PubMed returned HTTP {r.status_code} for DOI {doi}")
     except Exception as e:
