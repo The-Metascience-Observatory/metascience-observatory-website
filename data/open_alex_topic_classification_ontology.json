@@ -127,13 +127,13 @@
   },
   "Physical Sciences": {
     "Physics and Astronomy": [
-      "Acoustics and Ultrasonics",
-      "Statistical and Nonlinear Physics",
-      "Radiation",
+      "Acoustics",
       "Atomic and Molecular Physics, and Optics",
       "Condensed Matter Physics",
       "Astronomy and Astrophysics",
-      "Nuclear and High Energy Physics",
+      "Nuclear physics",
+      "High Energy Physics",
+      "Statistical and Nonlinear Physics",
       "Instrumentation"
     ],
     "Engineering": [
