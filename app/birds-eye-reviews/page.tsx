@@ -29,12 +29,20 @@ export default function BirdsEyeReviewsPage() {
       <main className="pt-20 pb-16">
         <div className="container mx-auto px-4 py-12 max-w-3xl">
           <Image
-            src="/assets/bird-up-high-woodcut.png"
-            alt="Bird's eye view woodcut"
+            src="/assets/looking_at_stars_cropped.png"
+            alt="Looking at stars"
             width={800}
             height={400}
             className="w-full mb-8 rounded"
           />
+          <div className="mb-6">
+            <Link
+              href="/docs/about-birds-eye-reviews"
+              className="text-blue-600 hover:text-blue-700 underline"
+            >
+              About Bird&rsquo;s Eye Reviews
+            </Link>
+          </div>
           <div className="space-y-4">
             {reviews.map((review) => (
               <div key={review.href}>
