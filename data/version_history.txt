@@ -66,3 +66,5 @@ replications_database_2026_04_16_100533.csv # added batch8_round_2_collated_resu
 replications_database_2026_04_16_143640.csv # added missing_years_to_reingest.csv (88 new rows); QC fixes from 100533.csv preserved
 
 replications_database_2026_04_21_130029.csv  # author name remediation (320 rows updated)
+replications_database_2026_05_06_201210.csv # added 8th_batch_collated_results_v8.5.csv
+replications_database_2026_05_17_071121.csv # added collated_results_v8.5.csv

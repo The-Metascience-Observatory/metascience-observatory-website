@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useMemo, useRef } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import Link from "next/link";
+import { toast } from "sonner";
 import {
   BarChart,
   Bar,
@@ -13,7 +14,7 @@ import {
   Cell,
   CartesianGrid,
 } from "recharts";
-import { ChevronDown, ChevronRight, ExternalLink } from "lucide-react";
+import { ChevronDown, ChevronRight, ExternalLink, Link2, Check } from "lucide-react";
 import {
   ComposableMap,
   Geographies,
@@ -226,6 +227,84 @@ export function LongCovidDashboard(props: DashboardProps) {
       }),
     };
   }, [isFiltered, props, recomputed, selectedDesignTypes, lcDefWho, lcDefBelow]);
+
+  // ── Shareable links: sync filter state ⇄ URL query string ──────────
+  // We use window.history rather than next/navigation so updating the URL
+  // never triggers a server re-render (the 21 MB JSONL is only parsed once).
+  const didInitFromUrl = useRef(false);
+
+  // On mount, hydrate filter state from the URL so a shared link opens
+  // straight into the intended selection.
+  useEffect(() => {
+    const sp = new URLSearchParams(window.location.search);
+    const year = sp.get("year");
+    if (year && Number.isFinite(Number(year))) setYearFilter(Number(year));
+    const intCat = sp.get("intCat");
+    if (intCat) setInterventionCategoryFilter(intCat);
+    const intName = sp.get("intName");
+    if (intName) setInterventionNameFilter(intName);
+    const lcat = sp.get("lcat");
+    if (lcat) setLandscapeCategory(lcat);
+    const lsym = sp.get("lsym");
+    if (lsym) setLandscapeSymptom(lsym);
+    const lcDef = sp.get("lcDef");
+    if (lcDef) setLcDefFilter(lcDef);
+    const country = sp.get("country");
+    if (country) setCountryFilter(country);
+    const blinding = sp.get("blinding");
+    if (blinding) setBlindingFilter(blinding);
+    const symptom = sp.get("symptom");
+    if (symptom) setSymptomDomainFilter(symptom);
+    // Top-level filters
+    if (sp.get("who") === "0") setLcDefWho(false);
+    if (sp.get("below") === "1") setLcDefBelow(true);
+    const types = sp.get("types");
+    if (types) setSelectedDesignTypes(new Set(types.split(",").filter(Boolean)));
+
+    didInitFromUrl.current = true;
+
+    // If a shared link targets a specific drill-down, bring the table into view.
+    const hasDrilldown = year || intCat || intName || lcat || lsym || lcDef || country || blinding || symptom;
+    if (hasDrilldown) setTimeout(scrollToTable, 150);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Reflect the current filter state back into the URL (no navigation/refetch).
+  useEffect(() => {
+    if (!didInitFromUrl.current) return;
+    const params = new URLSearchParams();
+    if (yearFilter !== null) params.set("year", String(yearFilter));
+    if (interventionCategoryFilter) params.set("intCat", interventionCategoryFilter);
+    if (interventionNameFilter) params.set("intName", interventionNameFilter);
+    if (landscapeCategory) params.set("lcat", landscapeCategory);
+    if (landscapeSymptom) params.set("lsym", landscapeSymptom);
+    if (lcDefFilter) params.set("lcDef", lcDefFilter);
+    if (countryFilter) params.set("country", countryFilter);
+    if (blindingFilter) params.set("blinding", blindingFilter);
+    if (symptomDomainFilter) params.set("symptom", symptomDomainFilter);
+    if (!lcDefWho) params.set("who", "0");
+    if (lcDefBelow) params.set("below", "1");
+    const typesArr = [...selectedDesignTypes].sort();
+    if (typesArr.join(",") !== ["RCT", "crossover"].sort().join(",")) {
+      params.set("types", typesArr.join(","));
+    }
+    const qs = params.toString();
+    const newUrl = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
+    window.history.replaceState(window.history.state, "", newUrl);
+  }, [
+    yearFilter,
+    interventionCategoryFilter,
+    interventionNameFilter,
+    landscapeCategory,
+    landscapeSymptom,
+    lcDefFilter,
+    countryFilter,
+    blindingFilter,
+    symptomDomainFilter,
+    lcDefWho,
+    lcDefBelow,
+    selectedDesignTypes,
+  ]);
 
 
   return (
@@ -580,6 +659,32 @@ function Heatmap({ data, onCellClick }: { data: DashboardProps["heatmapData"]; o
   );
 }
 
+/** Copies the current URL (which encodes the active selection) to the clipboard. */
+function CopyLinkButton() {
+  const [copied, setCopied] = useState(false);
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      toast.success("Link to this view copied to clipboard");
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast.error("Could not copy link");
+    }
+  };
+  return (
+    <button
+      type="button"
+      onClick={handleCopy}
+      className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-700 transition-colors"
+      title="Copy a shareable link that reproduces the current filters and selection"
+    >
+      {copied ? <Check size={13} /> : <Link2 size={13} />}
+      {copied ? "Copied!" : "Copy link to this view"}
+    </button>
+  );
+}
+
 // ── TRIAL TABLE TAB ──────────────────────────────────────────────────
 function TrialTableTab({
   tableRows,
@@ -794,6 +899,7 @@ function TrialTableTab({
 
       <div className="flex items-center gap-4 text-sm text-foreground/50">
         <p>{filtered.length} trials match</p>
+        <CopyLinkButton />
         <label className="flex items-center gap-1.5 cursor-pointer select-none">
           <input
             type="checkbox"
