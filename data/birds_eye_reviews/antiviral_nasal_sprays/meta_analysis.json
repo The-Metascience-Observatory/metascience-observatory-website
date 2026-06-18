@@ -59,7 +59,7 @@
           "ci_high": 1.54,
           "p_value": 0.8,
           "n_total": 57,
-          "outcome_name": "Change in SARS-CoV-2 viral load (log10 copies/mL) from baseline to day 5 (end of treatment) \u2014 ITT all subjects",
+          "outcome_name": "Change in SARS-CoV-2 viral load (log10 copies/mL) from baseline to day 5 (end of treatment) — ITT all subjects",
           "weight": null
         }
       ]
@@ -122,7 +122,7 @@
           "ci_high": 1.2,
           "p_value": 0.344,
           "n_total": 231,
-          "outcome_name": "SARS-CoV-2 RNA burden (vAUCd1-8) \u2014 area under the viral load curve Day 1 through Day 8",
+          "outcome_name": "SARS-CoV-2 RNA burden (vAUCd1-8) — area under the viral load curve Day 1 through Day 8",
           "weight": null
         }
       ]
@@ -269,7 +269,7 @@
           "ci_high": 1.63,
           "p_value": null,
           "n_total": 193,
-          "outcome_name": "Time to clinical relief (ITT) \u2014 Cox proportional-hazards model",
+          "outcome_name": "Time to clinical relief (ITT) — Cox proportional-hazards model",
           "weight": null
         }
       ]
@@ -290,7 +290,7 @@
           "ci_high": 21.32,
           "p_value": 0.004,
           "n_total": null,
-          "outcome_name": "Viral shedding time (VST) \u2014 time to first negative antigenic rapid test for SARS-CoV-2 from first positive RT-PCR",
+          "outcome_name": "Viral shedding time (VST) — time to first negative antigenic rapid test for SARS-CoV-2 from first positive RT-PCR",
           "weight": null
         }
       ]
@@ -311,7 +311,7 @@
           "ci_high": 0.65,
           "p_value": null,
           "n_total": null,
-          "outcome_name": "Viral shedding time (VST) \u2014 time to first negative antigenic rapid test for SARS-CoV-2 from first positive RT-PCR",
+          "outcome_name": "Viral shedding time (VST) — time to first negative antigenic rapid test for SARS-CoV-2 from first positive RT-PCR",
           "weight": null
         }
       ]
@@ -332,7 +332,7 @@
           "ci_high": 0.36,
           "p_value": null,
           "n_total": null,
-          "outcome_name": "Viral shedding time (VST) \u2014 time to first negative antigenic rapid test for SARS-CoV-2 from first positive RT-PCR",
+          "outcome_name": "Viral shedding time (VST) — time to first negative antigenic rapid test for SARS-CoV-2 from first positive RT-PCR",
           "weight": null
         }
       ]
@@ -668,7 +668,7 @@
           "ci_high": 1.49,
           "p_value": 0.077,
           "n_total": 211,
-          "outcome_name": "Duration of disease \u2014 ITT virus-positive population",
+          "outcome_name": "Duration of disease — ITT virus-positive population",
           "weight": null
         }
       ]
@@ -710,7 +710,7 @@
           "ci_high": 2.1,
           "p_value": 0.003,
           "n_total": 356,
-          "outcome_name": "Recovery rate from common cold (all viruses) \u2014 Cox regression risk ratio",
+          "outcome_name": "Recovery rate from common cold (all viruses) — Cox regression risk ratio",
           "weight": null
         }
       ]
@@ -841,27 +841,6 @@
     },
     {
       "ingredient": "nitric oxide (nons)",
-      "outcome_domain": "hospitalization",
-      "effect_measure": "odds_ratio",
-      "n_trials": 1,
-      "scale": "log",
-      "trials": [
-        {
-          "paper_id": "10.1016/j.jinf.2021.05.009",
-          "first_author": "",
-          "year": null,
-          "effect": 0.3,
-          "ci_low": 0.086,
-          "ci_high": 1.049,
-          "p_value": 0.059,
-          "n_total": null,
-          "outcome_name": "Mortality",
-          "weight": null
-        }
-      ]
-    },
-    {
-      "ingredient": "nitric oxide (nons)",
       "outcome_domain": "other",
       "effect_measure": "risk_difference",
       "n_trials": 1,
@@ -876,28 +855,7 @@
           "ci_high": 0.251,
           "p_value": 0.038,
           "n_total": 306,
-          "outcome_name": "Proportion of subjects with \u22652-point improvement in WHO Clinical Progression Scale (CPS) score",
-          "weight": null
-        }
-      ]
-    },
-    {
-      "ingredient": "nitric oxide (nons)",
-      "outcome_domain": "safety_adverse_events",
-      "effect_measure": "odds_ratio",
-      "n_trials": 1,
-      "scale": "log",
-      "trials": [
-        {
-          "paper_id": "10.1016/j.jinf.2021.05.009",
-          "first_author": "",
-          "year": null,
-          "effect": 2.153,
-          "ci_low": 1.052,
-          "ci_high": 4.405,
-          "p_value": 0.036,
-          "n_total": null,
-          "outcome_name": "Transient bradycardia incidence",
+          "outcome_name": "Proportion of subjects with ≥2-point improvement in WHO Clinical Progression Scale (CPS) score",
           "weight": null
         }
       ]
@@ -927,7 +885,7 @@
       "ingredient": "nitric oxide (nons)",
       "outcome_domain": "viral_load",
       "effect_measure": "mean_difference",
-      "n_trials": 1,
+      "n_trials": 2,
       "scale": "linear",
       "trials": [
         {
@@ -940,9 +898,28 @@
           "p_value": 0.01,
           "n_total": 306,
           "outcome_name": "Mean change from baseline in SARS-CoV-2 RNA (log10 copies/mL) through Day 8 (end of treatment)",
-          "weight": null
+          "weight": 0.6593
+        },
+        {
+          "paper_id": "10.1016/j.jinf.2021.05.009",
+          "first_author": "",
+          "year": null,
+          "effect": -1.21,
+          "ci_low": -2.07,
+          "ci_high": -0.35,
+          "p_value": 0.01,
+          "n_total": 80,
+          "outcome_name": "Change from baseline in log10 SARS-CoV-2 RNA concentration",
+          "weight": 0.3407
         }
-      ]
+      ],
+      "pooled": {
+        "effect": -0.7551,
+        "ci_low": -1.396,
+        "ci_high": -0.1141,
+        "i2": 51.0,
+        "model": "random_effects_DL"
+      }
     },
     {
       "ingredient": "nitric oxide (nons)",
@@ -1170,7 +1147,7 @@
           "ci_high": 0.0,
           "p_value": 0.05,
           "n_total": 417,
-          "outcome_name": "Time to resumption of usual activities \u2014 confirmed influenza",
+          "outcome_name": "Time to resumption of usual activities — confirmed influenza",
           "weight": null
         }
       ]

@@ -12,20 +12,20 @@
   "relevant": 555,
   "not_retrieved": 4,
   "retrieved": 551,
-  "excluded_not_treatment": 150,
-  "treatment_studies": 401,
-  "clinical": 152,
+  "excluded_not_treatment": 156,
+  "treatment_studies": 395,
+  "clinical": 146,
   "preclinical": 249,
   "study_design_breakdown": {
     "animal_in_vivo": 208,
     "rct": 60,
-    "human_challenge": 38,
     "non_randomized_trial": 37,
+    "human_challenge": 35,
     "formulation_pk": 18,
     "in_vitro": 12,
     "ex_vivo": 10,
-    "observational": 10,
     "case_series": 7,
+    "observational": 7,
     "in_silico": 1
   },
   "study_design_groups": {
@@ -46,30 +46,30 @@
   },
   "organism_breakdown": {
     "animal": 143,
-    "human": 131,
-    "mixed": 69,
+    "human": 126,
+    "mixed": 68,
     "unclassified": 31,
     "in_vitro": 17,
     "ex_vivo": 10
   },
   "indication_breakdown": {
-    "prevention": 157,
-    "treatment": 112,
-    "both": 70,
+    "prevention": 155,
+    "treatment": 111,
+    "both": 67,
     "not_applicable": 31,
     "unclassified": 31
   },
   "agent_breakdown": [
     {
       "agent": "interferon alpha (unspecified subtype)",
-      "count": 21
-    },
-    {
-      "agent": "zanamivir",
-      "count": 17
+      "count": 19
     },
     {
       "agent": "interferon alpha-2b",
+      "count": 16
+    },
+    {
+      "agent": "zanamivir",
       "count": 16
     },
     {
@@ -97,15 +97,15 @@
       "count": 6
     },
     {
-      "agent": "interferon (unspecified)",
-      "count": 5
-    },
-    {
       "agent": "interferon beta serine",
       "count": 4
     },
     {
       "agent": "azelastine",
+      "count": 4
+    },
+    {
+      "agent": "interferon (unspecified)",
       "count": 4
     },
     {
@@ -158,10 +158,6 @@
     },
     {
       "agent": "methionine enkephalin (menk)",
-      "count": 2
-    },
-    {
-      "agent": "interferon beta",
       "count": 2
     },
     {
@@ -320,6 +316,7 @@
     "immunoglobulin y (igy) antibodies against sars-cov-2 rbd",
     "interferon alfacon-1 (consensus)",
     "interferon alpha/beta",
+    "interferon beta",
     "interferon omega",
     "interferon-alpha and interferon-gamma",
     "intranasal antihistamine",
@@ -392,7 +389,6 @@
     "protectin conjugates in tissue regeneration 1 (pctr1) and protectin d1 (pd1)",
     "protecting rna (244 rna)",
     "pyrimidine biosynthesis inhibitors (ippa17-a04 and gac50)",
-    "r 61837",
     "r61837",
     "recombinant human iga anti-rsv antibodies (palivizumab and motavizumab formats)",
     "rfi-641",
@@ -434,6 +430,6 @@
     "zidovudine",
     "zinc sulfate"
   ],
-  "agent_named_total": 399,
-  "agent_distinct": 248
+  "agent_named_total": 393,
+  "agent_distinct": 247
 }

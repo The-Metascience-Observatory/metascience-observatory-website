@@ -156,7 +156,6 @@ export function ResultsTable({
   const [domain, setDomain] = useState(externalDomain ?? "all");
   const [rob, setRob] = useState(externalRob ?? "all");
   const [verdict, setVerdict] = useState("all");
-  const [abstractOnly, setAbstractOnly] = useState(false);
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
   const toggleSort = (k: SortKey) => {
@@ -195,9 +194,8 @@ export function ResultsTable({
     if (domain !== "all") r = r.filter((row) => row.primaryDomain === domain);
     if (rob !== "all") r = r.filter((row) => row.rob === rob);
     if (verdict !== "all") r = r.filter((row) => row.verdict === verdict);
-    if (abstractOnly) r = r.filter((row) => row.abstractOnly);
     return r;
-  }, [rows, search, ingredient, domain, rob, verdict, abstractOnly]);
+  }, [rows, search, ingredient, domain, rob, verdict]);
 
   useEffect(() => {
     if (externalIngredient || externalDomain || externalRob) {
@@ -245,10 +243,6 @@ export function ResultsTable({
           <Select label="Result" value={verdict} onChange={setVerdict}
             options={[{ value: "all", label: "All" }, ...verdicts.map((s) => ({ value: s, label: VERDICT_LABEL[s] ?? formatLabel(s) }))]} />
         )}
-        <label className="flex items-center gap-1.5 text-sm text-foreground/70 pb-1.5">
-          <input type="checkbox" checked={abstractOnly} onChange={(e) => setAbstractOnly(e.target.checked)} />
-          Abstract-only
-        </label>
       </div>
 
       <p className="text-sm text-foreground/50">
@@ -265,7 +259,9 @@ export function ResultsTable({
               <SortTh label="N" sortKey="n" active={sortKey === "n"} dir={sortDir} onSort={toggleSort} align="right" />
               <th className="p-2">Primary outcome &amp; effect</th>
               <th className="p-2">Result</th>
-              <th className="p-2">RoB</th>
+              <th className="p-2">
+                <span className="cursor-default underline decoration-dotted" title="Risk of Bias">RoB</span>
+              </th>
             </tr>
           </thead>
           <tbody>
