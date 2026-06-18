@@ -17,6 +17,7 @@ export const Navbar = () => {
               alt="Globe"
               width={40}
               height={40}
+              unoptimized
             />
             <h1 className="font-clarendon font-bold text-lg sm:text-xl text-foreground">
               The Metascience Observatory

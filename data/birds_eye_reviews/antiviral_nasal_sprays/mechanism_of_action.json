@@ -1,0 +1,43 @@
+{
+  "_note": "DRAFT mechanism-of-action content for the antiviral nasal sprays dashboard. Keys are the canonical intervention_categories slugs from config_antiviral_nasal_sprays.yaml. Mechanism text is a first draft and SHOULD be reviewed for medical accuracy before publication.",
+  "barrier_agent": {
+    "label": "Barrier / Mucosal Coating Agents",
+    "mechanism": "Form a physical gel or polymer film across the nasal mucosa that physically traps and sequesters virions, blocking their contact with and attachment to epithelial receptors. Some agents (e.g. iota-carrageenan) also directly bind viral particles, and hyperosmolar agents (e.g. xylitol) draw water across the mucosa to dilute and flush the viral inoculum.",
+    "example_agents": ["iota-carrageenan (Carragelose)", "HPMC (Nasaleze, Vicks First Defence)", "xylitol (Xlear)"]
+  },
+  "nitric_oxide": {
+    "label": "Nitric Oxide",
+    "mechanism": "Release gaseous nitric oxide (NO), a broad-spectrum antimicrobial radical, onto the nasal mucosa. NO and its reactive nitrogen intermediates inactivate viral proteins and inhibit replication, while also supporting local innate immune defence. Acts directly in the nasal cavity, the primary site of respiratory-virus entry and early replication.",
+    "example_agents": ["Enovid / SaNOtize (NONS)", "FabiSpray", "VirX"]
+  },
+  "antiseptic": {
+    "label": "Antiseptics / Virucidals",
+    "mechanism": "Chemically inactivate virions on contact through oxidation or disruption of the viral envelope and surface proteins. Povidone-iodine releases free iodine that denatures proteins and lipids; cetylpyridinium chloride and other surfactant/cationic agents disrupt the lipid envelope; metal ions (zinc, copper) interfere with viral entry and enzymatic function. Aim to reduce nasal viral load and onward transmission.",
+    "example_agents": ["povidone-iodine (PVP-I)", "cetylpyridinium chloride (CPC)", "zinc / copper"]
+  },
+  "saline_irrigation": {
+    "label": "Saline Irrigation / Nasal Wash",
+    "mechanism": "Mechanically flush and dilute the viral inoculum, inflammatory mediators, and mucus from the nasal cavity. Hypertonic saline additionally draws water across the epithelium and may raise intracellular chloride, which cells can convert to hypochlorous acid as an innate antiviral. Improves mucociliary clearance of trapped pathogens.",
+    "example_agents": ["isotonic saline spray", "hypertonic saline", "nasal douche / rinse"]
+  },
+  "antiviral_drug": {
+    "label": "Intranasal Antiviral Drugs",
+    "mechanism": "Deliver a specific small-molecule antiviral directly to the nasal mucosa to inhibit a defined step of the viral life cycle at high local concentration with low systemic exposure. Examples include neuraminidase inhibition (zanamivir) to block influenza release, and broad antiviral nucleoside or fusion-inhibitor activity (ribavirin, umifenovir).",
+    "example_agents": ["zanamivir", "ribavirin", "umifenovir (Arbidol)"]
+  },
+  "interferon": {
+    "label": "Intranasal Interferon",
+    "mechanism": "Apply type I interferon (IFN-alpha/beta) to the nasal mucosa to activate the innate antiviral state in epithelial cells, inducing interferon-stimulated genes that suppress viral replication across many respiratory viruses. Used prophylactically to prime mucosal defences before or shortly after exposure.",
+    "example_agents": ["IFN-alpha nasal drops/spray", "IFN-beta intranasal"]
+  },
+  "lactoferrin": {
+    "label": "Lactoferrin",
+    "mechanism": "An iron-binding glycoprotein of innate immunity that blocks viral attachment by binding heparan sulfate proteoglycans and viral surface proteins on the nasal epithelium, sequesters iron required by some pathogens, and exerts immunomodulatory effects that dampen mucosal inflammation.",
+    "example_agents": ["bovine lactoferrin nasal spray"]
+  },
+  "other": {
+    "label": "Novel Biologics & Immunomodulators",
+    "mechanism": "Heterogeneous category of newer or mechanistically distinct intranasal antivirals: lectins such as griffithsin / Q-GRFT that bind viral envelope glycans to block entry; carbohydrate-binding modules (Neumifil / mCBM) that occupy host receptors; and innate-immune agonists (INNA-051 / TLR2 agonists, NanoSTING / STING agonists) that activate mucosal antiviral signalling. Also captures combination or unclassified formulations.",
+    "example_agents": ["griffithsin / Q-GRFT", "Neumifil (mCBM)", "INNA-051", "NanoSTING"]
+  }
+}

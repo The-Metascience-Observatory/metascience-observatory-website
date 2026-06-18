@@ -11,14 +11,16 @@ export const metadata = {
 interface ReviewMeta {
   href: string;
   title: string;
-  description: string;
 }
 
 const reviews: ReviewMeta[] = [
   {
     href: "/birds-eye-reviews/long-covid",
     title: "Long Covid",
-    description: "Interactive dashboard into publication data on Long Covid research.",
+  },
+  {
+    href: "/birds-eye-reviews/antiviral-nasal-sprays",
+    title: "Antiviral Nasal Sprays",
   },
 ];
 

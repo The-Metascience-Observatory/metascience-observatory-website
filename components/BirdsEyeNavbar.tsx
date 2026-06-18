@@ -17,6 +17,7 @@ export const BirdsEyeNavbar = ({ subtitle }: { subtitle?: string }) => {
               alt="Globe"
               width={40}
               height={40}
+              unoptimized
             />
             <h1 className="font-clarendon font-bold text-lg sm:text-xl text-foreground">
               The Metascience Observatory: Bird&apos;s Eye Reviews{subtitle ? `: ${subtitle}` : ""}

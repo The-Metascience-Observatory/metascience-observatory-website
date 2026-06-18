@@ -1,0 +1,1221 @@
+{
+  "min_trials": 2,
+  "groups": [
+    {
+      "ingredient": "a8g6 antibody cocktail",
+      "outcome_domain": "infection_prevention",
+      "effect_measure": "hazard_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.2139/ssrn.4397031",
+          "first_author": "",
+          "year": null,
+          "effect": 0.12,
+          "ci_low": 0.07,
+          "ci_high": 0.22,
+          "p_value": 0.001,
+          "n_total": 513,
+          "outcome_name": "SARS-CoV-2 infection incidence (RT-PCR confirmed COVID-19)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "a8g6 antibody cocktail",
+      "outcome_domain": "viral_load",
+      "effect_measure": "hazard_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.2139/ssrn.4397031",
+          "first_author": "",
+          "year": null,
+          "effect": 0.98,
+          "ci_low": 0.54,
+          "ci_high": 1.77,
+          "p_value": 0.946,
+          "n_total": 513,
+          "outcome_name": "Time to viral clearance (SARS-CoV-2 negative conversion)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "acidic hypochlorous solution (sentinox)",
+      "outcome_domain": "viral_load",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.3390/v14051033",
+          "first_author": "",
+          "year": null,
+          "effect": 0.18,
+          "ci_low": -1.19,
+          "ci_high": 1.54,
+          "p_value": 0.8,
+          "n_total": 57,
+          "outcome_name": "Change in SARS-CoV-2 viral load (log10 copies/mL) from baseline to day 5 (end of treatment) \u2014 ITT all subjects",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "acidic hypochlorous solution (sentinox)",
+      "outcome_domain": "viral_load",
+      "effect_measure": "risk_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.3390/v14051033",
+          "first_author": "",
+          "year": null,
+          "effect": 1.43,
+          "ci_low": 1.14,
+          "ci_high": 1.78,
+          "p_value": null,
+          "n_total": 57,
+          "outcome_name": "Proportion of subjects with SARS-CoV-2 negativization by day 5 (Ct >35 cutoff)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "astodrimer sodium",
+      "outcome_domain": "viral_load",
+      "effect_measure": "hazard_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.3390/pharmaceutics16091173",
+          "first_author": "",
+          "year": null,
+          "effect": 1.31,
+          "ci_low": 0.79,
+          "ci_high": 2.15,
+          "p_value": 0.297,
+          "n_total": 231,
+          "outcome_name": "Proportion with negative RT-qPCR at or by Day 8 (all ages, mITT)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "astodrimer sodium",
+      "outcome_domain": "viral_load",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.3390/pharmaceutics16091173",
+          "first_author": "",
+          "year": null,
+          "effect": -1.2,
+          "ci_low": -3.6,
+          "ci_high": 1.2,
+          "p_value": 0.344,
+          "n_total": 231,
+          "outcome_name": "SARS-CoV-2 RNA burden (vAUCd1-8) \u2014 area under the viral load curve Day 1 through Day 8",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "azelastine",
+      "outcome_domain": "infection_prevention",
+      "effect_measure": "hazard_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1001/jamainternmed.2025.4283",
+          "first_author": "",
+          "year": null,
+          "effect": 0.31,
+          "ci_low": 0.11,
+          "ci_high": 0.86,
+          "p_value": null,
+          "n_total": 450,
+          "outcome_name": "Time to SARS-CoV-2 infection (Kaplan-Meier / Cox proportional hazard)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "azelastine",
+      "outcome_domain": "infection_prevention",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1001/jamainternmed.2025.4283",
+          "first_author": "",
+          "year": null,
+          "effect": 11.73,
+          "ci_low": 9.45,
+          "ci_high": 14.01,
+          "p_value": null,
+          "n_total": 450,
+          "outcome_name": "Time to SARS-CoV-2 infection among infected participants (mean days)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "azelastine",
+      "outcome_domain": "infection_prevention",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1001/jamainternmed.2025.4283",
+          "first_author": "",
+          "year": null,
+          "effect": 0.31,
+          "ci_low": 0.11,
+          "ci_high": 0.87,
+          "p_value": 0.02,
+          "n_total": 450,
+          "outcome_name": "PCR-confirmed SARS-CoV-2 infection (primary endpoint)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "azelastine",
+      "outcome_domain": "infection_prevention",
+      "effect_measure": "risk_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1001/jamainternmed.2025.4283",
+          "first_author": "",
+          "year": null,
+          "effect": -4.5,
+          "ci_low": -8.3,
+          "ci_high": -0.7,
+          "p_value": 0.02,
+          "n_total": 450,
+          "outcome_name": "PCR-confirmed SARS-CoV-2 infection (primary endpoint)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "azelastine",
+      "outcome_domain": "symptom_duration",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1001/jamainternmed.2025.4283",
+          "first_author": "",
+          "year": null,
+          "effect": -1.74,
+          "ci_low": -2.17,
+          "ci_high": -1.31,
+          "p_value": null,
+          "n_total": 450,
+          "outcome_name": "Duration of SARS-CoV-2 RAT positivity",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "baby shampoo nasal rinse",
+      "outcome_domain": "viral_load",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1002/alr.22975",
+          "first_author": "",
+          "year": null,
+          "effect": -5.277,
+          "ci_low": -9.474,
+          "ci_high": -1.08,
+          "p_value": null,
+          "n_total": 72,
+          "outcome_name": "SARS-CoV-2 nasal viral load (qRT-PCR Ct value, N1 primer)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "hydrogen peroxide",
+      "outcome_domain": "symptom_duration",
+      "effect_measure": "hazard_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.4178/epih.e2021051",
+          "first_author": "",
+          "year": null,
+          "effect": 0.99,
+          "ci_low": 0.6,
+          "ci_high": 1.63,
+          "p_value": null,
+          "n_total": 193,
+          "outcome_name": "Time to clinical relief (ITT) \u2014 Cox proportional-hazards model",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "hypertonic seawater solution with xylitol, panthenol, and lactic acid (tonimer lab panthexyl 800)",
+      "outcome_domain": "viral_load",
+      "effect_measure": "hazard_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.3390/pharmaceutics14112502",
+          "first_author": "",
+          "year": null,
+          "effect": 6.12,
+          "ci_low": 1.76,
+          "ci_high": 21.32,
+          "p_value": 0.004,
+          "n_total": null,
+          "outcome_name": "Viral shedding time (VST) \u2014 time to first negative antigenic rapid test for SARS-CoV-2 from first positive RT-PCR",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "hypertonic seawater solution with xylitol, panthenol, and lactic acid (tonimer lab panthexyl 800)",
+      "outcome_domain": "viral_load",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.3390/pharmaceutics14112502",
+          "first_author": "",
+          "year": null,
+          "effect": 0.22,
+          "ci_low": 0.08,
+          "ci_high": 0.65,
+          "p_value": null,
+          "n_total": null,
+          "outcome_name": "Viral shedding time (VST) \u2014 time to first negative antigenic rapid test for SARS-CoV-2 from first positive RT-PCR",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "hypertonic seawater solution with xylitol, panthenol, and lactic acid (tonimer lab panthexyl 800)",
+      "outcome_domain": "viral_load",
+      "effect_measure": "risk_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.3390/pharmaceutics14112502",
+          "first_author": "",
+          "year": null,
+          "effect": 0.23,
+          "ci_low": 0.1,
+          "ci_high": 0.36,
+          "p_value": null,
+          "n_total": null,
+          "outcome_name": "Viral shedding time (VST) \u2014 time to first negative antigenic rapid test for SARS-CoV-2 from first positive RT-PCR",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "igm-like ace2 fusion protein (hh-120)",
+      "outcome_domain": "infection_prevention",
+      "effect_measure": "hazard_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1002/jmv.29275",
+          "first_author": "",
+          "year": null,
+          "effect": 0.496,
+          "ci_low": 0.17,
+          "ci_high": 1.42,
+          "p_value": 0.185,
+          "n_total": null,
+          "outcome_name": "SARS-CoV-2 infection rate (NS02-Part2, close contact)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "interferon alpha (unspecified subtype)",
+      "outcome_domain": "infection_prevention",
+      "effect_measure": "hazard_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1093/cid/ciaf409",
+          "first_author": "",
+          "year": null,
+          "effect": 0.55,
+          "ci_low": 0.32,
+          "ci_high": 0.97,
+          "p_value": 0.04,
+          "n_total": 433,
+          "outcome_name": "Cumulative incidence of COVID-19 (time-to-event, ITT)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "interferon alpha (unspecified subtype)",
+      "outcome_domain": "infection_prevention",
+      "effect_measure": "risk_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1093/cid/ciaf409",
+          "first_author": "",
+          "year": null,
+          "effect": 0.6,
+          "ci_low": 0.33,
+          "ci_high": 0.97,
+          "p_value": null,
+          "n_total": 433,
+          "outcome_name": "Incidence of COVID-19 infection within 90 days (ITT)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "interferon alpha (unspecified subtype)",
+      "outcome_domain": "safety_adverse_events",
+      "effect_measure": "risk_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1093/cid/ciaf409",
+          "first_author": "",
+          "year": null,
+          "effect": 0.56,
+          "ci_low": 0.16,
+          "ci_high": 1.33,
+          "p_value": null,
+          "n_total": 433,
+          "outcome_name": "Any adverse events",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "interferon alpha-2a",
+      "outcome_domain": "infection_prevention",
+      "effect_measure": "risk_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1017/s0950268800029484",
+          "first_author": "",
+          "year": null,
+          "effect": 1.109,
+          "ci_low": 0.769,
+          "ci_high": 1.6,
+          "p_value": null,
+          "n_total": 412,
+          "outcome_name": "Laboratory-documented viral infection (virus isolation and/or antibody response)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "interferon alpha-2a",
+      "outcome_domain": "safety_adverse_events",
+      "effect_measure": "risk_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1017/s0950268800029484",
+          "first_author": "",
+          "year": null,
+          "effect": 1.585,
+          "ci_low": 0.862,
+          "ci_high": 2.917,
+          "p_value": null,
+          "n_total": 412,
+          "outcome_name": "Nasal erosions",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "interferon alpha-2b",
+      "outcome_domain": "infection_prevention",
+      "effect_measure": "risk_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.vaccine.2010.03.062",
+          "first_author": "",
+          "year": null,
+          "effect": 0.232,
+          "ci_low": 0.151,
+          "ci_high": 0.357,
+          "p_value": 0.0,
+          "n_total": 1449,
+          "outcome_name": "Influenza A virus infection rate (serum IgM seroconversion) - ITT analysis",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "interferon alpha-2b",
+      "outcome_domain": "safety_adverse_events",
+      "effect_measure": "risk_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.vaccine.2010.03.062",
+          "first_author": "",
+          "year": null,
+          "effect": 1.7,
+          "ci_low": 1.39,
+          "ci_high": 2.077,
+          "p_value": 0.0,
+          "n_total": 1449,
+          "outcome_name": "Dry pharynx (adverse event)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "interferon alpha-2b",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "rate_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1086/341455",
+          "first_author": "",
+          "year": null,
+          "effect": 1.57,
+          "ci_low": 1.06,
+          "ci_high": 2.32,
+          "p_value": 0.05,
+          "n_total": 150,
+          "outcome_name": "Total daily symptom severity score (baseline-adjusted means, days 2-5)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "interferon alpha-2b",
+      "outcome_domain": "viral_load",
+      "effect_measure": "rate_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1086/341455",
+          "first_author": "",
+          "year": null,
+          "effect": 1.55,
+          "ci_low": 1.12,
+          "ci_high": 2.16,
+          "p_value": 0.01,
+          "n_total": 150,
+          "outcome_name": "Virus titers in nasal secretions (geometric mean, days 1-5)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "iota-carrageenan",
+      "outcome_domain": "infection_prevention",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.2147/ijgm.s328486",
+          "first_author": "",
+          "year": null,
+          "effect": 0.19,
+          "ci_low": 0.05,
+          "ci_high": 0.77,
+          "p_value": 0.03,
+          "n_total": 400,
+          "outcome_name": "RT-PCR confirmed symptomatic COVID-19",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "iota-carrageenan",
+      "outcome_domain": "infection_prevention",
+      "effect_measure": "risk_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.2147/ijgm.s328486",
+          "first_author": "",
+          "year": null,
+          "effect": -0.04,
+          "ci_low": -0.074,
+          "ci_high": -0.006,
+          "p_value": 0.03,
+          "n_total": 400,
+          "outcome_name": "RT-PCR confirmed symptomatic COVID-19",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "iota-carrageenan",
+      "outcome_domain": "other",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.2147/ijgm.s328486",
+          "first_author": "",
+          "year": null,
+          "effect": 0.87,
+          "ci_low": 0.42,
+          "ci_high": 1.8,
+          "p_value": 0.7,
+          "n_total": 400,
+          "outcome_name": "Symptomatic participants with negative PCR",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "iota-carrageenan",
+      "outcome_domain": "other",
+      "effect_measure": "risk_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1002/prp2.810",
+          "first_author": "",
+          "year": null,
+          "effect": 0.44,
+          "ci_low": 0.25,
+          "ci_high": 0.75,
+          "p_value": 0.002,
+          "n_total": 356,
+          "outcome_name": "Recurrence of common cold symptoms (all viruses)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "iota-carrageenan",
+      "outcome_domain": "quality_of_life",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1186/s12931-015-0281-8",
+          "first_author": "",
+          "year": null,
+          "effect": 1.11,
+          "ci_low": 0.67,
+          "ci_high": 1.84,
+          "p_value": 0.6954,
+          "n_total": 200,
+          "outcome_name": "Patient assessment of treatment efficacy",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "iota-carrageenan",
+      "outcome_domain": "symptom_duration",
+      "effect_measure": "hazard_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1186/1465-9921-14-124",
+          "first_author": "",
+          "year": null,
+          "effect": 1.09,
+          "ci_low": 0.79,
+          "ci_high": 1.49,
+          "p_value": 0.077,
+          "n_total": 211,
+          "outcome_name": "Duration of disease \u2014 ITT virus-positive population",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "iota-carrageenan",
+      "outcome_domain": "symptom_duration",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1002/prp2.810",
+          "first_author": "",
+          "year": null,
+          "effect": -7,
+          "ci_low": -10.6,
+          "ci_high": -2.9,
+          "p_value": 0.001,
+          "n_total": 356,
+          "outcome_name": "80th percentile quantile treatment effect (cold duration shortened)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "iota-carrageenan",
+      "outcome_domain": "symptom_duration",
+      "effect_measure": "rate_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1002/prp2.810",
+          "first_author": "",
+          "year": null,
+          "effect": 1.54,
+          "ci_low": 1.15,
+          "ci_high": 2.1,
+          "p_value": 0.003,
+          "n_total": 356,
+          "outcome_name": "Recovery rate from common cold (all viruses) \u2014 Cox regression risk ratio",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "iota-carrageenan",
+      "outcome_domain": "symptom_duration",
+      "effect_measure": "risk_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1002/prp2.810",
+          "first_author": "",
+          "year": null,
+          "effect": 0.29,
+          "ci_low": 0.12,
+          "ci_high": 0.7,
+          "p_value": 0.003,
+          "n_total": 356,
+          "outcome_name": "Common cold duration >20 days (all viruses)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "iota-carrageenan",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 2,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.2147/ijgm.s476707",
+          "first_author": "",
+          "year": null,
+          "effect": 0.02,
+          "ci_low": -0.19,
+          "ci_high": 0.24,
+          "p_value": null,
+          "n_total": 41,
+          "outcome_name": "Nasal Congestion Symptom Score (NCSS) change from pre-treatment to mean 2-4h post-treatment",
+          "weight": 0.6481
+        },
+        {
+          "paper_id": "10.1186/s12931-015-0281-8",
+          "first_author": "",
+          "year": null,
+          "effect": -0.61,
+          "ci_low": -1.32,
+          "ci_high": 0.1,
+          "p_value": 0.0895,
+          "n_total": 200,
+          "outcome_name": "Total Symptom Score Days 2-4 (TSS2-4)",
+          "weight": 0.3519
+        }
+      ],
+      "pooled": {
+        "effect": -0.2017,
+        "ci_low": -0.7914,
+        "ci_high": 0.388,
+        "i2": 64.3,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "iota-carrageenan",
+      "outcome_domain": "viral_load",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1186/s12931-015-0281-8",
+          "first_author": "",
+          "year": null,
+          "effect": -0.453,
+          "ci_low": -0.99,
+          "ci_high": 0.084,
+          "p_value": 0.0958,
+          "n_total": 200,
+          "outcome_name": "Panenterhino/Ge/08 viral load change from baseline (HRV/HEV quantifiable patients)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "nicotinic cholinergic agonist composition",
+      "outcome_domain": "symptom_duration",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.32388/dp7zsf.2",
+          "first_author": "",
+          "year": null,
+          "effect": 0.65,
+          "ci_low": 0.56,
+          "ci_high": 0.85,
+          "p_value": 0.049,
+          "n_total": 80,
+          "outcome_name": "Anosmia",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "nicotinic cholinergic agonist composition",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.32388/dp7zsf.2",
+          "first_author": "",
+          "year": null,
+          "effect": 0.46,
+          "ci_low": 0.12,
+          "ci_high": 1.15,
+          "p_value": 0.799,
+          "n_total": 80,
+          "outcome_name": "Dyspnea",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "nitric oxide (nons)",
+      "outcome_domain": "hospitalization",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.jinf.2021.05.009",
+          "first_author": "",
+          "year": null,
+          "effect": 0.3,
+          "ci_low": 0.086,
+          "ci_high": 1.049,
+          "p_value": 0.059,
+          "n_total": null,
+          "outcome_name": "Mortality",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "nitric oxide (nons)",
+      "outcome_domain": "other",
+      "effect_measure": "risk_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.lansea.2022.100036",
+          "first_author": "",
+          "year": null,
+          "effect": 0.126,
+          "ci_low": 0.001,
+          "ci_high": 0.251,
+          "p_value": 0.038,
+          "n_total": 306,
+          "outcome_name": "Proportion of subjects with \u22652-point improvement in WHO Clinical Progression Scale (CPS) score",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "nitric oxide (nons)",
+      "outcome_domain": "safety_adverse_events",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.jinf.2021.05.009",
+          "first_author": "",
+          "year": null,
+          "effect": 2.153,
+          "ci_low": 1.052,
+          "ci_high": 4.405,
+          "p_value": 0.036,
+          "n_total": null,
+          "outcome_name": "Transient bradycardia incidence",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "nitric oxide (nons)",
+      "outcome_domain": "viral_load",
+      "effect_measure": "hazard_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.lansea.2022.100036",
+          "first_author": "",
+          "year": null,
+          "effect": 1.354,
+          "ci_low": 0.949,
+          "ci_high": 1.932,
+          "p_value": 0.044,
+          "n_total": 306,
+          "outcome_name": "Time to negative RT-PCR conversion (Kaplan-Meier)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "nitric oxide (nons)",
+      "outcome_domain": "viral_load",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.lansea.2022.100036",
+          "first_author": "",
+          "year": null,
+          "effect": -0.52,
+          "ci_low": -0.92,
+          "ci_high": -0.12,
+          "p_value": 0.01,
+          "n_total": 306,
+          "outcome_name": "Mean change from baseline in SARS-CoV-2 RNA (log10 copies/mL) through Day 8 (end of treatment)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "nitric oxide (nons)",
+      "outcome_domain": "viral_load",
+      "effect_measure": "risk_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.lansea.2022.100036",
+          "first_author": "",
+          "year": null,
+          "effect": 0.161,
+          "ci_low": 0.002,
+          "ci_high": 0.321,
+          "p_value": 0.046,
+          "n_total": 306,
+          "outcome_name": "Proportion of subjects with RT-PCR negative conversion by Day 8 (end of treatment)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "physiological seawater nasal irrigation",
+      "outcome_domain": "viral_load",
+      "effect_measure": "hazard_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1007/s12519-023-00749-z",
+          "first_author": "",
+          "year": null,
+          "effect": 1.25,
+          "ci_low": 1.03,
+          "ci_high": 1.52,
+          "p_value": 0.027,
+          "n_total": 403,
+          "outcome_name": "Duration of viral shedding from start of trial",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "povidone-iodine",
+      "outcome_domain": "quality_of_life",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.3389/fmed.2025.1565069",
+          "first_author": "",
+          "year": null,
+          "effect": -2.96,
+          "ci_low": -5.81,
+          "ci_high": -0.12,
+          "p_value": 0.0414,
+          "n_total": 260,
+          "outcome_name": "Quality of Life (QoL) score - Days 2-6 LSM",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "povidone-iodine",
+      "outcome_domain": "symptom_duration",
+      "effect_measure": "hazard_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.3389/fmed.2025.1565069",
+          "first_author": "",
+          "year": null,
+          "effect": 1.009,
+          "ci_low": 0.741,
+          "ci_high": 1.359,
+          "p_value": 0.956,
+          "n_total": 260,
+          "outcome_name": "Duration of Illness (DOI)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "povidone-iodine",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.3389/fmed.2025.1565069",
+          "first_author": "",
+          "year": null,
+          "effect": -0.63,
+          "ci_low": -1.63,
+          "ci_high": 0.37,
+          "p_value": 0.2168,
+          "n_total": 260,
+          "outcome_name": "Nasal Symptom Score (NSS) - primary endpoint - Days 2-6 LSM",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "povidone-iodine",
+      "outcome_domain": "viral_load",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1002/lary.29935",
+          "first_author": "",
+          "year": null,
+          "effect": 0.055,
+          "ci_low": 0.037,
+          "ci_high": 0.074,
+          "p_value": null,
+          "n_total": 35,
+          "outcome_name": "Rate of change of Ct over time (overall cohort)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "povidone-iodine",
+      "outcome_domain": "viral_load",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1007/s12070-022-03106-0",
+          "first_author": "",
+          "year": null,
+          "effect": 9.27,
+          "ci_low": 2.06,
+          "ci_high": 41.75,
+          "p_value": 0.006,
+          "n_total": 189,
+          "outcome_name": "Nasopharyngeal clearance of SARS-CoV-2 (RT-PCR negativity) after intervention",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "povidone-iodine plus glycyrrhizic acid",
+      "outcome_domain": "symptom_duration",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.3389/fmed.2022.863917",
+          "first_author": "",
+          "year": null,
+          "effect": -1.3,
+          "ci_low": -2.2,
+          "ci_high": -0.4,
+          "p_value": 0.008,
+          "n_total": 200,
+          "outcome_name": "Day symptoms disappeared (DSD)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "sa58 (anti-sars-cov-2 monoclonal antibody)",
+      "outcome_domain": "infection_prevention",
+      "effect_measure": "hazard_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1101/2023.03.19.23287462",
+          "first_author": "",
+          "year": null,
+          "effect": 0.485,
+          "ci_low": 0.354,
+          "ci_high": 0.665,
+          "p_value": null,
+          "n_total": null,
+          "outcome_name": "Time to SARS-CoV-2 infection (Kaplan-Meier / Cox regression)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "sa58 (anti-sars-cov-2 monoclonal antibody)",
+      "outcome_domain": "infection_prevention",
+      "effect_measure": "rate_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1080/22221751.2023.2212806",
+          "first_author": "",
+          "year": null,
+          "effect": 0.19,
+          "ci_low": 0.08,
+          "ci_high": 0.48,
+          "p_value": null,
+          "n_total": 1634,
+          "outcome_name": "Laboratory-confirmed symptomatic COVID-19",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "zanamivir",
+      "outcome_domain": "other",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1056/nejm199709253371302",
+          "first_author": "",
+          "year": null,
+          "effect": -0.8,
+          "ci_low": -1.5,
+          "ci_high": 0.0,
+          "p_value": 0.05,
+          "n_total": 417,
+          "outcome_name": "Time to resumption of usual activities \u2014 confirmed influenza",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "zanamivir",
+      "outcome_domain": "symptom_duration",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1056/nejm199709253371302",
+          "first_author": "",
+          "year": null,
+          "effect": -1.0,
+          "ci_low": -1.8,
+          "ci_high": -0.1,
+          "p_value": 0.02,
+          "n_total": 417,
+          "outcome_name": "Time to alleviation of all major symptoms (confirmed influenza infection)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "zinc sulfate",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/s0002-9343(01)00765-3",
+          "first_author": "",
+          "year": null,
+          "effect": -1.0,
+          "ci_low": -1.9,
+          "ci_high": -0.1,
+          "p_value": 0.006,
+          "n_total": 160,
+          "outcome_name": "Total symptom score",
+          "weight": null
+        }
+      ]
+    }
+  ]
+}

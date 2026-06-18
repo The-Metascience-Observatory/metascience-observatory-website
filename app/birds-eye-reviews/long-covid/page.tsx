@@ -35,7 +35,7 @@ function numericOrNull(v: unknown): number | null {
 function processData() {
   const filePath = path.join(
     process.cwd(),
-    "data/birds_eye_reviews/long_covid/long_covid_trial_extractions.jsonl"
+    "data/birds_eye_reviews/long_covid/trial_extractions.jsonl"
   );
   const raw = fs.readFileSync(filePath, "utf-8");
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

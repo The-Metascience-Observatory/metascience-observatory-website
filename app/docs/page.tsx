@@ -10,6 +10,10 @@ interface DocMeta {
 
 const documentation: DocMeta[] = [
   {
+    href: "/docs/what-weve-learned",
+    title: "What we've learned so far (key findings)",
+  },
+  {
     href: "/docs/defining-replication",
     title: "Defining replication",
   },

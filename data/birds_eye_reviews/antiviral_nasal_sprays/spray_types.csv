@@ -1,0 +1,558 @@
+doi,spray_type,agent,confidence
+10.1002/14651858.cd013626.pub2,other,unspecified,low
+10.1001/jamaoto.2020.5490,antiseptic,povidone-iodine,high
+10.1001/jamainternmed.2025.4283,other,azelastine,high
+10.1002/adma.202008304,barrier_agent,gellan and lambda-carrageenan composite,high
+10.1001/jamaoto.2020.3053,antiseptic,povidone-iodine,high
+10.1002/adma.202406348,barrier_agent,pathogen capture and neutralizing spray (pcans),high
+10.1002/14651858.cd013627.pub2,other,unspecified,low
+10.1002/14651858.cd002743,interferon,intranasal interferon,high
+10.1001/archotol.1992.01880090049015,interferon,recombinant interferon beta serine,high
+10.1002/14651858.cd002743.pub2,interferon,intranasal interferons,high
+10.1002/adtp.202100059,antiviral_drug,tamibarotene,high
+10.1002/adma.202408294,other,dendritic polymer 2d-suprapol,medium
+10.1002/advs.202300656,other,"rna aptamer (modified with 2'-fluoro pyrimidines, 2'-o-methyl purines, cholesterol, and peg40k)",high
+10.1002/bmc.4271,other,mdt-637,high
+10.1002/alr.21038,antiseptic,nvc-422,high
+10.1002/adma.202420563,other,chiral vanadium trioxide nanoparticles (l-v(2)o(3)),high
+10.1002/advs.202506430,other,trypstatin,high
+10.1002/alr.22975,antiseptic,johnson and johnson's baby shampoo (detergent virucidal),high
+10.1002/advs.202506764,interferon,interferon-lambda (g-hifn-lambda3-de1),high
+10.1002/cbf.959,other,calcitonin,medium
+10.1002/cti2.1443,other,lat8881,high
+10.1002/jmv.26514,saline_irrigation,baby shampoo nasal rinse,medium
+10.1002/lary.29935,antiseptic,povidone-iodine,high
+10.1002/mco2.101,other,unspecified,low
+10.1002/jmv.28805,other,igm-like ace2 fusion protein (hh-120),high
+10.1002/prp2.810,barrier_agent,iota-carrageenan,high
+10.1002/lary.31430,antiseptic,povidone-iodine (nasodine),high
+10.1002/smll.202507669,other,postan (polyoxyethylene sorbitan oleate and sodium taurodeoxycholate lipid nanoparticles),high
+10.1002/smmd.20230009,other,anti-ul29 sirna swarm,high
+10.1002/jmv.1890170202,interferon,leucocyte interferon,high
+10.1007/bf01310519,antiviral_drug,r61837,high
+10.1006/viro.2001.1213,other,2-5a antisense oligonucleotide,high
+10.1007/bf01314381,antiviral_drug,virazole,high
+10.1007/978-1-60327-547-7_16,other,chemically modified second-generation sirna,high
+10.1007/978-1-4939-1538-5_14,other,intranasal sirna,high
+10.1007/978-3-030-71697-4_14,other,unspecified,low
+10.1007/bf02126707,antiviral_drug,"1-phenyl-3-(4-phenyl-2-thiazolyl) guanidine (cl 88,277)",high
+10.1007/s00705-008-0067-0,other,phosphorodiamidate morpholino oligomers (ppmo),high
+10.1007/bf03256603,antiviral_drug,zanamivir,high
+10.1007/s10517-026-06627-8,antiviral_drug,ribavirin,high
+10.1007/s12070-020-02201-4,antiseptic,povidone-iodine,high
+10.1007/s10517-018-4140-8,other,oxidized dextrans,high
+10.1007/s12070-021-02525-9,antiseptic,povidone-iodine (pvp-i),high
+10.1007/s11427-023-2410-5,other,p315v3,high
+10.1007/s00405-021-06644-5,antiseptic,hypochlorous acid (aos2020),high
+10.1007/s12070-021-02616-7,antiseptic,povidone-iodine,high
+10.1007/s12602-009-9008-9,other,alpha-haemolytic streptococci with antimicrobial activity,medium
+10.1007/s12070-022-03106-0,antiseptic,povidone-iodine,high
+10.1007/s13346-025-01916-7,antiviral_drug,chloroquine diphosphate,high
+10.1007/s40121-022-00710-z,other,monoclonal antibodies,high
+10.1016/0166-3542(83)90034-7,interferon,human interferon alpha 2 (huifn-alpha 2),high
+10.1016/0166-3542(86)90011-2,interferon,recombinant interferon alpha (ro 22-8181),high
+10.1016/0166-3542(84)90027-5,interferon,interferon,high
+10.1007/s12070-021-02885-2,antiseptic,povidone-iodine,high
+10.1016/0166-3542(88)90022-8,interferon,recombinant interferon-alpha,high
+10.1016/0166-3542(88)90033-2,interferon,recombinant interferon alpha con1 (rifn-alpha con1),high
+10.1016/0166-3542(88)90055-1,other,rhinovirus receptor murine monoclonal antibody (rrma),high
+10.1016/0166-3542(95)00832-2,interferon,liposome-encapsulated interferon-gamma,high
+10.1016/0166-3542(90)90061-b,interferon,interferon alpha-2a,high
+10.1016/0166-3542(92)90080-o,other,isoscutellarein-8-methylether (f36),medium
+10.1016/j.antiviral.2007.11.009,other,aln-rsv01,high
+10.1016/0192-0561(86)90095-0,other,muramyl tripeptide-phosphatidylethanolamine (mtp-pe),high
+10.1016/j.antiviral.2006.07.011,other,3m-011 (tlr7/8 agonist),high
+10.1016/j.antiviral.2010.11.007,interferon,mdef201 (adenovirus vectored mouse interferon-alpha),high
+10.1016/j.antiviral.2008.06.003,other,cyanovirin-n,high
+10.1016/j.antiviral.2011.09.004,other,fimh (tlr4 ligand),high
+10.1016/j.antiviral.2015.11.005,antiviral_drug,ana-1,high
+10.1016/j.antiviral.2018.01.012,other,budesonide,medium
+10.1016/j.antiviral.2015.11.006,antiviral_drug,pyrimidine biosynthesis inhibitors (ippa17-a04 and gac50),high
+10.1016/j.antiviral.2017.07.003,antiviral_drug,gemcitabine,high
+10.1016/j.antiviral.2024.105897,other,ti(2)pw(10) polyoxometalate,high
+10.1016/j.antiviral.2023.105547,antiviral_drug,tribenzamide derivative (2f),high
+10.1016/j.antiviral.2024.105815,other,anti-sars-cov-2 sirna,high
+10.1016/j.antiviral.2024.105945,other,hex17 (neumifil),high
+10.1016/j.apsb.2023.05.030,other,hr121 (heptad repeat 121),high
+10.1016/j.antiviral.2024.106063,other,inna-051,high
+10.1016/j.amjoto.2020.102618,antiseptic,povidone-iodine,high
+10.1016/j.biopha.2022.112729,other,saliravira (herbal compound),medium
+10.1016/j.bmc.2005.03.048,antiviral_drug,bcx-1812,high
+10.1016/j.bbrep.2021.101187,barrier_agent,iota-carrageenan,high
+10.1016/j.carbpol.2024.122156,other,fucoidan (fsejrpi-27),high
+10.1016/j.carbpol.2025.124794,other,polysaccharide 922 from syzygium aromaticum,medium
+10.1016/j.cimid.2025.102373,other,clostridium perfringens sialidase,high
+10.1016/j.cegh.2021.100826,barrier_agent,iota-carrageenan,high
+10.1016/j.bmcl.2009.04.067,antiviral_drug,zanamivir (cs-8958),high
+10.1016/j.cyto.2021.155720,other,curcumin,high
+10.1016/j.dentre.2024.100108,other,egcg palmitate (ec16),high
+10.1016/j.drudis.2023.103601,nitric_oxide,s-nitroso-n-acetylpenicillamine (snap),high
+10.1016/j.ejphar.2025.177567,antiviral_drug,st-2 (borneol ester),high
+10.1016/j.celrep.2020.108016,other,fril (lectin from lablab purpureus),high
+10.1016/j.ejps.2023.106673,other,cyclosporine a (tpgs micelles),high
+10.1016/j.ejps.2025.107069,other,2-deoxy-d-glucose,high
+10.1016/j.etap.2014.10.003,other,curcumin,high
+10.1016/j.ijheh.2020.113605,other,unspecified,low
+10.1016/j.ijpharm.2022.121704,antiviral_drug,tamibarotene,high
+10.1016/j.ijantimicag.2025.107491,interferon,recombinant interferon lambda (ifn-lambda),high
+10.1016/j.ijid.2012.05.124,other,liposome-encapsulated poly iclc,high
+10.1016/j.ijpharm.2011.02.040,antiviral_drug,zidovudine,high
+10.1016/j.ijpharm.2024.123896,antiviral_drug,favipiravir,high
+10.1016/j.immuni.2021.01.017,interferon,recombinant interferon alpha,high
+10.1016/j.intimp.2017.12.001,other,methionine enkephalin (menk),high
+10.1016/j.jbc.2024.107884,other,"polypurine reverse hoogsteen hairpins (cc1-pprh, cc3-pprh)",high
+10.1016/j.jconrel.2023.10.050,other,nafamostat (liposomal delivery),medium
+10.1016/j.jconrel.2023.04.029,other,wks13 (monoclonal antibody),high
+10.1016/j.jconrel.2025.01.044,antiviral_drug,remdesivir,high
+10.1016/j.imu.2020.100446,antiviral_drug,chloroquine and hydroxychloroquine,high
+10.1016/j.jhin.2021.10.019,antiseptic,sodium hypochlorite,high
+10.1016/j.jphotobiol.2025.113261,other,methylene blue nanoparticles (mbsd),high
+10.1016/j.lanepe.2021.100084,antiviral_drug,niclosamide (uni91104),high
+10.1016/j.jtbi.2025.112237,other,unspecified,low
+10.1016/j.jinf.2021.05.009,nitric_oxide,nitric oxide nasal spray (nons),high
+10.1016/j.lanepe.2021.100094,antiviral_drug,niclosamide,high
+10.1016/j.lansea.2022.100110,nitric_oxide,nitric oxide (nons),high
+10.1016/j.mehy.2020.109802,interferon,interferon alpha-2b,high
+10.1016/j.mehy.2022.110775,antiseptic,copper acetate,high
+10.1016/j.lansea.2022.100036,nitric_oxide,nitric oxide (nons),high
+10.1016/j.micpath.2020.104504,other,nasoil (asclepias curassavica extract),medium
+10.1016/j.peptides.2021.170638,other,gk-7 peptide,high
+10.1016/j.phymed.2021.153892,other,elaeocarpus sylvestris extract (ese),high
+10.1016/j.phymed.2020.153396,other,unspecified phytopharmaceutical,low
+10.1016/j.rvsc.2016.02.020,nitric_oxide,nitric oxide releasing solution (nors),high
+10.1016/j.trsl.2015.06.009,nitric_oxide,liposomal nitric oxide donor (isosorbide mononitrate),high
+10.1016/j.vaccine.2009.01.048,other,poly iclc,high
+10.1016/j.prevetmed.2015.04.008,nitric_oxide,nitric oxide (intranasal spray),high
+10.1016/j.vaccine.2010.03.062,interferon,recombinant human interferon alpha-2b,high
+10.1016/j.virol.2011.06.021,other,monoclonal antibody s-oiv-3b2,high
+10.1016/j.virusres.2025.199642,lactoferrin,lactoferrin,medium
+10.1016/j.xcrm.2024.101418,other,a1l35hr2m-chol,high
+10.1016/j.ymthe.2018.01.008,other,synthetic mir-219 mimic,high
+10.1016/j.ymthe.2022.04.025,antiviral_drug,bifonazole,high
+10.1016/s0166-3542(01)00158-9,other,serum amyloid p component,high
+10.1016/s0166-3542(85)80033-4,interferon,intranasal recombinant interferon alpha-2,high
+10.1016/s0002-9343(01)00765-3,antiseptic,zinc sulfate,high
+10.1016/j.mtbio.2025.102567,other,iron-phenolic nano-networks (na-fe),high
+10.1016/j.ymthe.2025.05.028,other,"nsp8-derived peptides (n8-pepalpha, n8-pepalpha_cyc)",high
+10.1016/s0166-3542(87)80002-5,interferon,alpha/beta interferon,high
+10.1016/s0928-8244(03)00358-4,interferon,interferon-alpha and interferon-gamma,high
+10.1016/s0264-410x(00)00281-4,antiviral_drug,zanamivir,high
+10.1016/s0272-2712(18)30721-2,interferon,intranasal interferon,high
+10.1017/ash.2022.199,antiseptic,povidone-iodine,high
+10.1021/acscentsci.2c01243,other,piperlongumine,high
+10.1021/acs.biomac.5c00037,other,styrene maleic acid copolymer lipid particle nanodiscs (smalp-nds),high
+10.1021/acscentsci.4c00054,other,multivalent entry inhibitor (mei) with hydrophobic arms,medium
+10.1017/s0950268800029484,interferon,recombinant interferon alpha 2a (rifn-alpha 2a),high
+10.1021/acs.jmedchem.3c01308,other,no-donating azole derivative (3h),medium
+10.1021/acsnano.3c02050,other,aphe-np14,high
+10.1021/acsinfecdis.4c00504,other,diabzi-4,high
+10.1021/acsinfecdis.6b00064,other,peptide (pb2-eif4g1 inhibitory peptide),high
+10.1021/jm00188a013,antiviral_drug,alpha-5-[1-(indol-3-yl)ethyl]-2-methylamino-delta2-thiazoline-4-one,high
+10.1021/jm3009844,antiviral_drug,zanamivir-caffeic acid conjugate (za-7-ca),high
+10.1021/mp300257x,other,pam2cys (tlr2 agonist),high
+10.1038/nm1174,other,sirna nanoparticles targeting ns1 gene,high
+10.1038/s41467-025-59294-0,other,engineered igm-f045-092,high
+10.1038/s41467-022-32216-0,other,locked nucleic acid antisense oligonucleotides (lna asos),high
+10.1038/s41467-026-68462-9,other,macrocyclic peptide (6l3-1f3p11hr),high
+10.1038/s41467-023-39738-1,other,7dw8-5,high
+10.1038/s41467-020-19386-5,antiviral_drug,zanamivir-dinitrophenyl conjugate,high
+10.1038/s41598-020-80896-9,barrier_agent,lambda-carrageenan,high
+10.1038/s41598-021-99404-8,other,"n-palmitoyl-n-monomethyl-n,n-dimethyl-n,n,n-trimethyl-6-o-glycolchitosan (gcpq)",high
+10.1038/s41598-022-14601-3,other,astodrimer sodium,high
+10.1038/s41598-023-42539-7,other,hpmc-based human anti-sars-cov-2 igg1 nasal spray,high
+10.1038/s41598-022-08066-7,interferon,recombinant interferon beta,high
+10.1038/s41598-025-12444-2,other,lcb1-barnase (lcb1-bn) fusion protein,high
+10.1038/s41598-023-32546-z,other,azelastine,high
+10.1038/s41598-025-95494-w,other,ace2-fc decoy,high
+10.1038/s42003-023-04589-5,other,sirna cocktail,high
+10.1038/s41598-024-72262-w,barrier_agent,astodrimer sodium,high
+10.1038/s42003-025-07491-4,other,fusion-inhibitory lipopeptides,high
+10.1038/s41598-023-47547-1,other,op7 chimera defective interfering particles (dips),high
+10.1038/srep22880,antiviral_drug,ana-0,high
+10.1038/srep37999,other,alpha-galactosylceramide (alpha-galcer),high
+10.1038/srep23110,other,itraconazole,medium
+10.1055/s-0031-1296635,other,oxymetazoline,high
+10.1038/srep27870,other,embp (extracellular matrix-binding protein),high
+10.1038/srep28729,other,chitosan,high
+10.1056/nejm198601093140201,interferon,recombinant interferon alpha 2,high
+10.1056/nejm198601093140202,interferon,recombinant interferon alpha 2,high
+10.1056/nejm199709253371302,antiviral_drug,zanamivir,high
+10.1073/pnas.1404205111,other,carbohydrate-binding module biologic,high
+10.1080/09205063.2021.1925391,other,polysulfates,medium
+10.1073/pnas.2219523120,other,divalent sirna,high
+10.1073/pnas.2319566121,other,neomycin,high
+10.1073/pnas.2408469121,antiviral_drug,zandr,high
+10.1073/pnas.0912186107,other,aln-rsv01,high
+10.1080/14787210.2024.2378185,other,unspecified,low
+10.1080/10717544.2018.1428242,antiviral_drug,ribavirin,high
+10.1080/15476910500203925,antiviral_drug,rupintrivir (ag7088),high
+10.1080/17425247.2025.2522250,other,unspecified,low
+10.1080/17476348.2021.1988569,barrier_agent,mucoadhesive gel,medium
+10.1080/19420862.2018.1433974,other,recombinant human iga anti-rsv antibodies (palivizumab and motavizumab formats),high
+10.1080/22221751.2021.1899770,antiviral_drug,gs441524 with gc376,high
+10.1086/313696,antiviral_drug,zanamivir,high
+10.1080/22221751.2023.2275598,other,ace2 decamer viral trap (ace2-igm fc fusion),high
+10.1086/653621,other,das181 (recombinant sialidase),high
+10.1086/341455,interferon,intranasal interferon (ifn)-alpha2b,high
+10.1089/jir.1980.1.169,interferon,human leukocyte-derived interferon alpha,high
+10.1089/jir.1983.3.443,interferon,interferon,high
+10.1086/512858,saline_irrigation,citrate/phosphate buffer,high
+10.1089/jir.1986.6.153,interferon,recombinant interferon beta ser,high
+10.1089/jir.1988.8.591,interferon,recombinant human interferon-gamma (rhufin-gamma),high
+10.1089/vim.2011.0003,interferon,human interferon omega,high
+10.1093/bjs/znab259.508,barrier_agent,iota-carrageenan,high
+10.1089/jir.1984.4.535,interferon,lymphoblastoid interferon (wellferon),high
+10.1089/jir.1990.10.497,interferon,recombinant interferon alpha-2a,high
+10.1089/jir.2023.0193,interferon,recombinant human interferon alpha-2b (nasalferon),high
+10.1093/cid/ciq183,antiviral_drug,zanamivir,high
+10.1093/infdis/127.4.401,other,"n,n-dioctadecyl-n'-bis-(hydroxyethyl)-propanediamine",high
+10.1093/infdis/137.1.82,interferon,brl 5907 (polynucleotide interferon inducer of fungal origin),high
+10.1093/infdis/138.4.531,interferon,"cp-20,961",high
+10.1093/infdis/148.3.543,interferon,recombinant interferon alpha 2,high
+10.1093/infdis/150.2.174,interferon,recombinant interferon-alpha 2,high
+10.1093/infdis/133.supplement_2.a121,interferon,"n',n'-diotadecyl-n',n'-bis-(2-hydroxyethyl) propanediamine (cp 20961)",high
+10.1093/infdis/148.3.535,interferon,recombinant leukocyte a interferon,high
+10.1093/cid/ciaf409,interferon,interferon-alpha,high
+10.1093/infdis/151.4.731,interferon,interferon alpha-2,high
+10.1093/infdis/150.2.181,interferon,recombinant interferon alpha-a,high
+10.1093/infdis/158.1.166,interferon,recombinant beta serine interferon,high
+10.1093/infdis/166.4.776,interferon,recombinant interferon-alpha 2b,high
+10.1093/infdis/160.4.700,interferon,recombinant interferon beta serine,high
+10.1093/jac/1.suppl_4.77,other,unspecified,low
+10.1093/infdis/jir622,other,bivalent rsv f-specific nanobodies,high
+10.1093/jac/18.supplement_b.153,interferon,intranasal interferon,high
+10.1093/jac/dku127,antiviral_drug,bta938,high
+10.1093/oxfordjournals.aje.a114683,interferon,alpha 2-interferon,high
+10.1099/0022-1317-68-11-2831,other,poly(ri).poly(rc12u),high
+10.1093/infdis/154.3.443,interferon,recombinant interferon alpha-2b,high
+10.1099/jgv.0.000758,antiviral_drug,fa-613,high
+10.1099/jgv.0.001821,other,virusal (caprylic acid formulation),medium
+10.1101/2020.07.28.224733,barrier_agent,iota-carrageenan,high
+10.1101/2020.05.18.103184,antiseptic,povidone-iodine (iview-1503),high
+10.1093/infdis/154.1.128,interferon,recombinant interferon alpha 2b (ifn-alpha 2b),high
+10.1101/2020.08.19.225854,barrier_agent,iota-carrageenan,high
+10.1101/2021.04.13.21255409,barrier_agent,iota-carrageenan,high
+10.1099/vir.0.038679-0,other,"flupep (fp1, tkip)",high
+10.1101/2022.04.12.488010,other,sirna cocktail,high
+10.1101/2025.04.16.649247,interferon,interferon-lambda (g-hifn-λ3-de1),high
+10.1111/irv.13035,antiseptic,povidone-iodine,high
+10.1128/aac.00731-09,antiviral_drug,cs-8958,high
+10.1124/jpet.112.196485,other,sligrl (par2-activating peptide),high
+10.1128/aac.00737-17,antiviral_drug,pc786,high
+10.1128/aac.00014-09,other,aln-rsv01 (sirna),high
+10.1128/aac.00333-08,antiviral_drug,cs-8958,high
+10.1101/2025.04.10.648177,other,anti-spike nanobinder with mucin-binding domain,high
+10.1128/aac.01664-12,antiviral_drug,zanamivir,high
+10.1128/aac.01050-23,antiviral_drug,apilimod mesylate,high
+10.1128/aac.14.4.596,interferon,human leukocyte interferon,high
+10.1128/aac.33.3.387,interferon,alpha 2b interferon,high
+10.1128/aac.24.5.713,interferon,recombinant interferon alpha a,high
+10.1128/aac.16.5.644,antiviral_drug,amantadine,high
+10.1128/aac.32.2.224,interferon,recombinant alfa-2b interferon,high
+10.1128/aac.15.2.269,other,"n,n-dihexadecyl-m-xylylenediamine (cp-28,888-27)",high
+10.1128/aac.26.1.31,interferon,human interferon-alpha 2,high
+10.1128/aac.39.11.2583,antiviral_drug,gg167,high
+10.1128/aac.36.4.727,antiviral_drug,pirodavir (r77975),high
+10.1128/aac.38.10.2270,antiviral_drug,"gg167 (4-guanidino-2,4-dideoxy-2,3-dehydro-n-acetylneuraminic acid)",high
+10.1128/aac.34.11.2228,antiviral_drug,rimantadine,high
+10.1128/aac.43.11.2642,antiviral_drug,zanamivir,high
+10.1128/aac.47.12.3907-3916.2003,antiviral_drug,ruprintrivir,high
+10.1128/aac.39.2.290,antiviral_drug,"pirodavir (r77,975)",high
+10.1128/aac.46.3.841-847.2002,antiviral_drug,rfi-641,high
+10.1128/aac.45.4.1216-1224.2001,antiviral_drug,zanamivir,high
+10.1128/aac.47.9.2933-2937.2003,antiviral_drug,cidofovir (hpmpc),high
+10.1128/jvi.00052-20,other,cf-404 (triple monoclonal antibody combination),high
+10.1128/cvi.00002-10,other,dpjy01 mab (iga monoclonal antibody against h5 hemagglutinin),high
+10.1128/jvi.01327-25,other,humanized anti-h7n9 neutralizing antibody (chi4b7),high
+10.1128/jvi.01363-09,other,rhesus theta-defensin 1 (rtd-1),high
+10.1128/jvi.02174-08,interferon,human alpha interferon,high
+10.1128/iai.9.3.506-510.1974,interferon,"cp-20,961",high
+10.1128/jvi.02417-14,other,fusion inhibitor peptides,high
+10.1128/jvi.03258-15,interferon,recombinant adenovirus expressing ovine interferon tau (ad5-ifn-tau),high
+10.1128/jvi.00743-08,other,protecting rna (244 rna),high
+10.1128/jvi.02453-08,interferon,interferon alpha,high
+10.1128/mbio.02756-21,interferon,interferon lambda-1,high
+10.1134/s1607672922050155,other,vinylphosphonic acid copolymer with 4-acryloylmorpholine,high
+10.1136/bmj.284.6332.1822,interferon,human leucocyte interferon,high
+10.1136/bmjopen-2023-073735,other,griffithsin (q-grft),high
+10.1136/thx.46.10.706,interferon,recombinant alpha 2 interferon,high
+10.1134/s1990519x25060082,interferon,recombinant human interferon alpha-2b with double-stranded rna,high
+10.1136/ebm.5.3.80,antiviral_drug,zanamivir,high
+10.1152/ajplung.00552.2020,barrier_agent,iota-carrageenan,high
+10.1155/vmi/5582663,other,sialidase,high
+10.1155/2013/194976,other,eupatorium adenophorum polysaccharide (eap),high
+10.1136/thx.45.2.100,antiviral_drug,ribavirin,high
+10.1159/000097758,antiseptic,povidone-iodine,high
+10.1165/rcmb.2011-0194oc,other,palmitoyl-oleoyl-phosphatidylglycerol (popg),high
+10.1165/rcmb.2010-0288oc,other,"5,6-di-methylxanthenone-4-acetic acid (dmxaa)",high
+10.1177/00912700022008900,antiviral_drug,zanamivir,high
+10.1165/rcmb.2016-0174oc,interferon,recombinant interferon lambda2/3,high
+10.1177/0145561320957237,antiseptic,povidone-iodine,high
+10.1177/0194599820933170,other,unspecified,low
+10.1177/106002808501901201,interferon,intranasal alpha interferon,high
+10.1177/095632029000100501,antiviral_drug,r 61837,high
+10.1164/rccm.201908-1567oc,other,cxcl4,high
+10.1177/135965359900400302,antiviral_drug,zanamivir,high
+10.1183/13993003.congress-2024.oa1966,other,rig-i agonist (rig-101),high
+10.1183/13993003.congress-2025.pa3911,other,inna-051,high
+10.1183/13993003.congress-2024.oa5462,other,rig-i agonist (rig-101),high
+10.1183/23120541.00199-2024,other,inna-051,high
+10.1177/23743735231151554,other,unspecified,low
+10.1186/1465-9921-14-124,barrier_agent,iota-carrageenan,high
+10.1186/1465-9921-11-108,barrier_agent,iota-carrageenan,high
+10.1183/13993003.congress-2025.oa1187,other,rig-101 (rigimmune inc.),high
+10.1186/1465-9921-8-38,antiseptic,"low ph gel (pyroglutamic acid, succinic acid, zinc acetate)",medium
+10.1186/cc13171,other,etanercept,medium
+10.1186/2049-6958-9-57,barrier_agent,iota-carrageenan,high
+10.1186/1472-6882-12-147,barrier_agent,iota-carrageenan,high
+10.1186/1939-4551-7-18,antiviral_drug,lysine aspirin,high
+10.1186/s12865-023-00573-0,other,methionine enkephalin (menk),high
+10.1186/s12931-015-0281-8,barrier_agent,iota-carrageenan,high
+10.1186/s12931-024-02718-0,other,dimocarpus longan extract (p80 natural essence),high
+10.1186/s12879-024-09137-y,antiseptic,povidone-iodine,high
+10.1186/s12985-015-0387-0,other,poly-gamma glutamate (gamma-pga),high
+10.1186/s12974-023-02960-1,interferon,recombinant interferon alpha,high
+10.1186/s12985-022-01953-5,other,resveratrol,medium
+10.1186/s12985-019-1266-x,other,patchouli alcohol,high
+10.1186/s12985-025-02678-x,interferon,interferon alpha-2b,high
+10.1186/s13020-022-00635-2,other,allergic rhinitis nose drops (arnd),high
+10.1186/s12985-026-03155-9,other,sirna cocktail (lipid nanoparticles),high
+10.1186/s13063-020-04963-2,antiseptic,povidone-iodine,high
+10.1186/s13063-020-04634-2,antiseptic,povidone-iodine,high
+10.1186/s13063-022-06685-z,barrier_agent,iota-carrageenan (carragelose),high
+10.1194/jlr.m037077,other,palmitoyl-oleoyl-phosphatidylglycerol (popg),high
+10.1186/s41120-023-00072-x,antiviral_drug,niclosamide,high
+10.1186/s12985-023-02282-x,other,curcumin,high
+10.1186/s13578-021-00638-w,other,gl25e (bivalent grft-ek1 protein),high
+10.1194/jlr.m055723,other,phosphatidylinositol (pi),high
+10.12688/f1000research.51270.2,nitric_oxide,nitric oxide,high
+10.1208/s12249-024-02986-5,antiviral_drug,favipiravir sodium,high
+10.1211/0022357001777225,antiviral_drug,stachyflin (iii-phos),high
+10.1371/journal.pgph.0000231,interferon,interferon-alpha,high
+10.1371/journal.pone.0014320,barrier_agent,iota-carrageenan,high
+10.12998/wjcc.v10.i32.11665,lactoferrin,lactoferrin,high
+10.1371/journal.pone.0068685,interferon,adenovirus 5 vector encoding mouse interferon alpha subtype 5 (mdef201),high
+10.1371/journal.pone.0040499,interferon,recombinant interferon gamma,high
+10.1371/journal.pone.0237480,barrier_agent,iota-carrageenan,high
+10.1371/journal.pone.0049394,other,defective interfering influenza virus (244 di virus),high
+10.1371/journal.pone.0246803,other,niclosamide-lysozyme composite particles,high
+10.1371/journal.pone.0259943,barrier_agent,iota-carrageenan,high
+10.1371/journal.pone.0316700,barrier_agent,iota-carrageenan,high
+10.1378/chest.102.1.284,antiviral_drug,ribavirin,high
+10.15386/mpr-1817,barrier_agent,iota-carrageenan,high
+10.1371/journal.ppat.1009427,interferon,recombinant interferon alpha,high
+10.1371/journal.ppat.1010782,other,immunoglobulin y (igy) antibodies against sars-cov-2 rbd,high
+10.15574/pp.2016.65.27,interferon,nazoferon,high
+10.17816/ci636443,interferon,recombinant interferon alpha-2b,high
+10.15789/1563-0625-eoi-2300,interferon,recombinant interferon alpha-2b,high
+10.1371/journal.pone.0128794,antiviral_drug,zanamivir and iota-carrageenan,high
+10.18699/ssmj20250107,interferon,recombinant human interferon alpha-2b with double-stranded rna,high
+10.18103/mra.v10i3.2752,other,chlorpheniramine maleate,high
+10.20538/1682-0363-2022-2-48-59,interferon,recombinant interferon alpha-2b,high
+10.19112/2413-6174-2020-21-3-3-23,antiseptic,trace elements in low degree of oxidation,low
+10.20953/1729-9225-2020-4-33-41,interferon,recombinant interferon alpha-2b (viferon),high
+10.17816/ci698401,other,neomycin,high
+10.21203/rs.3.rs-500168/v1,other,johnson and johnson baby shampoo,high
+10.21467/preprints.36,other,linoleic acid (algal oil),low
+10.2139/ssrn.4063814,nitric_oxide,nitric oxide (nons),high
+10.2147/idr.s391630,antiseptic,povidone-iodine,high
+10.2147/ijgm.s328486,barrier_agent,iota-carrageenan,high
+10.2147/ijgm.s167123,barrier_agent,iota-carrageenan,high
+10.2147/ijgm.s476707,barrier_agent,iota-carrageenan,high
+10.2147/ijn.s423251,other,curcumin transferosome,high
+10.2147/ijn.s448005,other,lipid nanoparticle (lnp) inhibitors,high
+10.2147/ijn.s328090,other,nanobubble ozone in hyaluronic acid-decorated liposomes (nohal),high
+10.2147/itt.s470319,other,eps t14,high
+10.2147/ijn.s53622,other,silver nanoparticles (agnps),high
+10.2147/ijn.s512509,other,tannic acid-modified silver and gold nanoparticles (ta-ag/aunps),high
+10.2165/00003088-199936001-00001,antiviral_drug,zanamivir,high
+10.2165/00003088-199936001-00004,antiviral_drug,zanamivir,high
+10.2165/00003495-200262010-00004,antiviral_drug,zanamivir,high
+10.2165/00003495-199856040-00003,antiviral_drug,zanamivir,high
+10.2165/00003495-199142050-00003,interferon,interferon-alpha,high
+10.2165/00003495-199855050-00015,antiviral_drug,zanamivir,high
+10.2174/0124681873401780251124061921,antiviral_drug,oseltamivir,high
+10.2174/1381612829666221024124848,nitric_oxide,nitric oxide,high
+10.2165/00019053-199916001-00006,antiviral_drug,zanamivir,high
+10.2174/1568026621666210429083050,interferon,recombinant human interferon alpha,high
+10.2174/1574885518666230727100812,other,unspecified,low
+10.2174/2666796701999201104164010,other,coconut oil / monolaurin,low
+10.2174/1871526521666210218201113,barrier_agent,iota-carrageenan,high
+10.2174/1874357902014010009,barrier_agent,iota-carrageenan,high
+10.21518/ms2026-041,interferon,recombinant interferon alpha-2b,high
+10.2217/fmb-2020-0286,antiseptic,povidone-iodine,high
+10.21873/invivo.11263,antiviral_drug,zanamivir,high
+10.2174/2772432817666220601162006,other,chlorpheniramine maleate,medium
+10.2217/fmb-2021-0122,barrier_agent,iota-carrageenan,high
+10.26355/eurrev_202112_27337,other,alpha-cyclodextrin and hydroxytyrosol,high
+10.26787/nydha-2686-6838-2023-25-4-6-11,antiviral_drug,ribavirin,high
+10.30659/odj.9.0.131-136,other,allyl disulfide garlic extract,medium
+10.31080/asmi.2020.04.0760,other,nutrannanospheres (nns),medium
+10.26442/terarkh201890114-54,interferon,recombinant interferon alpha-2b (ifn-α2b),high
+10.3205/dgkh000416,antiseptic,povidone-iodine,medium
+10.31546/2633-8653.1007,barrier_agent,iota-carrageenan + ivermectin,medium
+10.32364/2587-6821-2022-6-11-618-625,other,panavir (polysaccharide from epilobium angustifolium),medium
+10.2174/0126667975319146240809095756,other,unspecified,low
+10.32902/2663-0338-2021-4-5-15,other,unspecified,low
+10.32607/20758251-2019-11-3-20-30,other,sulfonated beta-cyclodextrin (ks-6469),high
+10.32388/dp7zsf.2,other,nicotinic cholinergic agonist composition,low
+10.3389/fbioe.2022.858156,antiseptic,silver nanoparticles (agnp@hst),medium
+10.3389/fimmu.2021.660298,interferon,intranasal interferon beta,high
+10.3389/fimmu.2022.1009424,interferon,interferon-lambda,high
+10.3389/fimmu.2021.704427,other,protectin conjugates in tissue regeneration 1 (pctr1) and protectin d1 (pd1),high
+10.3389/fimmu.2022.867022,other,om-85 (bacterial lysate),high
+10.3389/fimmu.2018.00986,interferon,type iii interferon,high
+10.33667/2078-5631-2019-1-9(384)-38-46,other,sodium deoxyribonucleate (derinat),high
+10.3389/fmed.2022.863917,antiseptic,povidone-iodine plus glycyrrhizic acid,high
+10.3389/fimmu.2022.899617,other,anti-sars-cov-2 rbd igy,high
+10.3389/fmed.2025.1565069,antiseptic,povidone-iodine (nasodine),high
+10.3389/fmedt.2021.687681,barrier_agent,iota-carrageenan,high
+10.3389/fvets.2024.1360398,other,"essential oils (ajowan, thyme, fennel, cinnamon leaf, citronella)",high
+10.3389/fphar.2023.1292479,other,lentinan,high
+10.3389/fviro.2021.746824,barrier_agent,iota-carrageenan,high
+10.3389/fmolb.2023.1232573,other,"aromatic amino acid metabolites (pooled tryptophan, tyrosine, phenylalanine metabolites)",medium
+10.3389/fmicb.2014.00171,other,ladania067 (wild black currant leaf extract),high
+10.3389/fphar.2022.861295,other,azelastine,high
+10.3390/antibiotics15030245,antiseptic,neomycin sulfate,high
+10.3389/fmicb.2018.01164,other,lentinus edodes mycelia extract,medium
+10.3390/biomedicines12112462,other,betainized polyethyleneimine (b-pei),high
+10.3390/gels10060385,other,chlorhexidine-silver nanoparticles conjugates,high
+10.3390/ijerph191912148,antiseptic,povidone-iodine,high
+10.3390/ijerph182010985,lactoferrin,liposomal bovine lactoferrin,high
+10.3390/ijms222413202,barrier_agent,iota-carrageenan,high
+10.3390/ijms21144903,lactoferrin,lactoferrin,high
+10.3390/ijms24043695,barrier_agent,usnic acid,high
+10.3390/ijms25042061,barrier_agent,hydroxypropyl beta-cyclodextrin (hpbcd),high
+10.3390/ijms24054967,other,ginsenoside rk1,medium
+10.3390/ijms26136334,other,diammonium glycyrrhizinate,medium
+10.3390/microorganisms14051098,other,griffithsin (q-grft),high
+10.3390/md23030112,other,solubilized sturgeon oil,high
+10.3390/ph15040452,other,diphenhydramine,high
+10.3390/ijms262311341,other,resveratrol,medium
+10.3390/molecules27041178,barrier_agent,carrageenan nasal spray,high
+10.3390/jcm15083087,other,carboxymethyl-beta-glucan-resveratrol,high
+10.3390/ph15091053,other,larifan (bacteriophage-derived dsrna),medium
+10.3390/ph17091180,other,unspecified,low
+10.3390/ijms27021053,other,camostat with xanthan gum,high
+10.3390/pharmaceutics13081126,antiviral_drug,ribavirin,high
+10.3390/pharmaceutics13081180,other,cyclodextrins,medium
+10.3390/pharmaceutics16111349,interferon,interferon-alpha and interferon-gamma,high
+10.3390/pharmaceutics14122680,antiviral_drug,favipiravir,high
+10.3390/pharmaceutics15020591,other,hydroxypropyl methylcellulose and usnic acid (hexedra+),high
+10.3390/pharmaceutics16091173,other,astodrimer sodium,high
+10.3390/pharmaceutics15082055,other,18beta-glycyrrhetinic acid,high
+10.3390/pharmaceutics14112502,saline_irrigation,"hypertonic seawater solution with xylitol, panthenol, and lactic acid (tonimer lab panthexyl 800)",high
+10.3390/v11020109,other,mx1-9r,high
+10.3390/v13081498,other,dzif-10c (monoclonal neutralizing antibody),high
+10.3390/v13081656,other,astodrimer sodium,high
+10.3390/v13122345,barrier_agent,hydroxypropyl methylcellulose (nasaleze),high
+10.3390/v14050976,other,neumifil,high
+10.3390/v14051105,other,3d8 scfv (single chain variable fragment),high
+10.3390/v15030725,other,neumifil,high
+10.3390/v14122620,other,heparin,high
+10.3390/v15112161,antiviral_drug,remdesivir,high
+10.3390/v16020196,other,epigallocatechin-3-gallate-palmitate (ec16),high
+10.3390/v15102024,other,epigallocatechin gallate-modified silver nanoparticles (egcg-agnps),high
+10.3390/v15122300,antiviral_drug,azelastine hydrochloride,high
+10.3390/v16121919,other,phlorotannin-rich ascophyllum nodosum seaweed extract,medium
+10.3390/v18010091,nitric_oxide,nitric oxide nasal spray (nons),high
+10.3390/v18040444,other,neomycin,medium
+10.3390/v6031410,interferon,adenovirus-vectored interferon alpha (def201),high
+10.3390/v2071448,other,sirna,high
+10.3390/v7020798,other,maleic anhydride-modified human serum albumin (ml-hsa),high
+10.3390/v7092863,other,3d8 scfv (catalytic rna-hydrolyzing antibody),high
+10.37489/0235-2990-2021-66-5-6-11-16,other,thymogen,medium
+10.34883/pi.2021.9.4.017,other,lysozyme,high
+10.34133/bmr.0287,interferon,interferon lambda (nlp@ifn-lambda),high
+10.35617/jfionline.v13i2.124,other,silver nanoparticles (agnp),high
+10.37489/0235-2990-2022-67-9-10-42-48,other,double-stranded ribonucleic acid (dsrna),high
+10.37489/0235-2990-2023-68-7-8-27-33,interferon,recombinant human interferon-alpha-2b with double-stranded ribonucleic acid,high
+10.3851/imp1688,antiviral_drug,laninamivir (cs-8958),high
+10.4049/jimmunol.1700523,other,rice bran dsrna (rb-dsrna),high
+10.3851/imp1744,other,theramax (green tea and elderberry extract),high
+10.37489/0235-2990-2023-68-9-10-46-57,other,thymogen,high
+10.37489/0235-2990-2025-70-3-4-5-11,other,thymogen,high
+10.4067/s0718-381x2020000400513,antiseptic,povidone-iodine,high
+10.4049/jimmunol.190.supp.183.18,other,oenothein b,medium
+10.4103/ijo.ijo_883_20,antiseptic,benzalkonium chloride (bak),high
+10.4103/2045-9912.385414,nitric_oxide,nitric oxide (nasal spray),high
+10.4103/jfmpc.jfmpc_993_21,antiseptic,povidone-iodine,high
+10.4178/epih.e2021051,antiseptic,hydrogen peroxide,high
+10.4236/ojrd.2025.151003,barrier_agent,iota-carrageenan,high
+10.46607/iamj01p7062023,saline_irrigation,herbal phytoconstituents with xylitol in saline solution,medium
+10.4178/epih.e2021032,antiseptic,hydrogen peroxide,high
+10.53365/nrfhh/140607,other,"curcumin, sitopaladi churna, and kaempferol in zein-chitosan nanoparticles",high
+10.5152/alphapsychiatry.2024.241549,antiviral_drug,esketamine,low
+10.5281/zenodo.4376588,other,neem oil and hypericum (st. john's wort),high
+10.53730/ijhs.v6ns4.10257,nitric_oxide,nitric oxide (nons),high
+10.5694/j.1326-5377.1990.tb125353.x,interferon,intranasal interferon,high
+10.5799/jmid.1036836,other,iron phthalocyanine derivative,medium
+10.5772/20920,other,unspecified,low
+10.64063/10.64063/3049-1681.vol.2.issue9.4,other,nanosized antiviral agents (unspecified),low
+10.64063/3049-1681.vol.2.issue8.9,other,unspecified,low
+10.7326/0003-4819-12-1-95,other,unspecified,low
+10.70675/e7c62c36zd76fz452ez97e8z423cd06e6a46,other,c2x (nanobinder),high
+10.7499/j.issn.1008-8830.2014.03.011,antiviral_drug,ribavirin,high
+10.7759/cureus.11315,barrier_agent,xylitol plus grapefruit seed extract (xlear),high
+10.7759/cureus.27182,barrier_agent,xylitol,high
+pmid_10682150,antiviral_drug,zanamivir,high
+pmid_1026519,antiviral_drug,bonaphthon,medium
+pmid_11881202,interferon,poludane,high
+pmid_12945208,interferon,ridostin,high
+pmid_1330221,interferon,recombinant interferon alpha and beta,high
+pmid_1302513,other,bacterial ribonuclease-chitosan conjugate,medium
+pmid_16261198,interferon,recombinant interferon alpha2b,high
+pmid_16261200,interferon,recombinant human interferon alpha-2b,high
+pmid_16261199,interferon,recombinant human interferon alpha-2b,high
+pmid_16261201,interferon,interferon alpha-2b,high
+pmid_2360851,other,bacterial ribonuclease,medium
+pmid_35777803,other,griffithsin (q-grft),high
+pmid_34596523,other,unspecified,low
+pmid_235197,other,6-amino-6-deoxy-d-glucose hydrochloride,high
+pmid_2454085,other,epsilon-aminocaproic acid,medium
+pmid_4036004,other,aqueous horse-radish extract,high
+pmid_40305796,other,intranasal antihistamine,medium
+pmid_36451565,antiviral_drug,acyclovir,high
+pmid_4081525,interferon,recombinant interferon alpha,high
+pmid_616674,interferon,human leukocyte interferon,high
+pmid_6184029,interferon,mouse interferon (mu-ifn),high
+pmid_6341640,antiviral_drug,ribavirin,high
+pmid_6178364,interferon,polyguacyl polynucleotide and dsrna,medium
+pmid_9879333,antiviral_drug,zanamivir,high
+pmid_6272492,interferon,polyguacyl,high
+pmid_7988393,interferon,intranasal interferon,medium
+pmid_838422,other,avipox virus premunization inducer (pind),medium
+pmid_7165687,interferon,human interferon-alpha,high
+grey:miller-2023-thai-prevention,nitric_oxide,nitric oxide (nons),high
+nct:NCT04337918,nitric_oxide,nitric oxide (nons),high
+nct:NCT05109611,nitric_oxide,nitric oxide (nons),high
+10.1101/2023.03.19.23287462,other,sa58 (anti-sars-cov-2 monoclonal antibody),high
+10.1080/22221751.2023.2212806,other,sa58 (anti-sars-cov-2 monoclonal antibody),high
+10.46234/ccdcw2023.040,other,sa58 (anti-sars-cov-2 monoclonal antibody),high
+10.1002/jmv.29275,other,igm-like ace2 fusion protein (hh-120),high
+10.1038/s41467-023-37290-6,other,trisb92 (trimeric sherpabody),high
+10.1101/2023.03.17.23287398,other,a8g6 antibody cocktail,high
+10.2139/ssrn.4397031,other,a8g6 antibody cocktail,high
+10.1016/j.medj.2022.08.002,other,sti-9167 (neutralizing antibody),high
+10.1016/j.celbio.2025.100017,other,ace2 decoy vesicle,high
+10.3390/v14051033,antiseptic,acidic hypochlorous solution (sentinox),high
+10.20944/preprints202509.1594.v1,antiseptic,cetylpyridinium chloride (+ limonene + monolaurin),high
+10.3205/000321,antiseptic,phthalocyanine,high
+10.1016/j.jhin.2022.05.007,antiseptic,hydrogen peroxide,high
+10.1111/coa.14056,saline_irrigation,povidone-iodine / hypertonic alkaline / saline nasal lavage,high
+10.1002/lio2.686,saline_irrigation,hypertonic alkaline nasal irrigation,high
+10.1007/s12519-023-00749-z,saline_irrigation,physiological seawater nasal irrigation,high
+10.21037/tcr-23-2384,saline_irrigation,saline nasal irrigation,high
+10.21203/rs.3.rs-2167465/v1,other,chlorpheniramine maleate (intranasal),high
+10.1016/j.ijid.2021.04.035,antiseptic,povidone-iodine throat spray (+ oral hydroxychloroquine),high
+10.1016/j.antiviral.2007.01.003,other,cinnamaldehyde,high
+10.1016/j.indcrop.2022.114524,other,maqian essential oil (limonene),high
+10.3969/j.issn.1674-3865.2017.06.001,other,ganlu xiaodu volatile oil,high
+10.3969/j.issn.1674-4985.2018.03.001,other,ganlu xiaodu volatile oil,high
+10.13194/j.issn.1673-842x.2018.01.006,other,ganlu xiaodu volatile oil,high
+10.13193/j.issn.1673-7717.2019.02.019,other,ganlu xiaodu volatile oil,high
+10.1016/j.biopha.2022.113773,other,agrimonia pilosa + galla rhois extract (aprg64),high
+10.1001/jama.1983.03330430042027,antiviral_drug,ribavirin,high
+10.1177/135965359900400202,antiviral_drug,zanamivir,high
+10.1001/archfami.7.1.39,saline_irrigation,hypertonic saline,high
+10.1155/bri/8846903,nitric_oxide,nitric oxide,high
