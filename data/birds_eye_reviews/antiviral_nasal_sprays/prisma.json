@@ -7,21 +7,22 @@
     "CyberLeninka",
     "Semantic Scholar"
   ],
-  "identified": 21705,
-  "excluded_not_relevant": 21147,
-  "relevant": 558,
+  "identified": 27745,
+  "excluded_not_relevant": 26981,
+  "relevant": 764,
   "not_retrieved": 4,
-  "retrieved": 554,
-  "excluded_not_treatment": 158,
-  "treatment_studies": 396,
-  "clinical": 147,
-  "preclinical": 249,
+  "retrieved": 760,
+  "excluded_not_treatment": 211,
+  "treatment_studies": 549,
+  "clinical": 167,
+  "preclinical": 252,
   "study_design_breakdown": {
     "animal_in_vivo": 208,
-    "rct": 61,
-    "human_challenge": 36,
-    "non_randomized_trial": 36,
-    "formulation_pk": 18,
+    "unclear": 130,
+    "rct": 72,
+    "human_challenge": 44,
+    "non_randomized_trial": 37,
+    "formulation_pk": 21,
     "in_vitro": 12,
     "ex_vivo": 10,
     "case_series": 7,
@@ -45,24 +46,24 @@
     ]
   },
   "organism_breakdown": {
+    "unclassified": 161,
+    "human": 149,
     "animal": 143,
-    "human": 127,
-    "mixed": 68,
-    "unclassified": 31,
+    "mixed": 69,
     "in_vitro": 17,
     "ex_vivo": 10
   },
   "indication_breakdown": {
-    "prevention": 156,
-    "treatment": 111,
-    "both": 67,
-    "not_applicable": 31,
-    "unclassified": 31
+    "prevention": 169,
+    "unclassified": 161,
+    "treatment": 117,
+    "both": 70,
+    "not_applicable": 32
   },
   "agent_breakdown": [
     {
       "agent": "interferon alpha (unspecified subtype)",
-      "count": 19
+      "count": 21
     },
     {
       "agent": "interferon alpha-2b",
@@ -93,15 +94,15 @@
       "count": 7
     },
     {
+      "agent": "azelastine",
+      "count": 6
+    },
+    {
       "agent": "nitric oxide (nons)",
       "count": 6
     },
     {
       "agent": "interferon beta serine",
-      "count": 4
-    },
-    {
-      "agent": "azelastine",
       "count": 4
     },
     {
@@ -153,6 +154,14 @@
       "count": 3
     },
     {
+      "agent": "enviroxime",
+      "count": 3
+    },
+    {
+      "agent": "r61837",
+      "count": 2
+    },
+    {
       "agent": "laninamivir octanoate (cs-8958)",
       "count": 2
     },
@@ -166,6 +175,10 @@
     },
     {
       "agent": "pirodavir",
+      "count": 2
+    },
+    {
+      "agent": "ruprintrivir",
       "count": 2
     },
     {
@@ -219,6 +232,14 @@
     {
       "agent": "rig-i agonist (rig-101)",
       "count": 2
+    },
+    {
+      "agent": "ivermectin",
+      "count": 2
+    },
+    {
+      "agent": "niclosamide",
+      "count": 2
     }
   ],
   "agent_singletons": [
@@ -226,6 +247,8 @@
     "2-5a antisense oligonucleotide",
     "2-deoxy-d-glucose",
     "3m-011 (tlr7/8 agonist)",
+    "4',6-dichloroflavan",
+    "4-guanidino-neu5ac2en (gg167)",
     "5,6-di-methylxanthenone-4-acetic acid (dmxaa)",
     "6-amino-6-deoxy-d-glucose hydrochloride",
     "7dw8-5",
@@ -262,6 +285,7 @@
     "camostat with xanthan gum",
     "carbohydrate-binding module biologic",
     "cetylpyridinium chloride (+ limonene + monolaurin)",
+    "chalcone ro 09-0410",
     "chemically modified second-generation sirna",
     "chiral vanadium trioxide nanoparticles (l-v(2)o(3))",
     "chitosan",
@@ -308,7 +332,10 @@
     "heparin",
     "hpmc-based human anti-sars-cov-2 igg1 nasal spray",
     "hr121 (heptad repeat 121)",
+    "human monoclonal antibody f61",
     "humanized anti-h7n9 neutralizing antibody (chi4b7)",
+    "hydroxypropyl methylcellulose (hpmc)",
+    "hydroxypropyl methylcellulose (vicks first defence)",
     "hydroxypropyl methylcellulose and usnic acid (hexedra+)",
     "hypertonic alkaline nasal irrigation",
     "hypertonic saline",
@@ -363,6 +390,7 @@
     "oxidized dextrans",
     "oxymetazoline",
     "p315v3",
+    "palivizumab",
     "pam2cys (tlr2 agonist)",
     "panavir (polysaccharide from epilobium angustifolium)",
     "patchouli alcohol",
@@ -389,8 +417,8 @@
     "protectin conjugates in tissue regeneration 1 (pctr1) and protectin d1 (pd1)",
     "protecting rna (244 rna)",
     "pyrimidine biosynthesis inhibitors (ippa17-a04 and gac50)",
-    "r61837",
     "recombinant human iga anti-rsv antibodies (palivizumab and motavizumab formats)",
+    "resveratrol/carboxymethyl-beta-glucan (linfovir)",
     "rfi-641",
     "rhesus theta-defensin 1 (rtd-1)",
     "rhinovirus receptor murine monoclonal antibody (rrma)",
@@ -398,12 +426,12 @@
     "rig-101 (rigimmune inc.)",
     "rimantadine",
     "rna aptamer (modified with 2'-fluoro pyrimidines, 2'-o-methyl purines, cholesterol, and peg40k)",
-    "ruprintrivir",
     "saline nasal irrigation",
     "saline nasal spray",
     "saliravira (herbal compound)",
     "serum amyloid p component",
     "sirna nanoparticles targeting ns1 gene",
+    "skf 40491, glr9-338, rp l9326, ici 73,602",
     "sligrl (par2-activating peptide)",
     "sodium deoxyribonucleate (derinat)",
     "sodium hypochlorite",
@@ -430,8 +458,9 @@
     "zanamivir-caffeic acid conjugate (za-7-ca)",
     "zanamivir-dinitrophenyl conjugate",
     "zidovudine",
+    "zinc gluconate",
     "zinc sulfate"
   ],
-  "agent_named_total": 394,
-  "agent_distinct": 249
+  "agent_named_total": 417,
+  "agent_distinct": 262
 }

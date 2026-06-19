@@ -214,6 +214,27 @@
     {
       "ingredient": "azelastine",
       "outcome_domain": "symptom_duration",
+      "effect_measure": "hazard_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.3390/v16121914",
+          "first_author": "Peter",
+          "year": "2024",
+          "effect": 0.32,
+          "ci_low": 0.83,
+          "ci_high": 2.32,
+          "p_value": 0.2161,
+          "n_total": 294,
+          "outcome_name": "Time to cure",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "azelastine",
+      "outcome_domain": "symptom_duration",
       "effect_measure": "mean_difference",
       "n_trials": 1,
       "scale": "linear",
@@ -417,6 +438,153 @@
           "p_value": null,
           "n_total": 193,
           "outcome_name": "Time to clinical relief (ITT) — Cox proportional-hazards model",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "hydroxypropyl methylcellulose (vicks first defence)",
+      "outcome_domain": "infection_prevention",
+      "effect_measure": "rate_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.3399/bjgp.2025.0269",
+          "first_author": "Paul",
+          "year": "2025",
+          "effect": 0.94,
+          "ci_low": 0.89,
+          "ci_high": 1.01,
+          "p_value": null,
+          "n_total": 13799,
+          "outcome_name": "Number of infections in last 12 months",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "hydroxypropyl methylcellulose (vicks first defence)",
+      "outcome_domain": "infection_prevention",
+      "effect_measure": "risk_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.3399/bjgp.2025.0269",
+          "first_author": "Paul",
+          "year": "2025",
+          "effect": 1.01,
+          "ci_low": 0.98,
+          "ci_high": 1.03,
+          "p_value": null,
+          "n_total": 13799,
+          "outcome_name": "Occurrence of RTI (any infection) in last 12 months",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "hydroxypropyl methylcellulose (vicks first defence)",
+      "outcome_domain": "other",
+      "effect_measure": "rate_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.3399/bjgp.2025.0269",
+          "first_author": "Paul",
+          "year": "2025",
+          "effect": 0.82,
+          "ci_low": 0.72,
+          "ci_high": 0.94,
+          "p_value": null,
+          "n_total": 13799,
+          "outcome_name": "Days of work/normal activities lost over last 12 months",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "hydroxypropyl methylcellulose (vicks first defence)",
+      "outcome_domain": "quality_of_life",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.3399/bjgp.2025.0269",
+          "first_author": "Paul",
+          "year": "2025",
+          "effect": -0.07,
+          "ci_low": -0.12,
+          "ci_high": -0.02,
+          "p_value": null,
+          "n_total": 13799,
+          "outcome_name": "PHQ-8 depression score at 12 months",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "hydroxypropyl methylcellulose (vicks first defence)",
+      "outcome_domain": "safety_adverse_events",
+      "effect_measure": "risk_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.3399/bjgp.2025.0269",
+          "first_author": "Paul",
+          "year": "2025",
+          "effect": 0.91,
+          "ci_low": 0.83,
+          "ci_high": 0.99,
+          "p_value": null,
+          "n_total": 13799,
+          "outcome_name": "Nasal dryness/irritation (adverse event)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "hydroxypropyl methylcellulose (vicks first defence)",
+      "outcome_domain": "symptom_duration",
+      "effect_measure": "rate_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.3399/bjgp.2025.0269",
+          "first_author": "Paul",
+          "year": "2025",
+          "effect": 0.84,
+          "ci_low": 0.79,
+          "ci_high": 0.9,
+          "p_value": 0.0001,
+          "n_total": 13799,
+          "outcome_name": "Days of respiratory illness (primary outcome, monthly data summed over 12 months)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "hydroxypropyl methylcellulose (vicks first defence)",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "rate_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.3399/bjgp.2025.0269",
+          "first_author": "Paul",
+          "year": "2025",
+          "effect": 0.86,
+          "ci_low": 0.8,
+          "ci_high": 0.94,
+          "p_value": null,
+          "n_total": 13799,
+          "outcome_name": "Days of moderately bad symptoms over last 12 months",
           "weight": null
         }
       ]
@@ -945,6 +1113,48 @@
       ]
     },
     {
+      "ingredient": "niclosamide",
+      "outcome_domain": "infection_prevention",
+      "effect_measure": "hazard_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1186/s12879-025-10584-4",
+          "first_author": "Toby",
+          "year": "2025",
+          "effect": 1.02,
+          "ci_low": 0.79,
+          "ci_high": 1.32,
+          "p_value": null,
+          "n_total": 1651,
+          "outcome_name": "Confirmed symptomatic COVID-19 infection during trial treatment",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "niclosamide",
+      "outcome_domain": "infection_prevention",
+      "effect_measure": "rate_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1186/s12879-025-10584-4",
+          "first_author": "Toby",
+          "year": "2025",
+          "effect": 0.95,
+          "ci_low": 0.73,
+          "ci_high": 1.22,
+          "p_value": null,
+          "n_total": 1651,
+          "outcome_name": "Confirmed symptomatic COVID-19 infection during trial treatment",
+          "weight": null
+        }
+      ]
+    },
+    {
       "ingredient": "nicotinic cholinergic agonist composition",
       "outcome_domain": "symptom_duration",
       "effect_measure": "odds_ratio",
@@ -1085,6 +1295,174 @@
           "p_value": 0.046,
           "n_total": 306,
           "outcome_name": "Proportion of subjects with RT-PCR negative conversion by Day 8 (end of treatment)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "palivizumab",
+      "outcome_domain": "hospitalization",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.eclinm.2023.102324",
+          "first_author": "Natalie",
+          "year": "2023",
+          "effect": 1.6,
+          "ci_low": 0.5,
+          "ci_high": 5.0,
+          "p_value": null,
+          "n_total": 268,
+          "outcome_name": "All-cause RTI hospitalization",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "palivizumab",
+      "outcome_domain": "hospitalization",
+      "effect_measure": "risk_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.eclinm.2023.102324",
+          "first_author": "Natalie",
+          "year": "2023",
+          "effect": 8.5,
+          "ci_low": -3.8,
+          "ci_high": 20.9,
+          "p_value": null,
+          "n_total": 268,
+          "outcome_name": "RSV hospitalization",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "palivizumab",
+      "outcome_domain": "infection_prevention",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.eclinm.2023.102324",
+          "first_author": "Natalie",
+          "year": "2023",
+          "effect": 2.0,
+          "ci_low": 0.8,
+          "ci_high": 5.0,
+          "p_value": null,
+          "n_total": 268,
+          "outcome_name": "Any lab-confirmed RSV infection",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "palivizumab",
+      "outcome_domain": "infection_prevention",
+      "effect_measure": "risk_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.eclinm.2023.102324",
+          "first_author": "Natalie",
+          "year": "2023",
+          "effect": 14.9,
+          "ci_low": -3.5,
+          "ci_high": 33.3,
+          "p_value": null,
+          "n_total": 268,
+          "outcome_name": "Any lab-confirmed RSV infection",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "palivizumab",
+      "outcome_domain": "infection_prevention",
+      "effect_measure": "risk_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.eclinm.2023.102324",
+          "first_author": "Natalie",
+          "year": "2023",
+          "effect": 1.6,
+          "ci_low": 0.9,
+          "ci_high": 3.1,
+          "p_value": null,
+          "n_total": 268,
+          "outcome_name": "Any lab-confirmed RSV infection",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "palivizumab",
+      "outcome_domain": "other",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.eclinm.2023.102324",
+          "first_author": "Natalie",
+          "year": "2023",
+          "effect": 1.4,
+          "ci_low": 0.6,
+          "ci_high": 3.2,
+          "p_value": null,
+          "n_total": 268,
+          "outcome_name": "Medically attended RTI",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "palivizumab",
+      "outcome_domain": "other",
+      "effect_measure": "rate_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.eclinm.2023.102324",
+          "first_author": "Natalie",
+          "year": "2023",
+          "effect": 1.2,
+          "ci_low": 0.8,
+          "ci_high": 1.7,
+          "p_value": null,
+          "n_total": 268,
+          "outcome_name": "Wheezing episodes (incidence rate)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "palivizumab",
+      "outcome_domain": "other",
+      "effect_measure": "risk_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.eclinm.2023.102324",
+          "first_author": "Natalie",
+          "year": "2023",
+          "effect": 8.5,
+          "ci_low": -11.6,
+          "ci_high": 28.7,
+          "p_value": null,
+          "n_total": 268,
+          "outcome_name": "Medically attended RTI",
           "weight": null
         }
       ]
