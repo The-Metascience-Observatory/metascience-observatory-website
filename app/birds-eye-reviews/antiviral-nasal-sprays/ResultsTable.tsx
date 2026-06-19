@@ -3,9 +3,11 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { ExternalLink } from "lucide-react";
 import { prettyMeasure, prettyDomain } from "./ForestPlot";
+import { fmt, formatLabel } from "./utils";
 
 export interface TrialRow {
   doi: string;
+  armLabel: string;
   ingredient: string;
   indication: string;
   spray_type: string;
@@ -55,18 +57,11 @@ function SortTh({
   );
 }
 
-function formatLabel(s: string): string {
-  return s.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()).replace(/\bRct\b/g, "RCT");
-}
-function fmt(n: number | null): string {
-  if (n === null || Number.isNaN(n)) return "—";
-  const a = Math.abs(n);
-  return a >= 100 ? n.toFixed(0) : a >= 10 ? n.toFixed(1) : n.toFixed(2);
-}
-
-/** Real DOIs -> doi.org; grey-lit / PMIDs -> explicit url; else no link. */
+/** Real DOIs -> doi.org; grey-lit / PMIDs -> explicit url; else no link.
+ *  Strips an arm-split "#<arm>" suffix so the DOI resolves. */
 function rowHref(row: TrialRow): string | null {
-  if (row.doi.startsWith("10.")) return `https://doi.org/${row.doi}`;
+  const base = row.doi.split("#")[0];
+  if (base.startsWith("10.")) return `https://doi.org/${base}`;
   if (row.url) return row.url;
   return null;
 }
@@ -110,8 +105,8 @@ function VerdictBadge({ row }: { row: TrialRow }) {
 }
 
 function CitationLine({ row }: { row: TrialRow }) {
-  const volPages = [row.volume && `${row.volume}${row.issue ? `(${row.issue})` : ""}`, row.pages]
-    .filter(Boolean).join(" ");
+  const volParts = [row.volume, row.issue && `(${row.issue})`].filter(Boolean).join("");
+  const volPages = [volParts, row.pages].filter(Boolean).join(" ");
   const segs: React.ReactNode[] = [];
   if (row.authors) segs.push(row.authors.split(";")[0].trim() + (row.authors.includes(";") ? " et al." : ""));
   if (row.journal || volPages) segs.push(<>{row.journal && <em>{row.journal}</em>}{row.journal && volPages ? " " : ""}{volPages}</>);
@@ -140,19 +135,16 @@ function Select({ label, value, onChange, options }: {
 
 export function ResultsTable({
   rows,
-  externalIngredient,
   externalDomain,
   externalRob,
 }: {
   rows: TrialRow[];
-  externalIngredient?: string;
   externalDomain?: string;
   externalRob?: string;
 }) {
   const tableRef = useRef<HTMLDivElement>(null);
   const [searchInput, setSearchInput] = useState("");
   const [search, setSearch] = useState("");
-  const [ingredient, setIngredient] = useState(externalIngredient ?? "all");
   const [domain, setDomain] = useState(externalDomain ?? "all");
   const [rob, setRob] = useState(externalRob ?? "all");
   const [verdict, setVerdict] = useState("all");
@@ -163,15 +155,13 @@ export function ResultsTable({
     else { setSortKey(k); setSortDir("asc"); }
   };
 
-  useEffect(() => { if (externalIngredient !== undefined) setIngredient(externalIngredient); }, [externalIngredient]);
-  useEffect(() => { if (externalDomain !== undefined) setDomain(externalDomain); }, [externalDomain]);
-  useEffect(() => { if (externalRob !== undefined) setRob(externalRob); }, [externalRob]);
+  useEffect(() => {
+    setDomain(externalDomain ?? "all");
+    setRob(externalRob ?? "all");
+  }, [externalDomain, externalRob]);
 
   const uniq = (sel: (r: TrialRow) => string) =>
     [...new Set(rows.map(sel).filter(Boolean))].sort();
-  // Empty ingredient -> "unspecified" so it matches the chart's "unspecified"
-  // bar (clicking which filters here) and appears as a dropdown option.
-  const ingredients = useMemo(() => uniq((r) => r.ingredient || "unspecified"), [rows]);
   const domains = useMemo(() => uniq((r) => r.primaryDomain), [rows]);
   const robs = useMemo(() => uniq((r) => r.rob), [rows]);
   // Order verdicts by evidence direction rather than alphabetically.
@@ -190,18 +180,17 @@ export function ResultsTable({
         row.authors.toLowerCase().includes(s) || row.ingredient.toLowerCase().includes(s) ||
         row.primaryName.toLowerCase().includes(s));
     }
-    if (ingredient !== "all") r = r.filter((row) => (row.ingredient || "unspecified") === ingredient);
     if (domain !== "all") r = r.filter((row) => row.primaryDomain === domain);
     if (rob !== "all") r = r.filter((row) => row.rob === rob);
     if (verdict !== "all") r = r.filter((row) => row.verdict === verdict);
     return r;
-  }, [rows, search, ingredient, domain, rob, verdict]);
+  }, [rows, search, domain, rob, verdict]);
 
   useEffect(() => {
-    if (externalIngredient || externalDomain || externalRob) {
+    if (externalDomain || externalRob) {
       setTimeout(() => tableRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
     }
-  }, [externalIngredient, externalDomain, externalRob]);
+  }, [externalDomain, externalRob]);
 
   // Sorting (Ingredient / Design alphabetical, N numeric with nulls last).
   const visible = useMemo(() => {
@@ -233,8 +222,6 @@ export function ResultsTable({
             onKeyDown={(e) => { if (e.key === "Enter") setSearch(searchInput); }}
             className="border border-border rounded px-3 py-1.5 text-sm bg-background w-56" />
         </div>
-        <Select label="Ingredient" value={ingredient} onChange={setIngredient}
-          options={[{ value: "all", label: "All" }, ...ingredients.map((s) => ({ value: s, label: formatLabel(s) }))]} />
         <Select label="Outcome domain" value={domain} onChange={setDomain}
           options={[{ value: "all", label: "All" }, ...domains.map((s) => ({ value: s, label: prettyDomain(s) }))]} />
         <Select label="Risk of bias" value={rob} onChange={setRob}
@@ -282,13 +269,20 @@ export function ResultsTable({
                     {(row.authors || row.journal || row.year) && (
                       <div className="mt-0.5 text-xs"><CitationLine row={row} /></div>
                     )}
+                    {row.armLabel && (
+                      <div className="mt-0.5">
+                        <span className="inline-block rounded border border-blue-200 bg-blue-50 text-blue-700 px-1.5 py-0.5 text-[10px]">
+                          {row.armLabel}
+                        </span>
+                      </div>
+                    )}
                     {row.abstractOnly && (
                       <div className="mt-0.5 text-[10px] tracking-wide text-amber-600/80">
                         (Extracted from abstract only)
                       </div>
                     )}
                   </td>
-                  <td className="p-2 text-xs capitalize">{row.ingredient || "—"}</td>
+                  <td className="p-2 text-xs capitalize">{row.ingredient || "unspecified"}</td>
                   <td className="p-2 text-xs">{row.design ? formatLabel(row.design) : "—"}</td>
                   <td className="p-2 text-xs text-right tabular-nums">{row.n ?? "—"}</td>
                   <td className="p-2 text-xs">
@@ -299,7 +293,7 @@ export function ResultsTable({
                           <div className="text-foreground/60 tabular-nums mt-0.5">
                             {prettyMeasure(row.effMeasure)} {fmt(row.effVal)}
                             {row.ciLo != null && row.ciHi != null && ` (${fmt(row.ciLo)}–${fmt(row.ciHi)})`}
-                            {row.pVal != null && `, p=${row.pVal}`}
+                            {row.pVal != null && `, p=${fmt(row.pVal)}`}
                           </div>
                         )}
                       </>

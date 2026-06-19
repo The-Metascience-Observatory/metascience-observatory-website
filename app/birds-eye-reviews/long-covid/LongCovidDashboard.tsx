@@ -25,6 +25,7 @@ import {
 import { geoCentroid } from "d3-geo";
 import type { DashboardProps, InterventionBar, TrialTableRow } from "./types";
 import { aggregateFromMetas, getPromiseScoreColors, LC_WEEKS_BINS, LC_BIN_LABELS, LC_WHO_BIN_LABELS } from "./constants";
+import { trialHasFacet } from "./facets";
 
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
@@ -311,6 +312,9 @@ export function LongCovidDashboard(props: DashboardProps) {
     <div>
       {/* Hero */}
       <h1 className="font-clarendon font-bold text-3xl mb-2">Long Covid Clinical Trials</h1>
+      {props.lastUpdated && (
+        <p className="text-sm text-foreground/50 mb-3">Last updated: {props.lastUpdated}</p>
+      )}
       <Link
         href="/birds-eye-reviews/long-covid/screening"
         className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
@@ -513,8 +517,8 @@ function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => v
       </div>
 
       {/* Trials by intervention */}
-      <ChartSection title="Trials by intervention" subtitle="Each segment is one intervention — hover for name, click to filter table">
-        <InterventionStackedBar data={props.byIntervention} onInterventionClick={props.onInterventionClick} onCategoryClick={props.onCategoryClick} />
+      <ChartSection title="Trials by intervention" subtitle="One bar per intervention (top 30 by trial count) — click a bar to filter the table to those trials">
+        <InterventionStackedBar data={props.byIntervention} onInterventionClick={props.onInterventionClick} />
       </ChartSection>
 
       {/* Symptom domain + Blinding side by side */}
@@ -550,17 +554,24 @@ function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => v
               <Tooltip
                 labelFormatter={formatCategory}
                 formatter={(val: number, name: string) => {
-                  const label = name === "significant" ? "Significant (p < 0.05)" : "Not significant";
+                  const label = name === "significant" ? "Significant (p < 0.05)"
+                    : name === "not_significant" ? "Not significant"
+                    : "No p-value reported";
                   return [val, label];
                 }}
               />
               <Legend
                 formatter={(v) =>
-                  v === "significant" ? "Significant (p < 0.05)" : "Not significant"
+                  v === "significant" ? "Significant (p < 0.05)"
+                    : v === "not_significant" ? "Not significant"
+                    : "No p-value reported"
                 }
               />
-              <Bar dataKey="significant" fill="#ef4444" style={{ cursor: "pointer" }} onClick={(data) => { if (data && data.blinding && props.onBlindingClick) props.onBlindingClick(data.blinding); }} />
-              <Bar dataKey="not_significant" fill="#94a3b8" style={{ cursor: "pointer" }} onClick={(data) => { if (data && data.blinding && props.onBlindingClick) props.onBlindingClick(data.blinding); }} />
+              {/* Stacked so each blinding bar's height = all its trials = the rows
+                  shown when the bar is clicked (every trial is in exactly one segment). */}
+              <Bar dataKey="significant" stackId="a" fill="#ef4444" style={{ cursor: "pointer" }} onClick={(data) => { if (data && data.blinding && props.onBlindingClick) props.onBlindingClick(data.blinding); }} />
+              <Bar dataKey="not_significant" stackId="a" fill="#94a3b8" style={{ cursor: "pointer" }} onClick={(data) => { if (data && data.blinding && props.onBlindingClick) props.onBlindingClick(data.blinding); }} />
+              <Bar dataKey="unknown" stackId="a" fill="#d1d5db" style={{ cursor: "pointer" }} onClick={(data) => { if (data && data.blinding && props.onBlindingClick) props.onBlindingClick(data.blinding); }} />
             </BarChart>
           </ResponsiveContainer>
         </ChartSection>
@@ -768,11 +779,10 @@ function TrialTableTab({
     if (robFilter !== "all") rows = rows.filter((r) => r.rob_overall === robFilter);
     if (blindingDropdown !== "all") rows = rows.filter((r) => r.blinding === blindingDropdown);
     if (yearFilter !== null) rows = rows.filter((r) => r.year === yearFilter);
-    if (interventionCategoryFilter !== null) rows = rows.filter((r) => r.intervention_category === interventionCategoryFilter);
-    if (interventionNameFilter !== null) rows = rows.filter((r) => {
-      const names = r.intervention_name.split(",").map((s) => s.trim());
-      return names.includes(interventionNameFilter) || r.all_intervention_names.includes(interventionNameFilter);
-    });
+    // Intervention click-filters use the SAME structured list the chart counts,
+    // so a bar's number always equals the rows shown when it's clicked.
+    if (interventionCategoryFilter !== null) rows = rows.filter((r) => trialHasFacet(r.facets, "interventionCategory", interventionCategoryFilter));
+    if (interventionNameFilter !== null) rows = rows.filter((r) => trialHasFacet(r.facets, "intervention", interventionNameFilter));
     if (lcDefFilter !== null) {
       if (lcDefFilter === "≥12") {
         rows = rows.filter((r) => r.min_weeks != null && r.min_weeks >= 12);
@@ -787,11 +797,11 @@ function TrialTableTab({
         }
       }
     }
-    if (countryFilter !== null) rows = rows.filter((r) => r.countries.includes(countryFilter));
-    if (blindingFilter !== null) rows = rows.filter((r) => r.blinding === blindingFilter);
-    if (landscapeCategory !== null) rows = rows.filter((r) => r.intervention_category === landscapeCategory);
-    if (landscapeSymptom !== null) rows = rows.filter((r) => r.primary_symptom_domain === landscapeSymptom);
-    if (symptomDomainFilter !== null) rows = rows.filter((r) => r.primary_symptom_domain === symptomDomainFilter);
+    if (countryFilter !== null) rows = rows.filter((r) => trialHasFacet(r.facets, "country", countryFilter));
+    if (blindingFilter !== null) rows = rows.filter((r) => trialHasFacet(r.facets, "blinding", blindingFilter));
+    if (landscapeCategory !== null) rows = rows.filter((r) => trialHasFacet(r.facets, "interventionCategory", landscapeCategory));
+    if (landscapeSymptom !== null) rows = rows.filter((r) => trialHasFacet(r.facets, "symptomDomain", landscapeSymptom));
+    if (symptomDomainFilter !== null) rows = rows.filter((r) => trialHasFacet(r.facets, "symptomDomain", symptomDomainFilter));
     const outcomeRank = (r: typeof rows[0]): number => {
       const { primary_effect_value: ev, primary_p_value: p, primary_higher_is_better: hib } = r;
       if (ev == null && p == null) return -1;
@@ -1330,22 +1340,30 @@ function CountryMap({ allCountries, onCountryClick }: { allCountries: DashboardP
   );
 }
 
-function InterventionStackedBar({ data, onInterventionClick, onCategoryClick }: { data: InterventionBar[]; onInterventionClick?: (interventionName: string) => void; onCategoryClick?: (category: string) => void }) {
+const INTERVENTION_BAR_LIMIT = 30;
+
+function InterventionStackedBar({ data, onInterventionClick }: { data: InterventionBar[]; onInterventionClick?: (interventionName: string) => void }) {
   const [tooltip, setTooltip] = useState<{ x: number; y: number; name: string; count: number; category: string } | null>(null);
-  const maxCount = data.length ? Math.max(...data.map((d) => d.count)) : 0;
+  // One bar per intervention name (counts already merged across categories &
+  // distinct-trial-counted in aggregateFromMetas), most-studied first. The long
+  // tail of single-trial interventions is left to the table.
+  const shown = data.slice(0, INTERVENTION_BAR_LIMIT);
+  const maxCount = shown.length ? Math.max(...shown.map((d) => d.count)) : 0;
   const barHeight = 24;
-  const labelWidth = 130;
-  const chartWidth = 600;
-  const rightPad = 40;
+  const labelWidth = 240;
+  const chartWidth = 480;
+  const rightPad = 44;
+  const truncate = (s: string) => (s.length > 38 ? s.slice(0, 37) + "…" : s);
 
   return (
     <div className="relative">
-      <svg width="100%" viewBox={`0 0 ${labelWidth + chartWidth + rightPad} ${data.length * (barHeight + 6) + 10}`}>
-        {data.map((cat, rowIdx) => {
+      <svg width="100%" viewBox={`0 0 ${labelWidth + chartWidth + rightPad} ${shown.length * (barHeight + 6) + 10}`}>
+        {shown.map((iv, rowIdx) => {
           const y = rowIdx * (barHeight + 6) + 4;
-          let xOffset = labelWidth;
+          const barWidth = maxCount ? (iv.count / maxCount) * chartWidth : 0;
           return (
-            <g key={cat.category}>
+            <g key={iv.name} className="cursor-pointer" onClick={() => onInterventionClick?.(iv.name)}>
+              <title>{iv.name}</title>
               <text
                 x={labelWidth - 8}
                 y={y + barHeight / 2}
@@ -1353,51 +1371,40 @@ function InterventionStackedBar({ data, onInterventionClick, onCategoryClick }: 
                 dominantBaseline="central"
                 fontSize={12}
                 fill="currentColor"
-                opacity={0.8}
-                className="cursor-pointer hover:underline"
-                onClick={() => onCategoryClick?.(cat.category)}
+                opacity={0.85}
+                className="hover:underline"
               >
-                {formatCategory(cat.category)}
+                {truncate(iv.name)}
               </text>
-              {cat.interventions.map((intv, i) => {
-                const segWidth = (intv.count / maxCount) * chartWidth;
-                const x = xOffset;
-                xOffset += segWidth;
-                return (
-                  <rect
-                    key={i}
-                    x={x}
-                    y={y}
-                    width={Math.max(segWidth, 1)}
-                    height={barHeight}
-                    fill={hashColor(intv.name, i)}
-                    opacity={0.8}
-                    onMouseEnter={(e) => {
-                      const rect = e.currentTarget.getBoundingClientRect();
-                      const parent = e.currentTarget.closest(".relative")!.getBoundingClientRect();
-                      setTooltip({
-                        x: rect.left - parent.left + rect.width / 2,
-                        y: rect.top - parent.top - 8,
-                        name: intv.name,
-                        count: intv.count,
-                        category: formatCategory(cat.category),
-                      });
-                    }}
-                    onMouseLeave={() => setTooltip(null)}
-                    onClick={() => onInterventionClick?.(intv.name)}
-                    className="cursor-pointer"
-                  />
-                );
-              })}
+              <rect
+                x={labelWidth}
+                y={y}
+                width={Math.max(barWidth, 1)}
+                height={barHeight}
+                fill={hashColor(iv.category, rowIdx)}
+                opacity={0.85}
+                onMouseEnter={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const parent = e.currentTarget.closest(".relative")!.getBoundingClientRect();
+                  setTooltip({
+                    x: rect.left - parent.left + rect.width / 2,
+                    y: rect.top - parent.top - 8,
+                    name: iv.name,
+                    count: iv.count,
+                    category: formatCategory(iv.category),
+                  });
+                }}
+                onMouseLeave={() => setTooltip(null)}
+              />
               <text
-                x={xOffset + 4}
+                x={labelWidth + Math.max(barWidth, 1) + 4}
                 y={y + barHeight / 2}
                 dominantBaseline="central"
                 fontSize={11}
                 fill="currentColor"
-                opacity={0.5}
+                opacity={0.6}
               >
-                {cat.count}
+                {iv.count}
               </text>
             </g>
           );

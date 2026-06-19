@@ -1,5 +1,7 @@
 "use client";
 
+import { fmt } from "./utils";
+
 /** A single trial estimate on a forest plot. */
 export interface ForestTrial {
   paper_id: string;
@@ -19,6 +21,9 @@ export interface ForestTrial {
 export interface ForestGroup {
   ingredient: string;
   outcome_domain: string;
+  /** Optional display label that overrides prettyDomain(outcome_domain) for this
+   *  specific group (e.g. "Influenza symptom duration" for zanamivir). */
+  domainLabel?: string;
   effect_measure: string;
   scale: "log" | "linear";
   n_trials: number;
@@ -70,12 +75,6 @@ export function prettyMeasure(m: string): string {
 export function prettyDomain(d: string): string {
   return DOMAIN_LABELS[d] ?? d.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
-function fmt(n: number | null | undefined): string {
-  if (n === null || n === undefined || Number.isNaN(n)) return "—";
-  const abs = Math.abs(n);
-  return abs >= 100 ? n.toFixed(0) : abs >= 10 ? n.toFixed(1) : n.toFixed(2);
-}
-
 /** Outbound link for a trial: real DOIs -> doi.org; PMIDs / trial registry ids
  *  -> their canonical page; non-resolvable ids (grey lit) -> no link. */
 function trialHref(paperId: string | undefined): string | null {
@@ -146,7 +145,7 @@ export function ForestPlot({ group }: { group: ForestGroup }) {
     <div className="border border-border rounded-lg bg-white p-4 mb-6 overflow-x-auto">
       <div className="mb-1 flex flex-wrap items-baseline gap-x-3">
         <h3 className="font-semibold text-foreground capitalize">{group.ingredient}</h3>
-        <span className="text-sm text-foreground/70">{prettyDomain(group.outcome_domain)}</span>
+        <span className="text-sm text-foreground/70">{group.domainLabel ?? prettyDomain(group.outcome_domain)}</span>
         <span className="text-xs text-foreground/50">
           {prettyMeasure(group.effect_measure)} · {group.n_trials} trial{group.n_trials === 1 ? "" : "s"}
           {group.pooled ? ` · I² = ${group.pooled.i2}%` : " · not pooled"}

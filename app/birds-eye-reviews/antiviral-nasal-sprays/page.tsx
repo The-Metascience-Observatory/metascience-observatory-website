@@ -129,19 +129,35 @@ function labelFor(doi: string, cite: Citation | undefined, fallbackYear: number 
 function loadForestGroups(cites: Map<string, Citation>): { groups: ForestGroup[]; minTrials: number } {
   const fp = dataPath("meta_analysis.json");
   if (!fs.existsSync(fp)) return { groups: [], minTrials: 3 };
-  const raw = JSON.parse(fs.readFileSync(fp, "utf-8")) as {
-    min_trials: number;
-    groups: ForestGroup[];
-  };
-  const groups = (raw.groups ?? []).map((g) => ({
-    ...g,
-    trials: g.trials.map((t) => ({
-      ...t,
-      doi: t.paper_id,
-      label: labelFor(t.paper_id, cites.get(t.paper_id), t.year ?? null),
-    })),
-  }));
-  return { groups, minTrials: raw.min_trials ?? 3 };
+  try {
+    const raw = JSON.parse(fs.readFileSync(fp, "utf-8")) as {
+      min_trials: number;
+      groups: ForestGroup[];
+    };
+    const groups = (raw.groups ?? []).map((g) => ({
+      ...g,
+      // Zanamivir is an influenza-specific antiviral; all its symptom-duration
+      // trials are influenza, so label the domain accordingly on this group.
+      domainLabel:
+        g.ingredient === "zanamivir" && g.outcome_domain === "symptom_duration"
+          ? "Influenza symptom duration"
+          : undefined,
+      trials: g.trials.map((t) => {
+        // Arm-split points carry "<doi>#<arm>"; resolve to base DOI for the
+        // citation label and the outbound link.
+        const base = (t.paper_id ?? "").split("#")[0];
+        return {
+          ...t,
+          doi: base,
+          label: labelFor(t.paper_id, cites.get(base), t.year ?? null),
+        };
+      }),
+    }));
+    return { groups, minTrials: raw.min_trials ?? 3 };
+  } catch (e) {
+    console.error("Failed to load meta_analysis.json:", e);
+    return { groups: [], minTrials: 3 };
+  }
 }
 
 const RATIO = new Set([
@@ -165,18 +181,23 @@ function loadTrials(cites: Map<string, Citation>, indications: Map<string, strin
     try { r = JSON.parse(s); } catch { continue; }
     if (r._status && r._status !== "ok") continue;
     const doi = String(r.paper_id ?? "");
+    // Arm-split records have paper_id "<doi>#<arm>"; resolve to the base DOI for
+    // citation / verdict / indication / link lookups (those are keyed by DOI).
+    const baseDoi = doi.split("#")[0];
     const sd = (r.study_design ?? {}) as Record<string, unknown>;
     const ss = (r.sample_sizes ?? {}) as Record<string, unknown>;
     const rob = (r.risk_of_bias ?? {}) as Record<string, unknown>;
-    const outcomes = (r.outcomes as Record<string, unknown>[]) ?? [];
+    const outcomes = Array.isArray(r.outcomes) ? r.outcomes as Record<string, unknown>[] : [];
     const primary = outcomes.find((o) => o.is_primary) ?? outcomes[0];
     let effMeasure = "", effVal: number | null = null, ciLo: number | null = null,
       ciHi: number | null = null, pVal: number | null = null, primaryDomain = "", primaryName = "";
     if (primary) {
       primaryDomain = String(primary.outcome_domain ?? primary.symptom_domain ?? primary.category ?? "");
       primaryName = String(primary.name ?? "");
-      const effs = (primary.between_group_effects as Record<string, unknown>[]) ?? [];
-      const e = effs.find((x) => RATIO.has(String(x.effect_measure)) || DIFF.has(String(x.effect_measure))) ?? effs[0];
+      const effs = Array.isArray(primary.between_group_effects)
+        ? primary.between_group_effects as Record<string, unknown>[]
+        : [];
+      const e = effs.find((x) => RATIO.has(String(x.effect_measure)) || DIFF.has(String(x.effect_measure)));
       if (e) {
         effMeasure = String(e.effect_measure ?? "");
         effVal = (e.effect_value as number) ?? null;
@@ -185,13 +206,14 @@ function loadTrials(cites: Map<string, Citation>, indications: Map<string, strin
         pVal = (e.p_value as number) ?? null;
       }
     }
-    const c = cites.get(doi);
-    const v = verdicts.get(doi);
+    const c = cites.get(baseDoi);
+    const v = verdicts.get(baseDoi);
     const n = (ss.n_randomized_total as number) ?? (ss.n_enrolled_total as number) ?? null;
     out.push({
       doi,
+      armLabel: String(r.arm_label ?? ""),
       ingredient: String(r.agent_canonical ?? ""),
-      indication: indications.get(doi) ?? "",
+      indication: indications.get(baseDoi) ?? "",
       verdict: v?.verdict ?? "",
       verdictRationale: v?.rationale ?? "",
       spray_type: String(r.spray_type ?? ""),

@@ -10,6 +10,7 @@ import type {
   SummaryStats,
   TrialMeta,
 } from "./types";
+import { countDistinctTrials } from "./facets";
 
 // ── Shared constants ─────────────────────────────────────────────────
 
@@ -75,40 +76,33 @@ export function aggregateFromMetas(metas: TrialMeta[]): AggregatedData {
     nInstruments,
   };
 
-  // By intervention
-  const interventionMap = new Map<string, Map<string, number>>();
+  // By intervention — counts via the shared facet counter (one distinct trial per
+  // intervention name), so the bar number equals the table-filter row count. The
+  // displayed category is taken from the first trial reporting the name (display
+  // only — counting and filtering go through facets, never the category).
+  const ivCounts = countDistinctTrials(metas, "intervention");
+  const ivCat = new Map<string, string>();
   for (const m of metas) {
-    for (const a of m.interventionArms) {
-      if (!interventionMap.has(a.category)) interventionMap.set(a.category, new Map());
-      const nameMap = interventionMap.get(a.category)!;
-      nameMap.set(a.name, (nameMap.get(a.name) ?? 0) + 1);
-    }
+    for (const a of m.interventionArms) if (!ivCat.has(a.name)) ivCat.set(a.name, a.category);
   }
-  const byIntervention: InterventionBar[] = [...interventionMap.entries()]
-    .map(([category, nameMap]) => ({
-      category,
-      count: [...nameMap.values()].reduce((a, b) => a + b, 0),
-      interventions: [...nameMap.entries()]
-        .map(([name, count]) => ({ name, count }))
-        .sort((a, b) => a.name.localeCompare(b.name)),
-    }))
-    .sort((a, b) => b.count - a.count);
+  const byIntervention: InterventionBar[] = [...ivCounts.entries()]
+    .map(([name, count]) => ({ name, count, category: ivCat.get(name) ?? "unknown" }))
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
 
-  // By symptom
-  const symptomMap = new Map<string, number>();
-  for (const m of metas) {
-    for (const d of m.primarySymptomDomains) symptomMap.set(d, (symptomMap.get(d) ?? 0) + 1);
-  }
-  const bySymptom: SymptomBar[] = [...symptomMap.entries()]
+  // By symptom — distinct trials per primary domain (a trial with N primary
+  // domains is counted in each; the table filter matches the same list).
+  const bySymptom: SymptomBar[] = [...countDistinctTrials(metas, "symptomDomain").entries()]
     .map(([domain, count]) => ({ domain, count }))
     .sort((a, b) => b.count - a.count);
 
-  // Heatmap
+  // Heatmap (category × primary-domain). Cell count = trials whose facet category
+  // list includes the category AND whose primary-domain list includes the domain;
+  // the cell-click filter matches the same two lists (see LongCovidDashboard).
   const heatMap = new Map<string, { count: number; low: number; some_concerns: number; high: number }>();
   for (const m of metas) {
-    const cats = new Set(m.interventionArms.map((a) => a.category));
+    const cats = new Set(m.facets.interventionCategories);
     for (const cat of cats) {
-      for (const dom of m.primarySymptomDomains) {
+      for (const dom of m.facets.symptomDomains) {
         const k = `${cat}|||${dom}`;
         const entry = heatMap.get(k) ?? { count: 0, low: 0, some_concerns: 0, high: 0 };
         entry.count++;
@@ -124,12 +118,8 @@ export function aggregateFromMetas(metas: TrialMeta[]): AggregatedData {
     return { intervention, symptom, ...d };
   });
 
-  // Countries
-  const countryMap = new Map<string, number>();
-  for (const m of metas) {
-    for (const c of m.countries) countryMap.set(c, (countryMap.get(c) ?? 0) + 1);
-  }
-  const allCountries: CountryBar[] = [...countryMap.entries()]
+  // Countries — distinct trials per country (matches countries.includes filter)
+  const allCountries: CountryBar[] = [...countDistinctTrials(metas, "country").entries()]
     .map(([country, count]) => ({ country, count }))
     .sort((a, b) => b.count - a.count);
 
@@ -143,26 +133,23 @@ export function aggregateFromMetas(metas: TrialMeta[]): AggregatedData {
     .map(([year, count]) => ({ year, count }))
     .sort((a, b) => a.year - b.year);
 
-  // Blinding × significance
-  const blindSigMap = new Map<string, { significant: number; not_significant: number }>();
+  // Blinding × significance — every trial is represented: trials with no primary
+  // p-value fall in `unknown`, so a bar's total (sig+nonsig+unknown) equals the
+  // trials with that blinding, which equals the table-filter result on click.
+  const blindSigMap = new Map<string, { significant: number; not_significant: number; unknown: number }>();
   for (const m of metas) {
-    if (m.primary_p_value != null) {
-      const entry = blindSigMap.get(m.blinding) ?? { significant: 0, not_significant: 0 };
-      if (m.primary_p_value < 0.05) entry.significant++;
-      else entry.not_significant++;
-      blindSigMap.set(m.blinding, entry);
-    }
+    const entry = blindSigMap.get(m.blinding) ?? { significant: 0, not_significant: 0, unknown: 0 };
+    if (m.primary_p_value == null) entry.unknown++;
+    else if (m.primary_p_value < 0.05) entry.significant++;
+    else entry.not_significant++;
+    blindSigMap.set(m.blinding, entry);
   }
   const blindingBySignificance: BlindingSignificanceBar[] = BLINDING_ORDER
     .filter((b) => blindSigMap.has(b))
     .map((blinding) => ({ blinding, ...blindSigMap.get(blinding)! }));
 
-  // By design type
-  const designTypeMap = new Map<string, number>();
-  for (const m of metas) {
-    designTypeMap.set(m.design_type, (designTypeMap.get(m.design_type) ?? 0) + 1);
-  }
-  const byDesignType: DesignTypeBar[] = [...designTypeMap.entries()]
+  // By design type — distinct trials per design (single-valued; matches filter)
+  const byDesignType: DesignTypeBar[] = [...countDistinctTrials(metas, "designType").entries()]
     .map(([design_type, count]) => ({ design_type, count }))
     .sort((a, b) => b.count - a.count);
 

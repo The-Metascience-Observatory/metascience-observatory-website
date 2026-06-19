@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { BreakdownChart, Segment } from "./screening/BreakdownChart";
 import { ForestPlot, ForestGroup, DOMAIN_LABELS } from "./ForestPlot";
 import { ResultsTable, TrialRow } from "./ResultsTable";
+import { YearChart } from "./YearChart";
 
 const DESIGN_LABELS: Record<string, string> = {
   RCT: "RCT",
@@ -20,6 +21,10 @@ const formatDesign = (s: string) =>
   s.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()).replace(/\bRct\b/g, "RCT");
 
 const designKey = (r: TrialRow) => r.design || "unknown";
+
+/** Pretty ingredient label (matches BreakdownChart's prettyLabel). */
+const fmtIngredient = (s: string) =>
+  s.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
 // Trial outcome type: buckets the trial's PRIMARY outcome domain into the
 // high-level question the trial was asking. Drives the top-level filter panel.
@@ -93,26 +98,28 @@ export function ResultsClientWrapper({
   forestGroups: ForestGroup[];
   minTrials: number;
 }) {
+  // Top-level ingredient filter (dropdown + "Trials by Ingredient" bar click). This
+  // is the OUTERMOST filter — every panel, chart, forest plot, and the table react.
   const [ingredient, setIngredient] = useState<string | undefined>(undefined);
+  // Secondary, table-only filter set by clicking the outcome-domain chart.
   const [domain, setDomain] = useState<string | undefined>(undefined);
 
-  const clear = () => { setIngredient(undefined); setDomain(undefined); };
-  const pick = (set: (v: string) => void) => (k: string) => { clear(); set(k); };
+  const ingredientKey = (t: TrialRow) => t.ingredient || "unspecified";
+  const ingredientFilter = (t: TrialRow) => !ingredient || ingredientKey(t) === ingredient;
 
-  // Top-level trial-outcome-focus filter: a checkbox per outcome type. Defaults
-  // to the efficacy questions (infection prevention + treatment) checked, with
-  // safety and other off, so the page opens on the clinical-efficacy trials.
-  // Each trial falls in exactly one bucket (by its primary outcome domain).
+  // Top-level trial-outcome-focus filter: a checkbox per outcome type, all checked
+  // by default. Each trial falls in exactly one bucket (by its primary outcome domain).
   const [selectedTypes, setSelectedTypes] = useState<Set<string>>(
-    () => new Set(["infection_prevention", "treatment"])
+    () => new Set(OUTCOME_TYPES.map((t) => t.key))
   );
   const typeFilter = (t: TrialRow) => selectedTypes.has(outcomeType(t));
-  const toggleType = (k: string) =>
+  const toggleType = (k: string) => {
     setSelectedTypes((prev) => {
       const next = new Set(prev);
       if (next.has(k)) next.delete(k); else next.add(k);
       return next;
     });
+  };
   const selectAllTypes = () => setSelectedTypes(new Set(OUTCOME_TYPES.map((t) => t.key)));
   const clearAllTypes = () => setSelectedTypes(new Set());
 
@@ -134,14 +141,28 @@ export function ResultsClientWrapper({
   const selectAllDesigns = () => setSelectedDesigns(new Set(allDesignList));
   const clearAllDesigns = () => setSelectedDesigns(new Set());
 
-  // Cross-filtering: each panel's counts come from the data filtered by the OTHER
-  // panel, so both sets of numbers stay in sync as selections change.
-  const typeOnly = useMemo(() => trials.filter(typeFilter), [trials, selectedTypes]);
-  const designOnly = useMemo(() => trials.filter(designFilter), [trials, selectedDesigns]);
+  // Ingredient is the outermost filter; the panels / charts / forest plots / table all
+  // derive from this ingredient-narrowed base.
+  const afterIngredient = useMemo(() => trials.filter(ingredientFilter), [trials, ingredient]);
+
+  // Cross-filtering within the ingredient-narrowed base: each panel's counts come from
+  // the data filtered by the OTHER panel, so the numbers stay in sync.
+  const typeOnly = useMemo(() => afterIngredient.filter(typeFilter), [afterIngredient, selectedTypes]);
+  const designOnly = useMemo(() => afterIngredient.filter(designFilter), [afterIngredient, selectedDesigns]);
   const filteredTrials = useMemo(
-    () => trials.filter((t) => typeFilter(t) && designFilter(t)),
-    [trials, selectedTypes, selectedDesigns]
+    () => afterIngredient.filter((t) => typeFilter(t) && designFilter(t)),
+    [afterIngredient, selectedTypes, selectedDesigns]
   );
+
+  // Ingredient dropdown options — over ALL trials (independent of the current selection,
+  // so you can always switch); sorted alphabetically with total counts.
+  const ingredientOptions = useMemo(() => {
+    const counts = countBy(trials, ingredientKey);
+    // Sort by trial count (desc), then alphabetically as a tiebreak.
+    return Object.keys(counts)
+      .sort((a, b) => counts[b] - counts[a] || a.localeCompare(b))
+      .map((k) => ({ key: k, count: counts[k] }));
+  }, [trials]);
 
   // Per-outcome-type counts react to the trial-type selection (over designOnly).
   const typeCountMap = useMemo(() => countBy(designOnly, outcomeType), [designOnly]);
@@ -175,9 +196,15 @@ export function ResultsClientWrapper({
   }, [forestGroups, ingredient]);
   const pooledCount = forestGroups.filter((g) => g.pooled).length;
 
+  // Trials-by-year histogram, driven by the filtered set so it reacts to filters.
+  const filteredYears = useMemo(
+    () => filteredTrials.map((t) => parseInt(t.year, 10)).filter((y) => !Number.isNaN(y)),
+    [filteredTrials]
+  );
+
   return (
     <>
-      {/* Top-level trial-outcome-type filter (checkboxes, one per outcome type) */}
+      {/* Trial-outcome-focus filter (checkboxes, one per outcome type) */}
       <div className="mb-4 border border-border rounded-lg p-4 bg-foreground/[0.02]">
         <div className="flex items-center gap-3 mb-2">
           <span className="text-sm font-medium text-foreground">Filter by trial outcome focus</span>
@@ -191,7 +218,8 @@ export function ResultsClientWrapper({
           {OUTCOME_TYPES.map((t) => {
             const checked = selectedTypes.has(t.key);
             return (
-              <label key={t.key} className="inline-flex items-center gap-1.5 cursor-pointer text-sm">
+              <label key={t.key}
+                className={`inline-flex items-center gap-1.5 cursor-pointer text-sm rounded px-1.5 py-0.5 ${checked ? "" : "bg-foreground/[0.08]"}`}>
                 <input
                   type="checkbox"
                   checked={checked}
@@ -209,7 +237,7 @@ export function ResultsClientWrapper({
       </div>
 
       {/* Trial-type filter (long-covid style) */}
-      <div className="mb-8 border border-border rounded-lg p-4 bg-foreground/[0.02]">
+      <div className="mb-4 border border-border rounded-lg p-4 bg-foreground/[0.02]">
         <div className="flex items-center gap-3 mb-2">
           <span className="text-sm font-medium text-foreground">Filter by trial type</span>
           <span className="text-xs text-foreground/50">
@@ -236,17 +264,45 @@ export function ResultsClientWrapper({
         </div>
       </div>
 
-      {/* Breakdown charts (click to filter the table) */}
+      {/* Ingredient filter — the outermost filter; narrows everything below. */}
+      <div className="mb-8 border border-border rounded-lg p-4 bg-foreground/[0.02]">
+        <div className="flex items-center gap-3 flex-wrap">
+          <span className="text-sm font-medium text-foreground">Filter by ingredient</span>
+          <select
+            value={ingredient ?? "all"}
+            onChange={(e) => setIngredient(e.target.value === "all" ? undefined : e.target.value)}
+            className="border border-border rounded px-3 py-1.5 text-sm bg-background max-w-[22rem]"
+          >
+            <option value="all">All ingredients</option>
+            {ingredientOptions.map((o) => (
+              <option key={o.key} value={o.key}>{fmtIngredient(o.key)} ({o.count})</option>
+            ))}
+          </select>
+          <span className="text-xs text-foreground/50">
+            ({filteredTrials.length} of {trials.length} trials)
+          </span>
+          {ingredient && (
+            <button onClick={() => setIngredient(undefined)} className="text-xs text-blue-600 hover:text-blue-700 ml-auto">
+              Clear
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Breakdown charts */}
       {Object.keys(ingredientVerdictChart).length > 0 && (
         <BreakdownChart title="Trials by Ingredient" breakdown={ingredientVerdictChart}
-          segments={VERDICT_SEGMENTS} onBarClick={pick(setIngredient)}
-          clickHint="Each bar is split by result direction — click a bar to filter the trials and forest plots below." />
+          segments={VERDICT_SEGMENTS} onBarClick={(k) => setIngredient(k)}
+          clickHint="Each bar is split by result direction — click a bar to filter the whole dashboard to that ingredient." />
       )}
       {Object.keys(domainVerdictChart).length > 0 && (
         <BreakdownChart title="Trials by Primary Outcome Domain" breakdown={domainVerdictChart}
-          segments={VERDICT_SEGMENTS} labels={DOMAIN_LABELS} onBarClick={pick(setDomain)}
+          segments={VERDICT_SEGMENTS} labels={DOMAIN_LABELS} onBarClick={(k) => setDomain(k)}
           clickHint="Each bar is split by result direction — click a bar to filter the table below." />
       )}
+
+      {/* Trials by year (reacts to the filters above) */}
+      <YearChart years={filteredYears} />
 
       {/* Meta-analysis forest plots */}
       <section className="mb-10 mt-8">
@@ -254,12 +310,12 @@ export function ResultsClientWrapper({
         <p className="text-sm text-foreground/60 mb-4">
           One forest plot per ingredient × outcome × effect measure with ≥2 trials. A pooled
           random-effects diamond (DerSimonian–Laird) is shown when {minTrials}+ trials report the
-          same comparable estimate.{ingredient && ` Filtered to “${ingredient}”.`}
+          same comparable estimate.{ingredient && ` Filtered to “${fmtIngredient(ingredient)}”.`}
         </p>
         {shownGroups.length === 0 ? (
           <div className="border border-dashed border-border rounded-lg bg-foreground/[0.02] px-4 py-8 text-center text-sm text-foreground/60">
             No ingredient yet has ≥2 trials reporting a comparable outcome and effect measure
-            {ingredient ? ` for “${ingredient}”` : ""}. As more trials are extracted, forest plots
+            {ingredient ? ` for “${fmtIngredient(ingredient)}”` : ""}. As more trials are extracted, forest plots
             will appear here. ({pooledCount} pooled so far.)
           </div>
         ) : (
@@ -269,7 +325,6 @@ export function ResultsClientWrapper({
 
       <ResultsTable
         rows={filteredTrials}
-        externalIngredient={ingredient}
         externalDomain={domain}
       />
     </>

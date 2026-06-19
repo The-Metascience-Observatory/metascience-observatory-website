@@ -1,3 +1,5 @@
+import type { FacetInput } from "./facets";
+
 export interface SummaryStats {
   totalTrials: number;
   totalParticipants: number;
@@ -7,9 +9,9 @@ export interface SummaryStats {
 }
 
 export interface InterventionBar {
-  category: string;
+  name: string;
   count: number;
-  interventions: { name: string; count: number }[];
+  category: string;
 }
 
 export interface SymptomBar {
@@ -40,6 +42,7 @@ export interface BlindingSignificanceBar {
   blinding: string;
   significant: number;
   not_significant: number;
+  unknown: number; // no primary p-value — so every trial with this blinding is represented
 }
 
 export interface LcDefinitionBin {
@@ -67,6 +70,7 @@ export interface TrialMeta {
   year: number | null;
   n_instruments: number;
   primary_p_value: number | null;
+  facets: FacetInput; // shared count/filter source (see facets.ts)
 }
 
 export interface ArmSample {
@@ -91,9 +95,11 @@ export interface TrialTableRow {
   first_author: string;
   journal: string;
   design_type: string;
-  intervention_name: string;
-  all_intervention_names: string[];
+  intervention_name: string; // joined display string (r.interventions)
+  interventions: { name: string; category: string }[]; // structured, for count+filter
   intervention_category: string;
+  primary_symptom_domains: string[]; // ALL distinct primary domains (for count+filter)
+  facets: FacetInput; // shared count/filter source (see facets.ts)
   blinding: string;
   n_randomized: number | null;
   primary_symptom_domain: string;
@@ -127,6 +133,7 @@ export interface TrialTableRow {
 
 export interface DashboardProps {
   summaryStats: SummaryStats;
+  lastUpdated?: string;
   byIntervention: InterventionBar[];
   bySymptom: SymptomBar[];
   heatmapData: HeatmapCell[];

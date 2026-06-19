@@ -13,6 +13,7 @@ import {
   CONTROL_KEYWORDS,
   aggregateFromMetas,
 } from "./constants";
+import { buildFacetInput, countDistinctTrials, type FacetKey } from "./facets";
 
 export const metadata = {
   title: "Long Covid Clinical Trials | Bird's Eye Reviews | The Metascience Observatory",
@@ -32,6 +33,36 @@ function numericOrNull(v: unknown): number | null {
   return null;
 }
 
+/** A trial's intervention set, derived ONCE from the structured arms. This single
+ *  list drives both the "Trials by Intervention" chart count and the table's
+ *  intervention filter, so the two can never disagree. We read the structured
+ *  arms (not the comma-joined `interventions` string, whose names can contain
+ *  commas) and dedupe by name. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function trialInterventions(rec: any): { name: string; category: string }[] {
+  const arms = (rec.study_design?.arms ?? []).filter((a: any) => a.type === "intervention");
+  const seen = new Set<string>();
+  const out: { name: string; category: string }[] = [];
+  for (const a of arms) {
+    const name = (a.intervention_name ?? "").trim();
+    if (!name || seen.has(name)) continue;
+    seen.add(name);
+    out.push({ name, category: a.intervention_category ?? "unknown" });
+  }
+  return out;
+}
+
+/** A trial's distinct primary symptom domains (ALL of them, not just the first).
+ *  Used for both the symptom chart count and the symptom table filter. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function primaryDomainsOf(rec: any): string[] {
+  const out = new Set<string>();
+  for (const o of rec.outcomes ?? []) {
+    if (o.is_primary && o.symptom_domain) out.add(o.symptom_domain);
+  }
+  return [...out];
+}
+
 function processData() {
   const filePath = path.join(
     process.cwd(),
@@ -42,7 +73,10 @@ function processData() {
   const records: any[] = raw
     .trim()
     .split("\n")
-    .map((l) => JSON.parse(l));
+    .map((l) => JSON.parse(l))
+    // Skip failed/empty extractions: a record without study_design has no arms,
+    // design_type, or countries to display and would crash the maps below.
+    .filter((r) => r && r.study_design);
 
   // ── Load DOI metadata for author/journal citations ────────────────
   const doiMetaPath = path.join(
@@ -88,6 +122,16 @@ function processData() {
     const interventionArms = r.study_design.arms.filter((a: any) => a.type === "intervention");
     const interventionName = interventionArms[0]?.intervention_name ?? "unknown";
     const interventionCategory = interventionArms[0]?.intervention_category ?? "unknown";
+    // Canonical facet inputs (same helpers the chart aggregation uses).
+    const ivs = trialInterventions(r);
+    const primaryDomains = primaryDomainsOf(r);
+    const facets = buildFacetInput({
+      interventions: ivs,
+      symptomDomains: primaryDomains,
+      countries: r.study_design.countries ?? [],
+      designType: r.study_design.design_type ?? "unknown",
+      blinding: r.study_design.blinding ?? "unknown",
+    });
 
     let primarySymptomDomain = "";
     let primaryOutcomeName = "";
@@ -153,9 +197,10 @@ function processData() {
       journal: doiMetadata[r.paper_id]?.journal ?? "",
       design_type: r.study_design.design_type,
       intervention_name: r.interventions ?? interventionName,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      all_intervention_names: interventionArms.map((a: any) => a.intervention_name as string),
+      interventions: ivs,
       intervention_category: interventionCategory,
+      primary_symptom_domains: primaryDomains,
+      facets,
       blinding: r.study_design.blinding ?? "unknown",
       n_randomized: r.sample_sizes?.n_randomized_total ?? null,
       primary_symptom_domain: primarySymptomDomain,
@@ -199,33 +244,12 @@ function processData() {
 
   // ── 3. Trial metadata (lightweight per-record for client-side RCT filtering) ─
   const trialMetas: TrialMeta[] = records.map((r) => {
-    const rawArms = r.study_design.arms
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .filter((a: any) => a.type === "intervention");
-    // Use the consolidated `interventions` field, splitting comma-separated lists
-    const rawLabel = r.interventions;
-    const defaultCategory = rawArms[0]?.intervention_category ?? "unknown";
-    let interventionArms: { category: string; name: string }[];
-    if (rawLabel && rawLabel !== "Unknown") {
-      const names = rawLabel.split(",").map((s: string) => s.trim()).filter(Boolean);
-      interventionArms = names.map((name: string) => {
-        // Try to match to an arm by name similarity for category
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const matchedArm = rawArms.find((a: any) =>
-          a.intervention_name?.toLowerCase().includes(name.toLowerCase().split(" ")[0])
-        );
-        return { category: matchedArm?.intervention_category ?? defaultCategory, name };
-      });
-    } else {
-      interventionArms = rawArms.length > 0
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ? rawArms.map((a: any) => ({ category: a.intervention_category ?? "unknown", name: a.intervention_name ?? "unknown" }))
-        : [{ category: "unknown", name: "unknown" }];
-    }
-    const primarySymptomDomains: string[] = [];
+    // Same canonical intervention list the table filter uses (structured arms,
+    // deduped by name) so chart counts and filtered rows always agree.
+    const interventionArms = trialInterventions(r);
+    const primarySymptomDomains = primaryDomainsOf(r);
     let primaryPValue: number | null = null;
     for (const o of r.outcomes ?? []) {
-      if (o.is_primary && o.symptom_domain) primarySymptomDomains.push(o.symptom_domain);
       if (o.is_primary && !primaryPValue) {
         primaryPValue = numericOrNull(o.between_group_effects?.[0]?.p_value);
       }
@@ -239,7 +263,7 @@ function processData() {
       is_rct: r.is_rct ?? false,
       countries: r.study_design.countries ?? [],
       interventionArms,
-      primarySymptomDomains: [...new Set(primarySymptomDomains)],
+      primarySymptomDomains,
       rob_overall: r.risk_of_bias?.overall_judgment ?? "unknown",
       blinding: r.study_design.blinding ?? "unknown",
       design_type: r.study_design.design_type ?? "unknown",
@@ -248,15 +272,57 @@ function processData() {
       year: r.year ?? extractYearFromDOI(r.paper_id),
       n_instruments: instruments.size,
       primary_p_value: primaryPValue,
+      facets: buildFacetInput({
+        interventions: interventionArms,
+        symptomDomains: primarySymptomDomains,
+        countries: r.study_design.countries ?? [],
+        designType: r.study_design.design_type ?? "unknown",
+        blinding: r.study_design.blinding ?? "unknown",
+      }),
     };
   });
 
   // ── 4. Aggregate charts from trialMetas ──────────────────────────
   const aggregated = aggregateFromMetas(trialMetas);
 
+  // Dev invariant: a chart's per-value count (over metas) must equal the table's
+  // count (over rows) for the same facet — i.e. clicking a segment shows exactly
+  // its number of rows. Both go through facets.ts, so this only fires if the
+  // meta/row facet builders ever drift. Stripped from production builds.
+  if (process.env.NODE_ENV !== "production") {
+    const FACET_KEYS: FacetKey[] = [
+      "intervention", "interventionCategory", "symptomDomain", "country", "designType", "blinding",
+    ];
+    for (const key of FACET_KEYS) {
+      const chart = countDistinctTrials(trialMetas, key);
+      const table = countDistinctTrials(tableRows, key);
+      for (const [val, n] of chart) {
+        if ((table.get(val) ?? 0) !== n) {
+          console.warn(`[facet-invariant] ${key}="${val}": chart ${n} ≠ table ${table.get(val) ?? 0}`);
+        }
+      }
+    }
+  }
+
+  // "Last updated" stamp written by 13_export_dashboard.py (optional — older
+  // bundles won't have it, so fall back to an empty string).
+  let lastUpdated = "";
+  try {
+    const meta = JSON.parse(
+      fs.readFileSync(
+        path.join(process.cwd(), "data/birds_eye_reviews/long_covid/last_updated.json"),
+        "utf-8"
+      )
+    );
+    lastUpdated = meta.last_updated_display ?? meta.last_updated ?? "";
+  } catch {
+    // no stamp file — leave blank
+  }
+
   return {
     // Use server-accurate summary stats (instrument count uses Set dedup)
     summaryStats,
+    lastUpdated,
     byIntervention: aggregated.byIntervention,
     bySymptom: aggregated.bySymptom,
     heatmapData: aggregated.heatmapData,

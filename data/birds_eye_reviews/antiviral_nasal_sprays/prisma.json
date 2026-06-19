@@ -7,20 +7,20 @@
     "CyberLeninka",
     "Semantic Scholar"
   ],
-  "identified": 21702,
+  "identified": 21705,
   "excluded_not_relevant": 21147,
-  "relevant": 555,
+  "relevant": 558,
   "not_retrieved": 4,
-  "retrieved": 551,
-  "excluded_not_treatment": 156,
-  "treatment_studies": 395,
-  "clinical": 146,
+  "retrieved": 554,
+  "excluded_not_treatment": 158,
+  "treatment_studies": 396,
+  "clinical": 147,
   "preclinical": 249,
   "study_design_breakdown": {
     "animal_in_vivo": 208,
-    "rct": 60,
-    "non_randomized_trial": 37,
-    "human_challenge": 35,
+    "rct": 61,
+    "human_challenge": 36,
+    "non_randomized_trial": 36,
     "formulation_pk": 18,
     "in_vitro": 12,
     "ex_vivo": 10,
@@ -46,14 +46,14 @@
   },
   "organism_breakdown": {
     "animal": 143,
-    "human": 126,
+    "human": 127,
     "mixed": 68,
     "unclassified": 31,
     "in_vitro": 17,
     "ex_vivo": 10
   },
   "indication_breakdown": {
-    "prevention": 155,
+    "prevention": 156,
     "treatment": 111,
     "both": 67,
     "not_applicable": 31,
@@ -70,7 +70,7 @@
     },
     {
       "agent": "zanamivir",
-      "count": 16
+      "count": 15
     },
     {
       "agent": "iota-carrageenan",
@@ -400,6 +400,7 @@
     "rna aptamer (modified with 2'-fluoro pyrimidines, 2'-o-methyl purines, cholesterol, and peg40k)",
     "ruprintrivir",
     "saline nasal irrigation",
+    "saline nasal spray",
     "saliravira (herbal compound)",
     "serum amyloid p component",
     "sirna nanoparticles targeting ns1 gene",
@@ -424,12 +425,13 @@
     "wks13 (monoclonal antibody)",
     "xylitol",
     "xylitol plus grapefruit seed extract (xlear)",
+    "zanamivir (gg167)",
     "zanamivir and iota-carrageenan",
     "zanamivir-caffeic acid conjugate (za-7-ca)",
     "zanamivir-dinitrophenyl conjugate",
     "zidovudine",
     "zinc sulfate"
   ],
-  "agent_named_total": 393,
-  "agent_distinct": 247
+  "agent_named_total": 394,
+  "agent_distinct": 249
 }

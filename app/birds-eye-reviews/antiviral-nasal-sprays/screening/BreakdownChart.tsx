@@ -25,8 +25,12 @@ export type Segment = { key: string; label: string; color: string };
  *  Renders the default Rectangle (keeps fill, radius, click + hover) then overlays
  *  non-interactive divider lines. `leading` adds a divider at the segment's left
  *  edge too (the boundary with the previous segment) so every study is bounded. */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function TiledSegment(props: any) {
+interface TiledSegmentProps {
+  x: number; y: number; width: number; height: number;
+  payload: Record<string, unknown>; segKey: string; leading: boolean;
+  [key: string]: unknown;
+}
+function TiledSegment(props: TiledSegmentProps) {
   const { x, y, width, height, payload, segKey, leading } = props;
   const value = Number(payload?.[segKey] ?? 0);
   const lines: React.ReactNode[] = [];
