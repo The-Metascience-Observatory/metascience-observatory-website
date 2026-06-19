@@ -247,20 +247,24 @@ export function ResultsClientWrapper({
           <button onClick={clearAllDesigns} className="text-xs text-blue-600 hover:text-blue-700">Clear all</button>
         </div>
         <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-          {allDesignList.map((d) => (
-            <label key={d} className="inline-flex items-center gap-1.5 cursor-pointer text-sm">
-              <input
-                type="checkbox"
-                checked={selectedDesigns.has(d)}
-                onChange={() => toggleDesign(d)}
-                className="rounded border-foreground/30 text-blue-600 focus:ring-blue-500"
-              />
-              <span className={selectedDesigns.has(d) ? "text-foreground" : "text-foreground/50"}>
-                {formatDesign(d)}
-              </span>
-              <span className="text-xs text-foreground/40">({designCountMap[d] ?? 0})</span>
-            </label>
-          ))}
+          {allDesignList.map((d) => {
+            const checked = selectedDesigns.has(d);
+            return (
+              <label key={d}
+                className={`inline-flex items-center gap-1.5 cursor-pointer text-sm rounded px-1.5 py-0.5 ${checked ? "" : "bg-foreground/[0.08]"}`}>
+                <input
+                  type="checkbox"
+                  checked={checked}
+                  onChange={() => toggleDesign(d)}
+                  className="rounded border-foreground/30 text-blue-600 focus:ring-blue-500"
+                />
+                <span className={checked ? "text-foreground" : "text-foreground/50"}>
+                  {formatDesign(d)}
+                </span>
+                <span className="text-xs text-foreground/40">({designCountMap[d] ?? 0})</span>
+              </label>
+            );
+          })}
         </div>
       </div>
 
@@ -271,7 +275,7 @@ export function ResultsClientWrapper({
           <select
             value={ingredient ?? "all"}
             onChange={(e) => setIngredient(e.target.value === "all" ? undefined : e.target.value)}
-            className="border border-border rounded px-3 py-1.5 text-sm bg-background max-w-[22rem]"
+            className={`border border-border rounded px-3 py-1.5 text-sm max-w-[22rem] ${ingredient ? "bg-foreground/[0.08]" : "bg-background"}`}
           >
             <option value="all">All ingredients</option>
             {ingredientOptions.map((o) => (
