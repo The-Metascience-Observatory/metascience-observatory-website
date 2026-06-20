@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect, useRef } from "react";
+import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import { ExternalLink } from "lucide-react";
 import { prettyMeasure, prettyDomain } from "./ForestPlot";
 import { fmt, formatLabel } from "./utils";
@@ -372,7 +373,20 @@ export function ResultsTable({
               <th className="p-2">Primary outcome &amp; effect</th>
               <th className="p-2">Result</th>
               <th className="p-2">
-                <span className="cursor-default underline decoration-dotted" title="Risk of Bias">RoB</span>
+                <TooltipPrimitive.Root>
+                  <TooltipPrimitive.Trigger asChild>
+                    <span className="cursor-default underline decoration-dotted">RoB</span>
+                  </TooltipPrimitive.Trigger>
+                  <TooltipPrimitive.Portal>
+                    <TooltipPrimitive.Content
+                      className="z-50 rounded bg-popover px-2 py-1 text-xs text-popover-foreground shadow-md"
+                      sideOffset={4}
+                    >
+                      Risk of Bias
+                      <TooltipPrimitive.Arrow className="fill-popover" />
+                    </TooltipPrimitive.Content>
+                  </TooltipPrimitive.Portal>
+                </TooltipPrimitive.Root>
               </th>
             </tr>
           </thead>

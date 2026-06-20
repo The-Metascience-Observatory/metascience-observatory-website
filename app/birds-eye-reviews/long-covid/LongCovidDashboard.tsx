@@ -147,7 +147,7 @@ export function LongCovidDashboard(props: DashboardProps) {
 
   // Long Covid definition filter (top-level dashboard filter)
   const [lcDefWho, setLcDefWho] = useState(true);
-  const [lcDefBelow, setLcDefBelow] = useState(false);
+  const [lcDefBelow, setLcDefBelow] = useState(true);
 
   const lcDefFilteredMetas = useMemo(() => {
     if (lcDefWho && lcDefBelow) return props.trialMetas;
@@ -181,7 +181,7 @@ export function LongCovidDashboard(props: DashboardProps) {
   );
 
   const [selectedDesignTypes, setSelectedDesignTypes] = useState<Set<string>>(
-    () => new Set(["RCT", "crossover"])
+    () => new Set(props.trialMetas.map((m) => m.design_type || "unknown"))
   );
 
   const toggleDesignType = (dt: string) => {
@@ -258,7 +258,7 @@ export function LongCovidDashboard(props: DashboardProps) {
     if (symptom) setSymptomDomainFilter(symptom);
     // Top-level filters
     if (sp.get("who") === "0") setLcDefWho(false);
-    if (sp.get("below") === "1") setLcDefBelow(true);
+    if (sp.get("below") === "0") setLcDefBelow(false);
     const types = sp.get("types");
     if (types) setSelectedDesignTypes(new Set(types.split(",").filter(Boolean)));
 
@@ -284,9 +284,9 @@ export function LongCovidDashboard(props: DashboardProps) {
     if (blindingFilter) params.set("blinding", blindingFilter);
     if (symptomDomainFilter) params.set("symptom", symptomDomainFilter);
     if (!lcDefWho) params.set("who", "0");
-    if (lcDefBelow) params.set("below", "1");
+    if (!lcDefBelow) params.set("below", "0");
     const typesArr = [...selectedDesignTypes].sort();
-    if (typesArr.join(",") !== ["RCT", "crossover"].sort().join(",")) {
+    if (selectedDesignTypes.size < allDesignTypes.size) {
       params.set("types", typesArr.join(","));
     }
     const qs = params.toString();
@@ -311,6 +311,11 @@ export function LongCovidDashboard(props: DashboardProps) {
   return (
     <div>
       {/* Hero */}
+      <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1">
+        <Link href="/birds-eye-reviews" className="text-sm text-blue-600 hover:text-blue-700">
+          &larr; Bird&apos;s Eye Reviews
+        </Link>
+      </div>
       <h1 className="font-clarendon font-bold text-3xl mb-2">Long Covid Clinical Trials</h1>
       {props.lastUpdated && (
         <p className="text-sm text-foreground/50 mb-3">Last updated: {props.lastUpdated}</p>
@@ -323,10 +328,12 @@ export function LongCovidDashboard(props: DashboardProps) {
       </Link>
 
       {/* Long Covid definition filter */}
-      <div className="mb-3 border border-border rounded-lg p-4 bg-foreground/[0.02]">
-        <div className="flex items-center gap-4">
+      <div className={`mb-3 border border-border rounded-lg p-4 ${!(lcDefWho && lcDefBelow) ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`}>
+        <div className="flex items-center gap-3 mb-2">
           <span className="text-sm font-medium text-foreground">Filter by Long Covid definition</span>
-          <label className="inline-flex items-center gap-1.5 cursor-pointer text-sm">
+        </div>
+        <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+          <label className={`inline-flex items-center gap-1.5 cursor-pointer text-sm rounded px-1.5 py-0.5 ${lcDefWho ? "" : "bg-foreground/[0.08]"}`}>
             <input
               type="checkbox"
               checked={lcDefWho}
@@ -334,11 +341,11 @@ export function LongCovidDashboard(props: DashboardProps) {
               className="rounded border-foreground/30 text-blue-600 focus:ring-blue-500"
             />
             <span className={lcDefWho ? "text-foreground" : "text-foreground/50"}>
-              Meets WHO definition (symptom duration ≥12 weeks)
+              Meets WHO definition (≥12 weeks)
             </span>
             <span className="text-xs text-foreground/40">({whoCount})</span>
           </label>
-          <label className="inline-flex items-center gap-1.5 cursor-pointer text-sm">
+          <label className={`inline-flex items-center gap-1.5 cursor-pointer text-sm rounded px-1.5 py-0.5 ${lcDefBelow ? "" : "bg-foreground/[0.08]"}`}>
             <input
               type="checkbox"
               checked={lcDefBelow}
@@ -354,7 +361,7 @@ export function LongCovidDashboard(props: DashboardProps) {
       </div>
 
       {/* Design type filter checkboxes */}
-      <div className="mb-6 border border-border rounded-lg p-4 bg-foreground/[0.02]">
+      <div className={`mb-4 border border-border rounded-lg p-4 ${selectedDesignTypes.size < allDesignTypes.size ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`}>
         <div className="flex items-center gap-3 mb-2">
           <span className="text-sm font-medium text-foreground">Filter by trial type</span>
           <span className="text-xs text-foreground/50">
@@ -364,20 +371,45 @@ export function LongCovidDashboard(props: DashboardProps) {
           <button onClick={selectNone} className="text-xs text-blue-600 hover:text-blue-700">Clear all</button>
         </div>
         <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-          {designTypeCounts.map(([dt, count]) => (
-            <label key={dt} className="inline-flex items-center gap-1.5 cursor-pointer text-sm">
-              <input
-                type="checkbox"
-                checked={selectedDesignTypes.has(dt)}
-                onChange={() => toggleDesignType(dt)}
-                className="rounded border-foreground/30 text-blue-600 focus:ring-blue-500"
-              />
-              <span className={selectedDesignTypes.has(dt) ? "text-foreground" : "text-foreground/50"}>
-                {formatDesignType(dt)}
-              </span>
-              <span className="text-xs text-foreground/40">({count})</span>
-            </label>
-          ))}
+          {designTypeCounts.map(([dt, count]) => {
+            const checked = selectedDesignTypes.has(dt);
+            return (
+              <label key={dt} className={`inline-flex items-center gap-1.5 cursor-pointer text-sm rounded px-1.5 py-0.5 ${checked ? "" : "bg-foreground/[0.08]"}`}>
+                <input
+                  type="checkbox"
+                  checked={checked}
+                  onChange={() => toggleDesignType(dt)}
+                  className="rounded border-foreground/30 text-blue-600 focus:ring-blue-500"
+                />
+                <span className={checked ? "text-foreground" : "text-foreground/50"}>
+                  {formatDesignType(dt)}
+                </span>
+                <span className="text-xs text-foreground/40">({count})</span>
+              </label>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Intervention filter */}
+      <div className={`mb-6 border border-border rounded-lg p-4 ${interventionNameFilter ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`}>
+        <div className="flex items-center gap-3 flex-wrap">
+          <span className="text-sm font-medium text-foreground">Filter by intervention</span>
+          <select
+            value={interventionNameFilter ?? "all"}
+            onChange={(e) => setInterventionNameFilter(e.target.value === "all" ? null : e.target.value)}
+            className={`border border-border rounded px-3 py-1.5 text-sm max-w-[22rem] ${interventionNameFilter ? "bg-foreground/[0.08]" : "bg-background"}`}
+          >
+            <option value="all">All interventions</option>
+            {effectiveProps.byIntervention.map((iv) => (
+              <option key={iv.name} value={iv.name}>{formatCategory(iv.name)} ({iv.count})</option>
+            ))}
+          </select>
+          {interventionNameFilter && (
+            <button onClick={() => setInterventionNameFilter(null)} className="text-xs text-blue-600 hover:text-blue-700 ml-auto">
+              Clear
+            </button>
+          )}
         </div>
       </div>
 
@@ -515,11 +547,6 @@ function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => v
           <CountryMap allCountries={props.allCountries} onCountryClick={props.onCountryClick} />
         </ChartSection>
       </div>
-
-      {/* Trials by intervention */}
-      <ChartSection title="Trials by intervention" subtitle="One bar per intervention (top 30 by trial count) — click a bar to filter the table to those trials">
-        <InterventionStackedBar data={props.byIntervention} onInterventionClick={props.onInterventionClick} />
-      </ChartSection>
 
       {/* Symptom domain + Blinding side by side */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

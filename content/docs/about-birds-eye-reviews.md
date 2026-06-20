@@ -32,7 +32,7 @@ Here are the general principles behind how we do a Bird’s Eye Review: 
     
 *   By keeping all papers, we enable richer data for metascientific understanding of what is going on in science writ large. 
     
-*   The only journal filter we apply is to remove journals. 
+*   The only journal filter we apply is to remove predatory journals (Beal's list). 
     
 
 **We include as many non-English studies as we can**
