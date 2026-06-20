@@ -23,12 +23,6 @@
     "journal": "JAMA Internal Medicine",
     "year": "2025"
   },
-  "10.1001/jama.1983.03330430042027": {
-    "first_author": "Caroline",
-    "author_count": 1,
-    "journal": "JAMA",
-    "year": "1983"
-  },
   "10.1001/archotol.1992.01880090049015": {
     "first_author": "Sperber",
     "author_count": 6,
@@ -142,18 +136,6 @@
     "author_count": 3,
     "journal": "Antiviral Research",
     "year": "1988"
-  },
-  "10.1016/j.ijid.2021.04.035": {
-    "first_author": "Seet",
-    "author_count": 1,
-    "journal": "International Journal of Infectious Diseases",
-    "year": "2021"
-  },
-  "10.1016/j.lanepe.2021.100084": {
-    "first_author": "Vibeke",
-    "author_count": 11,
-    "journal": "The Lancet Regional Health - Europe",
-    "year": "2021"
   },
   "10.1016/s0002-9343(01)00765-3": {
     "first_author": "Edward",
@@ -581,12 +563,6 @@
     "journal": "International Journal of General Medicine",
     "year": "2024"
   },
-  "10.3205/000321": {
-    "first_author": "Colado",
-    "author_count": 1,
-    "journal": "GMS German Medical Science",
-    "year": "2023"
-  },
   "10.32388/dp7zsf.2": {
     "first_author": "Orlando",
     "author_count": 6,
@@ -597,12 +573,6 @@
     "first_author": "Hazem",
     "author_count": 8,
     "journal": "Frontiers in Medicine",
-    "year": "2022"
-  },
-  "10.32364/2587-6821-2022-6-11-618-625": {
-    "first_author": "E.V.",
-    "author_count": 4,
-    "journal": "Russian Medical Inquiry",
     "year": "2022"
   },
   "10.26442/terarkh201890114-54": {
@@ -622,12 +592,6 @@
     "author_count": 2,
     "journal": "Frontiers in Medicine",
     "year": "2025"
-  },
-  "10.3390/ijerph182010985": {
-    "first_author": "Elena",
-    "author_count": 32,
-    "journal": "International Journal of Environmental Research and Public Health",
-    "year": "2021"
   },
   "10.3390/v14051033": {
     "first_author": "Panatto",
@@ -785,12 +749,6 @@
     "journal": "Clinical Infectious Diseases",
     "year": "2000"
   },
-  "10.1136/ebm.5.3.80": {
-    "first_author": "Kristin",
-    "author_count": 1,
-    "journal": "Evidence Based Medicine",
-    "year": "2000"
-  },
   "10.1016/s2213-2600(24)00140-1": {
     "first_author": "Paul",
     "author_count": 31,
@@ -911,23 +869,11 @@
     "journal": "JAMA",
     "year": "1996"
   },
-  "10.3399/bjgp.2025.0269": {
-    "first_author": "Paul",
-    "author_count": 31,
-    "journal": "British Journal of General Practice",
-    "year": "2025"
-  },
   "10.1089/jir.2023.0193": {
     "first_author": "Hugo",
     "author_count": 9,
     "journal": "Journal of Interferon &amp; Cytokine Research",
     "year": "2024"
-  },
-  "10.1016/j.jhin.2022.05.007": {
-    "first_author": "Amoah",
-    "author_count": 1,
-    "journal": "Journal of Hospital Infection",
-    "year": "2022"
   },
   "10.1002/lio2.686": {
     "first_author": "Yilmaz",

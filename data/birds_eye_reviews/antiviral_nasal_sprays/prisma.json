@@ -10,16 +10,23 @@
   "identified": 27745,
   "excluded_not_relevant": 26981,
   "relevant": 764,
-  "not_retrieved": 4,
-  "retrieved": 760,
-  "excluded_not_treatment": 211,
-  "treatment_studies": 549,
-  "clinical": 167,
+  "not_retrieved": 6,
+  "retrieved": 758,
+  "excluded_not_treatment": 210,
+  "treatment_studies": 548,
+  "clinical": 166,
   "preclinical": 252,
+  "excluded_non_nasal_delivery": 7,
+  "analyzed_design_breakdown": {
+    "rct": 68,
+    "non_randomized_trial": 35,
+    "human_challenge": 43,
+    "observational": 6
+  },
   "study_design_breakdown": {
     "animal_in_vivo": 208,
     "unclear": 130,
-    "rct": 72,
+    "rct": 71,
     "human_challenge": 44,
     "non_randomized_trial": 37,
     "formulation_pk": 21,
@@ -47,14 +54,14 @@
   },
   "organism_breakdown": {
     "unclassified": 161,
-    "human": 149,
+    "human": 148,
     "animal": 143,
     "mixed": 69,
     "in_vitro": 17,
     "ex_vivo": 10
   },
   "indication_breakdown": {
-    "prevention": 169,
+    "prevention": 168,
     "unclassified": 161,
     "treatment": 117,
     "both": 70,
@@ -335,7 +342,6 @@
     "human monoclonal antibody f61",
     "humanized anti-h7n9 neutralizing antibody (chi4b7)",
     "hydroxypropyl methylcellulose (hpmc)",
-    "hydroxypropyl methylcellulose (vicks first defence)",
     "hydroxypropyl methylcellulose and usnic acid (hexedra+)",
     "hypertonic alkaline nasal irrigation",
     "hypertonic saline",
@@ -461,6 +467,6 @@
     "zinc gluconate",
     "zinc sulfate"
   ],
-  "agent_named_total": 417,
-  "agent_distinct": 262
+  "agent_named_total": 416,
+  "agent_distinct": 261
 }

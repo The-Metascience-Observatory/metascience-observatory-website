@@ -12,6 +12,8 @@ export interface PrismaCounts {
   treatment_studies: number;
   clinical: number;
   preclinical: number;
+  excluded_non_nasal_delivery?: number;
+  analyzed_design_breakdown?: Record<string, number>;
   study_design_breakdown: Record<string, number>;
   study_design_groups: { clinical: string[]; preclinical: string[] };
   agent_breakdown: { agent: string; count: number }[];
@@ -210,11 +212,18 @@ export function PrismaDiagram({ counts }: { counts: PrismaCounts }) {
   // case reports branch off it, leaving the controlled "Human clinical trials" box
   // below, whose tree shows the four trial designs this page analyzes.
   const caseSeriesN = sb["case_series"] ?? 0;
-  const trialItems = toItems(
-    counts.study_design_groups.clinical.filter((k) => k !== "case_series")
-  );
+  // Design tree under the FINAL box reflects the analyzed (post-exclusion) trials,
+  // so its leaves sum to the analyzed total. Falls back to the full breakdown.
+  const analyzedSb = counts.analyzed_design_breakdown ?? sb;
+  const trialItems = counts.study_design_groups.clinical
+    .filter((k) => k !== "case_series")
+    .map((k) => ({ key: k, n: analyzedSb[k] ?? 0 }))
+    .filter((x) => x.n > 0)
+    .sort((a, b) => b.n - a.n);
   const clinicalStudies = counts.clinical;
   const clinicalTrials = counts.clinical - caseSeriesN;
+  const excludedNonNasal = counts.excluded_non_nasal_delivery ?? 0;
+  const analyzedTrials = clinicalTrials - excludedNonNasal;
   const otherN = counts.treatment_studies - counts.clinical - counts.preclinical;
 
   return (
@@ -278,10 +287,25 @@ export function PrismaDiagram({ counts }: { counts: PrismaCounts }) {
           excluded={caseSeriesN > 0 ? { title: "excluded — case series / case reports", n: caseSeriesN } : undefined}
         />
         <DownArrow />
+        {/* Neutral "Human clinical trials" box, the non-nasal exclusion branching off
+            it, then the final blue box (with the design tree) for what's analyzed. */}
+        {excludedNonNasal > 0 && (
+          <>
+            <StageRow
+              title="Human clinical trials"
+              n={clinicalTrials}
+              excluded={{
+                title: "excluded — not nasal-delivered (inhaled aerosol / oral / mouthwash / capsule)",
+                n: excludedNonNasal,
+              }}
+            />
+            <DownArrow />
+          </>
+        )}
         <div className="grid md:grid-cols-2">
           <TreeBranch
-            label="Human clinical trials"
-            n={clinicalTrials}
+            label="Nasal-delivery human clinical trials"
+            n={analyzedTrials}
             accent="#2563eb"
             tint="rgba(96,165,250,0.15)"
             items={trialItems}

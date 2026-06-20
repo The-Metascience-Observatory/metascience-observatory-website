@@ -142,7 +142,7 @@ export function ForestPlot({ group }: { group: ForestGroup }) {
   };
 
   return (
-    <div className="border border-border rounded-lg bg-white p-4 mb-6 overflow-x-auto">
+    <div className="border border-border rounded-lg bg-white p-4 mb-6">
       <div className="mb-1 flex flex-wrap items-baseline gap-x-3">
         <h3 className="font-semibold text-foreground capitalize">{group.ingredient}</h3>
         <span className="text-sm text-foreground/70">{group.domainLabel ?? prettyDomain(group.outcome_domain)}</span>
@@ -151,7 +151,7 @@ export function ForestPlot({ group }: { group: ForestGroup }) {
           {group.pooled ? ` · I² = ${group.pooled.i2}%` : " · not pooled"}
         </span>
       </div>
-      <svg width={W} height={H} className="text-foreground" style={{ maxWidth: "100%" }}>
+      <svg viewBox={`0 0 ${W} ${H}`} className="text-foreground" style={{ width: "100%", height: "auto" }}>
         {/* column headers */}
         <text x={0} y={18} fontSize={11} fontWeight={600} fill="currentColor">Trial</text>
         <text x={W} y={18} fontSize={11} fontWeight={600} fill="currentColor" textAnchor="end">

@@ -160,6 +160,41 @@ function loadForestGroups(cites: Map<string, Citation>): { groups: ForestGroup[]
   }
 }
 
+/** Raw extracted arm `route` -> delivery-device bucket for the spray/drops filter. */
+const ROUTE_TO_DELIVERY: Record<string, string> = {
+  nasal_spray: "spray",
+  nasal_drops: "drops",
+  nasal_irrigation: "irrigation",
+};
+
+/** base DOI -> manual delivery-method override (delivery_overrides.json). Used
+ *  where the extracted arm `route` was a generic "intranasal" but the abstract /
+ *  full text explicitly states a spray or drops device. */
+function loadDeliveryOverrides(): Map<string, string> {
+  const map = new Map<string, string>();
+  const fp = dataPath("delivery_overrides.json");
+  if (!fs.existsSync(fp)) return map;
+  try {
+    const raw = JSON.parse(fs.readFileSync(fp, "utf-8")) as { overrides?: Record<string, string> };
+    for (const [doi, method] of Object.entries(raw.overrides ?? {})) {
+      if (doi && method) map.set(doi, method);
+    }
+  } catch (e) {
+    console.error("Failed to load delivery_overrides.json:", e);
+  }
+  return map;
+}
+
+/** Delivery device of a trial = the route of its intervention arm (the active
+ *  spray/drops/etc.), normalized. Generic "intranasal", "inhaled", "oral", etc.
+ *  and missing routes bucket as "other" so spray vs drops stays a clean split. */
+function deliveryMethodOf(sd: Record<string, unknown>): string {
+  const arms = Array.isArray(sd.arms) ? (sd.arms as Record<string, unknown>[]) : [];
+  const pick = arms.find((a) => String(a.type ?? "").startsWith("interv")) ?? arms[0];
+  const route = String(pick?.route ?? "").trim().toLowerCase();
+  return ROUTE_TO_DELIVERY[route] ?? (route ? "other" : "");
+}
+
 const RATIO = new Set([
   "risk_ratio", "odds_ratio", "hazard_ratio", "rate_ratio", "incidence_rate_ratio",
   "adjusted_odds_ratio", "adjusted_risk_ratio", "adjusted_hazard_ratio", "adjusted_rate_ratio",
@@ -170,7 +205,7 @@ const DIFF = new Set([
 ]);
 
 /** trial_extractions.jsonl -> one TrialRow per extracted trial. */
-function loadTrials(cites: Map<string, Citation>, indications: Map<string, string>, verdicts: Map<string, Verdict>): TrialRow[] {
+function loadTrials(cites: Map<string, Citation>, indications: Map<string, string>, verdicts: Map<string, Verdict>, deliveryOverrides: Map<string, string>): TrialRow[] {
   const fp = dataPath("trial_extractions.jsonl");
   if (!fs.existsSync(fp)) return [];
   const out: TrialRow[] = [];
@@ -209,11 +244,22 @@ function loadTrials(cites: Map<string, Citation>, indications: Map<string, strin
     const c = cites.get(baseDoi);
     const v = verdicts.get(baseDoi);
     const n = (ss.n_randomized_total as number) ?? (ss.n_enrolled_total as number) ?? null;
+    const relatedPubs = Array.isArray(r.related_publications)
+      ? (r.related_publications as Record<string, unknown>[])
+          .map((p) => ({
+            doi: String(p.doi ?? ""),
+            relation: String(p.relation ?? ""),
+            label: String(p.label ?? ""),
+          }))
+          .filter((p) => p.doi && p.label)
+      : [];
     out.push({
       doi,
       armLabel: String(r.arm_label ?? ""),
+      relatedPubs,
       ingredient: String(r.agent_canonical ?? ""),
       indication: indications.get(baseDoi) ?? "",
+      deliveryMethod: deliveryOverrides.get(baseDoi) ?? deliveryMethodOf(sd),
       verdict: v?.verdict ?? "",
       verdictRationale: v?.rationale ?? "",
       spray_type: String(r.spray_type ?? ""),
@@ -243,7 +289,8 @@ export default function ResultsPage() {
   const cites = loadCitations();
   const indications = loadIndications();
   const verdicts = loadVerdicts();
-  const trials = loadTrials(cites, indications, verdicts);
+  const deliveryOverrides = loadDeliveryOverrides();
+  const trials = loadTrials(cites, indications, verdicts, deliveryOverrides);
   const { groups, minTrials } = loadForestGroups(cites);
 
   return (

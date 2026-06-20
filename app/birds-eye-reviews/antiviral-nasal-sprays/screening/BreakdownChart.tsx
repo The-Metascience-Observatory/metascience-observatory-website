@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import {
   BarChart,
   Bar,
@@ -25,14 +26,21 @@ export type Segment = { key: string; label: string; color: string };
  *  Renders the default Rectangle (keeps fill, radius, click + hover) then overlays
  *  non-interactive divider lines. `leading` adds a divider at the segment's left
  *  edge too (the boundary with the previous segment) so every study is bounded. */
+const SELECT_OUTLINE = "#4b5563"; // dark grey rectangle drawn around the selected bar
+
 interface TiledSegmentProps {
   x: number; y: number; width: number; height: number;
   payload: Record<string, unknown>; segKey: string; leading: boolean;
+  isLast?: boolean; selectedKey?: string;
   [key: string]: unknown;
 }
 function TiledSegment(props: TiledSegmentProps) {
-  const { x, y, width, height, payload, segKey, leading } = props;
+  const { x, y, width, height, payload, segKey, leading, isLast, selectedKey } = props;
   const value = Number(payload?.[segKey] ?? 0);
+  const hasSelection = selectedKey != null && selectedKey !== "";
+  const isSelected = hasSelection && payload?.key === selectedKey;
+  const dimmed = hasSelection && !isSelected;
+
   const lines: React.ReactNode[] = [];
   if (value > 0 && width > 0) {
     const per = width / value;
@@ -40,14 +48,36 @@ function TiledSegment(props: TiledSegmentProps) {
       const lx = x + k * per;
       lines.push(
         <line key={k} x1={lx} x2={lx} y1={y} y2={y + height}
-          stroke="#fff" strokeWidth={1.5} pointerEvents="none" />
+          stroke="#fff" strokeWidth={1.5} pointerEvents="none"
+          opacity={dimmed ? 0.5 : 1} />
       );
     }
   }
+
+  // Dark-grey outline around the whole selected bar. The left edge is drawn by the
+  // first segment (at the axis origin) and the right edge by the last segment (at the
+  // bar's end) regardless of their own value; top/bottom run along each filled
+  // segment, so the collinear pieces compose one clean rectangle with no inner lines.
+  const outline: React.ReactNode[] = [];
+  if (isSelected) {
+    const ol = (key: string, x1: number, y1: number, x2: number, y2: number) => (
+      <line key={key} x1={x1} y1={y1} x2={x2} y2={y2}
+        stroke={SELECT_OUTLINE} strokeWidth={2} pointerEvents="none" />
+    );
+    if (width > 0) {
+      outline.push(ol("t", x, y, x + width, y));
+      outline.push(ol("b", x, y + height, x + width, y + height));
+    }
+    if (!leading) outline.push(ol("l", x, y, x, y + height));            // first segment → left edge
+    if (isLast) outline.push(ol("r", x + width, y, x + width, y + height)); // last segment → right edge
+  }
+
+  const rectProps = dimmed ? { ...props, fillOpacity: 0.25 } : props;
   return (
     <g>
-      <Rectangle {...props} />
+      <Rectangle {...rectProps} />
       {lines}
+      {outline}
     </g>
   );
 }
@@ -119,6 +149,7 @@ export function BreakdownChart({
   onBarClick,
   clickHint,
   segments,
+  selectedKey,
 }: {
   title: string;
   breakdown: Record<string, number> | Record<string, Record<string, number>>;
@@ -127,9 +158,23 @@ export function BreakdownChart({
   onBarClick?: (key: string) => void;
   clickHint?: string;
   segments?: Segment[];
+  /** When set, keep every bar visible but lighten the others and outline this one. */
+  selectedKey?: string;
 }) {
   const prettyLabel = (key: string) =>
     labels?.[key] ?? key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+
+  // On narrow screens a fixed 220px left label column would swallow the whole
+  // chart width, collapsing the bars (and their per-study dividers) to nothing.
+  // There we drop the label column and render each category name *above* its bar.
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 640px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   const barHeight = 26;
 
@@ -153,7 +198,37 @@ export function BreakdownChart({
         .sort((a, b) => b.count - a.count);
 
   const total = data.reduce((s, d) => s + (segments ? (d.total as number) : (d.count as number)), 0);
-  const chartHeight = data.length * (barHeight + 14) + 50;
+  // Mobile rows need extra vertical room for the stacked label sitting above each bar.
+  const labelRow = isMobile ? 20 : 0;
+  const chartHeight = data.length * (barHeight + 14 + labelRow) + 50;
+
+  // Category-name (YAxis) tick. Clickable when onBarClick is set, so clicking the
+  // ingredient name selects it just like clicking its bar. On mobile the name sits
+  // above-left of its bar (no fixed label column); on desktop it's right-aligned in
+  // the 220px column. The tick payload carries the pretty label, so map back to key.
+  const labelToKey: Record<string, string> = {};
+  for (const d of data) labelToKey[d.label as string] = d.key as string;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const CategoryTick = (p: any) => {
+    const label = p.payload?.value as string;
+    const key = labelToKey[label];
+    const isSelected = selectedKey != null && selectedKey !== "" && key === selectedKey;
+    const clickable = !!onBarClick;
+    const common = {
+      fontSize: 12,
+      fontWeight: isSelected ? 700 : 500,
+      fill: "#374151",
+      cursor: clickable ? "pointer" : undefined,
+      onClick: clickable && key != null ? () => onBarClick!(key) : undefined,
+      className: clickable ? "hover:underline" : undefined,
+    } as const;
+    return isMobile ? (
+      <text x={p.x} y={p.y - barHeight / 2 - 6} textAnchor="start" {...common}>{label}</text>
+    ) : (
+      <text x={p.x} y={p.y} dy="0.355em" textAnchor="end" {...common}>{label}</text>
+    );
+  };
 
   const rowBg = onBarClick
     ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -196,11 +271,12 @@ export function BreakdownChart({
           <YAxis
             type="category"
             dataKey="label"
-            width={220}
+            width={isMobile ? 1 : 220}
             fontSize={12}
             tickLine={false}
             axisLine={false}
             interval={0}
+            tick={<CategoryTick />}
           />
           {segments ? (
             <Tooltip content={<SegmentTooltip segments={segments} />} />
@@ -227,7 +303,7 @@ export function BreakdownChart({
                   onClick={onBarClick ? (_: unknown, index: number) => onBarClick(data[index].key) : undefined}
                   // Custom shape draws the segment plus per-study divider lines.
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  shape={(p: any) => <TiledSegment {...p} segKey={seg.key} leading={si > 0} />}
+                  shape={(p: any) => <TiledSegment {...p} segKey={seg.key} leading={si > 0} isLast={isLast} selectedKey={selectedKey} />}
                   // Row background only on the first segment so it isn't drawn N times.
                   background={si === 0 ? rowBg : undefined}
                 >
@@ -252,9 +328,19 @@ export function BreakdownChart({
               onClick={onBarClick ? (_: unknown, index: number) => onBarClick(data[index].key) : undefined}
               background={rowBg}
             >
-              {data.map((d) => (
-                <Cell key={d.key} fill={d.color} />
-              ))}
+              {data.map((d) => {
+                const hasSelection = selectedKey != null && selectedKey !== "";
+                const isSelected = hasSelection && d.key === selectedKey;
+                return (
+                  <Cell
+                    key={d.key}
+                    fill={d.color}
+                    fillOpacity={hasSelection && !isSelected ? 0.25 : 1}
+                    stroke={isSelected ? SELECT_OUTLINE : undefined}
+                    strokeWidth={isSelected ? 2 : undefined}
+                  />
+                );
+              })}
               <LabelList
                 dataKey="count"
                 position="right"

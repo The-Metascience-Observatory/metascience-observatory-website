@@ -5,12 +5,22 @@ import { ExternalLink } from "lucide-react";
 import { prettyMeasure, prettyDomain } from "./ForestPlot";
 import { fmt, formatLabel } from "./utils";
 
+/** A secondary publication of the same trial (follow-up / commentary), surfaced
+ *  as a labelled "see also" link next to the primary's reference. */
+export interface RelatedPub {
+  doi: string;
+  relation: string; // "follow_up" | "commentary"
+  label: string;
+}
+
 export interface TrialRow {
   doi: string;
   armLabel: string;
+  relatedPubs: RelatedPub[];
   ingredient: string;
   indication: string;
   spray_type: string;
+  deliveryMethod: string;
   design: string;
   n: number | null;
   rob: string;
@@ -36,6 +46,25 @@ export interface TrialRow {
 }
 
 type SortKey = "ingredient" | "design" | "n";
+
+/** Relation -> short prefix for a "see also" secondary-publication link. */
+const RELATION_LABEL: Record<string, string> = {
+  follow_up: "Follow-up",
+  commentary: "Commentary",
+};
+
+const DELIVERY_STYLE: Record<string, string> = {
+  spray: "border-purple-200 bg-purple-50 text-purple-700",
+};
+const DELIVERY_STYLE_DEFAULT = "border-border bg-foreground/[0.04] text-foreground/50";
+
+const DELIVERY_LABEL: Record<string, string> = {
+  spray: "Nasal spray",
+  drops: "Nasal drops",
+  irrigation: "Nasal irrigation",
+  swab: "Nasal swab / application",
+  other: "Other / unspecified delivery",
+};
 
 /** A clickable, sortable column header with an asc/desc/idle indicator. */
 function SortTh({
@@ -116,6 +145,87 @@ function CitationLine({ row }: { row: TrialRow }) {
     <span className="text-foreground/70">
       {segs.map((s, i) => <span key={i}>{i > 0 && ". "}{s}</span>)}
     </span>
+  );
+}
+
+function MobileCard({ row }: { row: TrialRow }) {
+  const href = rowHref(row);
+  return (
+    <div className="border border-border rounded-lg p-3 bg-white space-y-1.5">
+      {href ? (
+        <a href={href} target="_blank" rel="noopener noreferrer"
+          className="text-blue-600 hover:text-blue-700 font-medium leading-snug text-sm">
+          {row.title || row.doi}{" "}
+          <ExternalLink size={10} className="inline align-baseline ml-0.5" />
+        </a>
+      ) : (
+        <span className="font-medium leading-snug text-sm">{row.title || row.doi}</span>
+      )}
+      {(row.authors || row.journal || row.year) && (
+        <div className="text-xs"><CitationLine row={row} /></div>
+      )}
+      {row.armLabel && (
+        <div>
+          <span className="inline-block rounded border border-blue-200 bg-blue-50 text-blue-700 px-1.5 py-0.5 text-[10px]">
+            {row.armLabel}
+          </span>
+        </div>
+      )}
+      {row.abstractOnly && (
+        <div className="text-[10px] tracking-wide text-amber-600/80">(Extracted from abstract only)</div>
+      )}
+      {row.relatedPubs.length > 0 && (
+        <div className="text-[10px] text-foreground/55 leading-snug">
+          See also:{" "}
+          {row.relatedPubs.map((p, i) => (
+            <span key={p.doi}>
+              {i > 0 && " · "}
+              <span className="text-foreground/45">{RELATION_LABEL[p.relation] ?? p.relation}: </span>
+              <a href={`https://doi.org/${p.doi}`} target="_blank" rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-700">
+                {p.label}<ExternalLink size={9} className="inline align-baseline ml-0.5" />
+              </a>
+            </span>
+          ))}
+        </div>
+      )}
+      <div className="text-xs text-foreground/70 space-y-0.5">
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="capitalize">{row.ingredient || "unspecified"}</span>
+          {row.deliveryMethod && (
+            <span className="inline-block rounded border border-purple-200 bg-purple-50 text-purple-700 px-1.5 py-0.5 text-[10px]">
+              {DELIVERY_LABEL[row.deliveryMethod] ?? row.deliveryMethod}
+            </span>
+          )}
+        </div>
+        {(row.design || row.n != null) && (
+          <div className="flex flex-wrap gap-x-3">
+            {row.design && <span>{formatLabel(row.design)}</span>}
+            {row.n != null && <span>N = {row.n.toLocaleString()}</span>}
+          </div>
+        )}
+      </div>
+      {row.primaryName && (
+        <div className="text-xs">
+          <span className="text-foreground/80">{row.primaryName}</span>
+          {row.effMeasure && row.effVal != null && (
+            <span className="text-foreground/60 tabular-nums ml-1">
+              — {prettyMeasure(row.effMeasure)} {fmt(row.effVal)}
+              {row.ciLo != null && row.ciHi != null && ` (${fmt(row.ciLo)}–${fmt(row.ciHi)})`}
+              {row.pVal != null && `, p=${fmt(row.pVal)}`}
+            </span>
+          )}
+        </div>
+      )}
+      <div className="flex items-center gap-2 text-xs flex-wrap">
+        <VerdictBadge row={row} />
+        {row.rob && (
+          <span className={ROB_STYLE[row.rob] ?? "text-foreground/50"}>
+            RoB: {formatLabel(row.rob)}
+          </span>
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -232,11 +342,26 @@ export function ResultsTable({
         )}
       </div>
 
+      <div className="flex md:hidden flex-wrap items-center gap-x-3 gap-y-1 text-xs text-foreground/60">
+        <span>Sort:</span>
+        {(["ingredient", "design", "n"] as SortKey[]).map((k) => (
+          <button key={k} onClick={() => toggleSort(k)}
+            className={`hover:text-foreground ${sortKey === k ? "font-semibold text-foreground" : ""}`}>
+            {k === "n" ? "N" : k.charAt(0).toUpperCase() + k.slice(1)}
+            {sortKey === k ? (sortDir === "asc" ? " ▲" : " ▼") : ""}
+          </button>
+        ))}
+      </div>
+
       <p className="text-sm text-foreground/50">
         Showing {visible.length.toLocaleString()} of {filtered.length.toLocaleString()} trials
       </p>
 
-      <div className="overflow-x-auto">
+      <div className="block md:hidden space-y-3">
+        {visible.map((row) => <MobileCard key={row.doi} row={row} />)}
+      </div>
+
+      <div className="hidden md:block overflow-x-auto">
         <table className="w-full text-sm text-foreground border-collapse">
           <thead>
             <tr className="border-b border-border text-left">
@@ -281,8 +406,39 @@ export function ResultsTable({
                         (Extracted from abstract only)
                       </div>
                     )}
+                    {row.relatedPubs.length > 0 && (
+                      <div className="mt-0.5 text-[10px] text-foreground/55 leading-snug">
+                        See also:{" "}
+                        {row.relatedPubs.map((p, i) => (
+                          <span key={p.doi}>
+                            {i > 0 && " · "}
+                            <span className="text-foreground/45">
+                              {RELATION_LABEL[p.relation] ?? p.relation}:{" "}
+                            </span>
+                            <a
+                              href={`https://doi.org/${p.doi}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-600 hover:text-blue-700"
+                            >
+                              {p.label}
+                              <ExternalLink size={9} className="inline align-baseline ml-0.5" />
+                            </a>
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </td>
-                  <td className="p-2 text-xs capitalize">{row.ingredient || "unspecified"}</td>
+                  <td className="p-2 text-xs">
+                    <div className="capitalize">{row.ingredient || "unspecified"}</div>
+                    {row.deliveryMethod && (
+                      <div className="mt-0.5">
+                        <span className={`inline-block rounded border px-1.5 py-0.5 text-[10px] ${DELIVERY_STYLE[row.deliveryMethod] ?? DELIVERY_STYLE_DEFAULT}`}>
+                          {DELIVERY_LABEL[row.deliveryMethod] ?? row.deliveryMethod}
+                        </span>
+                      </div>
+                    )}
+                  </td>
                   <td className="p-2 text-xs">{row.design ? formatLabel(row.design) : "—"}</td>
                   <td className="p-2 text-xs text-right tabular-nums">{row.n ?? "—"}</td>
                   <td className="p-2 text-xs">
@@ -308,7 +464,7 @@ export function ResultsTable({
             })}
           </tbody>
         </table>
-      </div>
+      </div>  {/* end desktop overflow-x-auto */}
     </div>
   );
 }

@@ -22,6 +22,18 @@ const formatDesign = (s: string) =>
 
 const designKey = (r: TrialRow) => r.design || "unknown";
 
+// Delivery device (spray vs drops vs ...), derived in page.tsx from the
+// intervention arm's extracted `route`. Drives the top-level delivery filter.
+const DELIVERY_LABELS: Record<string, string> = {
+  spray: "Nasal spray",
+  drops: "Nasal drops",
+  irrigation: "Nasal irrigation",
+  swab: "Nasal swab / application",
+  other: "Other / unspecified",
+};
+const DELIVERY_ORDER = ["spray", "drops", "irrigation", "swab", "other"];
+const deliveryKey = (t: TrialRow) => t.deliveryMethod || "other";
+
 /** Pretty ingredient label (matches BreakdownChart's prettyLabel). */
 const fmtIngredient = (s: string) =>
   s.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
@@ -107,6 +119,27 @@ export function ResultsClientWrapper({
   const ingredientKey = (t: TrialRow) => t.ingredient || "unspecified";
   const ingredientFilter = (t: TrialRow) => !ingredient || ingredientKey(t) === ingredient;
 
+  // Delivery-method multi-select filter (spray vs drops vs ...), checkbox panel, all
+  // checked by default. Ordered spray, drops, irrigation, other.
+  const allDeliveryList = useMemo(
+    () => Object.keys(countBy(trials, deliveryKey)).sort(
+      (a, b) => DELIVERY_ORDER.indexOf(a) - DELIVERY_ORDER.indexOf(b)
+    ),
+    [trials]
+  );
+  const [selectedDeliveries, setSelectedDeliveries] = useState<Set<string>>(
+    () => new Set(trials.map(deliveryKey))
+  );
+  const deliveryFilter = (t: TrialRow) => selectedDeliveries.has(deliveryKey(t));
+  const toggleDelivery = (k: string) =>
+    setSelectedDeliveries((prev) => {
+      const next = new Set(prev);
+      if (next.has(k)) next.delete(k); else next.add(k);
+      return next;
+    });
+  const selectAllDeliveries = () => setSelectedDeliveries(new Set(allDeliveryList));
+  const clearAllDeliveries = () => setSelectedDeliveries(new Set());
+
   // Top-level trial-outcome-focus filter: a checkbox per outcome type, all checked
   // by default. Each trial falls in exactly one bucket (by its primary outcome domain).
   const [selectedTypes, setSelectedTypes] = useState<Set<string>>(
@@ -145,13 +178,24 @@ export function ResultsClientWrapper({
   // derive from this ingredient-narrowed base.
   const afterIngredient = useMemo(() => trials.filter(ingredientFilter), [trials, ingredient]);
 
-  // Cross-filtering within the ingredient-narrowed base: each panel's counts come from
-  // the data filtered by the OTHER panel, so the numbers stay in sync.
-  const typeOnly = useMemo(() => afterIngredient.filter(typeFilter), [afterIngredient, selectedTypes]);
-  const designOnly = useMemo(() => afterIngredient.filter(designFilter), [afterIngredient, selectedDesigns]);
-  const filteredTrials = useMemo(
+  // Cross-filtering between the three checkbox panels (delivery, outcome focus, trial
+  // type): each panel's denominator + counts come from the base filtered by the OTHER
+  // two panels, so every panel's numbers stay in sync.
+  const exceptDelivery = useMemo(
     () => afterIngredient.filter((t) => typeFilter(t) && designFilter(t)),
     [afterIngredient, selectedTypes, selectedDesigns]
+  );
+  const exceptType = useMemo(
+    () => afterIngredient.filter((t) => deliveryFilter(t) && designFilter(t)),
+    [afterIngredient, selectedDeliveries, selectedDesigns]
+  );
+  const exceptDesign = useMemo(
+    () => afterIngredient.filter((t) => deliveryFilter(t) && typeFilter(t)),
+    [afterIngredient, selectedDeliveries, selectedTypes]
+  );
+  const filteredTrials = useMemo(
+    () => afterIngredient.filter((t) => deliveryFilter(t) && typeFilter(t) && designFilter(t)),
+    [afterIngredient, selectedDeliveries, selectedTypes, selectedDesigns]
   );
 
   // Ingredient dropdown options — over ALL trials (independent of the current selection,
@@ -164,10 +208,18 @@ export function ResultsClientWrapper({
       .map((k) => ({ key: k, count: counts[k] }));
   }, [trials]);
 
-  // Per-outcome-type counts react to the trial-type selection (over designOnly).
-  const typeCountMap = useMemo(() => countBy(designOnly, outcomeType), [designOnly]);
-  // Per-design counts react to the outcome-type selection (over typeOnly).
-  const designCountMap = useMemo(() => countBy(typeOnly, designKey), [typeOnly]);
+  // Each panel's per-option counts come from the base filtered by the OTHER two panels.
+  const deliveryCountMap = useMemo(() => countBy(exceptDelivery, deliveryKey), [exceptDelivery]);
+  const typeCountMap = useMemo(() => countBy(exceptType, outcomeType), [exceptType]);
+  const designCountMap = useMemo(() => countBy(exceptDesign, designKey), [exceptDesign]);
+
+  // A checkbox card is "active" (some box unchecked) when its selection isn't the
+  // full set — darken its background to signal the filter is narrowing results.
+  const cardBg = (active: boolean) =>
+    `mb-4 border border-border rounded-lg p-4 ${active ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`;
+  const deliveryActive = selectedDeliveries.size !== allDeliveryList.length;
+  const typesActive = selectedTypes.size !== OUTCOME_TYPES.length;
+  const designsActive = selectedDesigns.size !== allDesignList.length;
 
   // Breakdowns recomputed from the trial-type-filtered set so the charts react.
   // Trials with no canonical ingredient are bucketed as "unspecified" so the
@@ -176,9 +228,17 @@ export function ResultsClientWrapper({
   // control / inconclusive). Trials with no canonical ingredient bucket as
   // "unspecified" so the bars still sum to the full trial count. (BreakdownChart
   // sorts the bars by total internally.)
+  //
+  // This chart reacts to the other panels but NOT to the ingredient selection, so
+  // every ingredient bar stays visible — a click highlights the bar (and filters
+  // the rest of the page) rather than isolating it.
+  const ingredientChartBase = useMemo(
+    () => trials.filter((t) => deliveryFilter(t) && typeFilter(t) && designFilter(t)),
+    [trials, selectedDeliveries, selectedTypes, selectedDesigns]
+  );
   const ingredientVerdictChart = useMemo(
-    () => verdictBreakdown(filteredTrials, (r) => r.ingredient),
-    [filteredTrials]
+    () => verdictBreakdown(ingredientChartBase, (r) => r.ingredient),
+    [ingredientChartBase]
   );
 
   // Trials by primary outcome domain, also split by result direction.
@@ -204,12 +264,44 @@ export function ResultsClientWrapper({
 
   return (
     <>
+      {/* Delivery-method filter (spray vs drops, checkboxes) — narrows everything below. */}
+      <div className={cardBg(deliveryActive)}>
+        <div className="flex items-center gap-3 mb-2">
+          <span className="text-sm font-medium text-foreground">Filter by delivery method</span>
+          <span className="text-xs text-foreground/50">
+            ({filteredTrials.length} of {exceptDelivery.length} trials selected)
+          </span>
+          <button onClick={selectAllDeliveries} className="text-xs text-blue-600 hover:text-blue-700 ml-auto">Select all</button>
+          <button onClick={clearAllDeliveries} className="text-xs text-blue-600 hover:text-blue-700">Clear all</button>
+        </div>
+        <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+          {allDeliveryList.map((k) => {
+            const checked = selectedDeliveries.has(k);
+            return (
+              <label key={k}
+                className={`inline-flex items-center gap-1.5 cursor-pointer text-sm rounded px-1.5 py-0.5 ${checked ? "" : "bg-foreground/[0.08]"}`}>
+                <input
+                  type="checkbox"
+                  checked={checked}
+                  onChange={() => toggleDelivery(k)}
+                  className="rounded border-foreground/30 text-blue-600 focus:ring-blue-500"
+                />
+                <span className={checked ? "text-foreground" : "text-foreground/50"}>
+                  {DELIVERY_LABELS[k] ?? k}
+                </span>
+                <span className="text-xs text-foreground/40">({deliveryCountMap[k] ?? 0})</span>
+              </label>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Trial-outcome-focus filter (checkboxes, one per outcome type) */}
-      <div className="mb-4 border border-border rounded-lg p-4 bg-foreground/[0.02]">
+      <div className={cardBg(typesActive)}>
         <div className="flex items-center gap-3 mb-2">
           <span className="text-sm font-medium text-foreground">Filter by trial outcome focus</span>
           <span className="text-xs text-foreground/50">
-            ({filteredTrials.length} of {designOnly.length} trials selected)
+            ({filteredTrials.length} of {exceptType.length} trials selected)
           </span>
           <button onClick={selectAllTypes} className="text-xs text-blue-600 hover:text-blue-700 ml-auto">Select all</button>
           <button onClick={clearAllTypes} className="text-xs text-blue-600 hover:text-blue-700">Clear all</button>
@@ -237,11 +329,11 @@ export function ResultsClientWrapper({
       </div>
 
       {/* Trial-type filter (long-covid style) */}
-      <div className="mb-4 border border-border rounded-lg p-4 bg-foreground/[0.02]">
+      <div className={cardBg(designsActive)}>
         <div className="flex items-center gap-3 mb-2">
           <span className="text-sm font-medium text-foreground">Filter by trial type</span>
           <span className="text-xs text-foreground/50">
-            ({filteredTrials.length} of {typeOnly.length} trials selected)
+            ({filteredTrials.length} of {exceptDesign.length} trials selected)
           </span>
           <button onClick={selectAllDesigns} className="text-xs text-blue-600 hover:text-blue-700 ml-auto">Select all</button>
           <button onClick={clearAllDesigns} className="text-xs text-blue-600 hover:text-blue-700">Clear all</button>
@@ -269,7 +361,7 @@ export function ResultsClientWrapper({
       </div>
 
       {/* Ingredient filter — the outermost filter; narrows everything below. */}
-      <div className="mb-8 border border-border rounded-lg p-4 bg-foreground/[0.02]">
+      <div className={`mb-8 border border-border rounded-lg p-4 ${ingredient ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`}>
         <div className="flex items-center gap-3 flex-wrap">
           <span className="text-sm font-medium text-foreground">Filter by ingredient</span>
           <select
@@ -296,10 +388,11 @@ export function ResultsClientWrapper({
       {/* Breakdown charts */}
       {Object.keys(ingredientVerdictChart).length > 0 && (
         <BreakdownChart title="Trials by Ingredient" breakdown={ingredientVerdictChart}
-          segments={VERDICT_SEGMENTS} onBarClick={(k) => setIngredient(k)}
-          clickHint="Each bar is split by result direction — click a bar to filter the whole dashboard to that ingredient." />
+          segments={VERDICT_SEGMENTS} selectedKey={ingredient}
+          onBarClick={(k) => setIngredient((cur) => (cur === k ? undefined : k))}
+          clickHint="Each bar is split by result direction — click a bar to filter the whole dashboard to that ingredient (click again to clear)." />
       )}
-      {Object.keys(domainVerdictChart).length > 0 && (
+      {!typesActive && Object.keys(domainVerdictChart).length > 0 && (
         <BreakdownChart title="Trials by Primary Outcome Domain" breakdown={domainVerdictChart}
           segments={VERDICT_SEGMENTS} labels={DOMAIN_LABELS} onBarClick={(k) => setDomain(k)}
           clickHint="Each bar is split by result direction — click a bar to filter the table below." />

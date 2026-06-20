@@ -1,0 +1,33 @@
+{
+  "_note": "Manual delivery-device overrides keyed by base DOI. Applied in page.tsx loadTrials() on top of the route-derived delivery method. Used where the extracted arm `route` was generic/ambiguous but the abstract/full text (or manual review) establishes the device. Values: spray | drops | irrigation | swab | other.",
+  "overrides": {
+    "10.1073/pnas.0912186107": "spray",
+    "10.1016/j.antiviral.2007.11.009": "spray",
+    "10.1136/bmjopen-2023-073735": "spray",
+    "pmid_35777803": "spray",
+    "10.1183/23120541.00199-2024": "spray",
+    "10.15789/1563-0625-eoi-2300": "spray",
+    "10.1186/s12879-025-10584-4": "spray",
+    "10.1186/s13063-023-07128-z": "spray",
+    "10.1093/infdis/158.1.166": "drops",
+
+    "10.1007/bf02126707": "spray",
+    "10.1016/0166-3542(90)90061-b": "spray",
+    "10.1089/jir.1988.8.591": "spray",
+    "10.1086/341455": "spray",
+    "10.1093/infdis/154.1.128": "spray",
+    "10.1128/aac.33.3.387": "spray",
+    "10.1128/iai.9.3.506-510.1974": "spray",
+    "pmid_8544269": "spray",
+    "10.5694/j.1326-5377.1990.tb125353.x": "spray",
+
+    "10.1056/nejm199709253371302": "spray",
+    "10.1177/135965359900400202": "spray",
+    "10.1086/314904": "spray",
+    "10.2165/00003495-200262010-00004": "spray",
+    "10.1086/313696": "spray",
+
+    "10.1017/ash.2022.199": "swab",
+    "10.4103/jfmpc.jfmpc_993_21": "swab"
+  }
+}
