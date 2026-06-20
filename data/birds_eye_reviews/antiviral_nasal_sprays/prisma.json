@@ -18,9 +18,9 @@
   "preclinical": 252,
   "excluded_non_nasal_delivery": 7,
   "analyzed_design_breakdown": {
+    "human_challenge": 43,
     "rct": 68,
     "non_randomized_trial": 35,
-    "human_challenge": 43,
     "observational": 6
   },
   "study_design_breakdown": {
@@ -133,7 +133,7 @@
       "count": 4
     },
     {
-      "agent": "baby shampoo nasal rinse",
+      "agent": "baby shampoo",
       "count": 3
     },
     {

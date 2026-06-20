@@ -196,14 +196,23 @@ export function LongCovidDashboard(props: DashboardProps) {
   const selectAll = () => setSelectedDesignTypes(new Set(allDesignTypes));
   const selectNone = () => setSelectedDesignTypes(new Set());
 
-  const isFiltered = selectedDesignTypes.size < allDesignTypes.size || !(lcDefWho && lcDefBelow);
+  const isFiltered = selectedDesignTypes.size < allDesignTypes.size || !(lcDefWho && lcDefBelow) || interventionNameFilter !== null;
 
   // Recompute aggregated data when filters change
   const filteredMetas = useMemo(
     () => lcDefFilteredMetas.filter((m) => selectedDesignTypes.has(m.design_type || "unknown")),
     [selectedDesignTypes, lcDefFilteredMetas]
   );
-  const recomputed = useMemo(() => aggregateFromMetas(filteredMetas), [filteredMetas]);
+  // Intervention name filter is the outermost filter — it narrows both the charts
+  // and the table. Filter metas directly so aggregateFromMetas produces correct counts.
+  const interventionFilteredMetas = useMemo(
+    () =>
+      interventionNameFilter
+        ? filteredMetas.filter((m) => trialHasFacet(m.facets, "intervention", interventionNameFilter))
+        : filteredMetas,
+    [filteredMetas, interventionNameFilter]
+  );
+  const recomputed = useMemo(() => aggregateFromMetas(interventionFilteredMetas), [interventionFilteredMetas]);
 
   const effectiveProps: DashboardProps = useMemo(() => {
     if (!isFiltered) return props;
@@ -224,10 +233,11 @@ export function LongCovidDashboard(props: DashboardProps) {
         if (lcDefWho && !lcDefBelow) return r.min_weeks != null && r.min_weeks >= 12;
         if (!lcDefWho && lcDefBelow) return r.min_weeks != null && r.min_weeks < 12;
         if (!lcDefWho && !lcDefBelow) return false;
+        if (interventionNameFilter && !trialHasFacet(r.facets, "intervention", interventionNameFilter)) return false;
         return true;
       }),
     };
-  }, [isFiltered, props, recomputed, selectedDesignTypes, lcDefWho, lcDefBelow]);
+  }, [isFiltered, props, recomputed, selectedDesignTypes, lcDefWho, lcDefBelow, interventionNameFilter]);
 
   // ── Shareable links: sync filter state ⇄ URL query string ──────────
   // We use window.history rather than next/navigation so updating the URL

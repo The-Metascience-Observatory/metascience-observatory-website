@@ -254,7 +254,7 @@
       ]
     },
     {
-      "ingredient": "baby shampoo nasal rinse",
+      "ingredient": "baby shampoo",
       "outcome_domain": "viral_load",
       "effect_measure": "mean_difference",
       "n_trials": 1,
