@@ -83,6 +83,7 @@ function loadData(): ScreeningRow[] {
       is_relevant: row.is_relevant ?? "",
       studies_treatment: row.studies_treatment ?? "",
       trial_type: row.trial_type ?? "",
+      phase: row.phase ?? "",
       is_excluded: row.is_excluded ?? "",
       exclusion_reason: row.exclusion_reason ?? "",
       topics: (row.topics ?? "").split("|").map((t) => t.trim()).filter(Boolean).slice(0, 5),

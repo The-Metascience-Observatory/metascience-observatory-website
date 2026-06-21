@@ -1,10 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { StudyTypeChart } from "./StudyTypeChart";
 import { DrugChart } from "./DrugChart";
 import { BreakdownChart } from "./BreakdownChart";
-import { ScreeningTable, ScreeningRow } from "./ScreeningTable";
+import { ScreeningTable, ScreeningRow, PHASE_LABELS } from "./ScreeningTable";
+
+const PHASE_COLORS: Record<string, string> = {
+  phase_1: "#7cb5ec",
+  phase_1_2: "#5fa8e0",
+  phase_2: "#2e86c1",
+  phase_2_3: "#1f6fa8",
+  phase_3: "#1a5276",
+  phase_4: "#16a085",
+  unclear: "#94a3b8",
+};
 
 const ORGANISM_LABELS: Record<string, string> = {
   human: "Human",
@@ -72,6 +82,7 @@ export function ScreeningClientWrapper({
   const [designFilter, setDesignFilter] = useState<string | undefined>(undefined);
   const [organismFilter, setOrganismFilter] = useState<string | undefined>(undefined);
   const [indicationFilter, setIndicationFilter] = useState<string | undefined>(undefined);
+  const [phaseFilter, setPhaseFilter] = useState<string | undefined>(undefined);
   const [filterKey, setFilterKey] = useState(0);
 
   const clearAll = () => {
@@ -80,7 +91,22 @@ export function ScreeningClientWrapper({
     setDesignFilter(undefined);
     setOrganismFilter(undefined);
     setIndicationFilter(undefined);
+    setPhaseFilter(undefined);
   };
+
+  // "Trials by Phase" — computed from the rows (interventional trials only;
+  // not_applicable/blank rows are observational/preclinical and excluded so the
+  // chart shows the phase distribution of actual clinical trials). Counts here
+  // match the table's Phase filter (both read row.phase).
+  const phaseBreakdown = useMemo(() => {
+    const m: Record<string, number> = {};
+    for (const r of rows) {
+      const p = r.phase;
+      if (!p || p === "not_applicable") continue;
+      m[p] = (m[p] ?? 0) + 1;
+    }
+    return m;
+  }, [rows]);
 
   // Each chart drives a single-dimension filter; clicking one bar clears the
   // others so the table shows exactly the papers that bar represents. (The
@@ -109,6 +135,12 @@ export function ScreeningClientWrapper({
     setFilterKey((k) => k + 1);
   };
 
+  const handlePhaseClick = (phase: string) => {
+    clearAll();
+    setPhaseFilter(phase);
+    setFilterKey((k) => k + 1);
+  };
+
   return (
     <>
       {studyType && <StudyTypeChart {...studyType} onBarClick={handleDesignClick} />}
@@ -133,6 +165,16 @@ export function ScreeningClientWrapper({
         />
       )}
       {drug && <DrugChart {...drug} onBarClick={handleDrugClick} />}
+      {Object.keys(phaseBreakdown).length > 0 && (
+        <BreakdownChart
+          title="Clinical Trials by Phase"
+          breakdown={phaseBreakdown}
+          labels={PHASE_LABELS}
+          colors={PHASE_COLORS}
+          onBarClick={handlePhaseClick}
+          clickHint="Interventional trials only (observational / preclinical excluded). Click a bar to filter the table below to that phase."
+        />
+      )}
 
       <ScreeningTable
         key={filterKey}
@@ -142,6 +184,7 @@ export function ScreeningClientWrapper({
         externalDesignFilter={designFilter}
         externalOrganismFilter={organismFilter}
         externalIndicationFilter={indicationFilter}
+        externalPhaseFilter={phaseFilter}
         sprayTypes={sprayTypes}
         compounds={drug?.agents.map((a) => a.agent)}
       />

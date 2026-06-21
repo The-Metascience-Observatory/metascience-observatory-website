@@ -1,0 +1,3332 @@
+{
+  "min_trials": 2,
+  "groups": [
+    {
+      "ingredient": "acupoint injection",
+      "outcome_domain": "periodic_limb_movements",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1097/md.0000000000032317",
+          "first_author": "Takero",
+          "year": 2022,
+          "effect": 1.375,
+          "ci_low": -69.53,
+          "ci_high": 66.78,
+          "p_value": 0.97,
+          "n_total": 8,
+          "outcome_name": "Periodic Leg Movement Index (PLMI) during SIT",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "acupoint injection",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1097/md.0000000000032317",
+          "first_author": "Takero",
+          "year": 2022,
+          "effect": -42.37,
+          "ci_low": -59.19,
+          "ci_high": -19.81,
+          "p_value": 0.001,
+          "n_total": 8,
+          "outcome_name": "Mean Leg Discomfort Score (MLDS) during SIT",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "acupressure",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.bj.2021.05.005",
+          "first_author": "Li-Hung",
+          "year": 2022,
+          "effect": -0.05,
+          "ci_low": -0.27,
+          "ci_high": 0.18,
+          "p_value": 0.6656,
+          "n_total": 27,
+          "outcome_name": "PSQI subscale S5: Sleep disturbance",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "acupressure",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.bj.2021.05.005",
+          "first_author": "Li-Hung",
+          "year": 2022,
+          "effect": 3.7,
+          "ci_low": 1.62,
+          "ci_high": 5.78,
+          "p_value": 0.0013,
+          "n_total": 27,
+          "outcome_name": "RLS severity (International Restless Legs Syndrome Rating Scale)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "acupuncture",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1089/jicm.2023.0791",
+          "first_author": "Jia-Ming",
+          "year": 2024,
+          "effect": -1.513,
+          "ci_low": -2.591,
+          "ci_high": -0.435,
+          "p_value": 0.006,
+          "n_total": 41,
+          "outcome_name": "Insomnia Severity Index (ISI)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "acupuncture",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1089/jicm.2023.0791",
+          "first_author": "Jia-Ming",
+          "year": 2024,
+          "effect": -1.34,
+          "ci_low": -2.227,
+          "ci_high": -0.452,
+          "p_value": 0.003,
+          "n_total": 41,
+          "outcome_name": "International Restless Legs Syndrome Rating Scale (IRLSRS)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "aromatherapy massage",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.3390/geriatrics6040099",
+          "first_author": "Mahbobeh",
+          "year": 2021,
+          "effect": -2.71,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.01,
+          "n_total": 105,
+          "outcome_name": "Severity of Restless Legs Syndrome",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "cabergoline",
+      "outcome_domain": "periodic_limb_movements",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1212/01.wnl.0000237742.08297.22",
+          "first_author": "Oertel",
+          "year": 2006,
+          "effect": -13.1,
+          "ci_low": -21.3,
+          "ci_high": -5.0,
+          "p_value": 0.0024,
+          "n_total": 43,
+          "outcome_name": "Periodic leg movements during sleep arousal index (PLMS-AI)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "cabergoline",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1212/01.wnl.0000237742.08297.22",
+          "first_author": "Oertel",
+          "year": 2006,
+          "effect": 6.79,
+          "ci_low": 0.18,
+          "ci_high": 13.39,
+          "p_value": 0.0443,
+          "n_total": 43,
+          "outcome_name": "Sleep efficiency",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "cabergoline",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 2,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1212/01.wnl.0000147297.51023.c8",
+          "first_author": "Stiasny-Kolster",
+          "year": 2004,
+          "effect": 2.81,
+          "ci_low": 1.01,
+          "ci_high": 4.6,
+          "p_value": 0.0026,
+          "n_total": 86,
+          "outcome_name": "RLS-6 Scale: Severity of RLS symptoms during the night",
+          "weight": 0.5009
+        },
+        {
+          "paper_id": "10.1002/mds.21401",
+          "first_author": "Claudia",
+          "year": 2007,
+          "effect": -6.6,
+          "ci_low": -8.6,
+          "ci_high": -4.7,
+          "p_value": 0.0001,
+          "n_total": 361,
+          "outcome_name": "IRLS total score change from baseline to Week 6/8 (short-term primary endpoint)",
+          "weight": 0.4991
+        }
+      ],
+      "pooled": {
+        "effect": -1.887,
+        "ci_low": -11.1086,
+        "ci_high": 7.3346,
+        "i2": 97.9,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "counterstrain manipulation",
+      "outcome_domain": "other",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1179/1753615412y.0000000011",
+          "first_author": "Theo",
+          "year": 2012,
+          "effect": 0.84,
+          "ci_low": 0.12,
+          "ci_high": 1.56,
+          "p_value": 0.0228,
+          "n_total": 39,
+          "outcome_name": "Clinical Global Impression of Improvement (CGI-I) at week 6",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "counterstrain manipulation",
+      "outcome_domain": "quality_of_life",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1179/1753615412y.0000000011",
+          "first_author": "Theo",
+          "year": 2012,
+          "effect": 27.83,
+          "ci_low": 5.1,
+          "ci_high": 50.57,
+          "p_value": 0.0179,
+          "n_total": 39,
+          "outcome_name": "Patient Specific Outcome Score (PSOS) at week 6",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "counterstrain manipulation",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1179/1753615412y.0000000011",
+          "first_author": "Theo",
+          "year": 2012,
+          "effect": -0.48,
+          "ci_low": -1.09,
+          "ci_high": 0.129,
+          "p_value": 0.119,
+          "n_total": 39,
+          "outcome_name": "Sleep loss (hours lost per night due to RLS)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "counterstrain manipulation",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1179/1753615412y.0000000011",
+          "first_author": "Theo",
+          "year": 2012,
+          "effect": -8.06,
+          "ci_low": -12.96,
+          "ci_high": -3.15,
+          "p_value": 0.0021,
+          "n_total": 39,
+          "outcome_name": "International Restless Legs Scale (IRLS) total score change from baseline to week 6",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "dipyridamole",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1002/mds.28668",
+          "first_author": "Diego",
+          "year": 2021,
+          "effect": 5.11,
+          "ci_low": 2.83,
+          "ci_high": 7.38,
+          "p_value": 0.001,
+          "n_total": 28,
+          "outcome_name": "N3 sleep percentage (PSG)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "ferric carboxymaltose",
+      "outcome_domain": "periodic_limb_movements",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.sleep.2015.08.006",
+          "first_author": "Juliane",
+          "year": 2015,
+          "effect": -10,
+          "ci_low": -17.4,
+          "ci_high": -2.0,
+          "p_value": 0.001,
+          "n_total": null,
+          "outcome_name": "Periodic limb movement index (PLM index; PLMs per hour of sleep)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "ferric carboxymaltose",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.sleep.2015.08.006",
+          "first_author": "Juliane",
+          "year": 2015,
+          "effect": -3,
+          "ci_low": -4.38,
+          "ci_high": -0.25,
+          "p_value": 0.029,
+          "n_total": null,
+          "outcome_name": "Pittsburgh Sleep Quality Index (PSQI)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "ferric carboxymaltose",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 2,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1002/mds.27040",
+          "first_author": "Claudia",
+          "year": 2017,
+          "effect": -2.9,
+          "ci_low": -5.93,
+          "ci_high": 1.02,
+          "p_value": 0.163,
+          "n_total": 110,
+          "outcome_name": "International Restless Legs Syndrome Severity Scale (IRLS) total score",
+          "weight": 0.5192
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2015.08.006",
+          "first_author": "Juliane",
+          "year": 2015,
+          "effect": -13,
+          "ci_low": -18.63,
+          "ci_high": -8.21,
+          "p_value": 0.0005,
+          "n_total": null,
+          "outcome_name": "International Restless Legs Syndrome Study Group rating scale score (IRLS)",
+          "weight": 0.4808
+        }
+      ],
+      "pooled": {
+        "effect": -7.7558,
+        "ci_low": -17.6463,
+        "ci_high": 2.1347,
+        "i2": 90.0,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "foot massage and heat therapy",
+      "outcome_domain": "quality_of_life",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1371/journal.pone.0230951",
+          "first_author": "Ariane",
+          "year": 2020,
+          "effect": 13.0,
+          "ci_low": -8.0,
+          "ci_high": 34.0,
+          "p_value": 0.215,
+          "n_total": 28,
+          "outcome_name": "Restless Legs Quality of Life questionnaire (RLS QOL) summary score",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "foot massage and heat therapy",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1371/journal.pone.0230951",
+          "first_author": "Ariane",
+          "year": 2020,
+          "effect": -15.7,
+          "ci_low": -27.2,
+          "ci_high": -4.1,
+          "p_value": 0.01,
+          "n_total": 28,
+          "outcome_name": "Medical Outcomes Study Sleep scale: Sleep Problems Index 9-item",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "foot massage and heat therapy",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "risk_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1371/journal.pone.0230951",
+          "first_author": "Ariane",
+          "year": 2020,
+          "effect": -0.138,
+          "ci_low": -0.547,
+          "ci_high": 0.271,
+          "p_value": 0.508,
+          "n_total": 28,
+          "outcome_name": "Optimal Sleep Indicator",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "foot massage and heat therapy",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1371/journal.pone.0230951",
+          "first_author": "Ariane",
+          "year": 2020,
+          "effect": -8.4,
+          "ci_low": -14.1,
+          "ci_high": -2.7,
+          "p_value": 0.005,
+          "n_total": 28,
+          "outcome_name": "International Restless Legs Severity Scale (IRLSS)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "gabapentin enacarbil",
+      "outcome_domain": "daytime_functioning",
+      "effect_measure": "mean_difference",
+      "n_trials": 3,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1002/mds.23771",
+          "first_author": "John",
+          "year": 2011,
+          "effect": 0.86,
+          "ci_low": 0.51,
+          "ci_high": 1.2,
+          "p_value": 0.0001,
+          "n_total": 136,
+          "outcome_name": "Feeling rested upon awakening (SPSD)",
+          "weight": 0.3636
+        },
+        {
+          "paper_id": "10.3109/07853890.2015.1025825",
+          "first_author": "Richard",
+          "year": 2015,
+          "effect": -1.2,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.012,
+          "n_total": 671,
+          "outcome_name": "POMS Fatigue-Inertia subscale - treatment difference (no-to-moderate subgroup)",
+          "weight": 0.33
+        },
+        {
+          "paper_id": "10.2147/jprls.s40804",
+          "first_author": "Richard",
+          "year": 2013,
+          "effect": -1.3,
+          "ci_low": -2.57,
+          "ci_high": -0.1,
+          "p_value": 0.0349,
+          "n_total": 427,
+          "outcome_name": "Epworth Sleepiness Scale (ESS) Total Score",
+          "weight": 0.3064
+        }
+      ],
+      "pooled": {
+        "effect": -0.4816,
+        "ci_low": -2.1356,
+        "ci_high": 1.1724,
+        "i2": 92.0,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "gabapentin enacarbil",
+      "outcome_domain": "mood_anxiety",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.3109/07853890.2015.1025825",
+          "first_author": "Richard",
+          "year": 2015,
+          "effect": -0.9,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.005,
+          "n_total": 671,
+          "outcome_name": "POMS Depression-Dejection subscale - treatment difference (no-to-moderate subgroup)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "gabapentin enacarbil",
+      "outcome_domain": "periodic_limb_movements",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1002/mds.23771",
+          "first_author": "John",
+          "year": 2011,
+          "effect": -0.14,
+          "ci_low": -0.21,
+          "ci_high": -0.06,
+          "p_value": 0.001,
+          "n_total": 136,
+          "outcome_name": "Periodic limb movements associated with awakening per hour of sleep (PLMAWI)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "gabapentin enacarbil",
+      "outcome_domain": "safety_adverse_events",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.jamda.2025.105485",
+          "first_author": "Kathy",
+          "year": 2025,
+          "effect": 1.89,
+          "ci_low": 0.096,
+          "ci_high": 3.71,
+          "p_value": 0.066,
+          "n_total": 147,
+          "outcome_name": "Falls (adverse event)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "gabapentin enacarbil",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "mean_difference",
+      "n_trials": 2,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.2147/jprls.s40804",
+          "first_author": "Richard",
+          "year": 2013,
+          "effect": -4.8,
+          "ci_low": -8.36,
+          "ci_high": -1.15,
+          "p_value": 0.01,
+          "n_total": 427,
+          "outcome_name": "Wake Time After Sleep Onset (WASO) - Pittsburgh Sleep Diary",
+          "weight": 0.5231
+        },
+        {
+          "paper_id": "10.1002/mds.23771",
+          "first_author": "John",
+          "year": 2011,
+          "effect": -26.0,
+          "ci_low": -35.64,
+          "ci_high": -16.36,
+          "p_value": 0.0001,
+          "n_total": 136,
+          "outcome_name": "Wake time during sleep (WTDS)",
+          "weight": 0.4769
+        }
+      ],
+      "pooled": {
+        "effect": -14.9092,
+        "ci_low": -35.6626,
+        "ci_high": 5.8441,
+        "i2": 93.9,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "gabapentin enacarbil",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1002/mds.23771",
+          "first_author": "John",
+          "year": 2011,
+          "effect": 4.7,
+          "ci_low": 2.54,
+          "ci_high": 8.82,
+          "p_value": 0.0001,
+          "n_total": 136,
+          "outcome_name": "Patient Global Impression - better night's sleep",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "gabapentin enacarbil",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 3,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.sleep.2021.07.004",
+          "first_author": "Yuichi",
+          "year": 2021,
+          "effect": -1.3,
+          "ci_low": -2.5,
+          "ci_high": -0.1,
+          "p_value": null,
+          "n_total": 610,
+          "outcome_name": "Change from baseline in IRLS score at Week 12 — overall pooled population by subgroup (age <65 years)",
+          "weight": 0.3544
+        },
+        {
+          "paper_id": "10.1002/mds.23771",
+          "first_author": "John",
+          "year": 2011,
+          "effect": -6.57,
+          "ci_low": -8.58,
+          "ci_high": -4.57,
+          "p_value": 0.0001,
+          "n_total": 136,
+          "outcome_name": "International Restless Legs Scale (IRLS) total score",
+          "weight": 0.3322
+        },
+        {
+          "paper_id": "10.1186/s40734-015-0018-3",
+          "first_author": "William",
+          "year": 2015,
+          "effect": 0.1,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.964,
+          "n_total": 671,
+          "outcome_name": "IRLS Rating Scale total score change from baseline",
+          "weight": 0.3134
+        }
+      ],
+      "pooled": {
+        "effect": -2.612,
+        "ci_low": -6.3073,
+        "ci_high": 1.0834,
+        "i2": 91.5,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "gabapentin enacarbil",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "odds_ratio",
+      "n_trials": 2,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.3109/07853890.2015.1025825",
+          "first_author": "Richard",
+          "year": 2015,
+          "effect": 5.5,
+          "ci_low": 3.3,
+          "ci_high": 9.2,
+          "p_value": 0.001,
+          "n_total": 671,
+          "outcome_name": "CGI-I responder rate (no-to-moderate sleep disturbance subgroup)",
+          "weight": 0.5998
+        },
+        {
+          "paper_id": "10.1002/mds.23771",
+          "first_author": "John",
+          "year": 2011,
+          "effect": 5.8,
+          "ci_low": 3.07,
+          "ci_high": 10.77,
+          "p_value": null,
+          "n_total": 136,
+          "outcome_name": "Clinical Global Impression-Improvement (CGI-I) responder rate",
+          "weight": 0.4002
+        }
+      ],
+      "pooled": {
+        "effect": 5.6182,
+        "ci_low": 3.7772,
+        "ci_high": 8.3563,
+        "i2": 0.0,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "gabapentin enacarbil (horizant)",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.2165/11634870-000000000-00000",
+          "first_author": "Susan",
+          "year": 2012,
+          "effect": -3.9,
+          "ci_low": -5.3,
+          "ci_high": -2.46,
+          "p_value": 0.0001,
+          "n_total": 760,
+          "outcome_name": "Change from baseline in IRLS total score",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "gabapentin enacarbil (horizant)",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.2165/11634870-000000000-00000",
+          "first_author": "Susan",
+          "year": 2012,
+          "effect": 4.2,
+          "ci_low": 2.87,
+          "ci_high": 6.14,
+          "p_value": 0.0001,
+          "n_total": 760,
+          "outcome_name": "CGI-I responder rate (investigator-rated)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "intradialytic resistance exercise",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.33755/jkk.v12i1.955",
+          "first_author": "Achmad",
+          "year": 2026,
+          "effect": -0.6,
+          "ci_low": -2.3,
+          "ci_high": 1.1,
+          "p_value": 0.52,
+          "n_total": 42,
+          "outcome_name": "International RLS Severity Scale (IRLS) total score",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "iron supplementation",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1007/s00384-018-3032-8",
+          "first_author": "Janek",
+          "year": 2018,
+          "effect": 0.215,
+          "ci_low": 0.05,
+          "ci_high": 0.38,
+          "p_value": 0.01,
+          "n_total": null,
+          "outcome_name": "Linear regression: IRLS score predicted by age, sex, IBD disease duration",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "magnesium citrate",
+      "outcome_domain": "other",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.5664/jcsm.11206",
+          "first_author": "Sasikanth",
+          "year": 2024,
+          "effect": 0.05,
+          "ci_low": -0.05,
+          "ci_high": 0.14,
+          "p_value": 0.32,
+          "n_total": null,
+          "outcome_name": "Serum magnesium level",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "magnesium citrate",
+      "outcome_domain": "quality_of_life",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.5664/jcsm.11206",
+          "first_author": "Sasikanth",
+          "year": 2024,
+          "effect": 8.5,
+          "ci_low": 2.09,
+          "ci_high": 14.91,
+          "p_value": 0.014,
+          "n_total": null,
+          "outcome_name": "Kohnen Restless Legs Syndrome Quality of Life Scale",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "magnesium citrate",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.5664/jcsm.11206",
+          "first_author": "Sasikanth",
+          "year": 2024,
+          "effect": 6.67,
+          "ci_low": 2.33,
+          "ci_high": 11.0,
+          "p_value": 0.006,
+          "n_total": null,
+          "outcome_name": "International Restless Legs Syndrome Study Group Rating Scale (IRLS)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "mindfulness-based stress reduction",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.14710/nmjn.v12i3.46307",
+          "first_author": "Zahra",
+          "year": 2022,
+          "effect": 0.89,
+          "ci_low": -1.14,
+          "ci_high": 2.91,
+          "p_value": 0.05,
+          "n_total": 60,
+          "outcome_name": "Severity of Restless Legs Syndrome",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "near-infrared light",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.3109/09593985.2015.1087613",
+          "first_author": "Guffey",
+          "year": 2016,
+          "effect": 9.7,
+          "ci_low": 6.2,
+          "ci_high": 13.2,
+          "p_value": 0.0,
+          "n_total": null,
+          "outcome_name": "International Restless Legs Syndrome Rating Scale (IRLSRS)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "onabotulinum toxin a",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.3109/00207454.2011.602774",
+          "first_author": "Pinky",
+          "year": 2011,
+          "effect": -2.75,
+          "ci_low": -7.826,
+          "ci_high": 2.326,
+          "p_value": 0.2647,
+          "n_total": null,
+          "outcome_name": "International Restless Legs Syndrome Scale (IRLSS)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "other",
+      "outcome_domain": "daytime_functioning",
+      "effect_measure": "mean_difference",
+      "n_trials": 2,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1371/journal.pone.0101003",
+          "first_author": "Joanne",
+          "year": 2014,
+          "effect": -1.4,
+          "ci_low": -2.8,
+          "ci_high": -0.09,
+          "p_value": 0.06,
+          "n_total": 325,
+          "outcome_name": "Epworth Sleepiness Scale (ESS) score",
+          "weight": 0.9315
+        },
+        {
+          "paper_id": "10.1016/j.brat.2021.103948",
+          "first_author": "Laurel",
+          "year": 2021,
+          "effect": -3.63,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.16,
+          "n_total": 121,
+          "outcome_name": "PROMIS-SRI - Insomnia subgroup",
+          "weight": 0.0685
+        }
+      ],
+      "pooled": {
+        "effect": -1.5527,
+        "ci_low": -2.8605,
+        "ci_high": -0.2449,
+        "i2": 0.0,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "other",
+      "outcome_domain": "daytime_functioning",
+      "effect_measure": "risk_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.sleep.2024.08.020",
+          "first_author": "Perlman",
+          "year": 2024,
+          "effect": -7.7,
+          "ci_low": -19.7,
+          "ci_high": 3.2,
+          "p_value": 0.17,
+          "n_total": null,
+          "outcome_name": "Proportion with Excessive Daytime Sleepiness (ESS > 10)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "other",
+      "outcome_domain": "mood_anxiety",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.brat.2021.103948",
+          "first_author": "Laurel",
+          "year": 2021,
+          "effect": -3.84,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.04,
+          "n_total": 121,
+          "outcome_name": "General Psychiatric Symptoms (DSM-5 Cross-Cutting Measure)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "other",
+      "outcome_domain": "other",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1371/journal.pone.0101003",
+          "first_author": "Joanne",
+          "year": 2014,
+          "effect": -0.02,
+          "ci_low": -0.1,
+          "ci_high": 0.06,
+          "p_value": 0.65,
+          "n_total": 325,
+          "outcome_name": "MAPI OSA probability score",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "other",
+      "outcome_domain": "other",
+      "effect_measure": "odds_ratio",
+      "n_trials": 2,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.sleep.2021.01.017",
+          "first_author": "Sofiène",
+          "year": 2021,
+          "effect": 1.19,
+          "ci_low": 1.16,
+          "ci_high": 1.23,
+          "p_value": 0.0001,
+          "n_total": null,
+          "outcome_name": "SCOPA-AUT Total Score",
+          "weight": 0.5486
+        },
+        {
+          "paper_id": "10.1371/journal.pone.0101003",
+          "first_author": "Joanne",
+          "year": 2014,
+          "effect": 3.4,
+          "ci_low": 1.8,
+          "ci_high": 6.5,
+          "p_value": 0.001,
+          "n_total": 325,
+          "outcome_name": "Proportion of screened patients identified as at risk of OSA",
+          "weight": 0.4514
+        }
+      ],
+      "pooled": {
+        "effect": 1.9115,
+        "ci_low": 0.6866,
+        "ci_high": 5.3218,
+        "i2": 90.2,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "other",
+      "outcome_domain": "quality_of_life",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.brat.2021.103948",
+          "first_author": "Laurel",
+          "year": 2021,
+          "effect": -2.26,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.11,
+          "n_total": 121,
+          "outcome_name": "SDS - Insomnia subgroup",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "other",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "mean_difference",
+      "n_trials": 3,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1111/j.1365-2125.2008.03310.x",
+          "first_author": "Joëlle",
+          "year": 2009,
+          "effect": -5.6,
+          "ci_low": -7.7,
+          "ci_high": -3.5,
+          "p_value": 0.003,
+          "n_total": 12,
+          "outcome_name": "Sleep latency at T5h30 (5h30min post-dose) on Multiple Sleep Latency Test",
+          "weight": 0.368
+        },
+        {
+          "paper_id": "10.1016/j.brat.2021.103948",
+          "first_author": "Laurel",
+          "year": 2021,
+          "effect": -1.07,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.42,
+          "n_total": 121,
+          "outcome_name": "PROMIS-SD - Insomnia subgroup",
+          "weight": 0.337
+        },
+        {
+          "paper_id": "10.1371/journal.pone.0101003",
+          "first_author": "Joanne",
+          "year": 2014,
+          "effect": -2.0,
+          "ci_low": -5.3,
+          "ci_high": 1.2,
+          "p_value": 0.21,
+          "n_total": 325,
+          "outcome_name": "Insomnia Severity Index (ISI) score",
+          "weight": 0.295
+        }
+      ],
+      "pooled": {
+        "effect": -3.0112,
+        "ci_low": -6.0368,
+        "ci_high": 0.0144,
+        "i2": 75.1,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "other",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "risk_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.sleep.2024.08.020",
+          "first_author": "Perlman",
+          "year": 2024,
+          "effect": -15.4,
+          "ci_low": -26.7,
+          "ci_high": -4.1,
+          "p_value": 0.008,
+          "n_total": null,
+          "outcome_name": "Proportion with Positive SDS OSA Screen (sub-score ≥3)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "other",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1371/journal.pone.0101003",
+          "first_author": "Joanne",
+          "year": 2014,
+          "effect": -0.3,
+          "ci_low": -0.97,
+          "ci_high": 0.37,
+          "p_value": 0.36,
+          "n_total": 325,
+          "outcome_name": "RLS risk score (NIH diagnostic criteria score)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "other",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "risk_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.sleep.2024.08.020",
+          "first_author": "Perlman",
+          "year": 2024,
+          "effect": -25.6,
+          "ci_low": -44.1,
+          "ci_high": -7.2,
+          "p_value": 0.006,
+          "n_total": null,
+          "outcome_name": "Proportion with Positive SDS RLS/PLMD Screen (sub-score ≥3)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "oxycodone/naloxone",
+      "outcome_domain": "quality_of_life",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1007/s40263-016-0372-1",
+          "first_author": "Wolfgang",
+          "year": 2016,
+          "effect": -0.24,
+          "ci_low": -0.55,
+          "ci_high": 0.06,
+          "p_value": 0.113,
+          "n_total": 304,
+          "outcome_name": "RLS-QoL Dimension - Effects of Other Features",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "oxycodone/naloxone",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1007/s40263-016-0372-1",
+          "first_author": "Wolfgang",
+          "year": 2016,
+          "effect": 0.77,
+          "ci_low": 0.43,
+          "ci_high": 1.11,
+          "p_value": 0.0001,
+          "n_total": 304,
+          "outcome_name": "MOS Sleep Scale - Sleep Quantity",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "pramipexole",
+      "outcome_domain": "mood_anxiety",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.sleep.2010.08.005",
+          "first_author": "Pasquale",
+          "year": 2011,
+          "effect": 1.5,
+          "ci_low": 0.2,
+          "ci_high": 2.7,
+          "p_value": 0.0199,
+          "n_total": 404,
+          "outcome_name": "BDI-II total score change from baseline to week 12",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "pramipexole",
+      "outcome_domain": "quality_of_life",
+      "effect_measure": "mean_difference",
+      "n_trials": 2,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.sleep.2008.09.001",
+          "first_author": "Ferini-Strambi",
+          "year": 2008,
+          "effect": 5.0,
+          "ci_low": 4.7,
+          "ci_high": 5.3,
+          "p_value": 0.01,
+          "n_total": 369,
+          "outcome_name": "RLS Quality of Life (RLS-QOL) score",
+          "weight": 0.5
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2010.08.005",
+          "first_author": "Pasquale",
+          "year": 2011,
+          "effect": 7.5,
+          "ci_low": 7.2,
+          "ci_high": 7.8,
+          "p_value": 0.0001,
+          "n_total": 404,
+          "outcome_name": "Johns Hopkins RLS Quality of Life (RLS-QOL) questionnaire score",
+          "weight": 0.5
+        }
+      ],
+      "pooled": {
+        "effect": 6.25,
+        "ci_low": 3.8,
+        "ci_high": 8.7,
+        "i2": 99.3,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "pramipexole",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.sleep.2008.09.001",
+          "first_author": "Ferini-Strambi",
+          "year": 2008,
+          "effect": -8.5,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.0001,
+          "n_total": 369,
+          "outcome_name": "MOS Sleep Disturbance (initiation and maintenance) domain score",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "pramipexole",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "hazard_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.jns.2010.04.003",
+          "first_author": "Yuichi",
+          "year": 2010,
+          "effect": 1.81,
+          "ci_low": 1.05,
+          "ci_high": 2.16,
+          "p_value": 0.027,
+          "n_total": 141,
+          "outcome_name": "Time to complete IRLS response (IRLS decrease >=50% from baseline AND to <=10 points)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "pramipexole",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 5,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.sleep.2010.11.007",
+          "first_author": "Magdolna",
+          "year": 2011,
+          "effect": -4.0,
+          "ci_low": -4.4,
+          "ci_high": -3.6,
+          "p_value": 0.0001,
+          "n_total": null,
+          "outcome_name": "RLS-related limb-pain VAS score — Trial 615",
+          "weight": 0.2068
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2010.08.005",
+          "first_author": "Pasquale",
+          "year": 2011,
+          "effect": 6.1,
+          "ci_low": 4.3,
+          "ci_high": 7.9,
+          "p_value": 0.0001,
+          "n_total": 404,
+          "outcome_name": "IRLS total score change from baseline to week 12",
+          "weight": 0.2003
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2008.09.001",
+          "first_author": "Ferini-Strambi",
+          "year": 2008,
+          "effect": -3.8,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.0001,
+          "n_total": 369,
+          "outcome_name": "International RLS Study Group Rating Scale (IRLS) total score",
+          "weight": 0.1988
+        },
+        {
+          "paper_id": "10.1002/mds.21261",
+          "first_author": "Wolfgang",
+          "year": 2007,
+          "effect": -6.6,
+          "ci_low": -8.6,
+          "ci_high": -4.5,
+          "p_value": 0.0001,
+          "n_total": 345,
+          "outcome_name": "International RLS Study Group Rating Scale (IRLS) score",
+          "weight": 0.1971
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2014.09.015",
+          "first_author": "Jingyu",
+          "year": 2015,
+          "effect": 3.8,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.001,
+          "n_total": 204,
+          "outcome_name": "International RLS Study Group Rating Scale (IRLS) score",
+          "weight": 0.1971
+        }
+      ],
+      "pooled": {
+        "effect": -0.9125,
+        "ci_low": -5.2477,
+        "ci_high": 3.4228,
+        "i2": 97.7,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "pregabalin",
+      "outcome_domain": "daytime_functioning",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.5665/sleep.3558",
+          "first_author": "Diego",
+          "year": 2014,
+          "effect": -5.4,
+          "ci_low": -10.4,
+          "ci_high": -0.3,
+          "p_value": 0.0396,
+          "n_total": 85,
+          "outcome_name": "RLS Next Day Impact (RLS-NDI) total score",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "pregabalin",
+      "outcome_domain": "periodic_limb_movements",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.5665/sleep.3558",
+          "first_author": "Diego",
+          "year": 2014,
+          "effect": 1.3,
+          "ci_low": -0.5,
+          "ci_high": 3.0,
+          "p_value": null,
+          "n_total": 85,
+          "outcome_name": "Periodic Limb Movement Arousal Index (PLMAI) by polysomnography",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "pregabalin",
+      "outcome_domain": "quality_of_life",
+      "effect_measure": "mean_difference",
+      "n_trials": 2,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1056/nejmoa1303646",
+          "first_author": "Richard",
+          "year": 2014,
+          "effect": 3.9,
+          "ci_low": 1.9,
+          "ci_high": 5.8,
+          "p_value": null,
+          "n_total": 731,
+          "outcome_name": "Quality of life with RLS",
+          "weight": 0.7359
+        },
+        {
+          "paper_id": "10.5665/sleep.3558",
+          "first_author": "Diego",
+          "year": 2014,
+          "effect": 3.3,
+          "ci_low": -0.01,
+          "ci_high": 6.5,
+          "p_value": null,
+          "n_total": 85,
+          "outcome_name": "RLS Quality of Life (RLS-QoL) score",
+          "weight": 0.2641
+        }
+      ],
+      "pooled": {
+        "effect": 3.7415,
+        "ci_low": 2.0687,
+        "ci_high": 5.4143,
+        "i2": 0.0,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "pregabalin",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "mean_difference",
+      "n_trials": 2,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1056/nejmoa1303646",
+          "first_author": "Richard",
+          "year": 2014,
+          "effect": 0.4,
+          "ci_low": 0.3,
+          "ci_high": 0.6,
+          "p_value": null,
+          "n_total": 731,
+          "outcome_name": "Total sleep time",
+          "weight": 0.5129
+        },
+        {
+          "paper_id": "10.5665/sleep.3558",
+          "first_author": "Diego",
+          "year": 2014,
+          "effect": -26.9,
+          "ci_low": -35.5,
+          "ci_high": -18.3,
+          "p_value": null,
+          "n_total": 85,
+          "outcome_name": "Wake After Sleep Onset (WASO) by polysomnography",
+          "weight": 0.4871
+        }
+      ],
+      "pooled": {
+        "effect": -12.8975,
+        "ci_low": -39.6421,
+        "ci_high": 13.8471,
+        "i2": 97.4,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "pregabalin",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 4,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1056/nejmoa1303646",
+          "first_author": "Richard",
+          "year": 2014,
+          "effect": -3.2,
+          "ci_low": -4.5,
+          "ci_high": -1.9,
+          "p_value": 0.001,
+          "n_total": 731,
+          "outcome_name": "IRLS Study Group Rating Scale score",
+          "weight": 0.4113
+        },
+        {
+          "paper_id": "10.5665/sleep.3558",
+          "first_author": "Diego",
+          "year": 2014,
+          "effect": -6.1,
+          "ci_low": -8.1,
+          "ci_high": -4.1,
+          "p_value": null,
+          "n_total": 85,
+          "outcome_name": "International RLS Study Group Rating Scale (IRLS) total score",
+          "weight": 0.3081
+        },
+        {
+          "paper_id": "10.64898/2025.12.26.696558",
+          "first_author": "Aref",
+          "year": 2025,
+          "effect": -4.2,
+          "ci_low": -7.8,
+          "ci_high": -0.6,
+          "p_value": 0.02,
+          "n_total": 103,
+          "outcome_name": "RLS severity score (IRLSSG rating scale) — absolute score at baseline",
+          "weight": 0.1562
+        },
+        {
+          "paper_id": "10.1212/wnl.0b013e3181e1ce73",
+          "first_author": "Garcia-Borreguero",
+          "year": 2010,
+          "effect": -4.92,
+          "ci_low": -9.12,
+          "ci_high": -0.73,
+          "p_value": 0.01,
+          "n_total": 58,
+          "outcome_name": "International Restless Legs Scale (IRLS) total score",
+          "weight": 0.1244
+        }
+      ],
+      "pooled": {
+        "effect": -4.4637,
+        "ci_low": -6.1482,
+        "ci_high": -2.7792,
+        "i2": 48.5,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "pregabalin",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.64898/2025.12.26.696558",
+          "first_author": "Aref",
+          "year": 2025,
+          "effect": 5.47,
+          "ci_low": 2.1,
+          "ci_high": 14.2,
+          "p_value": 0.003,
+          "n_total": 103,
+          "outcome_name": "Categorical improvement in RLS severity (any reduction in severity category)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "pregabalin",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "risk_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1212/wnl.0b013e3181e1ce73",
+          "first_author": "Garcia-Borreguero",
+          "year": 2010,
+          "effect": 1.87,
+          "ci_low": 1.12,
+          "ci_high": 3.1,
+          "p_value": 0.016,
+          "n_total": 58,
+          "outcome_name": "IRLS responder rate (>=50% reduction in total score)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "ropinirole",
+      "outcome_domain": "daytime_functioning",
+      "effect_measure": "mean_difference",
+      "n_trials": 5,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.4065/81.1.17",
+          "first_author": "Richard",
+          "year": 2006,
+          "effect": 1.9,
+          "ci_low": 0.8,
+          "ci_high": 2.9,
+          "p_value": 0.001,
+          "n_total": 381,
+          "outcome_name": "POMS - Vigor-Activity",
+          "weight": 0.2669
+        },
+        {
+          "paper_id": "10.1212/01.wnl.0000120672.94060.f1",
+          "first_author": "Adler",
+          "year": 2004,
+          "effect": -1.2,
+          "ci_low": -3.7,
+          "ci_high": 1.2,
+          "p_value": 0.31,
+          "n_total": 22,
+          "outcome_name": "Epworth Sleepiness Scale (ESS)",
+          "weight": 0.2434
+        },
+        {
+          "paper_id": "10.1002/mds.20257",
+          "first_author": "Arthur",
+          "year": 2004,
+          "effect": -6.3,
+          "ci_low": -10.5,
+          "ci_high": -2.0,
+          "p_value": 0.0043,
+          "n_total": 267,
+          "outcome_name": "MOS Sleep Scale - Somnolence domain",
+          "weight": 0.2001
+        },
+        {
+          "paper_id": "10.1093/sleep/27.5.907",
+          "first_author": "Allen",
+          "year": 2004,
+          "effect": -3.1,
+          "ci_low": -9.2,
+          "ci_high": 2.9,
+          "p_value": 0.3028,
+          "n_total": 65,
+          "outcome_name": "MOS Sleep Scale - Daytime somnolence",
+          "weight": 0.1571
+        },
+        {
+          "paper_id": "10.1002/mds.21050",
+          "first_author": "Jacques",
+          "year": 2006,
+          "effect": -9.1,
+          "ci_low": -16.4,
+          "ci_high": -1.9,
+          "p_value": 0.0136,
+          "n_total": 92,
+          "outcome_name": "MOS sleep scale - Daytime somnolence",
+          "weight": 0.1325
+        }
+      ],
+      "pooled": {
+        "effect": -2.7384,
+        "ci_low": -6.4191,
+        "ci_high": 0.9423,
+        "i2": 84.8,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "ropinirole",
+      "outcome_domain": "mood_anxiety",
+      "effect_measure": "mean_difference",
+      "n_trials": 4,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.4065/81.1.17",
+          "first_author": "Richard",
+          "year": 2006,
+          "effect": -1.2,
+          "ci_low": -2.3,
+          "ci_high": -0.1,
+          "p_value": 0.04,
+          "n_total": 381,
+          "outcome_name": "HADS - Anxiety score",
+          "weight": 0.3127
+        },
+        {
+          "paper_id": "10.1007/s00415-010-5879-7",
+          "first_author": "Benes",
+          "year": 2011,
+          "effect": -3.6,
+          "ci_low": -5.6,
+          "ci_high": -1.6,
+          "p_value": 0.001,
+          "n_total": 266,
+          "outcome_name": "Montgomery-Asberg Depression Rating Scale (MADRS) total score",
+          "weight": 0.2924
+        },
+        {
+          "paper_id": "10.1002/mds.20257",
+          "first_author": "Arthur",
+          "year": 2004,
+          "effect": 5.2,
+          "ci_low": 1.7,
+          "ci_high": 8.7,
+          "p_value": 0.0041,
+          "n_total": 267,
+          "outcome_name": "SF-36 Health Survey - Mental Health domain",
+          "weight": 0.2452
+        },
+        {
+          "paper_id": "10.1002/mds.21050",
+          "first_author": "Jacques",
+          "year": 2006,
+          "effect": 7.0,
+          "ci_low": 0.3,
+          "ci_high": 13.7,
+          "p_value": 0.042,
+          "n_total": 92,
+          "outcome_name": "SF-36 Mental health",
+          "weight": 0.1497
+        }
+      ],
+      "pooled": {
+        "effect": 0.8947,
+        "ci_low": -2.6457,
+        "ci_high": 4.4352,
+        "i2": 87.5,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "ropinirole",
+      "outcome_domain": "periodic_limb_movements",
+      "effect_measure": "mean_difference",
+      "n_trials": 2,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.4065/81.1.17",
+          "first_author": "Richard",
+          "year": 2006,
+          "effect": -14.5,
+          "ci_low": -20.3,
+          "ci_high": -8.7,
+          "p_value": 0.001,
+          "n_total": 381,
+          "outcome_name": "Periodic Leg Movement (PLM) index",
+          "weight": 0.5862
+        },
+        {
+          "paper_id": "10.1093/sleep/27.5.907",
+          "first_author": "Allen",
+          "year": 2004,
+          "effect": -27.2,
+          "ci_low": -39.1,
+          "ci_high": -15.4,
+          "p_value": 0.0001,
+          "n_total": 65,
+          "outcome_name": "Periodic limb movements of sleep per hour (PLMS/hour)",
+          "weight": 0.4138
+        }
+      ],
+      "pooled": {
+        "effect": -19.7556,
+        "ci_low": -32.0152,
+        "ci_high": -7.4961,
+        "i2": 71.9,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "ropinirole",
+      "outcome_domain": "quality_of_life",
+      "effect_measure": "mean_difference",
+      "n_trials": 3,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.4065/81.1.17",
+          "first_author": "Richard",
+          "year": 2006,
+          "effect": 4.5,
+          "ci_low": 1.6,
+          "ci_high": 7.5,
+          "p_value": 0.003,
+          "n_total": 381,
+          "outcome_name": "Johns Hopkins RLS Quality of Life questionnaire - overall life impact score",
+          "weight": 0.5032
+        },
+        {
+          "paper_id": "10.1002/mds.20257",
+          "first_author": "Arthur",
+          "year": 2004,
+          "effect": 4.4,
+          "ci_low": 0.5,
+          "ci_high": 8.4,
+          "p_value": 0.0263,
+          "n_total": 267,
+          "outcome_name": "RLS Quality of Life (RLSQoL) questionnaire - overall life-impact score",
+          "weight": 0.3672
+        },
+        {
+          "paper_id": "10.1002/mds.21050",
+          "first_author": "Jacques",
+          "year": 2006,
+          "effect": 11.8,
+          "ci_low": 3.9,
+          "ci_high": 19.7,
+          "p_value": 0.004,
+          "n_total": 92,
+          "outcome_name": "RLSQoL overall life impact score",
+          "weight": 0.1296
+        }
+      ],
+      "pooled": {
+        "effect": 5.4093,
+        "ci_low": 2.3475,
+        "ci_high": 8.4711,
+        "i2": 34.2,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "ropinirole",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "mean_difference",
+      "n_trials": 4,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.4065/81.1.17",
+          "first_author": "Richard",
+          "year": 2006,
+          "effect": 0.3,
+          "ci_low": 0.1,
+          "ci_high": 0.5,
+          "p_value": 0.005,
+          "n_total": 381,
+          "outcome_name": "MOS Sleep Scale - Sleep Quantity",
+          "weight": 0.428
+        },
+        {
+          "paper_id": "10.1002/mds.20257",
+          "first_author": "Arthur",
+          "year": 2004,
+          "effect": 1.3,
+          "ci_low": 0.3,
+          "ci_high": 2.2,
+          "p_value": 0.0097,
+          "n_total": 267,
+          "outcome_name": "MOS Sleep Scale - Sleep Quantity domain",
+          "weight": 0.3838
+        },
+        {
+          "paper_id": "10.1093/sleep/27.5.907",
+          "first_author": "Allen",
+          "year": 2004,
+          "effect": 0.7,
+          "ci_low": -2.8,
+          "ci_high": 4.2,
+          "p_value": 0.6929,
+          "n_total": 65,
+          "outcome_name": "Stage 1 sleep (percentage of TST)",
+          "weight": 0.1628
+        },
+        {
+          "paper_id": "10.1002/mds.21050",
+          "first_author": "Jacques",
+          "year": 2006,
+          "effect": -21.9,
+          "ci_low": -31.8,
+          "ci_high": -10.0,
+          "p_value": 0.0003,
+          "n_total": 92,
+          "outcome_name": "MOS sleep scale - Sleep disturbance",
+          "weight": 0.0254
+        }
+      ],
+      "pooled": {
+        "effect": 0.1848,
+        "ci_low": -1.6064,
+        "ci_high": 1.976,
+        "i2": 85.1,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "ropinirole",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "hazard_ratio",
+      "n_trials": 3,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.4065/81.1.17",
+          "first_author": "Richard",
+          "year": 2006,
+          "effect": 1.6,
+          "ci_low": 1.3,
+          "ci_high": 1.9,
+          "p_value": 0.001,
+          "n_total": 381,
+          "outcome_name": "Time to CGI-I response",
+          "weight": 0.3858
+        },
+        {
+          "paper_id": "10.1002/mds.20257",
+          "first_author": "Arthur",
+          "year": 2004,
+          "effect": 1.29,
+          "ci_low": 0.99,
+          "ci_high": 1.67,
+          "p_value": 0.0588,
+          "n_total": 267,
+          "outcome_name": "Time to response on IRLS (reduction of 6+ points from baseline)",
+          "weight": 0.3683
+        },
+        {
+          "paper_id": "10.1002/mds.21050",
+          "first_author": "Jacques",
+          "year": 2006,
+          "effect": 0.4,
+          "ci_low": 0.21,
+          "ci_high": 0.77,
+          "p_value": 0.006,
+          "n_total": 92,
+          "outcome_name": "Time to relapse during double-blind treatment phase",
+          "weight": 0.2459
+        }
+      ],
+      "pooled": {
+        "effect": 1.051,
+        "ci_low": 0.6301,
+        "ci_high": 1.7532,
+        "i2": 87.9,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "ropinirole",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 10,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.4065/81.1.17",
+          "first_author": "Richard",
+          "year": 2006,
+          "effect": -4.1,
+          "ci_low": -5.6,
+          "ci_high": -2.7,
+          "p_value": 0.001,
+          "n_total": 381,
+          "outcome_name": "International Restless Legs Scale (IRLS) total score",
+          "weight": 0.1545
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2007.08.017",
+          "first_author": "Richard",
+          "year": 2008,
+          "effect": -2.9,
+          "ci_low": -4.4,
+          "ci_high": -1.5,
+          "p_value": null,
+          "n_total": 996,
+          "outcome_name": "Change from baseline in IRLS total score at Week 12 LOCF — age-at-onset ≥35 years subgroup",
+          "weight": 0.1545
+        },
+        {
+          "paper_id": "10.1136/jnnp.2008.147397",
+          "first_author": "Morgan",
+          "year": 2008,
+          "effect": -2.8,
+          "ci_low": -4.7,
+          "ci_high": -1.0,
+          "p_value": 0.003,
+          "n_total": 550,
+          "outcome_name": "Change from baseline in International Restless Legs Scale (IRLS) total score at week 12 LOCF",
+          "weight": 0.1276
+        },
+        {
+          "paper_id": "10.1002/mds.24889",
+          "first_author": "Diego",
+          "year": 2012,
+          "effect": -2.1,
+          "ci_low": -4.0,
+          "ci_high": -0.1,
+          "p_value": 0.039,
+          "n_total": 404,
+          "outcome_name": "Change from baseline in IRLS total score at week 12 (primary endpoint)",
+          "weight": 0.1215
+        },
+        {
+          "paper_id": "10.1097/wnf.0b013e31815a3eec",
+          "first_author": "Clete",
+          "year": 2008,
+          "effect": -4.11,
+          "ci_low": -6.08,
+          "ci_high": -2.14,
+          "p_value": 0.001,
+          "n_total": 362,
+          "outcome_name": "Change from baseline in IRLS total score",
+          "weight": 0.1203
+        },
+        {
+          "paper_id": "10.1002/mds.20257",
+          "first_author": "Arthur",
+          "year": 2004,
+          "effect": -2.5,
+          "ci_low": -4.6,
+          "ci_high": -0.4,
+          "p_value": 0.0197,
+          "n_total": 267,
+          "outcome_name": "Change from baseline in International Restless Legs Scale (IRLS) score at week 12",
+          "weight": 0.1128
+        },
+        {
+          "paper_id": "10.1007/s00415-010-5879-7",
+          "first_author": "Benes",
+          "year": 2011,
+          "effect": -4.8,
+          "ci_low": -7.5,
+          "ci_high": -2.1,
+          "p_value": 0.001,
+          "n_total": 266,
+          "outcome_name": "International RLS Severity Scale (IRLS) total score",
+          "weight": 0.0844
+        },
+        {
+          "paper_id": "10.1002/mds.21050",
+          "first_author": "Jacques",
+          "year": 2006,
+          "effect": -4.6,
+          "ci_low": -8.6,
+          "ci_high": -0.6,
+          "p_value": 0.0246,
+          "n_total": 92,
+          "outcome_name": "IRLS total score",
+          "weight": 0.0479
+        },
+        {
+          "paper_id": "10.1093/sleep/27.5.907",
+          "first_author": "Allen",
+          "year": 2004,
+          "effect": -1.2,
+          "ci_low": -5.2,
+          "ci_high": 2.9,
+          "p_value": 0.5645,
+          "n_total": 65,
+          "outcome_name": "International Restless Legs Scale (IRLS) total score",
+          "weight": 0.047
+        },
+        {
+          "paper_id": "10.1212/01.wnl.0000120672.94060.f1",
+          "first_author": "Adler",
+          "year": 2004,
+          "effect": -12.0,
+          "ci_low": -17.0,
+          "ci_high": -6.3,
+          "p_value": 0.001,
+          "n_total": 22,
+          "outcome_name": "RLS Rating Scale score",
+          "weight": 0.0295
+        }
+      ],
+      "pooled": {
+        "effect": -3.5059,
+        "ci_low": -4.4882,
+        "ci_high": -2.5236,
+        "i2": 47.4,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "ropinirole",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "odds_ratio",
+      "n_trials": 6,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.sleep.2007.08.017",
+          "first_author": "Richard",
+          "year": 2008,
+          "effect": 1.7,
+          "ci_low": 1.2,
+          "ci_high": 2.4,
+          "p_value": null,
+          "n_total": 996,
+          "outcome_name": "CGI-I responders at Week 12 LOCF — age-at-onset ≥35 years subgroup",
+          "weight": 0.2011
+        },
+        {
+          "paper_id": "10.4065/81.1.17",
+          "first_author": "Richard",
+          "year": 2006,
+          "effect": 2.1,
+          "ci_low": 1.4,
+          "ci_high": 3.3,
+          "p_value": 0.001,
+          "n_total": 381,
+          "outcome_name": "CGI-Improvement responder rate at week 12 LOCF",
+          "weight": 0.1819
+        },
+        {
+          "paper_id": "10.1097/wnf.0b013e31815a3eec",
+          "first_author": "Clete",
+          "year": 2008,
+          "effect": 2.43,
+          "ci_low": 1.57,
+          "ci_high": 3.76,
+          "p_value": 0.001,
+          "n_total": 362,
+          "outcome_name": "Proportion of responders on Clinical Global Impression - Improvement scale",
+          "weight": 0.1801
+        },
+        {
+          "paper_id": "10.1136/jnnp.2008.147397",
+          "first_author": "Morgan",
+          "year": 2008,
+          "effect": 1.9,
+          "ci_low": 1.2,
+          "ci_high": 2.9,
+          "p_value": 0.004,
+          "n_total": 550,
+          "outcome_name": "Proportion of CGI-I responders at week 12 LOCF",
+          "weight": 0.179
+        },
+        {
+          "paper_id": "10.1002/mds.20257",
+          "first_author": "Arthur",
+          "year": 2004,
+          "effect": 2.3,
+          "ci_low": 1.4,
+          "ci_high": 3.8,
+          "p_value": 0.001,
+          "n_total": 267,
+          "outcome_name": "Responder rate on CGI-I scale at week 12 (much or very much improved)",
+          "weight": 0.1657
+        },
+        {
+          "paper_id": "10.1002/mds.21050",
+          "first_author": "Jacques",
+          "year": 2006,
+          "effect": 0.33,
+          "ci_low": 0.13,
+          "ci_high": 0.81,
+          "p_value": 0.0156,
+          "n_total": 92,
+          "outcome_name": "Proportion of patients relapsing during double-blind treatment phase",
+          "weight": 0.0921
+        }
+      ],
+      "pooled": {
+        "effect": 1.7375,
+        "ci_low": 1.2257,
+        "ci_high": 2.4631,
+        "i2": 69.6,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "rotigotine",
+      "outcome_domain": "daytime_functioning",
+      "effect_measure": "mean_difference",
+      "n_trials": 3,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1185/03007995.2015.1103216",
+          "first_author": "Diego",
+          "year": 2016,
+          "effect": -0.11,
+          "ci_low": -0.68,
+          "ci_high": 0.46,
+          "p_value": 0.7047,
+          "n_total": 150,
+          "outcome_name": "RLS-6 Item 5: Severity during activities",
+          "weight": 0.4963
+        },
+        {
+          "paper_id": "10.1053/j.ajkd.2015.12.027",
+          "first_author": "Yves",
+          "year": 2016,
+          "effect": -2.13,
+          "ci_low": -3.67,
+          "ci_high": -0.6,
+          "p_value": 0.009,
+          "n_total": 30,
+          "outcome_name": "RLS-6 Item 6: Daytime sleepiness/tiredness",
+          "weight": 0.3411
+        },
+        {
+          "paper_id": "10.1002/mds.28224",
+          "first_author": "Sofiene",
+          "year": 2020,
+          "effect": -0.34,
+          "ci_low": -3.42,
+          "ci_high": 2.74,
+          "p_value": 0.83,
+          "n_total": 70,
+          "outcome_name": "ESS total score",
+          "weight": 0.1626
+        }
+      ],
+      "pooled": {
+        "effect": -0.8364,
+        "ci_low": -2.3252,
+        "ci_high": 0.6523,
+        "i2": 65.8,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "rotigotine",
+      "outcome_domain": "mood_anxiety",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1185/03007995.2015.1103216",
+          "first_author": "Diego",
+          "year": 2016,
+          "effect": 0.8,
+          "ci_low": -7.18,
+          "ci_high": 8.78,
+          "p_value": 0.8432,
+          "n_total": 150,
+          "outcome_name": "Profile of Mood States (POMS) total score",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "rotigotine",
+      "outcome_domain": "other",
+      "effect_measure": "mean_difference",
+      "n_trials": 3,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1002/mds.28224",
+          "first_author": "Sofiene",
+          "year": 2020,
+          "effect": -0.23,
+          "ci_low": -0.61,
+          "ci_high": 0.15,
+          "p_value": 0.23,
+          "n_total": 70,
+          "outcome_name": "Endothelial function (RH-PAT index)",
+          "weight": 0.4369
+        },
+        {
+          "paper_id": "10.1212/wnl.0000000000002649",
+          "first_author": "Axel",
+          "year": 2016,
+          "effect": -3.98,
+          "ci_low": -8.14,
+          "ci_high": 0.18,
+          "p_value": 0.0602,
+          "n_total": 81,
+          "outcome_name": "Nocturnal DBP (mm Hg)",
+          "weight": 0.4298
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2014.12.019",
+          "first_author": "Werner",
+          "year": 2016,
+          "effect": 269.8,
+          "ci_low": 221.2,
+          "ci_high": 318.4,
+          "p_value": 0.001,
+          "n_total": null,
+          "outcome_name": "DBP Elevation Index with arousal",
+          "weight": 0.1333
+        }
+      ],
+      "pooled": {
+        "effect": 34.1535,
+        "ci_low": 12.8683,
+        "ci_high": 55.4388,
+        "i2": 98.4,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "rotigotine",
+      "outcome_domain": "other",
+      "effect_measure": "odds_ratio",
+      "n_trials": 2,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1177/0091270009338481",
+          "first_author": "Marina",
+          "year": 2009,
+          "effect": 1.03,
+          "ci_low": 0.96,
+          "ci_high": 1.12,
+          "p_value": null,
+          "n_total": 24,
+          "outcome_name": "Carbidopa AUC at steady state (AUCss)",
+          "weight": 0.6178
+        },
+        {
+          "paper_id": "10.1002/mds.28224",
+          "first_author": "Sofiene",
+          "year": 2020,
+          "effect": 2.92,
+          "ci_low": 1.08,
+          "ci_high": 7.89,
+          "p_value": 0.03,
+          "n_total": 70,
+          "outcome_name": "Percentage of systolic BP nondippers at end point",
+          "weight": 0.3822
+        }
+      ],
+      "pooled": {
+        "effect": 1.5339,
+        "ci_low": 0.5686,
+        "ci_high": 4.1381,
+        "i2": 76.2,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "rotigotine",
+      "outcome_domain": "periodic_limb_movements",
+      "effect_measure": "mean_difference",
+      "n_trials": 6,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.sleep.2010.02.014",
+          "first_author": "Wolfgang",
+          "year": 2010,
+          "effect": -3.12,
+          "ci_low": -5.36,
+          "ci_high": -0.88,
+          "p_value": 0.0072,
+          "n_total": 67,
+          "outcome_name": "PLM during sleep arousal index (PLMSAI; PLMSA/h TST)",
+          "weight": 0.1975
+        },
+        {
+          "paper_id": "10.1053/j.ajkd.2015.12.027",
+          "first_author": "Yves",
+          "year": 2016,
+          "effect": -5.19,
+          "ci_low": -15.36,
+          "ci_high": 4.98,
+          "p_value": 0.3,
+          "n_total": 30,
+          "outcome_name": "PLM During Sleep With Arousal Index (PLMSAI)",
+          "weight": 0.1923
+        },
+        {
+          "paper_id": "10.1002/mds.28224",
+          "first_author": "Sofiene",
+          "year": 2020,
+          "effect": -19.65,
+          "ci_low": -35.83,
+          "ci_high": -3.47,
+          "p_value": 0.02,
+          "n_total": 70,
+          "outcome_name": "PLMA index",
+          "weight": 0.1845
+        },
+        {
+          "paper_id": "10.1185/03007995.2015.1103216",
+          "first_author": "Diego",
+          "year": 2016,
+          "effect": 8.34,
+          "ci_low": -8.5,
+          "ci_high": 25.17,
+          "p_value": 0.329,
+          "n_total": 150,
+          "outcome_name": "Average of means of Periodic Limb Movement during Wakefulness Index (PLMWI) for the m-SIT",
+          "weight": 0.1835
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2014.12.019",
+          "first_author": "Werner",
+          "year": 2016,
+          "effect": 205.8,
+          "ci_low": 162.2,
+          "ci_high": 249.3,
+          "p_value": 0.001,
+          "n_total": null,
+          "outcome_name": "DBP Elevation Index with PLM",
+          "weight": 0.1302
+        },
+        {
+          "paper_id": "10.1212/wnl.0000000000002649",
+          "first_author": "Axel",
+          "year": 2016,
+          "effect": -160.34,
+          "ci_low": -213.23,
+          "ci_high": -107.45,
+          "p_value": 0.0001,
+          "n_total": 81,
+          "outcome_name": "Total PLM-associated nocturnal SBP elevations",
+          "weight": 0.112
+        }
+      ],
+      "pooled": {
+        "effect": 5.1221,
+        "ci_low": -21.7488,
+        "ci_high": 31.993,
+        "i2": 96.1,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "rotigotine",
+      "outcome_domain": "periodic_limb_movements",
+      "effect_measure": "rate_ratio",
+      "n_trials": 2,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.sleep.2010.02.014",
+          "first_author": "Wolfgang",
+          "year": 2010,
+          "effect": 4.25,
+          "ci_low": 2.48,
+          "ci_high": 7.28,
+          "p_value": 0.0001,
+          "n_total": 67,
+          "outcome_name": "Periodic Limb Movement Index (PLMI; PLM/h time in bed)",
+          "weight": 0.5048
+        },
+        {
+          "paper_id": "10.1053/j.ajkd.2015.12.027",
+          "first_author": "Yves",
+          "year": 2016,
+          "effect": 0.44,
+          "ci_low": 0.22,
+          "ci_high": 0.88,
+          "p_value": 0.02,
+          "n_total": 30,
+          "outcome_name": "Periodic Limb Movement Index (PLMI) ratio (end of maintenance to baseline)",
+          "weight": 0.4952
+        }
+      ],
+      "pooled": {
+        "effect": 1.3825,
+        "ci_low": 0.1498,
+        "ci_high": 12.7598,
+        "i2": 96.1,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "rotigotine",
+      "outcome_domain": "quality_of_life",
+      "effect_measure": "mean_difference",
+      "n_trials": 3,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1185/03007995.2015.1103216",
+          "first_author": "Diego",
+          "year": 2016,
+          "effect": -0.11,
+          "ci_low": -2.15,
+          "ci_high": 1.92,
+          "p_value": 0.9122,
+          "n_total": 150,
+          "outcome_name": "SF-36 Physical Component Summary score",
+          "weight": 0.4625
+        },
+        {
+          "paper_id": "10.1212/wnl.0000000000002649",
+          "first_author": "Axel",
+          "year": 2016,
+          "effect": -6.32,
+          "ci_low": -11.9,
+          "ci_high": -0.73,
+          "p_value": 0.0273,
+          "n_total": 81,
+          "outcome_name": "RLS-QoL (Restless Legs Syndrome Quality of Life questionnaire)",
+          "weight": 0.2718
+        },
+        {
+          "paper_id": "10.1053/j.ajkd.2015.12.027",
+          "first_author": "Yves",
+          "year": 2016,
+          "effect": 2.87,
+          "ci_low": -2.85,
+          "ci_high": 8.59,
+          "p_value": 0.3,
+          "n_total": 30,
+          "outcome_name": "SF-36 Physical Component Summary score",
+          "weight": 0.2656
+        }
+      ],
+      "pooled": {
+        "effect": -1.0064,
+        "ci_low": -5.2294,
+        "ci_high": 3.2166,
+        "i2": 64.6,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "rotigotine",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "mean_difference",
+      "n_trials": 6,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1185/03007995.2015.1103216",
+          "first_author": "Diego",
+          "year": 2016,
+          "effect": -0.24,
+          "ci_low": -0.69,
+          "ci_high": 0.2,
+          "p_value": 0.2847,
+          "n_total": 150,
+          "outcome_name": "MOS Sleep Scale - Sleep Quantity domain",
+          "weight": 0.3986
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2013.07.007",
+          "first_author": "Yuichi",
+          "year": 2013,
+          "effect": -0.6,
+          "ci_low": -1.4,
+          "ci_high": 0.3,
+          "p_value": 0.188,
+          "n_total": 284,
+          "outcome_name": "Pittsburgh Sleep Quality Index (PSQI) total score",
+          "weight": 0.3511
+        },
+        {
+          "paper_id": "10.1053/j.ajkd.2015.12.027",
+          "first_author": "Yves",
+          "year": 2016,
+          "effect": -1.37,
+          "ci_low": -3.91,
+          "ci_high": 1.17,
+          "p_value": 0.3,
+          "n_total": 30,
+          "outcome_name": "RLS-6 Item 1: Satisfaction with sleep",
+          "weight": 0.1525
+        },
+        {
+          "paper_id": "10.1212/wnl.0000000000002649",
+          "first_author": "Axel",
+          "year": 2016,
+          "effect": -7.1,
+          "ci_low": -11.93,
+          "ci_high": -2.26,
+          "p_value": 0.0047,
+          "n_total": 81,
+          "outcome_name": "PLMSAI (PLMS with arousal/total sleep time, per hour)",
+          "weight": 0.0571
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2010.02.014",
+          "first_author": "Wolfgang",
+          "year": 2010,
+          "effect": 2.72,
+          "ci_low": -3.2,
+          "ci_high": 8.63,
+          "p_value": 0.3618,
+          "n_total": 67,
+          "outcome_name": "Sleep efficiency (% during TIB)",
+          "weight": 0.0399
+        },
+        {
+          "paper_id": "10.1002/mds.28224",
+          "first_author": "Sofiene",
+          "year": 2020,
+          "effect": 48.68,
+          "ci_low": 4.07,
+          "ci_high": 93.28,
+          "p_value": 0.03,
+          "n_total": 70,
+          "outcome_name": "Total sleep time",
+          "weight": 0.0008
+        }
+      ],
+      "pooled": {
+        "effect": -0.7742,
+        "ci_low": -2.0169,
+        "ci_high": 0.4686,
+        "i2": 65.1,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "rotigotine",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "risk_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.sleep.2013.07.007",
+          "first_author": "Yuichi",
+          "year": 2013,
+          "effect": 21.0,
+          "ci_low": 7.9,
+          "ci_high": 34.2,
+          "p_value": 0.002,
+          "n_total": 284,
+          "outcome_name": "PSQI total score <5.5 at end of treatment (proportion with normalized sleep)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "rotigotine",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 12,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1002/mds.23157",
+          "first_author": "Wayne",
+          "year": 2010,
+          "effect": -0.35,
+          "ci_low": -0.7,
+          "ci_high": 0.0,
+          "p_value": 0.0603,
+          "n_total": 505,
+          "outcome_name": "CGI item 1 score (severity of illness)",
+          "weight": 0.1496
+        },
+        {
+          "paper_id": "10.1016/s1474-4422(08)70112-1",
+          "first_author": "Trenkwalder",
+          "year": 2008,
+          "effect": -0.76,
+          "ci_low": -1.13,
+          "ci_high": -0.38,
+          "p_value": 0.0001,
+          "n_total": 458,
+          "outcome_name": "CGI item 1 score - change from baseline to end of maintenance",
+          "weight": 0.1496
+        },
+        {
+          "paper_id": "10.1185/03007995.2015.1103216",
+          "first_author": "Diego",
+          "year": 2016,
+          "effect": 0.07,
+          "ci_low": -0.61,
+          "ci_high": 0.75,
+          "p_value": 0.8336,
+          "n_total": 150,
+          "outcome_name": "Average of means of m-SIT Discomfort Scale (m-SIT-DS) scores",
+          "weight": 0.1368
+        },
+        {
+          "paper_id": "10.1002/mds.28224",
+          "first_author": "Sofiene",
+          "year": 2020,
+          "effect": -1.73,
+          "ci_low": -2.44,
+          "ci_high": -1.01,
+          "p_value": 0.0001,
+          "n_total": 70,
+          "outcome_name": "CGIs score",
+          "weight": 0.135
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2010.02.014",
+          "first_author": "Wolfgang",
+          "year": 2010,
+          "effect": -0.89,
+          "ci_low": -1.62,
+          "ci_high": -0.17,
+          "p_value": 0.0168,
+          "n_total": 67,
+          "outcome_name": "CGI-1 (severity of illness) score",
+          "weight": 0.1345
+        },
+        {
+          "paper_id": "10.1053/j.ajkd.2015.12.027",
+          "first_author": "Yves",
+          "year": 2016,
+          "effect": -0.81,
+          "ci_low": -1.94,
+          "ci_high": 0.33,
+          "p_value": 0.2,
+          "n_total": 30,
+          "outcome_name": "Clinical Global Impression item 1 (CGI-1) severity of illness score",
+          "weight": 0.1122
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2013.07.007",
+          "first_author": "Yuichi",
+          "year": 2013,
+          "effect": -2.8,
+          "ci_low": -5.3,
+          "ci_high": -0.3,
+          "p_value": 0.03,
+          "n_total": 284,
+          "outcome_name": "International Restless Legs Syndrome Study Group rating scale (IRLS) total score",
+          "weight": 0.0526
+        },
+        {
+          "paper_id": "10.1111/j.1468-1331.2012.03719.x",
+          "first_author": "R.",
+          "year": 2012,
+          "effect": 4.46,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.0012,
+          "n_total": null,
+          "outcome_name": "Adjusted treatment difference (rotigotine minus placebo) in drug-naive patients - SP792 rotigotine 3 mg",
+          "weight": 0.049
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2007.04.010",
+          "first_author": "Wolfgang",
+          "year": 2008,
+          "effect": -5.8,
+          "ci_low": -9.3,
+          "ci_high": -2.4,
+          "p_value": 0.0004,
+          "n_total": 341,
+          "outcome_name": "IRLS total score change from baseline to end of Maintenance Period",
+          "weight": 0.0358
+        },
+        {
+          "paper_id": "10.1212/wnl.0000000000002649",
+          "first_author": "Axel",
+          "year": 2016,
+          "effect": -6.53,
+          "ci_low": -10.25,
+          "ci_high": -2.8,
+          "p_value": 0.0009,
+          "n_total": 81,
+          "outcome_name": "IRLS (International Restless Legs Syndrome Study Group rating scale)",
+          "weight": 0.03
+        },
+        {
+          "paper_id": "10.1002/mds.20251",
+          "first_author": "Stiasny-Kolster",
+          "year": 2004,
+          "effect": 7.7,
+          "ci_low": 2.0,
+          "ci_high": 13.5,
+          "p_value": 0.0095,
+          "n_total": 63,
+          "outcome_name": "International Restless Legs Syndrome Scale (IRLS) total score",
+          "weight": 0.0145
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2015.03.006",
+          "first_author": "Masayoshi",
+          "year": 2015,
+          "effect": -54.4,
+          "ci_low": -101.9,
+          "ci_high": -7.0,
+          "p_value": 0.03,
+          "n_total": 284,
+          "outcome_name": "Change in duration of daytime RLS symptoms (minutes/day)",
+          "weight": 0.0002
+        }
+      ],
+      "pooled": {
+        "effect": -0.8339,
+        "ci_low": -1.5521,
+        "ci_high": -0.1157,
+        "i2": 83.1,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "rotigotine",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "risk_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.sleep.2013.07.007",
+          "first_author": "Yuichi",
+          "year": 2013,
+          "effect": 18.5,
+          "ci_low": 5.9,
+          "ci_high": 31.2,
+          "p_value": 0.005,
+          "n_total": 284,
+          "outcome_name": "Patient Global Impression Improvement (PGI-I) responders",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "rotigotine (neupro)",
+      "outcome_domain": "other",
+      "effect_measure": "rate_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1007/s40261-013-0150-5",
+          "first_author": "Willi",
+          "year": 2014,
+          "effect": 1.37,
+          "ci_low": 1.12,
+          "ci_high": 1.68,
+          "p_value": null,
+          "n_total": null,
+          "outcome_name": "Cmax of total rotigotine",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "sumanirole",
+      "outcome_domain": "periodic_limb_movements",
+      "effect_measure": "rate_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.sleep.2006.05.018",
+          "first_author": "Diego",
+          "year": 2007,
+          "effect": 0.74,
+          "ci_low": 0.48,
+          "ci_high": 1.15,
+          "p_value": 0.1748,
+          "n_total": 270,
+          "outcome_name": "PLMS index change from baseline to end of maintenance (ITT/LOCF)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "sumanirole",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.sleep.2006.05.018",
+          "first_author": "Diego",
+          "year": 2007,
+          "effect": 0.84,
+          "ci_low": 0.39,
+          "ci_high": 1.78,
+          "p_value": 0.64,
+          "n_total": 270,
+          "outcome_name": "CGI Responder rate at end of maintenance",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "tension and trauma release exercises",
+      "outcome_domain": "mood_anxiety",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.3122/jabfm.2018.05.180065",
+          "first_author": "Eloise",
+          "year": 2018,
+          "effect": -0.4,
+          "ci_low": -3.3,
+          "ci_high": 2.4,
+          "p_value": 0.85,
+          "n_total": 18,
+          "outcome_name": "Global stress (Visual Analog Scale)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "tension and trauma release exercises",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.3122/jabfm.2018.05.180065",
+          "first_author": "Eloise",
+          "year": 2018,
+          "effect": 4.4,
+          "ci_low": -9.6,
+          "ci_high": 18.3,
+          "p_value": 0.5,
+          "n_total": 18,
+          "outcome_name": "Pittsburgh Insomnia Rating Scale (20-item version)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "tension and trauma release exercises",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.3122/jabfm.2018.05.180065",
+          "first_author": "Eloise",
+          "year": 2018,
+          "effect": -2.7,
+          "ci_low": -4.3,
+          "ci_high": -1.0,
+          "p_value": 0.003,
+          "n_total": 18,
+          "outcome_name": "Global RLS severity (Visual Analog Scale)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "tonic motor activation (tomac)",
+      "outcome_domain": "daytime_functioning",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1093/sleep/zsad190",
+          "first_author": "Bogan",
+          "year": 2023,
+          "effect": -11.1,
+          "ci_low": -18.5,
+          "ci_high": -3.6,
+          "p_value": 0.022,
+          "n_total": 133,
+          "outcome_name": "MOS Item 9 - trouble staying awake during the day (exploratory)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "tonic motor activation (tomac)",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "mean_difference",
+      "n_trials": 2,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1093/sleep/zsad190",
+          "first_author": "Bogan",
+          "year": 2023,
+          "effect": -9.7,
+          "ci_low": -14.7,
+          "ci_high": -4.7,
+          "p_value": 0.00017,
+          "n_total": 133,
+          "outcome_name": "MOS Sleep Problem Index II (MOS-II) score change from baseline",
+          "weight": 0.6657
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2024.08.017",
+          "first_author": "Haramandeep",
+          "year": 2024,
+          "effect": -10.76,
+          "ci_low": -17.81,
+          "ci_high": -3.7,
+          "p_value": 0.0046,
+          "n_total": 45,
+          "outcome_name": "MOS Sleep Problem Indices II (MOS-II) score change from Week 2 to Week 4",
+          "weight": 0.3343
+        }
+      ],
+      "pooled": {
+        "effect": -10.0544,
+        "ci_low": -14.1338,
+        "ci_high": -5.975,
+        "i2": 0.0,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "tonic motor activation (tomac)",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 2,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1093/sleep/zsad190",
+          "first_author": "Bogan",
+          "year": 2023,
+          "effect": -0.89,
+          "ci_low": -1.15,
+          "ci_high": -0.63,
+          "p_value": 0.0001,
+          "n_total": 133,
+          "outcome_name": "Change in IRLS Question #7 score (frequency of RLS symptoms) from baseline to Week 8",
+          "weight": 0.5838
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2024.08.017",
+          "first_author": "Haramandeep",
+          "year": 2024,
+          "effect": -4.42,
+          "ci_low": -7.26,
+          "ci_high": -1.57,
+          "p_value": 0.004,
+          "n_total": 45,
+          "outcome_name": "IRLS total score change from study entry to Week 4 (all participants)",
+          "weight": 0.4162
+        }
+      ],
+      "pooled": {
+        "effect": -2.359,
+        "ci_low": -5.7694,
+        "ci_high": 1.0513,
+        "i2": 82.9,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "tonic motor activation (tomac)",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "risk_difference",
+      "n_trials": 2,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1093/sleep/zsad190",
+          "first_author": "Bogan",
+          "year": 2023,
+          "effect": 0.28,
+          "ci_low": 0.14,
+          "ci_high": 0.43,
+          "p_value": 0.00011,
+          "n_total": 133,
+          "outcome_name": "Clinical Global Impressions-Improvement (CGI-I) responder rate at Week 4",
+          "weight": 0.6972
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2024.08.017",
+          "first_author": "Haramandeep",
+          "year": 2024,
+          "effect": 0.32,
+          "ci_low": 0.1,
+          "ci_high": 0.54,
+          "p_value": 0.0073,
+          "n_total": 45,
+          "outcome_name": "PGI-I responder rate at Week 4 (all participants)",
+          "weight": 0.3028
+        }
+      ],
+      "pooled": {
+        "effect": 0.2921,
+        "ci_low": 0.171,
+        "ci_high": 0.4132,
+        "i2": 0.0,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "vibrating pads",
+      "outcome_domain": "quality_of_life",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.2147/jprls.s40354",
+          "first_author": "Fred",
+          "year": 2013,
+          "effect": 4.13,
+          "ci_low": -1.33,
+          "ci_high": 9.59,
+          "p_value": 0.14,
+          "n_total": 158,
+          "outcome_name": "Johns Hopkins Restless Legs Syndrome Quality of Life summary scale (RLS-QoL)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "vibrating pads",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.2147/jprls.s40354",
+          "first_author": "Fred",
+          "year": 2013,
+          "effect": -7.09,
+          "ci_low": -12.92,
+          "ci_high": -0.27,
+          "p_value": 0.02,
+          "n_total": 158,
+          "outcome_name": "Medical Outcomes Study Sleep Problems Index II (MOS-II)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "vibrating pads",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.2147/jprls.s40354",
+          "first_author": "Fred",
+          "year": 2013,
+          "effect": -0.29,
+          "ci_low": -2.66,
+          "ci_high": 2.08,
+          "p_value": 0.81,
+          "n_total": 158,
+          "outcome_name": "International Restless Legs Syndrome Study Group rating scale (IRLS)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "vitamin d",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1007/s11325-018-1751-2",
+          "first_author": "Wali",
+          "year": 2019,
+          "effect": 4.2,
+          "ci_low": -12.8,
+          "ci_high": 4.4,
+          "p_value": 0.32,
+          "n_total": 35,
+          "outcome_name": "IRLSSG rating scale score (RLS severity score) — all participants",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "whole body vibration",
+      "outcome_domain": "other",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.5664/jcsm.5920",
+          "first_author": "Ulrike",
+          "year": 2016,
+          "effect": 7.8,
+          "ci_low": 5.9,
+          "ci_high": 9.7,
+          "p_value": 0.001,
+          "n_total": 13,
+          "outcome_name": "Acute skin blood flow increase with WBV (repeated measures across all sessions)",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "xp13512 (gabapentin enacarbil)",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "trials": [
+        {
+          "paper_id": "10.1212/01.wnl.0000341770.91926.cc",
+          "first_author": "Kushida",
+          "year": 2009,
+          "effect": -6.0,
+          "ci_low": -7.9,
+          "ci_high": -4.1,
+          "p_value": 0.0001,
+          "n_total": 222,
+          "outcome_name": "IRLS total score - change from baseline",
+          "weight": null
+        }
+      ]
+    },
+    {
+      "ingredient": "xp13512 (gabapentin enacarbil)",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "trials": [
+        {
+          "paper_id": "10.1212/01.wnl.0000341770.91926.cc",
+          "first_author": "Kushida",
+          "year": 2009,
+          "effect": 5.1,
+          "ci_low": 2.8,
+          "ci_high": 9.2,
+          "p_value": 0.0001,
+          "n_total": 222,
+          "outcome_name": "Investigator-rated CGI-I responder rate",
+          "weight": null
+        }
+      ]
+    }
+  ]
+}

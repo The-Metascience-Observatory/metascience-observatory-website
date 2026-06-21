@@ -1,0 +1,780 @@
+{
+  "_note": "Restless legs syndrome screening PRISMA + breakdowns over the treatment studies. Drug names canonicalised (see agent_canonical_map.json). agent_breakdown = drugs with >=2 papers; agent_singletons = single-paper drugs. drug_class_breakdown = by drug class.",
+  "sources": [
+    "PubMed",
+    "OpenAlex",
+    "Europe PMC",
+    "Semantic Scholar"
+  ],
+  "identified": 11044,
+  "excluded_not_relevant": 5395,
+  "relevant": 5649,
+  "not_retrieved": 0,
+  "retrieved": 5649,
+  "excluded_not_treatment": 4580,
+  "treatment_studies": 1069,
+  "clinical": 1037,
+  "preclinical": 0,
+  "study_design_breakdown": {
+    "case_series": 413,
+    "non_randomized_trial": 251,
+    "rct": 197,
+    "observational": 112,
+    "crossover": 64,
+    "other": 18,
+    "unclear": 14
+  },
+  "study_design_groups": {
+    "clinical": [
+      "case_series",
+      "crossover",
+      "non_randomized_trial",
+      "observational",
+      "rct"
+    ],
+    "preclinical": []
+  },
+  "drug_class_breakdown": {
+    "dopamine_agonist": 315,
+    "non_pharmacological": 262,
+    "other_pharmacological": 139,
+    "iron": 97,
+    "alpha2delta_ligand": 80,
+    "other": 58,
+    "levodopa": 52,
+    "opioid": 51,
+    "benzodiazepine": 15
+  },
+  "organism_breakdown": {
+    "human": 1064,
+    "animal": 4,
+    "other": 1
+  },
+  "indication_breakdown": {
+    "treatment": 981,
+    "not_applicable": 82,
+    "prevention": 5,
+    "both": 1
+  },
+  "agent_breakdown": [
+    {
+      "agent": "pramipexole",
+      "count": 121
+    },
+    {
+      "agent": "ropinirole",
+      "count": 41
+    },
+    {
+      "agent": "rotigotine",
+      "count": 40
+    },
+    {
+      "agent": "gabapentin enacarbil",
+      "count": 34
+    },
+    {
+      "agent": "ferric carboxymaltose",
+      "count": 29
+    },
+    {
+      "agent": "gabapentin",
+      "count": 26
+    },
+    {
+      "agent": "levodopa",
+      "count": 25
+    },
+    {
+      "agent": "cabergoline",
+      "count": 18
+    },
+    {
+      "agent": "pergolide",
+      "count": 18
+    },
+    {
+      "agent": "pregabalin",
+      "count": 15
+    },
+    {
+      "agent": "clonazepam",
+      "count": 14
+    },
+    {
+      "agent": "levodopa/benserazide",
+      "count": 13
+    },
+    {
+      "agent": "oral iron",
+      "count": 11
+    },
+    {
+      "agent": "tonic motor activation (tomac)",
+      "count": 11
+    },
+    {
+      "agent": "dopamine agonists",
+      "count": 11
+    },
+    {
+      "agent": "levodopa/carbidopa",
+      "count": 9
+    },
+    {
+      "agent": "tramadol",
+      "count": 8
+    },
+    {
+      "agent": "ferrous sulfate",
+      "count": 7
+    },
+    {
+      "agent": "intravenous iron",
+      "count": 7
+    },
+    {
+      "agent": "iron dextran",
+      "count": 7
+    },
+    {
+      "agent": "iron sucrose",
+      "count": 7
+    },
+    {
+      "agent": "repetitive transcranial magnetic stimulation (rtms)",
+      "count": 6
+    },
+    {
+      "agent": "bupropion",
+      "count": 6
+    },
+    {
+      "agent": "iron supplementation",
+      "count": 6
+    },
+    {
+      "agent": "intrathecal morphine",
+      "count": 6
+    },
+    {
+      "agent": "methadone",
+      "count": 6
+    },
+    {
+      "agent": "acupuncture",
+      "count": 6
+    },
+    {
+      "agent": "apomorphine",
+      "count": 5
+    },
+    {
+      "agent": "spinal cord stimulation",
+      "count": 5
+    },
+    {
+      "agent": "aerobic exercise",
+      "count": 4
+    },
+    {
+      "agent": "aripiprazole",
+      "count": 4
+    },
+    {
+      "agent": "dipyridamole",
+      "count": 4
+    },
+    {
+      "agent": "dopamine agonist",
+      "count": 4
+    },
+    {
+      "agent": "stretching exercises",
+      "count": 4
+    },
+    {
+      "agent": "near-infrared light",
+      "count": 4
+    },
+    {
+      "agent": "parathyroidectomy",
+      "count": 4
+    },
+    {
+      "agent": "yoga",
+      "count": 4
+    },
+    {
+      "agent": "oxycodone/naloxone",
+      "count": 4
+    },
+    {
+      "agent": "methadone and oxycodone",
+      "count": 4
+    },
+    {
+      "agent": "carbamazepine",
+      "count": 4
+    },
+    {
+      "agent": "intradialytic stretching exercise",
+      "count": 3
+    },
+    {
+      "agent": "vitamin d",
+      "count": 3
+    },
+    {
+      "agent": "dopaminergic therapy",
+      "count": 3
+    },
+    {
+      "agent": "acupressure",
+      "count": 3
+    },
+    {
+      "agent": "buprenorphine",
+      "count": 3
+    },
+    {
+      "agent": "lisuride",
+      "count": 3
+    },
+    {
+      "agent": "hydrotherapy and acupressure",
+      "count": 3
+    },
+    {
+      "agent": "vitamin d3",
+      "count": 3
+    },
+    {
+      "agent": "levetiracetam",
+      "count": 3
+    },
+    {
+      "agent": "pramipexole and ropinirole",
+      "count": 3
+    },
+    {
+      "agent": "blood flow restriction training",
+      "count": 3
+    },
+    {
+      "agent": "dopaminergic drugs",
+      "count": 3
+    },
+    {
+      "agent": "suvorexant",
+      "count": 3
+    },
+    {
+      "agent": "gluten-free diet",
+      "count": 3
+    },
+    {
+      "agent": "clonidine",
+      "count": 3
+    },
+    {
+      "agent": "iron",
+      "count": 3
+    },
+    {
+      "agent": "dextromethorphan",
+      "count": 2
+    },
+    {
+      "agent": "xp13512 (gabapentin enacarbil)",
+      "count": 2
+    },
+    {
+      "agent": "rifaximin",
+      "count": 2
+    },
+    {
+      "agent": "dopamine agonists (unspecified)",
+      "count": 2
+    },
+    {
+      "agent": "folic acid",
+      "count": 2
+    },
+    {
+      "agent": "iv iron",
+      "count": 2
+    },
+    {
+      "agent": "physical activity intervention",
+      "count": 2
+    },
+    {
+      "agent": "hydroxyzine hydrochloride",
+      "count": 2
+    },
+    {
+      "agent": "yi-gan san",
+      "count": 2
+    },
+    {
+      "agent": "dopaminergic agents",
+      "count": 2
+    },
+    {
+      "agent": "continuous positive airway pressure (cpap)",
+      "count": 2
+    },
+    {
+      "agent": "electroacupuncture",
+      "count": 2
+    },
+    {
+      "agent": "traction straight leg raise",
+      "count": 2
+    },
+    {
+      "agent": "ropinirole, pramipexole, and gabapentin",
+      "count": 2
+    },
+    {
+      "agent": "naproxen",
+      "count": 2
+    },
+    {
+      "agent": "lamotrigine",
+      "count": 2
+    },
+    {
+      "agent": "vortioxetine",
+      "count": 2
+    },
+    {
+      "agent": "subthalamic nucleus deep brain stimulation",
+      "count": 2
+    },
+    {
+      "agent": "opioids",
+      "count": 2
+    },
+    {
+      "agent": "whole body vibration",
+      "count": 2
+    },
+    {
+      "agent": "oral iron supplementation",
+      "count": 2
+    },
+    {
+      "agent": "physical activity",
+      "count": 2
+    },
+    {
+      "agent": "bromocriptine",
+      "count": 2
+    },
+    {
+      "agent": "pramipexole or pregabalin",
+      "count": 2
+    },
+    {
+      "agent": "kidney transplantation",
+      "count": 2
+    },
+    {
+      "agent": "transcutaneous spinal direct current stimulation",
+      "count": 2
+    },
+    {
+      "agent": "rotigotine (neupro)",
+      "count": 2
+    },
+    {
+      "agent": "physostigmine",
+      "count": 2
+    },
+    {
+      "agent": "gentle yoga",
+      "count": 2
+    },
+    {
+      "agent": "neurofeedback",
+      "count": 2
+    },
+    {
+      "agent": "angioplasty and stenting",
+      "count": 2
+    },
+    {
+      "agent": "transcutaneous spinal direct current stimulation (tsdcs)",
+      "count": 2
+    },
+    {
+      "agent": "dopaminergic agonist",
+      "count": 2
+    },
+    {
+      "agent": "talipexole",
+      "count": 2
+    },
+    {
+      "agent": "iron supplements",
+      "count": 2
+    },
+    {
+      "agent": "bryophyllum pinnatum",
+      "count": 2
+    },
+    {
+      "agent": "cool dialysate",
+      "count": 2
+    },
+    {
+      "agent": "opioids (unspecified)",
+      "count": 2
+    },
+    {
+      "agent": "rasagiline",
+      "count": 2
+    },
+    {
+      "agent": "positive airway pressure",
+      "count": 2
+    },
+    {
+      "agent": "gabapentinoids",
+      "count": 2
+    },
+    {
+      "agent": "cognitive behavioural therapy",
+      "count": 2
+    },
+    {
+      "agent": "progressive muscle relaxation",
+      "count": 2
+    },
+    {
+      "agent": "aerobic exercise and stretching exercise",
+      "count": 2
+    }
+  ],
+  "agent_singletons": [
+    "active supination dorsiflexion test guided therapeutic intervention",
+    "acupoint injection",
+    "acupuncture (he tiao du ren an shen)",
+    "acupuncture and moxibustion",
+    "acupuncture combined with tdp radiation",
+    "acupuncture plus gabapentin",
+    "acupuncture point injection",
+    "acupuncture-like tens",
+    "acute physical activity",
+    "adaptive spinal cord stimulation",
+    "aerobic and resistance exercise",
+    "aerobic and resistance training",
+    "aerobic and resistance training exercise",
+    "aerobic combined resistance exercise",
+    "aerobic exercise and resistance training",
+    "aerobic exercise and yogasana",
+    "aerobic exercise combined with dopamine agonists",
+    "aerobic exercise training",
+    "agalsidase beta",
+    "alpha-dihydroergocryptine",
+    "alprazolam (xanax)",
+    "amantadine",
+    "amitriptyline",
+    "anisodamine",
+    "aromatherapy",
+    "aromatherapy massage",
+    "aromatherapy massage with lavender oil",
+    "atomoxetine",
+    "auriculotherapy",
+    "baclofen",
+    "bariatric surgery",
+    "bee venom acupuncture",
+    "bilateral foot neuroma excision",
+    "biotin",
+    "botulinum toxin a",
+    "botulinum toxin type a",
+    "botulinum toxin type-a",
+    "bright light exposure",
+    "buerger allen exercise",
+    "buprenorphine-naloxone",
+    "bupropion and iron supplementation",
+    "calcitonin gene-related peptide monoclonal antibody (cgrp mab)",
+    "calcium carbonate / quercus e cortice 6x",
+    "cannabidiol",
+    "cannabis",
+    "cigarette smoking",
+    "cilostazol",
+    "classical chinese medicine prescriptions",
+    "codeine sulfate",
+    "coenzyme q10",
+    "cognitive behavioral therapy for insomnia",
+    "cognitive task",
+    "cold dialysate and stretching exercises",
+    "cold dialysis",
+    "cold water bags",
+    "cold water immersion",
+    "compression stockings",
+    "constant-pressure predilution online hemodiafiltration",
+    "core stability exercises",
+    "counterstrain manipulation",
+    "cranial electrical stimulation",
+    "cryotherapy",
+    "d-ribose",
+    "dangguijakyak-san and shihogyeji-tang",
+    "deep brain stimulation",
+    "deep brain stimulation (dbs)",
+    "deep brain stimulation (vim)",
+    "dexmedetomidine",
+    "dextroamphetamine sulfate",
+    "dipyridamole and suvorexant",
+    "disopyramide",
+    "dopamine agonist (unspecified)",
+    "dopamine agonists (pramipexole, ropinirole, rotigotine)",
+    "dopamine agonists, iron, or combination",
+    "dopamine receptor agonist",
+    "dopamine receptor agonists",
+    "dopaminergic agents and sedative-hypnotics",
+    "dopaminergic medications",
+    "dopaminergic medications (pramipexole, ropinirole, levodopa)",
+    "dopaminergic therapy withdrawal",
+    "dopaminergic treatment",
+    "dorsal root ganglion stimulation",
+    "ecopipam",
+    "effleurage massage therapy, foot reflexology, sleep hygiene education",
+    "electronic stimulation",
+    "endovenous laser ablation",
+    "endovenous radiofrequency ablation and ultrasound-guided foam sclerotherapy",
+    "enhanced external counter pulsation (eecp)",
+    "entacapone",
+    "epidural spinal cord stimulation",
+    "evidence-based nursing care",
+    "exercise",
+    "exercise (cycling)",
+    "exercise intervention",
+    "exercise training",
+    "exergaming",
+    "ferric carboxymaltose and ferrous sulfate",
+    "ferric carboxymaltose and iron fumarate",
+    "ferric carboxymaltose and iron gluconate",
+    "ferrous sulfate and ferumoxytol",
+    "foot massage and heat therapy",
+    "foot massage with lavender and sweet orange essential oils",
+    "foot reflexology and swedish massage",
+    "foot reflexology massage",
+    "fu's subcutaneous needling",
+    "gabapentin enacarbil (horizant)",
+    "gabapentin versus ropinirole",
+    "galcanezumab",
+    "ganoderma lucidum extract",
+    "globus pallidus deep brain stimulation",
+    "governor moxibustion",
+    "graded elastic compression stockings",
+    "gyejibokryeong-hwan",
+    "heat therapy",
+    "heel vessel catgut embedding",
+    "herbal medicines containing paeoniae radix",
+    "heroin",
+    "high-efficiency online hemodiafiltration",
+    "high-flux dialysis",
+    "high-volume hemodiafiltration with hemoadsorption",
+    "hot and cold water applications",
+    "hot water immersion",
+    "hydrocortisone",
+    "hydroquinine",
+    "hyeongbangsabaeksan",
+    "incobotulinum toxin-a",
+    "incobotulinumtoxin a",
+    "incobotulinumtoxina",
+    "interval aerobic training",
+    "intradialytic resistance exercise",
+    "intravenous iron and ferrous sulfate",
+    "intravenous vitamin c",
+    "iron and gabapentin",
+    "iron dextran (low molecular weight)",
+    "iron replacement therapy",
+    "iron repletion",
+    "iron substitution",
+    "iron supplement",
+    "iron supplementation (correction of iron stores)",
+    "iron, vitamin d, vitamin b12, folic acid, magnesium, calcium supplementation",
+    "istradefylline",
+    "jakyakgamcho-tang",
+    "jellyfish sting (cannonball jellyfish toxin)",
+    "jiin and seinetsu (traditional chinese medicine)",
+    "kampo medicine (goshuyuto and ryokeijutsukantou)",
+    "kinesio taping",
+    "korean medicine (herbal medication, acupuncture, oriental psychotherapy)",
+    "l-thyroxine",
+    "lacosamide",
+    "lavender oil and glycerin oil massage",
+    "lavender oil massage therapy",
+    "levodopa (rr-l-dopa and sr-l-dopa combination)",
+    "levodopa and codeine",
+    "levodopa and pergolide",
+    "levodopa or dopamine agonists",
+    "levodopa, pramipexole, ropinirole, rotigotine",
+    "levodopa/benserazide (madopar)",
+    "levodopa/carbidopa/entacapone",
+    "limb ischemic preconditioning",
+    "low frequency electrical stimulators",
+    "low-dose opioid",
+    "low-intensity exercise",
+    "low-sugar diet",
+    "lower leg nerve decompression surgery",
+    "lower limb strengthening exercises",
+    "lumbar corset",
+    "magnesium",
+    "magnesium and vitamin b6",
+    "magnesium citrate",
+    "magnesium sulfate",
+    "manual lymphatic drainage",
+    "massage",
+    "massage therapy with lavender oil",
+    "massage with lavender oil",
+    "massage with olive oil",
+    "medium cut-off hemodialysis membranes",
+    "melatonin, multivitamin supplement (colinplus delta)",
+    "methimazole",
+    "microsurgical treatment",
+    "mindfulness-based stress reduction",
+    "mixed rls treatments",
+    "morphine",
+    "morphine and bupivacaine (intrathecal)",
+    "morphine and fentanyl",
+    "motor imagery",
+    "mulligan's traction straight leg raise",
+    "multiple interventions",
+    "muscle stretching exercise",
+    "muscle stretching exercises",
+    "near-infrared light therapy",
+    "nerve decompression surgery",
+    "nerve mobilization exercises",
+    "neuromuscular electric stimulation",
+    "neurotropin",
+    "noninvasive peripheral nerve stimulation",
+    "noninvasive peroneal nerve stimulation",
+    "nursing care",
+    "nursing intervention strategies",
+    "ohdf (on-line hemodiafiltration)",
+    "olanzapine",
+    "onabotulinum toxin a",
+    "opiates (unspecified)",
+    "opioids (low-dose)",
+    "opioids (methadone, oxycodone)",
+    "opioids (unspecified low-dose)",
+    "oral iron supplement (65 mg elemental fe/day)",
+    "oriental medicine",
+    "orphenadrine citrate",
+    "oxcarbazepine",
+    "oxycodone",
+    "oxycodone-naloxone",
+    "paeoniae radix herbal formulations (shihogyeji-tang, gyejibokryeong-hwan, jakyakgamcho-tang)",
+    "palmitoylethanolamide (pea)",
+    "penicillin g",
+    "perampanel",
+    "pergolide mesylate",
+    "peripheral nerve stimulation",
+    "peroneal nerve stimulation (xd-tomac)",
+    "piribedil",
+    "pitolisant",
+    "placebo",
+    "pneumatic compression devices",
+    "pneumatic sequential compression devices",
+    "positive airway pressure (pap)",
+    "potassium citrate",
+    "pramipexole and gabapentin",
+    "pramipexole or ropinirole",
+    "pramipexole, pregabalin, clonazepam combination",
+    "progressive aerobic exercise training",
+    "progressive muscle relaxation exercise",
+    "progressive muscle relaxation exercises",
+    "progressive relaxation exercise",
+    "pycnogenol",
+    "red blood cell transfusion",
+    "reduced training intensity",
+    "reflexology and stretching exercises",
+    "renal transplantation",
+    "restiffic (pressure foot wrap)",
+    "ropinirole, pramipexole, pergolide",
+    "rouxiujiang decoction",
+    "saccharum iron",
+    "saint john's wort",
+    "sclerotherapy",
+    "scrambler device (electrical counter-stimulation)",
+    "selenium",
+    "self-stretching exercise",
+    "sensory stimulation",
+    "serotonin 1a receptor agonist",
+    "short daily hemodialysis",
+    "sildenafil",
+    "sleep hygiene training",
+    "sleepy well spray",
+    "stellate ganglion block",
+    "strength training",
+    "strength training (latihan kekuatan)",
+    "stretching exercise",
+    "stretching exercise and tens therapy",
+    "stretching, strengthening exercises and walking",
+    "subthalamic deep brain stimulation",
+    "subthalamic nucleus deep brain stimulation (stn dbs)",
+    "sucrose (nabat)",
+    "sumanirole",
+    "surface 19-channel z-score training (19 znf)",
+    "tadalafil",
+    "targeted pressure device (abductor hallucis and flexor hallucis brevis muscles)",
+    "tension and trauma release exercises",
+    "terguride",
+    "thalamic deep brain stimulation",
+    "thalidomide",
+    "thioperamide",
+    "thyroid hormone replacement therapy",
+    "tiaoshen acupuncture",
+    "tonic motor activation (tomac) system",
+    "tonic motor activation (tomac) therapy",
+    "topiramate",
+    "transauricular vagus nerve stimulation",
+    "transauricular vagus nerve stimulation (tvns)",
+    "transcranial direct current stimulation",
+    "transcranial magnetic stimulation",
+    "transcranial pulse stimulation",
+    "transcranial pulsed electrostimulation and alternating electrostatic field",
+    "transcutaneous auricular vagus nerve stimulation (tavns)",
+    "transcutaneous electric nerve stimulation (tens)",
+    "transcutaneous electrical nerve stimulation (tens)",
+    "transcutaneous electrical nerve stimulation with stretching",
+    "transcutaneous spinal cord direct current stimulation",
+    "transcutaneous spinal cord direct-current stimulation (tsdcs)",
+    "transcutaneous spinal direct current stimulation and pneumatic compression",
+    "ultrasound-guided foam sclerotherapy",
+    "unspecified dopamine agonist",
+    "unspecified non-pharmaceutical treatment",
+    "upper airway stimulation device",
+    "vagus nerve stimulation",
+    "valerian",
+    "varenicline",
+    "varicose vein surgery",
+    "vascular microsurgical intervention",
+    "venous ablation",
+    "vibrating pads",
+    "vibration and massage",
+    "vibration therapy",
+    "vibratory stimulation",
+    "vitamin b12 injections",
+    "vitamin b12 supplementation",
+    "vitamin d (colcalciferol)",
+    "vitamins and minerals",
+    "vitamins c and e",
+    "warm and cold water footbath",
+    "warm compression",
+    "warm massage therapy",
+    "wet cupping therapy",
+    "whole-body cryostimulation",
+    "withania somnifera",
+    "zincum valerianicum",
+    "zolpidem"
+  ],
+  "agent_named_total": 1013,
+  "agent_distinct": 415
+}

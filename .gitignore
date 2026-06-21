@@ -1,10 +1,15 @@
 data_ingestor/ingestion_complete
 data_ingestor/api_cache.json
 data_ingestor/ingestion_checkpoint.csv
+data_ingestor/J_Medline.txt
 
-# Next.js build output
+# Next.js build output (distDir points to ~/.next-metascience, outside Dropbox)
 .next
+/home/dan/.next-metascience
 .claude
+.cursor
+
+tsconfig.tsbuildinfo
 
 # Logs
 logs
@@ -30,7 +35,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
+tmp
+tmp*
 */__pycache__/
 */__pycache__/*
 */*/__pycache__/

@@ -15,6 +15,7 @@ export interface ScreeningRow {
   is_relevant: string;
   studies_treatment: string;
   trial_type: string;
+  phase: string;
   is_excluded: string;
   exclusion_reason: string;
   topics: string[];
@@ -45,6 +46,19 @@ function formatLabel(s: string): string {
     .replace(/\b\w/g, (c) => c.toUpperCase())
     .replace(/\bRct\b/g, "RCT");
 }
+
+/** Clinical-trial phase enum -> display label (shared with the chart). */
+export const PHASE_LABELS: Record<string, string> = {
+  phase_1: "Phase 1",
+  phase_1_2: "Phase 1/2",
+  phase_2: "Phase 2",
+  phase_2_3: "Phase 2/3",
+  phase_3: "Phase 3",
+  phase_4: "Phase 4",
+  not_applicable: "Not applicable",
+  unclear: "Unclear",
+};
+const phaseLabel = (p: string) => PHASE_LABELS[p] ?? formatLabel(p);
 
 /** Format a single author entry as "Last, F." across the formats present in the data. */
 function formatAuthorName(entry: string): string {
@@ -156,6 +170,7 @@ export function ScreeningTable({
   externalDesignFilter,
   externalOrganismFilter,
   externalIndicationFilter,
+  externalPhaseFilter,
   sprayTypes,
   compounds,
 }: {
@@ -165,6 +180,7 @@ export function ScreeningTable({
   externalDesignFilter?: string;
   externalOrganismFilter?: string;
   externalIndicationFilter?: string;
+  externalPhaseFilter?: string;
   sprayTypes?: string[];
   compounds?: string[];
 }) {
@@ -176,6 +192,7 @@ export function ScreeningTable({
   const [designFilter, setDesignFilter] = useState(externalDesignFilter ?? "all");
   const [organismFilter, setOrganismFilter] = useState(externalOrganismFilter ?? "all");
   const [indicationFilter, setIndicationFilter] = useState(externalIndicationFilter ?? "all");
+  const [phaseFilter, setPhaseFilter] = useState(externalPhaseFilter ?? "all");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   const sprays = sprayTypes ?? [];
@@ -193,6 +210,10 @@ export function ScreeningTable({
   );
   const indications = useMemo(
     () => [...new Set(rows.map((r) => r.indication).filter(Boolean))].sort(),
+    [rows]
+  );
+  const phases = useMemo(
+    () => [...new Set(rows.map((r) => r.phase).filter(Boolean))].sort(),
     [rows]
   );
 
@@ -217,25 +238,26 @@ export function ScreeningTable({
     if (designFilter !== "all") r = r.filter((row) => row.study_design === designFilter);
     if (organismFilter !== "all") r = r.filter((row) => row.organism === organismFilter);
     if (indicationFilter !== "all") r = r.filter((row) => row.indication === indicationFilter);
+    if (phaseFilter !== "all") r = r.filter((row) => row.phase === phaseFilter);
     return r;
-  }, [rows, search, sprayFilter, agentFilter, designFilter, organismFilter, indicationFilter]);
+  }, [rows, search, sprayFilter, agentFilter, designFilter, organismFilter, indicationFilter, phaseFilter]);
 
   // Reset pagination whenever the filtered set changes
   useEffect(() => {
     setVisibleCount(PAGE_SIZE);
-  }, [search, sprayFilter, agentFilter, designFilter, organismFilter, indicationFilter]);
+  }, [search, sprayFilter, agentFilter, designFilter, organismFilter, indicationFilter, phaseFilter]);
 
   // If mounted with an external filter (bar click), scroll into view
   useEffect(() => {
     if (externalSprayFilter || externalAgentFilter || externalDesignFilter
-        || externalOrganismFilter || externalIndicationFilter) {
+        || externalOrganismFilter || externalIndicationFilter || externalPhaseFilter) {
       setTimeout(() => {
         tableRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 100);
     }
     // eslint-disable-line react-hooks/exhaustive-deps
   }, [externalSprayFilter, externalAgentFilter, externalDesignFilter,
-      externalOrganismFilter, externalIndicationFilter]);
+      externalOrganismFilter, externalIndicationFilter, externalPhaseFilter]);
 
   const visible = filtered.slice(0, visibleCount);
 
@@ -298,6 +320,14 @@ export function ScreeningTable({
             options={[{ value: "all", label: "All" }, ...indications.map((i) => ({ value: i, label: formatLabel(i) }))]}
           />
         )}
+        {phases.length > 0 && (
+          <FilterSelect
+            label="Phase"
+            value={phaseFilter}
+            onChange={setPhaseFilter}
+            options={[{ value: "all", label: "All" }, ...phases.map((p) => ({ value: p, label: phaseLabel(p) }))]}
+          />
+        )}
       </div>
 
       <div className="flex items-center gap-4 text-sm text-foreground/50">
@@ -315,6 +345,7 @@ export function ScreeningTable({
               <th className="p-2">Spray Type</th>
               <th className="p-2">Compound</th>
               <th className="p-2">Study Design</th>
+              <th className="p-2">Phase</th>
               <th className="p-2">Organism</th>
               <th className="p-2">Prevention / Treatment</th>
             </tr>
@@ -373,6 +404,9 @@ function ScreeningRowItem({ row }: { row: ScreeningRow }) {
       <td className="p-2 text-xs">{row.spray_type ? formatLabel(row.spray_type) : "—"}</td>
       <td className="p-2 text-xs capitalize">{row.agent || "—"}</td>
       <td className="p-2 text-xs">{row.study_design ? formatLabel(row.study_design) : "—"}</td>
+      <td className="p-2 text-xs">
+        {row.phase && row.phase !== "not_applicable" && row.phase !== "unclear" ? phaseLabel(row.phase) : "—"}
+      </td>
       <td className="p-2 text-xs">
         {row.organism && row.organism !== "unclassified" ? formatLabel(row.organism) : "—"}
       </td>
