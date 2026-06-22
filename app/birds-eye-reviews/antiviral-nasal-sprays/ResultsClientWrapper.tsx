@@ -413,24 +413,26 @@ export function ResultsClientWrapper({
       {/* Trials by year (reacts to the filters above) */}
       <YearChart years={filteredYears} />
 
-      {/* Meta-analysis forest plots */}
-      <section className="mb-10 mt-8">
-        <h2 className="text-lg font-semibold mb-1">Meta-analyses</h2>
-        <p className="text-sm text-foreground/60 mb-4">
+      {/* Meta-analysis forest plots — hidden */}
+      {false && (
+      <section className=”mb-10 mt-8”>
+        <h2 className=”text-lg font-semibold mb-1”>Meta-analyses</h2>
+        <p className=”text-sm text-foreground/60 mb-4”>
           One forest plot per ingredient × outcome × effect measure with ≥2 trials. A pooled
           random-effects diamond (DerSimonian–Laird) is shown when {minTrials}+ trials report the
           same comparable estimate.{ingredient && ` Filtered to “${fmtIngredient(ingredient)}”.`}
         </p>
         {shownGroups.length === 0 ? (
-          <div className="border border-dashed border-border rounded-lg bg-foreground/[0.02] px-4 py-8 text-center text-sm text-foreground/60">
+          <div className=”border border-dashed border-border rounded-lg bg-foreground/[0.02] px-4 py-8 text-center text-sm text-foreground/60”>
             No ingredient yet has ≥2 trials reporting a comparable outcome and effect measure
-            {ingredient ? ` for “${fmtIngredient(ingredient)}”` : ""}. As more trials are extracted, forest plots
+            {ingredient ? ` for “${fmtIngredient(ingredient)}”` : “”}. As more trials are extracted, forest plots
             will appear here. ({pooledCount} pooled so far.)
           </div>
         ) : (
           shownGroups.map((g, i) => <ForestPlot key={`${g.ingredient}-${g.outcome_domain}-${g.effect_measure}-${i}`} group={g} />)
         )}
       </section>
+      )}
 
       <ResultsTable
         rows={filteredTrials}

@@ -785,7 +785,23 @@ function TrialTableTab({
   );
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
-  const [showCount, setShowCount] = useState(Infinity);
+  const [showCount, setShowCount] = useState(50);
+  const sentinelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setShowCount((c) => c + 50);
+        }
+      },
+      { rootMargin: "200px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const categories = useMemo(
     () => [...new Set(tableRows.map((r) => r.intervention_category))].sort(),
@@ -1024,14 +1040,13 @@ function TrialTableTab({
         </table>
       </div>
 
-      {showCount < filtered.length && (
-        <button
-          onClick={() => setShowCount((c) => c + 25)}
-          className="text-sm text-blue-600 hover:text-blue-700 underline"
-        >
-          Show more ({filtered.length - showCount} remaining)
-        </button>
-      )}
+      <div ref={sentinelRef} aria-hidden>
+        {showCount < filtered.length && (
+          <div className="py-4 text-center text-sm text-foreground/40">
+            Loading more… ({filtered.length - showCount} remaining)
+          </div>
+        )}
+      </div>
     </div>
   );
 }
