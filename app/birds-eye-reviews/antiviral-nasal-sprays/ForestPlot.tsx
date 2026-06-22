@@ -16,6 +16,8 @@ export interface ForestTrial {
   n_total: number | null;
   weight: number | null; // pooled weight (0..1) or null when not pooled
   outcome_name: string | null;
+  /** True when this trial's effect was inverted to match the group's reference orientation. */
+  oriented_flipped?: boolean;
 }
 
 export interface ForestGroup {
@@ -35,6 +37,18 @@ export interface ForestGroup {
     i2: number;
     model: string;
   } | null;
+  /** Set on the unified (drug × outcome) standardized-mean-difference pool, which
+   *  combines continuous (Hedges' g) and binary (Chinn OR→SMD) outcomes onto one
+   *  comparable Cohen's-d scale. */
+  standardized?: boolean;
+  /** Underlying measure families folded into a standardized pool, e.g. ["continuous","odds_ratio"]. */
+  combines?: string[];
+  /** Number of trials whose effect was converted to SMD (vs natively continuous). */
+  n_converted?: number;
+  /** Reference orientation for the group; trials measured the other way are flipped. */
+  reference_higher_is_better?: boolean;
+  /** How many trials were inverted to match the group's reference orientation. */
+  n_oriented_flipped?: number;
 }
 
 const MEASURE_LABEL: Record<string, string> = {
@@ -146,11 +160,30 @@ export function ForestPlot({ group }: { group: ForestGroup }) {
       <div className="mb-1 flex flex-wrap items-baseline gap-x-3">
         <h3 className="font-semibold text-foreground capitalize">{group.ingredient}</h3>
         <span className="text-sm text-foreground/70">{group.domainLabel ?? prettyDomain(group.outcome_domain)}</span>
+        {group.standardized && (
+          <span className="text-[10px] font-semibold uppercase tracking-wide rounded px-1.5 py-0.5 bg-violet-100 text-violet-700">
+            Standardized (SMD)
+          </span>
+        )}
         <span className="text-xs text-foreground/50">
           {prettyMeasure(group.effect_measure)} · {group.n_trials} trial{group.n_trials === 1 ? "" : "s"}
           {group.pooled ? ` · I² = ${group.pooled.i2}%` : " · not pooled"}
         </span>
       </div>
+      {(group.standardized || (group.n_oriented_flipped ?? 0) > 0) && (
+        <p className="mb-2 text-[11px] leading-snug text-foreground/55">
+          {group.standardized && (
+            <>Standardized effect size (Cohen&apos;s d): combines{" "}
+            {(group.combines ?? []).map(prettyMeasure).join(" & ").toLowerCase() || "outcomes"} onto one
+            scale via Hedges&apos; g and Chinn&apos;s OR→SMD conversion (an approximation). Positive = favors
+            treatment.{(group.n_converted ?? 0) > 0 ? ` ${group.n_converted} trial${group.n_converted === 1 ? "" : "s"} converted from binary.` : ""}{" "}</>
+          )}
+          {(group.n_oriented_flipped ?? 0) > 0 && (
+            <>{group.n_oriented_flipped} trial{group.n_oriented_flipped === 1 ? " was" : "s were"} inverted (†)
+            so all estimates share one direction (higher = better).</>
+          )}
+        </p>
+      )}
       <svg viewBox={`0 0 ${W} ${H}`} className="text-foreground" style={{ width: "100%", height: "auto" }}>
         {/* column headers */}
         <text x={0} y={18} fontSize={11} fontWeight={600} fill="currentColor">Trial</text>
@@ -171,7 +204,8 @@ export function ForestPlot({ group }: { group: ForestGroup }) {
           const x2 = t.ci_high != null ? xPix(t.ci_high) : cx;
           const valStr = `${fmt(t.effect)} (${fmt(t.ci_low)}–${fmt(t.ci_high)})`;
           const href = trialHref(t.doi ?? t.paper_id);
-          const labelText = t.label.length > 30 ? t.label.slice(0, 29) + "…" : t.label;
+          const dagger = t.oriented_flipped ? " †" : "";
+          const labelText = (t.label.length > 28 ? t.label.slice(0, 27) + "…" : t.label) + dagger;
           return (
             <g key={`${t.paper_id}-${i}`}>
               {href ? (

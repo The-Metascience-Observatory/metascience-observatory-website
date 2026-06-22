@@ -150,6 +150,7 @@ export function BreakdownChart({
   clickHint,
   segments,
   selectedKey,
+  collapseSingletons,
 }: {
   title: string;
   breakdown: Record<string, number> | Record<string, Record<string, number>>;
@@ -160,6 +161,9 @@ export function BreakdownChart({
   segments?: Segment[];
   /** When set, keep every bar visible but lighten the others and outline this one. */
   selectedKey?: string;
+  /** Stacked mode only: render single-trial keys as a compact color-coded list
+   *  below the bars instead of one tiny bar each (declutters a long singleton tail). */
+  collapseSingletons?: boolean;
 }) {
   const prettyLabel = (key: string) =>
     labels?.[key] ?? key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
@@ -179,7 +183,7 @@ export function BreakdownChart({
   const barHeight = 26;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const data: any[] = segments
+  const allData: any[] = segments
     ? Object.entries(breakdown as Record<string, Record<string, number>>)
         .map(([key, segCounts]) => {
           const total = segments.reduce((s, seg) => s + (segCounts[seg.key] || 0), 0);
@@ -197,7 +201,18 @@ export function BreakdownChart({
         }))
         .sort((a, b) => b.count - a.count);
 
-  const total = data.reduce((s, d) => s + (segments ? (d.total as number) : (d.count as number)), 0);
+  // Single-trial keys collapse into a list below; multi-trial keys stay as bars.
+  // AUTO by default: collapse when there's a genuine long single-trial tail (>=8),
+  // so any breakdown (now or future) declutters itself without setting the prop.
+  // Explicit `collapseSingletons` true forces it; false disables it.
+  const AUTO_SINGLETON_THRESHOLD = 8;
+  const singletonCount = segments ? allData.filter((d) => (d.total as number) === 1).length : 0;
+  const useCollapse = !!segments && collapseSingletons !== false &&
+    (collapseSingletons === true || singletonCount >= AUTO_SINGLETON_THRESHOLD);
+  const data = useCollapse ? allData.filter((d) => (d.total as number) > 1) : allData;
+  const singletonData = useCollapse ? allData.filter((d) => (d.total as number) === 1) : [];
+  // Title total counts ALL keys (bars + singletons) so n= stays the full count.
+  const total = allData.reduce((s, d) => s + (segments ? (d.total as number) : (d.count as number)), 0);
   // Mobile rows need extra vertical room for the stacked label sitting above each bar.
   const labelRow = isMobile ? 20 : 0;
   const chartHeight = data.length * (barHeight + 14 + labelRow) + 50;
@@ -352,6 +367,42 @@ export function BreakdownChart({
           )}
         </BarChart>
       </ResponsiveContainer>
+
+      {/* Single-trial keys: compact list, each with a colour-coded result swatch +
+          outcome label, clickable to filter (mirrors the bars above). */}
+      {singletonData.length > 0 && segments && (
+        <div className="mt-3 pt-3 border-t border-border">
+          <p className="text-xs text-foreground/60 mb-2">
+            {singletonData.length.toLocaleString()} with a single trial (swatch = result):
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-0.5">
+            {singletonData.map((d) => {
+              const seg = segments.find((s) => (d[s.key] as number) === 1);
+              const color = seg?.color ?? MUTED_COLOR;
+              const key = d.key as string;
+              const selected = selectedKey != null && selectedKey !== "" && key === selectedKey;
+              return (
+                <button
+                  key={key}
+                  onClick={onBarClick ? () => onBarClick(key) : undefined}
+                  title={seg?.label}
+                  className={`flex items-center gap-2 text-left text-xs rounded px-1 py-0.5 ${
+                    onBarClick ? "hover:bg-foreground/5 cursor-pointer" : ""
+                  } ${selected ? "bg-foreground/10 font-semibold" : ""}`}
+                >
+                  <span className="inline-block w-2.5 h-2.5 rounded-sm shrink-0" style={{ backgroundColor: color }} />
+                  <span className="truncate text-foreground/80">{d.label as string}</span>
+                  {seg && (
+                    <span className="ml-auto text-[10px] text-foreground/45 shrink-0 hidden sm:inline">
+                      {seg.label}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

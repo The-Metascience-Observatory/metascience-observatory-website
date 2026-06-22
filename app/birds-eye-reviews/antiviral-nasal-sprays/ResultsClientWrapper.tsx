@@ -247,12 +247,24 @@ export function ResultsClientWrapper({
     [filteredTrials]
   );
 
-  // Forest plots: groups with >=2 trials, pooled first, optionally filtered by ingredient.
-  // (Meta-analyses are aggregate over all trials and not narrowed by the trial-type filter.)
+  // Forest plots: groups with >=2 trials, optionally filtered by ingredient.
+  // Plots are clustered by ingredient (most-studied first), then by outcome domain;
+  // within each domain the unified standardized (SMD) plot leads, followed by the
+  // per-measure plots. (Meta-analyses are aggregate over all trials.)
   const shownGroups = useMemo(() => {
     let g = forestGroups.filter((x) => x.n_trials >= 2);
     if (ingredient) g = g.filter((x) => x.ingredient === ingredient);
-    return g.sort((a, b) => Number(Boolean(b.pooled)) - Number(Boolean(a.pooled)) || b.n_trials - a.n_trials);
+    const ingWeight = new Map<string, number>();
+    for (const x of g) ingWeight.set(x.ingredient, (ingWeight.get(x.ingredient) ?? 0) + x.n_trials);
+    return g.sort(
+      (a, b) =>
+        (ingWeight.get(b.ingredient)! - ingWeight.get(a.ingredient)!) ||
+        a.ingredient.localeCompare(b.ingredient) ||
+        a.outcome_domain.localeCompare(b.outcome_domain) ||
+        Number(Boolean(b.standardized)) - Number(Boolean(a.standardized)) ||
+        Number(Boolean(b.pooled)) - Number(Boolean(a.pooled)) ||
+        b.n_trials - a.n_trials
+    );
   }, [forestGroups, ingredient]);
   const pooledCount = forestGroups.filter((g) => g.pooled).length;
 
@@ -388,9 +400,9 @@ export function ResultsClientWrapper({
       {/* Breakdown charts */}
       {Object.keys(ingredientVerdictChart).length > 0 && (
         <BreakdownChart title="Trials by Ingredient" breakdown={ingredientVerdictChart}
-          segments={VERDICT_SEGMENTS} selectedKey={ingredient}
+          segments={VERDICT_SEGMENTS} selectedKey={ingredient} collapseSingletons
           onBarClick={(k) => setIngredient((cur) => (cur === k ? undefined : k))}
-          clickHint="Each bar is split by result direction — click a bar to filter the whole dashboard to that ingredient (click again to clear)." />
+          clickHint="Each bar is split by result direction — click a bar to filter the whole dashboard to that ingredient (click again to clear). Single-trial ingredients are listed below." />
       )}
       {!typesActive && Object.keys(domainVerdictChart).length > 0 && (
         <BreakdownChart title="Trials by Primary Outcome Domain" breakdown={domainVerdictChart}

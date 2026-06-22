@@ -7,6 +7,8 @@
       "effect_measure": "hazard_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.2139/ssrn.4397031",
@@ -28,6 +30,8 @@
       "effect_measure": "hazard_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.2139/ssrn.4397031",
@@ -49,6 +53,8 @@
       "effect_measure": "mean_difference",
       "n_trials": 1,
       "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.3390/v14051033",
@@ -70,6 +76,8 @@
       "effect_measure": "risk_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": true,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.3390/v14051033",
@@ -91,6 +99,8 @@
       "effect_measure": "hazard_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": true,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.3390/pharmaceutics16091173",
@@ -112,6 +122,8 @@
       "effect_measure": "mean_difference",
       "n_trials": 1,
       "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.3390/pharmaceutics16091173",
@@ -133,6 +145,8 @@
       "effect_measure": "hazard_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": true,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1001/jamainternmed.2025.4283",
@@ -154,6 +168,8 @@
       "effect_measure": "mean_difference",
       "n_trials": 1,
       "scale": "linear",
+      "reference_higher_is_better": true,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1001/jamainternmed.2025.4283",
@@ -175,6 +191,8 @@
       "effect_measure": "odds_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1001/jamainternmed.2025.4283",
@@ -196,6 +214,8 @@
       "effect_measure": "risk_difference",
       "n_trials": 1,
       "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1001/jamainternmed.2025.4283",
@@ -217,6 +237,8 @@
       "effect_measure": "hazard_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.3390/v16121914",
@@ -238,6 +260,8 @@
       "effect_measure": "mean_difference",
       "n_trials": 1,
       "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1001/jamainternmed.2025.4283",
@@ -259,6 +283,8 @@
       "effect_measure": "mean_difference",
       "n_trials": 1,
       "scale": "linear",
+      "reference_higher_is_better": true,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1002/alr.22975",
@@ -280,6 +306,8 @@
       "effect_measure": "risk_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/s2213-2600(24)00140-1#gel",
@@ -301,6 +329,8 @@
       "effect_measure": "risk_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/s2213-2600(24)00140-1#gel",
@@ -322,6 +352,8 @@
       "effect_measure": "rate_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/s2213-2600(24)00140-1#gel",
@@ -343,6 +375,8 @@
       "effect_measure": "rate_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/s2213-2600(24)00140-1#gel",
@@ -364,6 +398,8 @@
       "effect_measure": "risk_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/s2213-2600(24)00140-1#gel",
@@ -385,6 +421,8 @@
       "effect_measure": "rate_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/s2213-2600(24)00140-1#gel",
@@ -406,6 +444,8 @@
       "effect_measure": "rate_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/s2213-2600(24)00140-1#gel",
@@ -427,6 +467,8 @@
       "effect_measure": "hazard_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": true,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.4178/epih.e2021051",
@@ -448,6 +490,8 @@
       "effect_measure": "hazard_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.3390/pharmaceutics14112502",
@@ -469,6 +513,8 @@
       "effect_measure": "odds_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.3390/pharmaceutics14112502",
@@ -490,6 +536,8 @@
       "effect_measure": "risk_difference",
       "n_trials": 1,
       "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.3390/pharmaceutics14112502",
@@ -511,6 +559,8 @@
       "effect_measure": "hazard_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1002/jmv.29275",
@@ -532,6 +582,8 @@
       "effect_measure": "hazard_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1093/cid/ciaf409",
@@ -553,6 +605,8 @@
       "effect_measure": "risk_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1093/cid/ciaf409",
@@ -574,6 +628,8 @@
       "effect_measure": "risk_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1093/cid/ciaf409",
@@ -595,6 +651,8 @@
       "effect_measure": "risk_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1017/s0950268800029484",
@@ -616,6 +674,8 @@
       "effect_measure": "risk_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1017/s0950268800029484",
@@ -637,6 +697,8 @@
       "effect_measure": "risk_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/j.vaccine.2010.03.062",
@@ -658,6 +720,8 @@
       "effect_measure": "risk_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/j.vaccine.2010.03.062",
@@ -679,6 +743,8 @@
       "effect_measure": "rate_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1086/341455",
@@ -700,6 +766,8 @@
       "effect_measure": "rate_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1086/341455",
@@ -721,6 +789,8 @@
       "effect_measure": "odds_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.2147/ijgm.s328486",
@@ -742,6 +812,8 @@
       "effect_measure": "risk_difference",
       "n_trials": 1,
       "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.2147/ijgm.s328486",
@@ -763,6 +835,8 @@
       "effect_measure": "odds_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.2147/ijgm.s328486",
@@ -784,6 +858,8 @@
       "effect_measure": "risk_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1002/prp2.810",
@@ -805,6 +881,8 @@
       "effect_measure": "odds_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": true,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1186/s12931-015-0281-8",
@@ -826,6 +904,8 @@
       "effect_measure": "hazard_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1186/1465-9921-14-124",
@@ -847,6 +927,8 @@
       "effect_measure": "mean_difference",
       "n_trials": 1,
       "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1002/prp2.810",
@@ -868,6 +950,8 @@
       "effect_measure": "rate_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": true,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1002/prp2.810",
@@ -889,6 +973,8 @@
       "effect_measure": "risk_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1002/prp2.810",
@@ -910,6 +996,8 @@
       "effect_measure": "mean_difference",
       "n_trials": 2,
       "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.2147/ijgm.s476707",
@@ -950,6 +1038,8 @@
       "effect_measure": "mean_difference",
       "n_trials": 1,
       "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1186/s12931-015-0281-8",
@@ -971,6 +1061,8 @@
       "effect_measure": "hazard_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1186/s12879-025-10584-4",
@@ -992,6 +1084,8 @@
       "effect_measure": "rate_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1186/s12879-025-10584-4",
@@ -1013,6 +1107,8 @@
       "effect_measure": "odds_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.32388/dp7zsf.2",
@@ -1034,6 +1130,8 @@
       "effect_measure": "odds_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.32388/dp7zsf.2",
@@ -1055,6 +1153,8 @@
       "effect_measure": "risk_difference",
       "n_trials": 1,
       "scale": "linear",
+      "reference_higher_is_better": true,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/j.lansea.2022.100036",
@@ -1076,6 +1176,8 @@
       "effect_measure": "hazard_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/j.lansea.2022.100036",
@@ -1097,6 +1199,8 @@
       "effect_measure": "mean_difference",
       "n_trials": 2,
       "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/j.lansea.2022.100036",
@@ -1137,6 +1241,8 @@
       "effect_measure": "risk_difference",
       "n_trials": 1,
       "scale": "linear",
+      "reference_higher_is_better": true,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/j.lansea.2022.100036",
@@ -1158,6 +1264,8 @@
       "effect_measure": "odds_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/j.eclinm.2023.102324",
@@ -1179,6 +1287,8 @@
       "effect_measure": "risk_difference",
       "n_trials": 1,
       "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/j.eclinm.2023.102324",
@@ -1200,6 +1310,8 @@
       "effect_measure": "odds_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/j.eclinm.2023.102324",
@@ -1221,6 +1333,8 @@
       "effect_measure": "risk_difference",
       "n_trials": 1,
       "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/j.eclinm.2023.102324",
@@ -1242,6 +1356,8 @@
       "effect_measure": "risk_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/j.eclinm.2023.102324",
@@ -1263,6 +1379,8 @@
       "effect_measure": "odds_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/j.eclinm.2023.102324",
@@ -1284,6 +1402,8 @@
       "effect_measure": "rate_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/j.eclinm.2023.102324",
@@ -1305,6 +1425,8 @@
       "effect_measure": "risk_difference",
       "n_trials": 1,
       "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/j.eclinm.2023.102324",
@@ -1326,6 +1448,8 @@
       "effect_measure": "hazard_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1007/s12519-023-00749-z",
@@ -1347,6 +1471,8 @@
       "effect_measure": "mean_difference",
       "n_trials": 1,
       "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.3389/fmed.2025.1565069",
@@ -1368,6 +1494,8 @@
       "effect_measure": "hazard_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.3389/fmed.2025.1565069",
@@ -1389,6 +1517,8 @@
       "effect_measure": "mean_difference",
       "n_trials": 1,
       "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.3389/fmed.2025.1565069",
@@ -1410,6 +1540,8 @@
       "effect_measure": "mean_difference",
       "n_trials": 1,
       "scale": "linear",
+      "reference_higher_is_better": true,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1002/lary.29935",
@@ -1431,6 +1563,8 @@
       "effect_measure": "odds_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": true,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1007/s12070-022-03106-0",
@@ -1452,6 +1586,8 @@
       "effect_measure": "mean_difference",
       "n_trials": 1,
       "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.3389/fmed.2022.863917",
@@ -1473,6 +1609,8 @@
       "effect_measure": "hazard_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1101/2023.03.19.23287462",
@@ -1494,6 +1632,8 @@
       "effect_measure": "rate_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1080/22221751.2023.2212806",
@@ -1515,6 +1655,8 @@
       "effect_measure": "risk_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/s2213-2600(24)00140-1#saline",
@@ -1536,6 +1678,8 @@
       "effect_measure": "risk_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/s2213-2600(24)00140-1#saline",
@@ -1557,6 +1701,8 @@
       "effect_measure": "rate_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/s2213-2600(24)00140-1#saline",
@@ -1578,6 +1724,8 @@
       "effect_measure": "rate_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/s2213-2600(24)00140-1#saline",
@@ -1599,6 +1747,8 @@
       "effect_measure": "risk_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/s2213-2600(24)00140-1#saline",
@@ -1620,6 +1770,8 @@
       "effect_measure": "rate_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/s2213-2600(24)00140-1#saline",
@@ -1641,6 +1793,8 @@
       "effect_measure": "rate_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/s2213-2600(24)00140-1#saline",
@@ -1662,6 +1816,8 @@
       "effect_measure": "odds_ratio",
       "n_trials": 1,
       "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1086/313696",
@@ -1683,6 +1839,8 @@
       "effect_measure": "mean_difference",
       "n_trials": 1,
       "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1056/nejm199709253371302",
@@ -1704,6 +1862,8 @@
       "effect_measure": "mean_difference",
       "n_trials": 3,
       "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1177/135965359900400202",
@@ -1756,6 +1916,8 @@
       "effect_measure": "mean_difference",
       "n_trials": 1,
       "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1086/314904",
@@ -1777,6 +1939,8 @@
       "effect_measure": "mean_difference",
       "n_trials": 1,
       "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
       "trials": [
         {
           "paper_id": "10.1016/s0002-9343(01)00765-3",
@@ -1791,6 +1955,290 @@
           "weight": null
         }
       ]
+    },
+    {
+      "ingredient": "azelastine",
+      "outcome_domain": "viral_load",
+      "effect_measure": "smd",
+      "n_trials": 2,
+      "scale": "linear",
+      "standardized": true,
+      "combines": [
+        "continuous"
+      ],
+      "n_converted": 2,
+      "trials": [
+        {
+          "paper_id": "10.3390/v16121914",
+          "first_author": "Peter",
+          "year": "2024",
+          "effect": 0.3746,
+          "ci_low": 0.1249,
+          "ci_high": 0.6243,
+          "p_value": null,
+          "n_total": 294,
+          "outcome_name": "Mean SARS-CoV-2 RNA viral load change from baseline (log10 genEq/mL) through day 11",
+          "weight": 0.8249
+        },
+        {
+          "paper_id": "10.1038/s41598-023-32546-z",
+          "first_author": "Jens",
+          "year": "2023",
+          "effect": 0.3153,
+          "ci_low": -0.2265,
+          "ci_high": 0.8572,
+          "p_value": null,
+          "n_total": 90,
+          "outcome_name": "Reduction in viral load (log10 cp/mL) from baseline to Day 11 — ITT",
+          "weight": 0.1751
+        }
+      ],
+      "pooled": {
+        "effect": 0.3642,
+        "ci_low": 0.1374,
+        "ci_high": 0.591,
+        "i2": 0.0,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "interferon alpha-2b",
+      "outcome_domain": "symptom_duration",
+      "effect_measure": "smd",
+      "n_trials": 2,
+      "scale": "linear",
+      "standardized": true,
+      "combines": [
+        "continuous"
+      ],
+      "n_converted": 2,
+      "trials": [
+        {
+          "paper_id": "10.26442/terarkh201890114-54",
+          "first_author": "Kalyuzhin",
+          "year": "2018",
+          "effect": 0.2562,
+          "ci_low": -0.252,
+          "ci_high": 0.7643,
+          "p_value": null,
+          "n_total": 90,
+          "outcome_name": "Duration of pharyngitis (days)",
+          "weight": 0.5191
+        },
+        {
+          "paper_id": "10.1093/infdis/154.3.443",
+          "first_author": "Turner",
+          "year": "1986",
+          "effect": 0.8102,
+          "ci_low": 0.2597,
+          "ci_high": 1.3608,
+          "p_value": null,
+          "n_total": 56,
+          "outcome_name": "Mean number of days with total symptom score >4",
+          "weight": 0.4809
+        }
+      ],
+      "pooled": {
+        "effect": 0.5226,
+        "ci_low": -0.0199,
+        "ci_high": 1.0652,
+        "i2": 52.4,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "interferon beta serine",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "smd",
+      "n_trials": 2,
+      "scale": "linear",
+      "standardized": true,
+      "combines": [
+        "continuous"
+      ],
+      "n_converted": 2,
+      "trials": [
+        {
+          "paper_id": "10.1093/infdis/160.4.700",
+          "first_author": "Sperber",
+          "year": "1989",
+          "effect": 0.2079,
+          "ci_low": -0.0243,
+          "ci_high": 0.44,
+          "p_value": null,
+          "n_total": null,
+          "outcome_name": "Total symptom burden per day (1986)",
+          "weight": 0.7459
+        },
+        {
+          "paper_id": "10.1093/infdis/158.1.166",
+          "first_author": "Sperber",
+          "year": "1988",
+          "effect": 0.8031,
+          "ci_low": -0.0473,
+          "ci_high": 1.6535,
+          "p_value": null,
+          "n_total": 154,
+          "outcome_name": "Nasal tissue count over 5 days post-challenge — efficacy study, all subjects",
+          "weight": 0.2541
+        }
+      ],
+      "pooled": {
+        "effect": 0.3591,
+        "ci_low": -0.1488,
+        "ci_high": 0.8671,
+        "i2": 42.9,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "iota-carrageenan",
+      "outcome_domain": "quality_of_life",
+      "effect_measure": "smd",
+      "n_trials": 2,
+      "scale": "linear",
+      "standardized": true,
+      "combines": [
+        "continuous",
+        "odds_ratio"
+      ],
+      "n_converted": 2,
+      "trials": [
+        {
+          "paper_id": "10.1186/s12931-015-0281-8",
+          "first_author": "Eccles",
+          "year": "2015",
+          "effect": 0.0575,
+          "ci_low": -0.221,
+          "ci_high": 0.336,
+          "p_value": null,
+          "n_total": 200,
+          "outcome_name": "Patient assessment of treatment efficacy",
+          "weight": 0.7032
+        },
+        {
+          "paper_id": "10.1186/1465-9921-11-108",
+          "first_author": "Ron",
+          "year": "2010",
+          "effect": 0.5597,
+          "ci_low": -0.1267,
+          "ci_high": 1.2462,
+          "p_value": null,
+          "n_total": 35,
+          "outcome_name": "Product acceptability (VAS)",
+          "weight": 0.2968
+        }
+      ],
+      "pooled": {
+        "effect": 0.2066,
+        "ci_low": -0.2431,
+        "ci_high": 0.6563,
+        "i2": 43.4,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "iota-carrageenan",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "smd",
+      "n_trials": 2,
+      "scale": "linear",
+      "standardized": true,
+      "combines": [
+        "continuous"
+      ],
+      "n_converted": 2,
+      "trials": [
+        {
+          "paper_id": "10.2147/ijgm.s476707",
+          "first_author": "Nicole",
+          "year": "2024",
+          "effect": -0.0961,
+          "ci_low": -0.5293,
+          "ci_high": 0.337,
+          "p_value": null,
+          "n_total": 41,
+          "outcome_name": "Nasal Congestion Symptom Score (NCSS) change from pre-treatment to mean 2-4h post-treatment",
+          "weight": 0.5623
+        },
+        {
+          "paper_id": "10.1186/1465-9921-11-108",
+          "first_author": "Ron",
+          "year": "2010",
+          "effect": 0.7378,
+          "ci_low": 0.0163,
+          "ci_high": 1.4592,
+          "p_value": null,
+          "n_total": 35,
+          "outcome_name": "Total Symptom Score (TSS) mean of sum on days 2–4",
+          "weight": 0.4377
+        }
+      ],
+      "pooled": {
+        "effect": 0.2689,
+        "ci_low": -0.542,
+        "ci_high": 1.0797,
+        "i2": 73.5,
+        "model": "random_effects_DL"
+      }
+    },
+    {
+      "ingredient": "povidone-iodine",
+      "outcome_domain": "viral_load",
+      "effect_measure": "smd",
+      "n_trials": 3,
+      "scale": "linear",
+      "standardized": true,
+      "combines": [
+        "continuous",
+        "odds_ratio"
+      ],
+      "n_converted": 3,
+      "trials": [
+        {
+          "paper_id": "10.1007/s12070-022-03106-0",
+          "first_author": "Kamal",
+          "year": "2022",
+          "effect": 1.2277,
+          "ci_low": 0.3982,
+          "ci_high": 2.0572,
+          "p_value": null,
+          "n_total": 189,
+          "outcome_name": "Nasopharyngeal clearance of SARS-CoV-2 (RT-PCR negativity) after intervention",
+          "weight": 0.3768
+        },
+        {
+          "paper_id": "10.1002/lary.29935",
+          "first_author": "Zarabanda",
+          "year": "2022",
+          "effect": 0.3698,
+          "ci_low": -0.4731,
+          "ci_high": 1.2126,
+          "p_value": null,
+          "n_total": 35,
+          "outcome_name": "Nasopharyngeal SARS-CoV-2 viral load (cycle threshold by RT-PCR)",
+          "weight": 0.3711
+        },
+        {
+          "paper_id": "10.1186/s12879-024-09137-y",
+          "first_author": "Saad",
+          "year": "2024",
+          "effect": -0.0877,
+          "ci_low": -1.2751,
+          "ci_high": 1.0997,
+          "p_value": null,
+          "n_total": 25,
+          "outcome_name": "RT-PCR cycle threshold (Ct) value — viral load proxy",
+          "weight": 0.2522
+        }
+      ],
+      "pooled": {
+        "effect": 0.5776,
+        "ci_low": -0.1642,
+        "ci_high": 1.3195,
+        "i2": 46.9,
+        "model": "random_effects_DL"
+      }
     }
   ]
 }
