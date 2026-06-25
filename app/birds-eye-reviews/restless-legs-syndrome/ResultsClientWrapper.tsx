@@ -1,10 +1,21 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { BreakdownChart, Segment } from "./screening/BreakdownChart";
-import { ForestPlot, ForestGroup, DOMAIN_LABELS } from "./ForestPlot";
+import { BreakdownChart, Segment, HoverTrial } from "./screening/BreakdownChart";
 import { ResultsTable, TrialRow } from "./ResultsTable";
 import { YearChart } from "./YearChart";
+import { CountryMap, type CountryCount } from "@/components/CountryMap";
+
+/** Distinct-trial count per (canonical) country, for the "Trials by country" map. */
+function countriesOf(rows: TrialRow[]): CountryCount[] {
+  const counts = new Map<string, number>();
+  for (const r of rows) {
+    for (const c of new Set(r.countries)) counts.set(c, (counts.get(c) ?? 0) + 1);
+  }
+  return [...counts.entries()]
+    .map(([country, count]) => ({ country, count }))
+    .sort((a, b) => b.count - a.count);
+}
 
 const DESIGN_LABELS: Record<string, string> = {
   RCT: "RCT",
@@ -90,23 +101,48 @@ function verdictBreakdown(
   return out;
 }
 
+/** Per-key hover-trial lists for the BreakdownChart tooltip, built from the SAME
+ *  rows that feed verdictBreakdown so each bar's tiles and its hover entries align
+ *  (and react to the active filters together). Push order matches the segment
+ *  order the chart tiles by, so per-tile indexing lands on the right study. */
+function hoverTrialsByKey(
+  rows: TrialRow[],
+  key: (r: TrialRow) => string,
+  emptyKey = "unspecified",
+): Record<string, HoverTrial[]> {
+  const out: Record<string, HoverTrial[]> = {};
+  for (const r of rows) {
+    const k = key(r) || emptyKey;
+    (out[k] ??= []).push({
+      doi: r.doi.split("#")[0],
+      label: r.hoverLabel,
+      title: r.title,
+      year: r.year,
+      journal: r.journal,
+      n: r.n,
+      design: r.design,
+      phase: r.hoverPhase,
+      verdict: r.verdict || undefined,
+    });
+  }
+  return out;
+}
+
 export function ResultsClientWrapper({
   trials,
-  forestGroups,
-  minTrials,
 }: {
   trials: TrialRow[];
-  forestGroups: ForestGroup[];
-  minTrials: number;
 }) {
   // Top-level ingredient filter (dropdown + "Trials by Ingredient" bar click). This
   // is the OUTERMOST filter — every panel, chart, forest plot, and the table react.
   const [ingredient, setIngredient] = useState<string | undefined>(undefined);
-  // Secondary, table-only filter set by clicking the outcome-domain chart.
-  const [domain, setDomain] = useState<string | undefined>(undefined);
 
   const ingredientKey = (t: TrialRow) => t.ingredient || "unspecified";
   const ingredientFilter = (t: TrialRow) => !ingredient || ingredientKey(t) === ingredient;
+
+  // Country filter (set by clicking a country on the "Trials by country" map).
+  const [country, setCountry] = useState<string | undefined>(undefined);
+  const countryFilter = (t: TrialRow) => !country || t.countries.includes(country);
 
   // Top-level trial-outcome-focus filter: a checkbox per outcome type, all checked
   // by default. Each trial falls in exactly one bucket (by its primary outcome domain).
@@ -142,9 +178,18 @@ export function ResultsClientWrapper({
   const selectAllDesigns = () => setSelectedDesigns(new Set(allDesignList));
   const clearAllDesigns = () => setSelectedDesigns(new Set());
 
-  // Ingredient is the outermost filter; the panels / charts / forest plots / table all
-  // derive from this ingredient-narrowed base.
-  const afterIngredient = useMemo(() => trials.filter(ingredientFilter), [trials, ingredient]);
+  // Ingredient + country are the outermost filters; the panels / charts / forest
+  // plots / table all derive from this narrowed base.
+  const afterIngredient = useMemo(
+    () => trials.filter((t) => ingredientFilter(t) && countryFilter(t)),
+    [trials, ingredient, country]
+  );
+  // Ingredient-narrowed but NOT country-narrowed — the base for the country map,
+  // so every country stays visible even while one is selected as a filter.
+  const afterIngredientNoCountry = useMemo(
+    () => trials.filter(ingredientFilter),
+    [trials, ingredient]
+  );
 
   // Cross-filtering between the two checkbox panels (outcome focus, trial type):
   // each panel's denominator + counts come from the base filtered by the OTHER
@@ -179,7 +224,7 @@ export function ResultsClientWrapper({
   // A checkbox card is "active" (some box unchecked) when its selection isn't the
   // full set — darken its background to signal the filter is narrowing results.
   const cardBg = (active: boolean) =>
-    `mb-4 border border-border rounded-lg p-4 ${active ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`;
+    `mb-4 border border-border rounded-lg p-3 ${active ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`;
   const typesActive = selectedTypes.size !== OUTCOME_TYPES.length;
   const designsActive = selectedDesigns.size !== allDesignList.length;
 
@@ -195,48 +240,35 @@ export function ResultsClientWrapper({
   // every ingredient bar stays visible — a click highlights the bar (and filters
   // the rest of the page) rather than isolating it.
   const ingredientChartBase = useMemo(
-    () => trials.filter((t) => typeFilter(t) && designFilter(t)),
-    [trials, selectedTypes, selectedDesigns]
+    () => trials.filter((t) => countryFilter(t) && typeFilter(t) && designFilter(t)),
+    [trials, country, selectedTypes, selectedDesigns]
   );
   const ingredientVerdictChart = useMemo(
     () => verdictBreakdown(ingredientChartBase, (r) => r.ingredient),
     [ingredientChartBase]
   );
-
-  // Trials by primary outcome domain, also split by result direction.
-  const domainVerdictChart = useMemo(
-    () => verdictBreakdown(filteredTrials, (r) => r.primaryDomain, "other"),
-    [filteredTrials]
+  // Hover lists built from the SAME filtered base as the bars, so the tooltip
+  // never shows a study that the active filters have removed from the chart.
+  const ingredientHoverTrials = useMemo(
+    () => hoverTrialsByKey(ingredientChartBase, (r) => r.ingredient),
+    [ingredientChartBase]
   );
 
-  // Forest plots: groups with >=2 trials, optionally filtered by ingredient.
-  // (Meta-analyses are aggregate over all trials and not narrowed by the trial-type filter.)
-  // Plots are clustered by ingredient (most-studied first), then by outcome domain;
-  // within each domain the unified standardized (SMD) plot leads, followed by the
-  // per-measure plots. (Meta-analyses are aggregate over all trials.)
-  const shownGroups = useMemo(() => {
-    let g = forestGroups.filter((x) => x.n_trials >= 2);
-    if (ingredient) g = g.filter((x) => x.ingredient === ingredient);
-    // total trials per ingredient drives cluster order (busiest drug first)
-    const ingWeight = new Map<string, number>();
-    for (const x of g) ingWeight.set(x.ingredient, (ingWeight.get(x.ingredient) ?? 0) + x.n_trials);
-    return g.sort(
-      (a, b) =>
-        (ingWeight.get(b.ingredient)! - ingWeight.get(a.ingredient)!) ||
-        a.ingredient.localeCompare(b.ingredient) ||
-        a.outcome_domain.localeCompare(b.outcome_domain) ||
-        Number(Boolean(b.standardized)) - Number(Boolean(a.standardized)) ||
-        Number(Boolean(b.pooled)) - Number(Boolean(a.pooled)) ||
-        b.n_trials - a.n_trials
-    );
-  }, [forestGroups, ingredient]);
-  const pooledCount = forestGroups.filter((g) => g.pooled).length;
 
   // Trials-by-year histogram, driven by the filtered set so it reacts to filters.
   const filteredYears = useMemo(
     () => filteredTrials.map((t) => parseInt(t.year, 10)).filter((y) => !Number.isNaN(y)),
     [filteredTrials]
   );
+
+  // "Trials by country" map. Like the ingredient chart, it reacts to the other
+  // filters but NOT to the country selection, so every country stays visible —
+  // a click filters the dashboard (click the same country again to clear).
+  const countryChartBase = useMemo(
+    () => afterIngredientNoCountry.filter((t) => typeFilter(t) && designFilter(t)),
+    [afterIngredientNoCountry, selectedTypes, selectedDesigns]
+  );
+  const allCountries = useMemo(() => countriesOf(countryChartBase), [countryChartBase]);
 
   return (
     <>
@@ -331,42 +363,36 @@ export function ResultsClientWrapper({
 
       {/* Breakdown charts */}
       {Object.keys(ingredientVerdictChart).length > 0 && (
-        <BreakdownChart title="Trials by Drug" breakdown={ingredientVerdictChart}
-          segments={VERDICT_SEGMENTS} selectedKey={ingredient} collapseSingletons
+        <BreakdownChart title="Trials by Intervention" breakdown={ingredientVerdictChart}
+          segments={VERDICT_SEGMENTS} selectedKey={ingredient} collapseSingletons collapseMaxTrials={3}
+          hoverTrials={ingredientHoverTrials}
           onBarClick={(k) => setIngredient((cur) => (cur === k ? undefined : k))}
-          clickHint="Each bar is split by result direction — click a bar to filter the whole dashboard to that drug (click again to clear). Single-trial drugs are listed below." />
-      )}
-      {!typesActive && Object.keys(domainVerdictChart).length > 0 && (
-        <BreakdownChart title="Trials by Primary Outcome Domain" breakdown={domainVerdictChart}
-          segments={VERDICT_SEGMENTS} labels={DOMAIN_LABELS} onBarClick={(k) => setDomain(k)}
-          clickHint="Each bar is split by result direction — click a bar to filter the table below." />
+          clickHint="Each bar is split by result direction — click a bar to filter the whole dashboard to that drug (click again to clear). Hover for individual study details. Single-trial drugs are listed below." />
       )}
 
       {/* Trials by year (reacts to the filters above) */}
       <YearChart years={filteredYears} />
 
-      {/* Meta-analysis forest plots */}
-      <section className="mb-10 mt-8">
-        <h2 className="text-lg font-semibold mb-1">Meta-analyses</h2>
-        <p className="text-sm text-foreground/60 mb-4">
-          One forest plot per drug × outcome × effect measure with ≥2 trials. A pooled
-          random-effects diamond (DerSimonian–Laird) is shown when {minTrials}+ trials report the
-          same comparable estimate.{ingredient && ` Filtered to “${fmtIngredient(ingredient)}”.`}
-        </p>
-        {shownGroups.length === 0 ? (
-          <div className="border border-dashed border-border rounded-lg bg-foreground/[0.02] px-4 py-8 text-center text-sm text-foreground/60">
-            No drug yet has ≥2 trials reporting a comparable outcome and effect measure
-            {ingredient ? ` for “${fmtIngredient(ingredient)}”` : ""}. As more trials are extracted, forest plots
-            will appear here. ({pooledCount} pooled so far.)
-          </div>
-        ) : (
-          shownGroups.map((g, i) => <ForestPlot key={`${g.ingredient}-${g.outcome_domain}-${g.effect_measure}-${i}`} group={g} />)
-        )}
-      </section>
+      {/* Trials by country (reacts to the filters above; click a country to filter) */}
+      <div className="mt-8">
+        <div className="flex items-center gap-3 mb-3 flex-wrap">
+          <h3 className="font-semibold text-lg text-foreground">Trials by country</h3>
+          {country && (
+            <span className="inline-flex items-center gap-1.5 text-xs bg-foreground/[0.08] rounded-full px-2.5 py-1">
+              {country}
+              <button onClick={() => setCountry(undefined)} className="text-blue-600 hover:text-blue-700" aria-label="Clear country filter">×</button>
+            </span>
+          )}
+          <span className="text-xs text-foreground/50">Click a country to filter the dashboard.</span>
+        </div>
+        <CountryMap
+          allCountries={allCountries}
+          onCountryClick={(c) => setCountry((cur) => (cur === c ? undefined : c))}
+        />
+      </div>
 
       <ResultsTable
         rows={filteredTrials}
-        externalDomain={domain}
       />
     </>
   );

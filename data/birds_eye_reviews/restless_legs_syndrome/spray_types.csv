@@ -45,7 +45,7 @@ doi,spray_type,agent,confidence
 10.1002/mds.21882,dopamine_agonist,bromocriptine,high
 10.1002/mds.22016,dopamine_agonist,dopaminergic therapy,medium
 10.1002/mds.21401,dopamine_agonist,cabergoline,high
-10.1002/mds.22436,dopamine_agonist,unspecified,medium
+10.1002/mds.22436,dopamine_agonist,dopaminergic agents,medium
 10.1002/mds.22562,iron,iron sucrose,high
 10.1002/mds.22753,non_pharmacological,exercise training,high
 10.1002/mds.23157,dopamine_agonist,rotigotine,high
@@ -59,7 +59,7 @@ doi,spray_type,agent,confidence
 10.1002/mds.28903,other,unspecified,high
 10.1002/mds.870130333,dopamine_agonist,pergolide,high
 10.1002/mds.28668,other_pharmacological,dipyridamole,high
-10.1002/mus.20427,dopamine_agonist,unspecified,medium
+10.1002/mus.20427,dopamine_agonist,dopaminergic agents,medium
 10.1002/pcn5.213,dopamine_agonist,pramipexole,high
 10.1002/pds.5852,alpha2delta_ligand,gabapentinoids,medium
 10.1002/pds.5596,dopamine_agonist,dopamine agonists,high
@@ -73,7 +73,7 @@ doi,spray_type,agent,confidence
 10.1007/s00415-004-0367-6,levodopa,levodopa/benserazide,high
 10.1002/pu.20213,alpha2delta_ligand,pregabalin,high
 10.1007/s00415-009-5299-8,levodopa,levodopa,high
-10.1007/s00415-010-5644-y,dopamine_agonist,unspecified,medium
+10.1007/s00415-010-5644-y,dopamine_agonist,dopaminergic agents,medium
 10.1007/s00415-010-5879-7,dopamine_agonist,ropinirole,high
 10.1007/s00702-003-0814-z,levodopa,levodopa/benserazide,high
 10.1007/s00702-004-0217-9,levodopa,levodopa,high
@@ -123,7 +123,7 @@ doi,spray_type,agent,confidence
 10.1016/j.cdtm.2017.08.001,other,unspecified,high
 10.1016/j.clinph.2007.04.001,dopamine_agonist,pergolide,high
 10.1016/j.brs.2014.06.008,non_pharmacological,transcutaneous spinal direct current stimulation (tsdcs),high
-10.1016/j.clinph.2007.04.024,dopamine_agonist,unspecified,high
+10.1016/j.clinph.2007.04.024,dopamine_agonist,dopaminergic agents,high
 10.1016/j.clinph.2011.05.027,dopamine_agonist,pramipexole,high
 10.1016/j.clinthera.2008.02.001,other,unspecified,high
 10.1016/j.clinthera.2012.01.002,alpha2delta_ligand,gabapentin enacarbil,high
@@ -561,7 +561,6 @@ doi,spray_type,agent,confidence
 10.1136/bcr-2020-240686,levodopa,levodopa,high
 10.1136/bcr-2023-255700,other,levodopa or dopamine agonists,medium
 10.1111/psyg.70049,iron,iron sucrose,high
-10.1136/bmj.1.4030.753,non_pharmacological,cognitive behavioural therapy,high
 10.1136/bmj.330.7487.330,opioid,apomorphine,high
 10.1136/bmj.288.6415.444,other_pharmacological,carbamazepine,high
 10.1136/bmj.d8347,other,unspecified,low
@@ -588,7 +587,7 @@ doi,spray_type,agent,confidence
 10.1159/000099947,dopamine_agonist,pramipexole,high
 10.1159/000114904,other_pharmacological,folic acid,high
 10.1159/000116643,opioid,codeine sulfate,high
-10.1159/000228261,dopamine_agonist,unspecified,medium
+10.1159/000228261,dopamine_agonist,dopaminergic agents,medium
 10.1159/000322289,dopamine_agonist,pramipexole,high
 10.1159/000494737,non_pharmacological,spinal cord stimulation,high
 10.1159/000354408,other,calcium carbonate / quercus e cortice 6x,high
@@ -715,7 +714,7 @@ doi,spray_type,agent,confidence
 10.13703/j.0255-2930.20190323-k0001,non_pharmacological,tiaoshen acupuncture,high
 10.1371/journal.pone.0155835,non_pharmacological,parathyroidectomy,high
 10.1371/journal.pone.0173535,dopamine_agonist,pramipexole,high
-10.1371/journal.pone.0174793,dopamine_agonist,unspecified,high
+10.1371/journal.pone.0174793,dopamine_agonist,dopaminergic agents,high
 10.1371/journal.pone.0230951,non_pharmacological,foot massage and heat therapy,high
 10.1378/chest.08-1665,non_pharmacological,pneumatic compression devices,high
 10.14309/00000434-200809001-00268,non_pharmacological,gluten-free diet,high
@@ -932,7 +931,7 @@ doi,spray_type,agent,confidence
 10.51642/ppmj.v34i04.590,other_pharmacological,lacosamide,high
 10.51321/jskmcp.2020.20.1.53,non_pharmacological,bee venom acupuncture,high
 10.52768/3067-3852/1032,dopamine_agonist,dextroamphetamine sulfate,high
-10.52783/jchr.v15.i6.10944,other,unspecified,low
+10.52783/jchr.v15.i6.10944,non_pharmacological,yoga and physiotherapy,low
 10.5281/zenodo.7826121,other_pharmacological,sleepy well spray,low
 10.5336/medsci.2021-84596,dopamine_agonist,dopamine agonist (unspecified),high
 10.5281/zenodo.6892050,other_pharmacological,vitamin d (colcalciferol),high
@@ -1071,3 +1070,12 @@ pmid_8588396,levodopa,l-dopa,high
 pmid_9340624,other,unspecified,low
 pmid_9538563,benzodiazepine,clonazepam,high
 pmid_953882,other_pharmacological,folic acid,high
+10.1002/1531-8257(199901)14/1<138//aid-mds1023>3.0.co;2-a,dopamine_agonist,ropinirole,high
+10.1002/1531-8257(200003)15/2<324//aid-mds1020>3.0.co;2-4,other_pharmacological,amantadine,high
+10.1007/s12311-012-0382-6,dopamine_agonist,lisuride,high
+10.1093/sleep/19.3.214,levodopa,levodopa/carbidopa,high
+10.1093/sleep/23.3.1b,dopamine_agonist,cabergoline,high
+10.1093/sleep/9.3.385,benzodiazepine,clonazepam and temazepam,high
+10.1179/1753615411y.0000000002,non_pharmacological,counterstrain manipulation,high
+10.33588/rn.2909.99317,dopamine_agonist,ropinirole,high
+10.5665/sleep/31.9.1229,dopamine_agonist,pramipexole,high

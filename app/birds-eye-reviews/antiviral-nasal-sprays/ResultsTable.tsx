@@ -20,6 +20,7 @@ export interface TrialRow {
   relatedPubs: RelatedPub[];
   ingredient: string;
   indication: string;
+  countries: string[];
   spray_type: string;
   deliveryMethod: string;
   design: string;
@@ -27,6 +28,7 @@ export interface TrialRow {
   rob: string;
   verdict: string;
   verdictRationale: string;
+  hoverLabel: string; // "Surname et al." for the chart hover panel (derived from authors)
   abstractOnly: boolean;
   primaryDomain: string;
   primaryName: string;

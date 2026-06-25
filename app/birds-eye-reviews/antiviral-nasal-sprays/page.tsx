@@ -5,13 +5,12 @@ import { BirdsEyeNavbar } from "@/components/BirdsEyeNavbar";
 import { Footer } from "@/components/Footer";
 import { parseCSV, stripTags, normalizeTitle } from "./screening/csv-utils";
 import { ResultsClientWrapper } from "./ResultsClientWrapper";
-import { ForestGroup } from "./ForestPlot";
 import { TrialRow } from "./ResultsTable";
 
 export const metadata = {
-  title: "Clinical Trial Results & Meta-Analysis | Antiviral Nasal Sprays | Bird's Eye Reviews | The Metascience Observatory",
+  title: "Clinical Trial Results | Antiviral Nasal Sprays | Bird's Eye Reviews | The Metascience Observatory",
   description:
-    "Extracted outcomes and random-effects meta-analyses of the human clinical trials of antiviral and barrier nasal sprays.",
+    "Extracted outcomes from the human clinical trials of antiviral and barrier nasal sprays.",
 };
 
 const DATA_DIR = "data/birds_eye_reviews/antiviral_nasal_sprays";
@@ -39,6 +38,12 @@ function firstAuthorSurname(authors: string): string {
   const lastTok = toks[toks.length - 1];
   if (toks.length >= 2 && /^[A-Z]{1,3}\.?$/.test(lastTok)) return toks[0];
   return lastTok;
+}
+
+/** "Smith et al. 2023" label for hover tooltip. */
+function hoverLabel(authors: string): string {
+  const s = firstAuthorSurname(authors);
+  return s ? `${s} et al.` : "";
 }
 
 /** doi -> citation metadata from trial_screening.csv (reused screening feed). */
@@ -117,48 +122,6 @@ function loadVerdicts(): Map<string, Verdict> {
   return map;
 }
 
-function labelFor(doi: string, cite: Citation | undefined, fallbackYear: number | null): string {
-  const surname = cite ? firstAuthorSurname(cite.authors) : "";
-  const year = cite?.year || (fallbackYear != null ? String(fallbackYear) : "");
-  if (surname && year) return `${surname} ${year}`;
-  if (surname) return surname;
-  return doi;
-}
-
-/** meta_analysis.json -> ForestGroup[], trials enriched with author-year labels. */
-function loadForestGroups(cites: Map<string, Citation>): { groups: ForestGroup[]; minTrials: number } {
-  const fp = dataPath("meta_analysis.json");
-  if (!fs.existsSync(fp)) return { groups: [], minTrials: 3 };
-  try {
-    const raw = JSON.parse(fs.readFileSync(fp, "utf-8")) as {
-      min_trials: number;
-      groups: ForestGroup[];
-    };
-    const groups = (raw.groups ?? []).map((g) => ({
-      ...g,
-      // Zanamivir is an influenza-specific antiviral; all its symptom-duration
-      // trials are influenza, so label the domain accordingly on this group.
-      domainLabel:
-        g.ingredient === "zanamivir" && g.outcome_domain === "symptom_duration"
-          ? "Influenza symptom duration"
-          : undefined,
-      trials: g.trials.map((t) => {
-        // Arm-split points carry "<doi>#<arm>"; resolve to base DOI for the
-        // citation label and the outbound link.
-        const base = (t.paper_id ?? "").split("#")[0];
-        return {
-          ...t,
-          doi: base,
-          label: labelFor(t.paper_id, cites.get(base), t.year ?? null),
-        };
-      }),
-    }));
-    return { groups, minTrials: raw.min_trials ?? 3 };
-  } catch (e) {
-    console.error("Failed to load meta_analysis.json:", e);
-    return { groups: [], minTrials: 3 };
-  }
-}
 
 /** Raw extracted arm `route` -> delivery-device bucket for the spray/drops filter. */
 const ROUTE_TO_DELIVERY: Record<string, string> = {
@@ -259,9 +222,15 @@ function loadTrials(cites: Map<string, Citation>, indications: Map<string, strin
       relatedPubs,
       ingredient: String(r.agent_canonical ?? ""),
       indication: indications.get(baseDoi) ?? "",
+      // Canonical country names (synonym-merged by the export step); drives the
+      // "Trials by country" map and its click-to-filter.
+      countries: Array.isArray(sd.countries)
+        ? [...new Set((sd.countries as unknown[]).filter((c): c is string => typeof c === "string" && c.trim() !== ""))]
+        : [],
       deliveryMethod: deliveryOverrides.get(baseDoi) ?? deliveryMethodOf(sd),
       verdict: v?.verdict ?? "",
       verdictRationale: v?.rationale ?? "",
+      hoverLabel: hoverLabel(c?.authors ?? ""),
       spray_type: String(r.spray_type ?? ""),
       design: String(sd.design_type ?? (r.is_rct ? "RCT" : "")),
       n,
@@ -291,12 +260,14 @@ export default function ResultsPage() {
   const verdicts = loadVerdicts();
   const deliveryOverrides = loadDeliveryOverrides();
   const trials = loadTrials(cites, indications, verdicts, deliveryOverrides);
-  const { groups, minTrials } = loadForestGroups(cites);
+  // The meta-analysis lives on a separate opt-in sub-page; only link to it when
+  // the pipeline actually generated meta_analysis.json (off by default).
+  const hasMetaAnalysis = fs.existsSync(dataPath("meta_analysis.json"));
 
   return (
     <>
       <BirdsEyeNavbar />
-      <main className="container mx-auto px-4 pt-24 pb-16 min-h-screen">
+      <main className="container mx-auto px-2 pt-24 pb-16 min-h-screen">
         <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1">
           <Link href="/birds-eye-reviews" className="text-sm text-blue-600 hover:text-blue-700">
             &larr; Back to Bird&apos;s Eye Reviews
@@ -306,18 +277,24 @@ export default function ResultsPage() {
         <h1 className="font-clarendon font-bold text-3xl mb-2">
           Antiviral Nasal Sprays — Human Clinical Trials
         </h1>
-        <Link
-          href="/birds-eye-reviews/antiviral-nasal-sprays/screening"
-          className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
-        >
-          View screening process and preclinical research &rarr;
-        </Link>
+        <div className="mb-4 flex flex-wrap gap-2">
+          <Link
+            href="/birds-eye-reviews/antiviral-nasal-sprays/screening"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
+          >
+            View screening process and preclinical research &rarr;
+          </Link>
+          {hasMetaAnalysis && (
+            <Link
+              href="/birds-eye-reviews/antiviral-nasal-sprays/meta-analysis"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
+            >
+              View meta-analyses &rarr;
+            </Link>
+          )}
+        </div>
 
-        <ResultsClientWrapper
-          trials={trials}
-          forestGroups={groups}
-          minTrials={minTrials}
-        />
+        <ResultsClientWrapper trials={trials} />
       </main>
       <Footer />
     </>
