@@ -1,0 +1,1562 @@
+{
+  "meta": {
+    "slug": "restless_legs_syndrome",
+    "domain": "symptom_severity",
+    "scale": "IRLS (0-40), lower = better",
+    "measure": "mean_difference",
+    "reference": "placebo",
+    "model": "random-effects (DL)",
+    "engine": "R netmeta 3.6.1",
+    "n_studies": 102,
+    "n_treatments": 67,
+    "n_pairwise": 119,
+    "tau": 1.646,
+    "tau2": 2.708,
+    "I2": 59.9
+  },
+  "ranking": [
+    {
+      "treat": "cool dialysate hemodialysis",
+      "MD": -17.11,
+      "ci_low": -21.2,
+      "ci_high": -13.02,
+      "pscore": 0.9845,
+      "n_trials": 1
+    },
+    {
+      "treat": "high-frequency repetitive transcranial magnetic stimulation",
+      "MD": -15.9,
+      "ci_low": -21.04,
+      "ci_high": -10.76,
+      "pscore": 0.9675,
+      "n_trials": 1
+    },
+    {
+      "treat": "foot reflexology massage",
+      "MD": -12.66,
+      "ci_low": -16.538,
+      "ci_high": -8.782,
+      "pscore": 0.9106,
+      "n_trials": 1
+    },
+    {
+      "treat": "suvorexant",
+      "MD": -12.7,
+      "ci_low": -17.249,
+      "ci_high": -8.151,
+      "pscore": 0.907,
+      "n_trials": 1
+    },
+    {
+      "treat": "cabergoline",
+      "MD": -11.986,
+      "ci_low": -16.821,
+      "ci_high": -7.152,
+      "pscore": 0.8831,
+      "n_trials": 2
+    },
+    {
+      "treat": "effleurage massage with lavender essential oil",
+      "MD": -10.82,
+      "ci_low": -14.945,
+      "ci_high": -6.695,
+      "pscore": 0.8452,
+      "n_trials": 1
+    },
+    {
+      "treat": "pergolide",
+      "MD": -10.4,
+      "ci_low": -15.143,
+      "ci_high": -5.657,
+      "pscore": 0.8211,
+      "n_trials": 1
+    },
+    {
+      "treat": "mindfulness-based stress reduction",
+      "MD": -9.37,
+      "ci_low": -13.296,
+      "ci_high": -5.444,
+      "pscore": 0.7779,
+      "n_trials": 1
+    },
+    {
+      "treat": "lisuride",
+      "MD": -11.7,
+      "ci_low": -24.931,
+      "ci_high": 1.531,
+      "pscore": 0.7748,
+      "n_trials": 1
+    },
+    {
+      "treat": "transcutaneous electrical nerve stimulation   + pramipexole",
+      "MD": -9.701,
+      "ci_low": -16.756,
+      "ci_high": -2.646,
+      "pscore": 0.7614,
+      "n_trials": 1
+    },
+    {
+      "treat": "aerobic and lower-body resistance training",
+      "MD": -9.4,
+      "ci_low": -15.236,
+      "ci_high": -3.564,
+      "pscore": 0.7594,
+      "n_trials": 1
+    },
+    {
+      "treat": "mmf07 foot massager",
+      "MD": -9,
+      "ci_low": -16.65,
+      "ci_high": -1.35,
+      "pscore": 0.7215,
+      "n_trials": 1
+    },
+    {
+      "treat": "intradialytic resistance exercise with elastic bands",
+      "MD": -8.4,
+      "ci_low": -13.042,
+      "ci_high": -3.758,
+      "pscore": 0.7143,
+      "n_trials": 1
+    },
+    {
+      "treat": "intradialytic aerobic exercise",
+      "MD": -8.4,
+      "ci_low": -13.591,
+      "ci_high": -3.209,
+      "pscore": 0.7088,
+      "n_trials": 1
+    },
+    {
+      "treat": "medical acupuncture plus gabapentin",
+      "MD": -8.921,
+      "ci_low": -17.255,
+      "ci_high": -0.587,
+      "pscore": 0.7079,
+      "n_trials": 1
+    },
+    {
+      "treat": "monochromatic near-infrared light",
+      "MD": -8.3,
+      "ci_low": -13.47,
+      "ci_high": -3.13,
+      "pscore": 0.7028,
+      "n_trials": 1
+    },
+    {
+      "treat": "transcutaneous spinal cord direct current stimulation",
+      "MD": -8.4,
+      "ci_low": -14.54,
+      "ci_high": -2.26,
+      "pscore": 0.6992,
+      "n_trials": 1
+    },
+    {
+      "treat": "transcutaneous spinal cord direct-current stimulation",
+      "MD": -8.4,
+      "ci_low": -14.54,
+      "ci_high": -2.26,
+      "pscore": 0.6992,
+      "n_trials": 1
+    },
+    {
+      "treat": "magnesium oxide + pramipexole",
+      "MD": -8.16,
+      "ci_low": -13.232,
+      "ci_high": -3.088,
+      "pscore": 0.6961,
+      "n_trials": 1
+    },
+    {
+      "treat": "ferrous sulfate",
+      "MD": -7.963,
+      "ci_low": -12.697,
+      "ci_high": -3.229,
+      "pscore": 0.6856,
+      "n_trials": 2
+    },
+    {
+      "treat": "longden's counterstrain technique for rls",
+      "MD": -8.06,
+      "ci_low": -13.93,
+      "ci_high": -2.19,
+      "pscore": 0.681,
+      "n_trials": 0
+    },
+    {
+      "treat": "behavioral intervention for increasing physical activity in multiple sclerosis",
+      "MD": -7.9,
+      "ci_low": -14.076,
+      "ci_high": -1.724,
+      "pscore": 0.6681,
+      "n_trials": 1
+    },
+    {
+      "treat": "valerian",
+      "MD": -7.771,
+      "ci_low": -14.159,
+      "ci_high": -1.384,
+      "pscore": 0.6593,
+      "n_trials": 1
+    },
+    {
+      "treat": "dipyridamole",
+      "MD": -7.268,
+      "ci_low": -9.949,
+      "ci_high": -4.586,
+      "pscore": 0.6535,
+      "n_trials": 2
+    },
+    {
+      "treat": "pramipexole",
+      "MD": -6.521,
+      "ci_low": -7.902,
+      "ci_high": -5.141,
+      "pscore": 0.6006,
+      "n_trials": 13
+    },
+    {
+      "treat": "intradialytic stretching exercises",
+      "MD": -6.65,
+      "ci_low": -11.006,
+      "ci_high": -2.294,
+      "pscore": 0.5956,
+      "n_trials": 1
+    },
+    {
+      "treat": "gabapentin",
+      "MD": -6.621,
+      "ci_low": -11.403,
+      "ci_high": -1.839,
+      "pscore": 0.5886,
+      "n_trials": 3
+    },
+    {
+      "treat": "rotigotine system",
+      "MD": -6.53,
+      "ci_low": -11.457,
+      "ci_high": -1.603,
+      "pscore": 0.5835,
+      "n_trials": 0
+    },
+    {
+      "treat": "vitamin b6   + pramipexole",
+      "MD": -6.44,
+      "ci_low": -11.746,
+      "ci_high": -1.134,
+      "pscore": 0.5739,
+      "n_trials": 1
+    },
+    {
+      "treat": "aromatherapy massage with lavender essential oil",
+      "MD": -6.31,
+      "ci_low": -10.044,
+      "ci_high": -2.576,
+      "pscore": 0.5734,
+      "n_trials": 1
+    },
+    {
+      "treat": "gabapentin enacarbil",
+      "MD": -5.973,
+      "ci_low": -7.428,
+      "ci_high": -4.519,
+      "pscore": 0.5527,
+      "n_trials": 8
+    },
+    {
+      "treat": "iron sucrose",
+      "MD": -5.996,
+      "ci_low": -9.092,
+      "ci_high": -2.9,
+      "pscore": 0.5496,
+      "n_trials": 2
+    },
+    {
+      "treat": "olive oil massage",
+      "MD": -6.01,
+      "ci_low": -10.434,
+      "ci_high": -1.586,
+      "pscore": 0.5463,
+      "n_trials": 1
+    },
+    {
+      "treat": "pneumatic compression device",
+      "MD": -5.7,
+      "ci_low": -9.786,
+      "ci_high": -1.614,
+      "pscore": 0.5228,
+      "n_trials": 1
+    },
+    {
+      "treat": "swedish foot massage",
+      "MD": -4.86,
+      "ci_low": -8.732,
+      "ci_high": -0.988,
+      "pscore": 0.4552,
+      "n_trials": 1
+    },
+    {
+      "treat": "tension and trauma release exercises",
+      "MD": -4.7,
+      "ci_low": -11.886,
+      "ci_high": 2.486,
+      "pscore": 0.4524,
+      "n_trials": 1
+    },
+    {
+      "treat": "mmf07 foot massager combined with sunbeam heat pad",
+      "MD": -4.4,
+      "ci_low": -12.835,
+      "ci_high": 4.035,
+      "pscore": 0.4358,
+      "n_trials": 1
+    },
+    {
+      "treat": "levodopa/benserazide",
+      "MD": -4.52,
+      "ci_low": -8.808,
+      "ci_high": -0.233,
+      "pscore": 0.4288,
+      "n_trials": 2
+    },
+    {
+      "treat": "tonic motor activation",
+      "MD": -4.42,
+      "ci_low": -8.73,
+      "ci_high": -0.11,
+      "pscore": 0.4219,
+      "n_trials": 1
+    },
+    {
+      "treat": "sunbeam heat pad",
+      "MD": -4,
+      "ci_low": -13.595,
+      "ci_high": 5.595,
+      "pscore": 0.4175,
+      "n_trials": 1
+    },
+    {
+      "treat": "pregabalin",
+      "MD": -4.443,
+      "ci_low": -6.356,
+      "ci_high": -2.53,
+      "pscore": 0.4144,
+      "n_trials": 2
+    },
+    {
+      "treat": "rotigotine",
+      "MD": -4.443,
+      "ci_low": -5.913,
+      "ci_high": -2.974,
+      "pscore": 0.4134,
+      "n_trials": 10
+    },
+    {
+      "treat": "whole body cold air chamber cryotherapy at -60°c",
+      "MD": -4.1,
+      "ci_low": -9.366,
+      "ci_high": 1.166,
+      "pscore": 0.4031,
+      "n_trials": 1
+    },
+    {
+      "treat": "local warm water compression",
+      "MD": -4.03,
+      "ci_low": -7.581,
+      "ci_high": -0.479,
+      "pscore": 0.3876,
+      "n_trials": 1
+    },
+    {
+      "treat": "local cold air cryotherapy at -17°c to lower legs",
+      "MD": -3.7,
+      "ci_low": -9.046,
+      "ci_high": 1.646,
+      "pscore": 0.375,
+      "n_trials": 1
+    },
+    {
+      "treat": "near-infrared light therapy   to acupoints",
+      "MD": -3.8,
+      "ci_low": -7.139,
+      "ci_high": -0.461,
+      "pscore": 0.3682,
+      "n_trials": 1
+    },
+    {
+      "treat": "ferric carboxymaltose",
+      "MD": -3.773,
+      "ci_low": -6.263,
+      "ci_high": -1.282,
+      "pscore": 0.3603,
+      "n_trials": 3
+    },
+    {
+      "treat": "intradialytic aerobic exercise training",
+      "MD": -3.034,
+      "ci_low": -10.988,
+      "ci_high": 4.92,
+      "pscore": 0.3532,
+      "n_trials": 1
+    },
+    {
+      "treat": "noninvasive bilateral electrical stimulation of the common peroneal nerve",
+      "MD": -3.43,
+      "ci_low": -7.594,
+      "ci_high": 0.734,
+      "pscore": 0.3469,
+      "n_trials": 1
+    },
+    {
+      "treat": "ropinirole",
+      "MD": -3.663,
+      "ci_low": -5.069,
+      "ci_high": -2.258,
+      "pscore": 0.345,
+      "n_trials": 6
+    },
+    {
+      "treat": "compression stockings ccl2 below-knee medium pressure",
+      "MD": -3.32,
+      "ci_low": -7.518,
+      "ci_high": 0.878,
+      "pscore": 0.3393,
+      "n_trials": 1
+    },
+    {
+      "treat": "botulinum toxin type a",
+      "MD": -2.3,
+      "ci_low": -9.766,
+      "ci_high": 5.166,
+      "pscore": 0.3066,
+      "n_trials": 1
+    },
+    {
+      "treat": "foot reflexology massage with almond oil",
+      "MD": -2.71,
+      "ci_low": -6.515,
+      "ci_high": 1.095,
+      "pscore": 0.2929,
+      "n_trials": 1
+    },
+    {
+      "treat": "bupropion sustained-release",
+      "MD": -2.4,
+      "ci_low": -7.946,
+      "ci_high": 3.146,
+      "pscore": 0.2921,
+      "n_trials": 1
+    },
+    {
+      "treat": "tonic motor activation   device",
+      "MD": -1.7,
+      "ci_low": -5.61,
+      "ci_high": 2.21,
+      "pscore": 0.233,
+      "n_trials": 1
+    },
+    {
+      "treat": "medical acupuncture at specified acupoints",
+      "MD": -1.7,
+      "ci_low": -5.506,
+      "ci_high": 2.106,
+      "pscore": 0.2319,
+      "n_trials": 1
+    },
+    {
+      "treat": "low-fat dairy products fortified with nano-encapsulated vitamin d3",
+      "MD": -1.25,
+      "ci_low": -6.278,
+      "ci_high": 3.778,
+      "pscore": 0.2213,
+      "n_trials": 1
+    },
+    {
+      "treat": "ascorbic acid + alpha-tocopherol",
+      "MD": -0.3,
+      "ci_low": -4.854,
+      "ci_high": 4.254,
+      "pscore": 0.1711,
+      "n_trials": 1
+    },
+    {
+      "treat": "vibrating pad",
+      "MD": -0.29,
+      "ci_low": -4.276,
+      "ci_high": 3.696,
+      "pscore": 0.1649,
+      "n_trials": 1
+    },
+    {
+      "treat": "cognitive behavioral therapy for insomnia",
+      "MD": 0.5,
+      "ci_low": -5.905,
+      "ci_high": 6.905,
+      "pscore": 0.1602,
+      "n_trials": 1
+    },
+    {
+      "treat": "lower limb resistance/strength training",
+      "MD": 2.79,
+      "ci_low": -8.617,
+      "ci_high": 14.197,
+      "pscore": 0.1473,
+      "n_trials": 1
+    },
+    {
+      "treat": "stretching exercises",
+      "MD": 2,
+      "ci_low": -6.425,
+      "ci_high": 10.425,
+      "pscore": 0.1351,
+      "n_trials": 1
+    },
+    {
+      "treat": "placebo",
+      "MD": 0,
+      "ci_low": 0,
+      "ci_high": 0,
+      "pscore": 0.1347,
+      "n_trials": 82
+    },
+    {
+      "treat": "vitamin d",
+      "MD": 4.2,
+      "ci_low": -4.703,
+      "ci_high": 13.103,
+      "pscore": 0.0823,
+      "n_trials": 1
+    },
+    {
+      "treat": "amantadine",
+      "MD": 4.337,
+      "ci_low": -0.467,
+      "ci_high": 9.141,
+      "pscore": 0.0514,
+      "n_trials": 1
+    },
+    {
+      "treat": "aerobic exercise",
+      "MD": 6.33,
+      "ci_low": -2.772,
+      "ci_high": 15.432,
+      "pscore": 0.0437,
+      "n_trials": 2
+    },
+    {
+      "treat": "acupressure at bilateral lower limb acupoints",
+      "MD": 6,
+      "ci_low": -0.401,
+      "ci_high": 12.401,
+      "pscore": 0.0368,
+      "n_trials": 1
+    }
+  ],
+  "nodes": [
+    {
+      "treat": "acupressure at bilateral lower limb acupoints",
+      "n_trials": 1,
+      "n_participants": 14,
+      "pscore": 0.0368
+    },
+    {
+      "treat": "aerobic and lower-body resistance training",
+      "n_trials": 1,
+      "n_participants": 11,
+      "pscore": 0.7594
+    },
+    {
+      "treat": "aerobic exercise",
+      "n_trials": 2,
+      "n_participants": 21,
+      "pscore": 0.0437
+    },
+    {
+      "treat": "amantadine",
+      "n_trials": 1,
+      "n_participants": 19,
+      "pscore": 0.0514
+    },
+    {
+      "treat": "aromatherapy massage with lavender essential oil",
+      "n_trials": 1,
+      "n_participants": 35,
+      "pscore": 0.5734
+    },
+    {
+      "treat": "ascorbic acid + alpha-tocopherol",
+      "n_trials": 1,
+      "n_participants": 15,
+      "pscore": 0.1711
+    },
+    {
+      "treat": "behavioral intervention for increasing physical activity in multiple sclerosis",
+      "n_trials": 1,
+      "n_participants": 7,
+      "pscore": 0.6681
+    },
+    {
+      "treat": "botulinum toxin type a",
+      "n_trials": 1,
+      "n_participants": 6,
+      "pscore": 0.3066
+    },
+    {
+      "treat": "bupropion sustained-release",
+      "n_trials": 1,
+      "n_participants": 29,
+      "pscore": 0.2921
+    },
+    {
+      "treat": "cabergoline",
+      "n_trials": 2,
+      "n_participants": 198,
+      "pscore": 0.8831
+    },
+    {
+      "treat": "cognitive behavioral therapy for insomnia",
+      "n_trials": 1,
+      "n_participants": 12,
+      "pscore": 0.1602
+    },
+    {
+      "treat": "compression stockings ccl2 below-knee medium pressure",
+      "n_trials": 1,
+      "n_participants": 32,
+      "pscore": 0.3393
+    },
+    {
+      "treat": "cool dialysate hemodialysis",
+      "n_trials": 1,
+      "n_participants": 32,
+      "pscore": 0.9845
+    },
+    {
+      "treat": "dipyridamole",
+      "n_trials": 2,
+      "n_participants": 43,
+      "pscore": 0.6535
+    },
+    {
+      "treat": "effleurage massage with lavender essential oil",
+      "n_trials": 1,
+      "n_participants": 29,
+      "pscore": 0.8452
+    },
+    {
+      "treat": "ferric carboxymaltose",
+      "n_trials": 3,
+      "n_participants": 88,
+      "pscore": 0.3603
+    },
+    {
+      "treat": "ferrous sulfate",
+      "n_trials": 2,
+      "n_participants": 26,
+      "pscore": 0.6856
+    },
+    {
+      "treat": "foot reflexology massage",
+      "n_trials": 1,
+      "n_participants": 30,
+      "pscore": 0.9106
+    },
+    {
+      "treat": "foot reflexology massage with almond oil",
+      "n_trials": 1,
+      "n_participants": 35,
+      "pscore": 0.2929
+    },
+    {
+      "treat": "gabapentin",
+      "n_trials": 3,
+      "n_participants": 69,
+      "pscore": 0.5886
+    },
+    {
+      "treat": "gabapentin enacarbil",
+      "n_trials": 8,
+      "n_participants": 851,
+      "pscore": 0.5527
+    },
+    {
+      "treat": "high-frequency repetitive transcranial magnetic stimulation",
+      "n_trials": 1,
+      "n_participants": 11,
+      "pscore": 0.9675
+    },
+    {
+      "treat": "intradialytic aerobic exercise",
+      "n_trials": 1,
+      "n_participants": 13,
+      "pscore": 0.7088
+    },
+    {
+      "treat": "intradialytic aerobic exercise training",
+      "n_trials": 1,
+      "n_participants": 15,
+      "pscore": 0.3532
+    },
+    {
+      "treat": "intradialytic resistance exercise with elastic bands",
+      "n_trials": 1,
+      "n_participants": 21,
+      "pscore": 0.7143
+    },
+    {
+      "treat": "intradialytic stretching exercises",
+      "n_trials": 1,
+      "n_participants": 17,
+      "pscore": 0.5956
+    },
+    {
+      "treat": "iron sucrose",
+      "n_trials": 2,
+      "n_participants": 45,
+      "pscore": 0.5496
+    },
+    {
+      "treat": "levodopa/benserazide",
+      "n_trials": 2,
+      "n_participants": 222,
+      "pscore": 0.4288
+    },
+    {
+      "treat": "lisuride",
+      "n_trials": 1,
+      "n_participants": 5,
+      "pscore": 0.7748
+    },
+    {
+      "treat": "local cold air cryotherapy at -17°c to lower legs",
+      "n_trials": 1,
+      "n_participants": 12,
+      "pscore": 0.375
+    },
+    {
+      "treat": "local warm water compression",
+      "n_trials": 1,
+      "n_participants": 60,
+      "pscore": 0.3876
+    },
+    {
+      "treat": "longden's counterstrain technique for rls",
+      "n_trials": 0,
+      "n_participants": 0,
+      "pscore": 0.681
+    },
+    {
+      "treat": "low-fat dairy products fortified with nano-encapsulated vitamin d3",
+      "n_trials": 1,
+      "n_participants": 31,
+      "pscore": 0.2213
+    },
+    {
+      "treat": "lower limb resistance/strength training",
+      "n_trials": 1,
+      "n_participants": 15,
+      "pscore": 0.1473
+    },
+    {
+      "treat": "magnesium oxide + pramipexole",
+      "n_trials": 1,
+      "n_participants": 25,
+      "pscore": 0.6961
+    },
+    {
+      "treat": "medical acupuncture at specified acupoints",
+      "n_trials": 1,
+      "n_participants": 17,
+      "pscore": 0.2319
+    },
+    {
+      "treat": "medical acupuncture plus gabapentin",
+      "n_trials": 1,
+      "n_participants": 23,
+      "pscore": 0.7079
+    },
+    {
+      "treat": "mindfulness-based stress reduction",
+      "n_trials": 1,
+      "n_participants": 30,
+      "pscore": 0.7779
+    },
+    {
+      "treat": "mmf07 foot massager",
+      "n_trials": 1,
+      "n_participants": 8,
+      "pscore": 0.7215
+    },
+    {
+      "treat": "mmf07 foot massager combined with sunbeam heat pad",
+      "n_trials": 1,
+      "n_participants": 7,
+      "pscore": 0.4358
+    },
+    {
+      "treat": "monochromatic near-infrared light",
+      "n_trials": 1,
+      "n_participants": 17,
+      "pscore": 0.7028
+    },
+    {
+      "treat": "near-infrared light therapy   to acupoints",
+      "n_trials": 1,
+      "n_participants": 30,
+      "pscore": 0.3682
+    },
+    {
+      "treat": "noninvasive bilateral electrical stimulation of the common peroneal nerve",
+      "n_trials": 1,
+      "n_participants": 37,
+      "pscore": 0.3469
+    },
+    {
+      "treat": "olive oil massage",
+      "n_trials": 1,
+      "n_participants": 27,
+      "pscore": 0.5463
+    },
+    {
+      "treat": "pergolide",
+      "n_trials": 1,
+      "n_participants": 47,
+      "pscore": 0.8211
+    },
+    {
+      "treat": "placebo",
+      "n_trials": 82,
+      "n_participants": 4046,
+      "pscore": 0.1347
+    },
+    {
+      "treat": "pneumatic compression device",
+      "n_trials": 1,
+      "n_participants": 21,
+      "pscore": 0.5228
+    },
+    {
+      "treat": "pramipexole",
+      "n_trials": 13,
+      "n_participants": 1291,
+      "pscore": 0.6006
+    },
+    {
+      "treat": "pregabalin",
+      "n_trials": 2,
+      "n_participants": 69,
+      "pscore": 0.4144
+    },
+    {
+      "treat": "ropinirole",
+      "n_trials": 6,
+      "n_participants": 536,
+      "pscore": 0.345
+    },
+    {
+      "treat": "rotigotine",
+      "n_trials": 10,
+      "n_participants": 1128,
+      "pscore": 0.4134
+    },
+    {
+      "treat": "rotigotine system",
+      "n_trials": 0,
+      "n_participants": 0,
+      "pscore": 0.5835
+    },
+    {
+      "treat": "stretching exercises",
+      "n_trials": 1,
+      "n_participants": 6,
+      "pscore": 0.1351
+    },
+    {
+      "treat": "sunbeam heat pad",
+      "n_trials": 1,
+      "n_participants": 6,
+      "pscore": 0.4175
+    },
+    {
+      "treat": "suvorexant",
+      "n_trials": 1,
+      "n_participants": 41,
+      "pscore": 0.907
+    },
+    {
+      "treat": "swedish foot massage",
+      "n_trials": 1,
+      "n_participants": 30,
+      "pscore": 0.4552
+    },
+    {
+      "treat": "tension and trauma release exercises",
+      "n_trials": 1,
+      "n_participants": 9,
+      "pscore": 0.4524
+    },
+    {
+      "treat": "tonic motor activation",
+      "n_trials": 1,
+      "n_participants": 22,
+      "pscore": 0.4219
+    },
+    {
+      "treat": "tonic motor activation   device",
+      "n_trials": 1,
+      "n_participants": 64,
+      "pscore": 0.233
+    },
+    {
+      "treat": "transcutaneous electrical nerve stimulation   + pramipexole",
+      "n_trials": 1,
+      "n_participants": 22,
+      "pscore": 0.7614
+    },
+    {
+      "treat": "transcutaneous spinal cord direct current stimulation",
+      "n_trials": 1,
+      "n_participants": 15,
+      "pscore": 0.6992
+    },
+    {
+      "treat": "transcutaneous spinal cord direct-current stimulation",
+      "n_trials": 1,
+      "n_participants": 15,
+      "pscore": 0.6992
+    },
+    {
+      "treat": "valerian",
+      "n_trials": 1,
+      "n_participants": 15,
+      "pscore": 0.6593
+    },
+    {
+      "treat": "vibrating pad",
+      "n_trials": 1,
+      "n_participants": 90,
+      "pscore": 0.1649
+    },
+    {
+      "treat": "vitamin b6   + pramipexole",
+      "n_trials": 1,
+      "n_participants": 25,
+      "pscore": 0.5739
+    },
+    {
+      "treat": "vitamin d",
+      "n_trials": 1,
+      "n_participants": 12,
+      "pscore": 0.0823
+    },
+    {
+      "treat": "whole body cold air chamber cryotherapy at -60°c",
+      "n_trials": 1,
+      "n_participants": 12,
+      "pscore": 0.4031
+    }
+  ],
+  "edges": [
+    {
+      "treat1": "acupressure at bilateral lower limb acupoints",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "aerobic and lower-body resistance training",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "aerobic exercise",
+      "treat2": "lower limb resistance/strength training",
+      "n_studies": 1
+    },
+    {
+      "treat1": "aerobic exercise",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "aerobic exercise",
+      "treat2": "stretching exercises",
+      "n_studies": 1
+    },
+    {
+      "treat1": "amantadine",
+      "treat2": "ropinirole",
+      "n_studies": 1
+    },
+    {
+      "treat1": "aromatherapy massage with lavender essential oil",
+      "treat2": "foot reflexology massage with almond oil",
+      "n_studies": 1
+    },
+    {
+      "treat1": "aromatherapy massage with lavender essential oil",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "ascorbic acid + alpha-tocopherol",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "behavioral intervention for increasing physical activity in multiple sclerosis",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "botulinum toxin type a",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "bupropion sustained-release",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "cabergoline",
+      "treat2": "levodopa/benserazide",
+      "n_studies": 1
+    },
+    {
+      "treat1": "cabergoline",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "cognitive behavioral therapy for insomnia",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "compression stockings ccl2 below-knee medium pressure",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "cool dialysate hemodialysis",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "dipyridamole",
+      "treat2": "placebo",
+      "n_studies": 2
+    },
+    {
+      "treat1": "effleurage massage with lavender essential oil",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "ferric carboxymaltose",
+      "treat2": "placebo",
+      "n_studies": 4
+    },
+    {
+      "treat1": "ferrous sulfate",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "ferrous sulfate",
+      "treat2": "pramipexole",
+      "n_studies": 1
+    },
+    {
+      "treat1": "foot reflexology massage",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "foot reflexology massage",
+      "treat2": "swedish foot massage",
+      "n_studies": 1
+    },
+    {
+      "treat1": "foot reflexology massage with almond oil",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "gabapentin",
+      "treat2": "medical acupuncture plus gabapentin",
+      "n_studies": 1
+    },
+    {
+      "treat1": "gabapentin",
+      "treat2": "pramipexole",
+      "n_studies": 1
+    },
+    {
+      "treat1": "gabapentin",
+      "treat2": "valerian",
+      "n_studies": 1
+    },
+    {
+      "treat1": "gabapentin enacarbil",
+      "treat2": "placebo",
+      "n_studies": 8
+    },
+    {
+      "treat1": "high-frequency repetitive transcranial magnetic stimulation",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "intradialytic aerobic exercise",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "intradialytic aerobic exercise training",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "intradialytic aerobic exercise training",
+      "treat2": "ropinirole",
+      "n_studies": 1
+    },
+    {
+      "treat1": "intradialytic resistance exercise with elastic bands",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "intradialytic stretching exercises",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "iron sucrose",
+      "treat2": "placebo",
+      "n_studies": 2
+    },
+    {
+      "treat1": "levodopa/benserazide",
+      "treat2": "pramipexole",
+      "n_studies": 1
+    },
+    {
+      "treat1": "lisuride",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "local cold air cryotherapy at -17°c to lower legs",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "local cold air cryotherapy at -17°c to lower legs",
+      "treat2": "whole body cold air chamber cryotherapy at -60°c",
+      "n_studies": 1
+    },
+    {
+      "treat1": "local warm water compression",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "longden's counterstrain technique for rls",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "low-fat dairy products fortified with nano-encapsulated vitamin d3",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "magnesium oxide + pramipexole",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "magnesium oxide + pramipexole",
+      "treat2": "vitamin b6   + pramipexole",
+      "n_studies": 1
+    },
+    {
+      "treat1": "medical acupuncture at specified acupoints",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "mindfulness-based stress reduction",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "mmf07 foot massager",
+      "treat2": "mmf07 foot massager combined with sunbeam heat pad",
+      "n_studies": 1
+    },
+    {
+      "treat1": "mmf07 foot massager",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "mmf07 foot massager",
+      "treat2": "sunbeam heat pad",
+      "n_studies": 1
+    },
+    {
+      "treat1": "mmf07 foot massager combined with sunbeam heat pad",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "mmf07 foot massager combined with sunbeam heat pad",
+      "treat2": "sunbeam heat pad",
+      "n_studies": 1
+    },
+    {
+      "treat1": "monochromatic near-infrared light",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "near-infrared light therapy   to acupoints",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "noninvasive bilateral electrical stimulation of the common peroneal nerve",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "olive oil massage",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "pergolide",
+      "treat2": "placebo",
+      "n_studies": 1
+    },
+    {
+      "treat1": "placebo",
+      "treat2": "pneumatic compression device",
+      "n_studies": 1
+    },
+    {
+      "treat1": "placebo",
+      "treat2": "pramipexole",
+      "n_studies": 9
+    },
+    {
+      "treat1": "placebo",
+      "treat2": "pregabalin",
+      "n_studies": 5
+    },
+    {
+      "treat1": "placebo",
+      "treat2": "ropinirole",
+      "n_studies": 10
+    },
+    {
+      "treat1": "placebo",
+      "treat2": "rotigotine",
+      "n_studies": 10
+    },
+    {
+      "treat1": "placebo",
+      "treat2": "rotigotine system",
+      "n_studies": 1
+    },
+    {
+      "treat1": "placebo",
+      "treat2": "stretching exercises",
+      "n_studies": 1
+    },
+    {
+      "treat1": "placebo",
+      "treat2": "sunbeam heat pad",
+      "n_studies": 1
+    },
+    {
+      "treat1": "placebo",
+      "treat2": "suvorexant",
+      "n_studies": 1
+    },
+    {
+      "treat1": "placebo",
+      "treat2": "swedish foot massage",
+      "n_studies": 1
+    },
+    {
+      "treat1": "placebo",
+      "treat2": "tension and trauma release exercises",
+      "n_studies": 1
+    },
+    {
+      "treat1": "placebo",
+      "treat2": "tonic motor activation",
+      "n_studies": 1
+    },
+    {
+      "treat1": "placebo",
+      "treat2": "tonic motor activation   device",
+      "n_studies": 1
+    },
+    {
+      "treat1": "placebo",
+      "treat2": "transcutaneous spinal cord direct current stimulation",
+      "n_studies": 1
+    },
+    {
+      "treat1": "placebo",
+      "treat2": "transcutaneous spinal cord direct-current stimulation",
+      "n_studies": 1
+    },
+    {
+      "treat1": "placebo",
+      "treat2": "vibrating pad",
+      "n_studies": 1
+    },
+    {
+      "treat1": "placebo",
+      "treat2": "vitamin b6   + pramipexole",
+      "n_studies": 1
+    },
+    {
+      "treat1": "placebo",
+      "treat2": "vitamin d",
+      "n_studies": 1
+    },
+    {
+      "treat1": "placebo",
+      "treat2": "whole body cold air chamber cryotherapy at -60°c",
+      "n_studies": 1
+    },
+    {
+      "treat1": "pramipexole",
+      "treat2": "transcutaneous electrical nerve stimulation   + pramipexole",
+      "n_studies": 1
+    }
+  ],
+  "league": {
+    "treatments": ["acupressure at bilateral lower limb acupoints", "aerobic and lower-body resistance training", "aerobic exercise", "amantadine", "aromatherapy massage with lavender essential oil", "ascorbic acid + alpha-tocopherol", "behavioral intervention for increasing physical activity in multiple sclerosis", "botulinum toxin type a", "bupropion sustained-release", "cabergoline", "cognitive behavioral therapy for insomnia", "compression stockings ccl2 below-knee medium pressure", "cool dialysate hemodialysis", "dipyridamole", "effleurage massage with lavender essential oil", "ferric carboxymaltose", "ferrous sulfate", "foot reflexology massage", "foot reflexology massage with almond oil", "gabapentin", "gabapentin enacarbil", "high-frequency repetitive transcranial magnetic stimulation", "intradialytic aerobic exercise", "intradialytic aerobic exercise training", "intradialytic resistance exercise with elastic bands", "intradialytic stretching exercises", "iron sucrose", "levodopa/benserazide", "lisuride", "local cold air cryotherapy at -17°c to lower legs", "local warm water compression", "longden's counterstrain technique for rls", "low-fat dairy products fortified with nano-encapsulated vitamin d3", "lower limb resistance/strength training", "magnesium oxide + pramipexole", "medical acupuncture at specified acupoints", "medical acupuncture plus gabapentin", "mindfulness-based stress reduction", "mmf07 foot massager", "mmf07 foot massager combined with sunbeam heat pad", "monochromatic near-infrared light", "near-infrared light therapy   to acupoints", "noninvasive bilateral electrical stimulation of the common peroneal nerve", "olive oil massage", "pergolide", "placebo", "pneumatic compression device", "pramipexole", "pregabalin", "ropinirole", "rotigotine", "rotigotine system", "stretching exercises", "sunbeam heat pad", "suvorexant", "swedish foot massage", "tension and trauma release exercises", "tonic motor activation", "tonic motor activation   device", "transcutaneous electrical nerve stimulation   + pramipexole", "transcutaneous spinal cord direct current stimulation", "transcutaneous spinal cord direct-current stimulation", "valerian", "vibrating pad", "vitamin b6   + pramipexole", "vitamin d", "whole body cold air chamber cryotherapy at -60°c"],
+    "MD": [
+      [0, 15.4, -0.33, 1.663, 12.31, 6.3, 13.9, 8.3, 8.4, 17.986, 5.5, 9.32, 23.11, 13.268, 16.82, 9.773, 13.963, 18.66, 8.71, 12.621, 11.973, 21.9, 14.4, 9.034, 14.4, 12.65, 11.996, 10.52, 17.7, 9.7, 10.03, 14.06, 7.25, 3.21, 14.16, 7.7, 14.921, 15.37, 15, 10.4, 14.3, 9.8, 9.43, 12.01, 16.4, 6, 11.7, 12.521, 10.443, 9.663, 10.443, 12.53, 4, 10, 18.7, 10.86, 10.7, 10.42, 7.7, 15.701, 14.4, 14.4, 13.771, 6.29, 12.44, 1.8, 10.1],
+      [-15.4, 0, -15.73, -13.737, -3.09, -9.1, -1.5, -7.1, -7, 2.586, -9.9, -6.08, 7.71, -2.132, 1.42, -5.627, -1.437, 3.26, -6.69, -2.779, -3.427, 6.5, -1, -6.366, -1, -2.75, -3.404, -4.88, 2.3, -5.7, -5.37, -1.34, -8.15, -12.19, -1.24, -7.7, -0.479, -0.03, -0.4, -5, -1.1, -5.6, -5.97, -3.39, 1, -9.4, -3.7, -2.879, -4.957, -5.737, -4.957, -2.87, -11.4, -5.4, 3.3, -4.54, -4.7, -4.98, -7.7, 0.301, -1, -1, -1.629, -9.11, -2.96, -13.6, -5.3],
+      [0.33, 15.73, 0, 1.993, 12.64, 6.63, 14.23, 8.63, 8.73, 18.316, 5.83, 9.65, 23.44, 13.598, 17.15, 10.103, 14.293, 18.99, 9.04, 12.951, 12.303, 22.23, 14.73, 9.364, 14.73, 12.98, 12.326, 10.85, 18.03, 10.03, 10.36, 14.39, 7.58, 3.54, 14.49, 8.03, 15.251, 15.7, 15.33, 10.73, 14.63, 10.13, 9.76, 12.34, 16.73, 6.33, 12.03, 12.851, 10.773, 9.993, 10.773, 12.86, 4.33, 10.33, 19.03, 11.19, 11.03, 10.75, 8.03, 16.031, 14.73, 14.73, 14.101, 6.62, 12.77, 2.13, 10.43],
+      [-1.663, 13.737, -1.993, 0, 10.647, 4.637, 12.237, 6.637, 6.737, 16.323, 3.837, 7.657, 21.447, 11.604, 15.157, 8.109, 12.3, 16.997, 7.047, 10.958, 10.31, 20.237, 12.737, 7.371, 12.737, 10.987, 10.333, 8.857, 16.037, 8.037, 8.367, 12.397, 5.587, 1.547, 12.497, 6.037, 13.258, 13.707, 13.337, 8.737, 12.637, 8.137, 7.767, 10.347, 14.737, 4.337, 10.037, 10.858, 8.78, 8, 8.78, 10.867, 2.337, 8.337, 17.037, 9.197, 9.037, 8.757, 6.037, 14.038, 12.737, 12.737, 12.108, 4.627, 10.777, 0.137, 8.437],
+      [-12.31, 3.09, -12.64, -10.647, 0, -6.01, 1.59, -4.01, -3.91, 5.676, -6.81, -2.99, 10.8, 0.958, 4.51, -2.537, 1.653, 6.35, -3.6, 0.311, -0.337, 9.59, 2.09, -3.276, 2.09, 0.34, -0.314, -1.79, 5.39, -2.61, -2.28, 1.75, -5.06, -9.1, 1.85, -4.61, 2.611, 3.06, 2.69, -1.91, 1.99, -2.51, -2.88, -0.3, 4.09, -6.31, -0.61, 0.211, -1.867, -2.647, -1.867, 0.22, -8.31, -2.31, 6.39, -1.45, -1.61, -1.89, -4.61, 3.391, 2.09, 2.09, 1.461, -6.02, 0.13, -10.51, -2.21],
+      [-6.3, 9.1, -6.63, -4.637, 6.01, 0, 7.6, 2, 2.1, 11.686, -0.8, 3.02, 16.81, 6.968, 10.52, 3.473, 7.663, 12.36, 2.41, 6.321, 5.673, 15.6, 8.1, 2.734, 8.1, 6.35, 5.696, 4.22, 11.4, 3.4, 3.73, 7.76, 0.95, -3.09, 7.86, 1.4, 8.621, 9.07, 8.7, 4.1, 8, 3.5, 3.13, 5.71, 10.1, -0.3, 5.4, 6.221, 4.143, 3.363, 4.143, 6.23, -2.3, 3.7, 12.4, 4.56, 4.4, 4.12, 1.4, 9.401, 8.1, 8.1, 7.471, -0.01, 6.14, -4.5, 3.8],
+      [-13.9, 1.5, -14.23, -12.237, -1.59, -7.6, 0, -5.6, -5.5, 4.086, -8.4, -4.58, 9.21, -0.632, 2.92, -4.127, 0.063, 4.76, -5.19, -1.279, -1.927, 8, 0.5, -4.866, 0.5, -1.25, -1.904, -3.38, 3.8, -4.2, -3.87, 0.16, -6.65, -10.69, 0.26, -6.2, 1.021, 1.47, 1.1, -3.5, 0.4, -4.1, -4.47, -1.89, 2.5, -7.9, -2.2, -1.379, -3.457, -4.237, -3.457, -1.37, -9.9, -3.9, 4.8, -3.04, -3.2, -3.48, -6.2, 1.801, 0.5, 0.5, -0.129, -7.61, -1.46, -12.1, -3.8],
+      [-8.3, 7.1, -8.63, -6.637, 4.01, -2, 5.6, 0, 0.1, 9.686, -2.8, 1.02, 14.81, 4.968, 8.52, 1.473, 5.663, 10.36, 0.41, 4.321, 3.673, 13.6, 6.1, 0.734, 6.1, 4.35, 3.696, 2.22, 9.4, 1.4, 1.73, 5.76, -1.05, -5.09, 5.86, -0.6, 6.621, 7.07, 6.7, 2.1, 6, 1.5, 1.13, 3.71, 8.1, -2.3, 3.4, 4.221, 2.143, 1.363, 2.143, 4.23, -4.3, 1.7, 10.4, 2.56, 2.4, 2.12, -0.6, 7.401, 6.1, 6.1, 5.471, -2.01, 4.14, -6.5, 1.8],
+      [-8.4, 7, -8.73, -6.737, 3.91, -2.1, 5.5, -0.1, 0, 9.586, -2.9, 0.92, 14.71, 4.868, 8.42, 1.373, 5.563, 10.26, 0.31, 4.221, 3.573, 13.5, 6, 0.634, 6, 4.25, 3.596, 2.12, 9.3, 1.3, 1.63, 5.66, -1.15, -5.19, 5.76, -0.7, 6.521, 6.97, 6.6, 2, 5.9, 1.4, 1.03, 3.61, 8, -2.4, 3.3, 4.121, 2.043, 1.263, 2.043, 4.13, -4.4, 1.6, 10.3, 2.46, 2.3, 2.02, -0.7, 7.301, 6, 6, 5.371, -2.11, 4.04, -6.6, 1.7],
+      [-17.986, -2.586, -18.316, -16.323, -5.676, -11.686, -4.086, -9.686, -9.586, 0, -12.486, -8.666, 5.124, -4.719, -1.166, -8.214, -4.024, 0.674, -9.276, -5.365, -6.013, 3.914, -3.586, -8.952, -3.586, -5.336, -5.99, -7.466, -0.286, -8.286, -7.956, -3.926, -10.736, -14.776, -3.826, -10.286, -3.065, -2.616, -2.986, -7.586, -3.686, -8.186, -8.556, -5.976, -1.586, -11.986, -6.286, -5.465, -7.543, -8.323, -7.543, -5.456, -13.986, -7.986, 0.714, -7.126, -7.286, -7.566, -10.286, -2.285, -3.586, -3.586, -4.215, -11.696, -5.546, -16.186, -7.886],
+      [-5.5, 9.9, -5.83, -3.837, 6.81, 0.8, 8.4, 2.8, 2.9, 12.486, 0, 3.82, 17.61, 7.768, 11.32, 4.273, 8.463, 13.16, 3.21, 7.121, 6.473, 16.4, 8.9, 3.534, 8.9, 7.15, 6.496, 5.02, 12.2, 4.2, 4.53, 8.56, 1.75, -2.29, 8.66, 2.2, 9.421, 9.87, 9.5, 4.9, 8.8, 4.3, 3.93, 6.51, 10.9, 0.5, 6.2, 7.021, 4.943, 4.163, 4.943, 7.03, -1.5, 4.5, 13.2, 5.36, 5.2, 4.92, 2.2, 10.201, 8.9, 8.9, 8.271, 0.79, 6.94, -3.7, 4.6],
+      [-9.32, 6.08, -9.65, -7.657, 2.99, -3.02, 4.58, -1.02, -0.92, 8.666, -3.82, 0, 13.79, 3.948, 7.5, 0.453, 4.643, 9.34, -0.61, 3.301, 2.653, 12.58, 5.08, -0.286, 5.08, 3.33, 2.676, 1.2, 8.38, 0.38, 0.71, 4.74, -2.07, -6.11, 4.84, -1.62, 5.601, 6.05, 5.68, 1.08, 4.98, 0.48, 0.11, 2.69, 7.08, -3.32, 2.38, 3.201, 1.123, 0.343, 1.123, 3.21, -5.32, 0.68, 9.38, 1.54, 1.38, 1.1, -1.62, 6.381, 5.08, 5.08, 4.451, -3.03, 3.12, -7.52, 0.78],
+      [-23.11, -7.71, -23.44, -21.447, -10.8, -16.81, -9.21, -14.81, -14.71, -5.124, -17.61, -13.79, 0, -9.842, -6.29, -13.337, -9.147, -4.45, -14.4, -10.489, -11.137, -1.21, -8.71, -14.076, -8.71, -10.46, -11.114, -12.59, -5.41, -13.41, -13.08, -9.05, -15.86, -19.9, -8.95, -15.41, -8.189, -7.74, -8.11, -12.71, -8.81, -13.31, -13.68, -11.1, -6.71, -17.11, -11.41, -10.589, -12.667, -13.447, -12.667, -10.58, -19.11, -13.11, -4.41, -12.25, -12.41, -12.69, -15.41, -7.409, -8.71, -8.71, -9.339, -16.82, -10.67, -21.31, -13.01],
+      [-13.268, 2.132, -13.598, -11.604, -0.958, -6.968, 0.632, -4.968, -4.868, 4.719, -7.768, -3.948, 9.842, 0, 3.552, -3.495, 0.695, 5.392, -4.558, -0.646, -1.294, 8.632, 1.132, -4.233, 1.132, -0.618, -1.271, -2.747, 4.432, -3.568, -3.238, 0.792, -6.018, -10.058, 0.892, -5.568, 1.654, 2.102, 1.732, -2.868, 1.032, -3.468, -3.838, -1.258, 3.132, -7.268, -1.568, -0.746, -2.824, -3.604, -2.824, -0.738, -9.268, -3.268, 5.432, -2.408, -2.568, -2.848, -5.568, 2.434, 1.132, 1.132, 0.504, -6.978, -0.828, -11.468, -3.168],
+      [-16.82, -1.42, -17.15, -15.157, -4.51, -10.52, -2.92, -8.52, -8.42, 1.166, -11.32, -7.5, 6.29, -3.552, 0, -7.047, -2.857, 1.84, -8.11, -4.199, -4.847, 5.08, -2.42, -7.786, -2.42, -4.17, -4.824, -6.3, 0.88, -7.12, -6.79, -2.76, -9.57, -13.61, -2.66, -9.12, -1.899, -1.45, -1.82, -6.42, -2.52, -7.02, -7.39, -4.81, -0.42, -10.82, -5.12, -4.299, -6.377, -7.157, -6.377, -4.29, -12.82, -6.82, 1.88, -5.96, -6.12, -6.4, -9.12, -1.119, -2.42, -2.42, -3.049, -10.53, -4.38, -15.02, -6.72],
+      [-9.773, 5.627, -10.103, -8.109, 2.537, -3.473, 4.127, -1.473, -1.373, 8.214, -4.273, -0.453, 13.337, 3.495, 7.047, 0, 4.19, 8.887, -1.063, 2.849, 2.201, 12.127, 4.627, -0.738, 4.627, 2.877, 2.224, 0.748, 7.927, -0.073, 0.257, 4.287, -2.523, -6.563, 4.387, -2.073, 5.149, 5.597, 5.227, 0.627, 4.527, 0.027, -0.343, 2.237, 6.627, -3.773, 1.927, 2.749, 0.671, -0.109, 0.671, 2.757, -5.773, 0.227, 8.927, 1.087, 0.927, 0.647, -2.073, 5.929, 4.627, 4.627, 3.999, -3.483, 2.667, -7.973, 0.327],
+      [-13.963, 1.437, -14.293, -12.3, -1.653, -7.663, -0.063, -5.663, -5.563, 4.024, -8.463, -4.643, 9.147, -0.695, 2.857, -4.19, 0, 4.697, -5.253, -1.342, -1.99, 7.937, 0.437, -4.929, 0.437, -1.313, -1.967, -3.442, 3.737, -4.263, -3.933, 0.097, -6.713, -10.753, 0.197, -6.263, 0.958, 1.407, 1.037, -3.563, 0.337, -4.163, -4.533, -1.953, 2.437, -7.963, -2.263, -1.442, -3.52, -4.3, -3.52, -1.433, -9.963, -3.963, 4.737, -3.103, -3.263, -3.543, -6.263, 1.738, 0.437, 0.437, -0.192, -7.673, -1.523, -12.163, -3.863],
+      [-18.66, -3.26, -18.99, -16.997, -6.35, -12.36, -4.76, -10.36, -10.26, -0.674, -13.16, -9.34, 4.45, -5.392, -1.84, -8.887, -4.697, 0, -9.95, -6.039, -6.687, 3.24, -4.26, -9.626, -4.26, -6.01, -6.664, -8.14, -0.96, -8.96, -8.63, -4.6, -11.41, -15.45, -4.5, -10.96, -3.739, -3.29, -3.66, -8.26, -4.36, -8.86, -9.23, -6.65, -2.26, -12.66, -6.96, -6.139, -8.217, -8.997, -8.217, -6.13, -14.66, -8.66, 0.04, -7.8, -7.96, -8.24, -10.96, -2.959, -4.26, -4.26, -4.889, -12.37, -6.22, -16.86, -8.56],
+      [-8.71, 6.69, -9.04, -7.047, 3.6, -2.41, 5.19, -0.41, -0.31, 9.276, -3.21, 0.61, 14.4, 4.558, 8.11, 1.063, 5.253, 9.95, 0, 3.911, 3.263, 13.19, 5.69, 0.324, 5.69, 3.94, 3.286, 1.81, 8.99, 0.99, 1.32, 5.35, -1.46, -5.5, 5.45, -1.01, 6.211, 6.66, 6.29, 1.69, 5.59, 1.09, 0.72, 3.3, 7.69, -2.71, 2.99, 3.811, 1.733, 0.953, 1.733, 3.82, -4.71, 1.29, 9.99, 2.15, 1.99, 1.71, -1.01, 6.991, 5.69, 5.69, 5.061, -2.42, 3.73, -6.91, 1.39],
+      [-12.621, 2.779, -12.951, -10.958, -0.311, -6.321, 1.279, -4.321, -4.221, 5.365, -7.121, -3.301, 10.489, 0.646, 4.199, -2.849, 1.342, 6.039, -3.911, 0, -0.648, 9.279, 1.779, -3.587, 1.779, 0.029, -0.625, -2.101, 5.079, -2.921, -2.591, 1.439, -5.371, -9.411, 1.539, -4.921, 2.3, 2.749, 2.379, -2.221, 1.679, -2.821, -3.191, -0.611, 3.779, -6.621, -0.921, -0.1, -2.178, -2.958, -2.178, -0.091, -8.621, -2.621, 6.079, -1.761, -1.921, -2.201, -4.921, 3.08, 1.779, 1.779, 1.15, -6.331, -0.181, -10.821, -2.521],
+      [-11.973, 3.427, -12.303, -10.31, 0.337, -5.673, 1.927, -3.673, -3.573, 6.013, -6.473, -2.653, 11.137, 1.294, 4.847, -2.201, 1.99, 6.687, -3.263, 0.648, 0, 9.927, 2.427, -2.939, 2.427, 0.677, 0.023, -1.453, 5.727, -2.273, -1.943, 2.087, -4.723, -8.763, 2.187, -4.273, 2.948, 3.397, 3.027, -1.573, 2.327, -2.173, -2.543, 0.037, 4.427, -5.973, -0.273, 0.548, -1.53, -2.31, -1.53, 0.557, -7.973, -1.973, 6.727, -1.113, -1.273, -1.553, -4.273, 3.728, 2.427, 2.427, 1.798, -5.683, 0.467, -10.173, -1.873],
+      [-21.9, -6.5, -22.23, -20.237, -9.59, -15.6, -8, -13.6, -13.5, -3.914, -16.4, -12.58, 1.21, -8.632, -5.08, -12.127, -7.937, -3.24, -13.19, -9.279, -9.927, 0, -7.5, -12.866, -7.5, -9.25, -9.904, -11.38, -4.2, -12.2, -11.87, -7.84, -14.65, -18.69, -7.74, -14.2, -6.979, -6.53, -6.9, -11.5, -7.6, -12.1, -12.47, -9.89, -5.5, -15.9, -10.2, -9.379, -11.457, -12.237, -11.457, -9.37, -17.9, -11.9, -3.2, -11.04, -11.2, -11.48, -14.2, -6.199, -7.5, -7.5, -8.129, -15.61, -9.46, -20.1, -11.8],
+      [-14.4, 1, -14.73, -12.737, -2.09, -8.1, -0.5, -6.1, -6, 3.586, -8.9, -5.08, 8.71, -1.132, 2.42, -4.627, -0.437, 4.26, -5.69, -1.779, -2.427, 7.5, 0, -5.366, -0, -1.75, -2.404, -3.88, 3.3, -4.7, -4.37, -0.34, -7.15, -11.19, -0.24, -6.7, 0.521, 0.97, 0.6, -4, -0.1, -4.6, -4.97, -2.39, 2, -8.4, -2.7, -1.879, -3.957, -4.737, -3.957, -1.87, -10.4, -4.4, 4.3, -3.54, -3.7, -3.98, -6.7, 1.301, -0, 0, -0.629, -8.11, -1.96, -12.6, -4.3],
+      [-9.034, 6.366, -9.364, -7.371, 3.276, -2.734, 4.866, -0.734, -0.634, 8.952, -3.534, 0.286, 14.076, 4.233, 7.786, 0.738, 4.929, 9.626, -0.324, 3.587, 2.939, 12.866, 5.366, 0, 5.366, 3.616, 2.962, 1.486, 8.666, 0.666, 0.996, 5.026, -1.784, -5.824, 5.126, -1.334, 5.887, 6.336, 5.966, 1.366, 5.266, 0.766, 0.396, 2.976, 7.366, -3.034, 2.666, 3.487, 1.409, 0.629, 1.409, 3.496, -5.034, 0.966, 9.666, 1.826, 1.666, 1.386, -1.334, 6.667, 5.366, 5.366, 4.737, -2.744, 3.406, -7.234, 1.066],
+      [-14.4, 1, -14.73, -12.737, -2.09, -8.1, -0.5, -6.1, -6, 3.586, -8.9, -5.08, 8.71, -1.132, 2.42, -4.627, -0.437, 4.26, -5.69, -1.779, -2.427, 7.5, 0, -5.366, 0, -1.75, -2.404, -3.88, 3.3, -4.7, -4.37, -0.34, -7.15, -11.19, -0.24, -6.7, 0.521, 0.97, 0.6, -4, -0.1, -4.6, -4.97, -2.39, 2, -8.4, -2.7, -1.879, -3.957, -4.737, -3.957, -1.87, -10.4, -4.4, 4.3, -3.54, -3.7, -3.98, -6.7, 1.301, 0, 0, -0.629, -8.11, -1.96, -12.6, -4.3],
+      [-12.65, 2.75, -12.98, -10.987, -0.34, -6.35, 1.25, -4.35, -4.25, 5.336, -7.15, -3.33, 10.46, 0.618, 4.17, -2.877, 1.313, 6.01, -3.94, -0.029, -0.677, 9.25, 1.75, -3.616, 1.75, 0, -0.654, -2.13, 5.05, -2.95, -2.62, 1.41, -5.4, -9.44, 1.51, -4.95, 2.271, 2.72, 2.35, -2.25, 1.65, -2.85, -3.22, -0.64, 3.75, -6.65, -0.95, -0.129, -2.207, -2.987, -2.207, -0.12, -8.65, -2.65, 6.05, -1.79, -1.95, -2.23, -4.95, 3.051, 1.75, 1.75, 1.121, -6.36, -0.21, -10.85, -2.55],
+      [-11.996, 3.404, -12.326, -10.333, 0.314, -5.696, 1.904, -3.696, -3.596, 5.99, -6.496, -2.676, 11.114, 1.271, 4.824, -2.224, 1.967, 6.664, -3.286, 0.625, -0.023, 9.904, 2.404, -2.962, 2.404, 0.654, 0, -1.476, 5.704, -2.296, -1.966, 2.064, -4.746, -8.786, 2.164, -4.296, 2.925, 3.374, 3.004, -1.596, 2.304, -2.196, -2.566, 0.014, 4.404, -5.996, -0.296, 0.525, -1.553, -2.333, -1.553, 0.534, -7.996, -1.996, 6.704, -1.136, -1.296, -1.576, -4.296, 3.705, 2.404, 2.404, 1.775, -5.706, 0.444, -10.196, -1.896],
+      [-10.52, 4.88, -10.85, -8.857, 1.79, -4.22, 3.38, -2.22, -2.12, 7.466, -5.02, -1.2, 12.59, 2.747, 6.3, -0.748, 3.442, 8.14, -1.81, 2.101, 1.453, 11.38, 3.88, -1.486, 3.88, 2.13, 1.476, 0, 7.18, -0.82, -0.49, 3.54, -3.27, -7.31, 3.64, -2.82, 4.401, 4.85, 4.48, -0.12, 3.78, -0.72, -1.09, 1.49, 5.88, -4.52, 1.18, 2.001, -0.077, -0.857, -0.077, 2.01, -6.52, -0.52, 8.18, 0.34, 0.18, -0.1, -2.82, 5.181, 3.88, 3.88, 3.251, -4.23, 1.92, -8.72, -0.42],
+      [-17.7, -2.3, -18.03, -16.037, -5.39, -11.4, -3.8, -9.4, -9.3, 0.286, -12.2, -8.38, 5.41, -4.432, -0.88, -7.927, -3.737, 0.96, -8.99, -5.079, -5.727, 4.2, -3.3, -8.666, -3.3, -5.05, -5.704, -7.18, 0, -8, -7.67, -3.64, -10.45, -14.49, -3.54, -10, -2.779, -2.33, -2.7, -7.3, -3.4, -7.9, -8.27, -5.69, -1.3, -11.7, -6, -5.179, -7.257, -8.037, -7.257, -5.17, -13.7, -7.7, 1, -6.84, -7, -7.28, -10, -1.999, -3.3, -3.3, -3.929, -11.41, -5.26, -15.9, -7.6],
+      [-9.7, 5.7, -10.03, -8.037, 2.61, -3.4, 4.2, -1.4, -1.3, 8.286, -4.2, -0.38, 13.41, 3.568, 7.12, 0.073, 4.263, 8.96, -0.99, 2.921, 2.273, 12.2, 4.7, -0.666, 4.7, 2.95, 2.296, 0.82, 8, 0, 0.33, 4.36, -2.45, -6.49, 4.46, -2, 5.221, 5.67, 5.3, 0.7, 4.6, 0.1, -0.27, 2.31, 6.7, -3.7, 2, 2.821, 0.743, -0.037, 0.743, 2.83, -5.7, 0.3, 9, 1.16, 1, 0.72, -2, 6.001, 4.7, 4.7, 4.071, -3.41, 2.74, -7.9, 0.4],
+      [-10.03, 5.37, -10.36, -8.367, 2.28, -3.73, 3.87, -1.73, -1.63, 7.956, -4.53, -0.71, 13.08, 3.238, 6.79, -0.257, 3.933, 8.63, -1.32, 2.591, 1.943, 11.87, 4.37, -0.996, 4.37, 2.62, 1.966, 0.49, 7.67, -0.33, 0, 4.03, -2.78, -6.82, 4.13, -2.33, 4.891, 5.34, 4.97, 0.37, 4.27, -0.23, -0.6, 1.98, 6.37, -4.03, 1.67, 2.491, 0.413, -0.367, 0.413, 2.5, -6.03, -0.03, 8.67, 0.83, 0.67, 0.39, -2.33, 5.671, 4.37, 4.37, 3.741, -3.74, 2.41, -8.23, 0.07],
+      [-14.06, 1.34, -14.39, -12.397, -1.75, -7.76, -0.16, -5.76, -5.66, 3.926, -8.56, -4.74, 9.05, -0.792, 2.76, -4.287, -0.097, 4.6, -5.35, -1.439, -2.087, 7.84, 0.34, -5.026, 0.34, -1.41, -2.064, -3.54, 3.64, -4.36, -4.03, 0, -6.81, -10.85, 0.1, -6.36, 0.861, 1.31, 0.94, -3.66, 0.24, -4.26, -4.63, -2.05, 2.34, -8.06, -2.36, -1.539, -3.617, -4.397, -3.617, -1.53, -10.06, -4.06, 4.64, -3.2, -3.36, -3.64, -6.36, 1.641, 0.34, 0.34, -0.289, -7.77, -1.62, -12.26, -3.96],
+      [-7.25, 8.15, -7.58, -5.587, 5.06, -0.95, 6.65, 1.05, 1.15, 10.736, -1.75, 2.07, 15.86, 6.018, 9.57, 2.523, 6.713, 11.41, 1.46, 5.371, 4.723, 14.65, 7.15, 1.784, 7.15, 5.4, 4.746, 3.27, 10.45, 2.45, 2.78, 6.81, 0, -4.04, 6.91, 0.45, 7.671, 8.12, 7.75, 3.15, 7.05, 2.55, 2.18, 4.76, 9.15, -1.25, 4.45, 5.271, 3.193, 2.413, 3.193, 5.28, -3.25, 2.75, 11.45, 3.61, 3.45, 3.17, 0.45, 8.451, 7.15, 7.15, 6.521, -0.96, 5.19, -5.45, 2.85],
+      [-3.21, 12.19, -3.54, -1.547, 9.1, 3.09, 10.69, 5.09, 5.19, 14.776, 2.29, 6.11, 19.9, 10.058, 13.61, 6.563, 10.753, 15.45, 5.5, 9.411, 8.763, 18.69, 11.19, 5.824, 11.19, 9.44, 8.786, 7.31, 14.49, 6.49, 6.82, 10.85, 4.04, 0, 10.95, 4.49, 11.711, 12.16, 11.79, 7.19, 11.09, 6.59, 6.22, 8.8, 13.19, 2.79, 8.49, 9.311, 7.233, 6.453, 7.233, 9.32, 0.79, 6.79, 15.49, 7.65, 7.49, 7.21, 4.49, 12.491, 11.19, 11.19, 10.561, 3.08, 9.23, -1.41, 6.89],
+      [-14.16, 1.24, -14.49, -12.497, -1.85, -7.86, -0.26, -5.86, -5.76, 3.826, -8.66, -4.84, 8.95, -0.892, 2.66, -4.387, -0.197, 4.5, -5.45, -1.539, -2.187, 7.74, 0.24, -5.126, 0.24, -1.51, -2.164, -3.64, 3.54, -4.46, -4.13, -0.1, -6.91, -10.95, 0, -6.46, 0.761, 1.21, 0.84, -3.76, 0.14, -4.36, -4.73, -2.15, 2.24, -8.16, -2.46, -1.639, -3.717, -4.497, -3.717, -1.63, -10.16, -4.16, 4.54, -3.3, -3.46, -3.74, -6.46, 1.541, 0.24, 0.24, -0.389, -7.87, -1.72, -12.36, -4.06],
+      [-7.7, 7.7, -8.03, -6.037, 4.61, -1.4, 6.2, 0.6, 0.7, 10.286, -2.2, 1.62, 15.41, 5.568, 9.12, 2.073, 6.263, 10.96, 1.01, 4.921, 4.273, 14.2, 6.7, 1.334, 6.7, 4.95, 4.296, 2.82, 10, 2, 2.33, 6.36, -0.45, -4.49, 6.46, 0, 7.221, 7.67, 7.3, 2.7, 6.6, 2.1, 1.73, 4.31, 8.7, -1.7, 4, 4.821, 2.743, 1.963, 2.743, 4.83, -3.7, 2.3, 11, 3.16, 3, 2.72, 0, 8.001, 6.7, 6.7, 6.071, -1.41, 4.74, -5.9, 2.4],
+      [-14.921, 0.479, -15.251, -13.258, -2.611, -8.621, -1.021, -6.621, -6.521, 3.065, -9.421, -5.601, 8.189, -1.654, 1.899, -5.149, -0.958, 3.739, -6.211, -2.3, -2.948, 6.979, -0.521, -5.887, -0.521, -2.271, -2.925, -4.401, 2.779, -5.221, -4.891, -0.861, -7.671, -11.711, -0.761, -7.221, 0, 0.449, 0.079, -4.521, -0.621, -5.121, -5.491, -2.911, 1.479, -8.921, -3.221, -2.4, -4.478, -5.258, -4.478, -2.391, -10.921, -4.921, 3.779, -4.061, -4.221, -4.501, -7.221, 0.78, -0.521, -0.521, -1.15, -8.631, -2.481, -13.121, -4.821],
+      [-15.37, 0.03, -15.7, -13.707, -3.06, -9.07, -1.47, -7.07, -6.97, 2.616, -9.87, -6.05, 7.74, -2.102, 1.45, -5.597, -1.407, 3.29, -6.66, -2.749, -3.397, 6.53, -0.97, -6.336, -0.97, -2.72, -3.374, -4.85, 2.33, -5.67, -5.34, -1.31, -8.12, -12.16, -1.21, -7.67, -0.449, 0, -0.37, -4.97, -1.07, -5.57, -5.94, -3.36, 1.03, -9.37, -3.67, -2.849, -4.927, -5.707, -4.927, -2.84, -11.37, -5.37, 3.33, -4.51, -4.67, -4.95, -7.67, 0.331, -0.97, -0.97, -1.599, -9.08, -2.93, -13.57, -5.27],
+      [-15, 0.4, -15.33, -13.337, -2.69, -8.7, -1.1, -6.7, -6.6, 2.986, -9.5, -5.68, 8.11, -1.732, 1.82, -5.227, -1.037, 3.66, -6.29, -2.379, -3.027, 6.9, -0.6, -5.966, -0.6, -2.35, -3.004, -4.48, 2.7, -5.3, -4.97, -0.94, -7.75, -11.79, -0.84, -7.3, -0.079, 0.37, 0, -4.6, -0.7, -5.2, -5.57, -2.99, 1.4, -9, -3.3, -2.479, -4.557, -5.337, -4.557, -2.47, -11, -5, 3.7, -4.14, -4.3, -4.58, -7.3, 0.701, -0.6, -0.6, -1.229, -8.71, -2.56, -13.2, -4.9],
+      [-10.4, 5, -10.73, -8.737, 1.91, -4.1, 3.5, -2.1, -2, 7.586, -4.9, -1.08, 12.71, 2.868, 6.42, -0.627, 3.563, 8.26, -1.69, 2.221, 1.573, 11.5, 4, -1.366, 4, 2.25, 1.596, 0.12, 7.3, -0.7, -0.37, 3.66, -3.15, -7.19, 3.76, -2.7, 4.521, 4.97, 4.6, 0, 3.9, -0.6, -0.97, 1.61, 6, -4.4, 1.3, 2.121, 0.043, -0.737, 0.043, 2.13, -6.4, -0.4, 8.3, 0.46, 0.3, 0.02, -2.7, 5.301, 4, 4, 3.371, -4.11, 2.04, -8.6, -0.3],
+      [-14.3, 1.1, -14.63, -12.637, -1.99, -8, -0.4, -6, -5.9, 3.686, -8.8, -4.98, 8.81, -1.032, 2.52, -4.527, -0.337, 4.36, -5.59, -1.679, -2.327, 7.6, 0.1, -5.266, 0.1, -1.65, -2.304, -3.78, 3.4, -4.6, -4.27, -0.24, -7.05, -11.09, -0.14, -6.6, 0.621, 1.07, 0.7, -3.9, 0, -4.5, -4.87, -2.29, 2.1, -8.3, -2.6, -1.779, -3.857, -4.637, -3.857, -1.77, -10.3, -4.3, 4.4, -3.44, -3.6, -3.88, -6.6, 1.401, 0.1, 0.1, -0.529, -8.01, -1.86, -12.5, -4.2],
+      [-9.8, 5.6, -10.13, -8.137, 2.51, -3.5, 4.1, -1.5, -1.4, 8.186, -4.3, -0.48, 13.31, 3.468, 7.02, -0.027, 4.163, 8.86, -1.09, 2.821, 2.173, 12.1, 4.6, -0.766, 4.6, 2.85, 2.196, 0.72, 7.9, -0.1, 0.23, 4.26, -2.55, -6.59, 4.36, -2.1, 5.121, 5.57, 5.2, 0.6, 4.5, 0, -0.37, 2.21, 6.6, -3.8, 1.9, 2.721, 0.643, -0.137, 0.643, 2.73, -5.8, 0.2, 8.9, 1.06, 0.9, 0.62, -2.1, 5.901, 4.6, 4.6, 3.971, -3.51, 2.64, -8, 0.3],
+      [-9.43, 5.97, -9.76, -7.767, 2.88, -3.13, 4.47, -1.13, -1.03, 8.556, -3.93, -0.11, 13.68, 3.838, 7.39, 0.343, 4.533, 9.23, -0.72, 3.191, 2.543, 12.47, 4.97, -0.396, 4.97, 3.22, 2.566, 1.09, 8.27, 0.27, 0.6, 4.63, -2.18, -6.22, 4.73, -1.73, 5.491, 5.94, 5.57, 0.97, 4.87, 0.37, 0, 2.58, 6.97, -3.43, 2.27, 3.091, 1.013, 0.233, 1.013, 3.1, -5.43, 0.57, 9.27, 1.43, 1.27, 0.99, -1.73, 6.271, 4.97, 4.97, 4.341, -3.14, 3.01, -7.63, 0.67],
+      [-12.01, 3.39, -12.34, -10.347, 0.3, -5.71, 1.89, -3.71, -3.61, 5.976, -6.51, -2.69, 11.1, 1.258, 4.81, -2.237, 1.953, 6.65, -3.3, 0.611, -0.037, 9.89, 2.39, -2.976, 2.39, 0.64, -0.014, -1.49, 5.69, -2.31, -1.98, 2.05, -4.76, -8.8, 2.15, -4.31, 2.911, 3.36, 2.99, -1.61, 2.29, -2.21, -2.58, 0, 4.39, -6.01, -0.31, 0.511, -1.567, -2.347, -1.567, 0.52, -8.01, -2.01, 6.69, -1.15, -1.31, -1.59, -4.31, 3.691, 2.39, 2.39, 1.761, -5.72, 0.43, -10.21, -1.91],
+      [-16.4, -1, -16.73, -14.737, -4.09, -10.1, -2.5, -8.1, -8, 1.586, -10.9, -7.08, 6.71, -3.132, 0.42, -6.627, -2.437, 2.26, -7.69, -3.779, -4.427, 5.5, -2, -7.366, -2, -3.75, -4.404, -5.88, 1.3, -6.7, -6.37, -2.34, -9.15, -13.19, -2.24, -8.7, -1.479, -1.03, -1.4, -6, -2.1, -6.6, -6.97, -4.39, 0, -10.4, -4.7, -3.879, -5.957, -6.737, -5.957, -3.87, -12.4, -6.4, 2.3, -5.54, -5.7, -5.98, -8.7, -0.699, -2, -2, -2.629, -10.11, -3.96, -14.6, -6.3],
+      [-6, 9.4, -6.33, -4.337, 6.31, 0.3, 7.9, 2.3, 2.4, 11.986, -0.5, 3.32, 17.11, 7.268, 10.82, 3.773, 7.963, 12.66, 2.71, 6.621, 5.973, 15.9, 8.4, 3.034, 8.4, 6.65, 5.996, 4.52, 11.7, 3.7, 4.03, 8.06, 1.25, -2.79, 8.16, 1.7, 8.921, 9.37, 9, 4.4, 8.3, 3.8, 3.43, 6.01, 10.4, 0, 5.7, 6.521, 4.443, 3.663, 4.443, 6.53, -2, 4, 12.7, 4.86, 4.7, 4.42, 1.7, 9.701, 8.4, 8.4, 7.771, 0.29, 6.44, -4.2, 4.1],
+      [-11.7, 3.7, -12.03, -10.037, 0.61, -5.4, 2.2, -3.4, -3.3, 6.286, -6.2, -2.38, 11.41, 1.568, 5.12, -1.927, 2.263, 6.96, -2.99, 0.921, 0.273, 10.2, 2.7, -2.666, 2.7, 0.95, 0.296, -1.18, 6, -2, -1.67, 2.36, -4.45, -8.49, 2.46, -4, 3.221, 3.67, 3.3, -1.3, 2.6, -1.9, -2.27, 0.31, 4.7, -5.7, 0, 0.821, -1.257, -2.037, -1.257, 0.83, -7.7, -1.7, 7, -0.84, -1, -1.28, -4, 4.001, 2.7, 2.7, 2.071, -5.41, 0.74, -9.9, -1.6],
+      [-12.521, 2.879, -12.851, -10.858, -0.211, -6.221, 1.379, -4.221, -4.121, 5.465, -7.021, -3.201, 10.589, 0.746, 4.299, -2.749, 1.442, 6.139, -3.811, 0.1, -0.548, 9.379, 1.879, -3.487, 1.879, 0.129, -0.525, -2.001, 5.179, -2.821, -2.491, 1.539, -5.271, -9.311, 1.639, -4.821, 2.4, 2.849, 2.479, -2.121, 1.779, -2.721, -3.091, -0.511, 3.879, -6.521, -0.821, 0, -2.078, -2.858, -2.078, 0.009, -8.521, -2.521, 6.179, -1.661, -1.821, -2.101, -4.821, 3.18, 1.879, 1.879, 1.25, -6.231, -0.081, -10.721, -2.421],
+      [-10.443, 4.957, -10.773, -8.78, 1.867, -4.143, 3.457, -2.143, -2.043, 7.543, -4.943, -1.123, 12.667, 2.824, 6.377, -0.671, 3.52, 8.217, -1.733, 2.178, 1.53, 11.457, 3.957, -1.409, 3.957, 2.207, 1.553, 0.077, 7.257, -0.743, -0.413, 3.617, -3.193, -7.233, 3.717, -2.743, 4.478, 4.927, 4.557, -0.043, 3.857, -0.643, -1.013, 1.567, 5.957, -4.443, 1.257, 2.078, 0, -0.78, 0, 2.087, -6.443, -0.443, 8.257, 0.417, 0.257, -0.023, -2.743, 5.258, 3.957, 3.957, 3.328, -4.153, 1.997, -8.643, -0.343],
+      [-9.663, 5.737, -9.993, -8, 2.647, -3.363, 4.237, -1.363, -1.263, 8.323, -4.163, -0.343, 13.447, 3.604, 7.157, 0.109, 4.3, 8.997, -0.953, 2.958, 2.31, 12.237, 4.737, -0.629, 4.737, 2.987, 2.333, 0.857, 8.037, 0.037, 0.367, 4.397, -2.413, -6.453, 4.497, -1.963, 5.258, 5.707, 5.337, 0.737, 4.637, 0.137, -0.233, 2.347, 6.737, -3.663, 2.037, 2.858, 0.78, 0, 0.78, 2.867, -5.663, 0.337, 9.037, 1.197, 1.037, 0.757, -1.963, 6.038, 4.737, 4.737, 4.108, -3.373, 2.777, -7.863, 0.437],
+      [-10.443, 4.957, -10.773, -8.78, 1.867, -4.143, 3.457, -2.143, -2.043, 7.543, -4.943, -1.123, 12.667, 2.824, 6.377, -0.671, 3.52, 8.217, -1.733, 2.178, 1.53, 11.457, 3.957, -1.409, 3.957, 2.207, 1.553, 0.077, 7.257, -0.743, -0.413, 3.617, -3.193, -7.233, 3.717, -2.743, 4.478, 4.927, 4.557, -0.043, 3.857, -0.643, -1.013, 1.567, 5.957, -4.443, 1.257, 2.078, -0, -0.78, 0, 2.087, -6.443, -0.443, 8.257, 0.417, 0.257, -0.023, -2.743, 5.258, 3.957, 3.957, 3.328, -4.153, 1.997, -8.643, -0.343],
+      [-12.53, 2.87, -12.86, -10.867, -0.22, -6.23, 1.37, -4.23, -4.13, 5.456, -7.03, -3.21, 10.58, 0.738, 4.29, -2.757, 1.433, 6.13, -3.82, 0.091, -0.557, 9.37, 1.87, -3.496, 1.87, 0.12, -0.534, -2.01, 5.17, -2.83, -2.5, 1.53, -5.28, -9.32, 1.63, -4.83, 2.391, 2.84, 2.47, -2.13, 1.77, -2.73, -3.1, -0.52, 3.87, -6.53, -0.83, -0.009, -2.087, -2.867, -2.087, 0, -8.53, -2.53, 6.17, -1.67, -1.83, -2.11, -4.83, 3.171, 1.87, 1.87, 1.241, -6.24, -0.09, -10.73, -2.43],
+      [-4, 11.4, -4.33, -2.337, 8.31, 2.3, 9.9, 4.3, 4.4, 13.986, 1.5, 5.32, 19.11, 9.268, 12.82, 5.773, 9.963, 14.66, 4.71, 8.621, 7.973, 17.9, 10.4, 5.034, 10.4, 8.65, 7.996, 6.52, 13.7, 5.7, 6.03, 10.06, 3.25, -0.79, 10.16, 3.7, 10.921, 11.37, 11, 6.4, 10.3, 5.8, 5.43, 8.01, 12.4, 2, 7.7, 8.521, 6.443, 5.663, 6.443, 8.53, 0, 6, 14.7, 6.86, 6.7, 6.42, 3.7, 11.701, 10.4, 10.4, 9.771, 2.29, 8.44, -2.2, 6.1],
+      [-10, 5.4, -10.33, -8.337, 2.31, -3.7, 3.9, -1.7, -1.6, 7.986, -4.5, -0.68, 13.11, 3.268, 6.82, -0.227, 3.963, 8.66, -1.29, 2.621, 1.973, 11.9, 4.4, -0.966, 4.4, 2.65, 1.996, 0.52, 7.7, -0.3, 0.03, 4.06, -2.75, -6.79, 4.16, -2.3, 4.921, 5.37, 5, 0.4, 4.3, -0.2, -0.57, 2.01, 6.4, -4, 1.7, 2.521, 0.443, -0.337, 0.443, 2.53, -6, 0, 8.7, 0.86, 0.7, 0.42, -2.3, 5.701, 4.4, 4.4, 3.771, -3.71, 2.44, -8.2, 0.1],
+      [-18.7, -3.3, -19.03, -17.037, -6.39, -12.4, -4.8, -10.4, -10.3, -0.714, -13.2, -9.38, 4.41, -5.432, -1.88, -8.927, -4.737, -0.04, -9.99, -6.079, -6.727, 3.2, -4.3, -9.666, -4.3, -6.05, -6.704, -8.18, -1, -9, -8.67, -4.64, -11.45, -15.49, -4.54, -11, -3.779, -3.33, -3.7, -8.3, -4.4, -8.9, -9.27, -6.69, -2.3, -12.7, -7, -6.179, -8.257, -9.037, -8.257, -6.17, -14.7, -8.7, 0, -7.84, -8, -8.28, -11, -2.999, -4.3, -4.3, -4.929, -12.41, -6.26, -16.9, -8.6],
+      [-10.86, 4.54, -11.19, -9.197, 1.45, -4.56, 3.04, -2.56, -2.46, 7.126, -5.36, -1.54, 12.25, 2.408, 5.96, -1.087, 3.103, 7.8, -2.15, 1.761, 1.113, 11.04, 3.54, -1.826, 3.54, 1.79, 1.136, -0.34, 6.84, -1.16, -0.83, 3.2, -3.61, -7.65, 3.3, -3.16, 4.061, 4.51, 4.14, -0.46, 3.44, -1.06, -1.43, 1.15, 5.54, -4.86, 0.84, 1.661, -0.417, -1.197, -0.417, 1.67, -6.86, -0.86, 7.84, 0, -0.16, -0.44, -3.16, 4.841, 3.54, 3.54, 2.911, -4.57, 1.58, -9.06, -0.76],
+      [-10.7, 4.7, -11.03, -9.037, 1.61, -4.4, 3.2, -2.4, -2.3, 7.286, -5.2, -1.38, 12.41, 2.568, 6.12, -0.927, 3.263, 7.96, -1.99, 1.921, 1.273, 11.2, 3.7, -1.666, 3.7, 1.95, 1.296, -0.18, 7, -1, -0.67, 3.36, -3.45, -7.49, 3.46, -3, 4.221, 4.67, 4.3, -0.3, 3.6, -0.9, -1.27, 1.31, 5.7, -4.7, 1, 1.821, -0.257, -1.037, -0.257, 1.83, -6.7, -0.7, 8, 0.16, 0, -0.28, -3, 5.001, 3.7, 3.7, 3.071, -4.41, 1.74, -8.9, -0.6],
+      [-10.42, 4.98, -10.75, -8.757, 1.89, -4.12, 3.48, -2.12, -2.02, 7.566, -4.92, -1.1, 12.69, 2.848, 6.4, -0.647, 3.543, 8.24, -1.71, 2.201, 1.553, 11.48, 3.98, -1.386, 3.98, 2.23, 1.576, 0.1, 7.28, -0.72, -0.39, 3.64, -3.17, -7.21, 3.74, -2.72, 4.501, 4.95, 4.58, -0.02, 3.88, -0.62, -0.99, 1.59, 5.98, -4.42, 1.28, 2.101, 0.023, -0.757, 0.023, 2.11, -6.42, -0.42, 8.28, 0.44, 0.28, 0, -2.72, 5.281, 3.98, 3.98, 3.351, -4.13, 2.02, -8.62, -0.32],
+      [-7.7, 7.7, -8.03, -6.037, 4.61, -1.4, 6.2, 0.6, 0.7, 10.286, -2.2, 1.62, 15.41, 5.568, 9.12, 2.073, 6.263, 10.96, 1.01, 4.921, 4.273, 14.2, 6.7, 1.334, 6.7, 4.95, 4.296, 2.82, 10, 2, 2.33, 6.36, -0.45, -4.49, 6.46, -0, 7.221, 7.67, 7.3, 2.7, 6.6, 2.1, 1.73, 4.31, 8.7, -1.7, 4, 4.821, 2.743, 1.963, 2.743, 4.83, -3.7, 2.3, 11, 3.16, 3, 2.72, 0, 8.001, 6.7, 6.7, 6.071, -1.41, 4.74, -5.9, 2.4],
+      [-15.701, -0.301, -16.031, -14.038, -3.391, -9.401, -1.801, -7.401, -7.301, 2.285, -10.201, -6.381, 7.409, -2.434, 1.119, -5.929, -1.738, 2.959, -6.991, -3.08, -3.728, 6.199, -1.301, -6.667, -1.301, -3.051, -3.705, -5.181, 1.999, -6.001, -5.671, -1.641, -8.451, -12.491, -1.541, -8.001, -0.78, -0.331, -0.701, -5.301, -1.401, -5.901, -6.271, -3.691, 0.699, -9.701, -4.001, -3.18, -5.258, -6.038, -5.258, -3.171, -11.701, -5.701, 2.999, -4.841, -5.001, -5.281, -8.001, 0, -1.301, -1.301, -1.93, -9.411, -3.261, -13.901, -5.601],
+      [-14.4, 1, -14.73, -12.737, -2.09, -8.1, -0.5, -6.1, -6, 3.586, -8.9, -5.08, 8.71, -1.132, 2.42, -4.627, -0.437, 4.26, -5.69, -1.779, -2.427, 7.5, 0, -5.366, -0, -1.75, -2.404, -3.88, 3.3, -4.7, -4.37, -0.34, -7.15, -11.19, -0.24, -6.7, 0.521, 0.97, 0.6, -4, -0.1, -4.6, -4.97, -2.39, 2, -8.4, -2.7, -1.879, -3.957, -4.737, -3.957, -1.87, -10.4, -4.4, 4.3, -3.54, -3.7, -3.98, -6.7, 1.301, 0, 0, -0.629, -8.11, -1.96, -12.6, -4.3],
+      [-14.4, 1, -14.73, -12.737, -2.09, -8.1, -0.5, -6.1, -6, 3.586, -8.9, -5.08, 8.71, -1.132, 2.42, -4.627, -0.437, 4.26, -5.69, -1.779, -2.427, 7.5, -0, -5.366, -0, -1.75, -2.404, -3.88, 3.3, -4.7, -4.37, -0.34, -7.15, -11.19, -0.24, -6.7, 0.521, 0.97, 0.6, -4, -0.1, -4.6, -4.97, -2.39, 2, -8.4, -2.7, -1.879, -3.957, -4.737, -3.957, -1.87, -10.4, -4.4, 4.3, -3.54, -3.7, -3.98, -6.7, 1.301, -0, 0, -0.629, -8.11, -1.96, -12.6, -4.3],
+      [-13.771, 1.629, -14.101, -12.108, -1.461, -7.471, 0.129, -5.471, -5.371, 4.215, -8.271, -4.451, 9.339, -0.504, 3.049, -3.999, 0.192, 4.889, -5.061, -1.15, -1.798, 8.129, 0.629, -4.737, 0.629, -1.121, -1.775, -3.251, 3.929, -4.071, -3.741, 0.289, -6.521, -10.561, 0.389, -6.071, 1.15, 1.599, 1.229, -3.371, 0.529, -3.971, -4.341, -1.761, 2.629, -7.771, -2.071, -1.25, -3.328, -4.108, -3.328, -1.241, -9.771, -3.771, 4.929, -2.911, -3.071, -3.351, -6.071, 1.93, 0.629, 0.629, 0, -7.481, -1.331, -11.971, -3.671],
+      [-6.29, 9.11, -6.62, -4.627, 6.02, 0.01, 7.61, 2.01, 2.11, 11.696, -0.79, 3.03, 16.82, 6.978, 10.53, 3.483, 7.673, 12.37, 2.42, 6.331, 5.683, 15.61, 8.11, 2.744, 8.11, 6.36, 5.706, 4.23, 11.41, 3.41, 3.74, 7.77, 0.96, -3.08, 7.87, 1.41, 8.631, 9.08, 8.71, 4.11, 8.01, 3.51, 3.14, 5.72, 10.11, -0.29, 5.41, 6.231, 4.153, 3.373, 4.153, 6.24, -2.29, 3.71, 12.41, 4.57, 4.41, 4.13, 1.41, 9.411, 8.11, 8.11, 7.481, 0, 6.15, -4.49, 3.81],
+      [-12.44, 2.96, -12.77, -10.777, -0.13, -6.14, 1.46, -4.14, -4.04, 5.546, -6.94, -3.12, 10.67, 0.828, 4.38, -2.667, 1.523, 6.22, -3.73, 0.181, -0.467, 9.46, 1.96, -3.406, 1.96, 0.21, -0.444, -1.92, 5.26, -2.74, -2.41, 1.62, -5.19, -9.23, 1.72, -4.74, 2.481, 2.93, 2.56, -2.04, 1.86, -2.64, -3.01, -0.43, 3.96, -6.44, -0.74, 0.081, -1.997, -2.777, -1.997, 0.09, -8.44, -2.44, 6.26, -1.58, -1.74, -2.02, -4.74, 3.261, 1.96, 1.96, 1.331, -6.15, 0, -10.64, -2.34],
+      [-1.8, 13.6, -2.13, -0.137, 10.51, 4.5, 12.1, 6.5, 6.6, 16.186, 3.7, 7.52, 21.31, 11.468, 15.02, 7.973, 12.163, 16.86, 6.91, 10.821, 10.173, 20.1, 12.6, 7.234, 12.6, 10.85, 10.196, 8.72, 15.9, 7.9, 8.23, 12.26, 5.45, 1.41, 12.36, 5.9, 13.121, 13.57, 13.2, 8.6, 12.5, 8, 7.63, 10.21, 14.6, 4.2, 9.9, 10.721, 8.643, 7.863, 8.643, 10.73, 2.2, 8.2, 16.9, 9.06, 8.9, 8.62, 5.9, 13.901, 12.6, 12.6, 11.971, 4.49, 10.64, 0, 8.3],
+      [-10.1, 5.3, -10.43, -8.437, 2.21, -3.8, 3.8, -1.8, -1.7, 7.886, -4.6, -0.78, 13.01, 3.168, 6.72, -0.327, 3.863, 8.56, -1.39, 2.521, 1.873, 11.8, 4.3, -1.066, 4.3, 2.55, 1.896, 0.42, 7.6, -0.4, -0.07, 3.96, -2.85, -6.89, 4.06, -2.4, 4.821, 5.27, 4.9, 0.3, 4.2, -0.3, -0.67, 1.91, 6.3, -4.1, 1.6, 2.421, 0.343, -0.437, 0.343, 2.43, -6.1, -0.1, 8.6, 0.76, 0.6, 0.32, -2.4, 5.601, 4.3, 4.3, 3.671, -3.81, 2.34, -8.3, 0]
+    ],
+    "ci_low": [
+      [0, 6.738, -11.457, -6.34, 4.9, -1.555, 5.006, -1.534, -0.069, 9.965, -3.555, 1.665, 15.514, 6.328, 9.205, 2.904, 6.002, 11.176, 1.264, 4.631, 5.41, 13.691, 6.159, -1.175, 6.493, 4.908, 4.886, 2.816, 3.002, 1.361, 2.71, 5.375, -0.89, -9.87, 5.993, 0.253, 4.413, 7.861, 5.025, -0.189, 6.072, 2.581, 1.794, 4.23, 8.434, -0.401, 4.107, 5.973, 3.763, 3.11, 3.876, 4.452, -6.581, -1.534, 10.847, 3.379, 1.077, 2.704, 0.2, 6.175, 5.53, 5.53, 4.729, -1.251, 4.126, -9.165, 1.811],
+      [-24.062, 0, -26.543, -21.296, -10.019, -16.503, -9.997, -16.576, -15.051, -4.992, -18.565, -13.269, 0.583, -8.555, -5.727, -11.973, -8.952, -3.747, -13.657, -10.324, -9.441, -1.277, -8.811, -16.231, -8.457, -10.033, -10.01, -12.121, -12.161, -13.615, -12.202, -9.618, -15.854, -25.004, -8.972, -14.668, -10.654, -7.064, -10.022, -15.257, -8.897, -12.324, -13.139, -10.713, -6.52, -15.236, -10.824, -8.876, -11.099, -11.74, -10.975, -10.508, -21.649, -16.63, -4.1, -11.544, -13.957, -12.235, -14.725, -8.855, -9.472, -9.472, -10.281, -16.178, -10.848, -24.245, -13.161],
+      [-10.797, 4.917, 0, -8.299, 2.801, -3.548, 3.23, -3.143, -1.929, 8.01, -5.3, -0.374, 13.461, 4.108, 7.157, 0.666, 4.033, 9.096, -0.826, 2.669, 3.086, 11.777, 4.252, -2.724, 4.513, 2.889, 2.712, 0.789, 1.97, -0.526, 0.589, 3.559, -2.819, -3.336, 4.07, -1.836, 2.91, 5.787, 3.44, -1.68, 4.162, 0.435, -0.25, 2.22, 6.466, -2.772, 2.053, 3.645, 1.472, 0.783, 1.553, 2.51, -3.338, -2.895, 8.854, 1.298, -0.567, 0.679, -1.876, 4.515, 3.75, 3.75, 2.981, -3.317, 2.234, -10.602, -0.086],
+      [-9.666, 6.178, -12.285, 0, 4.562, -1.982, 4.413, -2.241, -0.6, 9.508, -4.169, 1.277, 15.138, 6.102, 8.825, 2.698, 5.555, 10.823, 0.918, 4.179, 5.291, 13.201, 5.664, -1.785, 6.057, 4.502, 4.618, 2.418, 1.961, 0.85, 2.392, 4.811, -1.368, -10.831, 5.511, -0.093, 3.638, 7.502, 4.303, -0.97, 5.579, 2.286, 1.409, 3.816, 7.986, -0.467, 3.73, 5.859, 3.609, 3.406, 3.756, 3.985, -7.362, -2.393, 10.421, 3.026, 0.393, 2.303, -0.157, 5.503, 4.94, 4.94, 4.116, -1.616, 3.619, -9.979, 1.309],
+      [-19.72, -3.839, -22.479, -16.732, 0, -11.899, -5.627, -12.358, -10.596, -0.432, -14.224, -8.609, 5.262, -3.64, -1.054, -7.026, -4.376, 0.966, -7.621, -5.756, -4.344, 3.237, -4.304, -12.063, -3.867, -5.398, -5.164, -7.475, -8.358, -9.131, -7.433, -5.207, -11.323, -21.103, -4.448, -9.942, -6.522, -2.358, -5.823, -11.135, -4.388, -7.519, -8.473, -6.089, -1.946, -10.044, -6.145, -3.77, -6.063, -6.637, -5.88, -5.963, -17.525, -12.606, 0.504, -6.829, -9.708, -7.592, -10.016, -4.591, -5.097, -5.097, -5.938, -11.482, -6.359, -20.164, -8.666],
+      [-14.155, 1.697, -16.808, -11.256, 0.121, 0, -0.073, -6.745, -5.076, 5.045, -8.659, -3.174, 10.689, 1.683, 4.376, -1.718, 1.095, 6.379, -3.524, -0.282, 0.893, 8.733, 1.195, -6.431, 1.598, 0.048, 0.19, -2.034, -2.593, -3.622, -2.045, 0.33, -5.834, -15.373, 1.044, -4.535, -0.876, 3.057, -0.203, -5.486, 1.11, -2.147, -3.04, -0.638, 3.525, -4.854, -0.718, 1.463, -0.796, -1.402, -0.642, -0.479, -11.877, -6.921, 5.963, -1.417, -4.107, -2.15, -4.602, 1.004, 0.455, 0.455, -0.373, -6.062, -0.852, -14.5, -3.162],
+      [-22.794, -6.997, -25.23, -20.061, -8.807, -15.273, 0, -15.289, -13.8, -3.757, -17.297, -12.048, 1.803, -7.365, -4.507, -10.787, -7.718, -2.532, -12.444, -9.09, -8.271, -0.035, -7.567, -14.936, -7.226, -8.808, -8.812, -10.898, -10.801, -12.368, -10.994, -8.361, -14.614, -23.662, -7.731, -13.455, -9.352, -5.848, -8.732, -13.954, -7.654, -11.121, -11.918, -9.487, -5.287, -14.076, -9.605, -7.707, -9.922, -10.571, -9.805, -9.271, -20.346, -15.311, -2.87, -10.329, -12.675, -11.011, -13.509, -7.575, -8.209, -8.209, -9.014, -14.961, -9.602, -22.935, -11.916],
+      [-18.134, -2.376, -20.403, -15.515, -4.338, -10.745, -4.089, 0, -9.2, 0.792, -12.637, -7.545, 6.297, -2.965, -0.01, -6.398, -3.177, 1.947, -7.97, -4.545, -3.933, 4.536, -2.993, -10.175, -2.691, -4.294, -4.386, -6.389, -5.792, -7.782, -6.538, -3.738, -10.051, -18.723, -3.166, -8.98, -4.568, -1.365, -3.989, -9.165, -3.081, -6.679, -7.419, -4.968, -0.745, -9.766, -5.111, -3.371, -5.564, -6.234, -5.466, -4.715, -15.557, -10.457, 1.657, -5.85, -7.962, -6.5, -9.028, -2.871, -3.567, -3.567, -4.354, -10.474, -5.02, -18.119, -7.336],
+      [-16.869, -1.051, -19.389, -14.074, -2.776, -9.276, -2.8, -9.4, 0, 2.229, -11.372, -6.035, 7.819, -1.292, 1.509, -4.707, -1.728, 3.493, -6.416, -3.102, -2.16, 5.939, -1.596, -9.062, -1.232, -2.802, -2.755, -4.889, -5.046, -6.403, -4.955, -2.416, -8.636, -17.874, -1.755, -7.426, -3.49, 0.175, -2.849, -8.095, -1.682, -5.073, -5.905, -3.484, 0.703, -7.946, -3.588, -1.594, -3.823, -4.458, -3.694, -3.288, -14.486, -9.482, 3.127, -4.304, -6.777, -5.003, -7.485, -1.672, -2.274, -2.274, -3.088, -8.94, -3.635, -17.089, -5.948],
+      [-26.008, -10.165, -28.623, -23.139, -11.785, -18.328, -11.929, -18.581, -16.944, 0, -20.511, -15.069, -1.209, -10.248, -7.521, -13.652, -10.698, -5.524, -15.429, -11.993, -11.062, -3.143, -10.68, -18.26, -10.289, -11.844, -11.731, -10.99, -14.373, -15.494, -13.955, -11.531, -17.712, -27.166, -10.833, -16.44, -12.58, -8.845, -12.036, -17.309, -10.765, -14.062, -14.937, -12.529, -8.359, -16.821, -12.616, -10.257, -12.743, -13.358, -12.596, -12.36, -23.7, -18.73, -5.925, -13.321, -15.947, -14.043, -16.504, -10.701, -11.402, -11.402, -12.08, -17.963, -12.725, -26.317, -15.035],
+      [-14.555, 1.235, -16.96, -11.843, -0.604, -7.059, -0.497, -7.037, -5.572, 4.462, 0, -3.838, 10.011, 0.824, 3.702, -2.599, 0.499, 5.673, -4.24, -0.872, -0.094, 8.188, 0.656, -6.678, 0.99, -0.596, -0.618, -2.687, -2.5, -4.143, -2.794, -0.128, -6.393, -15.372, 0.49, -5.251, -1.09, 2.358, -0.477, -5.691, 0.569, -2.923, -3.709, -1.274, 2.93, -5.905, -1.397, 0.469, -1.741, -2.394, -1.628, -1.051, -12.083, -7.036, 5.344, -2.124, -4.426, -2.8, -5.304, 0.673, 0.027, 0.027, -0.774, -6.754, -1.377, -14.667, -3.692],
+      [-16.975, -1.109, -19.674, -14.037, -2.629, -9.214, -2.888, -9.585, -7.875, 2.263, -11.478, 0, 7.929, -1.034, 1.615, -4.429, -1.684, 3.625, -6.276, -3.062, -1.79, 5.943, -1.596, -9.28, -1.179, -2.72, -2.54, -4.8, -5.501, -6.417, -4.789, -2.477, -8.621, -18.265, -1.744, -7.287, -3.731, 0.302, -3.046, -8.342, -1.68, -4.884, -5.803, -3.409, 0.746, -7.518, -3.478, -1.218, -3.49, -4.084, -3.325, -3.263, -14.733, -9.793, 3.19, -4.171, -6.942, -4.916, -7.357, -1.828, -2.358, -2.358, -3.192, -8.819, -3.646, -17.363, -5.955],
+      [-30.706, -14.837, -33.419, -27.756, -16.338, -22.931, -16.617, -23.323, -21.601, -11.456, -25.209, -19.651, 0, -14.733, -12.099, -18.126, -15.403, -10.086, -19.986, -16.781, -15.477, -7.779, -15.318, -23.019, -14.896, -16.435, -16.243, -18.515, -19.259, -20.141, -18.497, -16.205, -22.342, -32.018, -15.465, -20.997, -17.473, -13.409, -16.785, -22.084, -15.402, -18.59, -19.517, -17.124, -12.972, -21.2, -17.191, -14.905, -17.182, -17.771, -17.012, -16.984, -28.475, -23.54, -10.527, -17.882, -20.678, -18.631, -21.068, -15.563, -16.088, -16.088, -16.923, -22.531, -17.369, -31.107, -19.678],
+      [-20.207, -4.29, -23.087, -17.106, -5.555, -12.252, -6.1, -12.9, -11.027, -0.81, -14.711, -8.929, 4.952, 0, -1.367, -7.155, -4.745, 0.678, -9.213, -6.129, -4.345, 2.835, -4.71, -12.627, -4.228, -5.733, -5.367, -7.804, -9.068, -9.548, -7.688, -5.662, -11.716, -21.776, -4.845, -10.224, -7.102, -2.652, -6.374, -11.719, -4.792, -7.75, -8.79, -6.43, -2.316, -9.949, -6.455, -3.763, -6.119, -6.632, -5.882, -6.347, -18.109, -13.23, 0.152, -7.118, -10.237, -7.923, -10.309, -5.114, -5.568, -5.568, -6.424, -11.782, -6.773, -20.765, -9.077],
+      [-24.435, -8.567, -27.143, -21.489, -10.074, -16.664, -10.347, -17.05, -15.331, -5.189, -18.938, -13.385, 0.481, -8.472, 0, -11.866, -9.136, -3.821, -13.722, -10.514, -9.22, -1.511, -9.05, -16.746, -8.629, -10.169, -9.981, -12.249, -12.979, -13.872, -12.233, -9.935, -16.074, -25.74, -9.197, -14.733, -11.198, -7.145, -10.511, -15.809, -9.134, -12.327, -13.251, -10.858, -6.705, -14.945, -10.926, -8.648, -10.924, -11.514, -10.755, -10.716, -22.2, -17.264, -4.261, -11.617, -14.405, -12.365, -14.803, -9.291, -9.817, -9.817, -10.652, -16.266, -11.101, -24.832, -13.409],
+      [-16.641, -0.718, -19.54, -13.521, -1.951, -8.663, -2.532, -9.343, -7.452, 2.775, -11.145, -5.334, 8.549, -0.165, 2.229, 0, -1.159, 4.278, -5.611, -2.543, -0.684, 6.416, -1.13, -9.073, -0.64, -2.141, -1.75, -4.211, -5.536, -5.97, -4.08, -2.09, -8.134, -18.239, -1.263, -6.622, -3.55, 0.948, -2.818, -8.168, -1.211, -4.138, -5.195, -2.839, 1.271, -6.263, -2.858, -0.099, -2.47, -2.969, -2.221, -2.764, -14.558, -9.685, 3.741, -3.517, -6.678, -4.33, -6.708, -1.553, -1.999, -1.999, -2.857, -8.183, -3.194, -17.217, -5.498],
+      [-21.924, -6.078, -24.553, -19.044, -7.682, -14.231, -7.844, -14.503, -12.854, -2.651, -16.427, -10.97, 2.891, -6.136, -3.422, -9.539, 0, -1.422, -11.326, -7.917, -6.942, 0.949, -6.588, -14.185, -6.193, -7.746, -7.623, -9.707, -10.315, -11.403, -9.851, -7.444, -13.619, -23.104, -6.741, -12.337, -8.52, -4.743, -7.959, -13.235, -6.673, -9.956, -10.837, -8.432, -4.264, -12.697, -8.516, -6.162, -8.625, -9.238, -8.476, -8.266, -19.627, -14.662, -1.828, -9.219, -11.868, -9.945, -12.402, -6.637, -7.316, -7.316, -8.013, -13.862, -8.634, -22.246, -10.944],
+      [-26.144, -10.267, -28.884, -23.171, -11.734, -18.341, -12.052, -18.773, -17.027, -6.871, -20.647, -15.055, -1.186, -10.107, -7.501, -13.496, -10.816, 0, -15.383, -12.196, -10.828, -3.199, -10.739, -18.475, -10.308, -11.842, -11.626, -13.921, -14.748, -15.564, -13.889, -11.636, -17.76, -27.499, -10.885, -16.394, -12.931, -8.809, -12.237, -17.544, -10.823, -13.977, -14.92, -12.533, -8.386, -16.538, -12.593, -10.255, -12.541, -13.122, -12.364, -12.4, -23.935, -19.009, -5.938, -12.207, -16.125, -14.038, -16.467, -11.009, -11.522, -11.522, -12.361, -17.932, -12.792, -26.571, -15.1],
+      [-16.156, -0.277, -18.906, -13.176, -0.421, -8.344, -2.064, -8.79, -7.036, 3.124, -10.66, -5.056, 8.814, -0.098, 2.498, -3.485, -0.821, 4.517, 0, -2.2, -0.81, 6.795, -0.746, -8.493, -0.312, -1.844, -1.619, -3.922, -4.777, -5.572, -3.885, -1.646, -7.766, -17.525, -0.891, -6.392, -2.951, 1.192, -2.254, -7.564, -0.83, -3.972, -4.921, -2.535, 1.61, -6.515, -2.593, -0.237, -2.526, -3.103, -2.346, -2.406, -13.954, -9.032, 4.059, -3.279, -6.141, -4.039, -6.466, -1.025, -1.534, -1.534, -2.374, -7.931, -2.8, -16.592, -5.107],
+      [-20.611, -4.766, -23.233, -17.737, -6.378, -12.924, -6.532, -13.187, -11.544, -1.262, -15.114, -9.664, 4.197, -4.836, -2.116, -8.24, -5.234, -0.118, -10.022, 0, -5.646, 2.258, -5.279, -12.868, -4.885, -6.44, -6.322, -8.293, -8.99, -10.094, -8.548, -6.133, -12.31, -21.78, -5.432, -11.033, -4.526, -3.439, -6.643, -11.917, -5.364, -8.653, -9.532, -7.125, -2.956, -11.403, -7.211, -4.678, -7.328, -7.942, -7.181, -6.958, -18.309, -13.342, -0.521, -7.914, -10.553, -8.639, -11.098, -5.216, -6.004, -6.004, -3.085, -12.557, -7.324, -20.927, -9.635],
+      [-18.537, -2.588, -21.521, -15.33, -3.671, -10.454, -4.418, -11.28, -9.307, 0.964, -13.041, -7.096, 6.796, -1.757, 0.473, -5.085, -2.963, 2.545, -7.337, -4.351, 0, 4.585, -2.964, -11.025, -2.438, -3.916, -3.398, -5.981, -7.584, -7.814, -5.781, -3.961, -9.958, -20.263, -3.09, -8.348, -5.513, -0.79, -4.761, -10.133, -3.044, -5.815, -6.954, -4.62, -0.534, -7.428, -4.61, -1.458, -3.934, -4.333, -3.598, -4.581, -16.523, -11.678, 1.95, -5.25, -8.605, -6.102, -8.445, -3.476, -3.884, -3.884, -4.753, -9.927, -5.035, -19.194, -7.337],
+      [-30.109, -14.277, -32.683, -27.273, -15.943, -22.467, -16.035, -22.664, -21.061, -10.97, -24.612, -19.217, -5.359, -14.43, -11.671, -17.839, -14.925, -9.679, -19.585, -16.3, -15.269, 0, -14.805, -22.336, -14.426, -15.988, -15.904, -18.073, -18.394, -19.616, -18.118, -15.643, -21.841, -31.202, -14.961, -20.596, -16.771, -12.998, -16.117, -21.378, -14.891, -18.229, -19.085, -16.672, -12.494, -21.04, -16.766, -14.701, -16.942, -17.566, -16.803, -16.49, -27.769, -22.785, -10.064, -17.475, -20.035, -18.188, -20.658, -14.928, -15.508, -15.508, -16.328, -22.115, -16.848, -30.38, -19.159],
+      [-22.641, -6.811, -25.208, -19.81, -8.484, -15.005, -8.567, -15.193, -13.596, -3.507, -17.144, -11.756, 2.102, -6.975, -4.21, -10.385, -7.462, -2.219, -12.126, -8.837, -7.817, 0.195, 0, -14.864, -6.963, -8.526, -8.448, -10.612, -10.913, -12.151, -10.659, -8.176, -14.377, -23.723, -7.497, -13.137, -9.298, -5.538, -8.645, -13.904, -7.426, -10.772, -11.625, -9.21, -5.031, -13.591, -9.306, -7.25, -9.489, -10.115, -9.351, -9.027, -20.296, -15.309, -2.602, -10.016, -12.564, -10.727, -13.198, -7.458, -8.04, -8.04, -8.859, -14.655, -9.383, -22.906, -11.694],
+      [-19.244, -3.5, -21.452, -16.528, -5.511, -11.9, -5.204, -11.643, -10.331, -0.356, -13.746, -8.708, 5.132, -4.161, -1.174, -7.597, -4.327, 0.777, -9.142, -5.694, -5.147, 3.395, -4.132, 0, -3.844, -5.453, -5.573, -7.55, -6.772, -8.918, -7.715, -4.86, -11.195, -19.731, -4.308, -10.152, -5.634, -2.535, -5.07, -10.228, -4.221, -7.861, -8.582, -6.126, -1.895, -10.988, -6.276, -4.586, -6.772, -7.292, -6.68, -5.861, -16.621, -11.497, 0.503, -7.021, -9.054, -7.661, -10.197, -3.965, -4.683, -4.683, -5.464, -11.641, -6.156, -19.173, -8.474],
+      [-22.307, -6.457, -24.947, -19.417, -8.047, -14.602, -8.226, -14.891, -13.232, -3.116, -16.81, -11.339, 2.524, -6.493, -3.789, -9.895, -7.067, -1.788, -11.692, -8.443, -7.291, 0.574, -6.963, -14.575, 0, -8.116, -7.983, -10.198, -10.722, -11.78, -10.214, -7.824, -13.993, -23.506, -7.115, -12.703, -9.019, -5.11, -8.348, -13.628, -7.048, -10.318, -11.206, -8.802, -4.636, -13.042, -8.884, -6.721, -8.977, -9.587, -8.825, -8.639, -20.019, -15.059, -2.199, -9.585, -12.254, -10.314, -12.769, -7.144, -7.697, -7.697, -8.525, -14.229, -9.01, -22.64, -11.32],
+      [-20.392, -4.533, -23.071, -17.472, -6.078, -12.652, -6.308, -12.994, -11.302, -1.171, -14.896, -9.38, 4.485, -4.498, -1.829, -7.895, -5.12, 0.178, -9.724, -6.498, -5.269, 2.512, -5.026, -12.684, -4.616, 0, -5.998, -8.242, -8.88, -9.846, -8.24, -5.9, -12.053, -21.651, -5.176, -10.735, -7.133, -3.145, -6.453, -11.743, -5.111, -8.339, -9.246, -6.848, -2.69, -11.006, -6.922, -4.699, -6.965, -7.564, -6.804, -6.697, -18.135, -13.187, -0.249, -7.618, -10.353, -8.358, -10.803, -5.24, -5.779, -5.779, -6.61, -12.265, -7.075, -20.761, -9.384],
+      [-19.106, -3.203, -21.94, -16.048, -4.537, -11.202, -5.004, -11.778, -9.947, 0.25, -13.61, -7.892, 5.985, -2.824, -0.333, -6.197, -3.689, 1.702, -8.192, -5.072, -3.443, 3.903, -3.64, -11.497, -3.175, -4.69, 0, -6.764, -7.884, -8.474, -6.677, -4.573, -10.651, -20.606, -3.778, -9.203, -5.966, -1.626, -5.249, -10.581, -3.722, -6.749, -7.755, -5.385, -1.26, -9.092, -5.422, -2.865, -5.192, -5.733, -4.98, -5.285, -16.972, -12.078, 1.201, -6.094, -9.12, -6.882, -9.283, -3.999, -4.473, -4.473, -5.323, -10.753, -5.699, -19.622, -8.005],
+      [-18.225, -2.362, -20.912, -15.297, -3.896, -10.475, -4.139, -10.83, -9.13, 3.942, -12.728, -7.201, 6.664, -2.31, 0.35, -5.707, -2.822, 2.358, -7.543, -4.092, -3.075, 4.686, -2.853, -10.522, -2.439, -3.983, -3.813, 0, -6.729, -7.673, -6.058, -3.73, -9.879, -19.497, -3.002, -8.554, -4.816, -0.964, -4.29, -9.583, -2.937, -6.155, -7.067, -4.671, -0.514, -8.808, -4.743, -2.169, -4.772, -5.37, -4.61, -4.522, -15.974, -11.03, 1.928, -5.438, -8.188, -6.18, -8.623, -2.897, -3.61, -3.61, -4.252, -10.085, -4.903, -18.602, -7.211],
+      [-32.398, -16.761, -34.09, -30.113, -19.138, -25.393, -18.401, -24.592, -23.646, -13.8, -26.9, -22.261, -8.439, -17.933, -14.739, -21.391, -17.789, -12.828, -22.757, -19.148, -19.037, -9.994, -17.513, -24.103, -17.322, -18.98, -19.292, -21.088, 0, -22.27, -21.369, -18.115, -24.604, -31.96, -17.71, -23.768, -18.416, -16.131, -17.983, -22.991, -17.605, -21.546, -22.141, -19.641, -15.355, -24.931, -19.847, -18.482, -20.625, -21.342, -20.569, -19.289, -29.386, -24.044, -12.991, -20.626, -22.056, -21.195, -23.797, -16.993, -17.886, -17.886, -18.621, -25.228, -19.515, -31.847, -21.84],
+      [-18.039, -2.215, -20.586, -15.224, -3.911, -10.422, -3.968, -10.582, -9.003, 1.079, -12.543, -7.177, 6.679, -2.413, 0.368, -5.825, -2.877, 2.356, -7.552, -4.251, -3.267, 4.784, -2.751, -10.249, -2.38, -3.946, -3.881, -6.032, -6.27, 0, -6.088, -3.58, -9.789, -19.088, -2.909, -8.563, -4.68, -0.963, -4.033, -9.286, -2.837, -6.203, -7.046, -4.629, -0.446, -9.046, -4.728, -2.7, -4.935, -5.564, -4.801, -4.44, -15.678, -10.684, 1.98, -5.441, -7.956, -6.147, -8.623, -2.85, -3.441, -3.441, -4.258, -10.079, -4.792, -18.285, -5.789],
+      [-17.35, -1.462, -20.131, -14.341, -2.873, -9.505, -3.254, -9.998, -8.215, 1.958, -11.854, -6.209, 7.663, -1.213, 1.347, -4.595, -1.985, 3.371, -6.525, -3.365, -1.894, 5.622, -1.919, -9.706, -1.474, -3, -2.745, -5.077, -6.029, -6.748, 0, -2.831, -8.936, -18.767, -2.062, -7.536, -4.168, 0.046, -3.464, -8.782, -2.002, -5.104, -6.073, -3.693, 0.445, -7.581, -3.743, -1.319, -3.621, -4.186, -3.43, -3.574, -15.173, -10.261, 2.899, -4.424, -7.345, -5.194, -7.612, -2.227, -2.723, -2.723, -3.567, -9.079, -3.975, -17.815, -6.282],
+      [-22.745, -6.938, -25.221, -19.983, -8.707, -15.19, -8.681, -15.258, -13.736, -3.679, -17.248, -11.957, 1.895, -7.247, -4.415, -10.664, -7.638, -2.436, -12.346, -9.011, -8.135, 0.037, -7.496, -14.911, -7.144, -8.72, -8.701, -10.809, -10.835, -12.3, -10.891, 0, -14.54, -23.679, -7.658, -13.357, -9.333, -5.752, -8.703, -13.937, -7.583, -11.014, -11.827, -9.401, -5.207, -13.93, -9.512, -7.569, -9.791, -10.433, -9.668, -9.194, -20.329, -15.308, -2.787, -10.233, -12.639, -10.923, -13.413, -7.537, -8.155, -8.155, -8.964, -14.866, -9.533, -22.924, -11.846],
+      [-15.39, 0.446, -17.979, -12.541, -1.203, -7.734, -1.314, -7.951, -6.336, 3.761, -9.893, -4.481, 9.378, 0.319, 3.066, -3.089, -0.193, 5.06, -4.846, -1.568, -0.511, 7.459, -0.077, -7.626, 0.307, -1.253, -1.159, -3.338, -3.704, -4.889, -3.376, -0.92, 0, -16.507, -0.232, -5.857, -2.063, 1.74, -1.405, -6.67, -0.162, -3.486, -4.349, -1.937, 2.238, -6.278, -2.029, 0.057, -2.187, -2.808, -2.046, -1.76, -13.061, -8.083, 4.669, -2.737, -5.32, -3.453, -5.92, -0.212, -0.787, -0.787, -1.608, -7.377, -2.12, -15.675, -4.431],
+      [-16.29, -0.624, -10.416, -13.925, -2.903, -9.193, -2.282, -8.543, -7.494, 2.387, -10.792, -6.045, 7.782, -1.661, 1.48, -5.114, -1.598, 3.401, -6.525, -2.958, -2.736, 6.178, -1.343, -8.082, -1.126, -2.771, -3.034, -4.876, -2.98, -6.108, -5.127, -1.979, -8.427, 0, -1.534, -7.536, -2.417, 0.096, -1.945, -6.997, -1.434, -5.296, -5.924, -3.435, 0.836, -8.617, -3.627, -2.18, -4.334, -5.041, -4.268, -3.106, -9.509, -8.116, 3.209, -4.397, -5.992, -4.984, -7.569, -0.922, -1.765, -1.765, -2.513, -9.004, -3.351, -15.88, -5.674],
+      [-22.327, -6.492, -24.91, -19.483, -8.148, -14.676, -8.251, -14.886, -13.275, -3.181, -16.83, -11.424, 2.435, -6.63, -3.877, -10.038, -7.135, -1.885, -11.791, -8.51, -7.463, 0.519, -7.017, -14.559, -6.635, -8.196, -8.106, -10.281, -10.63, -11.829, -10.322, -7.858, -14.052, -23.434, 0, -12.801, -8.995, -5.204, -8.339, -13.602, -7.103, -10.432, -11.292, -8.88, -4.704, -13.232, -8.973, -6.895, -9.138, -9.76, -8.997, -8.701, -19.994, -15.013, -2.273, -9.681, -12.255, -10.396, -12.864, -7.148, -7.724, -7.724, -8.545, -14.321, -6.564, -22.606, -11.371],
+      [-15.147, 0.732, -17.896, -12.166, -0.722, -7.335, -1.055, -7.78, -6.026, 4.133, -9.651, -4.047, 9.823, 0.911, 3.507, -2.476, 0.189, 5.526, -4.372, -1.191, 0.198, 7.804, 0.263, -7.484, 0.697, -0.835, -0.61, -2.913, -3.768, -4.563, -2.876, -0.637, -6.757, -16.516, 0.119, 0, -1.941, 2.201, -1.245, -6.554, 0.18, -2.963, -3.912, -1.526, 2.619, -5.506, -1.584, 0.772, -1.517, -2.095, -1.337, -1.396, -12.945, -8.022, 5.068, -2.27, -5.132, -3.03, -5.457, -0.015, -0.525, -0.525, -1.364, -6.922, -1.79, -15.582, -4.098],
+      [-25.43, -9.696, -27.593, -22.878, -11.744, -18.118, -11.394, -17.81, -16.532, -6.449, -19.932, -14.933, -1.095, -10.409, -7.4, -13.847, -10.436, -5.454, -15.373, -9.126, -11.408, -2.813, -10.34, -17.408, -10.061, -11.675, -11.816, -13.617, -12.858, -15.123, -13.951, -11.055, -17.405, -25.839, -10.517, -16.384, 0, -8.764, -11.234, -16.379, -10.429, -14.099, -14.808, -12.347, -8.11, -17.255, -12.503, -10.619, -13.029, -13.71, -12.941, -12.073, -22.772, -17.63, -5.716, -13.251, -15.225, -13.884, -16.427, -9.963, -10.873, -10.873, -9.183, -17.87, -12.361, -25.316, -14.68],
+      [-22.879, -7.004, -25.613, -19.911, -8.478, -15.083, -8.788, -15.505, -13.765, -3.612, -17.382, -11.798, 2.071, -6.857, -4.245, -10.247, -7.557, -2.229, -12.128, -8.936, -7.584, 0.062, -7.478, -15.206, -7.05, -8.585, -8.374, -10.663, -11.471, -12.303, -10.634, -8.372, -14.5, -24.224, -7.624, -13.139, -9.662, 0, -8.969, -14.274, -7.562, -10.724, -11.663, -9.275, -5.127, -13.296, -9.336, -7.011, -9.294, -9.877, -9.119, -9.14, -20.665, -15.737, -2.679, -10.024, -12.858, -10.78, -13.211, -7.743, -8.258, -8.258, -9.097, -14.675, -9.531, -23.3, -11.839],
+      [-24.975, -9.222, -27.22, -22.37, -11.203, -17.603, -10.932, -17.389, -16.049, -6.063, -19.477, -14.406, -0.565, -9.839, -6.871, -13.273, -10.033, -4.917, -14.834, -11.401, -10.814, -2.317, -9.845, -17.002, -9.548, -11.153, -11.257, -13.249, -12.583, -14.633, -13.404, -10.583, -16.905, -25.525, -10.019, -15.845, -11.392, -8.229, 0, -10.922, -9.933, -13.547, -14.28, -11.827, -7.601, -16.65, -11.973, -10.253, -12.443, -13.115, -12.347, -11.57, -22.38, -12.803, -5.201, -12.714, -14.796, -13.36, -15.891, -9.705, -10.41, -10.41, -11.195, -17.336, -11.87, -24.938, -14.187],
+      [-20.989, -5.257, -23.14, -18.444, -7.315, -13.686, -6.954, -13.365, -12.095, -2.136, -15.491, -10.502, 3.336, -5.984, -2.969, -9.422, -6.11, -1.024, -10.944, -7.475, -6.986, 1.622, -5.904, -12.959, -5.628, -7.243, -7.389, -9.342, -8.391, -10.686, -9.522, -6.617, -12.97, -21.377, -6.082, -11.954, -7.337, -4.334, -1.722, 0, -5.993, -9.672, -10.377, -7.915, -3.677, -12.835, -8.072, -6.426, -8.606, -9.288, -8.519, -7.639, -18.322, -8.974, -1.284, -8.821, -10.781, -9.452, -11.997, -5.695, -6.433, -6.433, -7.209, -13.44, -7.925, -20.864, -10.244],
+      [-22.528, -6.697, -25.098, -19.695, -8.368, -14.89, -8.454, -15.081, -13.482, -3.392, -17.031, -11.64, 2.218, -6.857, -4.094, -10.266, -7.347, -2.103, -12.01, -8.721, -7.698, 0.309, -7.226, -14.752, -6.848, -8.411, -8.33, -10.496, -10.805, -12.037, -10.542, -8.063, -14.262, -23.614, -7.383, -13.02, -9.187, -5.422, -8.533, -13.793, 0, -10.655, -11.509, -9.094, -4.916, -13.47, -9.19, -7.13, -9.37, -9.995, -9.232, -8.912, -20.185, -15.199, -2.487, -9.899, -12.452, -10.611, -13.082, -7.345, -7.927, -7.927, -8.747, -14.539, -9.269, -22.795, -11.58],
+      [-17.019, -1.124, -19.825, -13.987, -2.499, -9.147, -2.921, -9.679, -7.873, 2.311, -11.523, -5.844, 8.03, -0.815, 1.713, -4.193, -1.63, 3.743, -6.152, -3.011, -1.469, 5.971, -1.572, -9.392, -1.118, -2.639, -2.357, -4.714, -5.746, -6.403, -4.644, -2.494, -8.586, -18.476, -1.712, -7.163, -3.857, 0.416, -3.147, -8.472, -1.655, 0, -5.707, -3.332, 0.8, -7.139, -3.376, -0.892, -3.205, -3.759, -3.005, -3.222, -14.862, -9.959, 3.257, -4.053, -7.024, -4.832, -7.241, -1.904, -2.389, -2.389, -3.236, -8.71, -3.629, -17.508, -5.935],
+      [-17.066, -1.199, -19.77, -14.125, -2.713, -9.3, -2.978, -9.679, -7.965, 2.176, -11.569, -6.023, 7.843, -1.115, 1.529, -4.51, -1.772, 3.54, -6.361, -3.15, -1.867, 5.855, -1.685, -9.374, -1.266, -2.806, -2.623, -4.886, -5.601, -6.506, -4.873, -2.567, -8.709, -18.364, -1.832, -7.372, -3.826, 0.217, -3.14, -8.437, -1.769, -4.967, 0, -3.495, 0.659, -7.594, -3.564, -1.296, -3.569, -4.162, -3.402, -3.351, -14.828, -9.889, 3.103, -4.256, -7.035, -5.003, -7.442, -1.921, -2.449, -2.449, -3.284, -8.905, -3.735, -17.458, -6.044],
+      [-19.79, -3.933, -22.46, -16.877, -5.489, -12.058, -5.707, -12.388, -10.704, -0.577, -14.294, -8.789, 5.076, -3.915, -1.238, -7.314, -4.526, 0.767, -9.135, -5.903, -4.693, 3.108, -4.43, -12.077, -4.022, -5.568, -5.413, -7.65, -8.261, -9.249, -7.653, -5.301, -11.457, -21.035, -4.58, -10.146, -6.524, -2.555, -5.847, -11.135, -4.514, -7.752, -8.655, 0, -2.095, -10.434, -6.332, -4.123, -6.386, -6.988, -6.228, -6.102, -17.526, -12.575, 0.345, -7.029, -9.748, -7.766, -10.214, -4.636, -5.178, -5.178, -6.008, -11.675, -6.478, -20.151, -8.788],
+      [-24.366, -8.52, -26.994, -21.488, -10.126, -16.675, -10.287, -16.945, -15.297, -5.186, -18.87, -13.414, 0.448, -8.581, -5.865, -11.984, -9.138, -3.866, -13.77, -10.514, -9.387, -1.494, -9.031, -16.626, -8.636, -10.19, -10.067, -12.273, -12.755, -13.846, -12.295, -9.887, -16.062, -25.544, -9.184, -14.781, -11.068, -7.187, -10.401, -15.677, -9.116, -12.4, -13.281, -10.875, 0, -15.143, -10.96, -8.818, -11.071, -11.683, -10.922, -10.709, -22.068, -17.103, -4.272, -11.663, -14.31, -12.388, -14.846, -9.2, -9.759, -9.759, -10.584, -16.305, -11.077, -24.687, -13.387],
+      [-12.401, 3.564, -15.432, -9.141, 2.576, -4.254, 1.724, -5.166, -3.146, 7.152, -6.905, -0.878, 13.02, 4.586, 6.695, 1.282, 3.229, 8.782, -1.095, 1.839, 4.519, 10.76, 3.209, -4.92, 3.758, 2.294, 2.9, 0.233, -1.531, -1.646, 0.479, 2.19, -3.778, -14.197, 3.088, -2.106, 0.587, 5.444, 1.35, -4.035, 3.13, 0.461, -0.734, 1.586, 5.657, 0, 1.614, 5.141, 2.53, 2.258, 2.974, 1.603, -10.425, -5.595, 8.151, 0.988, -2.486, 0.11, -2.21, 2.646, 2.26, 2.26, 1.384, -3.696, 1.134, -13.103, -1.166],
+      [-19.293, -3.424, -22.007, -16.343, -4.925, -11.518, -5.205, -11.911, -10.188, -0.043, -13.797, -8.238, 5.629, -3.32, -0.686, -6.712, -3.99, 1.327, -8.573, -5.369, -4.063, 3.634, -3.906, -11.608, -3.484, -5.022, -4.83, -7.102, -7.847, -8.728, -7.083, -4.792, -10.929, -20.607, -4.053, -9.584, -6.061, -1.996, -5.373, -10.672, -3.99, -7.176, -8.104, -5.712, -1.56, -9.786, 0, -3.491, -5.768, -6.358, -5.599, -5.571, -17.063, -12.128, 0.885, -6.469, -9.266, -7.218, -9.655, -4.151, -4.675, -4.675, -5.511, -11.118, -5.957, -19.696, -8.265],
+      [-19.069, -3.118, -22.058, -15.857, -4.192, -10.979, -4.949, -11.814, -9.836, 0.673, -13.573, -7.62, 6.272, -2.27, -0.051, -5.596, -3.278, 2.022, -7.859, -4.478, -2.553, 4.057, -3.492, -11.56, -2.964, -4.441, -3.915, -6.171, -8.124, -8.342, -6.301, -4.492, -10.486, -20.802, -3.618, -8.87, -5.819, -1.313, -5.295, -10.668, -3.572, -6.334, -7.478, -5.145, -1.061, -7.902, -5.134, 0, -4.437, -4.828, -4.094, -5.108, -17.058, -12.215, 1.425, -5.772, -9.138, -6.626, -8.967, -3.739, -4.415, -4.415, -4.986, -10.45, -5.564, -19.73, -7.865],
+      [-17.124, -1.185, -20.074, -13.951, -2.329, -9.082, -3.008, -9.85, -7.909, 2.344, -11.628, -5.737, 8.152, -0.47, 1.83, -3.811, -1.586, 3.893, -5.992, -2.973, -0.873, 5.972, -1.575, -9.59, -1.064, -2.551, -2.086, -4.618, -6.112, -6.421, -4.447, -2.558, -8.573, -18.8, -1.704, -7.003, -4.073, 0.559, -3.329, -8.692, -1.656, -4.491, -5.596, -3.253, 0.843, -6.356, -3.255, -0.281, 0, -3.154, -2.412, -3.199, -15.083, -10.227, 3.322, -3.902, -7.179, -4.738, -7.096, -2.052, -2.475, -2.475, -3.34, -8.575, -3.644, -17.749, -5.946],
+      [-16.216, -0.266, -19.203, -12.594, -1.343, -8.129, -2.097, -8.96, -6.984, 3.289, -10.72, -4.77, 9.122, 0.577, 2.799, -2.75, -0.638, 4.872, -5.01, -2.026, 0.288, 6.908, -0.641, -8.549, -0.113, -1.59, -1.067, -3.655, -5.269, -5.491, -3.453, -1.64, -7.634, -17.947, -0.766, -6.021, -3.194, 1.537, -2.441, -7.814, -0.721, -3.486, -4.628, -2.295, 1.79, -5.069, -2.284, 0.888, -1.594, 0, -1.253, -2.257, -14.204, -9.36, 4.275, -2.922, -6.285, -3.776, -6.118, -1.156, -1.562, -1.562, -2.432, -7.6, -2.712, -16.876, -5.014],
+      [-17.01, -1.062, -19.993, -13.804, -2.146, -8.928, -2.891, -9.752, -7.78, 2.49, -11.514, -5.571, 8.321, -0.234, 1.998, -3.562, -1.437, 4.07, -5.812, -2.825, -0.537, 6.111, -1.438, -9.497, -0.912, -2.391, -1.874, -4.455, -6.056, -6.287, -4.257, -2.435, -8.432, -18.735, -1.564, -6.823, -3.985, 0.735, -3.233, -8.605, -1.518, -4.291, -5.429, -3.094, 0.992, -5.913, -3.085, 0.062, -2.412, -2.813, 0, -3.055, -14.995, -10.15, 3.476, -3.725, -7.078, -4.576, -6.92, -1.948, -2.357, -2.357, -3.226, -8.402, -3.509, -17.666, -5.811],
+      [-20.608, -4.768, -23.21, -17.749, -6.403, -12.939, -6.531, -13.175, -11.548, -1.447, -15.111, -9.683, 4.176, -4.872, -2.136, -8.279, -5.4, -0.14, -10.046, -6.775, -5.694, 2.25, -5.287, -12.852, -4.899, -6.457, -6.353, -8.541, -8.949, -10.1, -8.574, -6.134, -12.32, -21.746, -5.441, -11.056, -7.291, -3.46, -6.63, -11.899, -5.372, -8.682, -9.551, -7.142, -2.969, -11.457, -7.231, -5.126, -7.373, -7.991, -7.229, 0, -18.29, -13.316, -0.536, -7.937, -10.543, -8.656, -11.12, -5.434, -6.003, -6.003, -6.826, -12.578, -7.331, -20.905, -9.642],
+      [-14.581, 1.151, -11.998, -12.035, -0.905, -7.277, -0.546, -6.957, -5.686, 4.273, -9.083, -4.093, 9.745, 0.426, 3.44, -3.013, 0.299, 5.385, -4.534, -1.066, -0.576, 8.031, 0.504, -6.552, 0.781, -0.835, -0.98, -2.933, -1.986, -4.278, -3.113, -0.209, -6.561, -11.089, 0.326, -5.545, -0.93, 2.075, -0.38, -5.522, 0.415, -3.262, -3.968, -1.506, 2.732, -6.425, -1.663, -0.016, -2.196, -2.878, -2.109, -1.23, 0, -6.769, 5.125, -2.412, -4.373, -3.043, -5.588, 0.712, -0.025, -0.025, -0.801, -7.03, -1.517, -14.457, -3.835],
+      [-21.534, -5.83, -23.555, -19.067, -7.986, -14.321, -7.511, -13.857, -12.682, -2.758, -16.036, -11.153, 2.68, -6.695, -3.624, -10.14, -6.736, -1.689, -11.612, -8.099, -7.731, 1.015, -6.509, -13.429, -6.259, -7.887, -8.086, -9.989, -8.644, -11.284, -10.201, -7.188, -13.583, -21.696, -6.693, -12.622, -7.788, -4.997, -2.803, -8.174, -6.599, -10.359, -11.029, -8.555, -4.303, -13.595, -8.728, -7.172, -9.341, -10.034, -9.263, -8.256, -18.769, 0, -1.919, -9.487, -11.287, -10.098, -12.661, -6.208, -6.991, -6.991, -7.755, -14.1, -8.524, -21.289, -10.845],
+      [-26.553, -10.7, -29.206, -23.653, -12.276, -18.837, -12.47, -19.143, -17.473, -7.352, -21.056, -15.57, -1.707, -10.713, -8.021, -14.114, -11.302, -6.018, -15.921, -12.679, -11.503, -3.664, -11.202, -18.829, -10.799, -12.349, -12.207, -14.431, -14.991, -16.02, -14.441, -12.067, -18.231, -27.771, -11.353, -16.932, -13.274, -9.339, -12.601, -17.884, -11.287, -14.543, -15.437, -13.035, -8.872, -17.249, -13.115, -10.933, -13.192, -13.798, -13.037, -12.876, -24.275, -19.319, 0, -13.814, -16.505, -14.546, -16.999, -11.393, -11.942, -11.942, -12.771, -18.459, -13.25, -26.898, -15.559],
+      [-18.341, -2.464, -21.082, -15.367, -3.929, -10.537, -4.249, -10.97, -9.224, 0.932, -12.844, -7.251, 6.618, -2.303, 0.303, -5.691, -3.013, 3.393, -7.579, -4.392, -3.023, 4.605, -2.936, -10.672, -2.505, -4.038, -3.821, -6.117, -6.946, -7.761, -6.084, -3.833, -9.957, -19.697, -3.081, -8.59, -5.129, -1.004, -4.434, -9.741, -3.019, -6.173, -7.116, -4.729, -0.583, -8.732, -4.789, -2.45, -4.736, -5.316, -4.558, -4.597, -16.132, -11.207, 1.866, 0, -8.323, -6.234, -8.663, -3.207, -3.719, -3.719, -4.558, -10.127, -4.989, -18.768, -7.297],
+      [-20.323, -4.557, -22.627, -17.681, -6.488, -12.907, -6.275, -12.762, -11.377, -1.374, -14.826, -9.702, 4.142, -5.102, -2.165, -8.533, -5.342, -0.205, -10.121, -6.71, -6.058, 2.365, -5.164, -12.385, -4.854, -6.453, -6.528, -8.547, -8.056, -9.956, -8.685, -5.919, -12.22, -20.972, -5.335, -11.132, -6.783, -3.518, -6.196, -11.381, -5.252, -8.824, -9.575, -7.128, -2.91, -11.886, -7.266, -5.496, -7.693, -8.359, -7.591, -6.883, -17.773, -12.687, -0.505, -8.003, 0, -8.659, -11.181, -5.069, -5.752, -5.752, -6.543, -12.627, -7.193, -20.341, -9.509],
+      [-18.136, -2.275, -20.821, -15.211, -3.812, -10.39, -4.051, -10.74, -9.043, 1.09, -12.64, -7.116, 6.749, -2.228, 0.435, -5.625, -2.859, 2.442, -7.459, -4.236, -2.995, 4.772, -2.767, -10.432, -2.354, -3.898, -3.73, -5.979, -6.635, -7.587, -5.974, -3.643, -9.793, -19.404, -2.916, -8.47, -4.882, -0.88, -4.2, -9.492, -2.851, -6.072, -6.983, -4.586, -0.428, -8.73, -4.658, -2.424, -4.692, -5.29, -4.53, -4.436, -15.883, -10.938, 2.014, -5.354, -8.099, 0, -8.539, -2.986, -3.522, -3.522, -4.354, -10.001, -4.816, -18.511, -7.125],
+      [-15.2, 0.675, -17.936, -12.231, -0.796, -7.402, -1.109, -7.828, -6.085, 4.069, -9.704, -4.117, 9.752, 0.826, 3.437, -2.563, 0.123, 5.453, -4.446, -1.256, 0.102, 7.742, 0.202, -7.529, 0.631, -0.903, -0.691, -2.982, -3.797, -4.623, -2.952, -0.693, -6.82, -16.549, 0.056, -5.457, -1.985, 2.129, -1.291, -6.597, 0.118, -3.041, -3.982, -1.594, 2.554, -5.61, -1.655, 0.675, -1.61, -2.192, -1.434, -1.46, -12.988, -8.061, 5.001, -2.343, -5.181, -3.099, 0, -0.065, -0.579, -0.579, -1.418, -6.994, -1.851, -15.623, -4.159],
+      [-25.227, -9.457, -27.547, -22.573, -11.373, -17.798, -11.177, -17.673, -16.275, -6.131, -19.73, -14.591, -0.746, -9.981, -7.053, -13.41, -10.113, -5.092, -15.007, -11.376, -10.931, -2.53, -10.06, -17.299, -9.746, -11.343, -11.409, -13.259, -12.995, -14.853, -13.57, -10.819, -17.115, -25.904, -10.23, -16.017, -11.523, -8.405, -11.108, -16.298, -10.148, -13.706, -14.463, -12.018, -7.802, -16.756, -12.154, -10.099, -12.568, -13.232, -12.464, -11.776, -22.69, -17.61, -5.396, -12.889, -15.071, -13.548, -16.067, 0, -10.654, -10.654, -11.244, -17.514, -12.089, -25.26, -14.405],
+      [-23.27, -7.472, -25.71, -20.533, -9.277, -15.745, -9.209, -15.767, -14.274, -4.229, -17.773, -12.518, 1.332, -7.833, -4.977, -11.254, -8.19, -3.002, -12.914, -9.562, -8.737, -0.508, -8.04, -15.414, -7.697, -9.279, -9.281, -11.369, -11.286, -12.841, -11.463, -8.835, -15.087, -24.145, -8.204, -13.925, -9.831, -6.318, -9.21, -14.433, -8.127, -11.589, -12.389, -9.958, -5.759, -14.54, -10.075, -8.173, -10.388, -11.036, -10.271, -9.743, -20.825, -15.791, -3.342, -10.799, -13.152, -11.482, -13.979, -8.052, 0, -8.684, -9.489, -15.431, -10.076, -23.415, -12.389],
+      [-23.27, -7.472, -25.71, -20.533, -9.277, -15.745, -9.209, -15.767, -14.274, -4.229, -17.773, -12.518, 1.332, -7.833, -4.977, -11.254, -8.19, -3.002, -12.914, -9.562, -8.737, -0.508, -8.04, -15.414, -7.697, -9.279, -9.281, -11.369, -11.286, -12.841, -11.463, -8.835, -15.087, -24.145, -8.204, -13.925, -9.831, -6.318, -9.21, -14.433, -8.127, -11.589, -12.389, -9.958, -5.759, -14.54, -10.075, -8.173, -10.388, -11.036, -10.271, -9.743, -20.825, -15.791, -3.342, -10.799, -13.152, -11.482, -13.979, -8.052, -8.684, 0, -9.489, -15.431, -10.076, -23.415, -12.389],
+      [-22.814, -7.023, -25.221, -20.1, -8.86, -15.316, -8.756, -15.297, -13.83, -3.65, -17.317, -12.095, 1.754, -7.431, -4.555, -10.854, -7.629, -2.584, -12.496, -5.385, -8.349, -0.07, -7.602, -14.938, -7.267, -8.853, -8.873, -10.753, -10.763, -12.4, -11.049, -8.386, -14.65, -23.635, -7.767, -13.507, -6.883, -5.899, -8.737, -13.952, -7.689, -11.179, -11.966, -9.531, -5.327, -14.159, -9.653, -7.486, -9.996, -10.648, -9.882, -9.308, -20.344, -15.298, -2.913, -10.381, -12.685, -11.056, -13.56, -7.384, -8.231, -8.231, 0, -15.01, -9.635, -22.928, -11.95],
+      [-13.831, 2.042, -16.557, -10.87, 0.558, -6.042, 0.259, -6.454, -4.72, 5.43, -8.334, -2.759, 11.109, 2.173, 4.794, -1.218, 1.484, 6.808, -3.091, 0.105, 1.44, 9.105, 1.565, -6.153, 1.991, 0.455, 0.659, -1.624, -2.408, -3.259, -1.599, 0.674, -5.457, -15.164, 1.419, -4.102, -0.608, 3.485, 0.084, -5.22, 1.481, -1.69, -2.625, -0.235, 3.915, -4.276, -0.298, 2.012, -0.269, -0.854, -0.095, -0.098, -11.61, -6.68, 6.361, -0.987, -3.807, -1.741, -4.174, 1.308, 0.789, 0.789, -0.048, 0, -0.487, -14.245, -2.795],
+      [-20.754, -4.928, -23.306, -17.935, -6.619, -13.132, -6.682, -13.3, -11.715, -1.632, -15.257, -9.886, 3.971, -5.118, -2.341, -8.529, -5.588, -0.352, -10.26, -6.962, -5.969, 2.072, -5.463, -12.967, -5.09, -6.655, -6.587, -8.742, -8.995, -10.272, -8.795, -6.293, -12.5, -21.811, -3.124, -11.27, -7.399, -3.671, -6.75, -12.005, -5.549, -8.909, -9.755, -7.338, -3.157, -11.746, -7.437, -5.402, -7.638, -8.266, -7.503, -7.151, -18.397, -13.404, -0.73, -8.149, -10.673, -8.856, -11.331, -5.567, -6.156, -6.156, -6.973, -12.787, 0, -21.004, -9.816],
+      [-12.765, 2.955, -14.862, -10.253, 0.856, -5.5, 1.265, -5.119, -3.889, 6.056, -7.267, -2.323, 11.513, 2.17, 5.208, -1.272, 2.08, 7.149, -2.772, 0.715, 1.153, 9.82, 2.294, -4.704, 2.56, 0.939, 0.77, -1.161, -0.047, -2.485, -1.355, 1.596, -4.775, -13.06, 2.114, -3.782, 0.926, 3.84, 1.462, -3.664, 2.205, -1.508, -2.198, 0.269, 4.513, -4.703, 0.104, 1.712, -0.463, -1.15, -0.38, 0.555, -10.057, -4.889, 6.902, -0.648, -2.541, -1.271, -3.823, 2.542, 1.785, 1.785, 1.014, -5.265, 0.276, 0, -2.044],
+      [-18.389, -2.561, -20.946, -15.565, -4.246, -10.762, -4.316, -10.936, -9.348, 0.738, -12.892, -7.515, 6.342, -2.742, 0.031, -6.153, -3.218, 2.02, -7.887, -4.592, -3.59, 4.441, -3.094, -10.605, -2.72, -4.284, -4.213, -6.37, -6.64, -6.589, -6.422, -3.926, -10.131, -19.454, -3.251, -8.898, -5.038, -1.299, -4.387, -9.644, -3.18, -6.535, -7.384, -4.968, -0.787, -9.366, -5.065, -3.023, -5.26, -5.887, -5.124, -4.782, -16.035, -11.045, 1.641, -5.777, -8.309, -6.485, -8.959, -3.203, -3.789, -3.789, -4.607, -10.415, -5.136, -18.644, 0]
+    ],
+    "ci_high": [
+      [0, 24.062, 10.797, 9.666, 19.72, 14.155, 22.794, 18.134, 16.869, 26.008, 14.555, 16.975, 30.706, 20.207, 24.435, 16.641, 21.924, 26.144, 16.156, 20.611, 18.537, 30.109, 22.641, 19.244, 22.307, 20.392, 19.106, 18.225, 32.398, 18.039, 17.35, 22.745, 15.39, 16.29, 22.327, 15.147, 25.43, 22.879, 24.975, 20.989, 22.528, 17.019, 17.066, 19.79, 24.366, 12.401, 19.293, 19.069, 17.124, 16.216, 17.01, 20.608, 14.581, 21.534, 26.553, 18.341, 20.323, 18.136, 15.2, 25.227, 23.27, 23.27, 22.814, 13.831, 20.754, 12.765, 18.389],
+      [-6.738, 0, -4.917, -6.178, 3.839, -1.697, 6.997, 2.376, 1.051, 10.165, -1.235, 1.109, 14.837, 4.29, 8.567, 0.718, 6.078, 10.267, 0.277, 4.766, 2.588, 14.277, 6.811, 3.5, 6.457, 4.533, 3.203, 2.362, 16.761, 2.215, 1.462, 6.938, -0.446, 0.624, 6.492, -0.732, 9.696, 7.004, 9.222, 5.257, 6.697, 1.124, 1.199, 3.933, 8.52, -3.564, 3.424, 3.118, 1.185, 0.266, 1.062, 4.768, -1.151, 5.83, 10.7, 2.464, 4.557, 2.275, -0.675, 9.457, 7.472, 7.472, 7.023, -2.042, 4.928, -2.955, 2.561],
+      [11.457, 26.543, 0, 12.285, 22.479, 16.808, 25.23, 20.403, 19.389, 28.623, 16.96, 19.674, 33.419, 23.087, 27.143, 19.54, 24.553, 28.884, 18.906, 23.233, 21.521, 32.683, 25.208, 21.452, 24.947, 23.071, 21.94, 20.912, 34.09, 20.586, 20.131, 25.221, 17.979, 10.416, 24.91, 17.896, 27.593, 25.613, 27.22, 23.14, 25.098, 19.825, 19.77, 22.46, 26.994, 15.432, 22.007, 22.058, 20.074, 19.203, 19.993, 23.21, 11.998, 23.555, 29.206, 21.082, 22.627, 20.821, 17.936, 27.547, 25.71, 25.71, 25.221, 16.557, 23.306, 14.862, 20.946],
+      [6.34, 21.296, 8.299, 0, 16.732, 11.256, 20.061, 15.515, 14.074, 23.139, 11.843, 14.037, 27.756, 17.106, 21.489, 13.521, 19.044, 23.171, 13.176, 17.737, 15.33, 27.273, 19.81, 16.528, 19.417, 17.472, 16.048, 15.297, 30.113, 15.224, 14.341, 19.983, 12.541, 13.925, 19.483, 12.166, 22.878, 19.911, 22.37, 18.444, 19.695, 13.987, 14.125, 16.877, 21.488, 9.141, 16.343, 15.857, 13.951, 12.594, 13.804, 17.749, 12.035, 19.067, 23.653, 15.367, 17.681, 15.211, 12.231, 22.573, 20.533, 20.533, 20.1, 10.87, 17.935, 10.253, 15.565],
+      [-4.9, 10.019, -2.801, -4.562, 0, -0.121, 8.807, 4.338, 2.776, 11.785, 0.604, 2.629, 16.338, 5.555, 10.074, 1.951, 7.682, 11.734, 0.421, 6.378, 3.671, 15.943, 8.484, 5.511, 8.047, 6.078, 4.537, 3.896, 19.138, 3.911, 2.873, 8.707, 1.203, 2.903, 8.148, 0.722, 11.744, 8.478, 11.203, 7.315, 8.368, 2.499, 2.713, 5.489, 10.126, -2.576, 4.925, 4.192, 2.329, 1.343, 2.146, 6.403, 0.905, 7.986, 12.276, 3.929, 6.488, 3.812, 0.796, 11.373, 9.277, 9.277, 8.86, -0.558, 6.619, -0.856, 4.246],
+      [1.555, 16.503, 3.548, 1.982, 11.899, 0, 15.273, 10.745, 9.276, 18.328, 7.059, 9.214, 22.931, 12.252, 16.664, 8.663, 14.231, 18.341, 8.344, 12.924, 10.454, 22.467, 15.005, 11.9, 14.602, 12.652, 11.202, 10.475, 25.393, 10.422, 9.505, 15.19, 7.734, 9.193, 14.676, 7.335, 18.118, 15.083, 17.603, 13.686, 14.89, 9.147, 9.3, 12.058, 16.675, 4.254, 11.518, 10.979, 9.082, 8.129, 8.928, 12.939, 7.277, 14.321, 18.837, 10.537, 12.907, 10.39, 7.402, 17.798, 15.745, 15.745, 15.316, 6.042, 13.132, 5.5, 10.762],
+      [-5.006, 9.997, -3.23, -4.413, 5.627, 0.073, 0, 4.089, 2.8, 11.929, 0.497, 2.888, 16.617, 6.1, 10.347, 2.532, 7.844, 12.052, 2.064, 6.532, 4.418, 16.035, 8.567, 5.204, 8.226, 6.308, 5.004, 4.139, 18.401, 3.968, 3.254, 8.681, 1.314, 2.282, 8.251, 1.055, 11.394, 8.788, 10.932, 6.954, 8.454, 2.921, 2.978, 5.707, 10.287, -1.724, 5.205, 4.949, 3.008, 2.097, 2.891, 6.531, 0.546, 7.511, 12.47, 4.249, 6.275, 4.051, 1.109, 11.177, 9.209, 9.209, 8.756, -0.259, 6.682, -1.265, 4.316],
+      [1.534, 16.576, 3.143, 2.241, 12.358, 6.745, 15.289, 0, 9.4, 18.581, 7.037, 9.585, 23.323, 12.9, 17.05, 9.343, 14.503, 18.773, 8.79, 13.187, 11.28, 22.664, 15.193, 11.643, 14.891, 12.994, 11.778, 10.83, 24.592, 10.582, 9.998, 15.258, 7.951, 8.543, 14.886, 7.78, 17.81, 15.505, 17.389, 13.365, 15.081, 9.679, 9.679, 12.388, 16.945, 5.166, 11.911, 11.814, 9.85, 8.96, 9.752, 13.175, 6.957, 13.857, 19.143, 10.97, 12.762, 10.74, 7.828, 17.673, 15.767, 15.767, 15.297, 6.454, 13.3, 5.119, 10.936],
+      [0.069, 15.051, 1.929, 0.6, 10.596, 5.076, 13.8, 9.2, 0, 16.944, 5.572, 7.875, 21.601, 11.027, 15.331, 7.452, 12.854, 17.027, 7.036, 11.544, 9.307, 21.061, 13.596, 10.331, 13.232, 11.302, 9.947, 9.13, 23.646, 9.003, 8.215, 13.736, 6.336, 7.494, 13.275, 6.026, 16.532, 13.765, 16.049, 12.095, 13.482, 7.873, 7.965, 10.704, 15.297, 3.146, 10.188, 9.836, 7.909, 6.984, 7.78, 11.548, 5.686, 12.682, 17.473, 9.224, 11.377, 9.043, 6.085, 16.275, 14.274, 14.274, 13.83, 4.72, 11.715, 3.889, 9.348],
+      [-9.965, 4.992, -8.01, -9.508, 0.432, -5.045, 3.757, -0.792, -2.229, 0, -4.462, -2.263, 11.456, 0.81, 5.189, -2.775, 2.651, 6.871, -3.124, 1.262, -0.964, 10.97, 3.507, 0.356, 3.116, 1.171, -0.25, -3.942, 13.8, -1.079, -1.958, 3.679, -3.761, -2.387, 3.181, -4.133, 6.449, 3.612, 6.063, 2.136, 3.392, -2.311, -2.176, 0.577, 5.186, -7.152, 0.043, -0.673, -2.344, -3.289, -2.49, 1.447, -4.273, 2.758, 7.352, -0.932, 1.374, -1.09, -4.069, 6.131, 4.229, 4.229, 3.65, -5.43, 1.632, -6.056, -0.738],
+      [3.555, 18.565, 5.3, 4.169, 14.224, 8.659, 17.297, 12.637, 11.372, 20.511, 0, 11.478, 25.209, 14.711, 18.938, 11.145, 16.427, 20.647, 10.66, 15.114, 13.041, 24.612, 17.144, 13.746, 16.81, 14.896, 13.61, 12.728, 26.9, 12.543, 11.854, 17.248, 9.893, 10.792, 16.83, 9.651, 19.932, 17.382, 19.477, 15.491, 17.031, 11.523, 11.569, 14.294, 18.87, 6.905, 13.797, 13.573, 11.628, 10.72, 11.514, 15.111, 9.083, 16.036, 21.056, 12.844, 14.826, 12.64, 9.704, 19.73, 17.773, 17.773, 17.317, 8.334, 15.257, 7.267, 12.892],
+      [-1.665, 13.269, 0.374, -1.277, 8.609, 3.174, 12.048, 7.545, 6.035, 15.069, 3.838, 0, 19.651, 8.929, 13.385, 5.334, 10.97, 15.055, 5.056, 9.664, 7.096, 19.217, 11.756, 8.708, 11.339, 9.38, 7.892, 7.201, 22.261, 7.177, 6.209, 11.957, 4.481, 6.045, 11.424, 4.047, 14.933, 11.798, 14.406, 10.502, 11.64, 5.844, 6.023, 8.789, 13.414, 0.878, 8.238, 7.62, 5.737, 4.77, 5.571, 9.683, 4.093, 11.153, 15.57, 7.251, 9.702, 7.116, 4.117, 14.591, 12.518, 12.518, 12.095, 2.759, 9.886, 2.323, 7.515],
+      [-15.514, -0.583, -13.461, -15.138, -5.262, -10.689, -1.803, -6.297, -7.819, 1.209, -10.011, -7.929, 0, -4.952, -0.481, -8.549, -2.891, 1.186, -8.814, -4.197, -6.796, 5.359, -2.102, -5.132, -2.524, -4.485, -5.985, -6.664, 8.439, -6.679, -7.663, -1.895, -9.378, -7.782, -2.435, -9.823, 1.095, -2.071, 0.565, -3.336, -2.218, -8.03, -7.843, -5.076, -0.448, -13.02, -5.629, -6.272, -8.152, -9.122, -8.321, -4.176, -9.745, -2.68, 1.707, -6.618, -4.142, -6.749, -9.752, 0.746, -1.332, -1.332, -1.754, -11.109, -3.971, -11.513, -6.342],
+      [-6.328, 8.555, -4.108, -6.102, 3.64, -1.683, 7.365, 2.965, 1.292, 10.248, -0.824, 1.034, 14.733, 0, 8.472, 0.165, 6.136, 10.107, 0.098, 4.836, 1.757, 14.43, 6.975, 4.161, 6.493, 4.498, 2.824, 2.31, 17.933, 2.413, 1.213, 7.247, -0.319, 1.661, 6.63, -0.911, 10.409, 6.857, 9.839, 5.984, 6.857, 0.815, 1.115, 3.915, 8.581, -4.586, 3.32, 2.27, 0.47, -0.577, 0.234, 4.872, -0.426, 6.695, 10.713, 2.303, 5.102, 2.228, -0.826, 9.981, 7.833, 7.833, 7.431, -2.173, 5.118, -2.17, 2.742],
+      [-9.205, 5.727, -7.157, -8.825, 1.054, -4.376, 4.507, 0.01, -1.509, 7.521, -3.702, -1.615, 12.099, 1.367, 0, -2.229, 3.422, 7.501, -2.498, 2.116, -0.473, 11.671, 4.21, 1.174, 3.789, 1.829, 0.333, -0.35, 14.739, -0.368, -1.347, 4.415, -3.066, -1.48, 3.877, -3.507, 7.4, 4.245, 6.871, 2.969, 4.094, -1.713, -1.529, 1.238, 5.865, -6.695, 0.686, 0.051, -1.83, -2.799, -1.998, 2.136, -3.44, 3.624, 8.021, -0.303, 2.165, -0.435, -3.437, 7.053, 4.977, 4.977, 4.555, -4.794, 2.341, -5.208, -0.031],
+      [-2.904, 11.973, -0.666, -2.698, 7.026, 1.718, 10.787, 6.398, 4.707, 13.652, 2.599, 4.429, 18.126, 7.155, 11.866, 0, 9.539, 13.496, 3.485, 8.24, 5.085, 17.839, 10.385, 7.597, 9.895, 7.895, 6.197, 5.707, 21.391, 5.825, 4.595, 10.664, 3.089, 5.114, 10.038, 2.476, 13.847, 10.247, 13.273, 9.422, 10.266, 4.193, 4.51, 7.314, 11.984, -1.282, 6.712, 5.596, 3.811, 2.75, 3.562, 8.279, 3.013, 10.14, 14.114, 5.691, 8.533, 5.625, 2.563, 13.41, 11.254, 11.254, 10.854, 1.218, 8.529, 1.272, 6.153],
+      [-6.002, 8.952, -4.033, -5.555, 4.376, -1.095, 7.718, 3.177, 1.728, 10.698, -0.499, 1.684, 15.403, 4.745, 9.136, 1.159, 0, 10.816, 0.821, 5.234, 2.963, 14.925, 7.462, 4.327, 7.067, 5.12, 3.689, 2.822, 17.789, 2.877, 1.985, 7.638, 0.193, 1.598, 7.135, -0.189, 10.436, 7.557, 10.033, 6.11, 7.347, 1.63, 1.772, 4.526, 9.138, -3.229, 3.99, 3.278, 1.586, 0.638, 1.437, 5.4, -0.299, 6.736, 11.302, 3.013, 5.342, 2.859, -0.123, 10.113, 8.19, 8.19, 7.629, -1.484, 5.588, -2.08, 3.218],
+      [-11.176, 3.747, -9.096, -10.823, -0.966, -6.379, 2.532, -1.947, -3.493, 5.524, -5.673, -3.625, 10.086, -0.678, 3.821, -4.278, 1.422, 0, -4.517, 0.118, -2.545, 9.679, 2.219, -0.777, 1.788, -0.178, -1.702, -2.358, 12.828, -2.356, -3.371, 2.436, -5.06, -3.401, 1.885, -5.526, 5.454, 2.229, 4.917, 1.024, 2.103, -3.743, -3.54, -0.767, 3.866, -8.782, -1.327, -2.022, -3.893, -4.872, -4.07, 0.14, -5.385, 1.689, 6.018, -3.393, 0.205, -2.442, -5.453, 5.092, 3.002, 3.002, 2.584, -6.808, 0.352, -7.149, -2.02],
+      [-1.264, 13.657, 0.826, -0.918, 7.621, 3.524, 12.444, 7.97, 6.416, 15.429, 4.24, 6.276, 19.986, 9.213, 13.722, 5.611, 11.326, 15.383, 0, 10.022, 7.337, 19.585, 12.126, 9.142, 11.692, 9.724, 8.192, 7.543, 22.757, 7.552, 6.525, 12.346, 4.846, 6.525, 11.791, 4.372, 15.373, 12.128, 14.834, 10.944, 12.01, 6.152, 6.361, 9.135, 13.77, 1.095, 8.573, 7.859, 5.992, 5.01, 5.812, 10.046, 4.534, 11.612, 15.921, 7.579, 10.121, 7.459, 4.446, 15.007, 12.914, 12.914, 12.496, 3.091, 10.26, 2.772, 7.887],
+      [-4.631, 10.324, -2.669, -4.179, 5.756, 0.282, 9.09, 4.545, 3.102, 11.993, 0.872, 3.062, 16.781, 6.129, 10.514, 2.543, 7.917, 12.196, 2.2, 0, 4.351, 16.3, 8.837, 5.694, 8.443, 6.498, 5.072, 4.092, 19.148, 4.251, 3.365, 9.011, 1.568, 2.958, 8.51, 1.191, 9.126, 8.936, 11.401, 7.475, 8.721, 3.011, 3.15, 5.903, 10.514, -1.839, 5.369, 4.478, 2.973, 2.026, 2.825, 6.775, 1.066, 8.099, 12.679, 4.392, 6.71, 4.236, 1.256, 11.376, 9.562, 9.562, 5.385, -0.105, 6.962, -0.715, 4.592],
+      [-5.41, 9.441, -3.086, -5.291, 4.344, -0.893, 8.271, 3.933, 2.16, 11.062, 0.094, 1.79, 15.477, 4.345, 9.22, 0.684, 6.942, 10.828, 0.81, 5.646, 0, 15.269, 7.817, 5.147, 7.291, 5.269, 3.443, 3.075, 19.037, 3.267, 1.894, 8.135, 0.511, 2.736, 7.463, -0.198, 11.408, 7.584, 10.814, 6.986, 7.698, 1.469, 1.867, 4.693, 9.387, -4.519, 4.063, 2.553, 0.873, -0.288, 0.537, 5.694, 0.576, 7.731, 11.503, 3.023, 6.058, 2.995, -0.102, 10.931, 8.737, 8.737, 8.349, -1.44, 5.969, -1.153, 3.59],
+      [-13.691, 1.277, -11.777, -13.201, -3.237, -8.733, 0.035, -4.536, -5.939, 3.143, -8.188, -5.943, 7.779, -2.835, 1.511, -6.416, -0.949, 3.199, -6.795, -2.258, -4.585, 0, -0.195, -3.395, -0.574, -2.512, -3.903, -4.686, 9.994, -4.784, -5.622, -0.037, -7.459, -6.178, -0.519, -7.804, 2.813, -0.062, 2.317, -1.622, -0.309, -5.971, -5.855, -3.108, 1.494, -10.76, -3.634, -4.057, -5.972, -6.908, -6.111, -2.25, -8.031, -1.015, 3.664, -4.605, -2.365, -4.772, -7.742, 2.53, 0.508, 0.508, 0.07, -9.105, -2.072, -9.82, -4.441],
+      [-6.159, 8.811, -4.252, -5.664, 4.304, -1.195, 7.567, 2.993, 1.596, 10.68, -0.656, 1.596, 15.318, 4.71, 9.05, 1.13, 6.588, 10.739, 0.746, 5.279, 2.964, 14.805, 0, 4.132, 6.963, 5.026, 3.64, 2.853, 17.513, 2.751, 1.919, 7.496, 0.077, 1.343, 7.017, -0.263, 10.34, 7.478, 9.845, 5.904, 7.226, 1.572, 1.685, 4.43, 9.031, -3.209, 3.906, 3.492, 1.575, 0.641, 1.438, 5.287, -0.504, 6.509, 11.202, 2.936, 5.164, 2.767, -0.202, 10.06, 8.04, 8.04, 7.602, -1.565, 5.463, -2.294, 3.094],
+      [1.175, 16.231, 2.724, 1.785, 12.063, 6.431, 14.936, 10.175, 9.062, 18.26, 6.678, 9.28, 23.019, 12.627, 16.746, 9.073, 14.185, 18.475, 8.493, 12.868, 11.025, 22.336, 14.864, 0, 14.575, 12.684, 11.497, 10.522, 24.103, 10.249, 9.706, 14.911, 7.626, 8.082, 14.559, 7.484, 17.408, 15.206, 17.002, 12.959, 14.752, 9.392, 9.374, 12.077, 16.626, 4.92, 11.608, 11.56, 9.59, 8.549, 9.497, 12.852, 6.552, 13.429, 18.829, 10.672, 12.385, 10.432, 7.529, 17.299, 15.414, 15.414, 14.938, 6.153, 12.967, 4.704, 10.605],
+      [-6.493, 8.457, -4.513, -6.057, 3.867, -1.598, 7.226, 2.691, 1.232, 10.289, -0.99, 1.179, 14.896, 4.228, 8.629, 0.64, 6.193, 10.308, 0.312, 4.885, 2.438, 14.426, 6.963, 3.844, 0, 4.616, 3.175, 2.439, 17.322, 2.38, 1.474, 7.144, -0.307, 1.126, 6.635, -0.697, 10.061, 7.05, 9.548, 5.628, 6.848, 1.118, 1.266, 4.022, 8.636, -3.758, 3.484, 2.964, 1.064, 0.113, 0.912, 4.899, -0.781, 6.259, 10.799, 2.505, 4.854, 2.354, -0.631, 9.746, 7.697, 7.697, 7.267, -1.991, 5.09, -2.56, 2.72],
+      [-4.908, 10.033, -2.889, -4.502, 5.398, -0.048, 8.808, 4.294, 2.802, 11.844, 0.596, 2.72, 16.435, 5.733, 10.169, 2.141, 7.746, 11.842, 1.844, 6.44, 3.916, 15.988, 8.526, 5.453, 8.116, 0, 4.69, 3.983, 18.98, 3.946, 3, 8.72, 1.253, 2.771, 8.196, 0.835, 11.675, 8.585, 11.153, 7.243, 8.411, 2.639, 2.806, 5.568, 10.19, -2.294, 5.022, 4.441, 2.551, 1.59, 2.391, 6.457, 0.835, 7.887, 12.349, 4.038, 6.453, 3.898, 0.903, 11.343, 9.279, 9.279, 8.853, -0.455, 6.655, -0.939, 4.284],
+      [-4.886, 10.01, -2.712, -4.618, 5.164, -0.19, 8.812, 4.386, 2.755, 11.731, 0.618, 2.54, 16.243, 5.367, 9.981, 1.75, 7.623, 11.626, 1.619, 6.322, 3.398, 15.904, 8.448, 5.573, 7.983, 5.998, 0, 3.813, 19.292, 3.881, 2.745, 8.701, 1.159, 3.034, 8.106, 0.61, 11.816, 8.374, 11.257, 7.389, 8.33, 2.357, 2.623, 5.413, 10.067, -2.9, 4.83, 3.915, 2.086, 1.067, 1.874, 6.353, 0.98, 8.086, 12.207, 3.821, 6.528, 3.73, 0.691, 11.409, 9.281, 9.281, 8.873, -0.659, 6.587, -0.77, 4.213],
+      [-2.816, 12.121, -0.789, -2.418, 7.475, 2.034, 10.898, 6.389, 4.889, 10.99, 2.687, 4.8, 18.515, 7.804, 12.249, 4.211, 9.707, 13.921, 3.922, 8.293, 5.981, 18.073, 10.612, 7.55, 10.198, 8.242, 6.764, 0, 21.088, 6.032, 5.077, 10.809, 3.338, 4.876, 10.281, 2.913, 13.617, 10.663, 13.249, 9.342, 10.496, 4.714, 4.886, 7.65, 12.273, -0.233, 7.102, 6.171, 4.618, 3.655, 4.455, 8.541, 2.933, 9.989, 14.431, 6.117, 8.547, 5.979, 2.982, 13.259, 11.369, 11.369, 10.753, 1.624, 8.742, 1.161, 6.37],
+      [-3.002, 12.161, -1.97, -1.961, 8.358, 2.593, 10.801, 5.792, 5.046, 14.373, 2.5, 5.501, 19.259, 9.068, 12.979, 5.536, 10.315, 14.748, 4.777, 8.99, 7.584, 18.394, 10.913, 6.772, 10.722, 8.88, 7.884, 6.729, 0, 6.27, 6.029, 10.835, 3.704, 2.98, 10.63, 3.768, 12.858, 11.471, 12.583, 8.391, 10.805, 5.746, 5.601, 8.261, 12.755, 1.531, 7.847, 8.124, 6.112, 5.269, 6.056, 8.949, 1.986, 8.644, 14.991, 6.946, 8.056, 6.635, 3.797, 12.995, 11.286, 11.286, 10.763, 2.408, 8.995, 0.047, 6.64],
+      [-1.361, 13.615, 0.526, -0.85, 9.131, 3.622, 12.368, 7.782, 6.403, 15.494, 4.143, 6.417, 20.141, 9.548, 13.872, 5.97, 11.403, 15.564, 5.572, 10.094, 7.814, 19.616, 12.151, 8.918, 11.78, 9.846, 8.474, 7.673, 22.27, 0, 6.748, 12.3, 4.889, 6.108, 11.829, 4.563, 15.123, 12.303, 14.633, 10.686, 12.037, 6.403, 6.506, 9.249, 13.846, 1.646, 8.728, 8.342, 6.421, 5.491, 6.287, 10.1, 4.278, 11.284, 16.02, 7.761, 9.956, 7.587, 4.623, 14.853, 12.841, 12.841, 12.4, 3.259, 10.272, 2.485, 6.589],
+      [-2.71, 12.202, -0.589, -2.392, 7.433, 2.045, 10.994, 6.538, 4.955, 13.955, 2.794, 4.789, 18.497, 7.688, 12.233, 4.08, 9.851, 13.889, 3.885, 8.548, 5.781, 18.118, 10.659, 7.715, 10.214, 8.24, 6.677, 6.058, 21.369, 6.088, 0, 10.891, 3.376, 5.127, 10.322, 2.876, 13.951, 10.634, 13.404, 9.522, 10.542, 4.644, 4.873, 7.653, 12.295, -0.479, 7.083, 6.301, 4.447, 3.453, 4.257, 8.574, 3.113, 10.201, 14.441, 6.084, 8.685, 5.974, 2.952, 13.57, 11.463, 11.463, 11.049, 1.599, 8.795, 1.355, 6.422],
+      [-5.375, 9.618, -3.559, -4.811, 5.207, -0.33, 8.361, 3.738, 2.416, 11.531, 0.128, 2.477, 16.205, 5.662, 9.935, 2.09, 7.444, 11.636, 1.646, 6.133, 3.961, 15.643, 8.176, 4.86, 7.824, 5.9, 4.573, 3.73, 18.115, 3.58, 2.831, 0, 0.92, 1.979, 7.858, 0.637, 11.055, 8.372, 10.583, 6.617, 8.063, 2.494, 2.567, 5.301, 9.887, -2.19, 4.792, 4.492, 2.558, 1.64, 2.435, 6.134, 0.209, 7.188, 12.067, 3.833, 5.919, 3.643, 0.693, 10.819, 8.835, 8.835, 8.386, -0.674, 6.293, -1.596, 3.926],
+      [0.89, 15.854, 2.819, 1.368, 11.323, 5.834, 14.614, 10.051, 8.636, 17.712, 6.393, 8.621, 22.342, 11.716, 16.074, 8.134, 13.619, 17.76, 7.766, 12.31, 9.958, 21.841, 14.377, 11.195, 13.993, 12.053, 10.651, 9.879, 24.604, 9.789, 8.936, 14.54, 0, 8.427, 14.052, 6.757, 17.405, 14.5, 16.905, 12.97, 14.262, 8.586, 8.709, 11.457, 16.062, 3.778, 10.929, 10.486, 8.573, 7.634, 8.432, 12.32, 6.561, 13.583, 18.231, 9.957, 12.22, 9.793, 6.82, 17.115, 15.087, 15.087, 14.65, 5.457, 12.5, 4.775, 10.131],
+      [9.87, 25.004, 3.336, 10.831, 21.103, 15.373, 23.662, 18.723, 17.874, 27.166, 15.372, 18.265, 32.018, 21.776, 25.74, 18.239, 23.104, 27.499, 17.525, 21.78, 20.263, 31.202, 23.723, 19.731, 23.506, 21.651, 20.606, 19.497, 31.96, 19.088, 18.767, 23.679, 16.507, 0, 23.434, 16.516, 25.839, 24.224, 25.525, 21.377, 23.614, 18.476, 18.364, 21.035, 25.544, 14.197, 20.607, 20.802, 18.8, 17.947, 18.735, 21.746, 11.089, 21.696, 27.771, 19.697, 20.972, 19.404, 16.549, 25.904, 24.145, 24.145, 23.635, 15.164, 21.811, 13.06, 19.454],
+      [-5.993, 8.972, -4.07, -5.511, 4.448, -1.044, 7.731, 3.166, 1.755, 10.833, -0.49, 1.744, 15.465, 4.845, 9.197, 1.263, 6.741, 10.885, 0.891, 5.432, 3.09, 14.961, 7.497, 4.308, 7.115, 5.176, 3.778, 3.002, 17.71, 2.909, 2.062, 7.658, 0.232, 1.534, 0, -0.119, 10.517, 7.624, 10.019, 6.082, 7.383, 1.712, 1.832, 4.58, 9.184, -3.088, 4.053, 3.618, 1.704, 0.766, 1.564, 5.441, -0.326, 6.693, 11.353, 3.081, 5.335, 2.916, -0.056, 10.23, 8.204, 8.204, 7.767, -1.419, 3.124, -2.114, 3.251],
+      [-0.253, 14.668, 1.836, 0.093, 9.942, 4.535, 13.455, 8.98, 7.426, 16.44, 5.251, 7.287, 20.997, 10.224, 14.733, 6.622, 12.337, 16.394, 6.392, 11.033, 8.348, 20.596, 13.137, 10.152, 12.703, 10.735, 9.203, 8.554, 23.768, 8.563, 7.536, 13.357, 5.857, 7.536, 12.801, 0, 16.384, 13.139, 15.845, 11.954, 13.02, 7.163, 7.372, 10.146, 14.781, 2.106, 9.584, 8.87, 7.003, 6.021, 6.823, 11.056, 5.545, 12.622, 16.932, 8.59, 11.132, 8.47, 5.457, 16.017, 13.925, 13.925, 13.507, 4.102, 11.27, 3.782, 8.898],
+      [-4.413, 10.654, -2.91, -3.638, 6.522, 0.876, 9.352, 4.568, 3.49, 12.58, 1.09, 3.731, 17.473, 7.102, 11.198, 3.55, 8.52, 12.931, 2.951, 4.526, 5.513, 16.771, 9.298, 5.634, 9.019, 7.133, 5.966, 4.816, 18.416, 4.68, 4.168, 9.333, 2.063, 2.417, 8.995, 1.941, 0, 9.662, 11.392, 7.337, 9.187, 3.857, 3.826, 6.524, 11.068, -0.587, 6.061, 5.819, 4.073, 3.194, 3.985, 7.291, 0.93, 7.788, 13.274, 5.129, 6.783, 4.882, 1.985, 11.523, 9.831, 9.831, 6.883, 0.608, 7.399, -0.926, 5.038],
+      [-7.861, 7.064, -5.787, -7.502, 2.358, -3.057, 5.848, 1.365, -0.175, 8.845, -2.358, -0.302, 13.409, 2.652, 7.145, -0.948, 4.743, 8.809, -1.192, 3.439, 0.79, 12.998, 5.538, 2.535, 5.11, 3.145, 1.626, 0.964, 16.131, 0.963, -0.046, 5.752, -1.74, -0.096, 5.204, -2.201, 8.764, 0, 8.229, 4.334, 5.422, -0.416, -0.217, 2.555, 7.187, -5.444, 1.996, 1.313, -0.559, -1.537, -0.735, 3.46, -2.075, 4.997, 9.339, 1.004, 3.518, 0.88, -2.129, 8.405, 6.318, 6.318, 5.899, -3.485, 3.671, -3.84, 1.299],
+      [-5.025, 10.022, -3.44, -4.303, 5.823, 0.203, 8.732, 3.989, 2.849, 12.036, 0.477, 3.046, 16.785, 6.374, 10.511, 2.818, 7.959, 12.237, 2.254, 6.643, 4.761, 16.117, 8.645, 5.07, 8.348, 6.453, 5.249, 4.29, 17.983, 4.033, 3.464, 8.703, 1.405, 1.945, 8.339, 1.245, 11.234, 8.969, 0, 1.722, 8.533, 3.147, 3.14, 5.847, 10.401, -1.35, 5.373, 5.295, 3.329, 2.441, 3.233, 6.63, 0.38, 2.803, 12.601, 4.434, 6.196, 4.2, 1.291, 11.108, 9.21, 9.21, 8.737, -0.084, 6.75, -1.462, 4.387],
+      [0.189, 15.257, 1.68, 0.97, 11.135, 5.486, 13.954, 9.165, 8.095, 17.309, 5.691, 8.342, 22.084, 11.719, 15.809, 8.168, 13.235, 17.544, 7.564, 11.917, 10.133, 21.378, 13.904, 10.228, 13.628, 11.743, 10.581, 9.583, 22.991, 9.286, 8.782, 13.937, 6.67, 6.997, 13.602, 6.554, 16.379, 14.274, 10.922, 0, 13.793, 8.472, 8.437, 11.135, 15.677, 4.035, 10.672, 10.668, 8.692, 7.814, 8.605, 11.899, 5.522, 8.174, 17.884, 9.741, 11.381, 9.492, 6.597, 16.298, 14.433, 14.433, 13.952, 5.22, 12.005, 3.664, 9.644],
+      [-6.072, 8.897, -4.162, -5.579, 4.388, -1.11, 7.654, 3.081, 1.682, 10.765, -0.569, 1.68, 15.402, 4.792, 9.134, 1.211, 6.673, 10.823, 0.83, 5.364, 3.044, 14.891, 7.426, 4.221, 7.048, 5.111, 3.722, 2.937, 17.605, 2.837, 2.002, 7.583, 0.162, 1.434, 7.103, -0.18, 10.429, 7.562, 9.933, 5.993, 0, 1.655, 1.769, 4.514, 9.116, -3.13, 3.99, 3.572, 1.656, 0.721, 1.518, 5.372, -0.415, 6.599, 11.287, 3.019, 5.252, 2.851, -0.118, 10.148, 8.127, 8.127, 7.689, -1.481, 5.549, -2.205, 3.18],
+      [-2.581, 12.324, -0.435, -2.286, 7.519, 2.147, 11.121, 6.679, 5.073, 14.062, 2.923, 4.884, 18.59, 7.75, 12.327, 4.138, 9.956, 13.977, 3.972, 8.653, 5.815, 18.229, 10.772, 7.861, 10.318, 8.339, 6.749, 6.155, 21.546, 6.203, 5.104, 11.014, 3.486, 5.296, 10.432, 2.963, 14.099, 10.724, 13.547, 9.672, 10.655, 0, 4.967, 7.752, 12.4, -0.461, 7.176, 6.334, 4.491, 3.486, 4.291, 8.682, 3.262, 10.359, 14.543, 6.173, 8.824, 6.072, 3.041, 13.706, 11.589, 11.589, 11.179, 1.69, 8.909, 1.508, 6.535],
+      [-1.794, 13.139, 0.25, -1.409, 8.473, 3.04, 11.918, 7.419, 5.905, 14.937, 3.709, 5.803, 19.517, 8.79, 13.251, 5.195, 10.837, 14.92, 4.921, 9.532, 6.954, 19.085, 11.625, 8.582, 11.206, 9.246, 7.755, 7.067, 22.141, 7.046, 6.073, 11.827, 4.349, 5.924, 11.292, 3.912, 14.808, 11.663, 14.28, 10.377, 11.509, 5.707, 0, 8.655, 13.281, 0.734, 8.104, 7.478, 5.596, 4.628, 5.429, 9.551, 3.968, 11.029, 15.437, 7.116, 9.575, 6.983, 3.982, 14.463, 12.389, 12.389, 11.966, 2.625, 9.755, 2.198, 7.384],
+      [-4.23, 10.713, -2.22, -3.816, 6.089, 0.638, 9.487, 4.968, 3.484, 12.529, 1.274, 3.409, 17.124, 6.43, 10.858, 2.839, 8.432, 12.533, 2.535, 7.125, 4.62, 16.672, 9.21, 6.126, 8.802, 6.848, 5.385, 4.671, 19.641, 4.629, 3.693, 9.401, 1.937, 3.435, 8.88, 1.526, 12.347, 9.275, 11.827, 7.915, 9.094, 3.332, 3.495, 0, 10.875, -1.586, 5.712, 5.145, 3.253, 2.295, 3.094, 7.142, 1.506, 8.555, 13.035, 4.729, 7.128, 4.586, 1.594, 12.018, 9.958, 9.958, 9.531, 0.235, 7.338, -0.269, 4.968],
+      [-8.434, 6.52, -6.466, -7.986, 1.946, -3.525, 5.287, 0.745, -0.703, 8.359, -2.93, -0.746, 12.972, 2.316, 6.705, -1.271, 4.264, 8.386, -1.61, 2.956, 0.534, 12.494, 5.031, 1.895, 4.636, 2.69, 1.26, 0.514, 15.355, 0.446, -0.445, 5.207, -2.238, -0.836, 4.704, -2.619, 8.11, 5.127, 7.601, 3.677, 4.916, -0.8, -0.659, 2.095, 0, -5.657, 1.56, 1.061, -0.843, -1.79, -0.992, 2.969, -2.732, 4.303, 8.872, 0.583, 2.91, 0.428, -2.554, 7.802, 5.759, 5.759, 5.327, -3.915, 3.157, -4.513, 0.787],
+      [0.401, 15.236, 2.772, 0.467, 10.044, 4.854, 14.076, 9.766, 7.946, 16.821, 5.905, 7.518, 21.2, 9.949, 14.945, 6.263, 12.697, 16.538, 6.515, 11.403, 7.428, 21.04, 13.591, 10.988, 13.042, 11.006, 9.092, 8.808, 24.931, 9.046, 7.581, 13.93, 6.278, 8.617, 13.232, 5.506, 17.255, 13.296, 16.65, 12.835, 13.47, 7.139, 7.594, 10.434, 15.143, 0, 9.786, 7.902, 6.356, 5.069, 5.913, 11.457, 6.425, 13.595, 17.249, 8.732, 11.886, 8.73, 5.61, 16.756, 14.54, 14.54, 14.159, 4.276, 11.746, 4.703, 9.366],
+      [-4.107, 10.824, -2.053, -3.73, 6.145, 0.718, 9.605, 5.111, 3.588, 12.616, 1.397, 3.478, 17.191, 6.455, 10.926, 2.858, 8.516, 12.593, 2.593, 7.211, 4.61, 16.766, 9.306, 6.276, 8.884, 6.922, 5.422, 4.743, 19.847, 4.728, 3.743, 9.512, 2.029, 3.627, 8.973, 1.584, 12.503, 9.336, 11.973, 8.072, 9.19, 3.376, 3.564, 6.332, 10.96, -1.614, 0, 5.134, 3.255, 2.284, 3.085, 7.231, 1.663, 8.728, 13.115, 4.789, 7.266, 4.658, 1.655, 12.154, 10.075, 10.075, 9.653, 0.298, 7.437, -0.104, 5.065],
+      [-5.973, 8.876, -3.645, -5.859, 3.77, -1.463, 7.707, 3.371, 1.594, 10.257, -0.469, 1.218, 14.905, 3.763, 8.648, 0.099, 6.162, 10.255, 0.237, 4.678, 1.458, 14.701, 7.25, 4.586, 6.721, 4.699, 2.865, 2.169, 18.482, 2.7, 1.319, 7.569, -0.057, 2.18, 6.895, -0.772, 10.619, 7.011, 10.253, 6.426, 7.13, 0.892, 1.296, 4.123, 8.818, -5.141, 3.491, 0, 0.281, -0.888, -0.062, 5.126, 0.016, 7.172, 10.933, 2.45, 5.496, 2.424, -0.675, 10.099, 8.173, 8.173, 7.486, -2.012, 5.402, -1.712, 3.023],
+      [-3.763, 11.099, -1.472, -3.609, 6.063, 0.796, 9.922, 5.564, 3.823, 12.743, 1.741, 3.49, 17.182, 6.119, 10.924, 2.47, 8.625, 12.541, 2.526, 7.328, 3.934, 16.942, 9.489, 6.772, 8.977, 6.965, 5.192, 4.772, 20.625, 4.935, 3.621, 9.791, 2.187, 4.334, 9.138, 1.517, 13.029, 9.294, 12.443, 8.606, 9.37, 3.205, 3.569, 6.386, 11.071, -2.53, 5.768, 4.437, 0, 1.594, 2.412, 7.373, 2.196, 9.341, 13.192, 4.736, 7.693, 4.692, 1.61, 12.568, 10.388, 10.388, 9.996, 0.269, 7.638, 0.463, 5.26],
+      [-3.11, 11.74, -0.783, -3.406, 6.637, 1.402, 10.571, 6.234, 4.458, 13.358, 2.394, 4.084, 17.771, 6.632, 11.514, 2.969, 9.238, 13.122, 3.103, 7.942, 4.333, 17.566, 10.115, 7.292, 9.587, 7.564, 5.733, 5.37, 21.342, 5.564, 4.186, 10.433, 2.808, 5.041, 9.76, 2.095, 13.71, 9.877, 13.115, 9.288, 9.995, 3.759, 4.162, 6.988, 11.683, -2.258, 6.358, 4.828, 3.154, 0, 2.813, 7.991, 2.878, 10.034, 13.798, 5.316, 8.359, 5.29, 2.192, 13.232, 11.036, 11.036, 10.648, 0.854, 8.266, 1.15, 5.887],
+      [-3.876, 10.975, -1.553, -3.756, 5.88, 0.642, 9.805, 5.466, 3.694, 12.596, 1.628, 3.325, 17.012, 5.882, 10.755, 2.221, 8.476, 12.364, 2.346, 7.181, 3.598, 16.803, 9.351, 6.68, 8.825, 6.804, 4.98, 4.61, 20.569, 4.801, 3.43, 9.668, 2.046, 4.268, 8.997, 1.337, 12.941, 9.119, 12.347, 8.519, 9.232, 3.005, 3.402, 6.228, 10.922, -2.974, 5.599, 4.094, 2.412, 1.253, 0, 7.229, 2.109, 9.263, 13.037, 4.558, 7.591, 4.53, 1.434, 12.464, 10.271, 10.271, 9.882, 0.095, 7.503, 0.38, 5.124],
+      [-4.452, 10.508, -2.51, -3.985, 5.963, 0.479, 9.271, 4.715, 3.288, 12.36, 1.051, 3.263, 16.984, 6.347, 10.716, 2.764, 8.266, 12.4, 2.406, 6.958, 4.581, 16.49, 9.027, 5.861, 8.639, 6.697, 5.285, 4.522, 19.289, 4.44, 3.574, 9.194, 1.76, 3.106, 8.701, 1.396, 12.073, 9.14, 11.57, 7.639, 8.912, 3.222, 3.351, 6.102, 10.709, -1.603, 5.571, 5.108, 3.199, 2.257, 3.055, 0, 1.23, 8.256, 12.876, 4.597, 6.883, 4.436, 1.46, 11.776, 9.743, 9.743, 9.308, 0.098, 7.151, -0.555, 4.782],
+      [6.581, 21.649, 3.338, 7.362, 17.525, 11.877, 20.346, 15.557, 14.486, 23.7, 12.083, 14.733, 28.475, 18.109, 22.2, 14.558, 19.627, 23.935, 13.954, 18.309, 16.523, 27.769, 20.296, 16.621, 20.019, 18.135, 16.972, 15.974, 29.386, 15.678, 15.173, 20.329, 13.061, 9.509, 19.994, 12.945, 22.772, 20.665, 22.38, 18.322, 20.185, 14.862, 14.828, 17.526, 22.068, 10.425, 17.063, 17.058, 15.083, 14.204, 14.995, 18.29, 0, 18.769, 24.275, 16.132, 17.773, 15.883, 12.988, 22.69, 20.825, 20.825, 20.344, 11.61, 18.397, 10.057, 16.035],
+      [1.534, 16.63, 2.895, 2.393, 12.606, 6.921, 15.311, 10.457, 9.482, 18.73, 7.036, 9.793, 23.54, 13.23, 17.264, 9.685, 14.662, 19.009, 9.032, 13.342, 11.678, 22.785, 15.309, 11.497, 15.059, 13.187, 12.078, 11.03, 24.044, 10.684, 10.261, 15.308, 8.083, 8.116, 15.013, 8.022, 17.63, 15.737, 12.803, 8.974, 15.199, 9.959, 9.889, 12.575, 17.103, 5.595, 12.128, 12.215, 10.227, 9.36, 10.15, 13.316, 6.769, 0, 19.319, 11.207, 12.687, 10.938, 8.061, 17.61, 15.791, 15.791, 15.298, 6.68, 13.404, 4.889, 11.045],
+      [-10.847, 4.1, -8.854, -10.421, -0.504, -5.963, 2.87, -1.657, -3.127, 5.925, -5.344, -3.19, 10.527, -0.152, 4.261, -3.741, 1.828, 5.938, -4.059, 0.521, -1.95, 10.064, 2.602, -0.503, 2.199, 0.249, -1.201, -1.928, 12.991, -1.98, -2.899, 2.787, -4.669, -3.209, 2.273, -5.068, 5.716, 2.679, 5.201, 1.284, 2.487, -3.257, -3.103, -0.345, 4.272, -8.151, -0.885, -1.425, -3.322, -4.275, -3.476, 0.536, -5.125, 1.919, 0, -1.866, 0.505, -2.014, -5.001, 5.396, 3.342, 3.342, 2.913, -6.361, 0.73, -6.902, -1.641],
+      [-3.379, 11.544, -1.298, -3.026, 6.829, 1.417, 10.329, 5.85, 4.304, 13.321, 2.124, 4.171, 17.882, 7.118, 11.617, 3.517, 9.219, 12.207, 3.279, 7.914, 5.25, 17.475, 10.016, 7.021, 9.585, 7.618, 6.094, 5.438, 20.626, 5.441, 4.424, 10.233, 2.737, 4.397, 9.681, 2.27, 13.251, 10.024, 12.714, 8.821, 9.899, 4.053, 4.256, 7.029, 11.663, -0.988, 6.469, 5.772, 3.902, 2.922, 3.725, 7.937, 2.412, 9.487, 13.814, 0, 8.003, 5.354, 2.343, 12.889, 10.799, 10.799, 10.381, 0.987, 8.149, 0.648, 5.777],
+      [-1.077, 13.957, 0.567, -0.393, 9.708, 4.107, 12.675, 7.962, 6.777, 15.947, 4.426, 6.942, 20.678, 10.237, 14.405, 6.678, 11.868, 16.125, 6.141, 10.553, 8.605, 20.035, 12.564, 9.054, 12.254, 10.353, 9.12, 8.188, 22.056, 7.956, 7.345, 12.639, 5.32, 5.992, 12.255, 5.132, 15.225, 12.858, 14.796, 10.781, 12.452, 7.024, 7.035, 9.748, 14.31, 2.486, 9.266, 9.138, 7.179, 6.285, 7.078, 10.543, 4.373, 11.287, 16.505, 8.323, 0, 8.099, 5.181, 15.071, 13.152, 13.152, 12.685, 3.807, 10.673, 2.541, 8.309],
+      [-2.704, 12.235, -0.679, -2.303, 7.592, 2.15, 11.011, 6.5, 5.003, 14.043, 2.8, 4.916, 18.631, 7.923, 12.365, 4.33, 9.945, 14.038, 4.039, 8.639, 6.102, 18.188, 10.727, 7.661, 10.314, 8.358, 6.882, 6.18, 21.195, 6.147, 5.194, 10.923, 3.453, 4.984, 10.396, 3.03, 13.884, 10.78, 13.36, 9.452, 10.611, 4.832, 5.003, 7.766, 12.388, -0.11, 7.218, 6.626, 4.738, 3.776, 4.576, 8.656, 3.043, 10.098, 14.546, 6.234, 8.659, 0, 3.099, 13.548, 11.482, 11.482, 11.056, 1.741, 8.856, 1.271, 6.485],
+      [-0.2, 14.725, 1.876, 0.157, 10.016, 4.602, 13.509, 9.028, 7.485, 16.504, 5.304, 7.357, 21.068, 10.309, 14.803, 6.708, 12.402, 16.467, 6.466, 11.098, 8.445, 20.658, 13.198, 10.197, 12.769, 10.803, 9.283, 8.623, 23.797, 8.623, 7.612, 13.413, 5.92, 7.569, 12.864, 5.457, 16.427, 13.211, 15.891, 11.997, 13.082, 7.241, 7.442, 10.214, 14.846, 2.21, 9.655, 8.967, 7.096, 6.118, 6.92, 11.12, 5.588, 12.661, 16.999, 8.663, 11.181, 8.539, 0, 16.067, 13.979, 13.979, 13.56, 4.174, 11.331, 3.823, 8.959],
+      [-6.175, 8.855, -4.515, -5.503, 4.591, -1.004, 7.575, 2.871, 1.672, 10.701, -0.673, 1.828, 15.563, 5.114, 9.291, 1.553, 6.637, 11.009, 1.025, 5.216, 3.476, 14.928, 7.458, 3.965, 7.144, 5.24, 3.999, 2.897, 16.993, 2.85, 2.227, 7.537, 0.212, 0.922, 7.148, 0.015, 9.963, 7.743, 9.705, 5.695, 7.345, 1.904, 1.921, 4.636, 9.2, -2.646, 4.151, 3.739, 2.052, 1.156, 1.948, 5.434, -0.712, 6.208, 11.393, 3.207, 5.069, 2.986, 0.065, 0, 8.052, 8.052, 7.384, -1.308, 5.567, -2.542, 3.203],
+      [-5.53, 9.472, -3.75, -4.94, 5.097, -0.455, 8.209, 3.567, 2.274, 11.402, -0.027, 2.358, 16.088, 5.568, 9.817, 1.999, 7.316, 11.522, 1.534, 6.004, 3.884, 15.508, 8.04, 4.683, 7.697, 5.779, 4.473, 3.61, 17.886, 3.441, 2.723, 8.155, 0.787, 1.765, 7.724, 0.525, 10.873, 8.258, 10.41, 6.433, 7.927, 2.389, 2.449, 5.178, 9.759, -2.26, 4.675, 4.415, 2.475, 1.562, 2.357, 6.003, 0.025, 6.991, 11.942, 3.719, 5.752, 3.522, 0.579, 10.654, 0, 8.684, 8.231, -0.789, 6.156, -1.785, 3.789],
+      [-5.53, 9.472, -3.75, -4.94, 5.097, -0.455, 8.209, 3.567, 2.274, 11.402, -0.027, 2.358, 16.088, 5.568, 9.817, 1.999, 7.316, 11.522, 1.534, 6.004, 3.884, 15.508, 8.04, 4.683, 7.697, 5.779, 4.473, 3.61, 17.886, 3.441, 2.723, 8.155, 0.787, 1.765, 7.724, 0.525, 10.873, 8.258, 10.41, 6.433, 7.927, 2.389, 2.449, 5.178, 9.759, -2.26, 4.675, 4.415, 2.475, 1.562, 2.357, 6.003, 0.025, 6.991, 11.942, 3.719, 5.752, 3.522, 0.579, 10.654, 8.684, 0, 8.231, -0.789, 6.156, -1.785, 3.789],
+      [-4.729, 10.281, -2.981, -4.116, 5.938, 0.373, 9.014, 4.354, 3.088, 12.08, 0.774, 3.192, 16.923, 6.424, 10.652, 2.857, 8.013, 12.361, 2.374, 3.085, 4.753, 16.328, 8.859, 5.464, 8.525, 6.61, 5.323, 4.252, 18.621, 4.258, 3.567, 8.964, 1.608, 2.513, 8.545, 1.364, 9.183, 9.097, 11.195, 7.209, 8.747, 3.236, 3.284, 6.008, 10.584, -1.384, 5.511, 4.986, 3.34, 2.432, 3.226, 6.826, 0.801, 7.755, 12.771, 4.558, 6.543, 4.354, 1.418, 11.244, 9.489, 9.489, 0, 0.048, 6.973, -1.014, 4.607],
+      [1.251, 16.178, 3.317, 1.616, 11.482, 6.062, 14.961, 10.474, 8.94, 17.963, 6.754, 8.819, 22.531, 11.782, 16.266, 8.183, 13.862, 17.932, 7.931, 12.557, 9.927, 22.115, 14.655, 11.641, 14.229, 12.265, 10.753, 10.085, 25.228, 10.079, 9.079, 14.866, 7.377, 9.004, 14.321, 6.922, 17.87, 14.675, 17.336, 13.44, 14.539, 8.71, 8.905, 11.675, 16.305, 3.696, 11.118, 10.45, 8.575, 7.6, 8.402, 12.578, 7.03, 14.1, 18.459, 10.127, 12.627, 10.001, 6.994, 17.514, 15.431, 15.431, 15.01, 0, 12.787, 5.265, 10.415],
+      [-4.126, 10.848, -2.234, -3.619, 6.359, 0.852, 9.602, 5.02, 3.635, 12.725, 1.377, 3.646, 17.369, 6.773, 11.101, 3.194, 8.634, 12.792, 2.8, 7.324, 5.035, 16.848, 9.383, 6.156, 9.01, 7.075, 5.699, 4.903, 19.515, 4.792, 3.975, 9.533, 2.12, 3.351, 6.564, 1.79, 12.361, 9.531, 11.87, 7.925, 9.269, 3.629, 3.735, 6.478, 11.077, -1.134, 5.957, 5.564, 3.644, 2.712, 3.509, 7.331, 1.517, 8.524, 13.25, 4.989, 7.193, 4.816, 1.851, 12.089, 10.076, 10.076, 9.635, 0.487, 0, -0.276, 5.136],
+      [9.165, 24.245, 10.602, 9.979, 20.164, 14.5, 22.935, 18.119, 17.089, 26.317, 14.667, 17.363, 31.107, 20.765, 24.832, 17.217, 22.246, 26.571, 16.592, 20.927, 19.194, 30.38, 22.906, 19.173, 22.64, 20.761, 19.622, 18.602, 31.847, 18.285, 17.815, 22.924, 15.675, 15.88, 22.606, 15.582, 25.316, 23.3, 24.938, 20.864, 22.795, 17.508, 17.458, 20.151, 24.687, 13.103, 19.696, 19.73, 17.749, 16.876, 17.666, 20.905, 14.457, 21.289, 26.898, 18.768, 20.341, 18.511, 15.623, 25.26, 23.415, 23.415, 22.928, 14.245, 21.004, 0, 18.644],
+      [-1.811, 13.161, 0.086, -1.309, 8.666, 3.162, 11.916, 7.336, 5.948, 15.035, 3.692, 5.955, 19.678, 9.077, 13.409, 5.498, 10.944, 15.1, 5.107, 9.635, 7.337, 19.159, 11.694, 8.474, 11.32, 9.384, 8.005, 7.211, 21.84, 5.789, 6.282, 11.846, 4.431, 5.674, 11.371, 4.098, 14.68, 11.839, 14.187, 10.244, 11.58, 5.935, 6.044, 8.788, 13.387, 1.166, 8.265, 7.865, 5.946, 5.014, 5.811, 9.642, 3.835, 10.845, 15.559, 7.297, 9.509, 7.125, 4.159, 14.405, 12.389, 12.389, 11.95, 2.795, 9.816, 2.044, 0]
+    ]
+  },
+  "inconsistency": {
+    "available": true,
+    "n_comparisons_tested": 8,
+    "n_significant": 0,
+    "min_p": 0.2023
+  }
+}

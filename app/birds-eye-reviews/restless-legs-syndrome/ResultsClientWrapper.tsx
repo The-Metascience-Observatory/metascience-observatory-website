@@ -140,9 +140,25 @@ export function ResultsClientWrapper({
   const ingredientKey = (t: TrialRow) => t.ingredient || "unspecified";
   const ingredientFilter = (t: TrialRow) => !ingredient || ingredientKey(t) === ingredient;
 
-  // Country filter (set by clicking a country on the "Trials by country" map).
-  const [country, setCountry] = useState<string | undefined>(undefined);
-  const countryFilter = (t: TrialRow) => !country || t.countries.includes(country);
+  // Country multi-select filter (toggled by clicking countries on the "Trials by
+  // country" map or removing bubbles). Empty set = no country filter (all pass);
+  // otherwise a trial passes if it lists ANY selected country.
+  const [selectedCountries, setSelectedCountries] = useState<Set<string>>(new Set());
+  const countryFilter = (t: TrialRow) =>
+    selectedCountries.size === 0 || t.countries.some((c) => selectedCountries.has(c));
+  const toggleCountry = (c: string) =>
+    setSelectedCountries((prev) => {
+      const next = new Set(prev);
+      if (next.has(c)) next.delete(c); else next.add(c);
+      return next;
+    });
+  // "Select all" = every country present in the data (built once from all trials).
+  const allCountryNames = useMemo(
+    () => [...new Set(trials.flatMap((t) => t.countries))].sort((a, b) => a.localeCompare(b)),
+    [trials]
+  );
+  const selectAllCountries = () => setSelectedCountries(new Set(allCountryNames));
+  const clearAllCountries = () => setSelectedCountries(new Set());
 
   // Top-level trial-outcome-focus filter: a checkbox per outcome type, all checked
   // by default. Each trial falls in exactly one bucket (by its primary outcome domain).
@@ -182,7 +198,7 @@ export function ResultsClientWrapper({
   // plots / table all derive from this narrowed base.
   const afterIngredient = useMemo(
     () => trials.filter((t) => ingredientFilter(t) && countryFilter(t)),
-    [trials, ingredient, country]
+    [trials, ingredient, selectedCountries]
   );
   // Ingredient-narrowed but NOT country-narrowed — the base for the country map,
   // so every country stays visible even while one is selected as a filter.
@@ -241,7 +257,7 @@ export function ResultsClientWrapper({
   // the rest of the page) rather than isolating it.
   const ingredientChartBase = useMemo(
     () => trials.filter((t) => countryFilter(t) && typeFilter(t) && designFilter(t)),
-    [trials, country, selectedTypes, selectedDesigns]
+    [trials, selectedCountries, selectedTypes, selectedDesigns]
   );
   const ingredientVerdictChart = useMemo(
     () => verdictBreakdown(ingredientChartBase, (r) => r.ingredient),
@@ -269,9 +285,48 @@ export function ResultsClientWrapper({
     [afterIngredientNoCountry, selectedTypes, selectedDesigns]
   );
   const allCountries = useMemo(() => countriesOf(countryChartBase), [countryChartBase]);
+  // Selected-country bubbles, sorted for stable display.
+  const selectedCountryList = useMemo(
+    () => [...selectedCountries].sort((a, b) => a.localeCompare(b)),
+    [selectedCountries]
+  );
+
+  // "Trials by country" — moved to the TOP of the page. Multi-select: click a
+  // country (or use Select all) to add it; remove via the × bubbles or Unselect all.
+  const countrySection = (
+    <div className="mb-8 border border-border rounded-lg p-4">
+      <div className="flex items-center gap-3 mb-2 flex-wrap">
+        <h3 className="font-semibold text-lg text-foreground">Trials by country</h3>
+        <span className="text-xs text-foreground/50">
+          {selectedCountries.size === 0
+            ? "Click a country to filter the dashboard. Select multiple to combine."
+            : `Filtering to ${selectedCountries.size} ${selectedCountries.size === 1 ? "country" : "countries"} (${filteredTrials.length} of ${trials.length} trials).`}
+        </span>
+        <button onClick={selectAllCountries} className="text-xs text-blue-600 hover:text-blue-700 ml-auto">Select all</button>
+        <button onClick={clearAllCountries} className="text-xs text-blue-600 hover:text-blue-700">Unselect all</button>
+      </div>
+      {selectedCountryList.length > 0 && (
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          {selectedCountryList.map((c) => (
+            <span key={c} className="inline-flex items-center gap-1.5 text-xs bg-blue-600/10 text-blue-700 border border-blue-600/20 rounded-full px-2.5 py-1">
+              {c}
+              <button onClick={() => toggleCountry(c)} className="hover:text-blue-900 font-semibold leading-none" aria-label={`Remove ${c} filter`}>×</button>
+            </span>
+          ))}
+        </div>
+      )}
+      <CountryMap
+        allCountries={allCountries}
+        selectedCountries={selectedCountryList}
+        onCountryClick={toggleCountry}
+      />
+    </div>
+  );
 
   return (
     <>
+      {countrySection}
+
       {/* Trial-outcome-focus filter (checkboxes, one per outcome type) */}
       <div className={cardBg(typesActive)}>
         <div className="flex items-center gap-3 mb-2">
@@ -372,24 +427,6 @@ export function ResultsClientWrapper({
 
       {/* Trials by year (reacts to the filters above) */}
       <YearChart years={filteredYears} />
-
-      {/* Trials by country (reacts to the filters above; click a country to filter) */}
-      <div className="mt-8">
-        <div className="flex items-center gap-3 mb-3 flex-wrap">
-          <h3 className="font-semibold text-lg text-foreground">Trials by country</h3>
-          {country && (
-            <span className="inline-flex items-center gap-1.5 text-xs bg-foreground/[0.08] rounded-full px-2.5 py-1">
-              {country}
-              <button onClick={() => setCountry(undefined)} className="text-blue-600 hover:text-blue-700" aria-label="Clear country filter">×</button>
-            </span>
-          )}
-          <span className="text-xs text-foreground/50">Click a country to filter the dashboard.</span>
-        </div>
-        <CountryMap
-          allCountries={allCountries}
-          onCountryClick={(c) => setCountry((cur) => (cur === c ? undefined : c))}
-        />
-      </div>
 
       <ResultsTable
         rows={filteredTrials}

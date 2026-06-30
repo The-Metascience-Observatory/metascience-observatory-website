@@ -255,6 +255,8 @@ export default function ResultsPage() {
   // The meta-analysis lives on a separate opt-in sub-page; only link to it when
   // the pipeline actually generated meta_analysis.json (off by default).
   const hasMetaAnalysis = fs.existsSync(dataPath("meta_analysis.json"));
+  // Likewise the (opt-in) network meta-analysis sub-page.
+  const hasNMA = fs.existsSync(dataPath("network_meta_analysis.json"));
 
   return (
     <>
@@ -282,6 +284,14 @@ export default function ResultsPage() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
             >
               View meta-analyses &rarr;
+            </Link>
+          )}
+          {hasNMA && (
+            <Link
+              href="/birds-eye-reviews/restless-legs-syndrome/network-meta-analysis"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
+            >
+              View network meta-analysis &rarr;
             </Link>
           )}
         </div>
