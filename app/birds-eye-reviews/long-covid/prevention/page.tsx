@@ -159,10 +159,8 @@ export default function PreventionPage() {
 
           <h1 className="font-clarendon font-bold text-3xl mb-1">Long Covid — Prevention Trials</h1>
           <p className="text-sm text-foreground/70 max-w-3xl mb-6">
-            These trials test whether an intervention given <em>around the time of acute COVID-19</em> (or before
-            Long Covid onset) <strong>prevents</strong> Long Covid / PASC — a different question from the main
-            dashboard, which is about <em>treating</em> people who already have Long Covid. Records are routed here
-            automatically by the indication classifier (<code>classify_intervention_indication.py</code>).
+            Note: this listing covers many trials we picked up while searching for Long COVID research, but is
+            not comprehensive.
           </p>
 
           {!data || data.rows.length === 0 ? (

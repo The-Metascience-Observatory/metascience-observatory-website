@@ -161,11 +161,20 @@ const INTERVENTION_CATEGORY_OVERRIDE: Record<string, string> = {
   "pirfenidone or nintedanib": "drug/supplement",
 };
 
+/** Category synonyms merged into one canonical category (so the "Trials by
+ *  Intervention" group, table filter, and dropdown all agree). Plain supplements
+ *  are folded into the combined "drug/supplement" bucket. */
+const CATEGORY_ALIASES: Record<string, string> = {
+  "supplement": "drug/supplement",
+};
+
 /** Canonicalize an intervention's category for the dashboard's grouping/filtering:
- *  apply per-intervention overrides first, then fold sparse categories into "other". */
+ *  apply per-intervention overrides first, then merge category synonyms, then fold
+ *  sparse categories into "other". */
 function normInterventionCategory(rawCategory: unknown, interventionName?: string): string {
   const override = interventionName ? INTERVENTION_CATEGORY_OVERRIDE[interventionName.trim().toLowerCase()] : undefined;
-  const c = (override ?? String(rawCategory ?? "").trim()) || "unknown";
+  let c = (override ?? String(rawCategory ?? "").trim()) || "unknown";
+  c = CATEGORY_ALIASES[c] ?? c;
   return CATEGORY_TO_OTHER.has(c) ? "other" : c;
 }
 
