@@ -16,6 +16,18 @@ const dataPath = (f: string) => path.join(process.cwd(), DATA_DIR, f);
 interface RankRow { treat: string; MD: number; ci_low: number; ci_high: number; pscore: number; n_trials: number; }
 interface NodeRow { treat: string; n_trials: number; n_participants: number; pscore: number; }
 interface EdgeRow { treat1: string; treat2: string; n_studies: number; }
+interface ValDrug {
+  treat: string; zhou_name?: string | null; n_trials: number;
+  subset_MD: number; subset_ci_low: number; subset_ci_high: number; subset_pscore: number;
+  project_significant: boolean; full_MD?: number; full_pscore?: number;
+  zhou_MD?: number; zhou_ci_low?: number; zhou_ci_high?: number; zhou_sucra?: number;
+  zhou_significant?: boolean; zhou_basis?: string; md_delta?: number; significance_agree?: boolean;
+}
+interface Validation {
+  available: boolean; source?: string; doi?: string; notes?: string;
+  n_subset_studies?: number; n_drugs_compared?: number; n_significance_agree?: number;
+  rank_concordance_spearman?: number; missing_in_project?: string[]; drugs?: ValDrug[];
+}
 interface NMA {
   meta: { scale: string; measure: string; reference: string; model: string; engine: string;
     n_studies: number; n_treatments: number; n_pairwise: number; tau: number; tau2: number; I2: number; };
@@ -24,6 +36,7 @@ interface NMA {
   edges: EdgeRow[];
   league: { treatments: string[]; MD: number[][]; ci_low: number[][]; ci_high: number[][] };
   inconsistency: { available: boolean; n_comparisons_tested?: number; n_significant?: number; min_p?: number };
+  validation?: Validation;
 }
 
 function loadNMA(): NMA | null {
@@ -147,16 +160,25 @@ function LeagueTable({ nma, core }: { nma: NMA; core: string[] }) {
               <td className="p-1 font-medium text-foreground/70 whitespace-nowrap text-right pr-2">{cap(r)}</td>
               {order.map((c) => {
                 if (r === c) return <td key={c} className="p-1 text-center text-foreground/30 bg-foreground/5">—</td>;
-                const v = nma.league.MD[idx(r)]?.[idx(c)];
-                return <td key={c} className="p-1 text-center tabular-nums" style={{ background: color(v) }}
-                  title={`${cap(r)} vs ${cap(c)}: ${f2(v)}`}>{isFinite(v) ? f2(v) : ""}</td>;
+                const ri = idx(r), ci = idx(c);
+                const v = nma.league.MD[ri]?.[ci];
+                const lo = nma.league.ci_low[ri]?.[ci];
+                const hi = nma.league.ci_high[ri]?.[ci];
+                // Statistically distinguishable when the 95% CI excludes 0.
+                const sig = isFinite(lo) && isFinite(hi) && (lo > 0 || hi < 0);
+                return <td key={c}
+                  className={`p-1 text-center tabular-nums ${sig ? "font-bold text-foreground/90" : "text-foreground/60"}`}
+                  style={{ background: color(v) }}
+                  title={isFinite(v) ? `${cap(r)} vs ${cap(c)}: ${f2(v)} (95% CI ${f2(lo)} to ${f2(hi)})` : ""}>
+                  {isFinite(v) ? f2(v) : ""}</td>;
               })}
             </tr>
           ))}
         </tbody>
       </table>
       <p className="mt-2 text-[11px] text-foreground/55">Cell = row treatment vs column treatment, IRLS mean difference
-        (green/negative favors the <em>row</em>; red/positive favors the <em>column</em>).</p>
+        (green/negative favors the <em>row</em>; red/positive favors the <em>column</em>).
+        {" "}<strong className="text-foreground/80">Bold</strong> = 95% CI excludes 0; hover any cell for the interval.</p>
     </div>
   );
 }
@@ -179,8 +201,7 @@ export default function NetworkMetaAnalysisPage() {
           const core = nma.nodes.filter((n) => n.n_trials >= 2).map((n) => n.treat);
           const coreRank = nma.ranking.filter((r) => r.n_trials >= 2);
           const singles = nma.ranking.filter((r) => r.n_trials === 1).sort((a, b) => b.pscore - a.pscore);
-          const by = Object.fromEntries(nma.ranking.map((r) => [r.treat, r]));
-          const ppx = by["pramipexole"], rop = by["ropinirole"], cab = by["cabergoline"], lev = by["levodopa/benserazide"];
+          const val = nma.validation;
           return (
             <>
               <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 mb-6 text-sm text-amber-900">
@@ -217,7 +238,9 @@ export default function NetworkMetaAnalysisPage() {
 
               <section className="mb-10">
                 <h2 className="text-lg font-semibold mb-1">Ranking (core drugs, ≥2 trials)</h2>
-                <p className="text-sm text-foreground/60 mb-3">P-score is the frequentist analogue of SUCRA (higher = better).</p>
+                <p className="text-sm text-foreground/60 mb-3">P-score is the frequentist analogue of SUCRA (higher = better),
+                  ranked here over the <em>full</em> network of all interventions. For a like-for-like comparison to Zhou&apos;s
+                  drug-only SUCRA, see the validation section below.</p>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead><tr className="text-left text-foreground/60 border-b border-border">
@@ -251,14 +274,53 @@ export default function NetworkMetaAnalysisPage() {
                 <LeagueTable nma={nma} core={core} />
               </section>
 
-              <section className="mb-10">
-                <h2 className="text-lg font-semibold mb-2">Validation vs Zhou et al. 2021</h2>
-                <ul className="text-sm text-foreground/75 space-y-1 list-disc pl-5">
-                  {cab && <li><strong>Cabergoline largest effect</strong> (Zhou MD −11.98) — our MD {cab.MD.toFixed(2)}. {Math.abs(cab.MD + 11.98) < 6 ? "✅" : "⚠️"}</li>}
-                  {ppx && rop && <li><strong>Pramipexole superior to ropinirole</strong> (Zhou MD −2.52) — our difference {(ppx.MD - rop.MD).toFixed(2)}. {ppx.MD < rop.MD ? "✅" : "⚠️"}</li>}
-                  {lev && <li><strong>Levodopa not significantly better than placebo</strong> — our CI {(lev.ci_high < 0 || lev.ci_low > 0) ? "excludes 0 ⚠️" : "crosses 0 ✅"}.</li>}
-                </ul>
-              </section>
+              {val?.available && (
+                <section className="mb-10">
+                  <h2 className="text-lg font-semibold mb-1">Validation vs Zhou et al. 2021</h2>
+                  <p className="text-sm text-foreground/60 mb-3">
+                    Re-run on only the {val.n_drugs_compared} pharmacological drugs Zhou analysed, so the
+                    P-score ranks over the same node set as Zhou&apos;s SUCRA (the full {nma.meta.n_treatments}-node
+                    landscape shown above ranks placebo mid-pack and is not directly comparable). Zhou MD/CI are
+                    primary-RLS estimates where available; SUCRA is Zhou&apos;s all-drug ranking.
+                  </p>
+                  <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-foreground/70 mb-3">
+                    <span>Rank concordance (Spearman P-score vs SUCRA): <strong className="text-foreground/90">{val.rank_concordance_spearman}</strong></span>
+                    <span>Significance agreement: <strong className="text-foreground/90">{val.n_significance_agree}/{val.n_drugs_compared}</strong></span>
+                  </div>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead><tr className="text-left text-foreground/60 border-b border-border">
+                        <th className="py-1 pr-3">Drug</th><th className="py-1 pr-3 text-right">Trials</th>
+                        <th className="py-1 pr-3">Project MD (95% CI)</th><th className="py-1 pr-3 text-right">P-score</th>
+                        <th className="py-1 pr-3 text-right">Zhou MD</th><th className="py-1 pr-3 text-right">SUCRA</th>
+                        <th className="py-1 pr-3 text-right">ΔMD</th><th className="py-1 pr-3 text-center">Sig.</th>
+                      </tr></thead>
+                      <tbody>
+                        {[...(val.drugs ?? [])].sort((a, b) => b.subset_pscore - a.subset_pscore).map((r) => (
+                          <tr key={r.treat} className="border-b border-border/50">
+                            <td className="py-1 pr-3 capitalize font-medium">{r.treat}</td>
+                            <td className="py-1 pr-3 text-right tabular-nums">{r.n_trials}</td>
+                            <td className="py-1 pr-3 tabular-nums">{r.subset_MD.toFixed(2)} ({r.subset_ci_low.toFixed(2)}, {r.subset_ci_high.toFixed(2)})</td>
+                            <td className="py-1 pr-3 text-right tabular-nums">{r.subset_pscore.toFixed(2)}</td>
+                            <td className="py-1 pr-3 text-right tabular-nums">{r.zhou_MD != null ? r.zhou_MD.toFixed(2) : "—"}</td>
+                            <td className="py-1 pr-3 text-right tabular-nums">{r.zhou_sucra != null ? r.zhou_sucra.toFixed(1) : "—"}</td>
+                            <td className="py-1 pr-3 text-right tabular-nums">{r.md_delta != null ? f2(r.md_delta) : "—"}</td>
+                            <td className={`py-1 pr-3 text-center ${r.zhou_MD == null ? "text-foreground/40" : r.significance_agree ? "text-green-700" : "text-amber-600 font-semibold"}`}>
+                              {r.zhou_MD == null ? "—" : r.significance_agree ? "✓" : "✗"}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  {val.missing_in_project && val.missing_in_project.length > 0 && (
+                    <p className="mt-2 text-[13px] text-foreground/60"><strong>Coverage gap:</strong> {val.missing_in_project.join(", ")} — analysed
+                      by Zhou but absent from the project&apos;s extracted network.</p>
+                  )}
+                  <p className="mt-2 text-[13px] text-foreground/55">Cabergoline ranks first and ropinirole near-last in both;
+                    most MDs agree within ~1 IRLS point. The one significance disagreement is <strong>levodopa</strong> (the
+                    project CI barely excludes 0, while Zhou reports it no better than placebo). Largest MD gap: gabapentin enacarbil.</p>
+                </section>
+              )}
 
               {singles.length > 0 && (
                 <section className="mb-10">

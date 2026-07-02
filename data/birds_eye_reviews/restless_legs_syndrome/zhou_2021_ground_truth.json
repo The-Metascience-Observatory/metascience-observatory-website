@@ -1,0 +1,22 @@
+{
+  "_citation": "Zhou X, Du J, Liang Y, Dai C, Zhao L, Liu X, Tan C, Mo L, Chen L. The Efficacy and Safety of Pharmacological Treatments for Restless Legs Syndrome: Systematic Review and Network Meta-Analysis. Front Neurosci. 2021;15:751643.",
+  "_doi": "10.3389/fnins.2021.751643",
+  "_design": "Frequentist NMA (Stata network command, random-effects, REML), mean difference on IRLS 0-40 vs placebo. 46 RCTs, 10,674 patients, 10 drugs + placebo (11 nodes, 13 direct comparisons); studies 2004-2018; pharmacological treatments only.",
+  "reference": "placebo",
+  "measure": "mean_difference",
+  "scale": "IRLS 0-40, lower = better",
+  "_notes": "MD (95% CI) are Zhou's primary-RLS analysis (Figure 7) where available; gabapentin and oxycodone-naloxone are from the all-studies analysis (Figure 3A / text) because Zhou lacked sufficient primary-RLS data for them. SUCRA values are from Figure 4 (all drugs, all studies). 'significant' is Zhou's stated conclusion vs placebo (every drug beat placebo except levodopa). Placebo SUCRA = 0.4%.",
+  "sucra_placebo": 0.4,
+  "drugs": {
+    "cabergoline":          {"md": -12.05, "ci_low": -17.63, "ci_high": -6.48, "sucra": 98.7, "significant": true,  "basis": "primary_rls", "md_all_studies": -11.98, "ci_low_all_studies": -16.19, "ci_high_all_studies": -7.78},
+    "gabapentin":           {"md": -8.25,  "ci_low": -14.47, "ci_high": -2.04, "sucra": 80.1, "significant": true,  "basis": "all_studies", "note": "high SUCRA rests on limited/indirect data (Zhou cautions it is unstable)"},
+    "oxycodone-naloxone":   {"md": -5.70,  "ci_low": -9.93,  "ci_high": -1.47, "sucra": 60.7, "significant": true,  "basis": "all_studies", "note": "single trial (Trenkwalder 2013); second-line for severe/refractory RLS"},
+    "pramipexole":          {"md": -5.44,  "ci_low": -7.03,  "ci_high": -3.85, "sucra": 57.2, "significant": true,  "basis": "primary_rls"},
+    "pregabalin":           {"md": -5.34,  "ci_low": -8.14,  "ci_high": -2.53, "sucra": 56.4, "significant": true,  "basis": "primary_rls"},
+    "rotigotine":           {"md": -5.12,  "ci_low": -7.12,  "ci_high": -3.11, "sucra": 54.7, "significant": true,  "basis": "primary_rls"},
+    "iron":                 {"md": -5.65,  "ci_low": -10.15, "ci_high": -1.15, "sucra": 51.0, "significant": true,  "basis": "primary_rls", "note": "effective for ferritin <45 ug/L (MD -5.15); NOT significant for normal ferritin (MD -2.22, CI crosses 0)"},
+    "levodopa":             {"md": -4.33,  "ci_low": -9.46,  "ci_high": 0.81,  "sucra": 41.5, "significant": false, "basis": "primary_rls", "note": "the ONLY drug Zhou found not significantly better than placebo (attributed to augmentation)"},
+    "gabapentin enacarbil": {"md": -3.69,  "ci_low": -5.57,  "ci_high": -1.81, "sucra": 32.6, "significant": true,  "basis": "primary_rls"},
+    "ropinirole":           {"md": -2.50,  "ci_low": -4.56,  "ci_high": -0.44, "sucra": 16.8, "significant": true,  "basis": "primary_rls"}
+  }
+}
