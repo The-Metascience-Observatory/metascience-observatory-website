@@ -26,10 +26,11 @@ const reviews: ReviewMeta[] = [
     href: "/birds-eye-reviews/restless-legs-syndrome",
     title: "Restless Legs Syndrome",
   },
-  {
-    href: "/birds-eye-reviews/me-cfs",
-    title: "ME/CFS",
-  },
+  // Hidden for now — the ME/CFS review isn't ready to be listed publicly.
+  // {
+  //   href: "/birds-eye-reviews/me-cfs",
+  //   title: "ME/CFS",
+  // },
 ];
 
 export default function BirdsEyeReviewsPage() {

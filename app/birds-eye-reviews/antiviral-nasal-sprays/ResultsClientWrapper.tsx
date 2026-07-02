@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { BreakdownChart, Segment, HoverTrial } from "./screening/BreakdownChart";
+import { Segment, HoverTrial } from "./screening/BreakdownChart";
+import { TrialRectList } from "@/components/TrialRectList";
 import { ResultsTable, TrialRow } from "./ResultsTable";
 import { YearChart } from "./YearChart";
 /** Distinct-trial count per (canonical) country, for the country filter card. */
@@ -135,6 +136,66 @@ function hoverTrialsByKey(
     });
   }
   return out;
+}
+
+/** Ingredients with MORE than this many trials span all columns (so their long row
+ *  of result rectangles lays out flat) — matches the long-covid dashboard. */
+const INGREDIENT_WIDE_MIN_TRIALS = 12;
+
+/** "Trials by Ingredient" rendered in the long-covid rectangle-list style: every
+ *  ingredient is a row with one rectangle per trial (coloured by result), a shared
+ *  hover tooltip, and click-to-filter. Replaces the stacked bar chart while reading
+ *  the SAME verdict-breakdown + hover data, so counts and filtering are unchanged. */
+function IngredientRectList({
+  breakdown, hoverTrials, segments, selectedKey, onItemClick,
+}: {
+  breakdown: Record<string, Record<string, number>>;
+  hoverTrials: Record<string, HoverTrial[]>;
+  segments: Segment[];
+  selectedKey?: string;
+  onItemClick?: (key: string) => void;
+}) {
+  const items = useMemo(
+    () =>
+      Object.entries(breakdown)
+        .map(([key, counts]) => {
+          const total = Object.values(counts).reduce((a, b) => a + b, 0);
+          return {
+            key,
+            label: fmtIngredient(key),
+            counts,
+            total,
+            wide: total > INGREDIENT_WIDE_MIN_TRIALS,
+            selected: selectedKey != null && selectedKey !== "" && key === selectedKey,
+          };
+        })
+        .filter((it) => it.total > 0)
+        // Most-studied (wide) ingredients first, then by trial count, then by name.
+        .sort((a, b) => Number(b.wide) - Number(a.wide) || b.total - a.total || a.label.localeCompare(b.label)),
+    [breakdown, selectedKey]
+  );
+
+  const total = items.reduce((s, it) => s + it.total, 0);
+  if (items.length === 0) return null;
+
+  return (
+    <div className="border border-border rounded-lg bg-white p-3 sm:p-4 mb-6">
+      <h2 className="text-lg font-semibold mb-1">Trials by Ingredient (n = {total.toLocaleString()})</h2>
+      <p className="text-sm text-foreground/60 mb-2">
+        Each rectangle is one trial coloured by result — hover for study details, click an ingredient
+        to filter the whole dashboard (click again to clear).
+      </p>
+      <div className="flex flex-wrap gap-x-4 gap-y-1 mb-4">
+        {segments.map((seg) => (
+          <span key={seg.key} className="inline-flex items-center gap-1.5 text-xs text-foreground/70">
+            <span className="inline-block w-3 h-3 rounded-sm" style={{ backgroundColor: seg.color }} />
+            {seg.label}
+          </span>
+        ))}
+      </div>
+      <TrialRectList items={items} segments={segments} hoverTrials={hoverTrials} onItemClick={onItemClick} />
+    </div>
+  );
 }
 
 export function ResultsClientWrapper({
@@ -488,13 +549,16 @@ export function ResultsClientWrapper({
         </div>
       </div>
 
-      {/* Breakdown charts */}
+      {/* Trials by Ingredient — long-covid rectangle-list style (one rectangle per
+          trial, coloured by result; hover for details, click to filter). */}
       {Object.keys(ingredientVerdictChart).length > 0 && (
-        <BreakdownChart title="Trials by Ingredient" breakdown={ingredientVerdictChart}
-          segments={VERDICT_SEGMENTS} selectedKey={ingredient} collapseSingletons collapseMaxTrials={3}
+        <IngredientRectList
+          breakdown={ingredientVerdictChart}
           hoverTrials={ingredientHoverTrials}
-          onBarClick={(k) => setIngredient((cur) => (cur === k ? undefined : k))}
-          clickHint="Each bar is split by result direction — click a bar to filter the whole dashboard to that ingredient (click again to clear). Hover for individual study details. Single-trial ingredients are listed below." />
+          segments={VERDICT_SEGMENTS}
+          selectedKey={ingredient}
+          onItemClick={(k) => setIngredient((cur) => (cur === k ? undefined : k))}
+        />
       )}
 
       {/* Trials by year (reacts to the filters above) */}

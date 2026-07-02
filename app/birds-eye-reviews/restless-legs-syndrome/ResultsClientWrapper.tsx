@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { BreakdownChart, Segment, HoverTrial } from "./screening/BreakdownChart";
+import { Segment, HoverTrial } from "./screening/BreakdownChart";
+import { TrialRectList } from "@/components/TrialRectList";
 import { ResultsTable, TrialRow } from "./ResultsTable";
 import { YearChart } from "./YearChart";
 import { CountryMap, type CountryCount } from "@/components/CountryMap";
@@ -126,6 +127,93 @@ function hoverTrialsByKey(
     });
   }
   return out;
+}
+
+/** Interventions with MORE than this many trials get their own full-width row of
+ *  result rectangles (the "bar chart" section); the rest flow in a 3-column grid. */
+const INTERVENTION_WIDE_MIN_TRIALS = 10;
+
+/** "Trials by Intervention" in the long-covid rectangle-list style. Every trial is
+ *  one fixed-size rectangle coloured by result (identical size in both sections),
+ *  with a shared hover tooltip and click-to-filter. Interventions with >10 trials
+ *  render as full-width rows on top; the long tail flows in a 3-column grid below.
+ *  Reads the SAME verdict-breakdown + hover data the bar chart used, so counts and
+ *  filtering are unchanged. */
+function InterventionRectList({
+  breakdown, hoverTrials, segments, selectedKey, onItemClick,
+}: {
+  breakdown: Record<string, Record<string, number>>;
+  hoverTrials: Record<string, HoverTrial[]>;
+  segments: Segment[];
+  selectedKey?: string;
+  onItemClick?: (key: string) => void;
+}) {
+  const { wideItems, narrowItems, total } = useMemo(() => {
+    const all = Object.entries(breakdown)
+      .map(([key, counts]) => ({
+        key,
+        label: fmtIngredient(key),
+        counts,
+        total: Object.values(counts).reduce((a, b) => a + b, 0),
+        selected: selectedKey != null && selectedKey !== "" && key === selectedKey,
+      }))
+      .filter((it) => it.total > 0)
+      .sort((a, b) => b.total - a.total || a.label.localeCompare(b.label));
+    return {
+      wideItems: all
+        .filter((it) => it.total > INTERVENTION_WIDE_MIN_TRIALS)
+        .map((it) => ({ ...it, wide: true })),
+      narrowItems: all.filter((it) => it.total <= INTERVENTION_WIDE_MIN_TRIALS),
+      total: all.reduce((s, it) => s + it.total, 0),
+    };
+  }, [breakdown, selectedKey]);
+
+  if (wideItems.length === 0 && narrowItems.length === 0) return null;
+
+  return (
+    <div className="border border-border rounded-lg bg-white p-3 sm:p-4 mb-6">
+      <h2 className="text-lg font-semibold mb-1">Trials by Intervention (n = {total.toLocaleString()})</h2>
+      <p className="text-sm text-foreground/60 mb-2">
+        Each rectangle is one trial coloured by result — hover for study details, click an intervention
+        to filter the whole dashboard (click again to clear).
+      </p>
+      <div className="flex flex-wrap gap-x-4 gap-y-1 mb-4">
+        {segments.map((seg) => (
+          <span key={seg.key} className="inline-flex items-center gap-1.5 text-xs text-foreground/70">
+            <span className="inline-block w-3 h-3 rounded-sm" style={{ backgroundColor: seg.color }} />
+            {seg.label}
+          </span>
+        ))}
+      </div>
+
+      {wideItems.length > 0 && (
+        <TrialRectList
+          items={wideItems}
+          segments={segments}
+          hoverTrials={hoverTrials}
+          onItemClick={onItemClick}
+          columns={1}
+        />
+      )}
+
+      {narrowItems.length > 0 && (
+        <div className={wideItems.length > 0 ? "mt-3 pt-3 border-t border-border" : ""}>
+          {wideItems.length > 0 && (
+            <p className="text-xs text-foreground/60 mb-2">
+              {narrowItems.length.toLocaleString()} with {INTERVENTION_WIDE_MIN_TRIALS} or fewer trials:
+            </p>
+          )}
+          <TrialRectList
+            items={narrowItems}
+            segments={segments}
+            hoverTrials={hoverTrials}
+            onItemClick={onItemClick}
+            columns={3}
+          />
+        </div>
+      )}
+    </div>
+  );
 }
 
 export function ResultsClientWrapper({
@@ -416,13 +504,17 @@ export function ResultsClientWrapper({
         </div>
       </div>
 
-      {/* Breakdown charts */}
+      {/* Trials by Intervention — long-covid rectangle-list style. Interventions with
+          >10 trials render as full-width rows; the rest flow in a 3-column grid, all
+          tiles the same fixed size (one rectangle = one trial, coloured by result). */}
       {Object.keys(ingredientVerdictChart).length > 0 && (
-        <BreakdownChart title="Trials by Intervention" breakdown={ingredientVerdictChart}
-          segments={VERDICT_SEGMENTS} selectedKey={ingredient} collapseSingletons collapseMaxTrials={3}
+        <InterventionRectList
+          breakdown={ingredientVerdictChart}
           hoverTrials={ingredientHoverTrials}
-          onBarClick={(k) => setIngredient((cur) => (cur === k ? undefined : k))}
-          clickHint="Each bar is split by result direction — click a bar to filter the whole dashboard to that drug (click again to clear). Hover for individual study details. Single-trial drugs are listed below." />
+          segments={VERDICT_SEGMENTS}
+          selectedKey={ingredient}
+          onItemClick={(k) => setIngredient((cur) => (cur === k ? undefined : k))}
+        />
       )}
 
       {/* Trials by year (reacts to the filters above) */}
