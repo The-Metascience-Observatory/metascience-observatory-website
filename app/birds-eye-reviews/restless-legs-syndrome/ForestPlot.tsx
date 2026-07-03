@@ -36,7 +36,32 @@ export interface ForestGroup {
     ci_high: number;
     i2: number;
     model: string;
+    tau2?: number;
+    ci_method?: string;
+    pred_low?: number;
+    pred_high?: number;
   } | null;
+  /** "rct" | "observational" — observational pools are never mixed with RCTs. */
+  design_class?: string;
+  /** CI method for the pooled estimate: "hksj" (Hartung-Knapp) or "dl_normal". */
+  ci_method?: string;
+  total_n?: number | null;
+  /** Count of trials by risk-of-bias category. */
+  rob_summary?: { low: number; some: number; high: number; unknown: number };
+  /** GRADE-style certainty of evidence. */
+  certainty?: {
+    grade: "high" | "moderate" | "low" | "very_low";
+    start?: string;
+    downgrades?: { domain: string; reason: string }[];
+  };
+  /** Sensitivity analyses (fixed-effect, leave-one-out, RoB-excluded re-pool). */
+  sensitivity?: {
+    fixed_effect?: { effect: number; ci_low: number; ci_high: number };
+    leave_one_out?: { omitted: string; effect: number; ci_low: number; ci_high: number }[];
+    rob_excluded?: { n_trials: number; effect: number; ci_low: number; ci_high: number; i2: number };
+  };
+  /** Small-study / publication-bias test (only computed at k >= threshold). */
+  pub_bias?: { available: boolean; k: number; intercept?: number; t?: number; p?: number };
   /** Set on the unified (drug × outcome) standardized-mean-difference pool, which
    *  combines continuous (Hedges' g) and binary (Chinn OR→SMD) outcomes onto one
    *  comparable Cohen's-d scale. */
@@ -97,6 +122,48 @@ function trialHref(paperId: string | undefined): string | null {
   if (paperId.startsWith("pmid_")) return `https://pubmed.ncbi.nlm.nih.gov/${paperId.slice(5)}/`;
   if (paperId.startsWith("nct:")) return `https://clinicaltrials.gov/study/${paperId.slice(4)}`;
   return null;
+}
+
+const GRADE_STYLE: Record<string, { label: string; cls: string }> = {
+  high: { label: "High certainty", cls: "bg-emerald-100 text-emerald-800" },
+  moderate: { label: "Moderate certainty", cls: "bg-lime-100 text-lime-800" },
+  low: { label: "Low certainty", cls: "bg-amber-100 text-amber-800" },
+  very_low: { label: "Very low certainty", cls: "bg-rose-100 text-rose-700" },
+};
+
+function CertaintyBadge({ grade }: { grade: string }) {
+  const s = GRADE_STYLE[grade] ?? { label: grade, cls: "bg-foreground/10 text-foreground/70" };
+  return (
+    <span className={`text-[10px] font-semibold uppercase tracking-wide rounded px-1.5 py-0.5 ${s.cls}`}
+      title="GRADE-style certainty of evidence">
+      {s.label}
+    </span>
+  );
+}
+
+/** One-line rigor summary under the header: GRADE downgrade reasons, RoB mix,
+ *  prediction interval, and any small-study-bias flag. */
+function RigorLine({ group }: { group: ForestGroup }) {
+  const c = group.certainty;
+  const downs = (c?.downgrades ?? []).map((d) => d.reason);
+  const rob = group.rob_summary;
+  const robBits = rob
+    ? [rob.low ? `${rob.low} low` : "", rob.some ? `${rob.some} some` : "", rob.high ? `${rob.high} high` : ""]
+        .filter(Boolean).join(", ")
+    : "";
+  const pi = group.pooled?.pred_low != null && group.pooled?.pred_high != null
+    ? `95% PI ${fmt(group.pooled.pred_low)} to ${fmt(group.pooled.pred_high)}`
+    : "";
+  const egger = group.pub_bias?.available && group.pub_bias.p != null && group.pub_bias.p < 0.1
+    ? `small-study bias (Egger p=${group.pub_bias.p})` : "";
+  const parts = [
+    downs.length ? `Downgraded: ${downs.join("; ")}` : "No downgrades",
+    robBits ? `RoB: ${robBits}` : "",
+    pi, egger,
+  ].filter(Boolean);
+  return (
+    <p className="mb-2 text-[11px] leading-snug text-foreground/55">{parts.join(" · ")}</p>
+  );
 }
 
 /** A self-contained SVG forest plot for one (ingredient × outcome × measure)
@@ -165,11 +232,19 @@ export function ForestPlot({ group }: { group: ForestGroup }) {
             Standardized (SMD)
           </span>
         )}
+        {group.design_class === "observational" && (
+          <span className="text-[10px] font-semibold uppercase tracking-wide rounded px-1.5 py-0.5 bg-amber-100 text-amber-700">
+            Observational
+          </span>
+        )}
+        {group.certainty && <CertaintyBadge grade={group.certainty.grade} />}
         <span className="text-xs text-foreground/50">
           {prettyMeasure(group.effect_measure)} · {group.n_trials} trial{group.n_trials === 1 ? "" : "s"}
           {group.pooled ? ` · I² = ${group.pooled.i2}%` : " · not pooled"}
+          {group.pooled?.ci_method === "hksj" ? " · Hartung–Knapp CI" : ""}
         </span>
       </div>
+      {group.certainty && <RigorLine group={group} />}
       {(group.standardized || (group.n_oriented_flipped ?? 0) > 0) && (
         <p className="mb-2 text-[11px] leading-snug text-foreground/55">
           {group.standardized && (

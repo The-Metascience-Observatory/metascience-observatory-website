@@ -99,7 +99,7 @@ function loadForestGroups(cites: Map<string, Citation>): { groups: ForestGroup[]
 export default function MetaAnalysisPage() {
   const hasFile = fs.existsSync(dataPath("meta_analysis.json"));
   const cites = loadCitations();
-  const { groups, minTrials } = loadForestGroups(cites);
+  const { groups } = loadForestGroups(cites);
 
   return (
     <>
@@ -122,7 +122,7 @@ export default function MetaAnalysisPage() {
         </h1>
 
         {hasFile ? (
-          <MetaAnalysisClientWrapper groups={groups} minTrials={minTrials} />
+          <MetaAnalysisClientWrapper groups={groups} />
         ) : (
           <p className="text-sm text-foreground/60 mt-4">
             No meta-analysis has been generated for this review.
