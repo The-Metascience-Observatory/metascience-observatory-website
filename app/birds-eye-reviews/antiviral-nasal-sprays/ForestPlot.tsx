@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { fmt } from "./utils";
 
 /** A single trial estimate on a forest plot. */
@@ -20,6 +21,36 @@ export interface ForestTrial {
   oriented_flipped?: boolean;
 }
 
+export interface ForestPooled {
+  effect: number;
+  ci_low: number;
+  ci_high: number;
+  i2: number;
+  model: string;
+  tau2?: number;
+  pred_low?: number | null;
+  pred_high?: number | null;
+}
+
+/** One compound's rows + subtotal inside a cross-compound plot. */
+export interface ForestSubgroup {
+  ingredient: string;
+  n_trials: number;
+  trials: ForestTrial[];
+  pooled?: ForestPooled | null;
+}
+
+/** A study that reports the outcome but could not be standardized (shown in the
+ *  transparency appendix under a cross-compound plot, never silently dropped). */
+export interface ForestExcluded {
+  paper_id: string;
+  first_author?: string;
+  year?: number | string | null;
+  ingredient?: string;
+  effect_measure?: string | null;
+  reason?: string;
+}
+
 export interface ForestGroup {
   ingredient: string;
   outcome_domain: string;
@@ -30,13 +61,14 @@ export interface ForestGroup {
   scale: "log" | "linear";
   n_trials: number;
   trials: ForestTrial[];
-  pooled?: {
-    effect: number;
-    ci_low: number;
-    ci_high: number;
-    i2: number;
-    model: string;
-  } | null;
+  pooled?: ForestPooled | null;
+  /** Cross-compound (all-ingredient) standardized plot: pools every compound on
+   *  one Cohen's-d scale, with per-compound subgroups + subtotals. */
+  cross_ingredient?: boolean;
+  n_compounds?: number;
+  subgroups?: ForestSubgroup[];
+  excluded?: ForestExcluded[];
+  n_excluded?: number;
   /** Set on the unified (drug × outcome) standardized-mean-difference pool, which
    *  combines continuous (Hedges' g) and binary (Chinn OR→SMD) outcomes onto one
    *  comparable Cohen's-d scale. */
@@ -102,7 +134,14 @@ function trialHref(paperId: string | undefined): string | null {
 /** A self-contained SVG forest plot for one (ingredient × outcome × measure)
  *  group: one row per trial (square sized by pooled weight + CI whisker), a
  *  null reference line, x-axis ticks, and a pooled diamond when available. */
+const prettyIngredient = (s: string) =>
+  s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+
 export function ForestPlot({ group }: { group: ForestGroup }) {
+  // Cross-compound (subgrouped) plots have their own richer renderer.
+  if (group.subgroups && group.subgroups.length > 0) {
+    return <CrossCompoundForestPlot group={group} />;
+  }
   const isLog = group.scale === "log";
   const nullVal = isLog ? 1 : 0;
   const ratio = isLog;
@@ -273,6 +312,173 @@ export function ForestPlot({ group }: { group: ForestGroup }) {
           );
         })()}
       </svg>
+    </div>
+  );
+}
+
+// ── Cross-compound (subgrouped) forest plot ──────────────────────────────────
+// One standardized (Cohen's d) figure per outcome, pooling every compound: a
+// subheading + rows + subtotal diamond per compound, then an overall diamond with
+// heterogeneity (I², τ², 95% prediction interval), directional axis labels, and a
+// collapsible appendix of studies that couldn't be standardized.
+type XItem =
+  | { kind: "subhead"; label: string }
+  | { kind: "trial"; t: ForestTrial }
+  | { kind: "diamond"; label: string; pooled: ForestPooled; bold?: boolean };
+
+function CrossCompoundForestPlot({ group }: { group: ForestGroup }) {
+  const subs = group.subgroups ?? [];
+  const items: XItem[] = [];
+  for (const s of subs) {
+    items.push({ kind: "subhead", label: `${prettyIngredient(s.ingredient)} (${s.n_trials})` });
+    for (const t of s.trials) items.push({ kind: "trial", t });
+    if (s.pooled) items.push({ kind: "diamond", label: "Subtotal", pooled: s.pooled });
+  }
+  if (group.pooled) items.push({ kind: "diamond", label: "Overall (random effects)", pooled: group.pooled, bold: true });
+
+  const ROW_H = 26, SUBHEAD_H = 24, HEADER_H = 28, AXIS_H = 58;
+  const LABEL_W = 210, VAL_W = 140, PLOT_W = 360;
+  const W = LABEL_W + PLOT_W + VAL_W;
+  const plotLeft = LABEL_W, plotRight = LABEL_W + PLOT_W;
+  const H = HEADER_H + items.reduce((s, it) => s + (it.kind === "subhead" ? SUBHEAD_H : ROW_H), 0) + AXIS_H;
+
+  // x-domain across all trial estimates/CIs, subtotal + overall diamonds, and 0.
+  const vals: number[] = [0];
+  for (const it of items) {
+    if (it.kind === "trial") { for (const v of [it.t.effect, it.t.ci_low, it.t.ci_high]) if (v != null && Number.isFinite(v)) vals.push(v); }
+    if (it.kind === "diamond") vals.push(it.pooled.effect, it.pooled.ci_low, it.pooled.ci_high, it.pooled.pred_low ?? it.pooled.effect, it.pooled.pred_high ?? it.pooled.effect);
+  }
+  let lo = Math.min(...vals), hi = Math.max(...vals);
+  if (lo === hi) { lo -= 1; hi += 1; }
+  const pad = (hi - lo) * 0.08; lo -= pad; hi += pad;
+  const xPix = (v: number) => plotLeft + ((v - lo) / (hi - lo)) * PLOT_W;
+  const step = (hi - lo) / 4;
+  const ticks = [0, 1, 2, 3, 4].map((i) => lo + step * i);
+
+  const allW = subs.flatMap((s) => s.trials.map((t) => (t.weight != null ? Math.sqrt(t.weight) : null)));
+  const maxSqrt = Math.max(...allW.filter((x): x is number => x != null), 1);
+
+  let y = HEADER_H;
+  const nodes: ReactNode[] = [];
+  for (let i = 0; i < items.length; i++) {
+    const it = items[i];
+    if (it.kind === "subhead") {
+      const cy = y + SUBHEAD_H - 8;
+      nodes.push(
+        <text key={`sh${i}`} x={0} y={cy} fontSize={11} fontWeight={700} fill="currentColor" className="fill-foreground/80">{it.label}</text>
+      );
+      y += SUBHEAD_H;
+    } else if (it.kind === "trial") {
+      const t = it.t; const cy = y + ROW_H / 2; const cx = xPix(t.effect);
+      const sw = t.weight != null ? Math.sqrt(t.weight) : null;
+      const half = sw == null ? 6 : 4 + (sw / maxSqrt) * 8;
+      const x1 = t.ci_low != null ? xPix(t.ci_low) : cx;
+      const x2 = t.ci_high != null ? xPix(t.ci_high) : cx;
+      const href = trialHref(t.doi ?? t.paper_id);
+      const lbl = (t.label.length > 30 ? t.label.slice(0, 29) + "…" : t.label) + (t.oriented_flipped ? " †" : "");
+      const valStr = `${fmt(t.effect)} (${fmt(t.ci_low)}–${fmt(t.ci_high)})`;
+      nodes.push(
+        <g key={`t${i}`}>
+          {href ? (
+            <a href={href} target="_blank" rel="noopener noreferrer">
+              <text x={12} y={cy + 3} fontSize={11} className="fill-blue-600 hover:underline" style={{ cursor: "pointer" }}>{lbl}</text>
+            </a>
+          ) : (
+            <text x={12} y={cy + 3} fontSize={11} className="fill-foreground/80" fill="currentColor">{lbl}</text>
+          )}
+          <line x1={x1} y1={cy} x2={x2} y2={cy} stroke="#2563eb" strokeWidth={1.5} />
+          <line x1={x1} y1={cy - 3} x2={x1} y2={cy + 3} stroke="#2563eb" strokeWidth={1.5} />
+          <line x1={x2} y1={cy - 3} x2={x2} y2={cy + 3} stroke="#2563eb" strokeWidth={1.5} />
+          <rect x={cx - half} y={cy - half} width={half * 2} height={half * 2} fill="#1d4ed8" />
+          <text x={W} y={cy + 3} fontSize={11} textAnchor="end" fill="currentColor" className="fill-foreground/70 tabular-nums">{valStr}</text>
+        </g>
+      );
+      y += ROW_H;
+    } else {
+      const p = it.pooled; const cy = y + ROW_H / 2;
+      const cl = xPix(p.ci_low), ch = xPix(p.ci_high), cc = xPix(p.effect); const hh = it.bold ? 8 : 6;
+      const color = it.bold ? "#b91c1c" : "#6b7280";
+      const valStr = `${fmt(p.effect)} (${fmt(p.ci_low)}–${fmt(p.ci_high)})`;
+      nodes.push(
+        <g key={`d${i}`}>
+          <text x={it.bold ? 0 : 12} y={cy + 4} fontSize={11} fontWeight={it.bold ? 700 : 600} fill="currentColor">{it.label}</text>
+          {/* prediction interval line (overall only) */}
+          {it.bold && p.pred_low != null && p.pred_high != null && (
+            <line x1={xPix(p.pred_low)} y1={cy} x2={xPix(p.pred_high)} y2={cy} stroke="#b91c1c" strokeWidth={1} strokeDasharray="2 2" opacity={0.7} />
+          )}
+          <polygon points={`${cl},${cy} ${cc},${cy - hh} ${ch},${cy} ${cc},${cy + hh}`} fill={color} stroke={it.bold ? "#7f1d1d" : "#4b5563"} />
+          <text x={W} y={cy + 4} fontSize={11} fontWeight={it.bold ? 700 : 600} textAnchor="end" fill="currentColor" className="tabular-nums">{valStr}</text>
+        </g>
+      );
+      y += ROW_H;
+    }
+  }
+
+  const axisY = y + 6;
+  const ov = group.pooled;
+
+  return (
+    <div className="border-2 border-violet-200 rounded-lg bg-white p-4 mb-6">
+      <div className="mb-1 flex flex-wrap items-baseline gap-x-3">
+        <h3 className="font-semibold text-foreground">{group.domainLabel ?? prettyDomain(group.outcome_domain)} — all compounds</h3>
+        <span className="text-[10px] font-semibold uppercase tracking-wide rounded px-1.5 py-0.5 bg-violet-100 text-violet-700">Standardized (SMD)</span>
+        <span className="text-xs text-foreground/50">
+          {group.n_trials} trials · {group.n_compounds} compounds
+          {ov ? ` · I² = ${ov.i2}%` : ""}
+        </span>
+      </div>
+      <p className="mb-2 text-[11px] leading-snug text-foreground/55">
+        Every compound pooled on one Cohen&apos;s-d scale (positive = favors treatment), combining{" "}
+        {(group.combines ?? []).map(prettyMeasure).join(", ").toLowerCase() || "measures"} via Hedges&apos; g,
+        Chinn&apos;s OR→SMD, mean-difference→SMD (pooled-SD back-calculation) and an lnHR≈lnOR approximation.
+        Pooling across different antivirals is <strong>exploratory</strong> — heterogeneity is high, so read the
+        prediction interval, not just the diamond.
+      </p>
+      <svg viewBox={`0 0 ${W} ${H}`} className="text-foreground" style={{ width: "100%", height: "auto" }}>
+        <text x={0} y={18} fontSize={11} fontWeight={600} fill="currentColor">Compound / trial</text>
+        <text x={W} y={18} fontSize={11} fontWeight={600} textAnchor="end" fill="currentColor">SMD (95% CI)</text>
+        <line x1={xPix(0)} y1={HEADER_H} x2={xPix(0)} y2={axisY} stroke="#9ca3af" strokeWidth={1} strokeDasharray="3 3" />
+        {nodes}
+        {/* x-axis + directional labels */}
+        <line x1={plotLeft} y1={axisY} x2={plotRight} y2={axisY} stroke="#9ca3af" strokeWidth={1} />
+        {ticks.map((t, i) => (
+          <g key={`x${i}`}>
+            <line x1={xPix(t)} y1={axisY} x2={xPix(t)} y2={axisY + 4} stroke="#9ca3af" strokeWidth={1} />
+            <text x={xPix(t)} y={axisY + 15} fontSize={10} textAnchor="middle" fill="currentColor" className="fill-foreground/60">{fmt(t)}</text>
+          </g>
+        ))}
+        <text x={plotLeft} y={axisY + 30} fontSize={9} textAnchor="start" fill="currentColor" className="fill-foreground/45">← favors control</text>
+        <text x={plotRight} y={axisY + 30} fontSize={9} textAnchor="end" fill="currentColor" className="fill-foreground/45">favors treatment →</text>
+      </svg>
+      {ov && (
+        <p className="mt-1 text-[11px] text-foreground/60">
+          Heterogeneity: I² = {ov.i2}%{ov.tau2 != null ? `, τ² = ${ov.tau2}` : ""}
+          {ov.pred_low != null && ov.pred_high != null
+            ? ` · 95% prediction interval ${fmt(ov.pred_low)} to ${fmt(ov.pred_high)}`
+            : ""}
+        </p>
+      )}
+      {group.excluded && group.excluded.length > 0 && (
+        <details className="mt-2 text-xs">
+          <summary className="cursor-pointer text-foreground/60 hover:text-foreground">
+            {group.excluded.length} more studies reported this outcome but couldn&apos;t be standardized (shown, not pooled)
+          </summary>
+          <ul className="mt-2 space-y-0.5 pl-4">
+            {group.excluded.map((e) => {
+              const href = trialHref(e.paper_id);
+              const lbl = `${e.first_author ?? e.paper_id}${e.year ? ` ${e.year}` : ""}`;
+              return (
+                <li key={e.paper_id} className="text-foreground/60">
+                  {href ? <a href={href} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">{lbl}</a> : lbl}
+                  {e.ingredient ? ` — ${prettyIngredient(e.ingredient)}` : ""}
+                  {e.effect_measure ? ` · ${prettyMeasure(e.effect_measure)}` : ""}
+                  {e.reason ? ` · ${e.reason}` : ""}
+                </li>
+              );
+            })}
+          </ul>
+        </details>
+      )}
     </div>
   );
 }
