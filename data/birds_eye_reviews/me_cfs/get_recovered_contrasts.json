@@ -1,0 +1,820 @@
+[
+ {
+  "control_arm_label": "Specialist medical care (SMC) alone",
+  "control_type": "usual_care/SMC",
+  "fatigue": {
+   "instrument": "Chalder Fatigue Questionnaire (CFQ), Likert scoring 0,1,2,3; range 0-33; higher = more fatigue",
+   "reported": "both",
+   "timepoint": "12 weeks post-randomisation (end of treatment)",
+   "scale_range": "0-33 (Likert 0-1-2-3 scoring)",
+   "higher_is_better": false,
+   "get_arm": {
+    "label": "GES (guided graded exercise self-help) + SMC",
+    "n": 97,
+    "mean": 19.1,
+    "sd": 7.6
+   },
+   "control_arm": {
+    "label": "SMC alone",
+    "n": 102,
+    "mean": 22.9,
+    "sd": 6.9
+   },
+   "between_group": {
+    "measure": "mean_difference",
+    "value": -4.2,
+    "ci_low": -6.1,
+    "ci_high": -2.3,
+    "p": "<0.0001",
+    "adjusted": true
+   },
+   "confidence": "high",
+   "evidence_quote": "At 12 weeks, compared with the control group, mean fatigue score was 19\u00b71 (SD 7\u00b76) in the GES group and 22\u00b79 (6\u00b79) in the control group (adjusted difference \u22124\u00b72 points, 95% CI \u22126\u00b71 to \u22122\u00b73, p<0\u00b70001; effect size 0\u00b753)."
+  },
+  "get_arm_label": "GES (guided graded exercise self-help) + SMC",
+  "harms": {
+   "get_events": 1,
+   "get_n": 97,
+   "control_events": 2,
+   "control_n": 101,
+   "definition": "Serious adverse events (1% GES vs 2% control); 0 serious adverse reactions in either arm; also reported: worsened CGI-health 1 (1%) GES vs 8 (8%) control (p=0.04, Fisher's exact); worsened CGI-CFS 0 GES vs 9 (9%) control (p=0.003); composite serious-deterioration criterion (SF-36 PF drop \u226510, CGI 'much/very much worse', or active withdrawal due to worsening) 20 (21%) GES vs 30 (30%) control, p=0.14.",
+   "note": "No serious adverse reactions to trial interventions in either group; safety signals favoured GES on worsening measures."
+  },
+  "is_get_vs_control": true,
+  "notes": "GETSET is a two-arm pragmatic RCT: guided graded exercise SELF-HELP (GES; booklet + up to 4 brief physiotherapist guidance sessions, max 90 min total, no direct therapist-led exercise sessions) plus specialist medical care (SMC), vs SMC alone (no non-exercise psychological/pacing arm). This is a lower-intensity, self-help variant of GET (distinct from PACE's therapist-delivered GET) but is coded as GET-vs-control per the review's classification since it is graded-exercise-based. Two co-primary outcomes (added mid-trial per protocol amendment, approved by ethics/DMEC/TSC before outcome data examined): CFQ fatigue and SF-36 PF physical function, both at 12 weeks, modified ITT. Both outcomes are per-arm mean/SD plus adjusted between-group difference from Table 3 (identical to abstract numbers). Physical function: GES 55.7 (SD 23.3, n=97) vs control 50.8 (SD 25.3, n=102); adjusted MD +6.3 (95% CI 1.8 to 10.8), p=0.006, effect size 0.20 (higher=better). Diagnostic criteria: NICE (primary), with subgroup analyses also reported meeting Oxford and CDC (Fukuda) criteria. Age: adults (18+). RoB: open-label (patients and physiotherapists unmasked; statistician masked to allocation); both primary outcomes are self-rated (high risk of performance/detection bias, typical for GET trials); randomization was computer-generated block randomization stratified by centre, depression score, and baseline physical function \u2014 concealment mechanism not explicitly detailed in the excerpted text; attrition: 97/107 (91%) GES and 102/104 (98%) control had 12-week outcome data (safety table shows n=97 GES / n=101 control, slightly different denominator for safety analysis).",
+  "paper_id": "10.1016/s0140-6736(16)32589-2",
+  "physical_function": {
+   "instrument": "SF-36 Physical Function subscale (SF-36 PF)",
+   "reported": "both",
+   "timepoint": "12 weeks post-randomisation (end of treatment)",
+   "scale_range": "0-100, higher = best function",
+   "higher_is_better": true,
+   "get_arm": {
+    "label": "GES (guided graded exercise self-help) + SMC",
+    "n": 97,
+    "mean": 55.7,
+    "sd": 23.3
+   },
+   "control_arm": {
+    "label": "SMC alone",
+    "n": 102,
+    "mean": 50.8,
+    "sd": 25.3
+   },
+   "between_group": {
+    "measure": "mean_difference",
+    "value": 6.3,
+    "ci_low": 1.8,
+    "ci_high": 10.8,
+    "p": "0.006",
+    "adjusted": true
+   },
+   "confidence": "high",
+   "evidence_quote": "mean physical function score was 55\u00b77 (23\u00b73) in the GES group and 50\u00b78 (25\u00b73) in the control group (adjusted difference 6\u00b73 points, 1\u00b78 to 10\u00b78, p=0\u00b7006; 0\u00b720)."
+  },
+  "population": {
+   "diagnostic_criteria": "nice",
+   "age_group": "adult",
+   "n_randomized_total": 211
+  },
+  "rob_notes": "Open-label: \"Patients and physiotherapists were necessarily unmasked from intervention assignment; the statistician was masked from intervention assignment.\" Randomization: block randomisation (randomly varying block sizes) at individual level, computer-generated sequence, stratified by centre, depression score, and severity of physical disability (allocation-concealment mechanism not detailed in text excerpted here). Both primary outcomes (CFQ fatigue, SF-36 PF) are self-rated by patients -> high risk of performance and detection bias given lack of participant/therapist blinding, standard limitation for GET/self-help trials. Attrition: 97/107 (GES) and 102/104 (control) had 12-week primary outcome data (modified ITT, i.e., all randomised with follow-up data included regardless of adherence). Two co-primary outcomes were established mid-recruitment (protocol amendment after 47% enrolled, before outcome data seen, approved by ethics/DMEC/TSC) \u2014 reduces (but does not eliminate) outcome-switching concern. No blinding of outcome assessment beyond the statistician.",
+  "source_used": "JATS XML: /home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/get-mecfs-meta-analysis/pdfs/10.1016--s0140-6736(16)32589-2.xml \u2014 Table 3 (\"Primary outcomes\", id=tbl3) for fatigue/physical-function per-arm data; Table 5 (\"Safety outcomes\", id=tbl5) for harms; abstract (coredata dc:description) corroborates identical numbers.",
+  "trial": "GETSET (Clark et al. 2017, Lancet)",
+  "usable_for_primary_pool": true,
+  "usable_reason": "Genuine two-arm GET(-self-help)-vs-non-exercise-control (SMC alone) trial with complete per-arm n/mean/SD at the designated primary end-of-treatment timepoint (12 weeks) for both fatigue (CFQ) and physical function (SF-36 PF), plus adjusted between-group MD and 95% CI/p for each \u2014 fully usable for SMD/MD pooling."
+ },
+ {
+  "control_arm_label": "Specialist medical care (SMC) alone",
+  "control_type": "usual_care/SMC",
+  "fatigue": {
+   "instrument": "Chalder Fatigue Questionnaire (bimodal scoring, range 0-33, 0=best)",
+   "reported": "both",
+   "confidence": "high",
+   "timepoint": "52 weeks",
+   "scale_range": "0-33",
+   "higher_is_better": false,
+   "get_arm": {
+    "label": "Graded exercise therapy",
+    "n": 154,
+    "mean": 20.6,
+    "sd": 7.5
+   },
+   "control_arm": {
+    "label": "Specialist medical care alone",
+    "n": 152,
+    "mean": 23.8,
+    "sd": 6.6
+   },
+   "between_group": {
+    "measure": "mean_difference",
+    "value": -3.2,
+    "ci_low": -4.8,
+    "ci_high": -1.7,
+    "p": "0.0003",
+    "adjusted": false
+   },
+   "evidence_quote": "52 weeks | 23\u00b71 (7\u00b73); n=153 | 20\u00b73 (8\u00b70); n=148 | 20\u00b76 (7\u00b75); n=154 | 23\u00b78 (6\u00b76); n=152 ... Mean difference (95% CI) from SMC (52 weeks) | \u22120\u00b77 (\u22122\u00b73 to 0\u00b79) | \u22123\u00b74 (\u22125\u00b70 to \u22121\u00b78) | \u22123\u00b72 (\u22124\u00b78 to \u22121\u00b77) | .. ... Unadjusted p values | 0\u00b738 | 0\u00b70001 | 0\u00b70003 | .. [columns order: APT, CBT, GET, SMC; footnote: Chalder fatigue questionnaire (range 0\u201333, 0=best)]"
+  },
+  "get_arm_label": "Graded exercise therapy",
+  "harms": {
+   "definition": "Serious adverse events (death, hospital admission, increased severe and persistent disability, self-harm, life-threatening, or intervention required to prevent one of these); GET also had serious adverse reactions and a 'serious deterioration' composite (SF-36 PF drop \u226520 at two consecutive visits, PCGI much/very much worse at two consecutive visits, withdrawal due to explicit worsening, or serious adverse reaction)",
+   "get_events": 13,
+   "get_n": 160,
+   "control_events": 7,
+   "control_n": 160,
+   "note": "Participants with serious adverse events: GET 13 (8%) of 160 vs SMC 7 (4%) of 160 (event counts 17 vs 7). Serious adverse reactions: GET 2 (1%) vs SMC 2 (1%). Serious deterioration composite: GET 10 (6%) vs SMC 15 (9%), difference vs SMC = -3.1%, p=0.30. No suspected unexpected serious adverse reactions in any group. [harms metric = participants with >=1 SAE: GET 13/160 vs SMC 7/160]"
+  },
+  "is_get_vs_control": true,
+  "notes": "4-arm trial (APT, CBT, GET, SMC alone), n=641 randomized. Primary GET-vs-control contrast used here is GET vs SMC alone (the non-exercise, non-CBT/APT usual-care control), matching the paper's own primary reported comparison table (Table 3, 'Mean difference (95% CI) from SMC (52 weeks)'). GET vs APT is also reported in the same table if a secondary pairwise contrast is wanted: fatigue MD -2.5 (-4.2 to -0.9), p=0.0059; physical function MD 12.8 (7.7 to 17.9), p<0.0001. Values converted from the source's middle-dot decimal notation (e.g. '20\u00b76' -> 20.6). Bonferroni-adjusted p for GET vs SMC: fatigue p=0.0013, physical function p=0.0025 (adjusted for 5 comparisons per outcome); unadjusted values reported above per the 'between_group' fields to match the schema's single p slot, with adjusted=false. Diagnostic criteria = Oxford (explicitly stated); adults recruited from six UK secondary-care clinics. Blinding: participants, therapists, doctors, and research assessors were NOT masked (open-label); primary outcomes were self-rated by participants; only the analysis statistician was masked to allocation \u2014 classic high risk of performance/detection bias for a GET trial with subjective self-report primary outcomes. Randomization: computer-generated sequence via independent Clinical Trials Unit database programmer, first 3 participants per centre simple randomization then centre-stratified minimisation \u2014 allocation concealment appears adequate (central allocation, independent of trial team).",
+  "paper_id": "10.1016/s0140-6736(11)60096-2",
+  "physical_function": {
+   "instrument": "SF-36 physical function subscale (range 0-100, 100=best)",
+   "reported": "both",
+   "confidence": "high",
+   "timepoint": "52 weeks",
+   "scale_range": "0-100",
+   "higher_is_better": true,
+   "get_arm": {
+    "label": "Graded exercise therapy",
+    "n": 154,
+    "mean": 57.7,
+    "sd": 26.5
+   },
+   "control_arm": {
+    "label": "Specialist medical care alone",
+    "n": 152,
+    "mean": 50.8,
+    "sd": 24.7
+   },
+   "between_group": {
+    "measure": "mean_difference",
+    "value": 9.4,
+    "ci_low": 4.4,
+    "ci_high": 14.4,
+    "p": "0.0005",
+    "adjusted": false
+   },
+   "evidence_quote": "52 weeks | 45\u00b79 (24\u00b79); n=153 | 58\u00b72 (24\u00b71); n=148 | 57\u00b77 (26\u00b75); n=154 | 50\u00b78 (24\u00b77); n=152 ... Mean difference (95% CI) from SMC (52 weeks) | \u22123\u00b74 (\u22128\u00b74 to 1\u00b76) | 7\u00b71 (2\u00b70 to 12\u00b71) | 9\u00b74 (4\u00b74 to 14\u00b74) | .. ... Unadjusted p values | 0\u00b718 | 0\u00b70068 | 0\u00b70005 | .. [columns order: APT, CBT, GET, SMC; footnote: Short form-36 physical function subscale score (range 0\u2013100, 100=best)]"
+  },
+  "population": {
+   "diagnostic_criteria": "oxford",
+   "age_group": "adult",
+   "n_randomized_total": 641
+  },
+  "rob_notes": "Randomization: computer-generated sequence, centrally administered by an independent database programmer at the Clinical Trials Unit, stratified by centre with probabilistic minimisation (first 3 participants/centre simple randomization) \u2014 low risk, adequate allocation concealment. Blinding: open-label \u2014 participants, therapists, and treating doctors could not be masked (nature of intervention); research assessors were also unmasked (deemed impractical); ONLY the statistician analyzing primary outcomes was masked to allocation. Primary outcomes (Chalder fatigue, SF-36 PF) are entirely self-rated by participants \u2014 high risk of performance and detection bias typical of open-label GET trials with subjective primary endpoints. Attrition: primary outcome data available for large majority (n=148-154 of 159-161 per arm at 52 weeks, ~93-96% retention), analysis included all participants with available primary-outcome data (not strict ITT for 100% of randomized). Independent, masked adverse-event scrutinisers used for harms adjudication (unmasked only afterward to classify serious adverse reactions) \u2014 good practice for the safety outcomes specifically.",
+  "source_used": "XML (Elsevier JATS/CALS): /home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/get-mecfs-meta-analysis/pdfs/10.1016--s0140-6736(11)60096-2.xml \u2014 Table 3 \"Primary outcomes of fatigue and physical function\" (52-week row) for fatigue/physical-function; Table 4 \"Safety outcomes\" for harms.",
+  "trial": "PACE (White et al. 2011, Lancet)",
+  "usable_for_primary_pool": true,
+  "usable_reason": "Genuine GET vs non-exercise usual-care control (SMC alone) contrast at the pre-specified 52-week primary end-of-treatment timepoint, with full per-arm n/mean/SD for both primary outcomes plus between-group MD and 95% CI directly reported in the source table \u2014 high-quality, directly usable data for the primary meta-analytic pool."
+ },
+ {
+  "control_arm_label": "BUC (usual care plus CBT booklet)",
+  "control_type": "usual_care/SMC",
+  "fatigue": {
+   "instrument": "Chalder Fatigue Scale (Likert-scored 0-3 items, total range 0-33)",
+   "scale_range": "0-33",
+   "higher_is_better": false,
+   "timepoint": "6 months (primary; trial also reported 12 months)",
+   "reported": "both",
+   "get_arm": {
+    "label": "GET",
+    "n": 51,
+    "mean": 14.6,
+    "sd": 8.5
+   },
+   "control_arm": {
+    "label": "BUC",
+    "n": 54,
+    "mean": 15.3,
+    "sd": 8
+   },
+   "between_group": {
+    "measure": "mean_difference",
+    "value": -1.3,
+    "ci_low": -4.2,
+    "ci_high": 1.9,
+    "p": "0.46",
+    "adjusted": false
+   },
+   "evidence_quote": "Chalder total score, mean (S.D.)  Baseline 23.4 (4.5) 24.8 (4.9) 24.8 (4.7)  6 months 15.3 (8.0) 14.6 (8.5) 16.2 (8.2) ... At 6 months Change in Chalder total score -8.1 (-10.4 to 6.6) -10.1 (-12.6 to 7.5) -8.6 (-10.8 to -6.5)  Mean difference in relation to BUC (95% CI) -1.3 (-4.2 to 1.9) ... p=0.46",
+   "confidence": "high"
+  },
+  "get_arm_label": "GET (graded exercise therapy)",
+  "harms": {
+   "note": "No serious adverse events or dropout-due-to-harm counts reported by arm. Only completion/attendance is reported: 6-month follow-up completed measures BUC 54/75 (72%), GET 51/71 (71.8%), COUNS 58/76 (76.3%); 12-month: BUC 57/75 (76%), GET 53/71 (73.2%), COUNS 64/76 (85.5%). Full treatment (attended all 8 sessions): BUC 75/75 (100%, received usual care by definition), GET 38/71 (53.5%), COUNS 42/76 (55.3%)."
+  },
+  "is_get_vs_control": true,
+  "notes": "Three-arm trial (BUC usual-care-plus-CBT-booklet vs GET vs Counselling) in UK primary care, patients referred by GPs for fatigue >3 months (not a specialist CFS/ME cohort defined by Oxford/Fukuda/CCC criteria - eligibility was pragmatic: age 16-75, fatigue as main problem >=3 months, normal FBC/ESR/TFT, fatigue scale score >=4, excluding physical/psychiatric causes). Randomized 1:1:1, block randomization (size 9) by a separate-site statistician using sequential sealed opaque envelopes - reasonable allocation concealment. Open-label (no blinding of participants/therapists possible for GET vs usual care); outcome (Chalder fatigue) is self-reported questionnaire mailed home - high risk of performance and detection bias typical of GET trials. Attrition: 6-month follow-up only 163/222 (73%) overall, fairly balanced across arms; ITT approach with multiple imputation used, complete-case results also reported (Table 3 uses complete-case observed means, since NEJM-style regression estimates reported separately in text with similar effect sizes). No physical-function outcome (no SF-36 PF subscale, no 6-minute walk test) was measured/reported in this trial - only fatigue (Chalder), HADS anxiety/depression, WSAS (work/social adjustment, a functional-impairment measure but not a physical-function scale), and patient satisfaction. Therefore physical_function fields are left null/not_reported. Both per-arm means/SDs (Table 3, observed/complete-case) and adjusted between-group mean differences with 95% CI/p (from mixed linear regression, unadjusted per authors since RCT) are available and are consistent with each other. 12-month (longer-term) fatigue result: GET -0.06 (95% CI -1.8 to 1.6) vs BUC, p=0.94 - included in trial narrative but NOT used as primary timepoint per instructions (using 6-month primary endpoint instead).",
+  "paper_id": "10.1017/s0033291712000256",
+  "physical_function": {
+   "instrument": "not_reported",
+   "reported": "not_reported",
+   "confidence": "low"
+  },
+  "population": {
+   "diagnostic_criteria": "other",
+   "age_group": "adult",
+   "n_randomized_total": 222
+  },
+  "rob_notes": "Randomization: computer/statistician-generated block randomization (blocks of size 9) performed at a separate site - low risk. Allocation concealment: sequential numbered opaque sealed envelopes opened in front of patient at baseline by research assistant - adequate concealment at allocation, though envelope methods carry some residual risk if not tamper-evident. Blinding: open-label design; participants and therapists necessarily unblinded to GET vs usual care vs counselling assignment - high risk of performance bias. Primary outcome (Chalder fatigue score) is self-reported questionnaire completed at home and mailed in - high risk of detection/reporting bias given lack of blinding. Attrition: substantial loss to follow-up at 6 months (163/222, ~73% retained) and 12 months (174/222, ~78%), but missingness not significantly associated with allocated group (p=0.78 at 6mo, p=0.36 at 12mo); handled via ITT with multiple imputation (MAR assumption) alongside complete-case analysis - moderate risk given differential completion of \\\"full treatment\\\" (100% BUC vs ~54% GET/COUNS attended all 8 sessions, though this reflects treatment adherence not outcome-assessment attrition). Overall: typical open-label GET-trial risk-of-bias profile - high risk of performance/detection bias, otherwise reasonably conducted randomization/allocation.",
+  "source_used": "PDF /home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/get-mecfs-meta-analysis/pdfs/10.1017--s0033291712000256.pdf pages 1-8 (Abstract, Table 1 eligibility criteria, Table 2 baseline characteristics, Table 3 \"Observed outcomes by therapy\" containing per-arm Chalder fatigue mean/SD at baseline/6/12 months and between-group mean differences with 95% CI and p-values); body.md fallback confirmed narrative text but Table 3 numeric table was lost in GROBID conversion (only fragments recovered), so PDF was authoritative.",
+  "trial": "Ridsdale 2012",
+  "usable_for_primary_pool": true,
+  "usable_reason": "Genuine three-arm RCT with a GET arm vs a non-exercise usual-care control (BUC) plus a counselling arm; per-arm means/SDs and between-group mean difference with 95% CI/p at the primary 6-month end-of-treatment timepoint are reported for the Chalder Fatigue Scale, making it usable for the primary fatigue pool. No physical-function outcome was measured in this trial, so it cannot contribute to a physical-function pooled analysis."
+ },
+ {
+  "trial": "Gordon 2010",
+  "paper_id": "10.1177/0269215510371429",
+  "source_used": "Original PDF (no JATS XML available); Table 2 'Physical and subjective measures at baseline and after a 4-week intervention', p.1076",
+  "population": {
+   "diagnostic_criteria": "fukuda_cdc",
+   "age_group": "pediatric",
+   "n_randomized_total": 22
+  },
+  "is_get_vs_control": false,
+  "control_type": "other_exercise",
+  "control_arm_label": "Progressive resistance training (RT)",
+  "get_arm_label": "Graded aerobic exercise training (AT)",
+  "fatigue": {
+   "instrument": "Fatigue Severity Scale (FSS, 9-item questionnaire)",
+   "scale_range": "1-7 (higher = more fatigue)",
+   "higher_is_better": false,
+   "timepoint": "Post-intervention, end of 4-week inpatient programme (primary end-of-treatment timepoint; no longer-term follow-up reported)",
+   "reported": "per_arm_mean_sd",
+   "get_arm": {
+    "label": "Aerobic training (AT), post-intervention",
+    "n": 11,
+    "mean": 5.37,
+    "sd": 0.81
+   },
+   "control_arm": {
+    "label": "Resistance training (RT), post-intervention",
+    "n": 11,
+    "mean": 5.25,
+    "sd": 1.17
+   },
+   "between_group": {
+    "measure": "mean_difference",
+    "value": 0.3,
+    "ci_low": -0.12,
+    "ci_high": 0.71,
+    "p": "not significant (P1=0.16 between-groups at follow-up; within-group P2: RT >0.05, AT=0.001)",
+    "adjusted": false
+   },
+   "evidence_quote": "Fatigue Severity (FSS) Pre intervention 5.37 \u00b1 1.42 (RT) 5.79 \u00b1 0.77 (AT) 0.40; Post intervention 5.25 \u00b1 1.17 (RT) 5.37 \u00b1 0.81 (AT); Difference \u22120.12 \u00b1 0.60 (RT) \u22120.42 \u00b1 0.31 (AT); P2 >0.05 (RT) 0.001 (AT). ... differences of 2.1 (\u22121.2\u20135.5), 3.1 (\u22122.2\u20138.4), 0.30 (\u22120.12\u20130.71) and 2.5 (\u22123.6\u20138.7) respectively between groups [muscle strength, sit-to-stand, fatigue severity, depression]",
+   "confidence": "high"
+  },
+  "physical_function": {
+   "instrument": "SF-36 Physical Component Score (PCS)",
+   "scale_range": "0-100",
+   "higher_is_better": true,
+   "timepoint": "Post-intervention, end of 4-week inpatient programme",
+   "reported": "per_arm_mean_sd",
+   "get_arm": {
+    "label": "Aerobic training (AT), post-intervention",
+    "n": 11,
+    "mean": 39.1,
+    "sd": 4.9
+   },
+   "control_arm": {
+    "label": "Resistance training (RT), post-intervention",
+    "n": 11,
+    "mean": 39.3,
+    "sd": 8.7
+   },
+   "between_group": {
+    "measure": "mean_difference",
+    "value": 0.7,
+    "ci_low": -5.8,
+    "ci_high": 7.2,
+    "p": "0.83 (not significant)",
+    "adjusted": false
+   },
+   "evidence_quote": "SF-36 (PCS) Pre intervention 33.0 \u00b1 6.1 (RT) 33.4 \u00b1 4.8 (AT) 0.86; Post intervention 39.3 \u00b1 8.7 (RT) 39.1 \u00b1 4.9 (AT); Difference 6.4 \u00b1 8.5 (RT) 5.7 \u00b1 5.9 (AT) 0.83 ... Similar improvements in reported quality of life were also noted, with a notional difference of 0.7 (\u22125.8\u20137.2) between groups.",
+   "confidence": "high"
+  },
+  "harms": {
+   "control_events": 0,
+   "control_n": 11,
+   "get_events": 0,
+   "get_n": 11,
+   "definition": "Adverse events (not further defined); dropouts reported separately (not attributed to harm)",
+   "note": "Text states: 'both treatment interventions were well tolerated by the individuals with no adverse events being recorded.' Separately, withdrawals: RT arm n=2 (1 due to injury restricting ability to complete intervention, 1 wanted to complete both interventions instead); AT arm n=1 (didn't want to complete programme). Handled via last-observation-carried-forward for ITT, not exclusion."
+  },
+  "rob_notes": "Randomization via envelope-draw of 40 slips (20 RT/20 AT) with the drawn slip replaced into the envelope before resealing -- weak/unclear allocation concealment and risk of imbalance. Single-blind design: only the outcome assessor was blinded; participants and the treating exercise physiologist were not blinded (open-label active-comparator trial), and outcomes are self-report questionnaires (SF-36, FSS, BDI) = high risk of performance and detection bias. Explicitly a pilot trial with no power calculation, n=11/arm. One missing data point imputed via last-observation-carried-forward. No non-exercising standard-care control arm -- authors explicitly acknowledge this as a limitation.",
+  "usable_for_primary_pool": false,
+  "usable_reason": "Both arms are active exercise interventions (graded aerobic training vs progressive resistance training) with no non-exercise comparator (no usual-care/SMC, waitlist, CBT, pacing, or relaxation control). This is a head-to-head exercise-modality comparison, explicitly acknowledged by the authors as lacking a standard-care control group ('limited by ... the lack of a non-exercising, standard care control group'). Per task instructions this must be excluded from the primary GET-vs-control pool (is_get_vs_control=false, usable_for_primary_pool=false). Data are reported for completeness only; the 'AT' arm is mapped to get_arm and 'RT' arm to control_arm purely for schema compliance, not because RT functions as a true control.",
+  "notes": "Trial: Gordon BA, Knapman LM, Lubitz L. \"Graduated exercise training and progressive resistance training in adolescents with chronic fatigue syndrome: a randomized controlled pilot study.\" Clin Rehabil 2010;24:1072-1079. Single-blind pilot RCT, n=22 adolescents (13-18y, Fukuda-CDC criteria), 4-week inpatient programme, 5 days/week. GET arm = graded aerobic exercise training (stationary cycling + treadmill, 20-40 min); comparator = progressive resistance training (16 exercises, single set, moderate load/high reps) -- NOT a non-exercise control. No between-group difference on any outcome (fatigue, SF-36 PCS, exercise tolerance, strength, depression); both arms improved significantly from baseline on most measures. Authors explicitly flag lack of non-exercising standard-care control group as a key limitation. Because there is no GET-vs-non-exercise-control contrast, this trial should be excluded from the primary meta-analytic pool per protocol, though it could be cited narratively as evidence that GET and resistance training produce similar effects, or included in a sensitivity analysis of exercise-vs-exercise trials."
+ },
+ {
+  "control_arm_label": "Activity Management (AM)",
+  "control_type": "other",
+  "fatigue": {
+   "instrument": "Chalder Fatigue scale (11-item version)",
+   "timepoint": "6 months",
+   "reported": "not_reported",
+   "scale_range": "0-33 (Likert scoring, 11-item)",
+   "higher_is_better": false,
+   "get_arm": {
+    "label": "GET",
+    "n": 123
+   },
+   "control_arm": {
+    "label": "AM",
+    "n": 118
+   },
+   "between_group": {
+    "measure": "mean_difference"
+   },
+   "evidence_quote": "There was little evidence of differences between groups in the secondary outcome measures (Supplementary Table 2). The allocated groups saw similar improvements over time in mean Chalder Fatigue scores.",
+   "confidence": "low"
+  },
+  "get_arm_label": "GET (Graded Exercise Therapy)",
+  "harms": {
+   "control_events": 1,
+   "control_n": 117,
+   "definition": "Serious adverse events requiring hospital treatment; withdrawal from allocated therapy due to feeling worse",
+   "get_events": 2,
+   "get_n": 123,
+   "note": "Four SAEs total requiring hospital treatment: one event in each of 2 AM participants, two events in 1 GET participant; one SAE (psychiatric hospital admission for suicidal ideation) possibly related to GET. Withdrew due to feeling worse: 4/117 (3%) GET, 1/123 (1%) AM (note paper's n-denominators appear swapped in text). Composite deterioration (from at least one measure: CGI, SF-36-PFS drop \u226520pts, clinician report, or withdrawal-due-to-worsening): 33/123 (27%) GET vs 20/117 (17%) AM, p=0.069."
+  },
+  "is_get_vs_control": true,
+  "notes": "MAGENTA is a pragmatic, open-label, two-arm parallel RCT: GET vs Activity Management (AM, a non-exercise 'energy management'/pacing-style personalised approach managing cognitive, school and physical activity). This is a genuine GET-vs-non-exercise-control comparison; AM is coded as control_type 'other' because it's not exactly usual-care/waitlist/CBT/pacing-APT/relaxation but is closest to a pacing/activity-management comparator (similar in spirit to APT). Primary outcome and only outcome with full per-arm mean/SD reported in the main text is SF-36 physical function subscale (SF-36-PFS) at 6 months (Table 3). Chalder Fatigue scale was a SECONDARY outcome; the main-text/PDF only states qualitatively that 'the allocated groups saw similar improvements over time in mean Chalder Fatigue scores' \u2014 exact 6-month per-arm mean/SD/between-group values are in Supplementary Table 2, which was not available in the local PDF or converted body.md (only baseline Chalder means were found: GET 24.5 (SD 5.0) n=119; AM 24.0 (SD 4.9) n=115 \u2014 these are BASELINE, not the end-of-treatment outcome, so not used to populate the primary/EOT fields). Recommend sourcing the online supplementary material (https://doi.org/10.1007/s00431-024-05458-x supplementary Table 2) if precise 6-month Chalder numbers are needed for the pooled fatigue meta-analysis; until then this trial should be treated as usable for physical function (SF-36-PFS) but NOT usable for the fatigue pool (reported=not_reported, confidence=low). Diagnostic criteria: 2007 NICE criteria for ME/CFS (not Oxford/Fukuda/CCC/ICC). Age group: pediatric (8-17 years, mean ~14.3). RoB: open-label/unblinded (participants, parents, clinicians all aware of allocation) \u2014 high risk of performance bias; self-reported primary outcome (SF-36-PFS) = high risk of detection/reporting bias for a subjective measure; randomization via web-based system with minimisation by age and sex (adequate allocation concealment plausible given central web-based randomization); ITT primary analysis with multiple imputation sensitivity analyses; attrition: 103/123 (84%) GET and 98/118 (83%) AM included in 6-month primary analysis, dropping further to 59% at 12 months in both arms (differential attrition risk to long-term but not 6-month primary timepoint).",
+  "physical_function": {
+   "instrument": "SF-36 physical function subscale (SF-36-PFS)",
+   "timepoint": "6 months",
+   "reported": "both",
+   "scale_range": "0-100, 100 = best physical function",
+   "higher_is_better": true,
+   "get_arm": {
+    "label": "GET",
+    "n": 103,
+    "mean": 55.7,
+    "sd": 23.3
+   },
+   "control_arm": {
+    "label": "AM",
+    "n": 98,
+    "mean": 57.7,
+    "sd": 26
+   },
+   "between_group": {
+    "measure": "mean_difference",
+    "value": -2.02,
+    "ci_low": -7.75,
+    "ci_high": 3.7,
+    "p": "0.49",
+    "adjusted": true
+   },
+   "evidence_quote": "6-month scores 55.7 (23.3), 103 57.7 (26.0), 98 \u2212 2.02 (\u2212 7.75, 3.70) 0.49 [Table 3, SF-36-PF at 6 months (primary outcome)]; also in text: 'the mean SF-36-PFS score changed from 54.8 (standard deviation 23.7) to 55.7 (23.3) for GET and from 55.5 (23.1) to 57.7 (26.0) for AM giving an adjusted difference in means of \u22122.02 (95% confidence interval \u22127.75, 2.70)' [Abstract; note abstract CI upper bound '2.70' appears to be a typo for Table 3's '3.70']",
+   "confidence": "high"
+  },
+  "population": {
+   "diagnostic_criteria": "other",
+   "age_group": "pediatric",
+   "n_randomized_total": 241
+  },
+  "rob_notes": "Open-label RCT: \"This study was necessarily unmasked, with participants, parents and clinicians, aware of allocation.\" Randomization: web-based system (Bristol Trials Centre) with minimisation by age (8-12 vs 13-17) and sex, weighted 0.8 \u2014 adequate allocation concealment via central web-based system. Primary outcome (SF-36-PFS) is self-reported = high risk of detection bias given lack of blinding (performance/detection bias typical of GET trials). ITT primary analysis (multivariable linear regression adjusting for baseline outcome, age, sex); sensitivity analyses for missing data (multiple imputation, MAR assumption) supported same conclusions. Attrition at 6-month primary timepoint: 103/123 (84%) GET, 98/118 (83%) AM analyzed \u2014 relatively low/balanced attrition at primary timepoint, but rises to ~59% completion in both arms by 12 months (secondary timepoint). Adherence/fidelity: mean of only 3.9 (GET) and 4.6 (AM) sessions attended by 6 months \u2014 very low treatment dose (\"this lack of improvement...may be explained by the low intensity of therapy sessions\" per Conclusions), which affects interpretation of a null effect (fidelity issue, not necessarily blinding-related bias). Registered prospectively (ISRCTN23962803, 3 Sept 2015) before enrolment; primary outcome was however only confirmed in the full trial protocol after the feasibility phase had already collected some data, raising some outcome-switching concern (acknowledged by authors in Discussion).",
+  "source_used": "PDF (publisher-formatted, no JATS XML found): /home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/get-mecfs-meta-analysis/pdfs/10.1007--s00431-024-05458-x.pdf \u2014 Table 3 (SF-36-PFS at 6 and 12 months, primary analysis), Table 1 (baseline characteristics incl. baseline Chalder Fatigue), Table 2 (adherence/fidelity), Table 4 (cost-effectiveness/QALY), Fig. 1 (CONSORT flow), and Results/Discussion body text. Supplementary Table 2 (secondary outcomes incl. 6-month Chalder Fatigue per-arm data) was referenced but not available in local files (not present in get-mecfs-meta-analysis/pdfs/ nor birds_eye_review_code/projects/me_cfs or get_mecfs converted/ directories).",
+  "trial": "MAGENTA",
+  "paper_id": "10.1007/s00431-024-05458-x",
+  "usable_for_primary_pool": true,
+  "usable_reason": "Genuine GET-vs-non-exercise-control (Activity Management) parallel RCT with full per-arm mean/SD/N for the primary outcome (SF-36-PFS) at the pre-specified 6-month primary end-of-treatment timepoint, plus the adjusted between-group mean difference and 95% CI \u2014 usable for the physical-function pool. NOT usable for the fatigue pool at present because exact 6-month per-arm Chalder Fatigue means/SDs are only in Supplementary Table 2, which was not locally available (only qualitative \"similar improvements\" text and BASELINE Chalder means could be sourced)."
+ },
+ {
+  "control_arm_label": "Appointments only (exercise-control / non-exercise), pooled across fluoxetine and placebo-drug sub-arms",
+  "control_type": "other",
+  "fatigue": {
+   "instrument": "Chalder Fatigue Scale (14-item, Likert 0-33 scoring)",
+   "scale_range": "0-33 (Likert scoring)",
+   "timepoint": "26 weeks (6 months, trial's designated end-of-treatment assessment; also had week 12 interim)",
+   "reported": "between_group_only",
+   "higher_is_better": false,
+   "control_arm": {
+    "label": "Exercise-control (appointments only), pooled fluoxetine+placebo, n=35+34",
+    "n": 69
+   },
+   "get_arm": {
+    "label": "Graded exercise, pooled fluoxetine+placebo, n=33+34",
+    "n": 67
+   },
+   "between_group": {
+    "measure": "mean_difference",
+    "value": 2.9,
+    "ci_low": -0.2,
+    "ci_high": 6.1,
+    "p": "0.07",
+    "adjusted": true
+   },
+   "evidence_quote": "There were trends for exercise to improve fatigue scale scores at week 12 (n=136, mean change=2.l (95% CI -0.6 to 4.8); F(1,132)=2.36, P=0.13) and at week 26 (n=136, mean change=2.9 (95% CI -0.2 to 6.1); F(1,132)=3.35, P=0.07).",
+   "confidence": "medium"
+  },
+  "get_arm_label": "Graded exercise (with fluoxetine or placebo drug), pooled across drug factor",
+  "harms": {
+   "note": "No formal adverse-event/SAE table by arm reported. Paper reports overall drop-out rate higher with exercise than non-exercise (25/68 (37%) vs 15/69 (22%), Cox proportional hazards P=0.05) and that 11 subjects dropped out due to medication side-effects (2 taking placebo drug) - not broken down by exercise arm. No exercise-specific harm/injury counts given."
+  },
+  "is_get_vs_control": true,
+  "notes": "This is a 2x2 FACTORIAL trial (exercise vs exercise-control appointments-only) x (fluoxetine 20mg vs placebo drug), n=136 randomized (33/34/35/34 per cell). Per task instructions, GET arms (exercise+fluoxetine, exercise+placebo, total n=67 randomized) were pooled vs non-GET/exercise-control arms (exercise-control+fluoxetine, exercise-control+placebo, total n=69 randomized), collapsing the drug factor. The paper itself reports this pooled exercise main-effect directly via 2-way ANOVA on change scores (F(1,132) etc.), which is exactly the GET-vs-control contrast needed - I used these pooled values rather than combining the 4 raw cells myself. Table 2 (page 4 of PDF) gives per-CELL (not pooled) mean(95% CI) for fatigue scale and mean(s.d.)/mean(95%CI) for functional work capacity at weeks 0, 0-12, 0-26, but NOT per-arm SD for fatigue at any timepoint (baseline fatigue is reported as mean with 95% CI, not SD, unlike fwc and HAD-depression which do report baseline SD). Because only pooled between-group ANOVA results (not per-arm pooled mean/SD) are directly stated in text, and the four individual factorial cells were not further pooled to synthetic mean/SD by me (would require assuming equal weighting/variance across unequal n cells, not stated in source), I report reported='between_group_only' for both outcomes with confidence=medium (numbers are exact/verbatim but the GET-vs-control arms are themselves already-pooled composites from a factorial design, and no independent per-arm SD is available to construct SMD). Trial-completer (per-protocol) sensitivity results at 26 weeks also reported in text (mean change=4.5, 95% CI 0.3-8.7, F(1,92)=4.98, P=0.028, n=96) but ITT is the primary/reported analysis and is what I used. Oxford criteria explicitly stated. Adults only (>18y). This is the trial commonly cited as 'Wearden 1998'.",
+  "paper_id": "10.1192/bjp.172.6.485",
+  "physical_function": {
+   "instrument": "Functional work capacity (fwc) - oxygen consumption (ml O2 per kg body weight per min) in final minute of graded cycle-ergometer exercise test; NOT SF-36 or 6MWT",
+   "scale_range": "ml O2 kg-1 min-1 (no fixed upper bound; baseline means ~20-26)",
+   "timepoint": "26 weeks (6 months)",
+   "reported": "between_group_only",
+   "higher_is_better": true,
+   "control_arm": {
+    "label": "Exercise-control (appointments only), pooled fluoxetine+placebo",
+    "n": 69
+   },
+   "get_arm": {
+    "label": "Graded exercise, pooled fluoxetine+placebo",
+    "n": 67
+   },
+   "between_group": {
+    "measure": "mean_difference",
+    "value": 1.9,
+    "ci_low": 0.15,
+    "ci_high": 3.69,
+    "p": "0.03",
+    "adjusted": true
+   },
+   "evidence_quote": "There was a significant effect of exercise on functional work capacity at both weeks 12 (n=132, mean change=2.0 (95% CI 0.60-3.49); F(1,28)=7.99, P=O.OOS) and 26 (n=132, mean change=1.9 (95% CI 0.15-3.69); F(1,128)=4.74, P=0.03).",
+   "confidence": "medium"
+  },
+  "population": {
+   "diagnostic_criteria": "oxford",
+   "age_group": "adult",
+   "n_randomized_total": 136
+  },
+  "rob_notes": "Randomization: computer-generated random numbers, balanced in blocks of 10, no stratification (adequate sequence generation). Allocation concealment: subject-number list with exercise-group assignment held by physiotherapist; pharmacy dispensed drug per subject number (concealment of drug allocation reasonable; concealment of exercise allocation from the randomizer/assessor less clear). Blinding: drug arm was double-blind (identical placebo capsule); exercise arm was NOT possible to blind in the usual sense - patients were told they'd receive 'one of two forms of lifestyle advice' and were blind to which, but this is a weak sham (activity-diary review as placebo control) rather than true blinding, so high risk of performance bias for the exercise contrast. Primary outcome (Chalder fatigue scale) is self-reported = high risk of detection/reporting bias given unblinded exercise allocation. Attrition: high and differential - 37% dropout in exercise vs 22% in non-exercise arms (P=0.05), handled via last-observation-carried-forward (previous assessment substituted) in ITT analysis, which is a further risk of bias (conservative but not unbiased). Outcome assessment for functional work capacity (cycle ergometer test) is more objective but still subject to effort/motivation effects post unblinded intervention.",
+  "source_used": "PDF (get-mecfs-meta-analysis/pdfs/10.1192--bjp.172.6.485.pdf), pages 1-7; key data from Table 1 (baseline demographics, p.487), Table 2 (baseline & change scores for fatigue scale, HAD depression, functional work capacity, p.488), Table 3 (case-level fatigue counts, p.488), Table 4 (HAD depression case counts, p.489), and RESULTS text (Intention to treat analysis of changes in scores, p.487-488). No JATS XML available; converted body.md was not used (per instructions) since PDF was read directly and confirmed the tables.",
+  "trial": "Wearden 1998",
+  "usable_for_primary_pool": true,
+  "usable_reason": "Genuine GET vs non-exercise control (appointments-only) contrast exists and is directly reported by the trial's own factorial ANOVA (pooling the fluoxetine/placebo-drug factor), giving a between-group mean-difference + 95% CI + p for both fatigue and physical function (functional work capacity) at the 26-week end-of-treatment timepoint. Usable for the primary GET-vs-control pool, but only as a between-group MD/CI entry (no per-arm SD available for fatigue, precluding independent SMD computation from this source alone) \u2014 flagged accordingly with confidence=medium on both outcomes."
+ },
+ {
+  "trial": "Moss-Morris 2005",
+  "paper_id": "10.1177/1359105305049774",
+  "source_used": "PDF (no JATS XML available): get-mecfs-meta-analysis/pdfs/10.1177--1359105305049774.pdf \u2014 Table 1 (p.250), Table 2 (p.251), Table 4 (p.252), Figure 1 (p.253)",
+  "population": {
+   "diagnostic_criteria": "fukuda_cdc",
+   "age_group": "adult",
+   "n_randomized_total": 49
+  },
+  "is_get_vs_control": true,
+  "control_arm_label": "Standard medical care (SMC) control group",
+  "control_type": "usual_care/SMC",
+  "get_arm_label": "12-week graded exercise therapy group",
+  "fatigue": {
+   "instrument": "14-item Fatigue Scale (Chalder et al.), 0-3 Likert scoring, 'total fatigue score' (physical+mental subscales combined)",
+   "scale_range": "0-42 (14 items x 0-3); physical fatigue and mental fatigue subscales also reported separately",
+   "timepoint": "12 weeks (end of 12-week treatment period) \u2014 primary end-of-treatment timepoint; 42-week (6-month) follow-up also reported separately",
+   "reported": "per_arm_mean_sd",
+   "get_arm": {
+    "label": "Exercise group",
+    "n": 22,
+    "mean": 13.91,
+    "sd": 10.88
+   },
+   "control_arm": {
+    "label": "Control group",
+    "n": 21,
+    "mean": 24.41,
+    "sd": 9.69
+   },
+   "higher_is_better": false,
+   "between_group": {
+    "measure": "mean_difference",
+    "p": ".02",
+    "adjusted": true
+   },
+   "evidence_quote": "Total fatigue score ... Exercise group (n=25) [baseline 24.45 (8.79)] Control group (n=24) [baseline 25.35 (8.05)] ... After the 12-week treatment period Exercise group (n=22) 13.91(10.88) Control group (n=21) 24.41(9.69) beta value .34 (p = .02)",
+   "confidence": "high"
+  },
+  "physical_function": {
+   "instrument": "SF-36 physical functioning subscale",
+   "scale_range": "0-100",
+   "timepoint": "12 weeks (end of 12-week treatment period)",
+   "reported": "per_arm_mean_sd",
+   "get_arm": {
+    "label": "Exercise group",
+    "n": 22,
+    "mean": 69.05,
+    "sd": 21.94
+   },
+   "control_arm": {
+    "label": "Control group",
+    "n": 21,
+    "mean": 55,
+    "sd": 22.94
+   },
+   "higher_is_better": true,
+   "between_group": {
+    "measure": "mean_difference",
+    "p": ".49",
+    "adjusted": true
+   },
+   "evidence_quote": "SF-36 Physical functioning ... Exercise group (n=25) 53.10(18.39) baseline; Control group (n=24) 45.65(21.07) baseline ... After 12-week: Exercise group (n=22) 69.05(21.94) Control group (n=21) 55.00(22.94) beta value -.10 (p=.49)",
+   "confidence": "high"
+  },
+  "harms": {
+   "note": "No serious adverse events reported. Dropout: 3 of 25 exercise-group patients dropped out of treatment (one moved overseas while doing well, one injured her calf and discontinued, reason for third not fully specified at follow-up); 3 of 24 control patients did not return 12-week follow-up questionnaires. No harm-attributed dropout in control (non-exercise) arm; the one exercise dropout (calf injury) was exercise-related but not classed as a serious adverse event.",
+   "get_n": 25,
+   "control_n": 24,
+   "get_events": 3,
+   "control_events": 3,
+   "definition": "Dropout from treatment/follow-up (not necessarily harm-related); only 1 of the 3 GET dropouts (calf injury) is plausibly exercise-related harm"
+  },
+  "rob_notes": "Randomization: computer-generated random number sequence in sealed opaque envelopes by independent administrator (adequate allocation concealment described). Open-label design \u2014 no blinding of participants or clinicians possible given nature of intervention (exercise vs standard care); primary/secondary outcomes are entirely self-report (Fatigue Scale, SF-36, global impression of change) = high risk of performance and detection bias. Attrition: 3/25 (12%) exercise and 3/24 (12.5%) control did not complete 12-week outcome data (88% completion both groups); ITT analysis conducted substituting non-improver status/carried-forward baseline scores, results held for fatigue but note per-arm N in Table 2 reflects completers (n=22 exercise, n=21 control) not the full randomized n=25/24. Small sample (power calculated for n=27/arm but only n=25/24 achieved, so likely underpowered for physical function outcome, consistent with the null SF-36 finding). Baseline imbalance: exercise group significantly younger (36.72 vs 45.48, p=.009); age was controlled for in regression analyses. Single site, single un-blinded assessor context typical of open-label GET trials.",
+  "usable_for_primary_pool": true,
+  "usable_reason": "Genuine GET (12-week individualized graded exercise programme) vs non-exercise standard-medical-care control, two-arm parallel RCT with per-arm mean/SD at end-of-treatment (12 weeks) for both fatigue (14-item Fatigue Scale total score) and physical function (SF-36 PF subscale). Suitable for SMD pooling using per-arm means/SDs from Table 2.",
+  "notes": "Fatigue Scale uses 0-3 item scoring (not the more common 0-11 bimodal or 0-33 Likert scoring), giving a total-score range of 0-42 for 14 items (physical fatigue subscale + mental fatigue subscale = total). When pooling as SMD this doesn't matter (scale-free), but if pooling as raw mean difference against other trials using different Chalder scoring, must convert/exclude. Between-group effect reported only as a standardized regression beta-weight (controlling for age and baseline score), not as mean-difference/CI/SMD, so no numeric MD/CI could be extracted for between_group.value/ci_low/ci_high \u2014 only beta and p are quoted in evidence_quote. Raw per-arm means/SDs (Table 2) are the more directly poolable numbers and are high-confidence. Primary study outcome per the authors was actually the dichotomous self-rated global improvement (12/22, 54.5% GET 'much/very much better' vs 5/21, 23.8% control; chi-sq=4.25, p=.04; NNT=3.2), not fatigue/physical-function per se, but fatigue and SF-36 PF are the standard outcomes needed for this meta-analysis's fatigue/physical-function pooled estimates. 6-month (42-week) follow-up data exist in Figure 1 (not extracted here per end-of-treatment instruction) showing gains maintained for physical fatigue (repeated-measures group x time interaction significant, p<.05) but not mental fatigue or physical functioning."
+ },
+ {
+  "trial": "Nunez 2011",
+  "paper_id": "10.1007/s10067-010-1677-y",
+  "source_used": "Original PDF (get-mecfs-meta-analysis/pdfs/10.1007--s10067-010-1677-y.pdf), Table 1 (baseline) and Table 2 (Outcome measures of SF-36 and HAQ questionnaires at 12 months) plus Results/Between-group differences text paragraph reporting FIS scores. No JATS XML available.",
+  "population": {
+   "diagnostic_criteria": "fukuda_cdc",
+   "age_group": "adult",
+   "n_randomized_total": 120
+  },
+  "is_get_vs_control": false,
+  "fatigue": {
+   "instrument": "Fatigue Impact Scale (FIS), range 0-160",
+   "timepoint": "12 months after end of treatment",
+   "reported": "per_arm_mean_sd",
+   "get_arm": {
+    "label": "Intervention group (group CBT + GET + pharmacological treatment)",
+    "n": 58,
+    "mean": 139.2,
+    "sd": 8.3
+   },
+   "control_arm": {
+    "label": "Control group (usual treatment: exercise counselling + pharmacological treatment)",
+    "n": 57,
+    "mean": 137.4,
+    "sd": 10.1
+   },
+   "between_group": {
+    "measure": "mean_difference",
+    "p": "ns (exact value not reported)",
+    "adjusted": false
+   },
+   "higher_is_better": false,
+   "scale_range": "0-160",
+   "confidence": "low",
+   "evidence_quote": "There were no significant differences in FIS scores, which were 137.3\u00b19.6 and 135.7\u00b110.5 at baseline and 139.2\u00b18.3 and 137.4\u00b110.1 at 12 months in the intervention and control groups, respectively."
+  },
+  "physical_function": {
+   "instrument": "SF-36 physical function subscale",
+   "timepoint": "12 months after end of treatment",
+   "reported": "both",
+   "get_arm": {
+    "label": "Intervention group (group CBT + GET + pharmacological treatment)",
+    "n": 58,
+    "mean": 32.63,
+    "sd": 22.52
+   },
+   "control_arm": {
+    "label": "Control group (usual treatment: exercise counselling + pharmacological treatment)",
+    "n": 57,
+    "mean": 38.28,
+    "sd": 22.73
+   },
+   "between_group": {
+    "measure": "mean_difference",
+    "p": "0.147",
+    "adjusted": false
+   },
+   "higher_is_better": true,
+   "scale_range": "0-100",
+   "confidence": "high",
+   "evidence_quote": "Physical function 39.69\u00b122.80 32.63\u00b122.52 0.004 40.04\u00b122.09 38.28\u00b122.73 0.975 0.147"
+  },
+  "harms": {
+   "note": "No serious adverse events or harms data reported for either group. Dropout was for non-attendance only (2 from intervention, 3 from control), not attributed to harm. Disclosures: None."
+  },
+  "rob_notes": "Randomization via ad hoc random-number generator; allocation performed by an author blinded to the randomization sequence (reasonable allocation concealment). No blinding of participants/providers possible (open-label CBT+GET vs usual care) -> high risk of performance bias. Outcome assessor described as independent and blinded to group assignment, but primary outcomes (SF-36, HAQ, FIS) are self-administered/self-reported questionnaires, limiting the value of assessor blinding against reporting bias. Attrition low and balanced (5/120, ~4%). CRITICAL CAVEAT: intervention arm is a combined multidisciplinary package (group CBT + GET + pharmacotherapy) vs usual treatment (exercise counselling + pharmacotherapy) -- GET's independent contribution cannot be isolated, so is_get_vs_control=false. Fatigue (FIS) was a secondary, sparsely reported outcome (no exact p or CI); primary outcome was SF-36 HRQL. The 12-month timepoint is long-term follow-up after treatment ended, not an immediate end-of-treatment assessment -- no earlier post-treatment data reported.",
+  "usable_for_primary_pool": false,
+  "usable_reason": "Intervention combines CBT+GET as one package vs a non-exercise usual-care control, so GET's independent effect cannot be extracted (is_get_vs_control=false). Fatigue outcome (FIS) is sparsely reported (means/SDs only, no CI/exact p) and was secondary; SF-36 physical function reflects 12-month long-term follow-up, not immediate post-treatment. Exclude from primary GET-only pooled estimate; consider only for a sensitivity analysis of combined CBT+GET packages."
+ },
+ {
+  "control_arm_label": "Standardised medical care (control) \u2014 medical assessment, advice, and information booklet encouraging graded activity but with no physiological explanation of symptoms",
+  "control_type": "usual_care/SMC",
+  "fatigue": {
+   "instrument": "Chalder Fatigue Scale (bimodal 0-11)",
+   "scale_range": "0-11",
+   "higher_is_better": false,
+   "timepoint": "12 months (1 year) post-randomisation \u2014 the trial's own predetermined primary follow-up point; intention-to-treat with last-value-carried-forward for dropouts",
+   "reported": "per_arm_mean_sd",
+   "control_arm": {
+    "label": "Standardised medical care",
+    "n": 34,
+    "mean": 10.1,
+    "sd": 2.23
+   },
+   "get_arm": {
+    "label": "GET education (pooled Min+Tel+Max arms)",
+    "n": 114,
+    "mean": 3.27,
+    "sd": 4.32
+   },
+   "between_group": {
+    "measure": "mean_difference",
+    "p": "<0.001 (each intervention arm vs control; overall omnibus F(3,142)=24.99, P<0.001)"
+   },
+   "confidence": "high",
+   "evidence_quote": "Fatigue scale\u2021 ... 1 year 10.1 (9.3 to 10.8) 3.2 (1.8 to 4.7) 3.5 (2.1 to 4.9) 3.1 (1.8 to 4.4) <0.001 ... \u2021 Score range 0-11, where scores>4=excessive fatigue. *P values derived from one way analysis of covariance on scores at one year with initial scores and depression scores as covariates."
+  },
+  "get_arm_label": "Maximum intervention (n=38): education about physiological basis of symptoms + individually-designed home-based graded exercise programme + 2 face-to-face sessions + 7 additional one-hour face-to-face sessions over 3 months. (Minimum intervention n=37, and Telephone intervention n=39, received the identical graded-exercise education/programme with less follow-up support; all three did not differ significantly from each other on primary outcomes, so any of the three could serve as the \"GET/education-to-exercise\" arm \u2014 Maximum intervention chosen here as the most intensively supported.)",
+  "harms": {
+   "definition": "Dropouts during treatment; reasons given (medical, psychiatric, no reason, emigrated, dissatisfied) \u2014 no explicit \"serious adverse event\" reporting in this paper",
+   "get_events": 19,
+   "get_n": 114,
+   "control_events": 2,
+   "control_n": 34,
+   "note": "19 of 21 total dropouts were from the three intervention (education/graded-exercise) groups combined (n=114 total across 3 arms: 37+39+38), vs 2 from control (n=34). Reasons for the 19 intervention dropouts: 8 medical reasons, 7 psychiatric reasons, 4 no reason given, 1 emigrated, 1 dissatisfied with treatment. No formal serious-adverse-event or harm-specific reporting; these are all-cause treatment dropouts, not verified harms."
+  },
+  "is_get_vs_control": true,
+  "notes": "This trial (Powell 2001, BMJ) is an educational intervention that explains the physiological basis of CFS symptoms and encourages self-managed HOME-BASED GRADED EXERCISE, delivered with varying intensity of therapist support (minimum/telephone/maximum), vs standardised medical care (which itself included an information booklet 'that encouraged graded activity' but gave no physiological explanation). It is commonly included in GET-vs-control meta-analyses (e.g. Cochrane Larun et al.) as a graded-exercise/advice trial, though it is arguably more an 'education + self-directed GET' trial than a formally supervised GET programme (unlike PACE/Fulcher-White/GETSET). There are 3 intervention arms and no significant differences were found between them ('No significant differences were found between the three intervention groups' \u2014 abstract; also confirmed in Results). Because there is no single combined-arm mean/SD reported in the paper, I selected the Maximum intervention arm (n=38) as the representative GET/education arm for the primary pool fields above, but the Minimum (n=37) or Telephone (n=39) intervention arms have nearly identical 1-year outcomes (Fatigue 1yr: 3.2, 3.5, 3.1 respectively; SF-36 PF 1yr: 25.1, 24.3, 24.9 respectively) and could equally be used, or all three could be pooled (would need pairwise combination formula since only per-arm CIs, not raw data, are available). Per-arm SDs are NOT directly reported in the source \u2014 Table 3 reports means with 95% CI only; SDs above were back-calculated from CI half-width and the ITT (randomised) n per arm: SE=(upper-lower)/(2*1.96), SD=SE*sqrt(n). This is mathematically sound but introduces some uncertainty (assumes normal approximation and that n used for CI = n randomized), hence confidence='medium' rather than 'high'. Primary outcome per the paper's own definition was the SF-36 physical-functioning subscale (dichotomized clinical-improvement criterion: score >=25 or increase >=10) plus the continuous fatigue scale score, both assessed at 12 months with ANCOVA (baseline score + depression score as covariates) \u2014 the between-group P<0.001 values reported are ANCOVA omnibus/pairwise P-values, not simple mean-difference CIs; the paper does not give an explicit MD/SMD with 95% CI for the group contrast, only per-arm means+CIs and ANCOVA P-values. No explicit serious-adverse-event reporting; dropout counts by arm are given (see harms field) but are not framed as harms specifically. Diagnostic criteria: Oxford (Sharpe et al 1991 operational criteria) explicitly stated ('148 consecutively referred patients fulfilling Oxford criteria'). Age: adults 15-55 (age_group=adult though lower bound 15 slightly overlaps adolescent; trial context and mean age ~33-34 mean it's essentially an adult sample). RoB: open-label, unblinded (patients and clinicians aware of allocation; impossible to blind an educational/exercise-advice intervention vs standard care), self-report primary outcomes (SF-36 PF and Chalder-type fatigue scale) = high risk of performance and detection bias. Randomization: 'computer generated random numbers in sealed numbered envelopes' with stratification by HADS depression cutoff \u2014 allocation concealment appears reasonable (sealed sequentially numbered envelopes) though not explicitly confirmed as opaque/tamper-evident. Attrition: 21/148 (14%) dropped out overall, asymmetric across arms (2/34 control vs 19/114 pooled intervention arms) \u2014 differential attrition is a risk-of-bias concern, though ITT-LOCF analysis was used for all randomised patients. No SF-36 raw table numbers were altered/invented; all values are transcribed directly from Table 3 of the PDF (BMJ 2001;322:387, pages 1-5 of the downloaded PDF). | PATCHED: pooled 3 intervention (education-to-encourage-graded-exercise) arms n=114 vs control n=34; SF-36 PF is Powell's 10-30 subscale, fatigue is Chalder 0-11 bimodal (source Table 3 = mean(95%CI); SDs back-converted). Intervention is patient education, NOT supervised GET -> flag + exclude-Powell sensitivity.",
+  "paper_id": "10.1136/bmj.322.7283.387",
+  "physical_function": {
+   "instrument": "SF-36 physical function subscale (Powell 10-30 scoring)",
+   "scale_range": "10-30",
+   "higher_is_better": true,
+   "timepoint": "12 months (1 year) post-randomisation \u2014 predetermined primary timepoint; ITT with LOCF",
+   "reported": "per_arm_mean_sd",
+   "control_arm": {
+    "label": "Standardised medical care",
+    "n": 34,
+    "mean": 16.9,
+    "sd": 4.46
+   },
+   "get_arm": {
+    "label": "GET education (pooled Min+Tel+Max arms)",
+    "n": 114,
+    "mean": 24.76,
+    "sd": 5.22
+   },
+   "between_group": {
+    "measure": "mean_difference",
+    "p": "<0.001 (each intervention arm vs control; overall omnibus F(3,142)=24.15, P<0.001)"
+   },
+   "confidence": "high",
+   "evidence_quote": "SF-36 physical functioning\u2020 ... 1 year 16.9 (15.4 to 18.4) 25.1 (23.3 to 26.8) 24.3 (22.5 to 26.0) 24.9 (23.4 to 26.4) <0.001 ... \u2020 Score range 10-30, where 10=maximum impairment and 30=no limitation on physical activity. Main outcome measure A score of >25 or an increase of >10 on the SF-36 physical functioning subscale (range 10 to 30) 12 months after randomisation."
+  },
+  "population": {
+   "diagnostic_criteria": "oxford",
+   "age_group": "adult",
+   "n_randomized_total": 148
+  },
+  "rob_notes": "Open-label trial: patients and clinicians necessarily unblinded (education/graded-exercise intervention vs standardised medical care cannot be masked); all primary outcomes are self-reported questionnaires (SF-36 physical function, Chalder-type fatigue scale) = high risk of performance and detection bias. Randomisation via computer-generated random numbers in sealed numbered envelopes, stratified by HADS depression cutoff (>=11) \u2014 allocation concealment plausible but not explicitly detailed as tamper-evident/opaque. Differential attrition: 21/148 (14%) overall dropouts, but heavily skewed to intervention arms (19/114 in the 3 active arms vs 2/34 in control), a moderate attrition/differential-dropout risk despite ITT-LOCF analysis being used for all randomised patients. Sample size was calculated a priori (26/group, target 34/group) and achieved (148 randomised across 4 groups). No mention of blinded outcome assessors. Group comparisons for the 3 intervention arms vs each other were post hoc / not prespecified (Bonferroni-corrected).",
+  "source_used": "PDF (no JATS XML available) at /home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/get-mecfs-meta-analysis/pdfs/10.1136--bmj.322.7283.387.pdf \u2014 Table 3 'Mean (95% confidence interval) scores on primary outcome measures at baseline and follow up at three, six, and 12 months' (page 4 of PDF)",
+  "trial": "Powell 2001",
+  "usable_for_primary_pool": true,
+  "usable_reason": "Genuine RCT of an intervention that explicitly promotes home-based graded exercise (via physiological education) vs a non-exercise-focused standardised-medical-care control, with clear per-arm 12-month means and back-calculable SDs for both primary outcomes (SF-36 PF and Chalder-type fatigue). Usable for the primary pool, though flagged in notes as an 'education-to-encourage-self-managed-GET' design rather than a formally supervised/titrated GET protocol, and as having 3 intervention arms of similar effect requiring an arm-selection or pooling decision."
+ },
+ {
+  "trial": "Fulcher &amp; White 1997",
+  "paper_id": "10.1136/bmj.314.7095.1647",
+  "source_used": "PDF (no JATS XML available): /home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/get-mecfs-meta-analysis/pdfs/10.1136--bmj.314.7095.1647.pdf, pages 3-4, Table 3 \"Symptomatic and functional measures at baseline and after completing treatment\" (cross-checked against converted body.md, which retained this table intact)",
+  "population": {
+   "diagnostic_criteria": "oxford",
+   "age_group": "adult",
+   "n_randomized_total": 66
+  },
+  "is_get_vs_control": true,
+  "fatigue": {
+   "instrument": "Chalder fatigue scale (14-item questionnaire, Likert 0-33 scoring; normal/usual score = 14)",
+   "timepoint": "After 12 weeks of treatment (end of treatment, completers analysis)",
+   "reported": "per_arm_mean_sd",
+   "get_arm": {
+    "label": "Exercise group",
+    "n": 29,
+    "mean": 20.5,
+    "sd": 8.9
+   },
+   "control_arm": {
+    "label": "Flexibility group",
+    "n": 30,
+    "mean": 27.4,
+    "sd": 7.4
+   },
+   "between_group": {
+    "measure": "mean_difference",
+    "p": "0.004",
+    "adjusted": false
+   },
+   "higher_is_better": false,
+   "evidence_quote": "Table 3: Mean (SD) Chalder fatigue score \u2014 Baseline: Exercise group 28.9 (7.1), Flexibility group 30.5 (5.6); After 12 weeks of treatment: Exercise group 20.5 (8.9), Flexibility group 27.4 (7.4); P value 0.004",
+   "confidence": "high"
+  },
+  "physical_function": {
+   "instrument": "SF-36 physical function subscale (0-100, 100=full capacity)",
+   "timepoint": "After 12 weeks of treatment (end of treatment, completers analysis)",
+   "reported": "per_arm_mean_sd",
+   "get_arm": {
+    "label": "Exercise group",
+    "n": 29,
+    "mean": 69,
+    "sd": 18.5
+   },
+   "control_arm": {
+    "label": "Flexibility group",
+    "n": 30,
+    "mean": 55,
+    "sd": 21.8
+   },
+   "between_group": {
+    "measure": "mean_difference",
+    "p": "0.01",
+    "adjusted": false
+   },
+   "higher_is_better": true,
+   "evidence_quote": "Table 3: Mean (SD) SF-36 physical function score \u2014 Baseline: Exercise group 48.5 (22.1), Flexibility group 47 (18.7); After 12 weeks of treatment: Exercise group 69 (18.5), Flexibility group 55 (21.8); P value 0.01",
+   "confidence": "high"
+  },
+  "get_arm_label": "Exercise group (graded aerobic exercise, 12 weeks supervised)",
+  "control_arm_label": "Flexibility group (flexibility exercises and relaxation therapy, 12 weeks supervised)",
+  "control_type": "other_exercise",
+  "harms": {
+   "get_n": 33,
+   "control_n": 33,
+   "get_events": 4,
+   "control_events": 3,
+   "definition": "Patients who dropped out of allocated treatment before completion (all-cause); separately, only 2 patients total (1 per group) rated themselves worse after treatment, and only 2 patients total (1 per group) said they dropped out specifically because treatment made them worse. No serious adverse events reported.",
+   "note": "Verbatim: \"Four patients receiving exercise and three receiving flexibility treatment dropped out before completion... Only two patients (one in each group) rated themselves worse after treatment... Only two patients (one from each group) said they dropped out because the treatment made them worse.\""
+  },
+  "rob_notes": "Randomization: computer/random-number-table generated allocation sequence (\"arranged in random order determined by random number tables\"), with allocation concealed via sealed opaque envelopes prepared and opened by an independent administrator blind to psychiatrist \u2014 reasonable allocation concealment. Blinding: NOT possible for participants or treating exercise physiologists (open-label, both arms knew which active behavioral treatment they received); the assessing psychiatrist who recorded the primary outcome (self-rated clinical global impression change score) WAS blind to treatment allocation, but the primary secondary outcomes reported here (Chalder fatigue, SF-36) are self-rated by unblinded patients -- high risk of performance/detection bias for these self-report measures. Attrition: low and balanced (4/33 exercise vs 3/33 flexibility dropped out before 12-week completion; ~12% overall), intention-to-treat sensitivity analysis reported for the primary CGI outcome only, not clearly for Chalder/SF-36 (Table 3 appears to be completers-only, n=29/30). Outcome measurement: fatigue and physical function are self-report questionnaires, consistent with the open-label design's bias risk.",
+  "usable_for_primary_pool": true,
+  "usable_reason": "Genuine GET-vs-non-exercise... ",
+  "notes": "Trial is 12 weeks of supervised graded aerobic exercise vs 12 weeks of flexibility+relaxation therapy (non-exercise, attention-matched control), n=33/33 randomized, Oxford criteria, adults, single-center UK (St Bartholomew's/Royal London). Table 3 provides per-arm mean(SD) at baseline and after 12 weeks (completers n=29 exercise, n=30 flexibility) for both Chalder fatigue and SF-36 physical function, plus a p-value column, but does NOT give an explicit between-group mean-difference estimate with 95% CI (only p-values, likely from Student's t-test per the Methods). No long-term (3-month/1-year) Chalder or SF-36 means are reported \u2014 those follow-ups only report categorical self-rated global improvement, not fatigue/function scale scores, so they cannot substitute for the 12-week endpoint. The primary outcome per the trial's own design was the self-rated Clinical Global Impression change score (not Chalder/SF-36), but per task instructions Chalder fatigue scale and SF-36 physical function are extracted here as the standardized fatigue/function outcomes for pooling. Confidence is 'high' for both because the exact per-arm n/mean/SD are directly read from the table image (cross-validated against two independent renders and against body.md's OCR text, which matched exactly)."
+ },
+ {
+  "trial": "Wallman 2004",
+  "paper_id": "10.5694/j.1326-5377.2004.tb06019.x",
+  "source_used": "PDF (no JATS XML available) - /home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/get-mecfs-meta-analysis/pdfs/10.5694--j.1326-5377.2004.tb06019.x.pdf ; Box 5 'Psychological, cognitive and general health scores' (page 4) for fatigue; Box 2/Box 3 (pages 2-3) for physiological/physical-function-adjacent data",
+  "population": {
+   "diagnostic_criteria": "fukuda_cdc",
+   "age_group": "adult",
+   "n_randomized_total": 68
+  },
+  "is_get_vs_control": true,
+  "control_arm_label": "Relaxation/flexibility (attention-placebo control)",
+  "control_type": "relaxation",
+  "get_arm_label": "Graded exercise with pacing",
+  "fatigue": {
+   "instrument": "Chalder Fatigue Scale (14-item self-rating scale, Chalder et al. 1993) reported as two subscales: Mental fatigue (max 12) and Physical fatigue (max 21) - NOT a single combined 0-33 score in this paper's reporting",
+   "timepoint": "Post-intervention (end of 12-week treatment)",
+   "scale_range": "Mental fatigue 0-12; Physical fatigue 0-21 (combined possible range 0-33 but not reported as single total)",
+   "higher_is_better": false,
+   "reported": "per_arm_mean_sd",
+   "get_arm": {
+    "label": "Graded exercise",
+    "n": 32,
+    "mean": 8.1
+   },
+   "control_arm": {
+    "label": "Relaxation/flexibility",
+    "n": 29,
+    "mean": 9.6
+   },
+   "between_group": {
+    "measure": "mean_difference",
+    "p": "0.074 (Physical fatigue, group x time interaction ANOVA); Mental fatigue P=0.023",
+    "adjusted": false
+   },
+   "confidence": "low",
+   "evidence_quote": "Mental fatigue\u2020 6.3 (5.6\u20137.0) 4.5 (3.9\u20135.2) 5.6 (5.0\u20136.1) 4.8 (4.2\u20135.5) 0.023 / Physical fatigue\u2020 11.6 (10.1\u201313.0) 8.1 (6.9\u20139.4) 11.4 (10.4\u201312.3) 9.6 (8.3\u201310.9) 0.074 [Box 5; \u2020 Maximum possible scores for mental and physical fatigue are 12 and 21, respectively]"
+  },
+  "physical_function": {
+   "instrument": "Not reported - no SF-36 physical function subscale or 6-minute walk test in this paper. Closest physiological proxy is submaximal cycle test work capacity (power output, W/kg, Aerobic Power Index test), reported only as a graph with 95% CI error bars (Box 2), not as an exact numeric table.",
+   "timepoint": "Post-intervention (end of 12-week treatment)",
+   "scale_range": "not_applicable (W/kg power output, not a 0-100 SF-36 scale)",
+   "higher_is_better": true,
+   "reported": "not_reported",
+   "get_arm": {
+    "label": "Graded exercise",
+    "n": 32
+   },
+   "control_arm": {
+    "label": "Relaxation/flexibility",
+    "n": 29
+   },
+   "confidence": "low",
+   "evidence_quote": "We observed a significant improvement in resting systolic BP (P=0.018) and in W\u00b7kg-1 (P=0.019) in the exercise group... Box 2: Changes (95% CIs) in selected physiological variables - Power output (W/kg) [graph only, no exact numeric table with means/SD provided in text]"
+  },
+  "harms": {
+   "get_n": 32,
+   "control_n": 29,
+   "get_events": 0,
+   "definition": "Subject-reported relapse/worsening of symptoms attributable to the intervention; no serious adverse events reported. On self-rated clinical global impression change scale, 0 GET subjects rated themselves 'a little worse'/'much worse'/'very much worse'; 1 relaxation/flexibility subject rated 'a little worse'.",
+   "note": "\"An important aspect of our study was that graded exercise was not associated with a relapse in any participant.\" Attrition: of 68 randomised (34 per arm), 2 exercise subjects withdrew and 5 relaxation/flexibility subjects withdrew during the 4-week baseline testing period, leaving 32 and 29 respectively who completed baseline + intervention + post-testing."
+  },
+  "rob_notes": "Randomisation done 'by an independent investigator' - method/allocation concealment not described in detail. Open-label: 'neither subjects nor the exercise physiologist were blinded to the intervention' (explicitly stated as a limitation). Control arm (relaxation/flexibility) is an attention-placebo control, which partially addresses non-specific effects but not exercise-specific expectancy. Primary outcomes (fatigue, depression, anxiety) are self-report questionnaires -> high risk of performance and detection bias given lack of blinding. Attrition: 6/34 (18%) withdrew from exercise arm and 5/34 (15%) from relaxation arm before/during baseline testing, analysed as completers (32 and 29) - no ITT analysis reported. Small sample (n=61 analysed).",
+  "usable_for_primary_pool": true,
+  "usable_reason": "Genuine GET vs non-exercise (relaxation/flexibility attention-placebo) control trial with Fukuda-CDC diagnosed adults. Fatigue data usable via Chalder-scale physical/mental fatigue subscale per-arm means (n, mean) at end of 12-week treatment, though SD not reported (only 95% CI - would need back-calculation: SD = CI_halfwidth * sqrt(n) / 1.96). Physical function (SF-36/6MWT) not reported at all in this paper - only graphical physiological work-capacity data without exact numbers, so not usable for physical function pooling from this source. Recommend back-calculating SD from the 95% CI bounds given in Box 5 for fatigue if pooling.",
+  "notes": "This is the Wallman/Morton/Goodman/Grove/Guilfoyle 2004 MJA trial ('Randomised controlled trial of graded exercise in chronic fatigue syndrome'), 12-week graded exercise WITH PACING vs relaxation/flexibility (attention-placebo control), Fukuda-CDC diagnosed adults (16-74 yo), N=61 analysed (32 GET, 29 control) of 68 randomised. No JATS XML was available; PDF was read directly and body.md was not used since it is known to lose tables. All numeric tables (Box 3, 4, 5, 6) were captured from the PDF render; Box 2 is a figure/graph only (values not numerically tabulated in text) so exact power-output/physical-function means+SD could not be extracted. Fatigue subscales (mental/physical) are reported as means with 95% CI (not SD) per arm at baseline and post-intervention; the group x time interaction ANOVA p-values are 0.023 (mental fatigue) and 0.074 (physical fatigue) - these are omnibus interaction p-values, not necessarily identical to a simple post-hoc between-group comparison at post-intervention alone. Depression (HADS) was significantly improved in GET vs control (interaction P=0.041; text states post-hoc P=0.027 for post-intervention group difference) - included only as context, not the primary requested outcome. No SF-36 physical function or 6MWT outcome exists in this paper."
+ }
+]

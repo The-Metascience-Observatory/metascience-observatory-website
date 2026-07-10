@@ -1,0 +1,495 @@
+{
+ "min_trials": 2,
+ "topic": "Graded exercise therapy for ME/CFS",
+ "generated_note": "SMDs (Hedges g) pooled by DerSimonian-Laird random effects with HKSJ CIs; source-verified per-arm data. +ve SMD favours GET. Positive-control excluded where no non-exercise comparator (Gordon) or intervention is combined CBT+GET (N\u00fa\u00f1ez).",
+ "groups": [
+  {
+   "ingredient": "Graded exercise therapy",
+   "outcome_domain": "fatigue",
+   "effect_measure": "smd",
+   "scale": "Standardised mean difference (Hedges g); +ve favours GET",
+   "n_trials": 6,
+   "reference_higher_is_better": true,
+   "n_oriented_flipped": 0,
+   "trials": [
+    {
+     "paper_id": "10.1016/s0140-6736(16)32589-2",
+     "first_author": "Clark",
+     "year": 2017,
+     "effect": 0.5222,
+     "ci_low": 0.24,
+     "ci_high": 0.805,
+     "p_value": "<0.0001",
+     "n_total": 199,
+     "outcome_name": "Chalder Fatigue Questionnaire (CFQ), Likert scoring 0,1,2,3;",
+     "weight": 18.4
+    },
+    {
+     "paper_id": "10.1016/s0140-6736(11)60096-2",
+     "first_author": "White",
+     "year": 2011,
+     "effect": 0.4517,
+     "ci_low": 0.225,
+     "ci_high": 0.679,
+     "p_value": "0.0003",
+     "n_total": 306,
+     "outcome_name": "Chalder Fatigue Questionnaire (bimodal scoring, range 0-33, ",
+     "weight": 19.0
+    },
+    {
+     "paper_id": "10.1017/s0033291712000256",
+     "first_author": "Ridsdale",
+     "year": 2012,
+     "effect": 0.0843,
+     "ci_low": -0.299,
+     "ci_high": 0.467,
+     "p_value": "0.46",
+     "n_total": 105,
+     "outcome_name": "Chalder Fatigue Scale (Likert-scored 0-3 items, total range ",
+     "weight": 17.2
+    },
+    {
+     "paper_id": "10.1177/1359105305049774",
+     "first_author": "Moss-Morris",
+     "year": 2005,
+     "effect": 0.999,
+     "ci_low": 0.365,
+     "ci_high": 1.633,
+     "p_value": ".02",
+     "n_total": 43,
+     "outcome_name": "14-item Fatigue Scale (Chalder et al.), 0-3 Likert scoring, ",
+     "weight": 13.7
+    },
+    {
+     "paper_id": "10.1136/bmj.322.7283.387",
+     "first_author": "Powell",
+     "year": 2001,
+     "effect": 1.7221,
+     "ci_low": 1.292,
+     "ci_high": 2.152,
+     "p_value": "<0.001 (each intervention arm vs control; overall omnibus F(3,142)=24.99, P<0.001)",
+     "n_total": 148,
+     "outcome_name": "Chalder Fatigue Scale (bimodal 0-11)",
+     "weight": 16.6
+    },
+    {
+     "paper_id": "10.1136/bmj.314.7095.1647",
+     "first_author": "Fulcher & White",
+     "year": 1997,
+     "effect": 0.8333,
+     "ci_low": 0.301,
+     "ci_high": 1.365,
+     "p_value": "0.004",
+     "n_total": 59,
+     "outcome_name": "Chalder fatigue scale (14-item questionnaire, Likert 0-33 sc",
+     "weight": 15.1
+    }
+   ],
+   "pooled": {
+    "effect": 0.7446060147842357,
+    "ci_low": 0.1486768103112197,
+    "ci_high": 1.3405352192572517,
+    "i2": 86.6,
+    "tau2": 0.22301529650616866,
+    "model": "random_effects_DL_HKSJ",
+    "ci_method": "hksj",
+    "pred_low": -0.6922810894475895,
+    "pred_high": 2.1814931190160607
+   },
+   "certainty": {
+    "grade": "very_low",
+    "start": "high",
+    "downgrades": [
+     {
+      "domain": "risk_of_bias",
+      "reason": "6/6 trials high RoB"
+     },
+     {
+      "domain": "inconsistency",
+      "reason": "I2=87% (considerable)"
+     },
+     {
+      "domain": "inconsistency",
+      "reason": "I2>=75% (double downgrade)"
+     }
+    ]
+   },
+   "subgroups": {
+    "oxford": {
+     "k": 3,
+     "effect": 0.9918013814658005,
+     "ci_low": -0.7826658981710096,
+     "ci_high": 2.7662686611026106,
+     "i2": 92.4
+    },
+    "non_oxford": {
+     "k": 3,
+     "effect": 0.4805972270943559,
+     "ci_low": -0.5758995915990086,
+     "ci_high": 1.5370940457877205,
+     "i2": 69.8
+    },
+    "adult": {
+     "k": 6,
+     "effect": 0.7446060147842357,
+     "ci_low": 0.1486768103112197,
+     "ci_high": 1.3405352192572517,
+     "i2": 86.6
+    }
+   },
+   "sensitivity": {
+    "fixed_or_dl_normal": {
+     "effect": 0.7446060147842357,
+     "ci_low": 0.3292718103483954,
+     "ci_high": 1.159940219220076
+    },
+    "leave_one_out": [
+     {
+      "omitted": "Clark",
+      "effect": 0.8019492366591522,
+      "ci_low": 0.02419182318457347,
+      "ci_high": 1.579706650133731
+     },
+     {
+      "omitted": "White",
+      "effect": 0.8192893960838786,
+      "ci_low": 0.031100420466473766,
+      "ci_high": 1.6074783717012835
+     },
+     {
+      "omitted": "Ridsdale",
+      "effect": 0.8810463169476545,
+      "ci_low": 0.23711483736794625,
+      "ci_high": 1.5249777965273625
+     },
+     {
+      "omitted": "Moss-Morris",
+      "effect": 0.7052451067991713,
+      "ci_low": -0.054821809019115486,
+      "ci_high": 1.465312022617458
+     },
+     {
+      "omitted": "Powell",
+      "effect": 0.5066798158322825,
+      "ci_low": 0.12158385225548557,
+      "ci_high": 0.8917757794090795
+     },
+     {
+      "omitted": "Fulcher & White",
+      "effect": 0.7314679965914719,
+      "ci_low": -0.04821973389933509,
+      "ci_high": 1.5111557270822789
+     }
+    ],
+    "exclude_powell": {
+     "k": 5,
+     "effect": 0.5066798158322825,
+     "ci_low": 0.12158385225548557,
+     "ci_high": 0.8917757794090795,
+     "i2": 53.0
+    }
+   }
+  },
+  {
+   "ingredient": "Graded exercise therapy",
+   "outcome_domain": "physical_function",
+   "effect_measure": "smd",
+   "scale": "Standardised mean difference (Hedges g); +ve favours GET",
+   "n_trials": 6,
+   "reference_higher_is_better": true,
+   "n_oriented_flipped": 0,
+   "trials": [
+    {
+     "paper_id": "10.1016/s0140-6736(16)32589-2",
+     "first_author": "Clark",
+     "year": 2017,
+     "effect": 0.2005,
+     "ci_low": -0.078,
+     "ci_high": 0.479,
+     "p_value": "0.006",
+     "n_total": 199,
+     "outcome_name": "SF-36 Physical Function subscale (SF-36 PF)",
+     "weight": 18.1
+    },
+    {
+     "paper_id": "10.1016/s0140-6736(11)60096-2",
+     "first_author": "White",
+     "year": 2011,
+     "effect": 0.2686,
+     "ci_low": 0.043,
+     "ci_high": 0.494,
+     "p_value": "0.0005",
+     "n_total": 306,
+     "outcome_name": "SF-36 physical function subscale (range 0-100, 100=best)",
+     "weight": 18.6
+    },
+    {
+     "paper_id": "10.1007/s00431-024-05458-x",
+     "first_author": "Baos Mu\u00f1oz",
+     "year": 2024,
+     "effect": -0.0808,
+     "ci_low": -0.357,
+     "ci_high": 0.196,
+     "p_value": "0.49",
+     "n_total": 201,
+     "outcome_name": "SF-36 physical function subscale (SF-36-PFS)",
+     "weight": 18.1
+    },
+    {
+     "paper_id": "10.1177/1359105305049774",
+     "first_author": "Moss-Morris",
+     "year": 2005,
+     "effect": 0.6148,
+     "ci_low": 0.003,
+     "ci_high": 1.227,
+     "p_value": ".49",
+     "n_total": 43,
+     "outcome_name": "SF-36 physical functioning subscale",
+     "weight": 13.8
+    },
+    {
+     "paper_id": "10.1136/bmj.322.7283.387",
+     "first_author": "Powell",
+     "year": 2001,
+     "effect": 1.5459,
+     "ci_low": 1.124,
+     "ci_high": 1.967,
+     "p_value": "<0.001 (each intervention arm vs control; overall omnibus F(3,142)=24.15, P<0.001)",
+     "n_total": 148,
+     "outcome_name": "SF-36 physical function subscale (Powell 10-30 scoring)",
+     "weight": 16.4
+    },
+    {
+     "paper_id": "10.1136/bmj.314.7095.1647",
+     "first_author": "Fulcher & White",
+     "year": 1997,
+     "effect": 0.6823,
+     "ci_low": 0.157,
+     "ci_high": 1.207,
+     "p_value": "0.01",
+     "n_total": 59,
+     "outcome_name": "SF-36 physical function subscale (0-100, 100=full capacity)",
+     "weight": 15.0
+    }
+   ],
+   "pooled": {
+    "effect": 0.5122112626801684,
+    "ci_low": -0.08867582429377674,
+    "ci_high": 1.1130983496541136,
+    "i2": 88.7,
+    "tau2": 0.23069545155960677,
+    "model": "random_effects_DL_HKSJ",
+    "ci_method": "hksj",
+    "pred_low": -0.9463579251287962,
+    "pred_high": 1.970780450489133
+   },
+   "certainty": {
+    "grade": "very_low",
+    "start": "high",
+    "downgrades": [
+     {
+      "domain": "risk_of_bias",
+      "reason": "6/6 trials high RoB"
+     },
+     {
+      "domain": "inconsistency",
+      "reason": "I2=89% (considerable)"
+     },
+     {
+      "domain": "inconsistency",
+      "reason": "I2>=75% (double downgrade)"
+     },
+     {
+      "domain": "imprecision",
+      "reason": "CI crosses null"
+     }
+    ]
+   },
+   "subgroups": {
+    "oxford": {
+     "k": 3,
+     "effect": 0.8219797392373129,
+     "ci_low": -0.9682400976076051,
+     "ci_high": 2.612199576082231,
+     "i2": 92.8
+    },
+    "non_oxford": {
+     "k": 3,
+     "effect": 0.16250986591713867,
+     "ci_low": -0.599291443307135,
+     "ci_high": 0.9243111751414124,
+     "i2": 58.7
+    },
+    "adult": {
+     "k": 5,
+     "effect": 0.6440200396534186,
+     "ci_low": -0.033646150153951226,
+     "ci_high": 1.3216862294607883,
+     "i2": 87.7
+    }
+   },
+   "sensitivity": {
+    "fixed_or_dl_normal": {
+     "effect": 0.5122112626801684,
+     "ci_low": 0.0947253038459554,
+     "ci_high": 0.9296972215143813
+    },
+    "leave_one_out": [
+     {
+      "omitted": "Clark",
+      "effect": 0.5878726977874277,
+      "ci_low": -0.17826267657946948,
+      "ci_high": 1.3540080721543248
+     },
+     {
+      "omitted": "White",
+      "effect": 0.5766728422189239,
+      "ci_low": -0.22906604786594176,
+      "ci_high": 1.3824117323037894
+     },
+     {
+      "omitted": "Baos Mu\u00f1oz",
+      "effect": 0.6440200396534186,
+      "ci_low": -0.033646150153951226,
+      "ci_high": 1.3216862294607883
+     },
+     {
+      "omitted": "Moss-Morris",
+      "effect": 0.497604017252175,
+      "ci_low": -0.28202915616502394,
+      "ci_high": 1.277237190669374
+     },
+     {
+      "omitted": "Powell",
+      "effect": 0.25505922835256856,
+      "ci_low": -0.09950297040879663,
+      "ci_high": 0.6096214271139337
+     },
+     {
+      "omitted": "Fulcher & White",
+      "effect": 0.48411731851680434,
+      "ci_low": -0.295733941859834,
+      "ci_high": 1.2639685788934427
+     }
+    ],
+    "exclude_powell": {
+     "k": 5,
+     "effect": 0.25505922835256856,
+     "ci_low": -0.09950297040879663,
+     "ci_high": 0.6096214271139337,
+     "i2": 57.0
+    }
+   }
+  },
+  {
+   "ingredient": "Graded exercise therapy",
+   "outcome_domain": "harms",
+   "effect_measure": "risk_ratio",
+   "scale": "Risk ratio of serious adverse events (GET vs control); >1 favours control",
+   "n_trials": 7,
+   "reference_higher_is_better": false,
+   "n_oriented_flipped": 0,
+   "trials": [
+    {
+     "paper_id": "10.1016/s0140-6736(16)32589-2",
+     "first_author": "Clark",
+     "year": 2017,
+     "effect": 0.521,
+     "ci_low": 0.048,
+     "ci_high": 5.649,
+     "n_total": 198,
+     "outcome_name": "Serious adverse events (1% GES vs 2% control); 0 serious adv",
+     "weight": 5.6,
+     "get": "1/97",
+     "control": "2/101"
+    },
+    {
+     "paper_id": "10.1016/s0140-6736(11)60096-2",
+     "first_author": "White",
+     "year": 2011,
+     "effect": 1.857,
+     "ci_low": 0.761,
+     "ci_high": 4.533,
+     "n_total": 320,
+     "outcome_name": "Serious adverse events (death, hospital admission, increased",
+     "weight": 40.2,
+     "get": "13/160",
+     "control": "7/160"
+    },
+    {
+     "paper_id": "10.1177/0269215510371429",
+     "first_author": "Gordon",
+     "year": 2010,
+     "effect": 1.0,
+     "ci_low": 0.022,
+     "ci_high": 46.24,
+     "n_total": 22,
+     "outcome_name": "Adverse events (not further defined); dropouts reported sepa",
+     "weight": 2.2,
+     "get": "0/11",
+     "control": "0/11"
+    },
+    {
+     "paper_id": "10.1007/s00431-024-05458-x",
+     "first_author": "Baos Mu\u00f1oz",
+     "year": 2024,
+     "effect": 1.902,
+     "ci_low": 0.175,
+     "ci_high": 20.703,
+     "n_total": 240,
+     "outcome_name": "Serious adverse events requiring hospital treatment; withdra",
+     "weight": 5.6,
+     "get": "2/123",
+     "control": "1/117"
+    },
+    {
+     "paper_id": "10.1177/1359105305049774",
+     "first_author": "Moss-Morris",
+     "year": 2005,
+     "effect": 0.96,
+     "ci_low": 0.214,
+     "ci_high": 4.299,
+     "n_total": 49,
+     "outcome_name": "Dropout from treatment/follow-up (not necessarily harm-relat",
+     "weight": 14.2,
+     "get": "3/25",
+     "control": "3/24"
+    },
+    {
+     "paper_id": "10.1136/bmj.322.7283.387",
+     "first_author": "Powell",
+     "year": 2001,
+     "effect": 2.833,
+     "ci_low": 0.695,
+     "ci_high": 11.557,
+     "n_total": 148,
+     "outcome_name": "Dropouts during treatment; reasons given (medical, psychiatr",
+     "weight": 16.2,
+     "get": "19/114",
+     "control": "2/34"
+    },
+    {
+     "paper_id": "10.1136/bmj.314.7095.1647",
+     "first_author": "Fulcher & White",
+     "year": 1997,
+     "effect": 1.333,
+     "ci_low": 0.323,
+     "ci_high": 5.5,
+     "n_total": 66,
+     "outcome_name": "Patients who dropped out of allocated treatment before compl",
+     "weight": 15.9,
+     "get": "4/33",
+     "control": "3/33"
+    }
+   ],
+   "pooled": {
+    "effect": 1.579,
+    "ci_low": 0.779,
+    "ci_high": 3.2,
+    "i2": 0.0,
+    "model": "random_effects_DL_HKSJ",
+    "ci_method": "hksj"
+   }
+  }
+ ]
+}

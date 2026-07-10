@@ -1,0 +1,39 @@
+{
+  "_note": "PRISMA 2020 flow for the GET-for-ME/CFS meta-analysis. Candidate pool = PubMed systematic search (154) unioned with a multi-database (PubMed, OpenAlex, Europe PMC, Semantic Scholar) graded-exercise-tagged set (113), deduplicated to 174 unique records assessed at full-text/PICO level.",
+  "sources": ["PubMed (protocol search)", "OpenAlex", "Europe PMC", "Semantic Scholar"],
+  "records_identified": 174,
+  "identified_breakdown": { "pubmed_protocol_search": 154, "multi_db_graded_exercise_set": 113, "overlap_deduped": 93 },
+  "records_screened": 174,
+  "records_excluded": 149,
+  "exclusion_reasons": {
+    "review_or_editorial": 64,
+    "not_graded_exercise_intervention": 34,
+    "not_an_RCT": 23,
+    "mechanistic_or_physiology_only": 11,
+    "protocol_no_results": 8,
+    "wrong_population": 6,
+    "conference_abstract": 3
+  },
+  "reports_included_papers": 21,
+  "studies_included_trials": 12,
+  "trials_in_quantitative_synthesis": { "fatigue": 6, "physical_function": 6, "harms": 7 },
+  "trials_excluded_from_primary_pool": [
+    { "trial": "Gordon 2010", "reason": "head-to-head exercise comparison (graded aerobic vs progressive resistance); no non-exercise control" },
+    { "trial": "Nunez 2011", "reason": "combined multidisciplinary CBT+GET arm; GET not isolable (sensitivity only)" },
+    { "trial": "Wearden 1998", "reason": "between-group difference reported without per-arm SD (factorial GET x fluoxetine); sensitivity only" },
+    { "trial": "Wallman 2004", "reason": "per-arm means without SD; SF-36 physical function not reported" }
+  ],
+  "included_trials": [
+    { "trial": "PACE (White)", "year": 2011, "pmid": "21334061", "n_randomized": 641, "criteria": "Oxford", "age": "adult" },
+    { "trial": "GETSET (Clark)", "year": 2017, "pmid": "28648402", "n_randomized": 211, "criteria": "NICE", "age": "adult" },
+    { "trial": "MAGENTA", "year": 2024, "pmid": "38429546", "n_randomized": 211, "criteria": "NICE/other", "age": "pediatric" },
+    { "trial": "Fulcher & White", "year": 1997, "pmid": "9180065", "n_randomized": 66, "criteria": "Oxford", "age": "adult" },
+    { "trial": "Wearden", "year": 1998, "pmid": "9828987", "n_randomized": 136, "criteria": "Oxford", "age": "adult" },
+    { "trial": "Powell", "year": 2001, "pmid": "11179154", "n_randomized": 148, "criteria": "Oxford", "age": "adult" },
+    { "trial": "Wallman", "year": 2004, "pmid": "15115421", "n_randomized": 61, "criteria": "Fukuda", "age": "adult" },
+    { "trial": "Moss-Morris", "year": 2005, "pmid": "15723894", "n_randomized": 49, "criteria": "Fukuda", "age": "adult" },
+    { "trial": "Gordon", "year": 2010, "pmid": "20605858", "n_randomized": 22, "criteria": "Fukuda", "age": "pediatric" },
+    { "trial": "Nunez", "year": 2011, "pmid": "21234629", "n_randomized": 120, "criteria": "Fukuda", "age": "adult" },
+    { "trial": "Ridsdale", "year": 2012, "pmid": "22370004", "n_randomized": 148, "criteria": "primary-care chronic fatigue", "age": "adult" }
+  ]
+}

@@ -1,4 +1,6 @@
 import type { FacetInput } from "./facets";
+import type { HoverTrial } from "@/components/BreakdownChart";
+export type { HoverTrial };
 
 export interface SummaryStats {
   totalTrials: number;
@@ -117,9 +119,12 @@ export interface TrialTableRow {
   long_covid_definition: string;
   outcomes_summary: OutcomeSummaryItem[];
   n_outcomes: number;
-  n_positive: number;
-  n_negative_ns: number;
-  n_unknown: number;
+  n_positive: number;       // significant outcomes favouring treatment
+  n_favors_control: number; // significant outcomes favouring control (harm)
+  n_null: number;           // non-significant outcomes (true null)
+  n_unknown: number;        // no usable effect/p, or significant w/ unknown direction
+  verdict: string;          // LLM trial verdict (proxy fallback) — a VERDICT_SEGMENTS key
+  verdict_rationale: string; // one-line LLM rationale for the verdict (may be empty)
   year: number | null;
   min_weeks: number | null;
   summary: string;
@@ -145,5 +150,11 @@ export interface DashboardProps {
   lcDefPct12Plus: number;
   tableRows: TrialTableRow[];
   trialMetas: TrialMeta[];
+  /** Verdict breakdown keyed by canonical intervention name, for the "Trials by Intervention" chart + tail. */
+  byNameVerdicts: Record<string, Record<string, number>>;
+  /** Per-intervention trial lists for the hover tooltip on the intervention chart/tail. */
+  trialsByName: Record<string, HoverTrial[]>;
+  /** Dominant intervention category for each canonical intervention name (for grouping the tail). */
+  interventionCategoryOf: Record<string, string>;
 }
 

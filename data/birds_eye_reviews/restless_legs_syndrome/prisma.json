@@ -6,18 +6,18 @@
     "Europe PMC",
     "Semantic Scholar"
   ],
-  "identified": 11044,
+  "identified": 11043,
   "excluded_not_relevant": 5395,
-  "relevant": 5649,
+  "relevant": 5648,
   "not_retrieved": 0,
-  "retrieved": 5649,
+  "retrieved": 5648,
   "excluded_not_treatment": 4580,
-  "treatment_studies": 1069,
-  "clinical": 1037,
+  "treatment_studies": 1068,
+  "clinical": 1036,
   "preclinical": 0,
   "study_design_breakdown": {
     "case_series": 413,
-    "non_randomized_trial": 251,
+    "non_randomized_trial": 250,
     "rct": 197,
     "observational": 112,
     "crossover": 64,
@@ -40,18 +40,18 @@
     "other_pharmacological": 139,
     "iron": 97,
     "alpha2delta_ligand": 80,
-    "other": 58,
+    "other": 57,
     "levodopa": 52,
     "opioid": 51,
     "benzodiazepine": 15
   },
   "organism_breakdown": {
-    "human": 1064,
+    "human": 1063,
     "animal": 4,
     "other": 1
   },
   "indication_breakdown": {
-    "treatment": 981,
+    "treatment": 980,
     "not_applicable": 82,
     "prevention": 5,
     "both": 1
@@ -123,6 +123,10 @@
     },
     {
       "agent": "tramadol",
+      "count": 8
+    },
+    {
+      "agent": "dopaminergic agents",
       "count": 8
     },
     {
@@ -318,10 +322,6 @@
       "count": 2
     },
     {
-      "agent": "dopaminergic agents",
-      "count": 2
-    },
-    {
       "agent": "continuous positive airway pressure (cpap)",
       "count": 2
     },
@@ -446,10 +446,6 @@
       "count": 2
     },
     {
-      "agent": "cognitive behavioural therapy",
-      "count": 2
-    },
-    {
       "agent": "progressive muscle relaxation",
       "count": 2
     },
@@ -510,6 +506,7 @@
     "codeine sulfate",
     "coenzyme q10",
     "cognitive behavioral therapy for insomnia",
+    "cognitive behavioural therapy",
     "cognitive task",
     "cold dialysate and stretching exercises",
     "cold dialysis",
@@ -772,9 +769,10 @@
     "wet cupping therapy",
     "whole-body cryostimulation",
     "withania somnifera",
+    "yoga and physiotherapy",
     "zincum valerianicum",
     "zolpidem"
   ],
-  "agent_named_total": 1013,
-  "agent_distinct": 415
+  "agent_named_total": 1019,
+  "agent_distinct": 416
 }

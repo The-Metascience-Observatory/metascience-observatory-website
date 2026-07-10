@@ -20,12 +20,15 @@ export interface TrialRow {
   relatedPubs: RelatedPub[];
   ingredient: string;
   indication: string;
+  countries: string[];
   drug_class: string;
   design: string;
   n: number | null;
   rob: string;
   verdict: string;
   verdictRationale: string;
+  hoverLabel: string;        // "Surname et al." for the chart hover panel (derived from authors)
+  hoverPhase: string | null; // trial phase for the chart hover panel (from the citation)
   abstractOnly: boolean;
   primaryDomain: string;
   primaryName: string;

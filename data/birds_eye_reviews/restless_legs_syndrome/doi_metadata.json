@@ -29,18 +29,6 @@
     "journal": "Annals of Neurology",
     "year": "1988"
   },
-  "10.1002/cpu.20053": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "The Brown University Child &amp; Adolescent Psychopharmacology Update",
-    "year": 2007
-  },
-  "10.1002/fps.3": {
-    "first_author": "Anthony",
-    "author_count": 1,
-    "journal": "Future Prescriber",
-    "year": "2007"
-  },
   "10.1002/mdc3.13833": {
     "first_author": "Özge",
     "author_count": 4,
@@ -179,12 +167,6 @@
     "journal": "Journal of Neural Transmission",
     "year": "1997"
   },
-  "10.1007/bf03160570": {
-    "first_author": "Thomas",
-    "author_count": 2,
-    "journal": "Journal of Neurology",
-    "year": "1997"
-  },
   "10.1007/s00384-018-3032-8": {
     "first_author": "Janek",
     "author_count": 9,
@@ -282,10 +264,10 @@
     "year": "2025"
   },
   "10.1007/s12311-012-0382-6": {
-    "first_author": "Luis",
-    "author_count": 13,
-    "journal": "The Cerebellum",
-    "year": 2012
+    "first_author": "",
+    "author_count": null,
+    "journal": "",
+    "year": null
   },
   "10.1007/s40261-013-0150-5": {
     "first_author": "Willi",
@@ -310,12 +292,6 @@
     "author_count": 6,
     "journal": "Biomedical Journal",
     "year": "2022"
-  },
-  "10.1016/j.brat.2021.103948": {
-    "first_author": "Laurel",
-    "author_count": 6,
-    "journal": "Behaviour Research and Therapy",
-    "year": 2021
   },
   "10.1016/j.brs.2014.06.008": {
     "first_author": "Heide",
@@ -346,12 +322,6 @@
     "author_count": 9,
     "journal": "Clinical Therapeutics",
     "year": "2012"
-  },
-  "10.1016/j.clinthera.2015.01.013": {
-    "first_author": "Bo-Hyung",
-    "author_count": 9,
-    "journal": "Clinical Therapeutics",
-    "year": 2015
   },
   "10.1016/j.ctim.2019.05.009": {
     "first_author": "Morteza",
@@ -425,12 +395,6 @@
     "journal": "Pain",
     "year": "2013"
   },
-  "10.1016/j.parkreldis.2018.12.026": {
-    "first_author": "Hidding",
-    "author_count": 17,
-    "journal": "Parkinsonism &amp; Related Disorders",
-    "year": 2019
-  },
   "10.1016/j.pnpbp.2010.02.011": {
     "first_author": "Hideto",
     "author_count": 13,
@@ -476,12 +440,6 @@
   "10.1016/j.sleep.2005.05.007": {
     "first_author": "Benes",
     "author_count": 1,
-    "journal": "Sleep Medicine",
-    "year": "2006"
-  },
-  "10.1016/j.sleep.2005.12.011": {
-    "first_author": "Linda",
-    "author_count": 8,
     "journal": "Sleep Medicine",
     "year": "2006"
   },
@@ -536,12 +494,6 @@
   "10.1016/j.sleep.2008.05.014": {
     "first_author": "Leni",
     "author_count": 8,
-    "journal": "Sleep Medicine",
-    "year": "2009"
-  },
-  "10.1016/j.sleep.2008.06.003": {
-    "first_author": "Richard",
-    "author_count": 4,
     "journal": "Sleep Medicine",
     "year": "2009"
   },
@@ -779,12 +731,6 @@
     "journal": "Sleep Medicine",
     "year": "2020"
   },
-  "10.1016/j.sleep.2021.01.017": {
-    "first_author": "Sofiène",
-    "author_count": 8,
-    "journal": "Sleep Medicine",
-    "year": "2021"
-  },
   "10.1016/j.sleep.2021.07.004": {
     "first_author": "Yuichi",
     "author_count": 4,
@@ -796,12 +742,6 @@
     "author_count": 7,
     "journal": "Sleep Medicine",
     "year": "2024"
-  },
-  "10.1016/j.sleep.2024.08.020": {
-    "first_author": "Perlman",
-    "author_count": 11,
-    "journal": "Sleep Medicine",
-    "year": 2024
   },
   "10.1016/s1474-4422(08)70112-1": {
     "first_author": "Trenkwalder",
@@ -936,10 +876,10 @@
     "year": "1996"
   },
   "10.1093/sleep/19.3.214": {
-    "first_author": "Walker",
-    "author_count": 1,
-    "journal": "Sleep",
-    "year": 1996
+    "first_author": "",
+    "author_count": null,
+    "journal": "",
+    "year": null
   },
   "10.1093/sleep/21.6.617": {
     "first_author": "Jacek",
@@ -954,10 +894,10 @@
     "year": "1999"
   },
   "10.1093/sleep/23.3.1b": {
-    "first_author": "Karin",
-    "author_count": 4,
-    "journal": "Sleep",
-    "year": 2000
+    "first_author": "",
+    "author_count": null,
+    "journal": "",
+    "year": null
   },
   "10.1093/sleep/26.7.815": {
     "first_author": "Marco",
@@ -990,10 +930,10 @@
     "year": "2010"
   },
   "10.1093/sleep/9.3.385": {
-    "first_author": "Merrill",
-    "author_count": 5,
-    "journal": "Sleep",
-    "year": 1986
+    "first_author": "",
+    "author_count": null,
+    "journal": "",
+    "year": null
   },
   "10.1093/sleep/zsaa056.787": {
     "first_author": "Cho",
@@ -1121,12 +1061,6 @@
     "journal": "Clinical Neuropharmacology",
     "year": "2004"
   },
-  "10.1097/mat.0000000000000271": {
-    "first_author": "Christoforos",
-    "author_count": 7,
-    "journal": "ASAIO Journal",
-    "year": "2015"
-  },
   "10.1097/mat.0000000000000622": {
     "first_author": "Giorgos",
     "author_count": 9,
@@ -1170,10 +1104,10 @@
     "year": "2007"
   },
   "10.1097/nen.0b013e3180517b5f": {
-    "first_author": "Shen",
-    "author_count": 6,
-    "journal": "Journal of Neuropathology and Experimental Neurology",
-    "year": 2007
+    "first_author": "",
+    "author_count": null,
+    "journal": "",
+    "year": null
   },
   "10.1097/wnf.0b013e31805930c2": {
     "first_author": "Olli",
@@ -1235,18 +1169,6 @@
     "journal": "Acta Medica Scandinavica",
     "year": "1985"
   },
-  "10.1111/j.1365-2125.2008.03310.x": {
-    "first_author": "Joëlle",
-    "author_count": 8,
-    "journal": "British Journal of Clinical Pharmacology",
-    "year": 2009
-  },
-  "10.1111/j.1365-2125.2008.03334.x": {
-    "first_author": "Marina",
-    "author_count": 4,
-    "journal": "British Journal of Clinical Pharmacology",
-    "year": 2009
-  },
   "10.1111/j.1423-0410.2010.01368.x": {
     "first_author": "Birgegård",
     "author_count": 3,
@@ -1306,18 +1228,6 @@
     "author_count": 10,
     "journal": "Journal of Sleep Research",
     "year": "2025"
-  },
-  "10.1111/pcn.12074": {
-    "first_author": "Yuichi",
-    "author_count": 5,
-    "journal": "Psychiatry and Clinical Neurosciences",
-    "year": "2013"
-  },
-  "10.1136/bmj.1.4030.753": {
-    "first_author": "Lake",
-    "author_count": 1,
-    "journal": "BMJ",
-    "year": "1938"
   },
   "10.1136/bmj.288.6415.444": {
     "first_author": "Telstad",
@@ -1480,12 +1390,6 @@
     "author_count": 10,
     "journal": "BMC Neurology",
     "year": "2010"
-  },
-  "10.1186/1471-2377-11-48": {
-    "first_author": "Daniel",
-    "author_count": 4,
-    "journal": "BMC Neurology",
-    "year": "2011"
   },
   "10.1186/1472-6882-12-s1-o55": {
     "first_author": "Kim",
@@ -1655,12 +1559,6 @@
     "journal": "Zhongguo zhen jiu = Chinese acupuncture & moxibustion",
     "year": "2016"
   },
-  "10.1371/journal.pone.0101003": {
-    "first_author": "Joanne",
-    "author_count": 6,
-    "journal": "PLoS ONE",
-    "year": 2014
-  },
   "10.1371/journal.pone.0174793": {
     "first_author": "Beatrice",
     "author_count": 11,
@@ -1812,10 +1710,10 @@
     "year": "2006"
   },
   "10.2174/0118746136268741240328062217": {
-    "first_author": "Maryam",
-    "author_count": 7,
-    "journal": "The Open AIDS Journal",
-    "year": 2024
+    "first_author": "",
+    "author_count": null,
+    "journal": "",
+    "year": null
   },
   "10.22038/ebcj.2020.51306.2366": {
     "first_author": "Azam",
@@ -1938,10 +1836,10 @@
     "year": "2022"
   },
   "10.33588/rn.2909.99317": {
-    "first_author": "Eduard",
-    "author_count": 2,
-    "journal": "Revista de Neurología",
-    "year": 1999
+    "first_author": "",
+    "author_count": null,
+    "journal": "",
+    "year": null
   },
   "10.33755/jkk.v12i1.955": {
     "first_author": "Achmad",
@@ -1954,12 +1852,6 @@
     "author_count": 5,
     "journal": "Frontiers in Neurology",
     "year": "2021"
-  },
-  "10.3389/fnins.2016.00374": {
-    "first_author": "Haley",
-    "author_count": 4,
-    "journal": "Frontiers in Neuroscience",
-    "year": 2016
   },
   "10.3389/fnins.2020.00873": {
     "first_author": "Min",
@@ -2159,12 +2051,6 @@
     "journal": "Journal of Clinical Sleep Medicine",
     "year": "2014"
   },
-  "10.5664/jcsm.5396": {
-    "first_author": "William",
-    "author_count": 5,
-    "journal": "Journal of Clinical Sleep Medicine",
-    "year": "2016"
-  },
   "10.5664/jcsm.5920": {
     "first_author": "Ulrike",
     "author_count": 4,
@@ -2184,16 +2070,10 @@
     "year": "2021"
   },
   "10.5665/sleep/31.9.1229": {
-    "first_author": "Manconi",
-    "author_count": 1,
-    "journal": "Sleep",
-    "year": 2008
-  },
-  "10.5665/sleep.2622": {
-    "first_author": "Stephany",
-    "author_count": 7,
-    "journal": "Sleep",
-    "year": 2013
+    "first_author": "",
+    "author_count": null,
+    "journal": "",
+    "year": null
   },
   "10.5665/sleep.3558": {
     "first_author": "Diego",

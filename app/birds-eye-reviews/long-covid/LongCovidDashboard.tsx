@@ -15,52 +15,17 @@ import {
   CartesianGrid,
 } from "recharts";
 import { ChevronDown, ChevronRight, ExternalLink, Link2, Check } from "lucide-react";
-import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  ZoomableGroup,
-  Marker,
-} from "react-simple-maps";
-import { geoCentroid } from "d3-geo";
-import type { DashboardProps, InterventionBar, TrialTableRow } from "./types";
-import { aggregateFromMetas, getPromiseScoreColors, LC_WEEKS_BINS, LC_BIN_LABELS, LC_WHO_BIN_LABELS } from "./constants";
+import type { DashboardProps, InterventionBar, TrialTableRow, HoverTrial } from "./types";
+import { aggregateFromMetas, interventionVerdictsFromRows, getPromiseScoreColors, LC_WEEKS_BINS, LC_BIN_LABELS, LC_WHO_BIN_LABELS, VERDICT_SEGMENTS, INTERVENTION_WIDE_MIN_TRIALS } from "./constants";
+import { TrialRectList } from "@/components/TrialRectList";
+import { CountryMap } from "@/components/CountryMap";
 import { trialHasFacet } from "./facets";
-
-const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
-
-const COUNTRY_NAME_MAPPING: Record<string, string> = {
-  "United States": "United States of America",
-  "Czech Republic": "Czechia",
-};
-
-// Reverse: map geo name → data name (for click filtering)
-const REVERSE_COUNTRY_MAPPING: Record<string, string> = Object.fromEntries(
-  Object.entries(COUNTRY_NAME_MAPPING).map(([data, geo]) => [geo, data])
-);
 
 // ── Color constants ──────────────────────────────────────────────────
 const ROB_COLORS = {
   low: "#22c55e",
   some_concerns: "#f59e0b",
   high: "#ef4444",
-};
-
-const CATEGORY_COLORS: Record<string, string> = {
-  rehabilitation: "#3b82f6",
-  supplement: "#8b5cf6",
-  exercise: "#14b8a6",
-  other: "#6b7280",
-  neurostimulation: "#f97316",
-  respiratory_therapy: "#06b6d4",
-  psychological: "#ec4899",
-  device: "#84cc16",
-  immunomodulator: "#ef4444",
-  oxygen_therapy: "#0ea5e9",
-  "anti-inflammatory": "#f43f5e",
-  probiotic: "#a855f7",
-  antiviral: "#10b981",
-  cell_therapy: "#eab308",
 };
 
 const ROB_LABELS: Record<string, string> = {
@@ -132,7 +97,6 @@ export function LongCovidDashboard(props: DashboardProps) {
 
   const handleYearClick = makeFilterHandler(setYearFilter);
   const handleInterventionClick = makeFilterHandler(setInterventionNameFilter);
-  const handleCategoryClick = makeFilterHandler(setInterventionCategoryFilter);
   const handleLcDefClick = makeFilterHandler(setLcDefFilter);
   const handleCountryClick = makeFilterHandler(setCountryFilter);
   const handleBlindingClick = makeFilterHandler(setBlindingFilter);
@@ -216,6 +180,18 @@ export function LongCovidDashboard(props: DashboardProps) {
 
   const effectiveProps: DashboardProps = useMemo(() => {
     if (!isFiltered) return props;
+    const filteredRows = props.tableRows.filter((r) => {
+      if (!selectedDesignTypes.has(r.design_type || "unknown")) return false;
+      if (lcDefWho && !lcDefBelow) return r.min_weeks != null && r.min_weeks >= 12;
+      if (!lcDefWho && lcDefBelow) return r.min_weeks != null && r.min_weeks < 12;
+      if (!lcDefWho && !lcDefBelow) return false;
+      if (interventionNameFilter && !trialHasFacet(r.facets, "intervention", interventionNameFilter)) return false;
+      return true;
+    });
+    // The "Trials by Intervention" chart/tail reads byNameVerdicts/trialsByName/
+    // interventionCategoryOf — recompute them from the filtered rows so the chart
+    // reacts to the top-level filters (it otherwise showed the full dataset).
+    const iv = interventionVerdictsFromRows(filteredRows);
     return {
       ...props,
       summaryStats: recomputed.summaryStats,
@@ -228,14 +204,10 @@ export function LongCovidDashboard(props: DashboardProps) {
       byDesignType: recomputed.byDesignType,
       lcDefinitionHist: recomputed.lcDefinitionHist,
       lcDefPct12Plus: recomputed.lcDefPct12Plus,
-      tableRows: props.tableRows.filter((r) => {
-        if (!selectedDesignTypes.has(r.design_type || "unknown")) return false;
-        if (lcDefWho && !lcDefBelow) return r.min_weeks != null && r.min_weeks >= 12;
-        if (!lcDefWho && lcDefBelow) return r.min_weeks != null && r.min_weeks < 12;
-        if (!lcDefWho && !lcDefBelow) return false;
-        if (interventionNameFilter && !trialHasFacet(r.facets, "intervention", interventionNameFilter)) return false;
-        return true;
-      }),
+      byNameVerdicts: iv.byNameVerdicts,
+      trialsByName: iv.trialsByName,
+      interventionCategoryOf: iv.interventionCategoryOf,
+      tableRows: filteredRows,
     };
   }, [isFiltered, props, recomputed, selectedDesignTypes, lcDefWho, lcDefBelow, interventionNameFilter]);
 
@@ -330,12 +302,20 @@ export function LongCovidDashboard(props: DashboardProps) {
       {props.lastUpdated && (
         <p className="text-sm text-foreground/50 mb-3">Last updated: {props.lastUpdated}</p>
       )}
-      <Link
-        href="/birds-eye-reviews/long-covid/screening"
-        className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
-      >
-        View breakdown of all Long COVID articles &rarr;
-      </Link>
+      <div className="flex flex-wrap gap-2 mb-4">
+        <Link
+          href="/birds-eye-reviews/long-covid/screening"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
+        >
+          View breakdown of all Long COVID articles &rarr;
+        </Link>
+        <Link
+          href="/birds-eye-reviews/long-covid/prevention"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
+        >
+          View prevention trials &rarr;
+        </Link>
+      </div>
 
       {/* Long Covid definition filter */}
       <div className={`mb-3 border border-border rounded-lg p-4 ${!(lcDefWho && lcDefBelow) ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`}>
@@ -423,7 +403,7 @@ export function LongCovidDashboard(props: DashboardProps) {
         </div>
       </div>
 
-      <OverviewTab {...effectiveProps} onYearClick={handleYearClick} onCellClick={handleCellClick} onInterventionClick={handleInterventionClick} onCategoryClick={handleCategoryClick} onLcDefClick={handleLcDefClick} onCountryClick={handleCountryClick} onBlindingClick={handleBlindingClick} onSymptomDomainClick={handleSymptomDomainClick} />
+      <OverviewTab {...effectiveProps} onYearClick={handleYearClick} onCellClick={handleCellClick} onInterventionClick={handleInterventionClick} onLcDefClick={handleLcDefClick} onCountryClick={handleCountryClick} onBlindingClick={handleBlindingClick} onSymptomDomainClick={handleSymptomDomainClick} />
       {/* Trial table — always visible at the bottom */}
       <div className="mt-12 border-t border-border pt-8" ref={tableRef}>
         <h2 className="font-clarendon font-bold text-2xl mb-4">All Trials</h2>
@@ -453,11 +433,87 @@ export function LongCovidDashboard(props: DashboardProps) {
   );
 }
 
+// ── Interventions by type ────────────────────────────────────────────
+/** Every intervention, grouped under its category header. Each intervention
+ *  shows one rectangle per trial coloured by result, with a shared hover tooltip;
+ *  clicking filters the table. Interventions with more than `wideMinTrials` trials
+ *  span all columns so their (long) row of rectangles has room to lay out flat. */
+function InterventionsByTypeList({
+  byNameVerdicts, trialsByName, interventionCategoryOf, wideMinTrials, onInterventionClick,
+}: {
+  byNameVerdicts: Record<string, Record<string, number>>;
+  trialsByName: Record<string, HoverTrial[]>;
+  interventionCategoryOf: Record<string, string>;
+  wideMinTrials: number;
+  onInterventionClick?: (name: string) => void;
+}) {
+  const groups = useMemo(() => {
+    const g: Record<string, { key: string; label: string; counts: Record<string, number>; total: number; wide: boolean }[]> = {};
+    for (const [name, v] of Object.entries(byNameVerdicts)) {
+      const total = Object.values(v).reduce((a, b) => a + b, 0);
+      if (total === 0) continue;
+      const cat = interventionCategoryOf[name] ?? "unknown";
+      (g[cat] ??= []).push({ key: name, label: name, counts: v, total, wide: total > wideMinTrials });
+    }
+    // Wide (most-studied) interventions first within each category, then by count.
+    for (const k in g) g[k].sort((a, b) => Number(b.wide) - Number(a.wide) || b.total - a.total || a.label.localeCompare(b.label));
+    return Object.entries(g)
+      .map(([cat, items]) => ({ cat, items, trials: items.reduce((s, i) => s + i.total, 0) }))
+      .sort((a, b) => b.trials - a.trials || b.items.length - a.items.length);
+  }, [byNameVerdicts, interventionCategoryOf, wideMinTrials]);
+
+  if (groups.length === 0) return null;
+
+  return (
+    <div className="border border-border rounded-lg bg-white p-3 sm:p-4 mb-6">
+      <h2 className="text-lg font-semibold mb-1">Trials by Intervention</h2>
+      <p className="text-sm text-foreground/60 mb-2">
+        Grouped by intervention type. Each rectangle is one trial coloured by result —
+        hover for study details, click an intervention to filter the table below.
+      </p>
+      <div className="flex flex-wrap gap-x-4 gap-y-1 mb-4">
+        {VERDICT_SEGMENTS.map((seg) => (
+          <span key={seg.key} className="inline-flex items-center gap-1.5 text-xs text-foreground/70">
+            <span className="inline-block w-3 h-3 rounded-sm" style={{ backgroundColor: seg.color }} />
+            {seg.label}
+          </span>
+        ))}
+      </div>
+      <div className="space-y-5">
+        {groups.map(({ cat, items, trials }) => (
+          <div key={cat}>
+            <div className="flex items-baseline gap-2 mb-1.5 pb-1 border-b border-border">
+              <span className="font-semibold text-lg">{formatCategory(cat)}</span>
+              <span className="text-sm text-foreground/70">{items.length} interventions · {trials} trials</span>
+            </div>
+            <TrialRectList
+              items={items}
+              segments={VERDICT_SEGMENTS}
+              hoverTrials={trialsByName}
+              onItemClick={onInterventionClick}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ── OVERVIEW TAB ─────────────────────────────────────────────────────
-function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => void; onCellClick?: (category: string, symptom: string) => void; onInterventionClick?: (interventionName: string) => void; onCategoryClick?: (category: string) => void; onLcDefClick?: (binLabel: string) => void; onCountryClick?: (country: string) => void; onBlindingClick?: (blinding: string) => void; onSymptomDomainClick?: (domain: string) => void }) {
+function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => void; onCellClick?: (category: string, symptom: string) => void; onInterventionClick?: (interventionName: string) => void; onLcDefClick?: (binLabel: string) => void; onCountryClick?: (country: string) => void; onBlindingClick?: (blinding: string) => void; onSymptomDomainClick?: (domain: string) => void }) {
   return (
     <div className="space-y-10">
-      {/* Timeline + Country map side by side */}
+      {/* Trials by Intervention — every intervention grouped by category; the most-
+          studied ones (> INTERVENTION_WIDE_MIN_TRIALS trials) span all columns. */}
+      <InterventionsByTypeList
+        byNameVerdicts={props.byNameVerdicts}
+        trialsByName={props.trialsByName}
+        interventionCategoryOf={props.interventionCategoryOf}
+        wideMinTrials={INTERVENTION_WIDE_MIN_TRIALS}
+        onInterventionClick={props.onInterventionClick}
+      />
+
+      {/* Timeline + LC definition side by side */}
       <div className="grid md:grid-cols-2 gap-8">
         <ChartSection title="Trials by publication year">
           <ResponsiveContainer width="100%" height={300}>
@@ -1011,9 +1067,10 @@ function TrialTableTab({
                 Primary Outcome {sortField === "outcome" ? (sortDir === "asc" ? "↑" : "↓") : ""}
               </th>
               <th className="p-2 text-right" title="# Outcomes"># Out</th>
-              <th className="p-2 text-right" title="Significant in positive direction">+ Sig</th>
-              <th className="p-2 text-right" title="Negative or non-significant">− / NS</th>
-              <th className="p-2 text-right" title="Unknown significance">Unk</th>
+              <th className="p-2 text-right" title="Significant, favours treatment">+ Sig</th>
+              <th className="p-2 text-right" title="Significant, favours control">− Ctrl</th>
+              <th className="p-2 text-right" title="Not significant (no difference)">NS</th>
+              <th className="p-2 text-right" title="Unknown / not assessable">Unk</th>
               <th
                 className="p-2 cursor-pointer hover:text-foreground text-right"
                 onClick={() => handleSort("promise_score")}
@@ -1103,7 +1160,8 @@ function TrialRow({
         </td>
         <td className="p-2 text-right tabular-nums text-xs">{row.n_outcomes}</td>
         <td className="p-2 text-right tabular-nums text-xs text-green-600">{row.n_positive || "—"}</td>
-        <td className="p-2 text-right tabular-nums text-xs">{row.n_negative_ns || "—"}</td>
+        <td className="p-2 text-right tabular-nums text-xs text-red-600">{row.n_favors_control || "—"}</td>
+        <td className="p-2 text-right tabular-nums text-xs">{row.n_null || "—"}</td>
         <td className="p-2 text-right tabular-nums text-xs">{row.n_unknown || "—"}</td>
         <td className="p-2 text-right tabular-nums text-xs">
           {row.promise_score != null ? (() => {
@@ -1124,7 +1182,7 @@ function TrialRow({
       </tr>
       {isExpanded && (
         <tr className="border-b border-border/50">
-          <td colSpan={11} className="p-4 bg-foreground/[0.02]">
+          <td colSpan={12} className="p-4 bg-foreground/[0.02]">
             <div className="grid md:grid-cols-2 gap-4 text-xs">
               {/* Reference */}
               <div className="md:col-span-2">
@@ -1275,123 +1333,6 @@ const INTERVENTION_PALETTE = [
 function hashColor(_name: string, index: number): string {
   return INTERVENTION_PALETTE[index % INTERVENTION_PALETTE.length];
 }
-
-// ── Country Map ─────────────────────────────────────────────────────
-function CountryMap({ allCountries, onCountryClick }: { allCountries: DashboardProps["allCountries"]; onCountryClick?: (country: string) => void }) {
-  const [tooltip, setTooltip] = useState<{ name: string; count: number; x: number; y: number } | null>(null);
-
-  const countByName = useMemo(() => {
-    const m = new Map<string, number>();
-    for (const c of allCountries) {
-      const mapName = COUNTRY_NAME_MAPPING[c.country] ?? c.country;
-      m.set(mapName, c.count);
-    }
-    return m;
-  }, [allCountries]);
-
-  const maxCount = useMemo(() => Math.max(...countByName.values(), 1), [countByName]);
-
-  const getColor = (count: number) => {
-    if (count === 0) return "#e2e8f0";
-    const t = Math.pow(count / maxCount, 0.5); // sqrt scale for better spread
-    const r = Math.round(219 - t * (219 - 30));
-    const g = Math.round(234 - t * (234 - 64));
-    const b = Math.round(254 - t * (254 - 175));
-    return `rgb(${r},${g},${b})`;
-  };
-
-  return (
-    <div className="relative">
-      <ComposableMap
-        projectionConfig={{ scale: 150, center: [10, 5] }}
-        width={800}
-        height={400}
-        style={{ width: "100%", height: "auto" }}
-      >
-        <ZoomableGroup center={[0, 0]} zoom={1} minZoom={0.5} maxZoom={5}>
-          <Geographies geography={GEO_URL}>
-            {({ geographies }) => (
-              <>
-                {geographies.map((geo) => {
-                  const name = geo.properties.name;
-                  const count = countByName.get(name) ?? 0;
-                  return (
-                    <Geography
-                      key={geo.rsmKey}
-                      geography={geo}
-                      fill={getColor(count)}
-                      stroke="#fff"
-                      strokeWidth={0.5}
-                      onMouseEnter={(e) => {
-                        if (count > 0) {
-                          const rect = (e.target as SVGElement).closest("svg")!.getBoundingClientRect();
-                          setTooltip({
-                            name: geo.properties.name,
-                            count,
-                            x: e.clientX - rect.left,
-                            y: e.clientY - rect.top,
-                          });
-                        }
-                      }}
-                      onMouseLeave={() => setTooltip(null)}
-                      onClick={() => {
-                        if (count > 0 && onCountryClick) {
-                          const dataName = REVERSE_COUNTRY_MAPPING[name] ?? name;
-                          onCountryClick(dataName);
-                        }
-                      }}
-                      style={{
-                        default: { outline: "none", cursor: count > 0 ? "pointer" : "default" },
-                        hover: { outline: "none", fill: count > 0 ? "#2563eb" : "#e2e8f0", cursor: count > 0 ? "pointer" : "default" },
-                        pressed: { outline: "none" },
-                      }}
-                    />
-                  );
-                })}
-                {geographies.map((geo) => {
-                  const name = geo.properties.name;
-                  const count = countByName.get(name) ?? 0;
-                  if (count === 0) return null;
-                  const centroid = geoCentroid(geo);
-                  return (
-                    <Marker key={geo.rsmKey + "-label"} coordinates={centroid}>
-                      <text
-                        textAnchor="middle"
-                        y={2}
-                        style={{
-                          fontFamily: "system-ui, sans-serif",
-                          fill: "#fff",
-                          fontSize: "8px",
-                          fontWeight: "bold",
-                          pointerEvents: "none",
-                          stroke: "rgba(0,0,0,0.5)",
-                          strokeWidth: "1.5px",
-                          paintOrder: "stroke",
-                        }}
-                      >
-                        {count}
-                      </text>
-                    </Marker>
-                  );
-                })}
-              </>
-            )}
-          </Geographies>
-        </ZoomableGroup>
-      </ComposableMap>
-      {tooltip && (
-        <div
-          className="absolute bg-background border border-border rounded px-2 py-1 text-xs shadow-lg pointer-events-none z-10"
-          style={{ left: tooltip.x, top: tooltip.y, transform: "translate(-50%, -120%)" }}
-        >
-          <div className="font-semibold">{tooltip.name}</div>
-          <div className="text-foreground/60">{tooltip.count} trial{tooltip.count !== 1 ? "s" : ""}</div>
-        </div>
-      )}
-    </div>
-  );
-}
-
 const INTERVENTION_BAR_LIMIT = 30;
 
 function InterventionStackedBar({ data, onInterventionClick }: { data: InterventionBar[]; onInterventionClick?: (interventionName: string) => void }) {

@@ -1,0 +1,4707 @@
+{
+  "min_trials": 3,
+  "generated_at": null,
+  "methods": {
+    "designs": "rct_only",
+    "grouping_unit": "ingredient",
+    "ci_method": "hksj",
+    "effect_size": "Hedges' g / SMD (Chinn for binary)",
+    "model": "DerSimonian-Laird random effects",
+    "outcome_domains": [
+      "symptom_severity",
+      "sleep_quality",
+      "periodic_limb_movements"
+    ],
+    "scale_filters": {
+      "symptom_severity": "irls_0_40"
+    },
+    "publication_bias_min_k": 10,
+    "llm_selection": false
+  },
+  "groups": [
+    {
+      "ingredient": "cabergoline",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 4,
+      "scale": "linear",
+      "combines": [
+        "continuous"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.1002/mds.21401",
+          "first_author": "",
+          "year": null,
+          "effect": 0.6519,
+          "ci_low": 0.4402,
+          "ci_high": 0.8637,
+          "p_value": null,
+          "n_total": 361,
+          "outcome_name": "IRLS total score change from baseline to Week 6/8 (short-term primary endpoint)",
+          "weight": 0.3176,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1212/01.wnl.0000147297.51023.c8",
+          "first_author": "",
+          "year": null,
+          "effect": -0.2219,
+          "ci_low": -0.8217,
+          "ci_high": 0.3779,
+          "p_value": null,
+          "n_total": 86,
+          "outcome_name": "International RLS Study Group severity scale (IRLS) total score",
+          "weight": 0.2495,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1212/01.wnl.0000237742.08297.22",
+          "first_author": "",
+          "year": null,
+          "effect": 1.3951,
+          "ci_low": 0.704,
+          "ci_high": 2.0862,
+          "p_value": null,
+          "n_total": 43,
+          "outcome_name": "IRLS total score",
+          "weight": 0.2309,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1093/sleep/26.7.815",
+          "first_author": "",
+          "year": null,
+          "effect": -0.0563,
+          "ci_low": -0.8956,
+          "ci_high": 0.7831,
+          "p_value": null,
+          "n_total": 12,
+          "outcome_name": "International RLS Study Group Rating Scale score",
+          "weight": 0.202,
+          "rob": "high"
+        }
+      ],
+      "pooled": {
+        "effect": 0.4625,
+        "ci_low": -0.6751,
+        "ci_high": 1.6001,
+        "i2": 79.8,
+        "tau2": 0.2883,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -2.2023,
+        "pred_high": 3.1273
+      },
+      "rob_summary": {
+        "low": 0,
+        "some": 3,
+        "high": 1,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "very_low",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "risk_of_bias",
+            "reason": "most trials have some concerns / high RoB"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2=80% (considerable)"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2>=75% (double downgrade)"
+          },
+          {
+            "domain": "imprecision",
+            "reason": "CI crosses null"
+          }
+        ]
+      },
+      "total_n": 502,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.5862,
+          "ci_low": 0.3992,
+          "ci_high": 0.7732
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.1002/mds.21401",
+            "effect": 0.3742,
+            "ci_low": -1.9175,
+            "ci_high": 2.6659
+          },
+          {
+            "omitted": "10.1212/01.wnl.0000147297.51023.c8",
+            "effect": 0.6939,
+            "ci_low": -0.9449,
+            "ci_high": 2.3326
+          },
+          {
+            "omitted": "10.1212/01.wnl.0000237742.08297.22",
+            "effect": 0.189,
+            "ci_low": -1.2505,
+            "ci_high": 1.6286
+          },
+          {
+            "omitted": "10.1093/sleep/26.7.815",
+            "effect": 0.5948,
+            "ci_low": -1.3276,
+            "ci_high": 2.5171
+          }
+        ],
+        "rob_excluded": {
+          "n_trials": 3,
+          "effect": 0.5948,
+          "ci_low": -1.3276,
+          "ci_high": 2.5171,
+          "i2": 84.0,
+          "tau2": 0.324,
+          "ci_method": "hksj",
+          "model": "random_effects_DL_HKSJ",
+          "pred_low": -7.9802,
+          "pred_high": 9.1697
+        }
+      }
+    },
+    {
+      "ingredient": "ferric carboxymaltose",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 4,
+      "scale": "linear",
+      "combines": [
+        "continuous"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.1002/mds.27040",
+          "first_author": "",
+          "year": null,
+          "effect": -0.0,
+          "ci_low": -0.3747,
+          "ci_high": 0.3747,
+          "p_value": null,
+          "n_total": 110,
+          "outcome_name": "RLS-6 Sleep satisfaction",
+          "weight": 0.3933,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2016.06.021",
+          "first_author": "",
+          "year": null,
+          "effect": 0.1105,
+          "ci_low": -0.3799,
+          "ci_high": 0.6008,
+          "p_value": null,
+          "n_total": 64,
+          "outcome_name": "Pittsburgh Sleep Quality Index (PSQI) change from baseline",
+          "weight": 0.2297,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2017.11.1134",
+          "first_author": "",
+          "year": null,
+          "effect": -0.1373,
+          "ci_low": -0.6279,
+          "ci_high": 0.3532,
+          "p_value": null,
+          "n_total": 64,
+          "outcome_name": "Pittsburgh Sleep Quality Index (PSQI) change from baseline",
+          "weight": 0.2295,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2011.06.009",
+          "first_author": "",
+          "year": null,
+          "effect": 0.5165,
+          "ci_low": -0.0952,
+          "ci_high": 1.1281,
+          "p_value": null,
+          "n_total": 46,
+          "outcome_name": "Medical Outcomes Study Sleep Scale (MOS sleep) total score change from baseline",
+          "weight": 0.1476,
+          "rob": "some"
+        }
+      ],
+      "pooled": {
+        "effect": 0.0701,
+        "ci_low": -0.3114,
+        "ci_high": 0.4516,
+        "i2": 0.0,
+        "tau2": 0.0,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -0.4458,
+        "pred_high": 0.586
+      },
+      "rob_summary": {
+        "low": 0,
+        "some": 4,
+        "high": 0,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "low",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "risk_of_bias",
+            "reason": "most trials have some concerns / high RoB"
+          },
+          {
+            "domain": "imprecision",
+            "reason": "CI crosses null; optimal information size not met"
+          }
+        ]
+      },
+      "total_n": 284,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.0701,
+          "ci_low": -0.1649,
+          "ci_high": 0.3051
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.1002/mds.27040",
+            "effect": 0.126,
+            "ci_low": -0.6541,
+            "ci_high": 0.9062
+          },
+          {
+            "omitted": "10.1016/j.sleep.2016.06.021",
+            "effect": 0.0746,
+            "ci_low": -0.6806,
+            "ci_high": 0.8297
+          },
+          {
+            "omitted": "10.1016/j.sleep.2017.11.1134",
+            "effect": 0.1319,
+            "ci_low": -0.4562,
+            "ci_high": 0.72
+          },
+          {
+            "omitted": "10.1016/j.sleep.2011.06.009",
+            "effect": -0.0072,
+            "ci_low": -0.566,
+            "ci_high": 0.5516
+          }
+        ]
+      }
+    },
+    {
+      "ingredient": "ferric carboxymaltose",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 4,
+      "scale": "linear",
+      "combines": [
+        "continuous"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.1002/mds.27040",
+          "first_author": "",
+          "year": null,
+          "effect": 0.0174,
+          "ci_low": -0.3574,
+          "ci_high": 0.3921,
+          "p_value": null,
+          "n_total": 110,
+          "outcome_name": "International Restless Legs Syndrome Severity Scale (IRLS) total score",
+          "weight": 0.3388,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2017.11.1134",
+          "first_author": "",
+          "year": null,
+          "effect": 0.4257,
+          "ci_low": -0.0698,
+          "ci_high": 0.9212,
+          "p_value": null,
+          "n_total": 64,
+          "outcome_name": "International RLS Severity Scale (IRLSS) change from baseline",
+          "weight": 0.2428,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2016.06.021",
+          "first_author": "",
+          "year": null,
+          "effect": 0.5635,
+          "ci_low": 0.0639,
+          "ci_high": 1.0631,
+          "p_value": null,
+          "n_total": 64,
+          "outcome_name": "International RLS Severity Scale (IRLSS) change from baseline",
+          "weight": 0.2402,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2011.06.009",
+          "first_author": "",
+          "year": null,
+          "effect": 0.6365,
+          "ci_low": 0.0197,
+          "ci_high": 1.2532,
+          "p_value": null,
+          "n_total": 46,
+          "outcome_name": "International Restless Legs Syndrome study group severity scale (IRLS) change from baseline",
+          "weight": 0.1781,
+          "rob": "some"
+        }
+      ],
+      "pooled": {
+        "effect": 0.358,
+        "ci_low": -0.1293,
+        "ci_high": 0.8453,
+        "i2": 34.8,
+        "tau2": 0.0327,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -0.6614,
+        "pred_high": 1.3773
+      },
+      "rob_summary": {
+        "low": 0,
+        "some": 4,
+        "high": 0,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "low",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "risk_of_bias",
+            "reason": "most trials have some concerns / high RoB"
+          },
+          {
+            "domain": "imprecision",
+            "reason": "CI crosses null; optimal information size not met"
+          }
+        ]
+      },
+      "total_n": 284,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.3247,
+          "ci_low": 0.0878,
+          "ci_high": 0.5615
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.1002/mds.27040",
+            "effect": 0.529,
+            "ci_low": -0.1419,
+            "ci_high": 1.1999
+          },
+          {
+            "omitted": "10.1016/j.sleep.2017.11.1134",
+            "effect": 0.3584,
+            "ci_low": -0.5593,
+            "ci_high": 1.2761
+          },
+          {
+            "omitted": "10.1016/j.sleep.2016.06.021",
+            "effect": 0.301,
+            "ci_low": -0.5076,
+            "ci_high": 1.1097
+          },
+          {
+            "omitted": "10.1016/j.sleep.2011.06.009",
+            "effect": 0.3004,
+            "ci_low": -0.453,
+            "ci_high": 1.0538
+          }
+        ]
+      }
+    },
+    {
+      "ingredient": "gabapentin",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 3,
+      "scale": "linear",
+      "combines": [
+        "continuous"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.15171/npj.2018.22",
+          "first_author": "",
+          "year": null,
+          "effect": -0.0,
+          "ci_low": -0.6049,
+          "ci_high": 0.6049,
+          "p_value": null,
+          "n_total": 21,
+          "outcome_name": "RLS symptom severity score (standardized questionnaire)",
+          "weight": 0.4014,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1053/ajkd.2001.25202",
+          "first_author": "",
+          "year": null,
+          "effect": -0.0,
+          "ci_low": -0.693,
+          "ci_high": 0.693,
+          "p_value": null,
+          "n_total": 16,
+          "outcome_name": "RLS symptom severity questionnaire score (parametric)",
+          "weight": 0.3058,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1111/1744-9987.13987",
+          "first_author": "",
+          "year": null,
+          "effect": 0.2933,
+          "ci_low": -0.4149,
+          "ci_high": 1.0015,
+          "p_value": null,
+          "n_total": 40,
+          "outcome_name": "Restless Legs Syndrome severity score",
+          "weight": 0.2928,
+          "rob": "high"
+        }
+      ],
+      "pooled": {
+        "effect": 0.0859,
+        "ci_low": -0.7554,
+        "ci_high": 0.9272,
+        "i2": 0.0,
+        "tau2": 0.0,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -2.3984,
+        "pred_high": 2.5701
+      },
+      "rob_summary": {
+        "low": 0,
+        "some": 2,
+        "high": 1,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "low",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "risk_of_bias",
+            "reason": "most trials have some concerns / high RoB"
+          },
+          {
+            "domain": "imprecision",
+            "reason": "CI crosses null; optimal information size not met"
+          }
+        ]
+      },
+      "total_n": 77,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.0859,
+          "ci_low": -0.2973,
+          "ci_high": 0.4691
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.15171/npj.2018.22",
+            "effect": 0.1435,
+            "ci_low": -3.0674,
+            "ci_high": 3.3543
+          },
+          {
+            "omitted": "10.1053/ajkd.2001.25202",
+            "effect": 0.1237,
+            "ci_low": -2.8579,
+            "ci_high": 3.1054
+          },
+          {
+            "omitted": "10.1111/1744-9987.13987",
+            "effect": 0.0,
+            "ci_low": -2.9541,
+            "ci_high": 2.9541
+          }
+        ]
+      }
+    },
+    {
+      "ingredient": "gabapentin enacarbil",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 6,
+      "scale": "linear",
+      "combines": [
+        "continuous"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.2147/jprls.s40804",
+          "first_author": "",
+          "year": null,
+          "effect": 0.0,
+          "ci_low": -0.2541,
+          "ci_high": 0.2541,
+          "p_value": null,
+          "n_total": 427,
+          "outcome_name": "MOS Sleep Scale - Sleep Quantity Domain",
+          "weight": 0.185,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1002/mds.23771",
+          "first_author": "",
+          "year": null,
+          "effect": 0.4691,
+          "ci_low": 0.2147,
+          "ci_high": 0.7234,
+          "p_value": null,
+          "n_total": 136,
+          "outcome_name": "Wake time during sleep (WTDS)",
+          "weight": 0.1849,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2018.04.001",
+          "first_author": "",
+          "year": null,
+          "effect": 0.5499,
+          "ci_low": 0.2836,
+          "ci_high": 0.8163,
+          "p_value": null,
+          "n_total": 131,
+          "outcome_name": "Subjective Post-Sleep Diary (SPSD) rested upon awakening",
+          "weight": 0.1821,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.3109/07853890.2015.1025825",
+          "first_author": "",
+          "year": null,
+          "effect": -0.1772,
+          "ci_low": -0.4462,
+          "ci_high": 0.0918,
+          "p_value": null,
+          "n_total": 671,
+          "outcome_name": "IRLS item 4 (severity of sleep disturbance) change from baseline",
+          "weight": 0.1815,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.jamda.2025.105485",
+          "first_author": "",
+          "year": null,
+          "effect": -0.0959,
+          "ci_low": -0.4239,
+          "ci_high": 0.2321,
+          "p_value": null,
+          "n_total": 147,
+          "outcome_name": "Observed nighttime wake episodes",
+          "weight": 0.1673,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2018.11.025",
+          "first_author": "",
+          "year": null,
+          "effect": 0.4534,
+          "ci_low": -0.1907,
+          "ci_high": 1.0974,
+          "p_value": null,
+          "n_total": 39,
+          "outcome_name": "RLS-6 Item 1: Sleep satisfaction",
+          "weight": 0.0994,
+          "rob": "some"
+        }
+      ],
+      "pooled": {
+        "effect": 0.1837,
+        "ci_low": -0.176,
+        "ci_high": 0.5434,
+        "i2": 79.6,
+        "tau2": 0.089,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -0.7312,
+        "pred_high": 1.0986
+      },
+      "rob_summary": {
+        "low": 0,
+        "some": 6,
+        "high": 0,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "very_low",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "risk_of_bias",
+            "reason": "most trials have some concerns / high RoB"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2=80% (considerable)"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2>=75% (double downgrade)"
+          },
+          {
+            "domain": "imprecision",
+            "reason": "CI crosses null"
+          }
+        ]
+      },
+      "total_n": 1551,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.1807,
+          "ci_low": 0.0617,
+          "ci_high": 0.2998
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.2147/jprls.s40804",
+            "effect": 0.2266,
+            "ci_low": -0.2434,
+            "ci_high": 0.6967
+          },
+          {
+            "omitted": "10.1002/mds.23771",
+            "effect": 0.1188,
+            "ci_low": -0.309,
+            "ci_high": 0.5466
+          },
+          {
+            "omitted": "10.1016/j.sleep.2018.04.001",
+            "effect": 0.099,
+            "ci_low": -0.2894,
+            "ci_high": 0.4874
+          },
+          {
+            "omitted": "10.3109/07853890.2015.1025825",
+            "effect": 0.263,
+            "ci_low": -0.1341,
+            "ci_high": 0.66
+          },
+          {
+            "omitted": "10.1016/j.jamda.2025.105485",
+            "effect": 0.2406,
+            "ci_low": -0.198,
+            "ci_high": 0.6791
+          },
+          {
+            "omitted": "10.1016/j.sleep.2018.11.025",
+            "effect": 0.1537,
+            "ci_low": -0.2667,
+            "ci_high": 0.5741
+          }
+        ]
+      }
+    },
+    {
+      "ingredient": "gabapentin enacarbil",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 9,
+      "scale": "linear",
+      "combines": [
+        "continuous"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.sleep.2021.07.004",
+          "first_author": "",
+          "year": null,
+          "effect": 0.019,
+          "ci_low": -0.1397,
+          "ci_high": 0.1777,
+          "p_value": null,
+          "n_total": 610,
+          "outcome_name": "Change from baseline in International Restless Legs Syndrome Rating Scale (IRLS) score at Week 12",
+          "weight": 0.1262,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1186/s40734-015-0018-3",
+          "first_author": "",
+          "year": null,
+          "effect": -0.144,
+          "ci_low": -0.3659,
+          "ci_high": 0.0779,
+          "p_value": null,
+          "n_total": 671,
+          "outcome_name": "IRLS Rating Scale total score change from baseline",
+          "weight": 0.122,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.2147/jprls.s40804",
+          "first_author": "",
+          "year": null,
+          "effect": 0.1518,
+          "ci_low": -0.1026,
+          "ci_high": 0.4062,
+          "p_value": null,
+          "n_total": 427,
+          "outcome_name": "IRLS Total Score",
+          "weight": 0.1195,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2018.04.001",
+          "first_author": "",
+          "year": null,
+          "effect": 0.8123,
+          "ci_low": 0.5543,
+          "ci_high": 1.0703,
+          "p_value": null,
+          "n_total": 131,
+          "outcome_name": "International Restless Legs Syndrome Rating Scale (IRLS) total score",
+          "weight": 0.1192,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1002/mds.23771",
+          "first_author": "",
+          "year": null,
+          "effect": 0.8181,
+          "ci_low": 0.559,
+          "ci_high": 1.0773,
+          "p_value": null,
+          "n_total": 136,
+          "outcome_name": "International Restless Legs Scale (IRLS) total score",
+          "weight": 0.1191,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.3109/07853890.2015.1025825",
+          "first_author": "",
+          "year": null,
+          "effect": 0.6115,
+          "ci_low": 0.337,
+          "ci_high": 0.886,
+          "p_value": null,
+          "n_total": 671,
+          "outcome_name": "IRLS total score change from baseline (no-to-moderate sleep disturbance subgroup)",
+          "weight": 0.1179,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1097/wnf.0b013e318259eac8",
+          "first_author": "",
+          "year": null,
+          "effect": -0.2606,
+          "ci_low": -0.684,
+          "ci_high": 0.1628,
+          "p_value": null,
+          "n_total": 217,
+          "outcome_name": "IRLS Rating Scale total score change from baseline at week 12",
+          "weight": 0.1037,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1097/wnf.0b013e3181b3ab16",
+          "first_author": "",
+          "year": null,
+          "effect": 0.9092,
+          "ci_low": 0.3985,
+          "ci_high": 1.42,
+          "p_value": null,
+          "n_total": 95,
+          "outcome_name": "Change from baseline IRLS total score at day 14 (end of treatment)",
+          "weight": 0.0947,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2018.11.025",
+          "first_author": "",
+          "year": null,
+          "effect": 1.1336,
+          "ci_low": 0.4485,
+          "ci_high": 1.8186,
+          "p_value": null,
+          "n_total": 39,
+          "outcome_name": "International Restless Legs Syndrome Scale (IRLS) total score",
+          "weight": 0.0776,
+          "rob": "some"
+        }
+      ],
+      "pooled": {
+        "effect": 0.4165,
+        "ci_low": 0.0345,
+        "ci_high": 0.7984,
+        "i2": 90.2,
+        "tau2": 0.1784,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -0.6458,
+        "pred_high": 1.4787
+      },
+      "rob_summary": {
+        "low": 0,
+        "some": 9,
+        "high": 0,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "very_low",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "risk_of_bias",
+            "reason": "most trials have some concerns / high RoB"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2=90% (considerable)"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2>=75% (double downgrade)"
+          }
+        ]
+      },
+      "total_n": 2997,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.2852,
+          "ci_low": 0.1975,
+          "ci_high": 0.3728
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.1016/j.sleep.2021.07.004",
+            "effect": 0.4764,
+            "ci_low": 0.0512,
+            "ci_high": 0.9016
+          },
+          {
+            "omitted": "10.1186/s40734-015-0018-3",
+            "effect": 0.4938,
+            "ci_low": 0.0941,
+            "ci_high": 0.8935
+          },
+          {
+            "omitted": "10.2147/jprls.s40804",
+            "effect": 0.4561,
+            "ci_low": 0.0183,
+            "ci_high": 0.8939
+          },
+          {
+            "omitted": "10.1016/j.sleep.2018.04.001",
+            "effect": 0.3599,
+            "ci_low": -0.0627,
+            "ci_high": 0.7826
+          },
+          {
+            "omitted": "10.1002/mds.23771",
+            "effect": 0.359,
+            "ci_low": -0.0629,
+            "ci_high": 0.7809
+          },
+          {
+            "omitted": "10.3109/07853890.2015.1025825",
+            "effect": 0.3923,
+            "ci_low": -0.0492,
+            "ci_high": 0.8338
+          },
+          {
+            "omitted": "10.1097/wnf.0b013e318259eac8",
+            "effect": 0.4942,
+            "ci_low": 0.1091,
+            "ci_high": 0.8793
+          },
+          {
+            "omitted": "10.1097/wnf.0b013e3181b3ab16",
+            "effect": 0.3645,
+            "ci_low": -0.0491,
+            "ci_high": 0.778
+          },
+          {
+            "omitted": "10.1016/j.sleep.2018.11.025",
+            "effect": 0.3558,
+            "ci_low": -0.0346,
+            "ci_high": 0.7463
+          }
+        ]
+      }
+    },
+    {
+      "ingredient": "levodopa/benserazide",
+      "outcome_domain": "periodic_limb_movements",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 4,
+      "scale": "linear",
+      "combines": [
+        "continuous"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.1093/sleep/22.8.1073",
+          "first_author": "",
+          "year": null,
+          "effect": 0.8923,
+          "ci_low": 0.3785,
+          "ci_high": 1.4061,
+          "p_value": null,
+          "n_total": 35,
+          "outcome_name": "Time without leg movements per hour in bed (%)",
+          "weight": 0.2625,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1007/s00415-004-0367-6",
+          "first_author": "",
+          "year": null,
+          "effect": -0.6309,
+          "ci_low": -1.2659,
+          "ci_high": 0.0042,
+          "p_value": null,
+          "n_total": 20,
+          "outcome_name": "Periodic limb movement index (PLMI)",
+          "weight": 0.2513,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1007/s00702-003-0814-z",
+          "first_author": "",
+          "year": null,
+          "effect": 1.388,
+          "ci_low": 0.7142,
+          "ci_high": 2.0617,
+          "p_value": null,
+          "n_total": 21,
+          "outcome_name": "PLM index per hour of sleep (PLM/h TST)",
+          "weight": 0.2475,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1002/mds.20969",
+          "first_author": "",
+          "year": null,
+          "effect": -0.2187,
+          "ci_low": -0.9791,
+          "ci_high": 0.5416,
+          "p_value": null,
+          "n_total": null,
+          "outcome_name": "PLMW index (polysomnography) — baseline",
+          "weight": 0.2386,
+          "rob": "high"
+        }
+      ],
+      "pooled": {
+        "effect": 0.367,
+        "ci_low": -1.1284,
+        "ci_high": 1.8624,
+        "i2": 87.7,
+        "tau2": 0.7502,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -3.8603,
+        "pred_high": 4.5943
+      },
+      "rob_summary": {
+        "low": 0,
+        "some": 3,
+        "high": 1,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "very_low",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "risk_of_bias",
+            "reason": "most trials have some concerns / high RoB"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2=88% (considerable)"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2>=75% (double downgrade)"
+          },
+          {
+            "domain": "imprecision",
+            "reason": "CI crosses null; optimal information size not met"
+          }
+        ]
+      },
+      "total_n": 76,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.4406,
+          "ci_low": 0.1275,
+          "ci_high": 0.7537
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.1093/sleep/22.8.1073",
+            "effect": 0.1799,
+            "ci_low": -2.5545,
+            "ci_high": 2.9144
+          },
+          {
+            "omitted": "10.1007/s00415-004-0367-6",
+            "effect": 0.7106,
+            "ci_low": -1.2858,
+            "ci_high": 2.707
+          },
+          {
+            "omitted": "10.1007/s00702-003-0814-z",
+            "effect": 0.0334,
+            "ci_low": -2.1325,
+            "ci_high": 2.1992
+          },
+          {
+            "omitted": "10.1002/mds.20969",
+            "effect": 0.5504,
+            "ci_low": -2.0499,
+            "ci_high": 3.1508
+          }
+        ],
+        "rob_excluded": {
+          "n_trials": 3,
+          "effect": 0.5504,
+          "ci_low": -2.0499,
+          "ci_high": 3.1508,
+          "i2": 90.4,
+          "tau2": 0.8986,
+          "ci_method": "hksj",
+          "model": "random_effects_DL_HKSJ",
+          "pred_low": -13.5437,
+          "pred_high": 14.6446
+        }
+      }
+    },
+    {
+      "ingredient": "levodopa/benserazide",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 4,
+      "scale": "linear",
+      "combines": [
+        "continuous"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.1093/sleep/22.8.1073",
+          "first_author": "",
+          "year": null,
+          "effect": 0.9879,
+          "ci_low": 0.4688,
+          "ci_high": 1.5069,
+          "p_value": null,
+          "n_total": 35,
+          "outcome_name": "Quality of sleep (SF-A subjective rating)",
+          "weight": 0.266,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1007/s00702-003-0814-z",
+          "first_author": "",
+          "year": null,
+          "effect": -0.008,
+          "ci_low": -0.6129,
+          "ci_high": 0.5968,
+          "p_value": null,
+          "n_total": 21,
+          "outcome_name": "Number of awakenings",
+          "weight": 0.2549,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1007/s00415-004-0367-6",
+          "first_author": "",
+          "year": null,
+          "effect": -0.3713,
+          "ci_low": -0.9964,
+          "ci_high": 0.2539,
+          "p_value": null,
+          "n_total": 20,
+          "outcome_name": "Sleep efficiency",
+          "weight": 0.2522,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1002/mds.20969",
+          "first_author": "",
+          "year": null,
+          "effect": 1.3639,
+          "ci_low": 0.5572,
+          "ci_high": 2.1705,
+          "p_value": null,
+          "n_total": null,
+          "outcome_name": "RLS-6 severity during the night — change from baseline (continuous treatment)",
+          "weight": 0.2269,
+          "rob": "high"
+        }
+      ],
+      "pooled": {
+        "effect": 0.4766,
+        "ci_low": -0.8085,
+        "ci_high": 1.7616,
+        "i2": 83.2,
+        "tau2": 0.5046,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -3.0127,
+        "pred_high": 3.9658
+      },
+      "rob_summary": {
+        "low": 0,
+        "some": 3,
+        "high": 1,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "very_low",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "risk_of_bias",
+            "reason": "most trials have some concerns / high RoB"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2=83% (considerable)"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2>=75% (double downgrade)"
+          },
+          {
+            "domain": "imprecision",
+            "reason": "CI crosses null; optimal information size not met"
+          }
+        ]
+      },
+      "total_n": 76,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.4545,
+          "ci_low": 0.1465,
+          "ci_high": 0.7625
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.1093/sleep/22.8.1073",
+            "effect": 0.2944,
+            "ci_low": -1.9403,
+            "ci_high": 2.5291
+          },
+          {
+            "omitted": "10.1007/s00702-003-0814-z",
+            "effect": 0.6459,
+            "ci_low": -1.6117,
+            "ci_high": 2.9035
+          },
+          {
+            "omitted": "10.1007/s00415-004-0367-6",
+            "effect": 0.7576,
+            "ci_low": -0.9862,
+            "ci_high": 2.5014
+          },
+          {
+            "omitted": "10.1002/mds.20969",
+            "effect": 0.2176,
+            "ci_low": -1.6016,
+            "ci_high": 2.0368
+          }
+        ],
+        "rob_excluded": {
+          "n_trials": 3,
+          "effect": 0.2176,
+          "ci_low": -1.6016,
+          "ci_high": 2.0368,
+          "i2": 83.6,
+          "tau2": 0.4475,
+          "ci_method": "hksj",
+          "model": "random_effects_DL_HKSJ",
+          "pred_low": -9.8376,
+          "pred_high": 10.2729
+        }
+      }
+    },
+    {
+      "ingredient": "pergolide",
+      "outcome_domain": "periodic_limb_movements",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 6,
+      "scale": "linear",
+      "combines": [
+        "continuous"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.clinph.2007.04.001",
+          "first_author": "",
+          "year": null,
+          "effect": 0.6637,
+          "ci_low": 0.2604,
+          "ci_high": 1.067,
+          "p_value": null,
+          "n_total": 100,
+          "outcome_name": "PLMS-arousal index (PLMS-associated arousals per hour of total sleep time)",
+          "weight": 0.1824,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1053/j.ajkd.2009.04.034",
+          "first_author": "",
+          "year": null,
+          "effect": -1.0983,
+          "ci_low": -1.6373,
+          "ci_high": -0.5593,
+          "p_value": null,
+          "n_total": null,
+          "outcome_name": "Number of leg movements on 30-minute SIT (SIT-PLM count)",
+          "weight": 0.1776,
+          "rob": "high"
+        },
+        {
+          "paper_id": "10.1212/wnl.52.5.944",
+          "first_author": "",
+          "year": null,
+          "effect": 1.5995,
+          "ci_low": 0.9978,
+          "ci_high": 2.2013,
+          "p_value": null,
+          "n_total": 30,
+          "outcome_name": "PLM index (periodic leg movements per hour of time in bed, during sleep and wakefulness)",
+          "weight": 0.175,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1212/wnl.51.6.1599",
+          "first_author": "",
+          "year": null,
+          "effect": -0.0031,
+          "ci_low": -0.9831,
+          "ci_high": 0.9769,
+          "p_value": null,
+          "n_total": 16,
+          "outcome_name": "PLMS per hour (periodic limb movements of sleep per hour)",
+          "weight": 0.1559,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1093/sleep/21.6.617",
+          "first_author": "",
+          "year": null,
+          "effect": 0.1489,
+          "ci_low": -0.8325,
+          "ci_high": 1.1302,
+          "p_value": null,
+          "n_total": 14,
+          "outcome_name": "Percentage of sleep time with leg movements (PSG)",
+          "weight": 0.1558,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1007/bf01277664",
+          "first_author": "",
+          "year": null,
+          "effect": 1.9992,
+          "ci_low": 0.9757,
+          "ci_high": 3.0226,
+          "p_value": null,
+          "n_total": 11,
+          "outcome_name": "NMS cluster disturbed time",
+          "weight": 0.1534,
+          "rob": "some"
+        }
+      ],
+      "pooled": {
+        "effect": 0.5353,
+        "ci_low": -0.6766,
+        "ci_high": 1.7472,
+        "i2": 91.2,
+        "tau2": 1.1758,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -2.7469,
+        "pred_high": 3.8175
+      },
+      "rob_summary": {
+        "low": 0,
+        "some": 5,
+        "high": 1,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "very_low",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "risk_of_bias",
+            "reason": "most trials have some concerns / high RoB"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2=91% (considerable)"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2>=75% (double downgrade)"
+          },
+          {
+            "domain": "imprecision",
+            "reason": "CI crosses null; optimal information size not met"
+          }
+        ]
+      },
+      "total_n": 171,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.4404,
+          "ci_low": 0.1855,
+          "ci_high": 0.6954
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.1016/j.clinph.2007.04.001",
+            "effect": 0.5149,
+            "ci_low": -1.2975,
+            "ci_high": 2.3274
+          },
+          {
+            "omitted": "10.1053/j.ajkd.2009.04.034",
+            "effect": 0.8965,
+            "ci_low": -0.1517,
+            "ci_high": 1.9447
+          },
+          {
+            "omitted": "10.1212/wnl.52.5.944",
+            "effect": 0.3075,
+            "ci_low": -1.0868,
+            "ci_high": 1.7018
+          },
+          {
+            "omitted": "10.1212/wnl.51.6.1599",
+            "effect": 0.6374,
+            "ci_low": -0.8874,
+            "ci_high": 2.1622
+          },
+          {
+            "omitted": "10.1093/sleep/21.6.617",
+            "effect": 0.6093,
+            "ci_low": -0.935,
+            "ci_high": 2.1536
+          },
+          {
+            "omitted": "10.1007/bf01277664",
+            "effect": 0.2705,
+            "ci_low": -1.1055,
+            "ci_high": 1.6466
+          }
+        ],
+        "rob_excluded": {
+          "n_trials": 5,
+          "effect": 0.8965,
+          "ci_low": -0.1517,
+          "ci_high": 1.9447,
+          "i2": 75.7,
+          "tau2": 0.4109,
+          "ci_method": "hksj",
+          "model": "random_effects_DL_HKSJ",
+          "pred_low": -1.4116,
+          "pred_high": 3.2046
+        }
+      }
+    },
+    {
+      "ingredient": "pergolide",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 5,
+      "scale": "linear",
+      "combines": [
+        "continuous"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.clinph.2007.04.001",
+          "first_author": "",
+          "year": null,
+          "effect": 0.0721,
+          "ci_low": -0.3208,
+          "ci_high": 0.4649,
+          "p_value": null,
+          "n_total": 100,
+          "outcome_name": "Sleep efficiency",
+          "weight": 0.311,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1212/wnl.52.5.944",
+          "first_author": "",
+          "year": null,
+          "effect": 0.9784,
+          "ci_low": 0.4242,
+          "ci_high": 1.5327,
+          "p_value": null,
+          "n_total": 30,
+          "outcome_name": "Quality of sleep (patients' sleep questionnaire SF-A)",
+          "weight": 0.2502,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1007/bf01277664",
+          "first_author": "",
+          "year": null,
+          "effect": 0.0419,
+          "ci_low": -0.7939,
+          "ci_high": 0.8777,
+          "p_value": null,
+          "n_total": 11,
+          "outcome_name": "Time in Bed (TIB)",
+          "weight": 0.1668,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1212/wnl.51.6.1599",
+          "first_author": "",
+          "year": null,
+          "effect": -0.1457,
+          "ci_low": -1.127,
+          "ci_high": 0.8356,
+          "p_value": null,
+          "n_total": 16,
+          "outcome_name": "Percent sleep efficiency",
+          "weight": 0.1361,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1093/sleep/21.6.617",
+          "first_author": "",
+          "year": null,
+          "effect": 0.1754,
+          "ci_low": -0.8065,
+          "ci_high": 1.1573,
+          "p_value": null,
+          "n_total": 14,
+          "outcome_name": "Latency to persistent sleep (minutes, PSG)",
+          "weight": 0.136,
+          "rob": "some"
+        }
+      ],
+      "pooled": {
+        "effect": 0.2782,
+        "ci_low": -0.3484,
+        "ci_high": 0.9048,
+        "i2": 51.5,
+        "tau2": 0.1237,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -1.0514,
+        "pred_high": 1.6079
+      },
+      "rob_summary": {
+        "low": 0,
+        "some": 5,
+        "high": 0,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "very_low",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "risk_of_bias",
+            "reason": "most trials have some concerns / high RoB"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2=52% (substantial)"
+          },
+          {
+            "domain": "imprecision",
+            "reason": "CI crosses null; optimal information size not met"
+          }
+        ]
+      },
+      "total_n": 171,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.2826,
+          "ci_low": 0.0078,
+          "ci_high": 0.5574
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.1016/j.clinph.2007.04.001",
+            "effect": 0.3521,
+            "ci_low": -0.5909,
+            "ci_high": 1.295
+          },
+          {
+            "omitted": "10.1212/wnl.52.5.944",
+            "effect": 0.0558,
+            "ci_low": -0.4579,
+            "ci_high": 0.5696
+          },
+          {
+            "omitted": "10.1007/bf01277664",
+            "effect": 0.3195,
+            "ci_low": -0.5583,
+            "ci_high": 1.1972
+          },
+          {
+            "omitted": "10.1212/wnl.51.6.1599",
+            "effect": 0.3438,
+            "ci_low": -0.478,
+            "ci_high": 1.1656
+          },
+          {
+            "omitted": "10.1093/sleep/21.6.617",
+            "effect": 0.2874,
+            "ci_low": -0.5752,
+            "ci_high": 1.1501
+          }
+        ]
+      }
+    },
+    {
+      "ingredient": "pramipexole",
+      "outcome_domain": "periodic_limb_movements",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 14,
+      "scale": "linear",
+      "combines": [
+        "continuous"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.4414/smw.2011.13274",
+          "first_author": "",
+          "year": null,
+          "effect": 0.2832,
+          "ci_low": -0.1629,
+          "ci_high": 0.7292,
+          "p_value": null,
+          "n_total": 67,
+          "outcome_name": "Periodic Limb Movement Index (PLM index, PLMI)",
+          "weight": 0.0802,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2008.05.014",
+          "first_author": "",
+          "year": null,
+          "effect": 0.0441,
+          "ci_low": -0.5608,
+          "ci_high": 0.649,
+          "p_value": null,
+          "n_total": 109,
+          "outcome_name": "Periodic limb movements during time in bed index (PLMI)",
+          "weight": 0.0779,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.5665/sleep/31.9.1229",
+          "first_author": "",
+          "year": null,
+          "effect": -0.453,
+          "ci_low": -1.0664,
+          "ci_high": 0.1604,
+          "p_value": null,
+          "n_total": 43,
+          "outcome_name": "PLMS Index (periodic leg movements during sleep per hour of sleep)",
+          "weight": 0.0778,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2011.08.007",
+          "first_author": "",
+          "year": null,
+          "effect": 0.0467,
+          "ci_low": -0.6162,
+          "ci_high": 0.7097,
+          "p_value": null,
+          "n_total": 35,
+          "outcome_name": "PLMW index (periodic leg movements during wakefulness per hour)",
+          "weight": 0.077,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2006.10.008",
+          "first_author": "",
+          "year": null,
+          "effect": -0.0215,
+          "ci_low": -0.7199,
+          "ci_high": 0.677,
+          "p_value": null,
+          "n_total": 32,
+          "outcome_name": "NREM sleep Total LM Index",
+          "weight": 0.0764,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1212/wnl.0b013e3182242d91",
+          "first_author": "",
+          "year": null,
+          "effect": 0.9193,
+          "ci_low": 0.1667,
+          "ci_high": 1.6718,
+          "p_value": null,
+          "n_total": 45,
+          "outcome_name": "PLMS index (total sleep) — change from baseline",
+          "weight": 0.0754,
+          "rob": "high"
+        },
+        {
+          "paper_id": "10.3988/jcn.2017.13.4.340",
+          "first_author": "",
+          "year": null,
+          "effect": -1.1701,
+          "ci_low": -1.9789,
+          "ci_high": -0.3613,
+          "p_value": null,
+          "n_total": null,
+          "outcome_name": "Periodic Leg Movements during Sleep (PLMS) index",
+          "weight": 0.0743,
+          "rob": "high"
+        },
+        {
+          "paper_id": "10.1093/sleep/33.6.793",
+          "first_author": "",
+          "year": null,
+          "effect": 1.9314,
+          "ci_low": 1.1135,
+          "ci_high": 2.7494,
+          "p_value": null,
+          "n_total": 34,
+          "outcome_name": "Periodic Leg Movements during Sleep (PLMS) Index",
+          "weight": 0.0741,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1007/s00406-002-0380-7",
+          "first_author": "",
+          "year": null,
+          "effect": 0.5869,
+          "ci_low": -0.2667,
+          "ci_high": 1.4404,
+          "p_value": null,
+          "n_total": 11,
+          "outcome_name": "PLM index per hour of sleep (PLM/h TST)",
+          "weight": 0.0734,
+          "rob": "high"
+        },
+        {
+          "paper_id": "10.1159/000099947",
+          "first_author": "",
+          "year": null,
+          "effect": 0.8987,
+          "ci_low": -0.021,
+          "ci_high": 1.8184,
+          "p_value": null,
+          "n_total": 10,
+          "outcome_name": "PLMW number",
+          "weight": 0.0721,
+          "rob": "high"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2010.03.019",
+          "first_author": "",
+          "year": null,
+          "effect": 1.8572,
+          "ci_low": 0.8735,
+          "ci_high": 2.8409,
+          "p_value": null,
+          "n_total": 23,
+          "outcome_name": "PLMS index (periodic leg movements during sleep per hour of sleep)",
+          "weight": 0.0708,
+          "rob": "high"
+        },
+        {
+          "paper_id": "10.1111/jsr.13216",
+          "first_author": "",
+          "year": null,
+          "effect": 0.7487,
+          "ci_low": -0.265,
+          "ci_high": 1.7625,
+          "p_value": null,
+          "n_total": 16,
+          "outcome_name": "Limb Movement",
+          "weight": 0.0701,
+          "rob": "high"
+        },
+        {
+          "paper_id": "10.1212/wnl.51.1.311-b",
+          "first_author": "",
+          "year": null,
+          "effect": 2.15,
+          "ci_low": 1.049,
+          "ci_high": 3.251,
+          "p_value": null,
+          "n_total": 10,
+          "outcome_name": "Periodic Leg Movement during Sleep (PLMS) index",
+          "weight": 0.0682,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.30978/unj2018-3-46",
+          "first_author": "",
+          "year": null,
+          "effect": 13.7258,
+          "ci_low": 10.7639,
+          "ci_high": 16.6877,
+          "p_value": null,
+          "n_total": 43,
+          "outcome_name": "Periodic Limb Movement Index (PLMI) during sleep measured by actigraphy",
+          "weight": 0.0323,
+          "rob": "high"
+        }
+      ],
+      "pooled": {
+        "effect": 1.0002,
+        "ci_low": -0.4953,
+        "ci_high": 2.4957,
+        "i2": 90.6,
+        "tau2": 1.4542,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -1.7343,
+        "pred_high": 3.7348
+      },
+      "rob_summary": {
+        "low": 0,
+        "some": 7,
+        "high": 7,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "very_low",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "risk_of_bias",
+            "reason": "7/14 trials high RoB"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2=91% (considerable)"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2>=75% (double downgrade)"
+          },
+          {
+            "domain": "imprecision",
+            "reason": "CI crosses null"
+          },
+          {
+            "domain": "publication_bias",
+            "reason": "Egger p=0.003 (k=14)"
+          }
+        ]
+      },
+      "total_n": 478,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.4385,
+          "ci_low": 0.2387,
+          "ci_high": 0.6384
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.4414/smw.2011.13274",
+            "effect": 1.1173,
+            "ci_low": -0.5856,
+            "ci_high": 2.8202
+          },
+          {
+            "omitted": "10.1016/j.sleep.2008.05.014",
+            "effect": 1.111,
+            "ci_low": -0.5538,
+            "ci_high": 2.7759
+          },
+          {
+            "omitted": "10.5665/sleep/31.9.1229",
+            "effect": 1.137,
+            "ci_low": -0.4938,
+            "ci_high": 2.7679
+          },
+          {
+            "omitted": "10.1016/j.sleep.2011.08.007",
+            "effect": 1.1055,
+            "ci_low": -0.5531,
+            "ci_high": 2.764
+          },
+          {
+            "omitted": "10.1016/j.sleep.2006.10.008",
+            "effect": 1.1072,
+            "ci_low": -0.5452,
+            "ci_high": 2.7597
+          },
+          {
+            "omitted": "10.1212/wnl.0b013e3182242d91",
+            "effect": 1.0266,
+            "ci_low": -0.6325,
+            "ci_high": 2.6857
+          },
+          {
+            "omitted": "10.3988/jcn.2017.13.4.340",
+            "effect": 1.1608,
+            "ci_low": -0.4024,
+            "ci_high": 2.7241
+          },
+          {
+            "omitted": "10.1093/sleep/33.6.793",
+            "effect": 0.9172,
+            "ci_low": -0.6941,
+            "ci_high": 2.5284
+          },
+          {
+            "omitted": "10.1007/s00406-002-0380-7",
+            "effect": 1.0513,
+            "ci_low": -0.6025,
+            "ci_high": 2.705
+          },
+          {
+            "omitted": "10.1159/000099947",
+            "effect": 1.0224,
+            "ci_low": -0.6267,
+            "ci_high": 2.6714
+          },
+          {
+            "omitted": "10.1016/j.sleep.2010.03.019",
+            "effect": 0.9325,
+            "ci_low": -0.6857,
+            "ci_high": 2.5506
+          },
+          {
+            "omitted": "10.1111/jsr.13216",
+            "effect": 1.0322,
+            "ci_low": -0.613,
+            "ci_high": 2.6774
+          },
+          {
+            "omitted": "10.1212/wnl.51.1.311-b",
+            "effect": 0.9086,
+            "ci_low": -0.6948,
+            "ci_high": 2.512
+          },
+          {
+            "omitted": "10.30978/unj2018-3-46",
+            "effect": 0.5459,
+            "ci_low": -0.0285,
+            "ci_high": 1.1202
+          }
+        ],
+        "rob_excluded": {
+          "n_trials": 7,
+          "effect": 0.4864,
+          "ci_low": -0.4195,
+          "ci_high": 1.3923,
+          "i2": 82.3,
+          "tau2": 0.52,
+          "ci_method": "hksj",
+          "model": "random_effects_DL_HKSJ",
+          "pred_low": -1.5266,
+          "pred_high": 2.4994
+        }
+      },
+      "pub_bias": {
+        "available": true,
+        "k": 14,
+        "intercept": 7.3405,
+        "t": 3.7725,
+        "p": 0.0027
+      }
+    },
+    {
+      "ingredient": "pramipexole",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 16,
+      "scale": "linear",
+      "combines": [
+        "continuous"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.sleep.2008.09.001",
+          "first_author": "",
+          "year": null,
+          "effect": 0.4238,
+          "ci_low": 0.2138,
+          "ci_high": 0.6339,
+          "p_value": null,
+          "n_total": 369,
+          "outcome_name": "MOS Sleep Disturbance (initiation and maintenance) domain score",
+          "weight": 0.0976,
+          "rob": "low"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2011.03.021",
+          "first_author": "",
+          "year": null,
+          "effect": -0.5073,
+          "ci_low": -0.7588,
+          "ci_high": -0.2557,
+          "p_value": null,
+          "n_total": 306,
+          "outcome_name": "RLS-6 Item I: Satisfaction of sleep at night - change from baseline",
+          "weight": 0.0952,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1111/jsr.14167",
+          "first_author": "",
+          "year": null,
+          "effect": -0.146,
+          "ci_low": -0.7253,
+          "ci_high": 0.4332,
+          "p_value": null,
+          "n_total": 50,
+          "outcome_name": "Pittsburgh Sleep Quality Index (PSQI)",
+          "weight": 0.0698,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.5665/sleep/31.9.1229",
+          "first_author": "",
+          "year": null,
+          "effect": -0.5122,
+          "ci_low": -1.1277,
+          "ci_high": 0.1033,
+          "p_value": null,
+          "n_total": 43,
+          "outcome_name": "Sleep Stage 2 percentage",
+          "weight": 0.067,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2009.03.009",
+          "first_author": "",
+          "year": null,
+          "effect": 0.6787,
+          "ci_low": 0.049,
+          "ci_high": 1.3085,
+          "p_value": null,
+          "n_total": 41,
+          "outcome_name": "PSQI Sleep Duration Sub-item",
+          "weight": 0.0659,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2011.08.007",
+          "first_author": "",
+          "year": null,
+          "effect": 0.0296,
+          "ci_low": -0.6333,
+          "ci_high": 0.6925,
+          "p_value": null,
+          "n_total": 35,
+          "outcome_name": "Wakefulness during the first recording hour",
+          "weight": 0.0634,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1093/sleep/33.6.793",
+          "first_author": "",
+          "year": null,
+          "effect": -0.0724,
+          "ci_low": -0.7495,
+          "ci_high": 0.6048,
+          "p_value": null,
+          "n_total": 34,
+          "outcome_name": "REM Sleep Latency",
+          "weight": 0.0623,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1002/ana.23565",
+          "first_author": "",
+          "year": null,
+          "effect": 0.0701,
+          "ci_low": -0.6244,
+          "ci_high": 0.7646,
+          "p_value": null,
+          "n_total": 46,
+          "outcome_name": "A1 index (CAP A1 subtype per hour)",
+          "weight": 0.061,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2006.10.008",
+          "first_author": "",
+          "year": null,
+          "effect": -0.1396,
+          "ci_low": -0.8388,
+          "ci_high": 0.5597,
+          "p_value": null,
+          "n_total": 32,
+          "outcome_name": "Sleep Onset Latency",
+          "weight": 0.0607,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1212/wnl.0b013e3182242d91",
+          "first_author": "",
+          "year": null,
+          "effect": 0.652,
+          "ci_low": -0.0825,
+          "ci_high": 1.3864,
+          "p_value": null,
+          "n_total": 45,
+          "outcome_name": "Total sleep time (TST) — change from baseline",
+          "weight": 0.0582,
+          "rob": "high"
+        },
+        {
+          "paper_id": "10.3988/jcn.2017.13.4.340",
+          "first_author": "",
+          "year": null,
+          "effect": -0.4765,
+          "ci_low": -1.2353,
+          "ci_high": 0.2823,
+          "p_value": null,
+          "n_total": null,
+          "outcome_name": "REM latency",
+          "weight": 0.0565,
+          "rob": "high"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2010.03.019",
+          "first_author": "",
+          "year": null,
+          "effect": -0.0135,
+          "ci_low": -0.838,
+          "ci_high": 0.8109,
+          "p_value": null,
+          "n_total": 23,
+          "outcome_name": "Sleep onset latency (SOL)",
+          "weight": 0.0522,
+          "rob": "high"
+        },
+        {
+          "paper_id": "10.1111/ene.12286",
+          "first_author": "",
+          "year": null,
+          "effect": 0.5976,
+          "ci_low": -0.2385,
+          "ci_high": 1.4338,
+          "p_value": null,
+          "n_total": 30,
+          "outcome_name": "Pittsburgh Sleep Quality Index (PSQI)",
+          "weight": 0.0515,
+          "rob": "high"
+        },
+        {
+          "paper_id": "10.1007/s00406-002-0380-7",
+          "first_author": "",
+          "year": null,
+          "effect": -0.4395,
+          "ci_low": -1.2853,
+          "ci_high": 0.4063,
+          "p_value": null,
+          "n_total": 11,
+          "outcome_name": "Slow-wave sleep (S3+S4, minutes)",
+          "weight": 0.0509,
+          "rob": "high"
+        },
+        {
+          "paper_id": "10.1159/000099947",
+          "first_author": "",
+          "year": null,
+          "effect": 0.236,
+          "ci_low": -0.6436,
+          "ci_high": 1.1156,
+          "p_value": null,
+          "n_total": 10,
+          "outcome_name": "Wakefulness after sleep onset (WASO)",
+          "weight": 0.0489,
+          "rob": "high"
+        },
+        {
+          "paper_id": "10.1111/jsr.13216",
+          "first_author": "",
+          "year": null,
+          "effect": 1.2323,
+          "ci_low": 0.1634,
+          "ci_high": 2.3013,
+          "p_value": null,
+          "n_total": 16,
+          "outcome_name": "Number of Awakenings",
+          "weight": 0.039,
+          "rob": "high"
+        }
+      ],
+      "pooled": {
+        "effect": 0.0648,
+        "ci_low": -0.2256,
+        "ci_high": 0.3552,
+        "i2": 70.7,
+        "tau2": 0.1787,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -0.8879,
+        "pred_high": 1.0175
+      },
+      "rob_summary": {
+        "low": 1,
+        "some": 8,
+        "high": 7,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "very_low",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "risk_of_bias",
+            "reason": "most trials have some concerns / high RoB"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2=71% (substantial)"
+          },
+          {
+            "domain": "imprecision",
+            "reason": "CI crosses null"
+          }
+        ]
+      },
+      "total_n": 1091,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.0501,
+          "ci_low": -0.0737,
+          "ci_high": 0.1739
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.1016/j.sleep.2008.09.001",
+            "effect": 0.0168,
+            "ci_low": -0.2678,
+            "ci_high": 0.3015
+          },
+          {
+            "omitted": "10.1016/j.sleep.2011.03.021",
+            "effect": 0.1287,
+            "ci_low": -0.123,
+            "ci_high": 0.3805
+          },
+          {
+            "omitted": "10.1111/jsr.14167",
+            "effect": 0.0821,
+            "ci_low": -0.2291,
+            "ci_high": 0.3932
+          },
+          {
+            "omitted": "10.5665/sleep/31.9.1229",
+            "effect": 0.1061,
+            "ci_low": -0.1958,
+            "ci_high": 0.408
+          },
+          {
+            "omitted": "10.1016/j.sleep.2009.03.009",
+            "effect": 0.021,
+            "ci_low": -0.2787,
+            "ci_high": 0.3207
+          },
+          {
+            "omitted": "10.1016/j.sleep.2011.08.007",
+            "effect": 0.0686,
+            "ci_low": -0.2412,
+            "ci_high": 0.3784
+          },
+          {
+            "omitted": "10.1093/sleep/33.6.793",
+            "effect": 0.0753,
+            "ci_low": -0.2338,
+            "ci_high": 0.3843
+          },
+          {
+            "omitted": "10.1002/ana.23565",
+            "effect": 0.0658,
+            "ci_low": -0.2432,
+            "ci_high": 0.3748
+          },
+          {
+            "omitted": "10.1016/j.sleep.2006.10.008",
+            "effect": 0.0792,
+            "ci_low": -0.2288,
+            "ci_high": 0.3873
+          },
+          {
+            "omitted": "10.1212/wnl.0b013e3182242d91",
+            "effect": 0.0284,
+            "ci_low": -0.2723,
+            "ci_high": 0.3292
+          },
+          {
+            "omitted": "10.3988/jcn.2017.13.4.340",
+            "effect": 0.0975,
+            "ci_low": -0.2048,
+            "ci_high": 0.3998
+          },
+          {
+            "omitted": "10.1016/j.sleep.2010.03.019",
+            "effect": 0.0702,
+            "ci_low": -0.2359,
+            "ci_high": 0.3764
+          },
+          {
+            "omitted": "10.1111/ene.12286",
+            "effect": 0.0361,
+            "ci_low": -0.2654,
+            "ci_high": 0.3375
+          },
+          {
+            "omitted": "10.1007/s00406-002-0380-7",
+            "effect": 0.0923,
+            "ci_low": -0.2099,
+            "ci_high": 0.3946
+          },
+          {
+            "omitted": "10.1159/000099947",
+            "effect": 0.0569,
+            "ci_low": -0.2479,
+            "ci_high": 0.3617
+          },
+          {
+            "omitted": "10.1111/jsr.13216",
+            "effect": 0.017,
+            "ci_low": -0.2728,
+            "ci_high": 0.3067
+          }
+        ],
+        "rob_excluded": {
+          "n_trials": 9,
+          "effect": -0.0209,
+          "ci_low": -0.427,
+          "ci_high": 0.3851,
+          "i2": 79.4,
+          "tau2": 0.1971,
+          "ci_method": "hksj",
+          "model": "random_effects_DL_HKSJ",
+          "pred_low": -1.1506,
+          "pred_high": 1.1087
+        }
+      },
+      "pub_bias": {
+        "available": true,
+        "k": 16,
+        "intercept": 0.1425,
+        "t": 0.1509,
+        "p": 0.8822
+      }
+    },
+    {
+      "ingredient": "pramipexole",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 19,
+      "scale": "linear",
+      "combines": [
+        "continuous",
+        "hazard_ratio"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.jns.2010.04.003",
+          "first_author": "",
+          "year": null,
+          "effect": 0.3271,
+          "ci_low": 0.1283,
+          "ci_high": 0.526,
+          "p_value": null,
+          "n_total": 141,
+          "outcome_name": "Time to complete IRLS response (IRLS decrease >=50% from baseline AND to <=10 points)",
+          "weight": 0.0723,
+          "rob": "high"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2010.08.005",
+          "first_author": "",
+          "year": null,
+          "effect": 0.6105,
+          "ci_low": 0.4095,
+          "ci_high": 0.8115,
+          "p_value": null,
+          "n_total": 404,
+          "outcome_name": "IRLS total score change from baseline to week 12",
+          "weight": 0.0721,
+          "rob": "low"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2008.09.001",
+          "first_author": "",
+          "year": null,
+          "effect": 0.4174,
+          "ci_low": 0.2074,
+          "ci_high": 0.6274,
+          "p_value": null,
+          "n_total": 369,
+          "outcome_name": "International RLS Study Group Rating Scale (IRLS) total score",
+          "weight": 0.0715,
+          "rob": "low"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2010.12.007",
+          "first_author": "",
+          "year": null,
+          "effect": 0.2559,
+          "ci_low": 0.0362,
+          "ci_high": 0.4756,
+          "p_value": null,
+          "n_total": 331,
+          "outcome_name": "International RLS Study Group Rating Scale (IRLS) total score — change from baseline",
+          "weight": 0.0708,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1002/mds.21261",
+          "first_author": "",
+          "year": null,
+          "effect": 0.6797,
+          "ci_low": 0.4485,
+          "ci_high": 0.911,
+          "p_value": null,
+          "n_total": 345,
+          "outcome_name": "International RLS Study Group Rating Scale (IRLS) score",
+          "weight": 0.07,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2011.03.021",
+          "first_author": "",
+          "year": null,
+          "effect": 0.5843,
+          "ci_low": 0.3318,
+          "ci_high": 0.8368,
+          "p_value": null,
+          "n_total": 306,
+          "outcome_name": "Change from baseline to week 6 in IRLS total score",
+          "weight": 0.0684,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2014.09.015",
+          "first_author": "",
+          "year": null,
+          "effect": 0.4932,
+          "ci_low": 0.2146,
+          "ci_high": 0.7718,
+          "p_value": null,
+          "n_total": 204,
+          "outcome_name": "International RLS Study Group Rating Scale (IRLS) score",
+          "weight": 0.0664,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1002/mds.20983",
+          "first_author": "",
+          "year": null,
+          "effect": 1.3412,
+          "ci_low": 0.9829,
+          "ci_high": 1.6996,
+          "p_value": null,
+          "n_total": 150,
+          "outcome_name": "IRLS Total Score",
+          "weight": 0.0599,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.4414/smw.2011.13274",
+          "first_author": "",
+          "year": null,
+          "effect": 0.4386,
+          "ci_low": -0.0105,
+          "ci_high": 0.8878,
+          "p_value": null,
+          "n_total": 67,
+          "outcome_name": "International RLS Study Group Rating Scale (IRLS) total score",
+          "weight": 0.0525,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1097/wnf.0b013e3181fd82a1",
+          "first_author": "",
+          "year": null,
+          "effect": -0.0,
+          "ci_low": -0.4557,
+          "ci_high": 0.4557,
+          "p_value": null,
+          "n_total": 37,
+          "outcome_name": "International Restless Legs Syndrome (IRLS) rating scale score",
+          "weight": 0.052,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.34172/jnp.2020.25",
+          "first_author": "",
+          "year": null,
+          "effect": -0.0154,
+          "ci_low": -0.5214,
+          "ci_high": 0.4907,
+          "p_value": null,
+          "n_total": 60,
+          "outcome_name": "RLS severity score (IRLSSG)",
+          "weight": 0.0481,
+          "rob": "high"
+        },
+        {
+          "paper_id": "10.1111/jsr.14167",
+          "first_author": "",
+          "year": null,
+          "effect": 0.2959,
+          "ci_low": -0.2858,
+          "ci_high": 0.8775,
+          "p_value": null,
+          "n_total": 50,
+          "outcome_name": "International Restless Legs Syndrome Rating Scale (IRLSRS)",
+          "weight": 0.0427,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2008.05.014",
+          "first_author": "",
+          "year": null,
+          "effect": 0.1101,
+          "ci_low": -0.4952,
+          "ci_high": 0.7154,
+          "p_value": null,
+          "n_total": 109,
+          "outcome_name": "International RLS study group rating scale total score (IRLS)",
+          "weight": 0.0411,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2006.03.011",
+          "first_author": "",
+          "year": null,
+          "effect": 0.8302,
+          "ci_low": 0.192,
+          "ci_high": 1.4684,
+          "p_value": null,
+          "n_total": 109,
+          "outcome_name": "International RLS Study Group Rating Scale (IRLS) total score",
+          "weight": 0.039,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2009.03.009",
+          "first_author": "",
+          "year": null,
+          "effect": 1.2958,
+          "ci_low": 0.6223,
+          "ci_high": 1.9694,
+          "p_value": null,
+          "n_total": 41,
+          "outcome_name": "IRLS Total Score",
+          "weight": 0.0369,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2006.10.008",
+          "first_author": "",
+          "year": null,
+          "effect": -0.1386,
+          "ci_low": -0.8379,
+          "ci_high": 0.5606,
+          "p_value": null,
+          "n_total": 32,
+          "outcome_name": "International RLS Study Group Rating Scale score at baseline",
+          "weight": 0.0354,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1111/ene.12286",
+          "first_author": "",
+          "year": null,
+          "effect": -0.0504,
+          "ci_low": -0.7662,
+          "ci_high": 0.6653,
+          "p_value": null,
+          "n_total": 30,
+          "outcome_name": "International RLS Study Group Rating Scale for Severity (IRLS) score",
+          "weight": 0.0345,
+          "rob": "high"
+        },
+        {
+          "paper_id": "10.1212/wnl.0b013e3182242d91",
+          "first_author": "",
+          "year": null,
+          "effect": -0.7138,
+          "ci_low": -1.452,
+          "ci_high": 0.0243,
+          "p_value": null,
+          "n_total": 45,
+          "outcome_name": "International RLS Study Group rating scale (IRLS) score at baseline",
+          "weight": 0.0333,
+          "rob": "high"
+        },
+        {
+          "paper_id": "10.1002/ana.23565",
+          "first_author": "",
+          "year": null,
+          "effect": -1.0626,
+          "ci_low": -1.8042,
+          "ci_high": -0.3211,
+          "p_value": null,
+          "n_total": 46,
+          "outcome_name": "International RLS Study Group Rating Scale (IRLS) - baseline severity",
+          "weight": 0.0331,
+          "rob": "some"
+        }
+      ],
+      "pooled": {
+        "effect": 0.3704,
+        "ci_low": 0.1216,
+        "ci_high": 0.6192,
+        "i2": 78.0,
+        "tau2": 0.1019,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -0.333,
+        "pred_high": 1.0737
+      },
+      "rob_summary": {
+        "low": 2,
+        "some": 13,
+        "high": 4,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "very_low",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "risk_of_bias",
+            "reason": "most trials have some concerns / high RoB"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2=78% (considerable)"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2>=75% (double downgrade)"
+          }
+        ]
+      },
+      "total_n": 2876,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.4517,
+          "ci_low": 0.3772,
+          "ci_high": 0.5262
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.1016/j.jns.2010.04.003",
+            "effect": 0.3677,
+            "ci_low": 0.0966,
+            "ci_high": 0.6388
+          },
+          {
+            "omitted": "10.1016/j.sleep.2010.08.005",
+            "effect": 0.347,
+            "ci_low": 0.0786,
+            "ci_high": 0.6154
+          },
+          {
+            "omitted": "10.1016/j.sleep.2008.09.001",
+            "effect": 0.3605,
+            "ci_low": 0.0893,
+            "ci_high": 0.6317
+          },
+          {
+            "omitted": "10.1016/j.sleep.2010.12.007",
+            "effect": 0.3751,
+            "ci_low": 0.1057,
+            "ci_high": 0.6446
+          },
+          {
+            "omitted": "10.1002/mds.21261",
+            "effect": 0.3445,
+            "ci_low": 0.079,
+            "ci_high": 0.61
+          },
+          {
+            "omitted": "10.1016/j.sleep.2011.03.021",
+            "effect": 0.3509,
+            "ci_low": 0.0829,
+            "ci_high": 0.6188
+          },
+          {
+            "omitted": "10.1016/j.sleep.2014.09.015",
+            "effect": 0.3578,
+            "ci_low": 0.0889,
+            "ci_high": 0.6266
+          },
+          {
+            "omitted": "10.1002/mds.20983",
+            "effect": 0.3246,
+            "ci_low": 0.1026,
+            "ci_high": 0.5465
+          },
+          {
+            "omitted": "10.4414/smw.2011.13274",
+            "effect": 0.3646,
+            "ci_low": 0.0983,
+            "ci_high": 0.631
+          },
+          {
+            "omitted": "10.1097/wnf.0b013e3181fd82a1",
+            "effect": 0.3912,
+            "ci_low": 0.1302,
+            "ci_high": 0.6522
+          },
+          {
+            "omitted": "10.34172/jnp.2020.25",
+            "effect": 0.3903,
+            "ci_low": 0.1298,
+            "ci_high": 0.6508
+          },
+          {
+            "omitted": "10.1111/jsr.14167",
+            "effect": 0.3725,
+            "ci_low": 0.1079,
+            "ci_high": 0.6371
+          },
+          {
+            "omitted": "10.1016/j.sleep.2008.05.014",
+            "effect": 0.381,
+            "ci_low": 0.1184,
+            "ci_high": 0.6436
+          },
+          {
+            "omitted": "10.1016/j.sleep.2006.03.011",
+            "effect": 0.3512,
+            "ci_low": 0.092,
+            "ci_high": 0.6105
+          },
+          {
+            "omitted": "10.1016/j.sleep.2009.03.009",
+            "effect": 0.3383,
+            "ci_low": 0.0941,
+            "ci_high": 0.5825
+          },
+          {
+            "omitted": "10.1016/j.sleep.2006.10.008",
+            "effect": 0.3895,
+            "ci_low": 0.1318,
+            "ci_high": 0.6472
+          },
+          {
+            "omitted": "10.1111/ene.12286",
+            "effect": 0.3854,
+            "ci_low": 0.1259,
+            "ci_high": 0.645
+          },
+          {
+            "omitted": "10.1212/wnl.0b013e3182242d91",
+            "effect": 0.4114,
+            "ci_low": 0.1734,
+            "ci_high": 0.6494
+          },
+          {
+            "omitted": "10.1002/ana.23565",
+            "effect": 0.4257,
+            "ci_low": 0.207,
+            "ci_high": 0.6443
+          }
+        ],
+        "rob_excluded": {
+          "n_trials": 15,
+          "effect": 0.46,
+          "ci_low": 0.1808,
+          "ci_high": 0.7392,
+          "i2": 78.1,
+          "tau2": 0.0994,
+          "ci_method": "hksj",
+          "model": "random_effects_DL_HKSJ",
+          "pred_low": -0.2538,
+          "pred_high": 1.1738
+        }
+      },
+      "pub_bias": {
+        "available": true,
+        "k": 19,
+        "intercept": -1.4682,
+        "t": -1.3755,
+        "p": 0.1868
+      }
+    },
+    {
+      "ingredient": "pregabalin",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 4,
+      "scale": "linear",
+      "combines": [
+        "continuous",
+        "mean_difference"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.1056/nejmoa1303646",
+          "first_author": "",
+          "year": null,
+          "effect": 0.1903,
+          "ci_low": -0.0165,
+          "ci_high": 0.3971,
+          "p_value": null,
+          "n_total": 731,
+          "outcome_name": "Time to sleep onset (sleep latency)",
+          "weight": 0.3448,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.5665/sleep.3558",
+          "first_author": "",
+          "year": null,
+          "effect": 0.7423,
+          "ci_low": 0.4125,
+          "ci_high": 1.0721,
+          "p_value": null,
+          "n_total": 85,
+          "outcome_name": "Wake After Sleep Onset (WASO) by polysomnography",
+          "weight": 0.2761,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.3988/jcn.2025.0092",
+          "first_author": "",
+          "year": null,
+          "effect": 0.1436,
+          "ci_low": -0.3572,
+          "ci_high": 0.6445,
+          "p_value": null,
+          "n_total": 78,
+          "outcome_name": "Visual Analog Scale (VAS) — overall sleep disturbance change from baseline",
+          "weight": 0.1933,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1212/wnl.0b013e3181e1ce73",
+          "first_author": "",
+          "year": null,
+          "effect": 0.3716,
+          "ci_low": -0.1479,
+          "ci_high": 0.891,
+          "p_value": null,
+          "n_total": 58,
+          "outcome_name": "Stage 4 sleep (minutes)",
+          "weight": 0.1858,
+          "rob": "some"
+        }
+      ],
+      "pooled": {
+        "effect": 0.3674,
+        "ci_low": -0.1237,
+        "ci_high": 0.8585,
+        "i2": 63.9,
+        "tau2": 0.058,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -0.8631,
+        "pred_high": 1.5979
+      },
+      "rob_summary": {
+        "low": 0,
+        "some": 4,
+        "high": 0,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "very_low",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "risk_of_bias",
+            "reason": "most trials have some concerns / high RoB"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2=64% (substantial)"
+          },
+          {
+            "domain": "imprecision",
+            "reason": "CI crosses null"
+          }
+        ]
+      },
+      "total_n": 952,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.3284,
+          "ci_low": 0.1708,
+          "ci_high": 0.486
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.1056/nejmoa1303646",
+            "effect": 0.4608,
+            "ci_low": -0.3569,
+            "ci_high": 1.2786
+          },
+          {
+            "omitted": "10.5665/sleep.3558",
+            "effect": 0.2059,
+            "ci_low": -0.1879,
+            "ci_high": 0.5998
+          },
+          {
+            "omitted": "10.3988/jcn.2025.0092",
+            "effect": 0.425,
+            "ci_low": -0.4076,
+            "ci_high": 1.2577
+          },
+          {
+            "omitted": "10.1212/wnl.0b013e3181e1ce73",
+            "effect": 0.3665,
+            "ci_low": -0.4857,
+            "ci_high": 1.2187
+          }
+        ]
+      }
+    },
+    {
+      "ingredient": "pregabalin",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 6,
+      "scale": "linear",
+      "combines": [
+        "continuous",
+        "mean_difference"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.1056/nejmoa1303646",
+          "first_author": "",
+          "year": null,
+          "effect": 0.018,
+          "ci_low": -0.1928,
+          "ci_high": 0.2288,
+          "p_value": null,
+          "n_total": 731,
+          "outcome_name": "IRLS Study Group Rating Scale score",
+          "weight": 0.1973,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.5665/sleep.3558",
+          "first_author": "",
+          "year": null,
+          "effect": 0.9778,
+          "ci_low": 0.6368,
+          "ci_high": 1.3187,
+          "p_value": null,
+          "n_total": 85,
+          "outcome_name": "International RLS Study Group Rating Scale (IRLS) total score",
+          "weight": 0.181,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.3988/jcn.2025.0092",
+          "first_author": "",
+          "year": null,
+          "effect": 0.2261,
+          "ci_low": -0.2192,
+          "ci_high": 0.6713,
+          "p_value": null,
+          "n_total": 78,
+          "outcome_name": "International Restless Legs Scale (IRLS) score change from baseline",
+          "weight": 0.1654,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.64898/2025.12.26.696558",
+          "first_author": "",
+          "year": null,
+          "effect": 0.8632,
+          "ci_low": 0.3802,
+          "ci_high": 1.3462,
+          "p_value": null,
+          "n_total": 103,
+          "outcome_name": "RLS severity score (IRLSSG rating scale) — absolute score at baseline",
+          "weight": 0.1596,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1212/wnl.0b013e3181e1ce73",
+          "first_author": "",
+          "year": null,
+          "effect": 0.5536,
+          "ci_low": 0.0288,
+          "ci_high": 1.0783,
+          "p_value": null,
+          "n_total": 58,
+          "outcome_name": "International Restless Legs Scale (IRLS) total score",
+          "weight": 0.153,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2010.03.003",
+          "first_author": "",
+          "year": null,
+          "effect": -0.1129,
+          "ci_low": -0.6979,
+          "ci_high": 0.472,
+          "p_value": null,
+          "n_total": 137,
+          "outcome_name": "IRLS Total Score change from baseline",
+          "weight": 0.1437,
+          "rob": "some"
+        }
+      ],
+      "pooled": {
+        "effect": 0.4241,
+        "ci_low": -0.0965,
+        "ci_high": 0.9448,
+        "i2": 83.4,
+        "tau2": 0.1963,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -0.9283,
+        "pred_high": 1.7766
+      },
+      "rob_summary": {
+        "low": 0,
+        "some": 6,
+        "high": 0,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "very_low",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "risk_of_bias",
+            "reason": "most trials have some concerns / high RoB"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2=83% (considerable)"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2>=75% (double downgrade)"
+          },
+          {
+            "domain": "imprecision",
+            "reason": "CI crosses null"
+          }
+        ]
+      },
+      "total_n": 1192,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.3264,
+          "ci_low": 0.1805,
+          "ci_high": 0.4722
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.1056/nejmoa1303646",
+            "effect": 0.53,
+            "ci_low": -0.0271,
+            "ci_high": 1.087
+          },
+          {
+            "omitted": "10.5665/sleep.3558",
+            "effect": 0.2931,
+            "ci_low": -0.1906,
+            "ci_high": 0.7769
+          },
+          {
+            "omitted": "10.3988/jcn.2025.0092",
+            "effect": 0.4634,
+            "ci_low": -0.2141,
+            "ci_high": 1.1409
+          },
+          {
+            "omitted": "10.64898/2025.12.26.696558",
+            "effect": 0.3408,
+            "ci_low": -0.2692,
+            "ci_high": 0.9508
+          },
+          {
+            "omitted": "10.1212/wnl.0b013e3181e1ce73",
+            "effect": 0.4004,
+            "ci_low": -0.2507,
+            "ci_high": 1.0514
+          },
+          {
+            "omitted": "10.1016/j.sleep.2010.03.003",
+            "effect": 0.515,
+            "ci_low": -0.1085,
+            "ci_high": 1.1385
+          }
+        ]
+      }
+    },
+    {
+      "ingredient": "ropinirole",
+      "outcome_domain": "periodic_limb_movements",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 5,
+      "scale": "linear",
+      "combines": [
+        "continuous"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.4065/81.1.17",
+          "first_author": "",
+          "year": null,
+          "effect": 0.5558,
+          "ci_low": 0.2882,
+          "ci_high": 0.8233,
+          "p_value": null,
+          "n_total": 381,
+          "outcome_name": "Periodic Leg Movement (PLM) index",
+          "weight": 0.2847,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1093/sleep/27.5.907",
+          "first_author": "",
+          "year": null,
+          "effect": -0.4531,
+          "ci_low": -0.97,
+          "ci_high": 0.0638,
+          "p_value": null,
+          "n_total": 65,
+          "outcome_name": "Periodic limb movements of sleep per hour (PLMS/hour)",
+          "weight": 0.2439,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1159/000026659",
+          "first_author": "",
+          "year": null,
+          "effect": 0.8532,
+          "ci_low": 0.0175,
+          "ci_high": 1.689,
+          "p_value": null,
+          "n_total": 12,
+          "outcome_name": "PLM per hour of total sleep time (PLM/h TST)",
+          "weight": 0.1853,
+          "rob": "high"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2004.12.002",
+          "first_author": "",
+          "year": null,
+          "effect": 0.6713,
+          "ci_low": -0.2014,
+          "ci_high": 1.5441,
+          "p_value": null,
+          "n_total": 26,
+          "outcome_name": "NREM Periodic Leg Movements Arousal Index (PLMSAI)",
+          "weight": 0.179,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.33588/rn.2909.99317",
+          "first_author": "",
+          "year": null,
+          "effect": 1.572,
+          "ci_low": 0.1538,
+          "ci_high": 2.9902,
+          "p_value": null,
+          "n_total": 5,
+          "outcome_name": "Number of periodic limb movements",
+          "weight": 0.1071,
+          "rob": "high"
+        }
+      ],
+      "pooled": {
+        "effect": 0.4943,
+        "ci_low": -0.3543,
+        "ci_high": 1.343,
+        "i2": 74.7,
+        "tau2": 0.2857,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -1.4473,
+        "pred_high": 2.4359
+      },
+      "rob_summary": {
+        "low": 0,
+        "some": 3,
+        "high": 2,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "very_low",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "risk_of_bias",
+            "reason": "most trials have some concerns / high RoB"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2=75% (substantial)"
+          },
+          {
+            "domain": "imprecision",
+            "reason": "CI crosses null"
+          }
+        ]
+      },
+      "total_n": 489,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.4273,
+          "ci_low": 0.2088,
+          "ci_high": 0.6457
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.4065/81.1.17",
+            "effect": 0.5403,
+            "ci_low": -0.8962,
+            "ci_high": 1.9767
+          },
+          {
+            "omitted": "10.1093/sleep/27.5.907",
+            "effect": 0.6187,
+            "ci_low": 0.2274,
+            "ci_high": 1.01
+          },
+          {
+            "omitted": "10.1159/000026659",
+            "effect": 0.4283,
+            "ci_low": -0.7824,
+            "ci_high": 1.6391
+          },
+          {
+            "omitted": "10.1016/j.sleep.2004.12.002",
+            "effect": 0.4755,
+            "ci_low": -0.7706,
+            "ci_high": 1.7217
+          },
+          {
+            "omitted": "10.33588/rn.2909.99317",
+            "effect": 0.3634,
+            "ci_low": -0.6013,
+            "ci_high": 1.328
+          }
+        ],
+        "rob_excluded": {
+          "n_trials": 3,
+          "effect": 0.2383,
+          "ci_low": -1.3572,
+          "ci_high": 1.8337,
+          "i2": 83.4,
+          "tau2": 0.3294,
+          "ci_method": "hksj",
+          "model": "random_effects_DL_HKSJ",
+          "pred_low": -8.4439,
+          "pred_high": 8.9205
+        }
+      }
+    },
+    {
+      "ingredient": "ropinirole",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 9,
+      "scale": "linear",
+      "combines": [
+        "continuous",
+        "mean_difference"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.4065/81.1.17",
+          "first_author": "",
+          "year": null,
+          "effect": 0.4003,
+          "ci_low": 0.1927,
+          "ci_high": 0.6079,
+          "p_value": null,
+          "n_total": 381,
+          "outcome_name": "MOS Sleep Scale - Sleep Problems Index",
+          "weight": 0.1993,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1002/mds.20257",
+          "first_author": "",
+          "year": null,
+          "effect": 0.3274,
+          "ci_low": 0.0859,
+          "ci_high": 0.5689,
+          "p_value": null,
+          "n_total": 267,
+          "outcome_name": "MOS Sleep Scale - Sleep Quantity domain",
+          "weight": 0.1917,
+          "rob": "low"
+        },
+        {
+          "paper_id": "10.1002/mds.21050",
+          "first_author": "",
+          "year": null,
+          "effect": 0.3308,
+          "ci_low": -0.0807,
+          "ci_high": 0.7424,
+          "p_value": null,
+          "n_total": 92,
+          "outcome_name": "MOS sleep scale - Sleep adequacy",
+          "weight": 0.1502,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1093/sleep/27.5.907",
+          "first_author": "",
+          "year": null,
+          "effect": -0.0628,
+          "ci_low": -0.5733,
+          "ci_high": 0.4478,
+          "p_value": null,
+          "n_total": 65,
+          "outcome_name": "REM sleep (minutes)",
+          "weight": 0.1275,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1055/s-0043-1770810",
+          "first_author": "",
+          "year": null,
+          "effect": -0.9474,
+          "ci_low": -1.7021,
+          "ci_high": -0.1926,
+          "p_value": null,
+          "n_total": 46,
+          "outcome_name": "Insomnia Severity Index (ISI)",
+          "weight": 0.0843,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1159/000026659",
+          "first_author": "",
+          "year": null,
+          "effect": -0.1936,
+          "ci_low": -0.9957,
+          "ci_high": 0.6084,
+          "p_value": null,
+          "n_total": 12,
+          "outcome_name": "Spontaneous arousals",
+          "weight": 0.078,
+          "rob": "high"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2004.12.002",
+          "first_author": "",
+          "year": null,
+          "effect": -0.2235,
+          "ci_low": -1.076,
+          "ci_high": 0.629,
+          "p_value": null,
+          "n_total": 26,
+          "outcome_name": "Total Sleep Time (TST)",
+          "weight": 0.0719,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1186/1471-2369-14-194",
+          "first_author": "",
+          "year": null,
+          "effect": -0.348,
+          "ci_low": -1.251,
+          "ci_high": 0.555,
+          "p_value": null,
+          "n_total": 32,
+          "outcome_name": "Sleep quality (weekly sleep diary score)",
+          "weight": 0.0664,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.33588/rn.2909.99317",
+          "first_author": "",
+          "year": null,
+          "effect": 1.8006,
+          "ci_low": 0.3311,
+          "ci_high": 3.27,
+          "p_value": null,
+          "n_total": 5,
+          "outcome_name": "Sleep efficiency",
+          "weight": 0.0308,
+          "rob": "high"
+        }
+      ],
+      "pooled": {
+        "effect": 0.1054,
+        "ci_low": -0.3008,
+        "ci_high": 0.5116,
+        "i2": 63.6,
+        "tau2": 0.0893,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -0.6767,
+        "pred_high": 0.8875
+      },
+      "rob_summary": {
+        "low": 1,
+        "some": 6,
+        "high": 2,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "very_low",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "risk_of_bias",
+            "reason": "most trials have some concerns / high RoB"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2=64% (substantial)"
+          },
+          {
+            "domain": "imprecision",
+            "reason": "CI crosses null"
+          }
+        ]
+      },
+      "total_n": 926,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.2612,
+          "ci_low": 0.1281,
+          "ci_high": 0.3943
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.4065/81.1.17",
+            "effect": 0.0194,
+            "ci_low": -0.4808,
+            "ci_high": 0.5195
+          },
+          {
+            "omitted": "10.1002/mds.20257",
+            "effect": 0.0335,
+            "ci_low": -0.4811,
+            "ci_high": 0.5482
+          },
+          {
+            "omitted": "10.1002/mds.21050",
+            "effect": 0.0531,
+            "ci_low": -0.4366,
+            "ci_high": 0.5427
+          },
+          {
+            "omitted": "10.1093/sleep/27.5.907",
+            "effect": 0.126,
+            "ci_low": -0.3519,
+            "ci_high": 0.6039
+          },
+          {
+            "omitted": "10.1055/s-0043-1770810",
+            "effect": 0.2356,
+            "ci_low": -0.0632,
+            "ci_high": 0.5344
+          },
+          {
+            "omitted": "10.1159/000026659",
+            "effect": 0.1294,
+            "ci_low": -0.3294,
+            "ci_high": 0.5881
+          },
+          {
+            "omitted": "10.1016/j.sleep.2004.12.002",
+            "effect": 0.1298,
+            "ci_low": -0.3262,
+            "ci_high": 0.5859
+          },
+          {
+            "omitted": "10.1186/1471-2369-14-194",
+            "effect": 0.1384,
+            "ci_low": -0.3074,
+            "ci_high": 0.5843
+          },
+          {
+            "omitted": "10.33588/rn.2909.99317",
+            "effect": 0.071,
+            "ci_low": -0.283,
+            "ci_high": 0.425
+          }
+        ],
+        "rob_excluded": {
+          "n_trials": 7,
+          "effect": 0.0899,
+          "ci_low": -0.315,
+          "ci_high": 0.4948,
+          "i2": 63.7,
+          "tau2": 0.0718,
+          "ci_method": "hksj",
+          "model": "random_effects_DL_HKSJ",
+          "pred_low": -0.6868,
+          "pred_high": 0.8667
+        }
+      }
+    },
+    {
+      "ingredient": "ropinirole",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 13,
+      "scale": "linear",
+      "combines": [
+        "continuous",
+        "mean_difference",
+        "odds_ratio"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.1016/j.sleep.2007.08.017",
+          "first_author": "",
+          "year": null,
+          "effect": 0.054,
+          "ci_low": -0.0703,
+          "ci_high": 0.1783,
+          "p_value": null,
+          "n_total": 996,
+          "outcome_name": "Change from baseline in IRLS total score at Week 12 LOCF",
+          "weight": 0.1053,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1136/jnnp.2008.147397",
+          "first_author": "",
+          "year": null,
+          "effect": 0.1798,
+          "ci_low": 0.0123,
+          "ci_high": 0.3472,
+          "p_value": null,
+          "n_total": 550,
+          "outcome_name": "Change from baseline in International Restless Legs Scale (IRLS) total score at week 12 LOCF",
+          "weight": 0.1021,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1002/mds.24889",
+          "first_author": "",
+          "year": null,
+          "effect": -0.0529,
+          "ci_low": -0.2487,
+          "ci_high": 0.143,
+          "p_value": null,
+          "n_total": 404,
+          "outcome_name": "Change from baseline in IRLS total score at week 12 (primary endpoint)",
+          "weight": 0.0997,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.4065/81.1.17",
+          "first_author": "",
+          "year": null,
+          "effect": 0.4194,
+          "ci_low": 0.2161,
+          "ci_high": 0.6227,
+          "p_value": null,
+          "n_total": 381,
+          "outcome_name": "International Restless Legs Scale (IRLS) total score",
+          "weight": 0.099,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1097/wnf.0b013e31815a3eec",
+          "first_author": "",
+          "year": null,
+          "effect": 0.4309,
+          "ci_low": 0.2215,
+          "ci_high": 0.6402,
+          "p_value": null,
+          "n_total": 362,
+          "outcome_name": "Change from baseline in IRLS total score",
+          "weight": 0.0984,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1002/mds.20257",
+          "first_author": "",
+          "year": null,
+          "effect": 0.2863,
+          "ci_low": 0.0447,
+          "ci_high": 0.5279,
+          "p_value": null,
+          "n_total": 267,
+          "outcome_name": "Change from baseline in International Restless Legs Scale (IRLS) score at week 12",
+          "weight": 0.0952,
+          "rob": "low"
+        },
+        {
+          "paper_id": "10.1007/s00415-010-5879-7",
+          "first_author": "",
+          "year": null,
+          "effect": 0.5299,
+          "ci_low": 0.2319,
+          "ci_high": 0.8279,
+          "p_value": null,
+          "n_total": 266,
+          "outcome_name": "International RLS Severity Scale (IRLS) total score",
+          "weight": 0.0892,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1093/sleep/27.5.907",
+          "first_author": "",
+          "year": null,
+          "effect": 0.1424,
+          "ci_low": -0.3445,
+          "ci_high": 0.6292,
+          "p_value": null,
+          "n_total": 65,
+          "outcome_name": "International Restless Legs Scale (IRLS) total score",
+          "weight": 0.0681,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1002/mds.21050",
+          "first_author": "",
+          "year": null,
+          "effect": 0.6112,
+          "ci_low": 0.1069,
+          "ci_high": 1.1156,
+          "p_value": null,
+          "n_total": 92,
+          "outcome_name": "Proportion of patients relapsing during double-blind treatment phase",
+          "weight": 0.0663,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1212/01.wnl.0000120672.94060.f1",
+          "first_author": "",
+          "year": null,
+          "effect": 1.1611,
+          "ci_low": 0.5223,
+          "ci_high": 1.7999,
+          "p_value": null,
+          "n_total": 22,
+          "outcome_name": "RLS Rating Scale score",
+          "weight": 0.0536,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1055/s-0043-1770810",
+          "first_author": "",
+          "year": null,
+          "effect": -1.5318,
+          "ci_low": -2.2648,
+          "ci_high": -0.7987,
+          "p_value": null,
+          "n_total": 46,
+          "outcome_name": "International RLS Study Group Rating Scale (IRLS) score",
+          "weight": 0.0461,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2004.12.002",
+          "first_author": "",
+          "year": null,
+          "effect": -1.8047,
+          "ci_low": -2.6102,
+          "ci_high": -0.9992,
+          "p_value": null,
+          "n_total": 26,
+          "outcome_name": "IRLSSG Rating Scale Total Score",
+          "weight": 0.0412,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1186/1471-2369-14-194",
+          "first_author": "",
+          "year": null,
+          "effect": -0.1716,
+          "ci_low": -1.0702,
+          "ci_high": 0.7269,
+          "p_value": null,
+          "n_total": 32,
+          "outcome_name": "RLS symptom severity (IRLS score)",
+          "weight": 0.0357,
+          "rob": "some"
+        }
+      ],
+      "pooled": {
+        "effect": 0.1386,
+        "ci_low": -0.2566,
+        "ci_high": 0.5339,
+        "i2": 85.5,
+        "tau2": 0.1018,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -0.6011,
+        "pred_high": 0.8784
+      },
+      "rob_summary": {
+        "low": 1,
+        "some": 12,
+        "high": 0,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "very_low",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "risk_of_bias",
+            "reason": "most trials have some concerns / high RoB"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2=86% (considerable)"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2>=75% (double downgrade)"
+          },
+          {
+            "domain": "imprecision",
+            "reason": "CI crosses null"
+          }
+        ]
+      },
+      "total_n": 3509,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.1814,
+          "ci_low": 0.1135,
+          "ci_high": 0.2493
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.1016/j.sleep.2007.08.017",
+            "effect": 0.1329,
+            "ci_low": -0.3246,
+            "ci_high": 0.5903
+          },
+          {
+            "omitted": "10.1136/jnnp.2008.147397",
+            "effect": 0.1211,
+            "ci_low": -0.3335,
+            "ci_high": 0.5758
+          },
+          {
+            "omitted": "10.1002/mds.24889",
+            "effect": 0.1548,
+            "ci_low": -0.2883,
+            "ci_high": 0.5978
+          },
+          {
+            "omitted": "10.4065/81.1.17",
+            "effect": 0.1037,
+            "ci_low": -0.336,
+            "ci_high": 0.5434
+          },
+          {
+            "omitted": "10.1097/wnf.0b013e31815a3eec",
+            "effect": 0.1032,
+            "ci_low": -0.3353,
+            "ci_high": 0.5417
+          },
+          {
+            "omitted": "10.1002/mds.20257",
+            "effect": 0.1171,
+            "ci_low": -0.3273,
+            "ci_high": 0.5616
+          },
+          {
+            "omitted": "10.1007/s00415-010-5879-7",
+            "effect": 0.1,
+            "ci_low": -0.329,
+            "ci_high": 0.529
+          },
+          {
+            "omitted": "10.1093/sleep/27.5.907",
+            "effect": 0.1362,
+            "ci_low": -0.2987,
+            "ci_high": 0.5711
+          },
+          {
+            "omitted": "10.1002/mds.21050",
+            "effect": 0.1051,
+            "ci_low": -0.3176,
+            "ci_high": 0.5279
+          },
+          {
+            "omitted": "10.1212/01.wnl.0000120672.94060.f1",
+            "effect": 0.0881,
+            "ci_low": -0.3004,
+            "ci_high": 0.4766
+          },
+          {
+            "omitted": "10.1055/s-0043-1770810",
+            "effect": 0.2256,
+            "ci_low": -0.1019,
+            "ci_high": 0.5531
+          },
+          {
+            "omitted": "10.1016/j.sleep.2004.12.002",
+            "effect": 0.2275,
+            "ci_low": -0.0808,
+            "ci_high": 0.5358
+          },
+          {
+            "omitted": "10.1186/1471-2369-14-194",
+            "effect": 0.1495,
+            "ci_low": -0.2742,
+            "ci_high": 0.5732
+          }
+        ]
+      },
+      "pub_bias": {
+        "available": true,
+        "k": 13,
+        "intercept": -0.6639,
+        "t": -0.4503,
+        "p": 0.6613
+      }
+    },
+    {
+      "ingredient": "rotigotine",
+      "outcome_domain": "periodic_limb_movements",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 5,
+      "scale": "linear",
+      "combines": [
+        "continuous"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.1185/03007995.2015.1103216",
+          "first_author": "",
+          "year": null,
+          "effect": 0.0022,
+          "ci_low": -0.3391,
+          "ci_high": 0.3434,
+          "p_value": null,
+          "n_total": 150,
+          "outcome_name": "Average of means of Periodic Limb Movement during Wakefulness Index (PLMWI) for the m-SIT",
+          "weight": 0.2624,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1002/mds.28224",
+          "first_author": "",
+          "year": null,
+          "effect": 0.5957,
+          "ci_low": 0.1063,
+          "ci_high": 1.0852,
+          "p_value": null,
+          "n_total": 70,
+          "outcome_name": "PLMW index",
+          "weight": 0.2126,
+          "rob": "low"
+        },
+        {
+          "paper_id": "10.1212/wnl.0000000000002649",
+          "first_author": "",
+          "year": null,
+          "effect": 0.7588,
+          "ci_low": 0.2558,
+          "ci_high": 1.2619,
+          "p_value": null,
+          "n_total": 81,
+          "outcome_name": "Total PLM-associated nocturnal SBP elevations",
+          "weight": 0.2082,
+          "rob": "low"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2010.02.014",
+          "first_author": "",
+          "year": null,
+          "effect": 0.5483,
+          "ci_low": 0.0049,
+          "ci_high": 1.0916,
+          "p_value": null,
+          "n_total": 67,
+          "outcome_name": "PLM during sleep arousal index (PLMSAI; PLMSA/h TST)",
+          "weight": 0.1958,
+          "rob": "low"
+        },
+        {
+          "paper_id": "10.1053/j.ajkd.2015.12.027",
+          "first_author": "",
+          "year": null,
+          "effect": 1.0791,
+          "ci_low": 0.2248,
+          "ci_high": 1.9333,
+          "p_value": null,
+          "n_total": 30,
+          "outcome_name": "Periodic Limb Movement Index (PLMI) ratio (end of maintenance to baseline)",
+          "weight": 0.1211,
+          "rob": "some"
+        }
+      ],
+      "pooled": {
+        "effect": 0.5232,
+        "ci_low": -0.0027,
+        "ci_high": 1.0491,
+        "i2": 61.9,
+        "tau2": 0.1065,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -0.6774,
+        "pred_high": 1.7237
+      },
+      "rob_summary": {
+        "low": 3,
+        "some": 2,
+        "high": 0,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "low",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "inconsistency",
+            "reason": "I2=62% (substantial)"
+          },
+          {
+            "domain": "imprecision",
+            "reason": "CI crosses null; optimal information size not met"
+          }
+        ]
+      },
+      "total_n": 398,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.4117,
+          "ci_low": 0.1959,
+          "ci_high": 0.6275
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.1185/03007995.2015.1103216",
+            "effect": 0.6847,
+            "ci_low": 0.2324,
+            "ci_high": 1.137
+          },
+          {
+            "omitted": "10.1002/mds.28224",
+            "effect": 0.5221,
+            "ci_low": -0.2488,
+            "ci_high": 1.293
+          },
+          {
+            "omitted": "10.1212/wnl.0000000000002649",
+            "effect": 0.4664,
+            "ci_low": -0.2342,
+            "ci_high": 1.1669
+          },
+          {
+            "omitted": "10.1016/j.sleep.2010.02.014",
+            "effect": 0.5348,
+            "ci_low": -0.2281,
+            "ci_high": 1.2977
+          },
+          {
+            "omitted": "10.1053/j.ajkd.2015.12.027",
+            "effect": 0.4432,
+            "ci_low": -0.1688,
+            "ci_high": 1.0552
+          }
+        ]
+      }
+    },
+    {
+      "ingredient": "rotigotine",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 9,
+      "scale": "linear",
+      "combines": [
+        "continuous"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.1016/s1474-4422(08)70112-1",
+          "first_author": "",
+          "year": null,
+          "effect": 0.0,
+          "ci_low": -0.2608,
+          "ci_high": 0.2608,
+          "p_value": null,
+          "n_total": 458,
+          "outcome_name": "MOS sleep quantity",
+          "weight": 0.2093,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2015.03.006",
+          "first_author": "",
+          "year": null,
+          "effect": -0.0315,
+          "ci_low": -0.2949,
+          "ci_high": 0.2319,
+          "p_value": null,
+          "n_total": 284,
+          "outcome_name": "PSQI total score at baseline",
+          "weight": 0.2051,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2013.07.007",
+          "first_author": "",
+          "year": null,
+          "effect": 0.2114,
+          "ci_low": -0.076,
+          "ci_high": 0.4989,
+          "p_value": null,
+          "n_total": 284,
+          "outcome_name": "Pittsburgh Sleep Quality Index (PSQI) total score",
+          "weight": 0.1722,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1185/03007995.2015.1103216",
+          "first_author": "",
+          "year": null,
+          "effect": 0.0,
+          "ci_low": -0.3412,
+          "ci_high": 0.3412,
+          "p_value": null,
+          "n_total": 150,
+          "outcome_name": "RLS-6 Item 1: Satisfaction with sleep",
+          "weight": 0.1222,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2007.04.010",
+          "first_author": "",
+          "year": null,
+          "effect": -0.0,
+          "ci_low": -0.3864,
+          "ci_high": 0.3864,
+          "p_value": null,
+          "n_total": 341,
+          "outcome_name": "RLS-6 Satisfaction with sleep",
+          "weight": 0.0953,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1002/mds.28224",
+          "first_author": "",
+          "year": null,
+          "effect": 0.1929,
+          "ci_low": -0.2871,
+          "ci_high": 0.673,
+          "p_value": null,
+          "n_total": 70,
+          "outcome_name": "Total sleep time",
+          "weight": 0.0618,
+          "rob": "low"
+        },
+        {
+          "paper_id": "10.1212/wnl.0000000000002649",
+          "first_author": "",
+          "year": null,
+          "effect": -0.0895,
+          "ci_low": -0.5758,
+          "ci_high": 0.3969,
+          "p_value": null,
+          "n_total": 81,
+          "outcome_name": "PLMSAI (PLMS with arousal/total sleep time, per hour)",
+          "weight": 0.0602,
+          "rob": "low"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2010.02.014",
+          "first_author": "",
+          "year": null,
+          "effect": -0.0256,
+          "ci_low": -0.5506,
+          "ci_high": 0.4994,
+          "p_value": null,
+          "n_total": 67,
+          "outcome_name": "MOS sleep adequacy subscale",
+          "weight": 0.0516,
+          "rob": "low"
+        },
+        {
+          "paper_id": "10.1053/j.ajkd.2015.12.027",
+          "first_author": "",
+          "year": null,
+          "effect": -0.0471,
+          "ci_low": -0.8474,
+          "ci_high": 0.7531,
+          "p_value": null,
+          "n_total": 30,
+          "outcome_name": "REM sleep duration",
+          "weight": 0.0222,
+          "rob": "some"
+        }
+      ],
+      "pooled": {
+        "effect": 0.0341,
+        "ci_low": -0.1062,
+        "ci_high": 0.1745,
+        "i2": 0.0,
+        "tau2": 0.0,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -0.1098,
+        "pred_high": 0.1781
+      },
+      "rob_summary": {
+        "low": 3,
+        "some": 6,
+        "high": 0,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "low",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "risk_of_bias",
+            "reason": "most trials have some concerns / high RoB"
+          },
+          {
+            "domain": "imprecision",
+            "reason": "CI crosses null"
+          }
+        ]
+      },
+      "total_n": 1765,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.0341,
+          "ci_low": -0.0852,
+          "ci_high": 0.1534
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.1016/s1474-4422(08)70112-1",
+            "effect": 0.0431,
+            "ci_low": -0.1187,
+            "ci_high": 0.205
+          },
+          {
+            "omitted": "10.1016/j.sleep.2015.03.006",
+            "effect": 0.051,
+            "ci_low": -0.1104,
+            "ci_high": 0.2125
+          },
+          {
+            "omitted": "10.1016/j.sleep.2013.07.007",
+            "effect": -0.0028,
+            "ci_low": -0.161,
+            "ci_high": 0.1554
+          },
+          {
+            "omitted": "10.1185/03007995.2015.1103216",
+            "effect": 0.0389,
+            "ci_low": -0.1148,
+            "ci_high": 0.1925
+          },
+          {
+            "omitted": "10.1016/j.sleep.2007.04.010",
+            "effect": 0.0377,
+            "ci_low": -0.1136,
+            "ci_high": 0.1891
+          },
+          {
+            "omitted": "10.1002/mds.28224",
+            "effect": 0.0237,
+            "ci_low": -0.125,
+            "ci_high": 0.1723
+          },
+          {
+            "omitted": "10.1212/wnl.0000000000002649",
+            "effect": 0.042,
+            "ci_low": -0.1065,
+            "ci_high": 0.1905
+          },
+          {
+            "omitted": "10.1016/j.sleep.2010.02.014",
+            "effect": 0.0374,
+            "ci_low": -0.1105,
+            "ci_high": 0.1852
+          },
+          {
+            "omitted": "10.1053/j.ajkd.2015.12.027",
+            "effect": 0.036,
+            "ci_low": -0.1096,
+            "ci_high": 0.1815
+          }
+        ]
+      }
+    },
+    {
+      "ingredient": "rotigotine",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 11,
+      "scale": "linear",
+      "combines": [
+        "continuous"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.1016/s1474-4422(08)70112-1",
+          "first_author": "",
+          "year": null,
+          "effect": 0.5313,
+          "ci_low": 0.2659,
+          "ci_high": 0.7966,
+          "p_value": null,
+          "n_total": 458,
+          "outcome_name": "IRLS sum score - change from baseline to end of maintenance",
+          "weight": 0.1072,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2015.03.006",
+          "first_author": "",
+          "year": null,
+          "effect": -0.5782,
+          "ci_low": -0.8463,
+          "ci_high": -0.3101,
+          "p_value": null,
+          "n_total": 284,
+          "outcome_name": "IRLS total score at baseline",
+          "weight": 0.107,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1002/mds.23157",
+          "first_author": "",
+          "year": null,
+          "effect": 0.2829,
+          "ci_low": 0.0022,
+          "ci_high": 0.5635,
+          "p_value": null,
+          "n_total": 505,
+          "outcome_name": "IRLS sum score",
+          "weight": 0.106,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2013.07.007",
+          "first_author": "",
+          "year": null,
+          "effect": 0.3143,
+          "ci_low": 0.0281,
+          "ci_high": 0.6004,
+          "p_value": null,
+          "n_total": 284,
+          "outcome_name": "International Restless Legs Syndrome Study Group rating scale (IRLS) total score",
+          "weight": 0.1055,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1185/03007995.2015.1103216",
+          "first_author": "",
+          "year": null,
+          "effect": 0.2492,
+          "ci_low": -0.0932,
+          "ci_high": 0.5915,
+          "p_value": null,
+          "n_total": 150,
+          "outcome_name": "International Restless Legs Syndrome Rating Scale (IRLS) sum score",
+          "weight": 0.1006,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2007.04.010",
+          "first_author": "",
+          "year": null,
+          "effect": 0.1366,
+          "ci_low": -0.2503,
+          "ci_high": 0.5234,
+          "p_value": null,
+          "n_total": 341,
+          "outcome_name": "IRLS total score change from baseline to end of Maintenance Period",
+          "weight": 0.0965,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1212/wnl.0000000000002649",
+          "first_author": "",
+          "year": null,
+          "effect": -0.1011,
+          "ci_low": -0.5875,
+          "ci_high": 0.3853,
+          "p_value": null,
+          "n_total": 81,
+          "outcome_name": "IRLS (International Restless Legs Syndrome Study Group rating scale)",
+          "weight": 0.087,
+          "rob": "low"
+        },
+        {
+          "paper_id": "10.1002/mds.28224",
+          "first_author": "",
+          "year": null,
+          "effect": 0.8732,
+          "ci_low": 0.372,
+          "ci_high": 1.3745,
+          "p_value": null,
+          "n_total": 70,
+          "outcome_name": "IRLS score",
+          "weight": 0.0855,
+          "rob": "low"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2010.02.014",
+          "first_author": "",
+          "year": null,
+          "effect": 0.6879,
+          "ci_low": 0.1499,
+          "ci_high": 1.2258,
+          "p_value": null,
+          "n_total": 67,
+          "outcome_name": "IRLS sum score",
+          "weight": 0.082,
+          "rob": "low"
+        },
+        {
+          "paper_id": "10.1002/mds.20251",
+          "first_author": "",
+          "year": null,
+          "effect": 0.8996,
+          "ci_low": 0.176,
+          "ci_high": 1.6233,
+          "p_value": null,
+          "n_total": 63,
+          "outcome_name": "International Restless Legs Syndrome Scale (IRLS) total score",
+          "weight": 0.0656,
+          "rob": "some"
+        },
+        {
+          "paper_id": "10.1053/j.ajkd.2015.12.027",
+          "first_author": "",
+          "year": null,
+          "effect": 0.8396,
+          "ci_low": 0.0063,
+          "ci_high": 1.6729,
+          "p_value": null,
+          "n_total": 30,
+          "outcome_name": "International Restless Legs Syndrome Study Group Rating Scale (IRLS)",
+          "weight": 0.0572,
+          "rob": "some"
+        }
+      ],
+      "pooled": {
+        "effect": 0.3258,
+        "ci_low": 0.0114,
+        "ci_high": 0.6401,
+        "i2": 82.4,
+        "tau2": 0.1673,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -0.653,
+        "pred_high": 1.3046
+      },
+      "rob_summary": {
+        "low": 3,
+        "some": 8,
+        "high": 0,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "very_low",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "risk_of_bias",
+            "reason": "most trials have some concerns / high RoB"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2=82% (considerable)"
+          },
+          {
+            "domain": "inconsistency",
+            "reason": "I2>=75% (double downgrade)"
+          }
+        ]
+      },
+      "total_n": 2333,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.2201,
+          "ci_low": 0.1105,
+          "ci_high": 0.3297
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.1016/s1474-4422(08)70112-1",
+            "effect": 0.3042,
+            "ci_low": -0.0446,
+            "ci_high": 0.653
+          },
+          {
+            "omitted": "10.1016/j.sleep.2015.03.006",
+            "effect": 0.398,
+            "ci_low": 0.1863,
+            "ci_high": 0.6096
+          },
+          {
+            "omitted": "10.1002/mds.23157",
+            "effect": 0.3377,
+            "ci_low": -0.0279,
+            "ci_high": 0.7032
+          },
+          {
+            "omitted": "10.1016/j.sleep.2013.07.007",
+            "effect": 0.3336,
+            "ci_low": -0.0301,
+            "ci_high": 0.6974
+          },
+          {
+            "omitted": "10.1185/03007995.2015.1103216",
+            "effect": 0.3394,
+            "ci_low": -0.0176,
+            "ci_high": 0.6963
+          },
+          {
+            "omitted": "10.1016/j.sleep.2007.04.010",
+            "effect": 0.35,
+            "ci_low": -0.0019,
+            "ci_high": 0.7019
+          },
+          {
+            "omitted": "10.1212/wnl.0000000000002649",
+            "effect": 0.3682,
+            "ci_low": 0.0277,
+            "ci_high": 0.7087
+          },
+          {
+            "omitted": "10.1002/mds.28224",
+            "effect": 0.2723,
+            "ci_low": -0.052,
+            "ci_high": 0.5966
+          },
+          {
+            "omitted": "10.1016/j.sleep.2010.02.014",
+            "effect": 0.2937,
+            "ci_low": -0.0406,
+            "ci_high": 0.6279
+          },
+          {
+            "omitted": "10.1002/mds.20251",
+            "effect": 0.2849,
+            "ci_low": -0.0419,
+            "ci_high": 0.6118
+          },
+          {
+            "omitted": "10.1053/j.ajkd.2015.12.027",
+            "effect": 0.2945,
+            "ci_low": -0.0337,
+            "ci_high": 0.6228
+          }
+        ]
+      },
+      "pub_bias": {
+        "available": true,
+        "k": 11,
+        "intercept": 2.9439,
+        "t": 1.4253,
+        "p": 0.1878
+      }
+    },
+    {
+      "ingredient": "tonic motor activation (tomac)",
+      "outcome_domain": "sleep_quality",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 3,
+      "scale": "linear",
+      "combines": [
+        "continuous",
+        "mean_difference"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.1093/sleep/zsad190",
+          "first_author": "",
+          "year": null,
+          "effect": 0.647,
+          "ci_low": 0.2982,
+          "ci_high": 0.9958,
+          "p_value": null,
+          "n_total": 133,
+          "outcome_name": "MOS Item 7 - trouble falling asleep (exploratory)",
+          "weight": 0.477,
+          "rob": "low"
+        },
+        {
+          "paper_id": "10.1093/sleep/zsad188",
+          "first_author": "",
+          "year": null,
+          "effect": 0.5839,
+          "ci_low": 0.1855,
+          "ci_high": 0.9824,
+          "p_value": null,
+          "n_total": null,
+          "outcome_name": "Medical Outcomes Study Sleep Problem Index I (MOS-I)",
+          "weight": 0.3654,
+          "rob": "high"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2024.08.017",
+          "first_author": "",
+          "year": null,
+          "effect": 0.7869,
+          "ci_low": 0.1802,
+          "ci_high": 1.3936,
+          "p_value": null,
+          "n_total": 45,
+          "outcome_name": "MOS Sleep Problem Indices I (MOS-I) score change from Week 2 to Week 4",
+          "weight": 0.1576,
+          "rob": "low"
+        }
+      ],
+      "pooled": {
+        "effect": 0.646,
+        "ci_low": 0.1172,
+        "ci_high": 1.1748,
+        "i2": 0.0,
+        "tau2": 0.0,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -0.9155,
+        "pred_high": 2.2075
+      },
+      "rob_summary": {
+        "low": 2,
+        "some": 0,
+        "high": 1,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "moderate",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "imprecision",
+            "reason": "optimal information size not met"
+          }
+        ]
+      },
+      "total_n": 178,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.646,
+          "ci_low": 0.4051,
+          "ci_high": 0.8869
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.1093/sleep/zsad190",
+            "effect": 0.6451,
+            "ci_low": -1.514,
+            "ci_high": 2.8042
+          },
+          {
+            "omitted": "10.1093/sleep/zsad188",
+            "effect": 0.6817,
+            "ci_low": -1.2784,
+            "ci_high": 2.6419
+          },
+          {
+            "omitted": "10.1016/j.sleep.2024.08.017",
+            "effect": 0.6196,
+            "ci_low": -1.0817,
+            "ci_high": 2.321
+          }
+        ]
+      }
+    },
+    {
+      "ingredient": "tonic motor activation (tomac)",
+      "outcome_domain": "symptom_severity",
+      "effect_measure": "smd",
+      "standardized": true,
+      "design_class": "rct",
+      "n_trials": 3,
+      "scale": "linear",
+      "combines": [
+        "continuous"
+      ],
+      "ci_method": "hksj",
+      "trials": [
+        {
+          "paper_id": "10.1093/sleep/zsad190",
+          "first_author": "",
+          "year": null,
+          "effect": 0.2593,
+          "ci_low": -0.0929,
+          "ci_high": 0.6115,
+          "p_value": null,
+          "n_total": 133,
+          "outcome_name": "Change in IRLS Question #7 score (frequency of RLS symptoms) from baseline to Week 8",
+          "weight": 0.414,
+          "rob": "low"
+        },
+        {
+          "paper_id": "10.1093/sleep/zsad188",
+          "first_author": "",
+          "year": null,
+          "effect": 0.2481,
+          "ci_low": -0.1438,
+          "ci_high": 0.6399,
+          "p_value": null,
+          "n_total": null,
+          "outcome_name": "IRLS Total Score at Parent Study Entry and Completion",
+          "weight": 0.3728,
+          "rob": "high"
+        },
+        {
+          "paper_id": "10.1016/j.sleep.2024.08.017",
+          "first_author": "",
+          "year": null,
+          "effect": 0.8917,
+          "ci_low": 0.2789,
+          "ci_high": 1.5046,
+          "p_value": null,
+          "n_total": 45,
+          "outcome_name": "IRLS total score change from study entry to Week 4 (all participants)",
+          "weight": 0.2132,
+          "rob": "low"
+        }
+      ],
+      "pooled": {
+        "effect": 0.39,
+        "ci_low": -0.405,
+        "ci_high": 1.1849,
+        "i2": 43.1,
+        "tau2": 0.0372,
+        "ci_method": "hksj",
+        "model": "random_effects_DL_HKSJ",
+        "pred_low": -2.8751,
+        "pred_high": 3.6551
+      },
+      "rob_summary": {
+        "low": 2,
+        "some": 0,
+        "high": 1,
+        "unknown": 0
+      },
+      "certainty": {
+        "grade": "moderate",
+        "start": "high",
+        "downgrades": [
+          {
+            "domain": "imprecision",
+            "reason": "CI crosses null; optimal information size not met"
+          }
+        ]
+      },
+      "total_n": 178,
+      "sensitivity": {
+        "fixed_effect": {
+          "effect": 0.3528,
+          "ci_low": 0.1119,
+          "ci_high": 0.5936
+        },
+        "leave_one_out": [
+          {
+            "omitted": "10.1093/sleep/zsad190",
+            "effect": 0.525,
+            "ci_low": -3.5242,
+            "ci_high": 4.5742
+          },
+          {
+            "omitted": "10.1093/sleep/zsad188",
+            "effect": 0.5238,
+            "ci_low": -3.4399,
+            "ci_high": 4.4874
+          },
+          {
+            "omitted": "10.1016/j.sleep.2024.08.017",
+            "effect": 0.2543,
+            "ci_low": -1.4438,
+            "ci_high": 1.9524
+          }
+        ]
+      }
+    }
+  ]
+}

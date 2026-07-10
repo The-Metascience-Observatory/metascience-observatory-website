@@ -1,0 +1,1113 @@
+{
+  "_note": "ME/CFS screening PRISMA + breakdowns over the treatment studies. Intervention names canonicalised (see agent_canonical_map.json). agent_breakdown = interventions with >=2 papers; agent_singletons = single-paper interventions. drug_class_breakdown = by intervention class.",
+  "sources": [
+    "PubMed",
+    "OpenAlex",
+    "Europe PMC",
+    "Semantic Scholar"
+  ],
+  "identified": 20137,
+  "excluded_not_relevant": 12318,
+  "relevant": 7819,
+  "not_retrieved": 0,
+  "retrieved": 7821,
+  "excluded_not_treatment": 6732,
+  "treatment_studies": 1089,
+  "clinical": 742,
+  "preclinical": 0,
+  "study_design_breakdown": {
+    "unclear": 280,
+    "non_randomized_trial": 249,
+    "case_series": 210,
+    "rct": 179,
+    "observational": 84,
+    "other": 67,
+    "crossover": 20
+  },
+  "study_design_groups": {
+    "clinical": [
+      "case_series",
+      "crossover",
+      "non_randomized_trial",
+      "observational",
+      "rct"
+    ],
+    "preclinical": []
+  },
+  "drug_class_breakdown": {
+    "other": 296,
+    "psychological": 238,
+    "supplement": 143,
+    "rehabilitation": 122,
+    "immunomodulator": 88,
+    "exercise": 75,
+    "antiviral": 31,
+    "anti-inflammatory": 30,
+    "device": 25,
+    "probiotic": 14,
+    "neurostimulation": 14,
+    "oxygen_therapy": 9,
+    "cell_therapy": 3,
+    "respiratory_therapy": 1
+  },
+  "organism_breakdown": {
+    "human": 1032,
+    "animal": 37,
+    "other": 15,
+    "unclear": 5
+  },
+  "indication_breakdown": {
+    "treatment": 980,
+    "not_applicable": 98,
+    "prevention": 7,
+    "unclear": 3,
+    "both": 1
+  },
+  "agent_breakdown": [
+    {
+      "agent": "cognitive behavioral therapy",
+      "count": 44
+    },
+    {
+      "agent": "cognitive behaviour therapy",
+      "count": 31
+    },
+    {
+      "agent": "graded exercise therapy",
+      "count": 17
+    },
+    {
+      "agent": "cognitive behavior therapy",
+      "count": 14
+    },
+    {
+      "agent": "acupuncture",
+      "count": 13
+    },
+    {
+      "agent": "rituximab",
+      "count": 12
+    },
+    {
+      "agent": "hydrocortisone",
+      "count": 9
+    },
+    {
+      "agent": "graded exercise",
+      "count": 9
+    },
+    {
+      "agent": "intravenous immunoglobulin",
+      "count": 9
+    },
+    {
+      "agent": "cognitive-behavioral therapy",
+      "count": 8
+    },
+    {
+      "agent": "pragmatic rehabilitation",
+      "count": 8
+    },
+    {
+      "agent": "immunoadsorption",
+      "count": 8
+    },
+    {
+      "agent": "electroacupuncture",
+      "count": 7
+    },
+    {
+      "agent": "modafinil",
+      "count": 7
+    },
+    {
+      "agent": "rintatolimod",
+      "count": 6
+    },
+    {
+      "agent": "lightning process",
+      "count": 6
+    },
+    {
+      "agent": "cognitive-behavioural therapy",
+      "count": 6
+    },
+    {
+      "agent": "acupuncture and moxibustion",
+      "count": 5
+    },
+    {
+      "agent": "valacyclovir",
+      "count": 5
+    },
+    {
+      "agent": "aerobic exercise",
+      "count": 5
+    },
+    {
+      "agent": "recumbent isometric yoga",
+      "count": 4
+    },
+    {
+      "agent": "pyridostigmine",
+      "count": 4
+    },
+    {
+      "agent": "influenza vaccine",
+      "count": 4
+    },
+    {
+      "agent": "occupational therapy",
+      "count": 4
+    },
+    {
+      "agent": "homeopathy",
+      "count": 4
+    },
+    {
+      "agent": "tuina",
+      "count": 4
+    },
+    {
+      "agent": "l-carnitine",
+      "count": 4
+    },
+    {
+      "agent": "clonidine",
+      "count": 4
+    },
+    {
+      "agent": "fluoxetine",
+      "count": 4
+    },
+    {
+      "agent": "anakinra",
+      "count": 4
+    },
+    {
+      "agent": "hyperbaric oxygen therapy",
+      "count": 4
+    },
+    {
+      "agent": "intravenous immunoglobulin (ivig)",
+      "count": 4
+    },
+    {
+      "agent": "dextroamphetamine sulfate",
+      "count": 4
+    },
+    {
+      "agent": "minocycline",
+      "count": 3
+    },
+    {
+      "agent": "cognitive-behavior therapy",
+      "count": 3
+    },
+    {
+      "agent": "graded aerobic exercise",
+      "count": 3
+    },
+    {
+      "agent": "mindfulness-based cognitive therapy",
+      "count": 3
+    },
+    {
+      "agent": "acyclovir",
+      "count": 3
+    },
+    {
+      "agent": "melatonin",
+      "count": 3
+    },
+    {
+      "agent": "cyclophosphamide",
+      "count": 3
+    },
+    {
+      "agent": "cognitive behavioral stress management",
+      "count": 3
+    },
+    {
+      "agent": "vitamin d",
+      "count": 3
+    },
+    {
+      "agent": "repetitive transcranial magnetic stimulation (rtms)",
+      "count": 3
+    },
+    {
+      "agent": "qigong",
+      "count": 3
+    },
+    {
+      "agent": "magnesium",
+      "count": 3
+    },
+    {
+      "agent": "low-dose naltrexone",
+      "count": 3
+    },
+    {
+      "agent": "multidisciplinary rehabilitation treatment",
+      "count": 3
+    },
+    {
+      "agent": "valganciclovir",
+      "count": 2
+    },
+    {
+      "agent": "cognitive-behaviour therapy",
+      "count": 2
+    },
+    {
+      "agent": "cognitive behaviour therapy (cbt) and graded exercise therapy (get)",
+      "count": 2
+    },
+    {
+      "agent": "ginsenoside rg1",
+      "count": 2
+    },
+    {
+      "agent": "bifidobacterium infantis 35624",
+      "count": 2
+    },
+    {
+      "agent": "group cognitive behavioural therapy",
+      "count": 2
+    },
+    {
+      "agent": "nicotinamide adenine dinucleotide (nadh)",
+      "count": 2
+    },
+    {
+      "agent": "structured exercise programme",
+      "count": 2
+    },
+    {
+      "agent": "far-infrared ray dry sauna",
+      "count": 2
+    },
+    {
+      "agent": "terfenadine",
+      "count": 2
+    },
+    {
+      "agent": "cognitive behavioural therapy and graded exercise therapy",
+      "count": 2
+    },
+    {
+      "agent": "fatigue self-management",
+      "count": 2
+    },
+    {
+      "agent": "moclobemide",
+      "count": 2
+    },
+    {
+      "agent": "eye movement desensitization and reprocessing (emdr)",
+      "count": 2
+    },
+    {
+      "agent": "mindfulness-based stress reduction",
+      "count": 2
+    },
+    {
+      "agent": "coenzyme q10",
+      "count": 2
+    },
+    {
+      "agent": "high-intensity interval training",
+      "count": 2
+    },
+    {
+      "agent": "fludrocortisone acetate",
+      "count": 2
+    },
+    {
+      "agent": "energy envelope therapy",
+      "count": 2
+    },
+    {
+      "agent": "phenylephrine",
+      "count": 2
+    },
+    {
+      "agent": "oxygen-ozone autohemotherapy",
+      "count": 2
+    },
+    {
+      "agent": "low-dose hydrocortisone",
+      "count": 2
+    },
+    {
+      "agent": "midodrine",
+      "count": 2
+    },
+    {
+      "agent": "bupropion",
+      "count": 2
+    },
+    {
+      "agent": "curcumin",
+      "count": 2
+    },
+    {
+      "agent": "galantamine hydrobromide",
+      "count": 2
+    },
+    {
+      "agent": "compression stockings",
+      "count": 2
+    },
+    {
+      "agent": "rehabilitation",
+      "count": 2
+    },
+    {
+      "agent": "ginger-separated moxibustion",
+      "count": 2
+    },
+    {
+      "agent": "sodium dichloroacetate",
+      "count": 2
+    },
+    {
+      "agent": "military antishock trousers (mast)",
+      "count": 2
+    },
+    {
+      "agent": "d-ribose",
+      "count": 2
+    },
+    {
+      "agent": "internet-based cognitive behavioral therapy (i-cbt)",
+      "count": 2
+    },
+    {
+      "agent": "distant healing",
+      "count": 2
+    },
+    {
+      "agent": "staphylococcus toxoid vaccine",
+      "count": 2
+    },
+    {
+      "agent": "magnesium sulphate",
+      "count": 2
+    },
+    {
+      "agent": "multi-disciplinary rehabilitation program",
+      "count": 2
+    },
+    {
+      "agent": "poly(i).poly(c12u)",
+      "count": 2
+    },
+    {
+      "agent": "aquatic exercise",
+      "count": 2
+    },
+    {
+      "agent": "oxaloacetate",
+      "count": 2
+    },
+    {
+      "agent": "cervical muscle physical therapy",
+      "count": 2
+    },
+    {
+      "agent": "internet-based cognitive behavioral therapy (fitnet)",
+      "count": 2
+    },
+    {
+      "agent": "rapamycin",
+      "count": 2
+    },
+    {
+      "agent": "epipharyngeal abrasive therapy",
+      "count": 2
+    },
+    {
+      "agent": "cognitive behavioural therapy and graded exercise",
+      "count": 2
+    },
+    {
+      "agent": "qigong exercise",
+      "count": 2
+    },
+    {
+      "agent": "acceptance and commitment therapy",
+      "count": 2
+    },
+    {
+      "agent": "intravenous saline",
+      "count": 2
+    },
+    {
+      "agent": "desmopressin",
+      "count": 2
+    },
+    {
+      "agent": "coenzyme q10 plus nadh",
+      "count": 2
+    },
+    {
+      "agent": "guided graded exercise self-help",
+      "count": 2
+    },
+    {
+      "agent": "sijunzi decoction",
+      "count": 2
+    },
+    {
+      "agent": "multidisciplinary rehabilitation",
+      "count": 2
+    },
+    {
+      "agent": "guanidinoacetic acid",
+      "count": 2
+    },
+    {
+      "agent": "apocynin, allopurinol, tempol, ebselen",
+      "count": 2
+    },
+    {
+      "agent": "multi-convergent therapy",
+      "count": 2
+    },
+    {
+      "agent": "(-)-osu6162",
+      "count": 2
+    },
+    {
+      "agent": "buspirone",
+      "count": 2
+    },
+    {
+      "agent": "methylphenidate",
+      "count": 2
+    },
+    {
+      "agent": "family-focused cognitive behaviour therapy",
+      "count": 2
+    },
+    {
+      "agent": "myelophil",
+      "count": 2
+    },
+    {
+      "agent": "cupping therapy",
+      "count": 2
+    },
+    {
+      "agent": "oxygen-ozone therapy",
+      "count": 2
+    },
+    {
+      "agent": "moxibustion",
+      "count": 2
+    }
+  ],
+  "agent_singletons": [
+    "2-aminopurine",
+    "5-aminolevulinic acid with sodium ferrous citrate (5-ala/sfc)",
+    "8-bromoadenosine phosphoribose (8-br-adpr) and n(6)-benzoyladenosine-3',5'-cyclic monophosphate (n(6)-bnz-camp)",
+    "abdominal acupuncture",
+    "abdominal tuina",
+    "acclydine",
+    "acetaminophen",
+    "acetyl l-carnitine",
+    "acetylcarnitine and propionylcarnitine",
+    "active rehabilitation programme",
+    "active video gaming",
+    "activity modification within energy envelope",
+    "activity pacing",
+    "activity pacing framework",
+    "activity pacing self-management",
+    "activity scheduling",
+    "acupoint catgut embedding combined with ginger-partitioned moxibustion",
+    "acupoint massage at shenque (cv 8)",
+    "acupoint sticking combined traditional chinese medicine foot bath",
+    "acupressure",
+    "acupressure and massage",
+    "acupressure and qigong",
+    "acupuncture and moxibustion combined with psychological approach",
+    "acupuncture and physiotherapy",
+    "acute tryptophan depletion",
+    "acyclovir and interferon-alpha",
+    "acyclovir sodium",
+    "adapted physical activity and therapeutic exercise",
+    "adaptive pacing therapy",
+    "advanced physician's formula with nt factor",
+    "aerobic cycling exercise",
+    "aerobic exercise and resistance training",
+    "aerobic exercise therapy",
+    "aerobic exercise training and progressive resistance training",
+    "agomelatine",
+    "allokin-alpha",
+    "aloe vera juice with l-arginine",
+    "alpha-1 antitrypsin",
+    "alpha-methyl-p-tyrosine (metyrosine)",
+    "amantadine hydrochloride",
+    "amisulpride",
+    "amitriptyline and hochuekkito",
+    "amitriptyline and modafinil",
+    "amygdala and insula retraining (air)",
+    "analytical psychotherapy",
+    "anhydrous enol-oxaloacetate",
+    "anti-hhv-6 transfer factor",
+    "anticoagulant therapy (unspecified)",
+    "antidepressants (tricyclic and ssri)",
+    "antioxidants, leaky gut diet, intravenous immunoglobulins",
+    "antiviral/immunoglobulin",
+    "aripiprazole",
+    "artesunate",
+    "atenolol or disopyramide",
+    "auricular gold-needle therapy",
+    "autologous lymph node cell transplant",
+    "ayurvedic herbs and tonics",
+    "azithromycin",
+    "bacillus spp. probiotic complex",
+    "bacteriotherapy (nonpathogenic enteric bacteria)",
+    "baduanjin qigong",
+    "baduanjin qigong exercise",
+    "balance rehabilitation exercises",
+    "bamboo-based medicinal moxibustion",
+    "behavioral intervention",
+    "biobran mgn-3",
+    "biofeedback",
+    "bioresonance therapy",
+    "blood flow restriction training",
+    "bo's abdominal acupuncture",
+    "breathing retraining",
+    "bright light therapy",
+    "buddy support program",
+    "calcium channel blocker",
+    "camel milk",
+    "carnitine",
+    "cds22",
+    "cervical disc replacement implant with decompression and fusion",
+    "cervical disc replacement surgery",
+    "chaihu longgu muli decoction",
+    "cholecalciferol (vitamin d) with multiminerals",
+    "chronic disease self-management course",
+    "cistanche and ginkgo extract",
+    "cistanche and ginkgo extract botanical product",
+    "citalopram",
+    "citrulline malate",
+    "clarithromycin",
+    "clarithromycin and flumazenil",
+    "clinical pilates",
+    "clonidine hydrochloride",
+    "coenzyme q10 (coq10)",
+    "coenzyme q10 plus nicotinamide adenine dinucleotide",
+    "coenzyme q10 plus selenium",
+    "cognitive behavioral intervention",
+    "cognitive behavioral self-management",
+    "cognitive behavioral therapy with antidepressant medication",
+    "cognitive behavioral therapy with biofeedback",
+    "cognitive behavioral therapy with graded exercise therapy",
+    "cognitive behaviour group therapy",
+    "cognitive behaviour therapy (cbt)",
+    "cognitive behaviour therapy and graded exercise therapy",
+    "cognitive behaviour therapy with graded activity",
+    "cognitive behavioural guided self-help treatment",
+    "cognitive behavioural therapy (cbt)",
+    "cognitive behavioural therapy (cbt) and graded exercise therapy (get)",
+    "cognitive behavioural therapy (cbt) with schema therapy",
+    "cognitive behavioural therapy for insomnia (cbt-i)",
+    "cognitive behavioural therapy with graded exercise therapy",
+    "cognitive behavioural therapy with graded exercise therapy and pacing",
+    "cognitive bias modification for interpretations (cbm-i)",
+    "cognitive remediation training",
+    "cognitive-behavioral therapy with mindfulness",
+    "cognitive-behavioural group treatment (stress)",
+    "cognitive-behavioural therapy combined with music therapy",
+    "colchicine and spironolactone",
+    "combined hormonal contraception",
+    "community-based domiciliary therapy intervention",
+    "complementary and alternative medicine (unspecified)",
+    "comprehensive cognitive behavior therapy",
+    "comprehensive treatment (pacing management, pharmacological treatments, psychiatric interventions)",
+    "computerized working memory training",
+    "constitutional homoeopathy",
+    "conventional rehabilitation for chronic habitual hyperventilation",
+    "coordination complex with succinate acid anion (ccsa)",
+    "cortisol",
+    "cortisol/cortisone acetate",
+    "counselling",
+    "counselling and residential rehabilitation courses",
+    "creatine monohydrate",
+    "cromolyn sodium",
+    "ct38s",
+    "cyclines and macrolides",
+    "daily walking program",
+    "daratumumab",
+    "dehydroepiandrosterone (dhea)",
+    "dendrobium officinale pseudobulb extract",
+    "dengzhanshengmai capsule",
+    "dental metal removal",
+    "dexamphetamine",
+    "dexamphetamine or methylphenidate",
+    "dhea, licorice root, pregnenolone, 5-htp, tyrosine, silymarin",
+    "dialyzable leukocyte extract",
+    "dietary essential fatty acid modulation",
+    "dietary supplements (vitamin c, herbal supplements, evening primrose oil)",
+    "distant healing (prayers)",
+    "double filtration plasmapheresis",
+    "double-filtration apheresis",
+    "doxycycline",
+    "doxycycline, minocycline, ciprofloxacin, azithromycin, clarithromycin",
+    "duloxetine",
+    "duloxetine and triiodothyronine",
+    "dysautonomia management protocol",
+    "echinacea purpurea and panax ginseng",
+    "edible bird's nest",
+    "educational video film",
+    "eeg neurofeedback",
+    "eeg neurofeedback and self-hypnosis",
+    "efamol marine",
+    "eicosapentaenoic acid",
+    "eicosapentaenoic acid (epa)",
+    "eicosapentaenoic acid (epa)-rich essential fatty acid supplement",
+    "elderberry extract (sambucol)",
+    "electrical acupuncture and auricular-plaster therapy",
+    "electro-acupuncture",
+    "electroacupuncture (zusanli st 36)",
+    "electroacupuncture at bl15",
+    "electroacupuncture at shenshu (bl 23) and zusanli (st 36)",
+    "electroacupuncture plus interferential current therapy",
+    "electroconvulsive therapy (ect)",
+    "emdr (eye movement desensitization and reprocessing)",
+    "energotropic therapy",
+    "energy envelope intervention",
+    "energy envelope theory",
+    "enhanced habitual activity",
+    "enteric-coated peppermint oil",
+    "epa",
+    "epipharyngeal abrasive therapy (eat)",
+    "erythromycin",
+    "erythromycin and probiotic",
+    "essential fatty acids (linoleic, gamma-linolenic, eicosapentaenoic, docosahexaenoic acids)",
+    "essential fatty acids (n-3 and n-6)",
+    "eszopiclone",
+    "ethinylestradiol/desogestrel oral contraceptive",
+    "exercise",
+    "exercise therapy",
+    "exercise training",
+    "exopulse neuromodulation suit",
+    "extracorporeal apheresis",
+    "eye-movement desensitization and reprocessing (emdr)",
+    "faecal microbiome transplantation",
+    "faecal microbiota transplantation",
+    "family cognitive behaviour therapy",
+    "fasting therapy",
+    "fatiguewalk (online multicomponent program)",
+    "fecal microbiota transplantation",
+    "feedback intervention",
+    "fludrocortisone, beta-adrenergic blocking agents, and disopyramide",
+    "fluoroquinolones and tetracycline",
+    "folinic acid",
+    "forest bathing",
+    "freeze-dried aloe vera gel extract",
+    "french oak wood extract (robuvit)",
+    "gabapentin and pregabalin",
+    "galanthamine hydrobromide",
+    "ganciclovir",
+    "ginger-indirect moxibustion",
+    "glatiramer acetate",
+    "glucocorticoids",
+    "glutamine, n-acetyl cysteine, and zinc",
+    "glyconutrients",
+    "goal-setting rehabilitation program",
+    "graded activities/exercise programme with family sessions",
+    "graded activity therapy",
+    "graded and intermittent exercise",
+    "graded exercise programme",
+    "graded exercise therapy and cognitive behavioural therapy",
+    "graded exercise with pacing",
+    "graded-activity program with cognitive training",
+    "gradual exercise",
+    "granisetron",
+    "gravity-induced exercise",
+    "group aquatic exercise",
+    "group cognitive behavioral therapy",
+    "group cognitive-behavioural therapy",
+    "group therapy",
+    "group-based education programme",
+    "group-based self-management program",
+    "growth hormone",
+    "guided self-help",
+    "guided self-help intervention",
+    "guided self-instruction",
+    "guided self-instruction (cbt-based)",
+    "guided self-instructions (cognitive-behavioural therapy)",
+    "gupta program (neuroplasticity limbic retraining)",
+    "health management",
+    "health psychological group intervention",
+    "health-improving diet",
+    "heart rate monitor",
+    "heart rate variability biofeedback",
+    "heart rate variability biofeedback therapy",
+    "heartspeak lite for bodywork",
+    "herba epimedii polysaccharide (hep2-a)",
+    "herbal and homeopathic preparations",
+    "herbal cake-separated moxibustion",
+    "herbal formula (\u9ec4\u82aa\u3001\u592a\u5b50\u53c2\u3001\u767d\u672f\u3001\u832f\u82d3\u3001\u5f53\u5f52\u3001\u767d\u828d\u3001\u751f\u5730)",
+    "hh-205m",
+    "high cocoa polyphenol rich chocolate",
+    "high-frequency rtms",
+    "hochu-ekki-to (tj-41)",
+    "hochu-ekki-to (tj-41) combined with interferon-gamma",
+    "hochuekkito (tj-41) and hachimijiogan (tj-7)",
+    "home orthostatic training",
+    "home-based family focused rehabilitation",
+    "home-based self-management program",
+    "homeopathic phosphate salts (cobaltum phosphoricum, calcium phosphoricum, cadmium phosphoricum)",
+    "honey-processed licorice polysaccharides",
+    "hrg80 red ginseng",
+    "human placenta extract (laennec)",
+    "human placenta extract laennec",
+    "human placental extract",
+    "hydrocortisone and fludrocortisone",
+    "hydrogen gas",
+    "hydrokinesotherapy",
+    "hyperbaric oxygen",
+    "illness-management counseling",
+    "imipramine",
+    "immunoglobulin",
+    "immunoglobulins",
+    "increased physical activity",
+    "individualised activity programme",
+    "influenza vaccination",
+    "influenza vaccine (influvac)",
+    "inopamil",
+    "inpatient rehabilitation programme",
+    "inspiratory muscle training",
+    "integrated multi-intervention protocol",
+    "integrative consumer-driven rehabilitation program",
+    "intelligent-turtle massage",
+    "intensive self-management program",
+    "interdisciplinary care model with online education",
+    "interdisciplinary group treatment",
+    "interdisciplinary therapeutic approach (self-help, acupuncture, psychosomatic group interventions)",
+    "interferon alfa-2a",
+    "interleukin-1 blocker",
+    "interleukin-2 (il-2)",
+    "intermittent exercise therapy",
+    "internet intervention",
+    "internet-based cognitive behavior therapy (fitnet)",
+    "internet-based cognitive behavioral therapy",
+    "internet-based cognitive behaviour therapy",
+    "internet-based cognitive behavioural therapy",
+    "internet-based cognitive behavioural therapy (fitnet)",
+    "internet-based cognitive-behavioural therapy",
+    "intranasal mechanical stimulation",
+    "intranasal mechanical stimulation (inmest)",
+    "intravenous gammaglobulin",
+    "intravenous ganciclovir",
+    "intravenous immunoglobulin g",
+    "intravenous immunoglobulins (ivig) with plasmapheresis",
+    "intravenous saline infusion",
+    "intravenous vitamin c",
+    "isoflavones",
+    "isometric yoga",
+    "isoprinosine",
+    "ivabradine",
+    "ivig",
+    "jingfang granule",
+    "jingfang granules",
+    "jugular venoplasty",
+    "jujube polysaccharide conjugates",
+    "kai xin san",
+    "kampo medicine (sanhuang xiexin tang, buzhong yiqi tang)",
+    "kanshoho (low-pressure muscle relaxation technique)",
+    "ketamine",
+    "ketogenic diet",
+    "ketogenic metabolic therapy",
+    "kpax002 (methylphenidate hydrochloride and mitochondrial support nutrients)",
+    "kuibitang",
+    "l-glutamine",
+    "lactobacillus casei",
+    "lactobacillus casei strain shirota",
+    "lactobacillus paracasei f19, lactobacillus acidophilus ncfb 1748, and bifidobacterium lactis bb12",
+    "lidocaine",
+    "lifestyle and dietary self-management strategies",
+    "lifestyle management programme",
+    "light exercise test",
+    "light-intensity intermittent walking",
+    "lipid replacement therapy (lrt)",
+    "lisdexamfetamine dimesylate",
+    "live oral polio virus vaccine",
+    "liver extract-folic acid-cyanocobalamin",
+    "lixu jieyu recipe",
+    "lixujieyu recipe with five elements music therapy",
+    "long snake moxibustion",
+    "long-snake-like moxibustion",
+    "low dose hydrocortisone",
+    "low dose naltrexone (ldn)",
+    "low energy neurofeedback system (lens)",
+    "low sugar low yeast diet",
+    "low-dose naltrexone (ldn)",
+    "low-dose naltrexone and ketamine infusions",
+    "lumbar puncture",
+    "lyophilized full-spectrum microbiota",
+    "ma's bamboo-based medicinal moxibustion",
+    "massage therapy",
+    "mast cell-targeted treatment",
+    "maximal exercise test",
+    "maximal exercise testing",
+    "medical family therapy",
+    "melatonin plus zinc",
+    "membrane lipid replacement",
+    "mesenchymal stem cell therapy",
+    "metal removal (dental restorations, orthopedic implants)",
+    "metformin",
+    "methylphenidate hydrochloride",
+    "metreleptin",
+    "micronutrients",
+    "mild exercise (walking)",
+    "mildronate",
+    "milieu therapy",
+    "milk protein elimination diet",
+    "mindfulness therapy",
+    "mindfulness-based cognitive behavioral therapy",
+    "mindfulness-based intervention",
+    "mindfulness-based stress reduction (mbsr)",
+    "mindfulness-based stress reduction / mindfulness-based cognitive therapy",
+    "mindfulness-based training",
+    "minocycline or doxycycline",
+    "mirtazapine",
+    "mm wave therapy (reflex therapy and uhf-acupuncture)",
+    "molecular hydrogen (hydrogen-enriched water)",
+    "morphine",
+    "multi convergent therapy",
+    "multi-component cognitive-behavioral treatment",
+    "multi-component coping programme",
+    "multicomponent intervention (physical activity, nutrition, chronobiology)",
+    "multidisciplinary care approach",
+    "multidisciplinary hospital-based rehabilitation program",
+    "multidisciplinary inpatient programme",
+    "multidisciplinary inpatient rehabilitation",
+    "multidisciplinary inpatient rehabilitation programme",
+    "multidisciplinary intervention",
+    "multidisciplinary rehabilitation program with cbt and get",
+    "multidisciplinary rehabilitation with climatotherapy",
+    "multidisciplinary treatment",
+    "multimodal pain therapy",
+    "multimodal pain therapy with pacing and energy management",
+    "multimodal therapy",
+    "multiple micronutrients with coenzyme q10",
+    "multitherapeutic approach (wheat-free diet, nutritional supplementation, homoeopathic treatment, psychotherapy)",
+    "multivitamin complexes",
+    "multivitamin mineral supplement",
+    "music therapy",
+    "myelophil (astragali radix and salviae miltiorrhizae radix extract)",
+    "myers' cocktail",
+    "nagipol",
+    "naltrexone",
+    "naltrexone hydrochloride",
+    "nano-processed cbg/cbd combination",
+    "nebulized antioxidant/anti-pathogen agent (five-ingredient formulation)",
+    "nefazodone",
+    "neurotropin",
+    "nicotinamide adenine dinucleotide",
+    "nimesulide and caffeic acid combination",
+    "nimodipine",
+    "nonpharmacological interventions (unspecified)",
+    "nonpharmacological treatment",
+    "norvir (ritonavir)",
+    "ntfactor (lipid replacement therapy with antioxidants)",
+    "nucca atlas correction",
+    "nurse-delivered nonpharmacologic intervention",
+    "nutraceuticals with anti-oxidative and nitrosative stress effects (l-carnitine, coenzyme q10, taurine, lipoic acid, curcumine, quercitine, n-acetyl-cysteine, zinc, glutamine)",
+    "nutritional supplements (unspecified)",
+    "occupational therapy inpatient programme",
+    "occupational therapy programme",
+    "olanzapine and aripiprazole",
+    "olive extract",
+    "ondansetron",
+    "online support groups",
+    "online symptom management program",
+    "oral colostrum macrophage-activating factor (maf)",
+    "oral hydrocortisone",
+    "osteopathic manipulative treatment with shoulder exercises",
+    "osteopathic treatment",
+    "otolith repositioning maneuvers",
+    "outpatient post-covid rehabilitation",
+    "oxygen-ozone insufflations and probiotics",
+    "ozone therapy",
+    "pacing",
+    "pacing intervention",
+    "pacing self-management",
+    "pacing self-management strategy",
+    "pain neuroscience education",
+    "pain physiology education",
+    "paracetamol",
+    "participatory action research",
+    "patient education",
+    "pc (homeopathic remedy for cfs)",
+    "peer-facilitated group therapy",
+    "periodontal treatment",
+    "personalized lifestyle advice",
+    "personalized rehabilitation program",
+    "phenelzine",
+    "phosphoglycolipids with coenzyme q10 and nadh",
+    "physical reconditioning programme",
+    "physiotherapy",
+    "polio vaccination",
+    "poly (i): poly (c12u) (ampligen)",
+    "poly(i)-poly(c12u)",
+    "polynutrient supplement",
+    "polysomnography",
+    "porcine liver extract",
+    "porcine serum polypeptide extract (recovery factors\u00ae)",
+    "potassium arsenite 0.5%",
+    "powerlifting exercises (back squat, bench press, deadlift)",
+    "pragmatic rehabilitation and supportive listening",
+    "prednisolone",
+    "prednisone",
+    "pressure-controlled manual therapy",
+    "prolong life with nine turn method (qigong)",
+    "prolong life with nine turn method (yan nian jiu zhuan) qigong",
+    "propranolol",
+    "proprioception-based treatment (multimodal inpatient program)",
+    "psychoanalytic psychotherapy",
+    "psychological and behavioral intervention",
+    "psychosocial intervention",
+    "psychostimulants",
+    "psychotherapy",
+    "pure oxygen",
+    "qi therapy (external qigong)",
+    "qigong (prolong life with nine turn method)",
+    "qigong exercise (prolong life with nine turn method)",
+    "qiye shen'an pian combined with glutathione and vitamin b1",
+    "recombinant interferon \u03b12b",
+    "rehabilitation approach",
+    "rehabilitation program",
+    "rehabilitation programme",
+    "rehabilitation sport and functional training",
+    "rehabilitation therapies",
+    "remdesivir and nirmaltrelvir/ritonavir",
+    "ren-shen-yang-rong-tang",
+    "repetitive transcranial magnetic stimulation",
+    "residential rehabilitation course in self-directed illness management",
+    "rhodiola rosea (rhodiolan\u00ae 200)",
+    "rintatolimid and galantamine",
+    "robuvit (quercus robur extract)",
+    "robuvit (quercus robur oak extract)",
+    "s-citalopram",
+    "salmeterol xinafoate and xanomeline",
+    "sarcodon imbricatus",
+    "schisandra chinensis polysaccharide",
+    "seated isometric yoga",
+    "selegiline",
+    "selenium",
+    "self-confrontation method",
+    "self-management intervention",
+    "self-management programme",
+    "self-management training",
+    "sertraline",
+    "shengyang sanhuo decoction",
+    "shenmai injection",
+    "shosaikota",
+    "sipjeondaebo-tang",
+    "sitting isometric yoga",
+    "social robot",
+    "sodium chloride",
+    "sodium oxybate",
+    "solriamfetol",
+    "specialist cognitive behavioral therapy and graded exercise therapy",
+    "spilanthes oleracea extract",
+    "spironolactone",
+    "sports training",
+    "srl 172",
+    "staphylococcus toxoid",
+    "staphylococcus toxoid (staphypan berna)",
+    "staphylococcus vaccine",
+    "staphypan",
+    "staphypan berna",
+    "stress management intervention",
+    "structural integration",
+    "subcutaneous immunoglobulin",
+    "subcutaneous immunoglobulin (s.c. igg)",
+    "submaximal aerobic exercise with mechanical vibrations (galileo 2000)",
+    "succinic acid electrophoresis, reflexo-segmental peloidotherapy, polyoxidonium injections",
+    "sumatriptan",
+    "surgical venous decompression",
+    "symptomatic treatment",
+    "synbiotic (gasteel plus)",
+    "synbiotic mixture (l. rhamnosus dsm 32550, l. plantarum dsm 34532, b. lactis dsm 32269, b. longum dsm 32946, fructooligosaccharides, zinc)",
+    "synchronize + mediterranean diet intervention",
+    "synergistic off-label treatment (spironolactone, colchicine, low-dose naltrexone, multivitamins)",
+    "tai chi",
+    "tai chi chuan",
+    "tai chi exercise",
+    "tele-rehabilitation",
+    "telephone-based guided self-help (cognitive-behavioural)",
+    "therapeutic apheresis",
+    "therapeutic hyperthermia",
+    "therapeutic intervention (caring)",
+    "therapeutic plasma exchange",
+    "thimerosal",
+    "thoracic outlet syndrome surgery (rib resection, neurolysis, scalenectomy)",
+    "thoracic rotational movement (physiotherapy)",
+    "thymic protein a",
+    "topical nasal corticosteroids",
+    "topiramate",
+    "traditional korean medicine",
+    "traditional korean medicine (herbal medicine, acupuncture, moxibustion)",
+    "transcranial magnetic stimulation and transcranial direct current stimulation",
+    "transcutaneous electrical acupoint stimulation (teas)",
+    "transcutaneous vagus nerve stimulation",
+    "transfer factor",
+    "transfer factor (immodin)",
+    "transluminal balloon angioplasty",
+    "trivalent influenza vaccine (tiv)",
+    "tropisetron and ondansetron",
+    "tube feeding",
+    "tuina scraping and stepping technique",
+    "ubiquinol-10",
+    "valacyclovir and/or valganciclovir",
+    "vasoactive intestinal peptide (vip) replacement therapy",
+    "venous sinus stenting",
+    "videoconferencing-delivered therapy",
+    "vildagliptin and saxagliptin",
+    "vilon, epitalon, cortagen, derinat",
+    "visible mobile application (visible plus)",
+    "vitamin b12 and folic acid",
+    "vitamin b12 nasal drops",
+    "vitamin c infusion",
+    "vitamin c infusion with dehydroepiandrosterone",
+    "vitamin c, vitamin e, and eicosapentanoic acid",
+    "vitamin d3",
+    "vitamins and minerals mixture",
+    "vortioxetine",
+    "walking exercise with intensity and duration limits",
+    "walking program",
+    "waon therapy",
+    "waon therapy (far-infrared dry sauna)",
+    "warm acupuncture",
+    "warm water immersion",
+    "warming needle moxibustion",
+    "wasabi extract containing 6-msitc",
+    "water-filtered infrared-a (wira) irradiation",
+    "waterfall forest environment exposure",
+    "wellness intervention",
+    "whee (wholistic hybrid derived from emdr and eft)",
+    "whole body cryotherapy with static stretching",
+    "whole body periodic acceleration",
+    "whole-body cryotherapy and static stretching",
+    "whole-body cryotherapy with static-stretching exercises",
+    "whole-body hyperthermia",
+    "yang-supporting cupping combined with wheat-grain moxibustion",
+    "yeast beta-glucan with multivitamins",
+    "yijinjing qigong",
+    "yoga",
+    "yoga-based lifestyle intervention",
+    "\u03b2-glucan sizofiran"
+  ],
+  "agent_named_total": 1048,
+  "agent_distinct": 708
+}

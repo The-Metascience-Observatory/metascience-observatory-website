@@ -22,6 +22,10 @@ const reviews: ReviewMeta[] = [
     href: "/birds-eye-reviews/antiviral-nasal-sprays",
     title: "Antiviral Nasal Sprays",
   },
+  {
+    href: "/birds-eye-reviews/restless-legs-syndrome",
+    title: "Restless Legs Syndrome",
+  },
 ];
 
 export default function BirdsEyeReviewsPage() {

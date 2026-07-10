@@ -1,3 +1,5 @@
+import type { Segment } from "@/components/BreakdownChart";
+import type { HoverTrial } from "@/components/BreakdownChart";
 import type {
   InterventionBar,
   SymptomBar,
@@ -9,8 +11,25 @@ import type {
   LcDefinitionBin,
   SummaryStats,
   TrialMeta,
+  TrialTableRow,
 } from "./types";
 import { countDistinctTrials } from "./facets";
+
+// ── Verdict segments (shared with antiviral/RLS) ─────────────────────
+/** Outcome-direction segments used in breakdown charts for all dashboards. */
+export const VERDICT_SEGMENTS: Segment[] = [
+  { key: "favors_treatment", label: "Favors treatment", color: "#16a34a" },
+  { key: "favors_control", label: "Favors control", color: "#dc2626" },
+  { key: "mixed", label: "Mixed", color: "#fdba74" },
+  { key: "no_difference", label: "No significant difference", color: "#94a3b8" },
+  { key: "inconclusive", label: "No directional verdict (uncontrolled / underpowered)", color: "#cbd5e1" },
+  { key: "unknown", label: "Result unknown", color: "#e2e8f0" },
+];
+
+/** In the category-grouped "Trials by Intervention" list, an intervention with
+ *  MORE than this many trials spans all columns (so its long row of result
+ *  rectangles has room to lay out flat). Less-studied ones flow in the 3-col grid. */
+export const INTERVENTION_WIDE_MIN_TRIALS = 12;
 
 // ── Shared constants ─────────────────────────────────────────────────
 
@@ -39,6 +58,55 @@ export function getPromiseScoreColors(score: number): { bg: string; text: string
   if (score >= 0.6) return { bg: "#22c55e20", text: "#16a34a" };
   if (score >= 0.3) return { bg: "#f59e0b20", text: "#d97706" };
   return { bg: "#94a3b820", text: "#64748b" };
+}
+
+// ── Intervention verdict breakdown (chart + tail) ────────────────────
+
+export interface InterventionVerdictData {
+  /** Verdict-count bucket keyed by canonical intervention name. */
+  byNameVerdicts: Record<string, Record<string, number>>;
+  /** Per-intervention trial lists for the hover tooltip. */
+  trialsByName: Record<string, HoverTrial[]>;
+  /** Dominant intervention category for each canonical intervention name. */
+  interventionCategoryOf: Record<string, string>;
+}
+
+/** Zeroed verdict-count bucket keyed by VERDICT_SEGMENTS keys (one place to edit). */
+function emptyVerdicts(): Record<string, number> {
+  return { favors_treatment: 0, favors_control: 0, no_difference: 0, mixed: 0, inconclusive: 0, unknown: 0 };
+}
+
+/** Build the "Trials by Intervention" chart/tail inputs from a list of table
+ *  rows. Mirrors the server-side build in page.tsx so the chart counts match the
+ *  table's intervention filter exactly. Recomputed client-side from the FILTERED
+ *  rows so the chart reacts to the dashboard's top-level filters (LC definition,
+ *  trial type, intervention). A trial contributes its verdict to EACH of its
+ *  distinct canonical intervention names. */
+export function interventionVerdictsFromRows(rows: TrialTableRow[]): InterventionVerdictData {
+  const byNameVerdicts: Record<string, Record<string, number>> = {};
+  const trialsByName: Record<string, HoverTrial[]> = {};
+  const nameCategory: Record<string, Record<string, number>> = {}; // name -> cat -> count
+  for (const r of rows) {
+    const verdict = r.verdict;
+    const label = r.first_author ? `${r.first_author} et al.` : "";
+    for (const iv of r.interventions) {
+      const name = iv.name || "unspecified";
+      const bucket = (byNameVerdicts[name] ??= emptyVerdicts());
+      bucket[verdict] = (bucket[verdict] ?? 0) + 1;
+      (trialsByName[name] ??= []).push({
+        doi: r.paper_id, label, title: r.title, year: r.year, journal: r.journal,
+        n: r.n_randomized, design: r.design_type, phase: null, verdict,
+        note: r.verdict_rationale || undefined,
+      });
+      const cc = (nameCategory[name] ??= {});
+      cc[iv.category || "unknown"] = (cc[iv.category || "unknown"] ?? 0) + 1;
+    }
+  }
+  const interventionCategoryOf: Record<string, string> = {};
+  for (const [name, cats] of Object.entries(nameCategory)) {
+    interventionCategoryOf[name] = Object.entries(cats).sort((a, b) => b[1] - a[1])[0][0];
+  }
+  return { byNameVerdicts, trialsByName, interventionCategoryOf };
 }
 
 // ── Shared aggregation ───────────────────────────────────────────────
