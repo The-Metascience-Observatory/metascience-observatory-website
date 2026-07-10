@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "NODE_OPTIONS='--max-old-space-size=8192' next dev",
+    "dev:safe": "bash scripts/with-dropbox-paused.sh npm run dev",
     "build": "next build",
+    "build:safe": "bash scripts/with-dropbox-paused.sh npm run build",
     "start": "next start",
     "lint": "next lint"
   },

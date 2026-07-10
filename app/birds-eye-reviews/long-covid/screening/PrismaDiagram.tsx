@@ -206,26 +206,26 @@ export function PrismaDiagram({ counts }: { counts: PrismaCounts }) {
           excluded={counts.not_retrieved > 0 ? { title: "not retrieved", n: counts.not_retrieved } : undefined}
         />
         <DownArrow />
-        <StageRow
-          title="Full-text articles retrieved and screened"
-          n={counts.retrieved}
-          align="start"
-          excluded={{
-            title: "excluded at eligibility screening",
-            n: counts.excluded_at_eligibility,
-            reasons,
-          }}
-        />
-        <DownArrow />
-        <StageRow
-          title="Eligible — treatment studies assessed for extraction"
-          n={counts.eligible}
-          excluded={
-            counts.eligible - counts.extracted_total > 0
-              ? { title: "not extracted (no usable full text / failed extraction)", n: counts.eligible - counts.extracted_total }
-              : undefined
-          }
-        />
+        {/* "Retrieved" + "Eligible" share one grid so the connector spine in the
+            left column stretches to fill the height of the tall eligibility-exclusion
+            box on the right, keeping both main boxes vertically connected. */}
+        <div className="grid md:grid-cols-2 gap-3 md:gap-0 items-start">
+          <div className="flex flex-col self-stretch">
+            <MainBox title="Full-text articles retrieved and screened" n={counts.retrieved} />
+            <div className="flex flex-col items-center flex-1 text-foreground/30">
+              <div className="w-px flex-1 bg-foreground/25 min-h-8" />
+              <ArrowDown size={18} className="-mt-2" />
+            </div>
+            <MainBox title="Eligible — treatment studies assessed for extraction" n={counts.eligible} />
+          </div>
+          <div className="md:pr-2">
+            <ExcludedBox
+              title="excluded at eligibility screening"
+              n={counts.excluded_at_eligibility}
+              reasons={reasons}
+            />
+          </div>
+        </div>
         <DownArrow />
         <StageRow
           title="Full-text data extracted"

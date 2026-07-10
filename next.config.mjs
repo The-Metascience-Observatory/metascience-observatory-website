@@ -2,8 +2,10 @@ import path from "path";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Put build artifacts outside Dropbox to avoid sync race conditions (local only — Vercel uses default .next)
-  distDir: process.env.VERCEL ? ".next" : "/home/dan/.next-metascience",
+  // Default .next inside the project. Build artifacts must NOT live outside the project root
+  // or Node can't resolve node_modules from the build worker (react/jsx-runtime not found).
+  // The Dropbox sync-race this used to work around is avoided by pausing Dropbox during builds
+  // (see the npm prebuild/postbuild scripts in package.json).
   reactStrictMode: true,
   allowedDevOrigins: ["10.0.0.16"],
   experimental: {

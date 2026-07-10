@@ -43,3 +43,6 @@ tmp*
 */*/__pycache__/*
 
 /data/backup
+
+# Dropbox sync conflict files (never commit these)
+*conflicted copy*

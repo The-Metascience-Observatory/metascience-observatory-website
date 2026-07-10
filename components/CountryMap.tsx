@@ -49,9 +49,12 @@ const REVERSE_COUNTRY_MAPPING: Record<string, string> = Object.fromEntries(
 export function CountryMap({
   allCountries,
   onCountryClick,
+  selectedCountries,
 }: {
   allCountries: CountryCount[];
   onCountryClick?: (country: string) => void;
+  /** Data-names of currently-selected countries; their polygons are highlighted. */
+  selectedCountries?: string[];
 }) {
   const [tooltip, setTooltip] = useState<{ name: string; count: number; x: number; y: number } | null>(null);
 
@@ -66,6 +69,12 @@ export function CountryMap({
     }
     return m;
   }, [allCountries]);
+
+  // Selected data-names mapped to geo-polygon names, for highlight lookup.
+  const selectedGeoNames = useMemo(
+    () => new Set((selectedCountries ?? []).map((c) => COUNTRY_NAME_MAPPING[c] ?? c)),
+    [selectedCountries]
+  );
 
   const maxCount = useMemo(() => Math.max(...countByName.values(), 1), [countByName]);
 
@@ -93,13 +102,14 @@ export function CountryMap({
                 {geographies.map((geo) => {
                   const name = geo.properties.name;
                   const count = countByName.get(name) ?? 0;
+                  const isSelected = selectedGeoNames.has(name);
                   return (
                     <Geography
                       key={geo.rsmKey}
                       geography={geo}
-                      fill={getColor(count)}
-                      stroke="#fff"
-                      strokeWidth={0.5}
+                      fill={isSelected ? "#1d4ed8" : getColor(count)}
+                      stroke={isSelected ? "#1e3a8a" : "#fff"}
+                      strokeWidth={isSelected ? 1 : 0.5}
                       onMouseEnter={(e) => {
                         if (count > 0) {
                           const rect = (e.target as SVGElement).closest("svg")!.getBoundingClientRect();

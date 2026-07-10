@@ -44,10 +44,12 @@ const formatPValue = (p: number): string => {
   return p.toFixed(2);
 };
 
+// Keys must match normDesignType() output (lowercased, hyphens → underscores),
+// otherwise the lookup misses and formatCategory turns "rct" into "Rct".
 const DESIGN_TYPE_LABELS: Record<string, string> = {
-  RCT: "RCT",
+  rct: "RCT",
   crossover: "Crossover RCT",
-  "quasi-experimental": "Quasi-Experimental",
+  quasi_experimental: "Quasi-Experimental",
   prospective_cohort: "Prospective Cohort",
   retrospective_cohort: "Retrospective Cohort",
   before_after: "Before–After",
@@ -109,9 +111,10 @@ export function LongCovidDashboard(props: DashboardProps) {
     scrollToTable();
   };
 
-  // Long Covid definition filter (top-level dashboard filter)
+  // Long Covid definition filter (top-level dashboard filter). Default to showing
+  // only trials that meet the WHO definition (≥12 weeks since infection).
   const [lcDefWho, setLcDefWho] = useState(true);
-  const [lcDefBelow, setLcDefBelow] = useState(true);
+  const [lcDefBelow, setLcDefBelow] = useState(false);
 
   const lcDefFilteredMetas = useMemo(() => {
     if (lcDefWho && lcDefBelow) return props.trialMetas;
@@ -144,8 +147,9 @@ export function LongCovidDashboard(props: DashboardProps) {
     [designTypeCounts]
   );
 
+  // Default to the two randomized designs only (values match normDesignType output).
   const [selectedDesignTypes, setSelectedDesignTypes] = useState<Set<string>>(
-    () => new Set(props.trialMetas.map((m) => m.design_type || "unknown"))
+    () => new Set(["rct", "crossover"])
   );
 
   const toggleDesignType = (dt: string) => {
@@ -240,7 +244,7 @@ export function LongCovidDashboard(props: DashboardProps) {
     if (symptom) setSymptomDomainFilter(symptom);
     // Top-level filters
     if (sp.get("who") === "0") setLcDefWho(false);
-    if (sp.get("below") === "0") setLcDefBelow(false);
+    if (sp.get("below") === "1") setLcDefBelow(true);
     const types = sp.get("types");
     if (types) setSelectedDesignTypes(new Set(types.split(",").filter(Boolean)));
 
@@ -266,7 +270,7 @@ export function LongCovidDashboard(props: DashboardProps) {
     if (blindingFilter) params.set("blinding", blindingFilter);
     if (symptomDomainFilter) params.set("symptom", symptomDomainFilter);
     if (!lcDefWho) params.set("who", "0");
-    if (!lcDefBelow) params.set("below", "0");
+    if (lcDefBelow) params.set("below", "1");
     const typesArr = [...selectedDesignTypes].sort();
     if (selectedDesignTypes.size < allDesignTypes.size) {
       params.set("types", typesArr.join(","));

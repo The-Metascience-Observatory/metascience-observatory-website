@@ -53,6 +53,15 @@ export function ScreeningClientWrapper({
         totalTreatment={totalTreatment}
         onBarClick={handleBarClick}
       />
+      <div className="flex justify-end mb-2">
+        <a
+          href="/api/screening/download"
+          download="trial_screening.csv"
+          className="text-blue-600 hover:text-blue-700 text-sm"
+        >
+          Download CSV
+        </a>
+      </div>
       <ScreeningTable
         key={filterKey}
         initialRows={initialRows}

@@ -76,6 +76,12 @@ function loadForestGroups(cites: Map<string, Citation>): { groups: ForestGroup[]
       min_trials: number;
       groups: ForestGroup[];
     };
+    // Arm-split points carry "<doi>#<arm>"; resolve to base DOI for the citation
+    // label + outbound link. Applied to flat trials AND cross-compound subgroups.
+    const enrich = (t: ForestGroup["trials"][number]) => {
+      const base = (t.paper_id ?? "").split("#")[0];
+      return { ...t, doi: base, label: labelFor(t.paper_id, cites.get(base), t.year ?? null) };
+    };
     const groups = (raw.groups ?? []).map((g) => ({
       ...g,
       // Zanamivir is an influenza-specific antiviral; all its symptom-duration
@@ -84,16 +90,8 @@ function loadForestGroups(cites: Map<string, Citation>): { groups: ForestGroup[]
         g.ingredient === "zanamivir" && g.outcome_domain === "symptom_duration"
           ? "Influenza symptom duration"
           : undefined,
-      trials: g.trials.map((t) => {
-        // Arm-split points carry "<doi>#<arm>"; resolve to base DOI for the
-        // citation label and the outbound link.
-        const base = (t.paper_id ?? "").split("#")[0];
-        return {
-          ...t,
-          doi: base,
-          label: labelFor(t.paper_id, cites.get(base), t.year ?? null),
-        };
-      }),
+      trials: (g.trials ?? []).map(enrich),
+      subgroups: g.subgroups?.map((s) => ({ ...s, trials: (s.trials ?? []).map(enrich) })),
     }));
     return { groups, minTrials: raw.min_trials ?? 3 };
   } catch (e) {

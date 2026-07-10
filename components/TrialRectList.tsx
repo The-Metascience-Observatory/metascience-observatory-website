@@ -30,13 +30,16 @@ export function TrialRectList({
   segments: Segment[];
   hoverTrials?: Record<string, HoverTrial[]>;
   onItemClick?: (key: string) => void;
-  columns?: 2 | 3;
+  columns?: 1 | 2 | 3;
 }) {
   const { openKey, anchor, show, scheduleHide, cancelHide } = useHoverPanel();
 
   // CSS multi-column (not grid) so items flow top-to-bottom down the first column,
-  // then the next — i.e. column-major fill. `wide` items span all columns.
-  const colCls = columns === 2
+  // then the next — i.e. column-major fill. `columns={1}` is a single full-width
+  // column, used for `wide` items whose long row of rectangles needs the full width.
+  const colCls = columns === 1
+    ? "columns-1 gap-x-5"
+    : columns === 2
     ? "columns-1 sm:columns-2 gap-x-5"
     : "columns-1 sm:columns-2 lg:columns-3 gap-x-5";
 

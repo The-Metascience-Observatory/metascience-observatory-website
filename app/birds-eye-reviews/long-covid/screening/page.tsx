@@ -124,20 +124,11 @@ export default function ScreeningPage() {
           </Link>
         </div>
 
-        <h1 className="font-clarendon font-bold text-3xl mb-2">
+        <h1 className="font-clarendon font-bold text-3xl mb-6">
           Trial Screening
         </h1>
-        <p className="text-foreground/70 text-lg mb-6">
-          {allRows.length.toLocaleString()} articles on Long Covid were found for the Long Covid Bird&apos;s Eye Review.
-          {" "}
-          <a
-            href="/api/screening/download"
-            download="trial_screening.csv"
-            className="text-blue-600 hover:text-blue-700 text-sm"
-          >
-            Download CSV
-          </a>
-        </p>
+
+        {prisma && <PrismaDiagram counts={prisma} />}
 
         {prisma && <PrismaDiagram counts={prisma} />}
 

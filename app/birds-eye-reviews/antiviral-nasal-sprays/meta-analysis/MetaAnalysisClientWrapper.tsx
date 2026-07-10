@@ -19,11 +19,22 @@ export function MetaAnalysisClientWrapper({
 }) {
   const [ingredient, setIngredient] = useState<string | undefined>(undefined);
 
-  // Ingredient options: every ingredient with at least one poolable group, by volume.
+  // Cross-compound (all-ingredient) standardized plots — the headline "compare the
+  // compounds" figures. Ordered symptom duration, then viral load, then any others.
+  const crossGroups = useMemo(() => {
+    const order = ["symptom_duration", "viral_load"];
+    return groups
+      .filter((g) => g.cross_ingredient && g.n_trials >= 2)
+      .sort((a, b) =>
+        (order.indexOf(a.outcome_domain) + 1 || 99) - (order.indexOf(b.outcome_domain) + 1 || 99) ||
+        b.n_trials - a.n_trials);
+  }, [groups]);
+
+  // Ingredient options: every (non-cross) ingredient with a poolable group, by volume.
   const ingredientOptions = useMemo(() => {
     const weight = new Map<string, number>();
     for (const g of groups) {
-      if (g.n_trials < 2) continue;
+      if (g.n_trials < 2 || g.cross_ingredient) continue;
       weight.set(g.ingredient, (weight.get(g.ingredient) ?? 0) + g.n_trials);
     }
     return [...weight.entries()]
@@ -31,11 +42,11 @@ export function MetaAnalysisClientWrapper({
       .map(([key]) => key);
   }, [groups]);
 
-  // Plots: groups with >=2 trials, optionally filtered by ingredient. Clustered by
-  // ingredient (most-studied first), then outcome domain; within a domain the unified
-  // standardized (SMD) plot leads, followed by the per-measure plots.
+  // Per-compound plots: groups with >=2 trials, optionally filtered by ingredient.
+  // Clustered by ingredient (most-studied first), then outcome domain; within a
+  // domain the standardized (SMD) plot leads, followed by the per-measure plots.
   const shownGroups = useMemo(() => {
-    let g = groups.filter((x) => x.n_trials >= 2);
+    let g = groups.filter((x) => x.n_trials >= 2 && !x.cross_ingredient);
     if (ingredient) g = g.filter((x) => x.ingredient === ingredient);
     const ingWeight = new Map<string, number>();
     for (const x of g) ingWeight.set(x.ingredient, (ingWeight.get(x.ingredient) ?? 0) + x.n_trials);
@@ -54,12 +65,30 @@ export function MetaAnalysisClientWrapper({
   return (
     <>
       <p className="text-sm text-foreground/60 mb-4 max-w-3xl">
-        One forest plot per ingredient × outcome × effect measure with ≥2 trials. A pooled
-        random-effects diamond (DerSimonian–Laird) is shown when {minTrials}+ trials report the
-        same comparable estimate. A standardized (SMD) plot — combining continuous and binary
-        outcomes onto one Cohen&apos;s-d scale — leads each ingredient×outcome group.
+        The top <strong>&ldquo;across all compounds&rdquo;</strong> plots compare every nasal spray on one
+        outcome, standardized to Cohen&apos;s d (positive = favors treatment) so different scales and units
+        pool together; each compound is a subgroup with its own subtotal. Below, one forest plot per
+        ingredient × outcome × effect measure (≥2 trials), with a standardized plot leading each
+        ingredient×outcome group. Pooled diamonds are random-effects (DerSimonian–Laird).
         {" "}({pooledCount} pooled.)
       </p>
+
+      {crossGroups.length > 0 && (
+        <section className="mb-8">
+          <h2 className="font-clarendon font-bold text-xl mb-1">Across all compounds</h2>
+          <p className="text-xs text-foreground/50 mb-3 max-w-3xl">
+            Exploratory class-level pools — antivirals differ, so heterogeneity is high; read the
+            prediction interval, per-compound subtotals, and the not-poolable appendix, not just the diamond.
+          </p>
+          {crossGroups.map((g, i) => (
+            <ForestPlot key={`cross-${g.outcome_domain}-${i}`} group={g} />
+          ))}
+        </section>
+      )}
+
+      {shownGroups.length > 0 && (
+        <h2 className="font-clarendon font-bold text-xl mb-3">By compound</h2>
+      )}
 
       {ingredientOptions.length > 0 && (
         <div className="mb-6">

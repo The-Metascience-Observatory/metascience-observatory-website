@@ -161,6 +161,18 @@ function canonicalAgent(name: string): string {
 }
 
 /** trial_extractions.jsonl -> one TrialRow per extracted trial. */
+/** Secondary POOLED/INTEGRATED analyses of MULTIPLE already-eligible trials
+ *  (double-count participants — not primary trials). Mis-classified as RCTs by
+ *  the extraction; dropped here so the dashboard shows one row per primary trial.
+ *  (Single-trial post-hoc analyses are kept — they may be a trial's only RLS report.) */
+const POOLED_ANALYSIS_EXCLUDED = new Set<string>([
+  "10.3109/07853890.2015.1025825", // "Pooled analyses from 3 trials of gabapentin enacarbil"
+  "10.1016/j.sleep.2021.07.004",   // "post hoc pooled analysis of two RCTs" (gabapentin enacarbil)
+  "10.1186/s40734-015-0018-3",     // "pooled post-hoc analysis of three RCTs" (GEn × prior DA)
+  "10.2147/jprls.s40354",          // "pooled analysis of two RCTs" (vibrating pads)
+  "10.2147/jprls.s40804",          // "retrospective integrated analysis of two RCTs" (GEn)
+]);
+
 function loadTrials(cites: Map<string, Citation>, indications: Map<string, string>, verdicts: Map<string, Verdict>): TrialRow[] {
   const fp = dataPath("trial_extractions.jsonl");
   if (!fs.existsSync(fp)) return [];
@@ -172,6 +184,7 @@ function loadTrials(cites: Map<string, Citation>, indications: Map<string, strin
     try { r = JSON.parse(s); } catch { continue; }
     if (r._status && r._status !== "ok") continue;
     const doi = String(r.paper_id ?? "");
+    if (POOLED_ANALYSIS_EXCLUDED.has(doi.split("#")[0])) continue;
     // Arm-split records have paper_id "<doi>#<arm>"; resolve to the base DOI for
     // citation / verdict / indication / link lookups (those are keyed by DOI).
     const baseDoi = doi.split("#")[0];
@@ -255,6 +268,8 @@ export default function ResultsPage() {
   // The meta-analysis lives on a separate opt-in sub-page; only link to it when
   // the pipeline actually generated meta_analysis.json (off by default).
   const hasMetaAnalysis = fs.existsSync(dataPath("meta_analysis.json"));
+  // Likewise the (opt-in) network meta-analysis sub-page.
+  const hasNMA = fs.existsSync(dataPath("network_meta_analysis.json"));
 
   return (
     <>
@@ -282,6 +297,14 @@ export default function ResultsPage() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
             >
               View meta-analyses &rarr;
+            </Link>
+          )}
+          {hasNMA && (
+            <Link
+              href="/birds-eye-reviews/restless-legs-syndrome/network-meta-analysis"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
+            >
+              View network meta-analysis &rarr;
             </Link>
           )}
         </div>

@@ -9,9 +9,9 @@ import { parseCSV } from "../screening/csv-utils";
 import type { TrialTableRow } from "../types";
 
 export const metadata = {
-  title: "Long Covid Prevention Trials (prototype) | Bird's Eye Reviews | The Metascience Observatory",
+  title: "Long Covid Prevention Trials | Bird's Eye Reviews | The Metascience Observatory",
   description:
-    "Prototype dashboard of trials testing whether interventions given around acute COVID-19 prevent Long Covid (PASC).",
+    "Trials testing whether interventions given around acute COVID-19 prevent Long Covid (PASC).",
 };
 
 const DIR = "data/birds_eye_reviews/long_covid";
@@ -104,8 +104,7 @@ function loadData() {
     const meta = doiMeta[pid] ?? {};
     const firstAuthor = (meta.first_author || String(r.authors ?? "").split(/[;]| and /)[0] || "").trim();
     const year = r.year ?? meta.year ?? null;
-    const ref = firstAuthor ? `${firstAuthor} et al.${year ? ` ${year}` : ""}` : (year ? String(year) : pid);
-    const journal = (meta.journal || r.journal || "").trim();
+    const journal = (r.journal || meta.journal || "").trim();
     const n = r.sample_sizes?.n_randomized_total ?? r.sample_sizes?.n_enrolled_total ?? null;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const primary = (r.outcomes ?? []).find((o: any) => o.is_primary) ?? (r.outcomes ?? [])[0];
@@ -115,7 +114,13 @@ function loadData() {
     rows.push({
       paper_id: pid,
       url: String(r.url || `https://doi.org/${pid}`),
-      ref, title: String(r.title ?? ""), journal,
+      authors: String(r.authors ?? "").trim(),
+      title: String(r.title ?? ""),
+      journal,
+      year,
+      volume: String(r.volume ?? "").trim(),
+      issue: String(r.issue ?? "").trim(),
+      pages: String(r.pages ?? "").trim(),
       design: fmtDesign(sd.design_type ?? ""),
       n,
       countries: (sd.countries ?? []) as string[],
@@ -133,42 +138,11 @@ function loadData() {
     });
   }
 
-  // Summary stats
-  const interventions = new Set<string>();
-  const countries = new Set<string>();
-  let participants = 0, nRct = 0;
-  for (const row of rows) {
-    row.interventionNames.forEach((n) => interventions.add(n));
-    row.countries.forEach((c) => countries.add(c));
-    if (row.n) participants += row.n;
-    if (/rct/i.test(row.design)) nRct++;
-  }
-
   const { byNameVerdicts, trialsByName } = interventionVerdictsFromRows(chartRows as TrialTableRow[]);
 
-  rows.sort((a, b) => (b.n ?? 0) - (a.n ?? 0) || a.ref.localeCompare(b.ref));
+  rows.sort((a, b) => (b.n ?? 0) - (a.n ?? 0) || a.authors.localeCompare(b.authors));
 
-  return {
-    rows,
-    byNameVerdicts,
-    trialsByName,
-    stats: {
-      total: rows.length,
-      participants,
-      interventions: interventions.size,
-      countries: countries.size,
-      pctRct: rows.length ? Math.round((nRct / rows.length) * 100) : 0,
-    },
-  };
-}
-
-function StatCard({ label, value }: { label: string; value: string | number }) {
-  return (
-    <div className="border border-border rounded-lg bg-white p-3">
-      <div className="text-2xl font-bold tabular-nums">{value}</div>
-      <div className="text-xs text-foreground/60 mt-0.5">{label}</div>
-    </div>
-  );
+  return { rows, byNameVerdicts, trialsByName };
 }
 
 export default function PreventionPage() {
@@ -183,15 +157,10 @@ export default function PreventionPage() {
             &larr; Long Covid treatment trials
           </Link>
 
-          <div className="flex flex-wrap items-center gap-2 mb-1">
-            <h1 className="font-clarendon font-bold text-3xl">Long Covid — Prevention Trials</h1>
-            <span className="text-[11px] uppercase tracking-wide font-semibold text-amber-700 bg-amber-100 rounded px-1.5 py-0.5">Prototype</span>
-          </div>
+          <h1 className="font-clarendon font-bold text-3xl mb-1">Long Covid — Prevention Trials</h1>
           <p className="text-sm text-foreground/70 max-w-3xl mb-6">
-            These trials test whether an intervention given <em>around the time of acute COVID-19</em> (or before
-            Long Covid onset) <strong>prevents</strong> Long Covid / PASC — a different question from the main
-            dashboard, which is about <em>treating</em> people who already have Long Covid. Records are routed here
-            automatically by the indication classifier (<code>classify_intervention_indication.py</code>).
+            Note: this listing covers many trials we picked up while searching for Long COVID research, but is
+            not comprehensive.
           </p>
 
           {!data || data.rows.length === 0 ? (
@@ -201,14 +170,6 @@ export default function PreventionPage() {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-8">
-                <StatCard label="Prevention trials" value={data.stats.total} />
-                <StatCard label="Participants" value={data.stats.participants.toLocaleString()} />
-                <StatCard label="Interventions" value={data.stats.interventions} />
-                <StatCard label="Countries" value={data.stats.countries} />
-                <StatCard label="Randomized (RCT)" value={`${data.stats.pctRct}%`} />
-              </div>
-
               {Object.keys(data.byNameVerdicts).length > 0 && (
                 <BreakdownChart
                   title="Prevention trials by intervention"
@@ -238,11 +199,18 @@ export default function PreventionPage() {
                   <tbody>
                     {data.rows.map((r) => (
                       <tr key={r.paper_id} className="border-b border-border/50 align-top">
-                        <td className="p-2 whitespace-nowrap">
-                          <a href={r.url} target="_blank" rel="noreferrer" className="text-blue-600 hover:text-blue-700 hover:underline font-medium">
-                            {r.ref}
-                          </a>
-                          {r.journal && <div className="text-xs text-foreground/45 italic max-w-[16rem] truncate">{r.journal}</div>}
+                        <td className="p-2 align-top">
+                          <div className="max-w-[30rem] min-w-[18rem] leading-snug">
+                            <a href={r.url} target="_blank" rel="noreferrer" className="text-blue-600 hover:text-blue-700 hover:underline font-medium">
+                              {r.title || r.paper_id}
+                            </a>
+                            {r.authors && (
+                              <div className="text-xs text-foreground/60 mt-0.5">{r.authors}</div>
+                            )}
+                            {(citationTail(r) || r.year) && (
+                              <div className="text-xs text-foreground/45 italic mt-0.5">{citationTail(r) || String(r.year)}</div>
+                            )}
+                          </div>
                         </td>
                         <td className="p-2">{r.interventionNames.join(", ") || "—"}</td>
                         <td className="p-2 whitespace-nowrap">{r.design}</td>
