@@ -1,0 +1,435 @@
+journal_impact_factors match report - generated 2026-07-14
+CSV: replications_database_2026_07_14_182338.csv
+
+Unique journal names: 1625
+Match tiers: aggressive=136, denylist=12, light=1220, override=16, subtitle+aggressive=2, subtitle+light=28, unmatched=211
+Matched names: 1402 (86.3%)
+Result-bearing rows total: 6200; with a journal: 6102
+  on a matched journal: 5906 (96.8%)
+  on a journal with >=1 exact publication-year IF: 5905 (96.8%)
+Journals emitted: 1402; snapshot year: 2024
+
+External metric coverage (of emitted journals):
+  OpenAlex 2yr_mean_citedness: 1399 (99.8%)
+  SCImago SJR (>=1 year matched): 1308 (93.3%)
+  SCImago rank/quartile/h-index (journals emitted to rank JSON): 1308
+  SJR CSV year range: 1999-2025 (27 files)
+
+Denylisted: 18; overrides: 17
+
+UNMATCHED NAMES (211), sorted by result-bearing row count.
+Add high-count real journals to scripts/journal_if_overrides.json 'overrides';
+add books/preprints/conference venues to 'denylist'.
+  [  16 rows] Personality Disorders and the Five-factor Model of Personality (2nd Ed.).  | near: S&T ;; IV ;; Order
+  [   3 rows] Chinese Journal of Psychology  | near: RNA ;; PS ;; U
+  [   3 rows] Journal of Neuropsychiatry and Clinical Neurosciences  | near: Science ;; Neuroscience ;; Psychiatry and Clinical Neurosciences
+  [   2 rows] Panel Data Research  | near: PA ;; Research ;; AN
+  [   2 rows] Humr
+  [   2 rows] Individual Differences Research  | near: U ;; IV ;; Research
+  [   2 rows] Journal of Child Psychiatry and Psychology  | near: RNA ;; Psychiatry ;; PS
+  [   2 rows] Self Portrait with Gorget Portrait of Rembrandt with a Gorget  | near: AN ;; OR ;; AI
+  [   1 rows] Academy Letters  | near: Academy ;; AcA ;; E
+  [   1 rows] American Economic Journal  | near: RNA ;; U ;; América
+  [   1 rows] Public Policy Brief  | near: U ;; Public ;; Brief
+  [   1 rows] Industrial and Labor Relations Review  | near: U ;; Review ;; AN
+  [   1 rows] Psychotherapy: Theory, Research, Practice, Training  | near: Psychotherapy ;; PS ;; Research
+  [   1 rows] Psychological Monographs: General and Applied  | near: Gene ;; PS ;; AN
+  [   1 rows] Proceedings of the 51st ACM Technical Symposium on Computer Science Education  | near: Science ;; Proceedings ;; Computer
+  [   1 rows] The Science of Giving: Experimental Approaches to the Study of Charity (Eds DM Oppenheimer, CY Olivola)  | near: Science ;; U ;; IV
+  [   1 rows] Motivation, Language Identity and the L2 Self  | near: Language ;; U ;; AGE
+  [   1 rows] Unpublished Pilot Study  | near: U ;; published ;; E
+  [   1 rows] Journal of Experimental Psychology: Learning, Memory  | near: Journal of Experimental Psychology ;; RNA ;; PS
+  [   1 rows] Administration and Policy in Mental Health  | near: Health ;; Administration and Policy in Mental Health and Mental Health Services Research ;; AN
+  [   1 rows] International Symposium on Search Based Software Engineering  | near: RNA ;; U ;; Engineering
+  [   1 rows] Satoshi Village: the Blog of Daniel Himmelstein  | near: AGE ;; AN ;; Log
+  [   1 rows] Eat Weight Disorders  | near: Order ;; OR ;; IG
+  [   1 rows] Handbook of Partial Least Squares: Concepts, Methods and Applications  | near: Methods ;; Hand ;; U
+  [   1 rows] Nurse Education  | near: Nurse Education Today ;; Education ;; Nurse Education in Practice
+  [   1 rows] Journal of the American Medical Informatics Association: JAMIA  | near: RNA ;; Journal of the American Medical Informatics Association ;; AMIA
+  [   1 rows] Language Acquisition by Eye  | near: Language ;; Eye ;; U
+  [   1 rows] Int Congress Series  | near: ESS ;; SERIEs ;; E
+  [   1 rows] Journal of Gerontology: Biological Sciences and Medical Sciences  | near: Science ;; Journal of Gerontology ;; RNA
+  [   1 rows] Journal of the National Cancer Institute  | near: Cancer ;; JNCI Journal of the National Cancer Institute ;; RNA
+  [   1 rows] Vård i Norden  | near: OR ;; Nord ;; E
+  [   1 rows] Journal of the American Medical Director's Association  | near: RNA ;; U ;; América
+  [   1 rows] Human Factors  | near: Proceedings of the Human Factors and Ergonomics Society Annual Meeting ;; Man ;; Human Factors The Journal of the Human Factors and Ergonomics Society
+  [   1 rows] NEI/NCBI dbGAP Database  | near: Database ;; Database ;; Data
+  [   1 rows] Med Sportiva  | near: IV ;; OR ;; Med
+  [   1 rows] Zentralblatt für die Gesamte Neurologie und Psychiatrie  | near: PS ;; U ;; Log
+  [   1 rows] Behavior Analysis in Education  | near: Analysis ;; Education ;; U
+  [   1 rows] Journal of Neurological Sciences  | near: Science ;; Canadian Journal of Neurological Sciences / Journal Canadien des Sciences Neurologiques ;; Neurological Sciences
+  [   1 rows] Pharmacogenetics Genomics  | near: Gene ;; Genetics ;; Genomics
+  [   1 rows] Hum Soc Sci Commun  | near: U ;; Sci ;; Hum
+  [   1 rows] Proceedings of the 15th International Conference on Mining Software Repositories (MSR)  | near: Proceedings ;; RNA ;; Proceedings
+  [   1 rows] Violence Against Women and Children: Mapping the Terrain  | near: Children ;; Violence Against Women ;; Mapping
+  [   1 rows] Journal of Experimental Psychology Learning  | near: Journal of Experimental Psychology ;; Journal of Experimental Psychology Learning Memory and Cognition ;; RNA
+  [   1 rows] Unpublished Doctoral Dissertation  | near: U ;; published ;; OR
+  [   1 rows] Harper & Row  | near: AN ;; Harper & Row eBooks ;; RPER
+  [   1 rows] 27th ACM Conference on Innovation and Technology in Computer Science Education  | near: Science ;; Computer ;; Science Education
+  [   1 rows] Bulletin of the Graduate School of Education  | near: Education ;; U ;; Educatio
+  [   1 rows] Journal of Alzheimer's Disease & Other Dementias  | near: RNA ;; U ;; Dementia
+  [   1 rows] A Contemporary Journal  | near: RNA ;; Tempo ;; U
+  [   1 rows] STEM
+  [   1 rows] American Journal of Medical Genetics Part B  | near: Gene ;; Genetics ;; American Journal of Medical Genetics
+  [   1 rows] Interaction of Biological Systems with Static and ELF Electric and Magnetic Fields  | near: System ;; Systems ;; AN
+  [   1 rows] Presented at CUNY Sentence Processing Conference  | near: Presented at ;; U ;; PROCES
+  [   1 rows] Paper Presented at the Second Biennial Meeting of the Society for Research on Adolescence  | near: Society ;; Presented at ;; PA
+  [   1 rows] Law Enforcement Assistance Administration, U.S. Department of Justice  | near: U ;; PA ;; AN
+  [   1 rows] IEEE/ACM 43rd International Conference on Software Engineering (ICSE)  | near: RNA ;; International Conference on Software Engineering ;; Engineering
+  [   1 rows] American Journal of Physiology  | near: American Journal of Physiology-Legacy Content ;; Physiology ;; RNA
+  [   1 rows] Chas. C. Thomas  | near: S ;; as
+  [   1 rows] Jossey-Bass  | near: Jossey-Bass eBooks ;; JO ;; E
+  [   1 rows] Proceedings of the Royal Society of London, Series B  | near: Proceedings ;; Proceedings of the Royal Society of London ;; Society
+  [   1 rows] Proceedings of the Royal Society B  | near: Proceedings ;; Proceedings of the Royal Society B Biological Sciences ;; Society
+  [   1 rows] Nicotine Tobacco Research  | near: Research ;; Research ;; Arch
+  [   1 rows] Evolutionary Human Behavior  | near: Evolution ;; Man ;; U
+  [   1 rows] Journal of Gerontology: Series B  | near: Journal of Gerontology ;; RNA ;; Gerontology
+  [   1 rows] The Journal of Neuropsychiatry and Clinical Neurosciences  | near: Science ;; Neuroscience ;; Psychiatry and Clinical Neurosciences
+  [   1 rows] European Journal of Pediatric Neurology  | near: Neurology ;; Urology ;; Pediatric Neurology
+  [   1 rows] Behavioural Neuroscience  | near: Science ;; Neuroscience ;; Behaviour
+  [   1 rows] Springer-Verlag  | near: Ring ;; E ;; ER
+  [   1 rows] Open Science Framework  | near: Science ;; Work ;; OR
+  [   1 rows] Acta Paediatrica (Oslo, Norway : 1992)  | near: Acta Paediatrica ;; PA ;; OR
+  [   1 rows] Eye Movements and Vision  | near: Eye ;; AN ;; Vision
+  [   1 rows] Rembrandt by Himself  | near: AN ;; E ;; Self
+  [   1 rows] Routledge & Kegan Paul  | near: U ;; PA ;; AN
+  [   1 rows] Psychotherapy: Theory, Research & Practice  | near: Psychotherapy ;; PS ;; Research
+  [   1 rows] Traumatology  | near: Orthopedics & Traumatology ;; Knee Surgery Sports Traumatology Arthroscopy ;; European Journal of Orthopaedic Surgery & Traumatology
+  [   1 rows] Journal of Air & Waste Management Association  | near: Man ;; Waste Management ;; RNA
+  [   1 rows] Eating Disorders: The Journal of Treatment and Prevention  | near: RNA ;; U ;; Eating Disorders
+  [   1 rows] Barrow Neurological Institute  | near: U ;; Log ;; E
+  [   1 rows] Journal of Intellectual Disability Research: JIDR  | near: RNA ;; Journal of Intellectual Disability Research ;; U
+  [   1 rows] Journal of the International Neuropsychology Society  | near: Society ;; RNA ;; Neuropsychology
+  [   1 rows] The Tell-tale Eye. How Your Eyes Reveal Hidden Thoughts and Emotions  | near: Eye ;; Thought ;; Emotion
+  [   1 rows] Proceedings of the 20th Working Conference on Reverse Engineering  | near: Proceedings ;; Work ;; Proceedings
+  [   1 rows] Institute of Special Education, University of Oslo  | near: University ;; Education ;; U
+  [   1 rows] Journal of Gerontology: Social Sciences  | near: Science ;; Journal of Gerontology ;; RNA
+  [   1 rows] Proceedings of the National Academy of Sciences United States of America  | near: Science ;; Proceedings of the National Academy of Sciences ;; Proceedings
+  [   1 rows] Lancet North Am Ed  | near: AN ;; OR ;; E
+  [   1 rows] Invited Presentation to the Healthcare Financial Management Association CFO Exchange, San Francisco, CA  | near: Man ;; Healthcare ;; Health
+  [   1 rows] Journal of Nursing Administration  | near: Nursing ;; JONA The Journal of Nursing Administration ;; RNA
+  [   1 rows] Revue Suisse de Zoologie; Annales de La Societe Zoologique Suisse et Du Museum D'histoire Naturelle de Geneve  | near: Nature ;; Gene ;; Revue suisse de zoologie
+  [   1 rows] Proceedings of the Royal Society of London B  | near: Proceedings ;; Proceedings of the Royal Society of London ;; Society
+  [   1 rows] 8th IEEE International Software Metrics Symposium  | near: RNA ;; U ;; Symposium
+  [   1 rows] Proceedings of the 38th EUROMICRO Conference on Software Engineering and Advanced Applications (SEAA)  | near: Proceedings ;; Proceedings ;; U
+  [   1 rows] Proceedings of the 5th International Symposium on Empirical Software Engineering  | near: Proceedings ;; RNA ;; Proceedings
+  [   1 rows] Proceedings of the 24th International Conference on Evaluation and Assessment in Software Engineering (EASE)  | near: Proceedings ;; RNA ;; Proceedings
+  [   1 rows] Competing Motivations in Grammar and Usage  | near: U ;; AGE ;; IV
+  [   1 rows] University of Chicago Press  | near: University of Chicago Press eBooks ;; University ;; U
+  [   1 rows] Lexical Ambiguity Resolution  | near: U ;; x ;; IG
+  [   1 rows] Journal of Marriage and the Family  | near: RNA ;; The Family ;; U
+  [   1 rows] International Journal of Positive Behavioural Support  | near: RNA ;; Behaviour ;; U
+  [   1 rows] Agile Processes in Software Engineering and Extreme Programming - Lecture Notes in Business Information Processing  | near: Notes ;; Processes ;; Lecture notes in business information processing
+  [   1 rows] Proceedings of the SIGCHI Conference on Human Factors in Computing Systems (CHI '11)  | near: Proceedings ;; Man ;; System
+  [   1 rows] arXiv  | near: arXiv (Cornell University) ;; EarthArXiv (California Digital Library) ;; IV
+  [   1 rows] Proceedings of the IEEE/ACM 46th International Conference on Software Engineering  | near: Proceedings ;; Proceedings of the IEEE ;; RNA
+  [   1 rows] Advances in Physiology Education  | near: Physiology ;; Education ;; U
+  [   1 rows] Internet J Allied Health Sci Pract  | near: Health ;; RN ;; Sci
+  [   1 rows] Report to the Washington State Lottery  | near: Report ;; Report ;; OR
+  [   1 rows] Oregon Gambling Addiction Treatment Foundation  | near: Addiction ;; U ;; OR
+  [   1 rows] Parenting and Psychopathology  | near: Pathology ;; PS ;; Psychopathology
+  [   1 rows] Medienpsychologie  | near: PS ;; Log ;; Med
+  [   1 rows] Free Press  | near: ESS ;; Free Press eBooks ;; E
+  [   1 rows] Journal of Applied Behaviour Analysis  | near: Analysis ;; RNA ;; Behaviour
+  [   1 rows] Institute of Labor Economics Discussion Paper Series  | near: U ;; PA ;; Economics
+  [   1 rows] J Verb Learn Verb Behav  | near: RN ;; E ;; ER
+  [   1 rows] Child Welfare League of America  | near: U ;; América ;; Child welfare
+  [   1 rows] The Semantic Differential Technique  | near: Man ;; U ;; AN
+  [   1 rows] Professional Development: The International Journal of Continuing Social Work Education  | near: Development ;; Social Work ;; Work
+  [   1 rows] The Eta Sigma Gammtan  | near: AN ;; IG ;; E
+  [   1 rows] Physiological Science  | near: Science ;; The Journal of Physiological Sciences ;; Science
+  [   1 rows] Journal of Neuroradiology = Journal de Neuroradiologie  | near: Radiology ;; Neuroradiology ;; RNA
+  [   1 rows] Gender: An Ethnomethodological Approach  | near: HNO ;; AN ;; Log
+  [   1 rows] JAMA-Journal of the American Medical Association  | near: JAMA ;; Journal of the American Medical Association ;; RNA
+  [   1 rows] J Physiol-London  | near: S ;; Y
+  [   1 rows] Morbidity and Mortality Weekly Report  | near: Report ;; MMWR Morbidity and Mortality Weekly Report ;; Report
+  [   1 rows] University of Arizona PhD Thesis  | near: University ;; U ;; IV
+  [   1 rows] Archives of Pediatric Adolescent Medicine  | near: Medicine ;; Medicine ;; IV
+  [   1 rows] J Anim Physiol Anim Nutr  | near: U ;; AN ;; S
+  [   1 rows] Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining  | near: Proceedings ;; RNA ;; Proceedings
+  [   1 rows] Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition  | near: Proceedings ;; Proceedings of the IEEE ;; Computer
+  [   1 rows] Proceedings of the Ninth Biennial ACM Symposium on Eye Tracking Research & Applications  | near: Proceedings ;; Eye ;; Proceedings
+  [   1 rows] European Journal of Oncology = Giornale Europeo Di Oncologia  | near: Oncology ;; RNA ;; Journal of Oncology
+  [   1 rows] Proceedings of the 11th International Conference on Natural Language Generation  | near: Gene ;; Proceedings ;; Language
+  [   1 rows] Proceedings of ACL2016  | near: Proceedings ;; Proceedings ;; Proceedings.
+  [   1 rows] Proceedings of the 52nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)  | near: Proceedings ;; Linguistics ;; Proceedings
+  [   1 rows] Archives of Pediatric and Adolescent Medicine  | near: Medicine ;; Medicine ;; IV
+  [   1 rows] TPM-Testing Psychometrics Methodol Appl Psychol  | near: STIN ;; PS ;; Test
+  [   1 rows] International Conference on Information Technology & Systems  | near: System ;; RNA ;; HNO
+  [   1 rows] Quality of Life in Severely and Profoundly Mentally Retarded People--research Foundations for Improvement (Book Chapter)  | near: Life ;; U ;; Research
+  [   1 rows] Animal Behaviour, Supplement I  | near: Animal Behaviour ;; animal ;; Behaviour
+  [   1 rows] Early Childhood Development and Care  | near: Development ;; DH ;; Development
+  [   1 rows] Impact Evaluation of the Minnesota Reading Corps K-3 Program  | near: PS ;; U ;; PA
+  [   1 rows] Behavioral Medicine: Changing Health Lifestyles  | near: Medicine ;; Life ;; Medicine
+  [   1 rows] Remembering: Attributions, Processes, and Control in Human Memory (Essays in Honor of Larry Jacoby)  | near: Processes ;; Man ;; U
+  [   1 rows] Journal of the Medical Library Association  | near: RNA ;; U ;; Journal of the Medical Library Association JMLA
+  [   1 rows] Corrections: Policy, Practice and Research  | near: Research ;; AN ;; Practice
+  [   1 rows] Proceedings of 1993 15th International Conference on Software Engineering  | near: Proceedings ;; RNA ;; International Conference on Software Engineering
+  [   1 rows] Proceedings Sixth International Software Metrics Symposium (Cat. No.PR00403)  | near: Proceedings ;; RNA ;; Proceedings
+  [   1 rows] Proceedings of the 8th ACM/IEEE International Symposium on Empirical Software Engineering and Measurement  | near: Proceedings ;; Measurement ;; RNA
+  [   1 rows] Journal of Universal Computer Science  | near: Science ;; Computer ;; Computer Science
+  [   1 rows] MasterABA  | near: Aster ;; E ;; ER
+  [   1 rows] Nature Genetics and Others  | near: Nature ;; Gene ;; Genetics
+  [   0 rows] Nations and Households in Economic Growth: Essays in Honor of Mozes Abramowitz  | near: U ;; AN ;; Oz
+  [   0 rows] Credit and Banking  | near: Journal of money credit and banking ;; Bank ;; AN
+  [   0 rows] 5 th International Symposium on Empirical Software Engineering and Measurement (ESEM)  | near: Measurement ;; RNA ;; U
+  [   0 rows] J Gerontol Biol Sci  | near: Geron ;; Sci ;; E
+  [   0 rows] Proceedings. Biological Sciences  | near: Science ;; Proceedings ;; Proceedings
+  [   0 rows] Mensch Und Computer 2017 - Usability Professionals  | near: Computer ;; U ;; Usability Professionals
+  [   0 rows] Harvard Kennedy School HKS Misinformation Review  | near: Information ;; Review ;; Information
+  [   0 rows] Baywood  | near: Baywood Publishing Co., Inc. eBooks ;; Y
+  [   0 rows] Proceedings of the 21st Annual ACM Symposium on User Interface Software and Technology (UIST '08)  | near: Proceedings ;; HNO ;; Proceedings
+  [   0 rows] Health Expectations: An International Journal of Public Participation in Health Care and Health Policy  | near: Health Policy ;; RNA ;; Health Expectations
+  [   0 rows] FASEB Journal: Official Publication Federation Am Soc Experimental Biology  | near: Biology ;; RNA ;; U
+  [   0 rows] Public Health Practice  | near: Public Health ;; U ;; Health
+  [   0 rows] JMIR Public Health Surveillance  | near: Public Health ;; U ;; Health
+  [   0 rows] Psychological Trauma  | near: PS ;; U ;; Psychological Trauma Theory Research Practice and Policy
+  [   0 rows] Chelsea College, University of London  | near: University ;; U ;; IV
+  [   0 rows] Human Perception and Performance  | near: Man ;; Perception ;; Journal of Experimental Psychology Human Perception & Performance
+  [   0 rows] Masters Thesis, AFIT/GAE/AA86J-1, Air Force Institute of Technology  | near: Masters Thesis ;; HNO ;; U
+  [   0 rows] The Bulletin of the Academy of Medical Sciences of the USSR  | near: Science ;; U ;; Medical Science
+  [   0 rows] PNAS Proceedings of the National Academy of Sciences of the United States of America  | near: Science ;; Proceedings of the National Academy of Sciences ;; Proceedings
+  [   0 rows] Symposium Conducted at the 18th World Congress of Gerontology  | near: ORL ;; Gerontology ;; U
+  [   0 rows] Rowohlt  | near: Rowohlt eBooks ;; Rowohlt Taschenbuch Verlag eBooks ;; Rowohlt Taschenbuch eBooks
+  [   0 rows] Canadian Journal of Public Health  | near: Public Health ;; Journal of Public Health ;; RNA
+  [   0 rows] Proceedings of the 34th International Conference on Software Engineering (ICSE '12)  | near: Proceedings ;; RNA ;; International Conference on Software Engineering
+  [   0 rows] Northwestern University  | near: Northwestern University Press eBooks ;; University ;; U
+  [   0 rows] A Model for Intelligence  | near: Intelligence ;; OR ;; IG
+  [   0 rows] Berlin Journal of Research in Homeopathy  | near: RNA ;; U ;; PA
+  [   0 rows] IEEE/ACM 14th International Conference on Mining Software Repositories (MSR)  | near: RNA ;; Tori ;; OR
+  [   0 rows] 2017 IEEE/ACM 14th International Conference on Mining Software Repositories (MSR)  | near: RNA ;; Tori ;; OR
+  [   0 rows] Early Interventions in Psychiatry  | near: Psychiatry ;; PS ;; Interventions
+  [   0 rows] Unpublished Doctoral Dissertation, New York University  | near: University ;; U ;; published
+  [   0 rows] Paper Presented at the Annual Meeting of the International Communication Association  | near: RNA ;; Presented at ;; U
+  [   0 rows] Battering and Family Therapy: a Feminist Perspective  | near: IV ;; Therapy ;; Fem
+  [   0 rows] Proceedings of the 2014 IEEE International Conference on Software Maintenance and Evolution (ICSME)  | near: Proceedings ;; Evolution ;; RNA
+  [   0 rows] Ed. Paideia  | near: PA ;; IDE ;; Ide
+  [   0 rows] Sage Publications  | near: SAGE Publications Ltd eBooks ;; SAGE Publications, Inc. eBooks ;; SAGE Publications India Pvt Ltd eBooks
+  [   0 rows] Hafner  | near: E ;; ER ;; Hafner eBooks
+  [   0 rows] Proceedings of the 22nd European Conference on Object-Oriented Programming (ECOOP '08)  | near: Proceedings ;; Proceedings ;; U
+  [   0 rows] 20th IEEE International Conference on Program Comprehension  | near: RNA ;; NA ;; 2
+  [   0 rows] MSc Thesis, Department of Nursing, University of Manchester  | near: Nursing ;; Man ;; University
+  [   0 rows] Nurse Practitioner: American Journal of Primary Health Care  | near: Primary Health Care ;; RNA ;; U
+  [   0 rows] Fifteenth Symposium on Usable Privacy and Security (SOUPS 2019)  | near: PS ;; U ;; IV
+  [   0 rows] Proceedings - 10th International Conference on Virtual Campus, JICV 2020  | near: Proceedings ;; RNA ;; Proceedings
+  [   0 rows] XXXVII Brazilian Symposium on Software Engineering (SBES 2023)  | near: U ;; Engineering ;; Engineering
+  [   0 rows] Developmental Neuropsychiatry  | near: Development ;; Psychiatry ;; PS
+  [   0 rows] European Journal of Sport and Society  | near: Society ;; RNA ;; U
+  [   0 rows] Nicot Tob Res  | near: E ;; S
+  [   0 rows] Proceedings of the National Academy of Sciences, USA  | near: Science ;; Proceedings of the National Academy of Sciences ;; Proceedings
+  [   0 rows] Environmental Epigenetics  | near: Gene ;; Genetics ;; Epigenetics
+  [   0 rows] Proceedings of the Eleventh European Workshop on Natural Language Generation (ENLG 07)  | near: Gene ;; Proceedings ;; Language
+  [   0 rows] Topic and Focus: Cross-linguistic Perspectives on Meaning and Intonation  | near: U ;; IV ;; Perspectives
+  [   0 rows] Teaching & Learning Inquiry  | near: Inquiry ;; U ;; AN
+  [   0 rows] Norton  | near: OR ;; W.W. Norton eBooks ;; Norton eBooks
+  [   0 rows] Book (John Wiley & Sons)  | near: AN ;; JO ;; E
+  [   0 rows] 2010 ACM/IEEE 32nd International Conference on Software Engineering  | near: RNA ;; International Conference on Software Engineering ;; Engineering
+  [   0 rows] Education and Training  | near: Education ;; U ;; Journal of Education and Training Studies
+  [   0 rows] The Family Therapy of Drug Abuse and Addiction  | near: Addiction ;; The Family ;; U
+  [   0 rows] Art Percept  | near: E ;; ER
+  [   0 rows] University of Lüneburg Working Paper Series in Economics  | near: University ;; Work ;; U
+  [   0 rows] Journal on Behavior, Health & Social Issues  | near: RNA ;; U ;; Health
+  [   0 rows] Adult Learning: a Reader (Book Chapter, Kogan Page)  | near: U ;; AGE ;; PA
+  [   0 rows] Strategic Management Journal and Other Management Journals  | near: Man ;; RNA ;; Strategic Management Journal
+
+AMBIGUOUS NORMALIZED NAMES (runner-up >25% of winner) - first 200 shown:
+  'genome biology': kept S81160022 ('Genome biology', 5058 papers) over S4210206758 ('Genome Biology', 2863 papers)
+  'genome biology': kept S81160022 ('Genome biology', 5058 papers) over S4210206758 ('Genome Biology', 2863 papers)
+  'journal of trauma and acute care surgery': kept S2312674 ('Journal of Trauma and Acute Care Surgery', 20857 papers) over S4210177186 ('Journal of Trauma and Acute Care Surgery', 5297 papers)
+  'journal of trauma and acute care surgery': kept S2312674 ('Journal of Trauma and Acute Care Surgery', 20857 papers) over S4210177186 ('Journal of Trauma and Acute Care Surgery', 5297 papers)
+  'bulletin of the american mathematical society': kept S71584477 ('Bulletin of the American Mathematical Society', 10004 papers) over S4210204411 ('Bulletin of the American Mathematical Society', 8499 papers)
+  'bulletin of the american mathematical society': kept S71584477 ('Bulletin of the American Mathematical Society', 10004 papers) over S4210204411 ('Bulletin of the American Mathematical Society', 8499 papers)
+  'endocrine': kept S194842327 ('Endocrine', 4579 papers) over S4210180277 ('Endocrine', 1294 papers)
+  'endocrine': kept S194842327 ('Endocrine', 4579 papers) over S4210180277 ('Endocrine', 1294 papers)
+  'journal of ornithology': kept S11051793 ('Journal of Ornithology', 7010 papers) over S4210188091 ('Journal of Ornithology', 2490 papers)
+  'journal of ornithology': kept S11051793 ('Journal of Ornithology', 7010 papers) over S4210188091 ('Journal of Ornithology', 2490 papers)
+  'journal of agricultural science': kept S12429487 ('The Journal of Agricultural Science', 9461 papers) over S4210186936 ('Journal of Agricultural Science', 4187 papers)
+  'applied mathematical sciences': kept S4210234645 ('Applied Mathematical Sciences', 3186 papers) over S2764390947 ('Applied mathematical sciences', 2904 papers)
+  'applied mathematical sciences': kept S4210234645 ('Applied Mathematical Sciences', 3186 papers) over S2764390947 ('Applied mathematical sciences', 2904 papers)
+  'geostandards and geoanalytical research': kept S4210189886 ('Geostandards and Geoanalytical Research', 862 papers) over S196832940 ('Geostandards and Geoanalytical Research', 857 papers)
+  'geostandards and geoanalytical research': kept S4210189886 ('Geostandards and Geoanalytical Research', 862 papers) over S196832940 ('Geostandards and Geoanalytical Research', 857 papers)
+  'journal of the australian mathematical society': kept S199276155 ('Journal of the Australian Mathematical Society', 2052 papers) over S4210182236 ('Journal of the Australian Mathematical Society', 944 papers)
+  'journal of the australian mathematical society': kept S199276155 ('Journal of the Australian Mathematical Society', 2052 papers) over S4210182236 ('Journal of the Australian Mathematical Society', 944 papers)
+  'european respiratory journal': kept S198733495 ('European Respiratory Journal', 12964 papers) over S4210207896 ('European Respiratory Journal', 11733 papers)
+  'european respiratory journal': kept S198733495 ('European Respiratory Journal', 12964 papers) over S4210207896 ('European Respiratory Journal', 11733 papers)
+  'highway research record': kept S2764581635 ('Highway Research Record', 3146 papers) over S2765022687 ('Highway research record', 1474 papers)
+  'highway research record': kept S2764581635 ('Highway Research Record', 3146 papers) over S2765022687 ('Highway research record', 1474 papers)
+  'chinese journal of computers': kept S168036270 ('Chinese Journal of Computers', 3136 papers) over S4210175330 ('Chinese Journal of Computers', 1418 papers)
+  'chinese journal of computers': kept S168036270 ('Chinese Journal of Computers', 3136 papers) over S4210175330 ('Chinese Journal of Computers', 1418 papers)
+  'research journal of pharmacy and technology': kept S2764737005 ('Research Journal of Pharmacy and Technology', 6930 papers) over S4210228335 ('Research Journal of Pharmacy and Technology', 3643 papers)
+  'research journal of pharmacy and technology': kept S2764737005 ('Research Journal of Pharmacy and Technology', 6930 papers) over S4210228335 ('Research Journal of Pharmacy and Technology', 3643 papers)
+  'japanese journal of mathematics': kept S2764813145 ('Japanese Journal of Mathematics', 596 papers) over S156728337 ('Japanese journal of mathematics', 570 papers)
+  'japanese journal of mathematics': kept S2764813145 ('Japanese Journal of Mathematics', 596 papers) over S156728337 ('Japanese journal of mathematics', 570 papers)
+  'computing in cardiology': kept S4220650825 ('Computing in cardiology', 2449 papers) over S2764580057 ('Computing in Cardiology', 849 papers)
+  'computing in cardiology': kept S4220650825 ('Computing in cardiology', 2449 papers) over S2764580057 ('Computing in Cardiology', 849 papers)
+  'animal welfare': kept S144449874 ('Animal Welfare', 2598 papers) over S4210231318 ('Animal welfare', 919 papers)
+  'animal welfare': kept S144449874 ('Animal Welfare', 2598 papers) over S4210231318 ('Animal welfare', 919 papers)
+  'language policy': kept S44845084 ('Language Policy', 940 papers) over S4210197187 ('Language policy', 451 papers)
+  'language policy': kept S44845084 ('Language Policy', 940 papers) over S4210197187 ('Language policy', 451 papers)
+  'international journal of pediatrics': kept S159161056 ('International journal of pediatrics', 3352 papers) over S4210187787 ('International Journal of Pediatrics', 921 papers)
+  'international journal of pediatrics': kept S159161056 ('International journal of pediatrics', 3352 papers) over S4210187787 ('International Journal of Pediatrics', 921 papers)
+  'noro psikiyatri arsivi': kept S102736123 ('Nöro Psikiyatri Arşivi', 862 papers) over S4210174062 ('Nöro Psikiyatri Arşivi', 563 papers)
+  'noro psikiyatri arsivi': kept S102736123 ('Nöro Psikiyatri Arşivi', 862 papers) over S4210174062 ('Nöro Psikiyatri Arşivi', 563 papers)
+  'res publica': kept S4210221017 ('Res Publica', 3454 papers) over S163937955 ('Res Publica', 1518 papers)
+  'res publica': kept S4210221017 ('Res Publica', 3454 papers) over S163937955 ('Res Publica', 1518 papers)
+  'energy materials': kept S4210212614 ('Energy Materials', 383 papers) over S122476552 ('Energy Materials', 146 papers)
+  'energy materials': kept S4210212614 ('Energy Materials', 383 papers) over S122476552 ('Energy Materials', 146 papers)
+  'database': kept S4210201630 ('Database', 1648 papers) over S5986019 ('Database', 1153 papers)
+  'database': kept S4210201630 ('Database', 1648 papers) over S5986019 ('Database', 1153 papers)
+  'accounting education': kept S169699294 ('Accounting Education', 1293 papers) over S4210169657 ('Accounting education', 334 papers)
+  'accounting education': kept S169699294 ('Accounting Education', 1293 papers) over S4210169657 ('Accounting education', 334 papers)
+  'proceedings': kept S4210214883 ('Proceedings', 150 papers) over S4210198994 ('Proceedings', 129 papers)
+  'proceedings': kept S4210214883 ('Proceedings', 150 papers) over S4210198994 ('Proceedings', 129 papers)
+  'jurnal psikologi': kept S4210171056 ('Jurnal Psikologi', 241 papers) over S4210226554 ('Jurnal Psikologi', 191 papers)
+  'jurnal psikologi': kept S4210171056 ('Jurnal Psikologi', 241 papers) over S4210226554 ('Jurnal Psikologi', 191 papers)
+  'il nuovo cimento b': kept S4210201706 ('Il Nuovo Cimento B', 1388 papers) over S171216741 ('Il Nuovo Cimento B', 1017 papers)
+  'il nuovo cimento b': kept S4210201706 ('Il Nuovo Cimento B', 1388 papers) over S171216741 ('Il Nuovo Cimento B', 1017 papers)
+  'ekonomika': kept S4210203272 ('Ekonomika', 1866 papers) over S2764944728 ('Ekonomika', 660 papers)
+  'ekonomika': kept S4210203272 ('Ekonomika', 1866 papers) over S2764944728 ('Ekonomika', 660 papers)
+  'jurnal pendidikan teknologi dan kejuruan': kept S4210234377 ('Jurnal Pendidikan Teknologi dan Kejuruan', 386 papers) over S2737553469 ('Jurnal Pendidikan Teknologi dan Kejuruan', 265 papers)
+  'jurnal pendidikan teknologi dan kejuruan': kept S4210234377 ('Jurnal Pendidikan Teknologi dan Kejuruan', 386 papers) over S2737553469 ('Jurnal Pendidikan Teknologi dan Kejuruan', 265 papers)
+  'jurnal sosioteknologi': kept S4210200298 ('Jurnal Sosioteknologi', 387 papers) over S4210225814 ('Jurnal Sosioteknologi', 132 papers)
+  'jurnal sosioteknologi': kept S4210200298 ('Jurnal Sosioteknologi', 387 papers) over S4210225814 ('Jurnal Sosioteknologi', 132 papers)
+  'prospects': kept S4210230791 ('Prospects', 167 papers) over S153694555 ('Prospects', 161 papers)
+  'prospects': kept S4210230791 ('Prospects', 167 papers) over S153694555 ('Prospects', 161 papers)
+  'current hepatology reports': kept S4210199769 ('Current Hepatology Reports', 447 papers) over S68870015 ('Current Hepatology Reports', 347 papers)
+  'current hepatology reports': kept S4210199769 ('Current Hepatology Reports', 447 papers) over S68870015 ('Current Hepatology Reports', 347 papers)
+  'astrophysics': kept S933939914 ('Astrophysics', 3606 papers) over S4210185924 ('Astrophysics', 1062 papers)
+  'astrophysics': kept S933939914 ('Astrophysics', 3606 papers) over S4210185924 ('Astrophysics', 1062 papers)
+  'international journal of civil engineering': kept S141661966 ('International Journal of Civil Engineering', 1460 papers) over S4210206216 ('International Journal of Civil Engineering', 724 papers)
+  'international journal of civil engineering': kept S141661966 ('International Journal of Civil Engineering', 1460 papers) over S4210206216 ('International Journal of Civil Engineering', 724 papers)
+  'hacettepe journal of mathematics and statistics': kept S181677907 ('Hacettepe Journal of Mathematics and Statistics', 1095 papers) over S4210188591 ('Hacettepe Journal of Mathematics and Statistics', 710 papers)
+  'hacettepe journal of mathematics and statistics': kept S181677907 ('Hacettepe Journal of Mathematics and Statistics', 1095 papers) over S4210188591 ('Hacettepe Journal of Mathematics and Statistics', 710 papers)
+  'journal of applied business and economics': kept S4210192355 ('Journal of Applied Business and Economics', 943 papers) over S2764688128 ('THE JOURNAL OF APPLIED BUSINESS AND ECONOMICS', 430 papers)
+  'research in mathematics education': kept S191399060 ('Research in Mathematics Education', 666 papers) over S4210233148 ('Research in mathematics education', 401 papers)
+  'research in mathematics education': kept S191399060 ('Research in Mathematics Education', 666 papers) over S4210233148 ('Research in mathematics education', 401 papers)
+  'proceedings': kept S4210214883 ('Proceedings', 150 papers) over S4210207155 ('Proceedings', 82 papers)
+  'proceedings': kept S4210214883 ('Proceedings', 150 papers) over S4210207155 ('Proceedings', 82 papers)
+  'technology audit and production reserves': kept S2764402084 ('Technology audit and production reserves', 2563 papers) over S4210231895 ('Technology audit and production reserves', 890 papers)
+  'technology audit and production reserves': kept S2764402084 ('Technology audit and production reserves', 2563 papers) over S4210231895 ('Technology audit and production reserves', 890 papers)
+  'journal of social sciences': kept S4210202442 ('The Journal of Social Sciences', 2741 papers) over S4210197619 ('Journal of Social Sciences', 1683 papers)
+  'jurnal akuntansi': kept S4210216861 ('Jurnal Akuntansi', 293 papers) over S4210224051 ('Jurnal Akuntansi', 190 papers)
+  'jurnal akuntansi': kept S4210216861 ('Jurnal Akuntansi', 293 papers) over S4210224051 ('Jurnal Akuntansi', 190 papers)
+  'deleted': kept S4210226164 ('DELETED', 1066 papers) over S2898495476 ('DELETED', 713 papers)
+  'deleted': kept S4210226164 ('DELETED', 1066 papers) over S2898495476 ('DELETED', 713 papers)
+  'chromatography': kept S4210188149 ('Chromatography', 250 papers) over S2736596934 ('Chromatography', 203 papers)
+  'chromatography': kept S4210188149 ('Chromatography', 250 papers) over S2736596934 ('Chromatography', 203 papers)
+  'jurnal manajemen bisnis': kept S4210171106 ('Jurnal Manajemen Bisnis', 395 papers) over S4210230440 ('Jurnal Manajemen Bisnis', 135 papers)
+  'jurnal manajemen bisnis': kept S4210171106 ('Jurnal Manajemen Bisnis', 395 papers) over S4210230440 ('Jurnal Manajemen Bisnis', 135 papers)
+  'international journal of person centered medicine': kept S4210198705 ('The International Journal of Person Centered Medicine', 411 papers) over S2764876796 ('the International Journal of Person-Centered Medicine', 187 papers)
+  'jurnal akuntansi': kept S4210216861 ('Jurnal Akuntansi', 293 papers) over S4210187457 ('Jurnal Akuntansi', 174 papers)
+  'jurnal akuntansi': kept S4210216861 ('Jurnal Akuntansi', 293 papers) over S4210187457 ('Jurnal Akuntansi', 174 papers)
+  'leviathan': kept S54847137 ('Leviathan', 1104 papers) over S4210175507 ('Leviathan', 1017 papers)
+  'leviathan': kept S54847137 ('Leviathan', 1104 papers) over S4210175507 ('Leviathan', 1017 papers)
+  'irish veterinary journal': kept S4210206830 ('Irish Veterinary Journal', 441 papers) over S177695016 ('Irish veterinary journal', 239 papers)
+  'irish veterinary journal': kept S4210206830 ('Irish Veterinary Journal', 441 papers) over S177695016 ('Irish veterinary journal', 239 papers)
+  'jurnal ilmu manajemen': kept S4210209504 ('Jurnal Ilmu Manajemen', 491 papers) over S4210205216 ('JURNAL ILMU MANAJEMEN', 202 papers)
+  'jurnal ilmu manajemen': kept S4210209504 ('Jurnal Ilmu Manajemen', 491 papers) over S4210205216 ('JURNAL ILMU MANAJEMEN', 202 papers)
+  'international journal of learning and teaching': kept S4210178280 ('International Journal of Learning and Teaching', 567 papers) over S4210180690 ('International Journal of Learning & Teaching', 220 papers)
+  'international journal of learning and teaching': kept S4210178280 ('International Journal of Learning and Teaching', 567 papers) over S4210180690 ('International Journal of Learning & Teaching', 220 papers)
+  'journal of plant sciences': kept S196329220 ('Journal of Plant Sciences', 578 papers) over S4210189349 ('Journal of Plant Sciences', 200 papers)
+  'journal of plant sciences': kept S196329220 ('Journal of Plant Sciences', 578 papers) over S4210189349 ('Journal of Plant Sciences', 200 papers)
+  'jurnal informatika': kept S4210197111 ('JURNAL INFORMATIKA', 264 papers) over S4210188195 ('Jurnal Informatika', 258 papers)
+  'jurnal informatika': kept S4210197111 ('JURNAL INFORMATIKA', 264 papers) over S4210188195 ('Jurnal Informatika', 258 papers)
+  'turkish thoracic journal': kept S4210240874 ('Turkish Thoracic Journal', 789 papers) over S4210177756 ('Turkish Thoracic Journal', 226 papers)
+  'turkish thoracic journal': kept S4210240874 ('Turkish Thoracic Journal', 789 papers) over S4210177756 ('Turkish Thoracic Journal', 226 papers)
+  'therapy': kept S4210178224 ('Therapy', 1304 papers) over S100978731 ('Therapy', 1042 papers)
+  'therapy': kept S4210178224 ('Therapy', 1304 papers) over S100978731 ('Therapy', 1042 papers)
+  'deleted': kept S4210226164 ('DELETED', 1066 papers) over S2764779124 ('DELETED', 498 papers)
+  'deleted': kept S4210226164 ('DELETED', 1066 papers) over S2764779124 ('DELETED', 498 papers)
+  'italian botanist': kept S4210202029 ('Italian Botanist', 299 papers) over S4210221877 ('Italian Botanist', 175 papers)
+  'italian botanist': kept S4210202029 ('Italian Botanist', 299 papers) over S4210221877 ('Italian Botanist', 175 papers)
+  'the structural engineer': kept S2764842506 ('The Structural Engineer', 1310 papers) over S2765058153 ('The Structural engineer', 508 papers)
+  'structural engineer': kept S2764842506 ('The Structural Engineer', 1310 papers) over S2765058153 ('The Structural engineer', 508 papers)
+  'economic bulletin': kept S4210195089 ('Economic Bulletin', 1066 papers) over S20755864 ('Economic Bulletin', 465 papers)
+  'economic bulletin': kept S4210195089 ('Economic Bulletin', 1066 papers) over S20755864 ('Economic Bulletin', 465 papers)
+  'jurnal psikologi': kept S4210171056 ('Jurnal Psikologi', 241 papers) over S4210180405 ('Jurnal Psikologi', 175 papers)
+  'jurnal psikologi': kept S4210171056 ('Jurnal Psikologi', 241 papers) over S4210180405 ('Jurnal Psikologi', 175 papers)
+  'china perspectives': kept S4210171771 ('China Perspectives', 1272 papers) over S2764984147 ('China perspectives', 712 papers)
+  'china perspectives': kept S4210171771 ('China Perspectives', 1272 papers) over S2764984147 ('China perspectives', 712 papers)
+  'jurnal teknik industri': kept S4210180798 ('Jurnal Teknik Industri', 560 papers) over S4210173107 ('JURNAL TEKNIK INDUSTRI', 342 papers)
+  'jurnal teknik industri': kept S4210180798 ('Jurnal Teknik Industri', 560 papers) over S4210173107 ('JURNAL TEKNIK INDUSTRI', 342 papers)
+  'food science and technology': kept S4210204799 ('Food Science and Technology', 645 papers) over S4210204302 ('Food Science and Technology', 507 papers)
+  'food science and technology': kept S4210204799 ('Food Science and Technology', 645 papers) over S4210204302 ('Food Science and Technology', 507 papers)
+  'journal of modern rehabilitation': kept S2764351002 ('Journal of Modern Rehabilitation', 2010 papers) over S2764614797 ('Journal of Modern Rehabilitation', 612 papers)
+  'journal of modern rehabilitation': kept S2764351002 ('Journal of Modern Rehabilitation', 2010 papers) over S2764614797 ('Journal of Modern Rehabilitation', 612 papers)
+  'spectrum': kept S2765016018 ('Spectrum', 404 papers) over S2764666708 ('Spectrum', 303 papers)
+  'spectrum': kept S2765016018 ('Spectrum', 404 papers) over S2764666708 ('Spectrum', 303 papers)
+  'jurnal manajemen': kept S4220651764 ('Jurnal Manajemen', 558 papers) over S4210195910 ('Jurnal Manajemen', 231 papers)
+  'jurnal manajemen': kept S4220651764 ('Jurnal Manajemen', 558 papers) over S4210195910 ('Jurnal Manajemen', 231 papers)
+  'the japanese journal of personality': kept S108247814 ('The Japanese Journal of Personality', 731 papers) over S4210188714 ('The Japanese Journal of Personality', 247 papers)
+  'japanese journal of personality': kept S108247814 ('The Japanese Journal of Personality', 731 papers) over S4210188714 ('The Japanese Journal of Personality', 247 papers)
+  'istanbul university - journal of electrical and electronics engineering': kept S4210203742 ('Istanbul University - Journal of Electrical & Electronics Engineering', 212 papers) over S2765009289 ('Istanbul University - Journal of Electrical & Electronics Engineering', 110 papers)
+  'istanbul university journal of electrical and electronics engineering': kept S4210203742 ('Istanbul University - Journal of Electrical & Electronics Engineering', 212 papers) over S2765009289 ('Istanbul University - Journal of Electrical & Electronics Engineering', 110 papers)
+  'selcuk journal of agricultural and food sciences': kept S4210170488 ('Selcuk Journal of Agricultural and Food Sciences', 671 papers) over S4210239260 ('Selcuk Journal of Agricultural and Food Sciences', 215 papers)
+  'selcuk journal of agricultural and food sciences': kept S4210170488 ('Selcuk Journal of Agricultural and Food Sciences', 671 papers) over S4210239260 ('Selcuk Journal of Agricultural and Food Sciences', 215 papers)
+  'jurnal agroteknologi': kept S4210207793 ('JURNAL AGROTEKNOLOGI', 182 papers) over S4210230869 ('JURNAL AGROTEKNOLOGI', 118 papers)
+  'jurnal agroteknologi': kept S4210207793 ('JURNAL AGROTEKNOLOGI', 182 papers) over S4210230869 ('JURNAL AGROTEKNOLOGI', 118 papers)
+  'anthropologica': kept S4210239026 ('Anthropologica', 775 papers) over S2737122198 ('Anthropologica', 327 papers)
+  'anthropologica': kept S4210239026 ('Anthropologica', 775 papers) over S2737122198 ('Anthropologica', 327 papers)
+  'journal of science and technology': kept S4210190893 ('Journal of Science and Technology', 185 papers) over S4210228107 ('Journal of Science and Technology', 124 papers)
+  'journal of science and technology': kept S4210190893 ('Journal of Science and Technology', 185 papers) over S4210228107 ('Journal of Science and Technology', 124 papers)
+  'the journal of the japan society of aeronautical engineering': kept S2764545682 ('The Journal of the Japan Society of Aeronautical Engineering', 2561 papers) over S4210240305 ('The Journal of the Japan Society of Aeronautical Engineering', 1010 papers)
+  'journal of the japan society of aeronautical engineering': kept S2764545682 ('The Journal of the Japan Society of Aeronautical Engineering', 2561 papers) over S4210240305 ('The Journal of the Japan Society of Aeronautical Engineering', 1010 papers)
+  'jurnal ekonomi pembangunan': kept S4210206992 ('Jurnal Ekonomi Pembangunan', 194 papers) over S4210232478 ('Jurnal Ekonomi Pembangunan', 94 papers)
+  'jurnal ekonomi pembangunan': kept S4210206992 ('Jurnal Ekonomi Pembangunan', 194 papers) over S4210232478 ('Jurnal Ekonomi Pembangunan', 94 papers)
+  'artificial intelligence': kept S4210206574 ('Artificial intelligence', 259 papers) over S4210212235 ('Artificial intelligence', 204 papers)
+  'artificial intelligence': kept S4210206574 ('Artificial intelligence', 259 papers) over S4210212235 ('Artificial intelligence', 204 papers)
+  'jurnal sistem informasi': kept S4210224568 ('Jurnal Sistem Informasi', 350 papers) over S4210216747 ('Jurnal Sistem Informasi', 223 papers)
+  'jurnal sistem informasi': kept S4210224568 ('Jurnal Sistem Informasi', 350 papers) over S4210216747 ('Jurnal Sistem Informasi', 223 papers)
+  'jurnal akuntansi': kept S4210216861 ('Jurnal Akuntansi', 293 papers) over S4210218720 ('Jurnal Akuntansi', 99 papers)
+  'jurnal akuntansi': kept S4210216861 ('Jurnal Akuntansi', 293 papers) over S4210218720 ('Jurnal Akuntansi', 99 papers)
+  'jurnal kebidanan': kept S4210228730 ('Jurnal Kebidanan', 172 papers) over S4210224241 ('JURNAL KEBIDANAN', 167 papers)
+  'jurnal kebidanan': kept S4210228730 ('Jurnal Kebidanan', 172 papers) over S4210224241 ('JURNAL KEBIDANAN', 167 papers)
+  'akademika': kept S4210199950 ('Akademika', 220 papers) over S4210177057 ('AKADEMIKA', 183 papers)
+  'akademika': kept S4210199950 ('Akademika', 220 papers) over S4210177057 ('AKADEMIKA', 183 papers)
+  'curriculum theory network': kept S4210227812 ('Curriculum Theory Network', 141 papers) over S2764997341 ('Curriculum Theory Network', 36 papers)
+  'curriculum theory network': kept S4210227812 ('Curriculum Theory Network', 141 papers) over S2764997341 ('Curriculum Theory Network', 36 papers)
+  'journal of science and technology': kept S4210240570 ('Journal of Science and Technology', 394 papers) over S4210190893 ('Journal of Science and Technology', 185 papers)
+  'journal of science and technology': kept S4210240570 ('Journal of Science and Technology', 394 papers) over S4210190893 ('Journal of Science and Technology', 185 papers)
+  'sakarya medical journal': kept S4210240077 ('Sakarya Medical Journal', 712 papers) over S4210172335 ('Sakarya Medical Journal', 359 papers)
+  'sakarya medical journal': kept S4210240077 ('Sakarya Medical Journal', 712 papers) over S4210172335 ('Sakarya Medical Journal', 359 papers)
+  'jp3m (jurnal penelitian pendidikan dan pengajaran matematika)': kept S4210194398 ('JP3M (Jurnal Penelitian Pendidikan dan Pengajaran Matematika)', 46 papers) over S4210206624 ('JP3M (Jurnal Penelitian Pendidikan dan Pengajaran Matematika)', 22 papers)
+  'jp3m jurnal penelitian pendidikan dan pengajaran matematika': kept S4210194398 ('JP3M (Jurnal Penelitian Pendidikan dan Pengajaran Matematika)', 46 papers) over S4210206624 ('JP3M (Jurnal Penelitian Pendidikan dan Pengajaran Matematika)', 22 papers)
+  'tema': kept S2738021163 ('TEMA', 204 papers) over S2765024721 ('TeMA', 198 papers)
+  'tema': kept S2738021163 ('TEMA', 204 papers) over S2765024721 ('TeMA', 198 papers)
+  'financial internet quarterly': kept S2739380074 ('Financial Internet Quarterly', 423 papers) over S4210180908 ('Financial Internet Quarterly', 120 papers)
+  'financial internet quarterly': kept S2739380074 ('Financial Internet Quarterly', 423 papers) over S4210180908 ('Financial Internet Quarterly', 120 papers)
+  'international journal of education and learning': kept S4210234871 ('International Journal of Education and Learning', 93 papers) over S4210190287 ('International Journal of Education and Learning', 49 papers)
+  'international journal of education and learning': kept S4210234871 ('International Journal of Education and Learning', 93 papers) over S4210190287 ('International Journal of Education and Learning', 49 papers)
+  'jurnal ilmiah akuntansi dan bisnis': kept S2737807330 ('Jurnal Ilmiah Akuntansi dan Bisnis', 301 papers) over S4210227173 ('Jurnal Ilmiah Akuntansi dan Bisnis', 89 papers)
+  'jurnal ilmiah akuntansi dan bisnis': kept S2737807330 ('Jurnal Ilmiah Akuntansi dan Bisnis', 301 papers) over S4210227173 ('Jurnal Ilmiah Akuntansi dan Bisnis', 89 papers)
+  'international journal of language and literature': kept S4210167600 ('International Journal of Language and Literature', 191 papers) over S4210218547 ('International Journal of Language and Literature', 133 papers)
+  'international journal of language and literature': kept S4210167600 ('International Journal of Language and Literature', 191 papers) over S4210218547 ('International Journal of Language and Literature', 133 papers)
+  'культура и искусство': kept S4210211760 ('Культура и искусство', 761 papers) over S4210205329 ('Культура и искусство', 399 papers)
+  'культура и искусство': kept S4210211760 ('Культура и искусство', 761 papers) over S4210205329 ('Культура и искусство', 399 papers)
+  'meridiano 47 - journal of global studies': kept S2764994141 ('Meridiano 47 - Journal of Global Studies', 435 papers) over S4210171423 ('Meridiano 47 - Journal of Global Studies', 221 papers)
+  'meridiano 47 journal of global studies': kept S2764994141 ('Meridiano 47 - Journal of Global Studies', 435 papers) over S4210171423 ('Meridiano 47 - Journal of Global Studies', 221 papers)
+  'modern care journal': kept S4210227775 ('Modern Care Journal', 281 papers) over S4210203708 ('Modern Care Journal', 178 papers)
+  'modern care journal': kept S4210227775 ('Modern Care Journal', 281 papers) over S4210203708 ('Modern Care Journal', 178 papers)
+  'analisis': kept S4210194929 ('Análisis', 373 papers) over S2736353661 ('AnálisiS', 219 papers)
+  'analisis': kept S4210194929 ('Análisis', 373 papers) over S2736353661 ('AnálisiS', 219 papers)
+  'herald of dagestan state university': kept S4210193623 ('Herald of Dagestan State University', 465 papers) over S4210187865 ('HERALD of Dagestan State University', 463 papers)
+  'herald of dagestan state university': kept S4210193623 ('Herald of Dagestan State University', 465 papers) over S4210187865 ('HERALD of Dagestan State University', 463 papers)
+  'caliban': kept S4210194905 ('Caliban', 419 papers) over S2764959743 ('Caliban', 397 papers)
+  'caliban': kept S4210194905 ('Caliban', 419 papers) over S2764959743 ('Caliban', 397 papers)
+  'educacao em foco': kept S4210193678 ('Educação em Foco', 693 papers) over S2737392348 ('Educação em Foco', 593 papers)
+  'educacao em foco': kept S4210193678 ('Educação em Foco', 693 papers) over S2737392348 ('Educação em Foco', 593 papers)
+  'chinese journal of engineering': kept S4210176809 ('Chinese Journal of Engineering', 492 papers) over S2764937794 ('Chinese journal of engineering', 175 papers)
+  'chinese journal of engineering': kept S4210176809 ('Chinese Journal of Engineering', 492 papers) over S2764937794 ('Chinese journal of engineering', 175 papers)
+  'radioengineering': kept S6596365 ('Radioengineering', 1061 papers) over S4210197785 ('Radioengineering', 557 papers)
+  'radioengineering': kept S6596365 ('Radioengineering', 1061 papers) over S4210197785 ('Radioengineering', 557 papers)
+  'inovasi': kept S4210167839 ('Inovasi', 187 papers) over S4210200197 ('INOVASI', 110 papers)
+  'inovasi': kept S4210167839 ('Inovasi', 187 papers) over S4210200197 ('INOVASI', 110 papers)
+  'journal of lgbtq issues in counseling': kept S143617034 ('Journal of LGBTQ Issues in Counseling', 359 papers) over S3207635824 ('Journal of LGBTQ Issues in Counseling', 116 papers)
+  'journal of lgbtq issues in counseling': kept S143617034 ('Journal of LGBTQ Issues in Counseling', 359 papers) over S3207635824 ('Journal of LGBTQ Issues in Counseling', 116 papers)
+  'signos': kept S4210232344 ('Signos', 314 papers) over S4210207729 ('Signos', 314 papers)
+  'signos': kept S4210232344 ('Signos', 314 papers) over S4210207729 ('Signos', 314 papers)
+  'usa and canada economics – politics – culture': kept S4210240539 ('USA & Canada Economics – Politics – Culture', 534 papers) over S4210211279 ('USA & Canada Economics – Politics – Culture', 169 papers)
+  'usa and canada economics politics culture': kept S4210240539 ('USA & Canada Economics – Politics – Culture', 534 papers) over S4210211279 ('USA & Canada Economics – Politics – Culture', 169 papers)
+  'chirurgia': kept S4210209283 ('Chirurgia', 800 papers) over S4210197164 ('Chirurgia', 577 papers)
+  'chirurgia': kept S4210209283 ('Chirurgia', 800 papers) over S4210197164 ('Chirurgia', 577 papers)
+  'journal on today s ideas-tomorrow s technologies': kept S4210237326 ('Journal on Today s Ideas-Tomorrow s Technologies', 44 papers) over S4210221500 ('Journal on Today s Ideas-Tomorrow s Technologies', 38 papers)
+  'journal on today s ideas tomorrow s technologies': kept S4210237326 ('Journal on Today s Ideas-Tomorrow s Technologies', 44 papers) over S4210221500 ('Journal on Today s Ideas-Tomorrow s Technologies', 38 papers)
+  'journal of information management': kept S4210177387 ('Journal of Information Management', 623 papers) over S4210167902 ('Journal of Information Management', 357 papers)
+  'journal of information management': kept S4210177387 ('Journal of Information Management', 623 papers) over S4210167902 ('Journal of Information Management', 357 papers)

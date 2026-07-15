@@ -1,0 +1,42 @@
+{
+  "_comment": "Manual curation for scripts/build_journal_impact_factors.py. 'overrides' maps the exact original_journal string from the replications CSV to an OpenAlex sourceid in journals.db (resolved by looking the journal up in journal_summary). 'denylist' lists venues that must stay unmatched (books, preprints, conference proceedings, artworks, placeholders - no impact factor exists). Re-run the build script after editing.",
+  "overrides": {
+    "PNAS": "S125754415",
+    "Proceedings of the National Academy of Sciences USA": "S125754415",
+    "Cancer Res": "S168522863",
+    "J Med Genet": "S112540174",
+    "Cell Immunology": "S193466101",
+    "Canadian Journal of Experimental Psychology": "S181082468",
+    "Canadian Journal of Psychology": "S4210177808",
+    "Child Abuse & Neglect: The International Journal": "S53055215",
+    "Body Image: An International Journal of Research": "S177391433",
+    "Archives of Environmental Health": "S13479866",
+    "Journal of Child Psychology and Psychiatry, and Allied Disciplines": "S177929781",
+    "Behavior Research Methods, Instruments, and Computers": "S137478622",
+    "Journal of Reseach in Personality": "S156995526",
+    "Wiener Medizinische Wochenzeitschrift": "S122096800",
+    "Families in Society: The Journal of Contemporary Human Services": "S2764619794",
+    "Brain Research 1179": "S96638545",
+    "humr": "S174777489"
+  },
+  "denylist": [
+    "MIT Press",
+    "PsyArXiv Preprints",
+    "Personality disorders and the five-factor model of personality (2nd ed.).",
+    "Cognition and Categorization",
+    "Self portrait with gorget Portrait of Rembrandt with a gorget",
+    "Proceedings of the International Conference on Software Engineering",
+    "Computer Vision-ECCV 2014: 13th European Conference",
+    "Proceedings of the 2017 ACM Conference on International Computing Education Research",
+    "Proceedings of the 51st ACM technical symposium on computer science education",
+    "Proceedings of the 2020 Genetic and Evolutionary Computation Conference",
+    "IEEE/ACM 45th International Conference on Software Engineering (ICSE)",
+    "The science of giving: experimental approaches to the study of charity (eds DM Oppenheimer, CY Olivola)",
+    "The Mismeasure of Man: Revised and Expanded",
+    "Psychopathology Assessment Methods Revisited",
+    "Motivation, language identity and the L2 self",
+    "Economic Consequences of Divorce: The International Perspective",
+    "Unpublished pilot study",
+    "Mostly"
+  ]
+}

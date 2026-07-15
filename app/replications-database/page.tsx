@@ -294,8 +294,6 @@ function ReplicationsDatabaseContent() {
   );
   const [showColumnSelector, setShowColumnSelector] = useState(false);
   const [outcomeMethod, setOutcomeMethod] = useState<"significance" | "orig_in_rep_ci" | "rep_in_orig_ci">("rep_in_orig_ci");
-  const [yearAnalysisLevel, setYearAnalysisLevel] = useState<"effect" | "paper">("paper");
-  const [paperThreshold, setPaperThreshold] = useState<number>(0.75);
 
   useEffect(() => {
     async function fetchData() {
@@ -666,53 +664,6 @@ function ReplicationsDatabaseContent() {
     return bins.slice(firstValid, lastValid + 1);
   }, [filteredRows]);
 
-  // Paper-level year bins: group by original_url, success if >= threshold of effects succeeded
-  const yearBinsPaper = useMemo(() => {
-    const paperMap = new Map<string, { year: number; results: string[] }>();
-    for (const r of filteredRows) {
-      const url = String(r.original_url ?? "").trim();
-      if (!url) continue;
-      const yearRaw = toNumber(r.original_year);
-      if (yearRaw == null || yearRaw < 1900 || yearRaw > 2030) continue;
-      const year = Math.floor(yearRaw);
-      const res = String(r.result ?? "").trim();
-      if (!res) continue;
-      if (!paperMap.has(url)) {
-        paperMap.set(url, { year, results: [] });
-      }
-      paperMap.get(url)!.results.push(res);
-    }
-
-    const entries: Array<{ year: number; result: string }> = [];
-    for (const [, paper] of paperMap) {
-      const successes = paper.results.filter(r => r === "success").length;
-      const paperResult = successes / paper.results.length >= paperThreshold ? "success" : "failure";
-      entries.push({ year: paper.year, result: paperResult });
-    }
-    if (entries.length === 0) return [];
-
-    const minYear = Math.min(...entries.map(e => e.year));
-    const maxYear = Math.max(...entries.map(e => e.year));
-    const binStart = Math.floor(minYear / 5) * 5;
-    const binEnd = Math.floor(maxYear / 5) * 5;
-
-    const bins: YearBin[] = [];
-    for (let start = binStart; start <= binEnd; start += 5) {
-      const end = start + 4;
-      const inBin = entries.filter(e => e.year >= start && e.year <= end);
-      const total = inBin.length;
-      const success = inBin.filter(e => e.result === "success").length;
-      const failure = inBin.filter(e => e.result === "failure").length;
-      const inconclusive = total - success - failure;
-      const rate = total >= 10 ? Math.round((success / total) * 1000) / 10 : -1;
-      bins.push({ label: `${start}-${String(end).slice(2)}`, total, success, failure, inconclusive, rate });
-    }
-    const firstValid = bins.findIndex(b => b.rate >= 0);
-    const lastValid = bins.length - 1 - [...bins].reverse().findIndex(b => b.rate >= 0);
-    if (firstValid < 0) return [];
-    return bins.slice(firstValid, lastValid + 1);
-  }, [filteredRows, paperThreshold]);
-
   // Count unique papers for the subtitle
   const uniquePaperCount = useMemo(() => {
     const urls = new Set<string>();
@@ -857,7 +808,7 @@ function ReplicationsDatabaseContent() {
             />
           </div>
           <div className="md:col-span-2">
-            <label htmlFor="search" className="block text-sm font-medium opacity-80 mb-1">Search titles, authors, description, tags, or references</label>
+            <label htmlFor="search" className="block text-sm font-medium opacity-80 mb-1">Search</label>
             <div className="flex items-center gap-3">
               <Input
                 id="search"
@@ -868,13 +819,25 @@ function ReplicationsDatabaseContent() {
               />
               <div className="flex flex-col items-end shrink-0">
                 <a href="/replications-database/by-discipline" className="text-sm underline hover:opacity-80 whitespace-nowrap">
-                  Detailed breakdown by discipline
+                  Replication rate by discipline
                 </a>
                 <a href="/replications-database/by-journal" className="text-sm underline hover:opacity-80 whitespace-nowrap">
-                  Detailed breakdown by journal
+                  Replication rate by journal
                 </a>
                 <a href="/replications-database/by-p-value" className="text-sm underline hover:opacity-80 whitespace-nowrap">
                   Replication rate by original p-value
+                </a>
+                <a href="/replications-database/by-impact-factor" className="text-sm underline hover:opacity-80 whitespace-nowrap">
+                  Replication rate by journal impact factor
+                </a>
+                <a href="/replications-database/by-journal-rank" className="text-sm underline hover:opacity-80 whitespace-nowrap">
+                  Replication rate by journal rank
+                </a>
+                <a href="/replications-database/by-citation-count" className="text-sm underline hover:opacity-80 whitespace-nowrap">
+                  Replication rate by citation count
+                </a>
+                <a href="/replications-database/by-h-index" className="text-sm underline hover:opacity-80 whitespace-nowrap">
+                  Replication rate by author h-index
                 </a>
               </div>
             </div>
@@ -999,48 +962,20 @@ function ReplicationsDatabaseContent() {
         <div className="border rounded p-4">
           <div className="flex items-start justify-between mb-2">
             <div className="text-xs font-medium">
-              Replication Success Rate by Year of Original Publication{" "}
+              Experiment Replication Success Rate by Year of Original Publication{" "}
               <span className="font-bold">
-                ({yearAnalysisLevel === "effect"
-                  ? `${yearBins.filter(b => b.rate >= 0).reduce((s, b) => s + b.total, 0)} effect replications from ${uniquePaperCount} original papers`
-                  : `${yearBinsPaper.filter(b => b.rate >= 0).reduce((s, b) => s + b.total, 0)} original papers`})
+                ({`${yearBins.filter(b => b.rate >= 0).reduce((s, b) => s + b.total, 0)} effect replications from ${uniquePaperCount} original papers`})
               </span>
             </div>
-            <div className="flex flex-col items-end gap-1 ml-4 shrink-0">
-              <div className="flex items-center gap-1">
-                <label className="text-[10px] opacity-60 cursor-help" title="A paper is considered successfully replicated if X% of effect replications for effects reported in that paper were successful. The threshold X can be shifted with the dropdown below.">Level of analysis:</label>
-                <select
-                  value={yearAnalysisLevel}
-                  onChange={(e) => setYearAnalysisLevel(e.target.value as "effect" | "paper")}
-                  className="text-[10px] border rounded px-1 py-0.5 bg-background"
-                >
-                  <option value="effect">Effect</option>
-                  <option value="paper">Paper</option>
-                </select>
-              </div>
-              {yearAnalysisLevel === "paper" && (
-                <div className="flex items-center gap-1">
-                  <label className="text-[10px] opacity-60">Threshold for success:</label>
-                  <select
-                    value={paperThreshold}
-                    onChange={(e) => setPaperThreshold(Number(e.target.value))}
-                    className="text-[10px] border rounded px-1 py-0.5 bg-background"
-                  >
-                    <option value={0.5}>50%</option>
-                    <option value={0.75}>75%</option>
-                    <option value={0.9}>90%</option>
-                    <option value={1}>100%</option>
-                  </select>
-                </div>
-              )}
-            </div>
+            <a
+              href="/replications-database/by-year"
+              className="text-xs underline hover:opacity-80 ml-4 shrink-0"
+            >
+              detailed view
+            </a>
           </div>
           <div className="mt-2">
-            <InlineYearBars
-              bins={yearAnalysisLevel === "effect" ? yearBins : yearBinsPaper}
-              threshold={yearAnalysisLevel === "effect" ? 20 : 10}
-              binSize={5}
-            />
+            <InlineYearBars bins={yearBins} threshold={20} binSize={5} />
           </div>
         </div>
         {/* Raw effect sizes scatterplot - hidden for now
@@ -1503,6 +1438,17 @@ type YearBin = {
   rate: number;
 };
 
+// Wilson score 95% CI for a proportion k/n, returned as percentages.
+function wilsonCI(k: number, n: number): [number, number] {
+  if (n === 0) return [0, 100];
+  const z = 1.96;
+  const p = k / n;
+  const denom = 1 + (z * z) / n;
+  const center = (p + (z * z) / (2 * n)) / denom;
+  const margin = (z * Math.sqrt((p * (1 - p)) / n + (z * z) / (4 * n * n))) / denom;
+  return [Math.max(0, center - margin) * 100, Math.min(1, center + margin) * 100];
+}
+
 function InlineYearBars({ bins, threshold, binSize }: { bins: YearBin[]; threshold: number; binSize: number }) {
   const width = 600;
   const height = 240;
@@ -1536,22 +1482,28 @@ function InlineYearBars({ bins, threshold, binSize }: { bins: YearBin[]; thresho
           ))}
           {bins.map((bin, i) => {
             const bx = offsetX + i * (barWidth + barGap);
+            const cx = bx + barWidth / 2;
             const insufficientData = bin.rate < 0;
             const barH = insufficientData ? 0 : (bin.rate / 100) * innerH;
             const by = innerH - barH;
+            const [ciLow, ciHigh] = wilsonCI(bin.success, bin.total);
             return (
               <g key={bin.label}>
-                <title>{insufficientData ? `${bin.label}: insufficient data (${bin.total} replications)` : `${bin.label}: ${bin.rate}% success (${bin.success}/${bin.total})`}</title>
+                <title>{insufficientData ? `${bin.label}: insufficient data (${bin.total} replications)` : `${bin.label}: ${bin.rate}% success (${bin.success}/${bin.total}) · 95% CI [${ciLow.toFixed(1)}%–${ciHigh.toFixed(1)}%]`}</title>
                 {insufficientData ? (
-                  <text x={bx + barWidth / 2} y={innerH - 24} textAnchor="middle" className="fill-current" style={{ fontSize: 7, opacity: 0.4 }}>
-                    <tspan x={bx + barWidth / 2} dy="0">not</tspan>
-                    <tspan x={bx + barWidth / 2} dy="9">enough</tspan>
-                    <tspan x={bx + barWidth / 2} dy="9">data</tspan>
+                  <text x={cx} y={innerH - 24} textAnchor="middle" className="fill-current" style={{ fontSize: 7, opacity: 0.4 }}>
+                    <tspan x={cx} dy="0">not</tspan>
+                    <tspan x={cx} dy="9">enough</tspan>
+                    <tspan x={cx} dy="9">data</tspan>
                   </text>
                 ) : (
                   <>
                     <rect x={bx} y={by} width={barWidth} height={Math.max(barH, 2)} fill="#10b981" fillOpacity={0.85} rx={1} />
-                    <text x={bx + barWidth / 2} y={by - 4} textAnchor="middle" className="fill-current" style={{ fontSize: 9, opacity: 0.7 }}>{bin.total}</text>
+                    {/* Wilson 95% CI whisker */}
+                    <line x1={cx} x2={cx} y1={yScale(ciLow)} y2={yScale(ciHigh)} stroke="#111827" strokeWidth={1} strokeOpacity={0.5} />
+                    <line x1={cx - 3} x2={cx + 3} y1={yScale(ciHigh)} y2={yScale(ciHigh)} stroke="#111827" strokeWidth={1} strokeOpacity={0.5} />
+                    <line x1={cx - 3} x2={cx + 3} y1={yScale(ciLow)} y2={yScale(ciLow)} stroke="#111827" strokeWidth={1} strokeOpacity={0.5} />
+                    <text x={cx} y={yScale(ciHigh) - 4} textAnchor="middle" className="fill-current" style={{ fontSize: 9, opacity: 0.7 }}>{bin.total}</text>
                   </>
                 )}
                 <text x={bx + barWidth / 2} y={innerH + 12} textAnchor="end" transform={`rotate(-45, ${bx + barWidth / 2}, ${innerH + 12})`} className="fill-current" style={{ fontSize: 9, opacity: 0.7 }}>{bin.label}</text>

@@ -1,0 +1,110 @@
+Original-paper author h-index match report
+generated: 2026-07-14   csv: replications_database_2026_07_13_201507.csv
+source: SciSciNet-v2 dashboard SQLite snapshot (derived from OpenAlex), backup dated 2026-01-29
+
+CSV rows: 7545; rows with an original DOI: 7287
+unique DOIs: 5003; matched with author h-index data: 4909 (98.1%); unmatched: 86; matched but no author records: 8
+
+mean h-index per paper: n=4909, min 0.0, p25 24.0, median 38.8, p75 58.2, p90 82.7, max 215.0
+max h-index per paper: n=4909, min 0, p25 40, median 67, p75 111, p90 175, max 434
+first-author h-index: n=4909, min 0, p25 14, median 28, p75 52, p90 81, max 413
+last-author h-index: n=4870, min 0, p25 23, median 47.0, p75 81, p90 122, max 434
+authors with h-index per paper: n=4909, min 1, p25 2, median 4, p75 8, p90 19, max 678
+
+papers matched but with no author records (8):
+  https://doi.org/10.1038/ng.940
+  https://doi.org/10.1056/nejmoa1307095
+  https://doi.org/10.1176/ajp.133.6.646
+  https://doi.org/10.2307/3133909
+  https://doi.org/10.3982/ecta9626
+  https://doi.org/10.4324/9780203865972-24
+  https://doi.org/10.5771/9783845253862_115
+  https://doi.org/10.5860/choice.34-2458
+
+unmatched DOIs (86):
+  https://doi.org/10.1002/jae.944
+  https://doi.org/10.1002/npr2.70010
+  https://doi.org/10.1002/pam.2013.32.issue-3
+  https://doi.org/10.1007/s00406-022-01461-w
+  https://doi.org/10.1007/s00415-006-0416-4
+  https://doi.org/10.1007/s10887-006-9009-4
+  https://doi.org/10.1016/0028-3932(92)90144-4
+  https://doi.org/10.1016/0191-8869(89)90238-7
+  https://doi.org/10.1016/1054-139x(94)90042-6
+  https://doi.org/10.1016/j.beth.2007.08.009
+  https://doi.org/10.1016/j.brs.2017.05.002
+  https://doi.org/10.1016/j.brs.2020.01.005
+  https://doi.org/10.1016/j.concog.2008.11.006
+  https://doi.org/10.1016/j.cub.2010.12.009
+  https://doi.org/10.1016/j.schres.2004.12.007
+  https://doi.org/10.1016/j.schres.2005.04.011
+  https://doi.org/10.1016/j.schres.2005.10.018
+  https://doi.org/10.1016/j.tsc.2025.102094
+  https://doi.org/10.1016/s0022-1031%2802%2900011-2
+  https://doi.org/10.1016/s0140-6736(05)63387-9
+  https://doi.org/10.1016/s0140-6736(05)65139-2
+  https://doi.org/10.1016/s0140-6736(99)00665-0
+  https://doi.org/10.1016/s0191-8869(97)00198-2
+  https://doi.org/10.1016/s0920-9964(02)00349-3
+  https://doi.org/10.1017/s2045796019000337
+  https://doi.org/10.1037/0003-066x.54.6.408
+  https://doi.org/10.1037/xge0000157
+  https://doi.org/10.1038/35079151
+  https://doi.org/10.1038/5009
+  https://doi.org/10.1038/mp.2015.118
+  https://doi.org/10.1038/ng.429
+  https://doi.org/10.1038/ng0398-211
+  https://doi.org/10.1038/s41562-018-0520-3
+  https://doi.org/10.1038/s41586-023-06355-3
+  https://doi.org/10.1038/s41598-021-00055-6
+  https://doi.org/10.1038/scep05340
+  https://doi.org/10.1038/sj.bmt.1705850
+  https://doi.org/10.1056/nejmc1414754
+  https://doi.org/10.1073/pnas.2300949100
+  https://doi.org/10.1080/02699931.2013.832653
+  https://doi.org/10.1093/schbul/sbi021
+  https://doi.org/10.1097/qad.0b013e32833d4237
+  https://doi.org/10.1109/icse.2013.6606538
+  https://doi.org/10.1111/1467-6494.t01-1-00090
+  https://doi.org/10.1111/1467-9280.t2-01-01
+  https://doi.org/10.1111/cdev.130
+  https://doi.org/10.1111/desc.1998.1.issue-2
+  https://doi.org/10.1111/j.1467-9280.2006.01809.x
+  https://doi.org/10.1111/j.1467-9922.2012.00729
+  https://doi.org/10.1126/science.1146554
+  https://doi.org/10.1126/science.1246799
+  https://doi.org/10.1126/science.1439826
+  https://doi.org/10.1136/jmg.2003.017954
+  https://doi.org/10.1136/jmg.40.12.933
+  https://doi.org/10.1145/3173574
+  https://doi.org/10.1161/01.atv.0000147304.67100.ee
+  https://doi.org/10.1161/circulationaha.105.576533
+  https://doi.org/10.1167/jov.25.3.6
+  https://doi.org/10.1177/0022427812448399
+  https://doi.org/10.1177/0146167212475225
+  https://doi.org/10.1177/0956797610395708
+  https://doi.org/10.1177/0956797612474672
+  https://doi.org/10.1177/0956797619841264
+  https://doi.org/10.1177/216770261875768
+  https://doi.org/10.1186/s12889-025-24026-y
+  https://doi.org/10.1212/wnl.0b013e3181eee901
+  https://doi.org/10.1257/aer.83.4.685
+  https://doi.org/10.1371/journal.pone.036473
+  https://doi.org/10.15027/52179
+  https://doi.org/10.18053/jctres.05.202004.003
+  https://doi.org/10.2190/de.39.3
+  https://doi.org/10.2190/de.42.4
+  https://doi.org/10.2196/20572
+  https://doi.org/10.31234/osf.io/y2g6s_v1
+  https://doi.org/10.3386/w10435
+  https://doi.org/10.3386/w11591
+  https://doi.org/10.3386/w13305
+  https://doi.org/10.3386/w4248
+  https://doi.org/10.3386/w5758
+  https://doi.org/10.3899/jrheum.140573
+  https://doi.org/10.5465/amj.2010.0962
+  https://doi.org/10.6129/cjp.2003.4501.07
+  https://doi.org/10.64152/10125/44748
+  https://doi.org/10.65030/idr.02004
+  https://doi.org/10.7554/elife.63751.sa2
+  https://doi.org/10.7916/d8b27s91

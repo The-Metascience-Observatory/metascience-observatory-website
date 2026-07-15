@@ -111,19 +111,29 @@ export default function ByJournalPage() {
       }
     }
 
-    // Step 2: Classify each paper at the current threshold
+    // Step 2: Classify each paper at the current threshold. Journal names are
+    // grouped case-insensitively (with collapsed whitespace) so case variants
+    // like "Nature Genetics" / "Nature genetics" don't split into two rows; the
+    // best-cased spelling seen is kept for display.
+    const normJournal = (s: string) => s.trim().toLowerCase().replace(/\s+/g, " ");
+    const upperCount = (s: string) => (s.match(/[A-Z]/g) ?? []).length;
     const journalCounts = new Map<
       string,
-      { replicated: number; notReplicated: number }
+      { display: string; replicated: number; notReplicated: number }
     >();
 
     for (const paper of papers.values()) {
       if (paper.totalCount === 0) continue;
 
-      const entry = journalCounts.get(paper.journal) || {
+      const key = normJournal(paper.journal);
+      const entry = journalCounts.get(key) || {
+        display: paper.journal,
         replicated: 0,
         notReplicated: 0,
       };
+      if (upperCount(paper.journal) > upperCount(entry.display)) {
+        entry.display = paper.journal;
+      }
 
       const rate = paper.successCount / paper.totalCount;
       if (rate >= threshold) {
@@ -132,16 +142,16 @@ export default function ByJournalPage() {
         entry.notReplicated++;
       }
 
-      journalCounts.set(paper.journal, entry);
+      journalCounts.set(key, entry);
     }
 
     // Step 3: Filter to journals with MIN_PAPERS+ papers, compute percentages + CI
-    return Array.from(journalCounts.entries())
-      .map(([journal, v]) => {
+    return Array.from(journalCounts.values())
+      .map(({ display, ...v }) => {
         const total = v.replicated + v.notReplicated;
         const [ciLow, ciHigh] = wilsonCI(v.replicated, total);
         return {
-          journal,
+          journal: display,
           ...v,
           total,
           replicatedPct: total > 0 ? (v.replicated / total) * 100 : 0,

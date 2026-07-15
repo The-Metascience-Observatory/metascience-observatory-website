@@ -1,0 +1,70 @@
+Original-paper citation match report
+generated: 2026-07-13   csv: replications_database_2026_05_17_071121.csv   source: OpenAlex API
+
+CSV rows: 7527; rows with an original DOI: 7269
+unique DOIs: 4986; matched in OpenAlex: 4949 (99.3%); unmatched: 37
+papers with a publication year (trajectory available): 4948
+
+cited_by_count distribution: min 0, median 104, p90 766, max 49232
+publication years: 1898-2025
+
+papers where |sum(group_by) - cited_by_count| > max(10, 10%): 25
+  https://doi.org/10.1002/gps.5104  cited_by_count=59  group_by_sum=35
+  https://doi.org/10.1002/jclp.22539  cited_by_count=138  group_by_sum=123
+  https://doi.org/10.1007/s00408-010-9236-5  cited_by_count=34  group_by_sum=22
+  https://doi.org/10.1007/s10683-011-9281-9  cited_by_count=99  group_by_sum=80
+  https://doi.org/10.1007/s11302-017-9559-2  cited_by_count=37  group_by_sum=25
+  https://doi.org/10.1016/j.fertnstert.2006.04.027  cited_by_count=54  group_by_sum=28
+  https://doi.org/10.1016/j.jclinepi.2020.01.008  cited_by_count=700  group_by_sum=604
+  https://doi.org/10.1016/j.resuscitation.2020.12.022  cited_by_count=43  group_by_sum=32
+  https://doi.org/10.1038/ncomms8041  cited_by_count=130  group_by_sum=104
+  https://doi.org/10.1038/ng.2384  cited_by_count=749  group_by_sum=616
+  https://doi.org/10.1038/ng.732  cited_by_count=857  group_by_sum=721
+  https://doi.org/10.1038/s41467-019-09671-3  cited_by_count=263  group_by_sum=206
+  https://doi.org/10.1080/15374416.2015.1020540  cited_by_count=192  group_by_sum=169
+  https://doi.org/10.1093/hmg/ddv232  cited_by_count=190  group_by_sum=154
+  https://doi.org/10.1111/cob.12077  cited_by_count=41  group_by_sum=21
+  https://doi.org/10.1111/j.1365-2982.2012.01937.x  cited_by_count=91  group_by_sum=73
+  https://doi.org/10.1136/ard.2008.093252  cited_by_count=37  group_by_sum=17
+  https://doi.org/10.1136/bmj.n1864  cited_by_count=64  group_by_sum=51
+  https://doi.org/10.1136/jech-2013-202658  cited_by_count=65  group_by_sum=43
+  https://doi.org/10.1177/0959683615609754  cited_by_count=98  group_by_sum=74
+
+unmatched DOIs (37):
+  https://doi.org/10.1002/pam.2013.32.issue-3
+  https://doi.org/10.1007/s00406-022-01461-w
+  https://doi.org/10.1016/0028-3932(92)90144-4
+  https://doi.org/10.1016/0191-8869(89)90238-7
+  https://doi.org/10.1016/1054-139x(94)90042-6
+  https://doi.org/10.1016/j.beth.2007.08.009
+  https://doi.org/10.1016/s0022-1031%2802%2900011-2
+  https://doi.org/10.1016/s0191-8869(97)00198-2
+  https://doi.org/10.1037//0002-9432.71.3.379
+  https://doi.org/10.1038/npjparkd.2016.12
+  https://doi.org/10.1038/scep05340
+  https://doi.org/10.1056/nejmc1414754
+  https://doi.org/10.1073/pnas.2300949100
+  https://doi.org/10.1093/schbul/sbi021
+  https://doi.org/10.1097/qad.0b013e32833d4237
+  https://doi.org/10.1109/icse.2013.6606538
+  https://doi.org/10.1111/1467-6494.t01-1-00090
+  https://doi.org/10.1111/1467-9280.t2-01-01
+  https://doi.org/10.1111/cdev.130
+  https://doi.org/10.1111/j.1467-9922.2012.00729
+  https://doi.org/10.1111/ssqu.12566
+  https://doi.org/10.1161/circulationaha.105.576533
+  https://doi.org/10.1177/0022427812448399
+  https://doi.org/10.1177/0956797610395708
+  https://doi.org/10.1177/107118138002400197
+  https://doi.org/10.1177/216770261875768
+  https://doi.org/10.1212/wnl.0b013e3181eee901
+  https://doi.org/10.1257/aer.83.4.685
+  https://doi.org/10.13109/prkk.2020.69.6.541
+  https://doi.org/10.1371/journal.pone.0046154
+  https://doi.org/10.1371/journal.pone.036473
+  https://doi.org/10.15027/52179
+  https://doi.org/10.18053/jctres.05.202004.003
+  https://doi.org/10.2190/de.39.3
+  https://doi.org/10.2190/de.42.4
+  https://doi.org/10.31234/osf.io/y2g6s_v1
+  https://doi.org/10.6129/cjp.2003.4501.07

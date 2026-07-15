@@ -25,9 +25,6 @@ export function YearChart({ years }: { years: number[] }) {
   const data: { year: number; count: number }[] = [];
   for (let y = min; y <= max; y++) data.push({ year: y, count: counts.get(y) ?? 0 });
 
-  // Thin the x-axis labels to ~14 regardless of span.
-  const interval = Math.max(0, Math.ceil(data.length / 14) - 1);
-
   return (
     <div className="border border-border rounded-lg bg-white p-6 mb-8">
       <h2 className="text-lg font-semibold mb-3">
@@ -39,7 +36,9 @@ export function YearChart({ years }: { years: number[] }) {
           <XAxis
             dataKey="year"
             type="category"
-            interval={interval}
+            interval="preserveStartEnd"
+            minTickGap={20}
+            tickMargin={6}
             fontSize={12}
             tickLine={false}
           />

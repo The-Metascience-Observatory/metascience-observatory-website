@@ -24,6 +24,8 @@ const SUCCESS_DEF_OPTIONS: { value: SuccessDef; label: string }[] = [
 ];
 
 // Fixed significance-threshold bins for the original finding's p-value.
+// Only originally-significant findings (p < 0.05) are charted, so there is no
+// "> 0.05" bin — a non-significant original has no comparable "replication rate".
 const P_BINS: { label: string; lo: number; hi: number }[] = [
   { label: "< 0.001", lo: 0, hi: 0.001 },
   { label: "0.001–0.01", lo: 0.001, hi: 0.01 },
@@ -31,7 +33,6 @@ const P_BINS: { label: string; lo: number; hi: number }[] = [
   { label: "0.02–0.03", lo: 0.02, hi: 0.03 },
   { label: "0.03–0.04", lo: 0.03, hi: 0.04 },
   { label: "0.04–0.05", lo: 0.04, hi: 0.05 },
-  { label: "> 0.05", lo: 0.05, hi: Infinity },
 ];
 
 // Minimum number of effect replications in a bin before we draw a rate bar.
@@ -56,6 +57,22 @@ function wilsonCI(k: number, n: number): [number, number] {
   const center = (p + (z * z) / (2 * n)) / denom;
   const margin = (z * Math.sqrt((p * (1 - p)) / n + (z * z) / (4 * n * n))) / denom;
   return [Math.max(0, center - margin) * 100, Math.min(1, center + margin) * 100];
+}
+
+// Build a PBin from success/failure tallies, sharing the Wilson CI and the
+// "below MIN_N ⇒ don't score" convention used across all three bar sets.
+function makeBin(label: string, success: number, failure: number): PBin {
+  const total = success + failure;
+  const [ciLow, ciHigh] = wilsonCI(success, total);
+  return {
+    label,
+    success,
+    failure,
+    total,
+    rate: total >= MIN_N ? (success / total) * 100 : -1,
+    ciLow,
+    ciHigh,
+  };
 }
 
 /**
@@ -109,6 +126,9 @@ function PValueBars({ bins }: { bins: PBin[] }) {
               <text x={-10} y={yScale(t)} dy="0.32em" textAnchor="end" className="text-xs fill-current" style={{ opacity: 0.7 }}>{t}%</text>
             </g>
           ))}
+          {/* Enclosing axis lines that hug the plot (left + bottom), matching the by-year charts */}
+          <line x1={0} x2={0} y1={0} y2={innerH} stroke="#000000" strokeWidth={1} />
+          <line x1={0} x2={innerW} y1={innerH} y2={innerH} stroke="#000000" strokeWidth={1} />
           {bins.map((bin, i) => {
             const bx = offsetX + i * (barWidth + barGap);
             const cx = bx + barWidth / 2;
@@ -144,6 +164,112 @@ function PValueBars({ bins }: { bins: PBin[] }) {
           })}
           <text x={-innerH / 2} y={-40} textAnchor="middle" transform="rotate(-90)" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 11 }}>Replication Success Rate (%)</text>
           <text x={innerW / 2} y={innerH + 48} textAnchor="middle" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 11 }}>p-value of the Original Finding</text>
+        </g>
+      </svg>
+    </div>
+  );
+}
+
+// Chart 2: the six range bins (green, exact p-values only) followed by a separated
+// group of imputed "p < X" bound bars (amber), so studies whose original p was only
+// reported as an upper bound are visible rather than silently dropped.
+function PValueBarsWithBounds({ rangeBins, boundBars }: { rangeBins: PBin[]; boundBars: PBin[] }) {
+  const width = 720;
+  const height = 340;
+  const margin = { top: 16, right: 16, bottom: 84, left: 52 };
+  const innerW = width - margin.left - margin.right;
+  const innerH = height - margin.top - margin.bottom;
+
+  const nBars = rangeBins.length + boundBars.length;
+  const barGap = 10;
+  const groupGap = 34; // extra space between the range group and the bound group
+  const barWidth = Math.max(
+    18,
+    Math.min(60, (innerW - barGap * (nBars - 1) - groupGap) / Math.max(nBars, 1)),
+  );
+  const totalBarsWidth = nBars * barWidth + (nBars - 1) * barGap + (boundBars.length > 0 ? groupGap : 0);
+  const offsetX = (innerW - totalBarsWidth) / 2;
+
+  // x of bar i (a group gap is inserted before the first bound bar)
+  const xAt = (i: number) =>
+    offsetX + i * (barWidth + barGap) + (i >= rangeBins.length ? groupGap : 0);
+
+  const yScale = (v: number) => innerH - (v / 100) * innerH;
+  const yTicks = [0, 20, 40, 60, 80, 100];
+
+  const bars = [
+    ...rangeBins.map((bin) => ({ bin, color: "#10b981" })),
+    ...boundBars.map((bin) => ({ bin, color: "#f59e0b" })),
+  ];
+  const dividerX =
+    rangeBins.length > 0 && boundBars.length > 0
+      ? xAt(rangeBins.length) - barGap / 2 - groupGap / 2
+      : null;
+
+  return (
+    <div className="relative">
+      <svg
+        width={width}
+        height={height}
+        viewBox={`0 0 ${width} ${height}`}
+        preserveAspectRatio="xMidYMid meet"
+        className="max-w-full h-auto"
+      >
+        <g transform={`translate(${margin.left},${margin.top})`}>
+          <rect x={0} y={0} width={innerW} height={innerH} fill="#f3f4f6" />
+          {yTicks.map((t) => (
+            <g key={`y-${t}`}>
+              <line x1={0} y1={yScale(t)} x2={innerW} y2={yScale(t)} stroke="#d1d5db" strokeWidth={0.5} />
+              <line x1={-6} x2={0} y1={yScale(t)} y2={yScale(t)} stroke="#111827" strokeWidth={1} />
+              <text x={-10} y={yScale(t)} dy="0.32em" textAnchor="end" className="text-xs fill-current" style={{ opacity: 0.7 }}>{t}%</text>
+            </g>
+          ))}
+          {dividerX != null && (
+            <line x1={dividerX} x2={dividerX} y1={0} y2={innerH} stroke="#9ca3af" strokeWidth={1} strokeDasharray="3 3" />
+          )}
+          {bars.map(({ bin, color }, i) => {
+            const bx = xAt(i);
+            const cx = bx + barWidth / 2;
+            const insufficientData = bin.rate < 0;
+            const barH = insufficientData ? 0 : (bin.rate / 100) * innerH;
+            const by = innerH - barH;
+            return (
+              <g key={`${bin.label}-${i}`}>
+                <title>
+                  {insufficientData
+                    ? `${bin.label}: insufficient data (${bin.total} replications)`
+                    : `${bin.label}: ${bin.rate.toFixed(1)}% success (${bin.success}/${bin.total}) · 95% CI [${bin.ciLow.toFixed(1)}%–${bin.ciHigh.toFixed(1)}%]`}
+                </title>
+                {insufficientData ? (
+                  <text x={cx} y={innerH - 24} textAnchor="middle" className="fill-current" style={{ fontSize: 8, opacity: 0.4 }}>
+                    <tspan x={cx} dy="0">not</tspan>
+                    <tspan x={cx} dy="10">enough</tspan>
+                    <tspan x={cx} dy="10">data</tspan>
+                  </text>
+                ) : (
+                  <>
+                    <rect x={bx} y={by} width={barWidth} height={Math.max(barH, 2)} fill={color} fillOpacity={0.85} rx={1} />
+                    <line x1={cx} x2={cx} y1={yScale(bin.ciLow)} y2={yScale(bin.ciHigh)} stroke="#111827" strokeWidth={1} strokeOpacity={0.5} />
+                    <line x1={cx - 4} x2={cx + 4} y1={yScale(bin.ciHigh)} y2={yScale(bin.ciHigh)} stroke="#111827" strokeWidth={1} strokeOpacity={0.5} />
+                    <line x1={cx - 4} x2={cx + 4} y1={yScale(bin.ciLow)} y2={yScale(bin.ciLow)} stroke="#111827" strokeWidth={1} strokeOpacity={0.5} />
+                    <text x={cx} y={yScale(bin.ciHigh) - 4} textAnchor="middle" className="fill-current" style={{ fontSize: 10, opacity: 0.75 }}>n={bin.total}</text>
+                  </>
+                )}
+                <text x={cx} y={innerH + 16} textAnchor="middle" className="fill-current" style={{ fontSize: 10, opacity: 0.75 }}>{bin.label}</text>
+              </g>
+            );
+          })}
+          {rangeBins.length > 0 && (
+            <text x={xAt(0)} y={innerH + 44} textAnchor="start" className="fill-current" style={{ fontSize: 10, opacity: 0.55 }}>
+              exact p-values (by range)
+            </text>
+          )}
+          {boundBars.length > 0 && (
+            <text x={xAt(rangeBins.length)} y={innerH + 44} textAnchor="start" style={{ fontSize: 10, fill: "#b45309" }}>
+              reported only as a bound
+            </text>
+          )}
+          <text x={-innerH / 2} y={-40} textAnchor="middle" transform="rotate(-90)" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 11 }}>Replication Success Rate (%)</text>
         </g>
       </svg>
     </div>
@@ -265,37 +391,70 @@ export default function ByPValuePage() {
     fetchData();
   }, []);
 
-  const bins: PBin[] = useMemo(() => {
-    const counts = P_BINS.map(() => ({ success: 0, failure: 0 }));
+  // Three bar sets, all computed in one pass:
+  //  • chart1Bins      – six range bins; exact p's bin at face value, imputed "p < X"
+  //                       bounds are folded in only when X ≤ 0.001 (into the < 0.001 bar).
+  //  • chart2RangeBins – the same six range bins but from EXACT p-values only.
+  //  • chart2BoundBars – imputed "p < X" bounds pulled out as their own bars, grouped by
+  //                       cutoff (only groups with ≥ MIN_N are kept).
+  // All three exclude null originals (p ≥ 0.05) from the range bins; the bound bars keep
+  // "p < .05" because that is a genuinely significant (if imprecise) finding.
+  const { chart1Bins, chart2RangeBins, chart2BoundBars } = useMemo(() => {
+    const c1 = P_BINS.map(() => ({ success: 0, failure: 0 }));
+    const c2 = P_BINS.map(() => ({ success: 0, failure: 0 }));
+    const boundGroups = [
+      { key: "lt001", label: "p < .001", success: 0, failure: 0 },
+      { key: "lt01", label: "p < .01", success: 0, failure: 0 },
+      { key: "lt05", label: "p < .05", success: 0, failure: 0 },
+      { key: "other", label: "other bounds", success: 0, failure: 0 },
+    ];
+    const bump = (g: { success: number; failure: number }, ok: boolean) =>
+      ok ? g.success++ : g.failure++;
+
     if (data) {
       for (const row of data.rows) {
         const p = toNumber(row.original_p_value);
         if (p == null || p < 0) continue;
         const outcome = classifyRow(row, successDef);
         if (outcome == null) continue;
-        const idx = P_BINS.findIndex((b) => p >= b.lo && p < b.hi);
-        if (idx < 0) continue;
-        if (outcome === "success") counts[idx].success++;
-        else counts[idx].failure++;
+        const ok = outcome === "success";
+        const isLt = String(row.original_p_value_type ?? "").trim() === "<";
+
+        // Chart 2 imputed-bound bars: significant bounds only (p ≤ 0.05).
+        if (isLt && p <= 0.05) {
+          if (p <= 0.001) bump(boundGroups[0], ok);
+          else if (p === 0.01) bump(boundGroups[1], ok);
+          else if (p === 0.05) bump(boundGroups[2], ok);
+          else bump(boundGroups[3], ok); // 0.001 < p < 0.05, p ≠ 0.01
+        }
+
+        // Range bins exclude null originals (also drops exact-0.05 and "p < .05").
+        if (p >= 0.05) continue;
+
+        if (isLt) {
+          // Chart 1 only: fold a trustworthy "p < X" (X ≤ 0.001) into the < 0.001 bar.
+          if (p <= 0.001) bump(c1[0], ok);
+          // coarser bounds are not charted in chart 1, and never in the exact-only chart 2 range bins.
+        } else {
+          const idx = P_BINS.findIndex((b) => p >= b.lo && p < b.hi);
+          if (idx >= 0) {
+            bump(c1[idx], ok);
+            bump(c2[idx], ok);
+          }
+        }
       }
     }
-    return P_BINS.map((b, i) => {
-      const { success, failure } = counts[i];
-      const total = success + failure;
-      const [ciLow, ciHigh] = wilsonCI(success, total);
-      return {
-        label: b.label,
-        success,
-        failure,
-        total,
-        rate: total >= MIN_N ? (success / total) * 100 : -1,
-        ciLow,
-        ciHigh,
-      };
-    });
+
+    return {
+      chart1Bins: P_BINS.map((b, i) => makeBin(b.label, c1[i].success, c1[i].failure)),
+      chart2RangeBins: P_BINS.map((b, i) => makeBin(b.label, c2[i].success, c2[i].failure)),
+      chart2BoundBars: boundGroups
+        .map((g) => makeBin(g.label, g.success, g.failure))
+        .filter((b) => b.total >= MIN_N),
+    };
   }, [data, successDef]);
 
-  const totalReplications = bins.reduce((s, b) => s + b.total, 0);
+  const totalReplications = chart1Bins.reduce((s, b) => s + b.total, 0);
 
   // z-curve: fit on the significant original test statistics that also have a
   // replication outcome, so the model-predicted rate (ERR) describes exactly the
@@ -338,19 +497,23 @@ export default function ByPValuePage() {
         <div className="max-w-4xl mx-auto space-y-8">
           <div>
             <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
-              Replication Rate by p-value of the Original Finding
+              Replication rate by p-value of the original finding
             </h1>
             <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
               Effect-level analysis: each replication is placed in a bin according to the p-value
               reported for the <em>original</em> finding, and we show what fraction of replications in
-              each bin were successful. Only replications that record an original p-value are
-              included ({totalReplications.toLocaleString()} replications under the current definition).
-              Bins with fewer than {MIN_N} replications are not scored. Whiskers are Wilson 95% confidence intervals.
+              each bin were successful. Only <strong>originally-significant</strong> findings (original
+              p &lt; 0.05) are included ({totalReplications.toLocaleString()} replications under the
+              current definition) — when the original found no effect, &ldquo;replication rate&rdquo; is
+              not comparable. Bins with fewer than {MIN_N} replications are not scored. Whiskers are
+              Wilson 95% confidence intervals.
             </p>
             <p className="mt-2 text-xs text-gray-400 dark:text-gray-500">
-              Findings just under the conventional p = 0.05 threshold tend to replicate less often — but
-              note that original p-values near 0.05 are also more vulnerable to publication and selection
-              effects, so read the right-hand bins with care.
+              Findings just under the conventional p = 0.05 threshold tend to replicate less often.
+              About a fifth of original p-values are recorded only as an upper bound
+              (&ldquo;p &lt; X&rdquo;): the first chart charts such a bound only when X ≤ 0.001 (it
+              clearly belongs in the &lt; 0.001 bar); the second chart shows the coarser bounds
+              (p &lt; .01, p &lt; .05, …) as their own bars.
             </p>
           </div>
 
@@ -378,41 +541,20 @@ export default function ByPValuePage() {
             </a>
           </div>
 
-          {/* Chart */}
-          <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-            <PValueBars bins={bins} />
+          {/* Chart 1 — precise p-values */}
+          <div className="space-y-2">
+            <h2 className="text-lg font-semibold">Precise p-values</h2>
+            <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+              <PValueBars bins={chart1Bins} />
+            </div>
           </div>
 
-          {/* Companion table */}
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300">
-                  <th className="p-2 text-left font-medium">Original p-value</th>
-                  <th className="p-2 text-right font-medium">Successful</th>
-                  <th className="p-2 text-right font-medium">Failed</th>
-                  <th className="p-2 text-right font-medium">Total</th>
-                  <th className="p-2 text-right font-medium">Success rate</th>
-                  <th className="p-2 text-right font-medium">95% CI</th>
-                </tr>
-              </thead>
-              <tbody>
-                {bins.map((b) => (
-                  <tr key={b.label} className="border-b border-gray-100 dark:border-gray-800">
-                    <td className="p-2 text-left tabular-nums">{b.label}</td>
-                    <td className="p-2 text-right tabular-nums">{b.success}</td>
-                    <td className="p-2 text-right tabular-nums">{b.failure}</td>
-                    <td className="p-2 text-right tabular-nums">{b.total}</td>
-                    <td className="p-2 text-right tabular-nums">
-                      {b.rate < 0 ? <span className="opacity-40">—</span> : `${b.rate.toFixed(1)}%`}
-                    </td>
-                    <td className="p-2 text-right tabular-nums text-gray-500 dark:text-gray-400">
-                      {b.rate < 0 ? <span className="opacity-40">—</span> : `${b.ciLow.toFixed(0)}–${b.ciHigh.toFixed(0)}%`}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          {/* Chart 2 — including imputed bounds */}
+          <div className="space-y-2">
+            <h2 className="text-lg font-semibold">Replication rate by p-value of original finding</h2>
+            <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+              <PValueBarsWithBounds rangeBins={chart2RangeBins} boundBars={chart2BoundBars} />
+            </div>
           </div>
 
           {/* z-curve: observed vs expected replication rate */}

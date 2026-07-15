@@ -68,3 +68,5 @@ replications_database_2026_04_16_143640.csv # added missing_years_to_reingest.cs
 replications_database_2026_04_21_130029.csv  # author name remediation (320 rows updated)
 replications_database_2026_05_06_201210.csv # added 8th_batch_collated_results_v8.5.csv
 replications_database_2026_05_17_071121.csv # added collated_results_v8.5.csv
+replications_database_2026_07_13_201507.csv # added eerp_2016_extraction.json
+replications_database_2026_07_14_182338.csv # added EROE effect sizes/CIs/Ns from OSF reproduction kit (osf.io/sk82q)

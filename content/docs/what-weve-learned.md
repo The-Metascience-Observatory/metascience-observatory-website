@@ -4,7 +4,7 @@
 (NOTE: THIS PAGE IS AI GENERATED!! )
 
 
-*A metascience-level read of the aggregate [replications database](https://metascienceobservatory.org/replications-database). Figures below are computed from database version `2026_05_17` (**7,524 replication pairs**) and will be refreshed as the database grows.*
+*A metascience-level read of the aggregate [replications database](https://metascienceobservatory.org/replications-database). Figures below are computed from database version `2026_07_13` (**7,545 replication pairs**) and will be refreshed as the database grows.*
 
 > **How to read these numbers first.** This database is a **convenience corpus** assembled from systematic replication initiatives plus AI-assisted harvesting of the published literature — it is **not a random sample of science**. The rates below describe *this collection*, not "the fraction of all published science that replicates." About **73%** of rows are AI-curated and not yet human-validated, and the meaning of "success" varies by source (original judgment by replication authors, by a human curator, or by the AI). Treat every headline number as conditional on these caveats, which are spelled out at the bottom.
 
@@ -14,16 +14,16 @@ With that framing, several findings are robust enough to state plainly.
 
 ## 1. Roughly 45% of published findings replicate — and the number sharpens as the method tightens
 
-Across all 7,524 rows, the raw outcome split is **success 46.4% · failure 35.8% · inconclusive 14.2% · reversal 1.8%**. Counting only definitive outcomes (excluding inconclusive), success / (success + failure) = **56.5%**.
+Across all 7,545 rows, the raw outcome split is **success 46.4% · failure 35.7% · inconclusive 14.1% · reversal 1.8%**. Counting only definitive outcomes (excluding inconclusive), success / (success + failure) = **56.5%**.
 
 But that loose figure is inflated by lenient replication designs. As you restrict to the most rigorous subset, the rate converges on a lower, more credible value:
 
 | Subset | n | Success / (success + failure) |
 |---|---|---|
-| All definitive rows | 6,179 | 56.5% |
-| Major coordinated replication initiatives | 1,506 | **46%** |
-| Direct replications only | 2,047 | **44%** |
-| Direct **and** human-validated ("gold standard") | 1,859 | **45%** |
+| All definitive rows | 6,199 | 56.5% |
+| Major coordinated replication initiatives | 1,524 | **46%** |
+| Direct replications only | 2,065 | **44%** |
+| Direct **and** human-validated ("gold standard") | 1,869 | **45%** |
 
 **Conclusion:** when judged by the cleanest available evidence — direct, human-validated replications from coordinated initiatives — **a little under half of published effects replicate**. This holds across fields, not just psychology.
 
@@ -31,12 +31,12 @@ But that loose figure is inflated by lenient replication designs. As you restric
 
 ## 2. The most reliable signal is shrinkage, not pass/fail
 
-Binary "did it replicate?" labels hide a more consistent and quantitative result: **published effect sizes systematically shrink on replication.** Among 1,773 study pairs with effect sizes converted to a common Pearson $r$ scale (see [Effect size normalization](/docs/effect-size-normalization)):
+Binary "did it replicate?" labels hide a more consistent and quantitative result: **published effect sizes systematically shrink on replication.** Among 1,791 study pairs with effect sizes converted to a common Pearson $r$ scale (see [Effect size normalization](/docs/effect-size-normalization)):
 
 | Statistic | Original | Replication |
 |---|---|---|
-| Mean $\lvert r \rvert$ | 0.350 | **0.204** |
-| Median $\lvert r \rvert$ | 0.317 | **0.129** |
+| Mean $\lvert r \rvert$ | 0.352 | **0.205** |
+| Median $\lvert r \rvert$ | 0.317 | **0.130** |
 
 - Replications retain only **~58% of the original magnitude** on average (median: ~41%).
 - **~80%** of replications produce a *smaller* effect than the original.
@@ -50,7 +50,7 @@ Binary "did it replicate?" labels hide a more consistent and quantitative result
 
 ## 3. Statistical significance poorly predicts replicability
 
-Among studies where both the original and replication report a p-value (n = 953 with an originally significant result), only **57.5%** of originally significant findings ($p < 0.05$) remain significant on replication.
+Among studies where both the original and replication report a p-value (n = 969 with an originally significant result), only **57.6%** of originally significant findings ($p < 0.05$) remain significant on replication.
 
 **Conclusion:** an original "$p < 0.05$" carries only modest information about whether an effect is real. Significance is a weak instrument; effect size and its confidence interval are more informative.
 
@@ -62,11 +62,11 @@ The headline rate is highly sensitive to **how** a replication was conducted. Di
 
 | Replication type | n | Success rate |
 |---|---|---|
-| `direct` | 2,047 | **44%** |
+| `direct` | 2,065 | 44% |
 | `direct or close` | 1,423 | 54% |
 | `conceptual` | 379 | 52% |
 | `close experiment` | 1,303 | 62% |
-| `close extension` | 2,372 | **66%** |
+| `close extension` | 2,375 | 66% |
 
 **Conclusion:** apparent "success" climbs from 44% to 66% purely by loosening what counts as a replication. Any reported replication rate is meaningless without stating the design. See [Defining replication](/docs/defining-replication).
 
@@ -74,17 +74,19 @@ The headline rate is highly sensitive to **how** a replication was conducted. Di
 
 ## 5. What gets *chosen* for replication matters more than systematic vs. ad-hoc
 
-It is tempting to split this corpus into "coordinated replication initiatives" vs. "ad-hoc replications harvested from the literature" and compare success rates. Done crudely — every row belonging to a coordinated initiative on one side (1,506 rows, **46%**), every loose literature-harvested row on the other (6,018 rows, **59%**) — it looks like the ad-hoc literature is **13 points rosier**, as if published replications skew positive.
+It is tempting to split this corpus into "coordinated replication initiatives" vs. "ad-hoc replications harvested from the literature" and compare success rates. Done crudely — every row belonging to a coordinated initiative on one side (1,524 rows, **46%**), every loose literature-harvested row on the other (6,021 rows, **59%**) — it looks like the ad-hoc literature is **13 points rosier**, as if published replications skew positive.
 
 **That comparison is misleading, and the real signal is more interesting.** The "initiatives" bucket secretly mixes two opposite *selection strategies*, and pulling them apart dissolves the gap:
 
-| Selection strategy | n (definitive) | Success rate |
+| Selection strategy | # findings | Success rate |
 |---|---|---|
-| **Representative / systematically-sampled** initiatives (RP:P, DARPA SCORE, LOOPR, X-Phi, Cancer Biology, Brazilian Reproducibility Initiative, …) | 896 | **59%** |
+| **Representative / systematically-sampled** initiatives (RP:P, DARPA SCORE, LOOPR, X-Phi, Cancer Biology, Brazilian Reproducibility Initiative, …) | 914 | **59%** |
 | **Targeted mega-replications of famous / contested findings** (Many Labs, Registered Replication Reports) | 343 | **12%** |
-| Ad-hoc / literature-harvested replications | 4,940 | **59%** |
+| Ad-hoc / literature-harvested replications | 4,945 | **59%** |
 
-**Conclusion:** once you separate *how the target was chosen*, **representative-sampled replications (59%) and literature-harvested ones (59%) are indistinguishable.** The whole "coordinated initiatives look worse" effect was driven by the targeted mega-replications, which deliberately go after a handful of celebrated, hotly-contested effects — and find that **only ~12% hold up** (Many Labs 3 **6%**, Many Labs 4 **6%**, Many Labs 5 **10%**, Registered Replication Reports **12%**), versus broad-sampling projects that score high (Life Outcomes of Personality Replication Project **87%**, Experimental Philosophy Reproducibility Project **78%**, DARPA SCORE **68%**).
+*Counts are replication findings (many initiatives replicate several findings per paper) with a definitive outcome — success or failure.*
+
+**Conclusion:** once you separate *how the target was chosen*, **representative-sampled replications (59%) and literature-harvested ones (59%) are indistinguishable.** The whole "coordinated initiatives look worse" effect was driven by the targeted mega-replications, which deliberately go after a handful of celebrated, hotly-contested effects — and find that **only ~12% hold up** (Many Labs 3 **6%**, Many Labs 4 **6%**, Many Labs 5 **10%**, Registered Replication Reports **12%**), versus broad-sampling projects that score high (Life Outcomes of Personality Replication Project **87%**, Experimental Philosophy Reproducibility Project **78%**, DARPA SCORE **67%**).
 
 The load-bearing variable is **what gets picked for replication**, not whether the replication was part of an organized initiative. Hand-picking a famous, surprising claim — exactly the kind of selection that *also* drives which findings get harvested from the literature — is one of the strongest predictors of failure in the whole database. (Caveat: the literature-harvested 59% is the least-validated number in this corpus — ~73% AI-curated with heterogeneous "success" definitions — so read its parity with the representative initiatives as suggestive, not settled.)
 
@@ -95,15 +97,28 @@ Breaking representative-sampled and literature-harvested replications down by fi
 | Discipline | Representative-sampled initiatives | Literature-harvested |
 |---|---|---|
 | Psychology | **67%** (n=465) | **59%** (n=2,206) |
-| Medical fields | 41% (n=27) | 59% (n=1,146) |
+| Medical fields | 41% (n=27) | 59% (n=1,149) |
 | Neuroscience | 80% (n=44) | 59% (n=664) |
 | Biology | 33% (n=217) | 50% (n=344) |
-| Economics | 70% (n=23) | 63% (n=264) |
+| Economics | 66% (n=41) | 63% (n=266) |
 | Education | 79% (n=24) | 86% (n=73) |
+| Political science | 76% (n=38) | 53% (n=19) |
+| Marketing | 61% (n=23) | — (no literature-harvested rows) |
+| Sociology | 58% (n=19) | 50% (n=30) |
 
-*Cells show definitive-outcome success rate (success / (success + failure)); n is the definitive-row count. Small-n cells like the medical and economics representative samples should be read with caution.*
+*Cells show definitive-outcome success rate (success / (success + failure)); n is the definitive-row count. Small-n cells — the medical, economics, marketing, and sociology representative samples in particular — should be read with caution.*
 
-The clearest test is psychology, where both buckets are well-populated: **random-sampled psychology initiatives replicate *better* (67%) than one-off psychology replications harvested from the literature (59%)** — the opposite of the "systematic looks worse" story (the deliberately-targeted contested findings, covered in section 5 above, sit far lower at **12%**). Biology shows representative samples replicating *below* the literature (33% vs 50%), a reminder that "representative" still means "whatever effects that particular initiative chose to sample," and field-specific selection cuts both ways.
+**Which initiatives feed each representative cell** (initiative → definitive n). Several projects span multiple fields, so their rows are assigned by each paper's home discipline rather than lumped under one label:
+
+- **Psychology** (465): [Student Replication Projects](https://royalsocietypublishing.org/doi/10.1098/rsos.231240) 138, [Life Outcomes of Personality](https://doi.org/10.1177/0956797619831612) 117, [DARPA SCORE](https://doi.org/10.1038/s41586-025-10078-y) 82, [RP:Psychology](https://www.science.org/doi/10.1126/science.aac4716) 49, [X-Phi](https://zenodo.org/records/14296259/files/fulltext.pdf?download=1) 25, [EROE](https://www.nature.com/articles/s41562-024-02062-9) 22, [Sensory Marketing](https://www.frontiersin.org/journals/communication/articles/10.3389/fcomm.2022.1048896/full) 19, [Social Science Replication Project](https://pure.eur.nl/files/37359856/Camerer_et_al._2018_Evaluating_the_replicability_of_social_science_experiments_in_Nature_and_Science_between_2010_and_2015.pdf) 13
+- **Medical fields** (27): [Sports & Exercise Science](https://doi.org/10.1007/s40279-025-02201-w) 23, [3ie](https://www.3ieimpact.org/evidence-hub/publications/replication-papers) 4
+- **Neuroscience** (44): the neuroscience slices of [RP:Psychology](https://www.science.org/doi/10.1126/science.aac4716) 22, [X-Phi](https://zenodo.org/records/14296259/files/fulltext.pdf?download=1) 15, [EROE](https://www.nature.com/articles/s41562-024-02062-9) 4, [Student Replication](https://royalsocietypublishing.org/doi/10.1098/rsos.231240) 3
+- **Biology** (217): [Cancer Biology](https://elifesciences.org/articles/71601) 122, [Brazilian Reproducibility Initiative](https://www.biorxiv.org/content/10.1101/2025.04.02.645026v4) 95
+- **Economics** (41): [DARPA SCORE](https://doi.org/10.1038/s41586-025-10078-y) 18, [Experimental Economics Replication Project](https://www.science.org/cms/asset/febfa588-66f1-493b-afb8-268e0aaeb6a9/pap.pdf) 18, [3ie](https://www.3ieimpact.org/evidence-hub/publications/replication-papers) 5
+- **Education** (24), **Political science** (38), **Marketing** (23): [DARPA SCORE](https://doi.org/10.1038/s41586-025-10078-y) only
+- **Sociology** (19): [DARPA SCORE](https://doi.org/10.1038/s41586-025-10078-y) 17, [Student Replication](https://royalsocietypublishing.org/doi/10.1098/rsos.231240) 2
+
+The clearest test is psychology, where both buckets are well-populated: **random-sampled psychology initiatives replicate *better* (67%) than one-off psychology replications harvested from the literature (59%)** — the opposite of the "systematic looks worse" story (the deliberately-targeted contested findings, covered in section 5 above, sit far lower at **12%**). Biology shows representative samples replicating *below* the literature (33% vs 50%), a reminder that "representative" still means "whatever effects that particular initiative chose to sample," and field-specific selection cuts both ways. Note that the smaller fields (education, political science, marketing, and part of sociology) are populated almost entirely by **DARPA SCORE**, a deliberately cross-field initiative that sampled 60+ social-science journals; its papers are split to their home disciplines above. Marketing has no literature-harvested comparison at all, so its cell reflects the SCORE sample alone.
 
 ---
 
@@ -117,10 +132,10 @@ Restricting to disciplines with at least 40 rows (rates are confounded by which 
 | Medical fields | 1,449 | 58% | 0.257 | 0.187 |
 | Neuroscience | 827 | 60% | 0.419 | 0.229 |
 | Biology | 694 | 43% | 0.674 | 0.385 |
-| Economics | 373 | 63% | 0.373 | 0.236 |
-| Education | 118 | 85% | 0.344 | 0.189 |
+| Economics | 394 | 64% | 0.402 | 0.257 |
+| Education | 118 | 85% | 0.198 | 0.173 |
 
-**Conclusion:** the headline success rate varies by field, but **effect-size attenuation is universal** — replication magnitudes run ~50–73% of originals in every discipline measured. The shrinkage pattern, in particular, is not a quirk of any one field.
+**Conclusion:** the headline success rate varies by field, but **effect-size attenuation is universal** — replication magnitudes run ~55–75% of originals in every discipline measured except education, the smallest cell (32 effect-size pairs), where they retain ~87%. The shrinkage pattern, in particular, is not a quirk of any one field.
 
 ---
 
