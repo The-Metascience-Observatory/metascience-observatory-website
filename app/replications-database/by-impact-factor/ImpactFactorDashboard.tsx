@@ -53,6 +53,8 @@ function spearman(xs: number[], ys: number[]): number | null {
 
 const REPLICATED = "#10b981";
 const NOT_REPLICATED = "#f87171";
+// Bars in the binned rate charts, matching the by-year page.
+const BAR_COLOR = "#4f77bd";
 const POINT = "#2563eb";
 
 const CRITERION_OPTIONS = [
@@ -68,6 +70,7 @@ const METRIC_OPTIONS = [
   { value: 2, label: "CiteScore" },
   { value: 3, label: "OpenAlex 2-year mean citedness" },
   { value: 4, label: "SCImago SJR" },
+  { value: 5, label: "Cites / citable doc (SCImago, 3yr)" },
 ];
 // Metric indices that are a single current snapshot (no per-publication-year
 // series): the "publication year" basis has nothing year-specific to show, so
@@ -245,11 +248,19 @@ export function ImpactFactorDashboard({
   csvName: string;
 }) {
   const [criterion, setCriterion] = useState(0);
-  const [metric, setMetric] = useState(0);
+  const [metric, setMetric] = useState(3); // default: OpenAlex 2-year mean citedness
   const [basis, setBasis] = useState<"pub" | "recent">("pub");
+  // Snapshot-only metrics (OpenAlex 2yr mean citedness) have no per-publication-year
+  // series, so the basis is forced to the recent snapshot and the toggle is locked.
+  const lockBasis = SNAPSHOT_ONLY_METRICS.has(metric);
+  const effectiveBasis: "pub" | "recent" = lockBasis ? "recent" : basis;
+  useEffect(() => {
+    if (lockBasis) setBasis("recent");
+  }, [lockBasis]);
   const [threshold, setThreshold] = useState(0.75);
   const [minPapers, setMinPapers] = useState(15);
   const [repType, setRepType] = useState(-1); // -1 = all types
+  const [showCI, setShowCI] = useState(false);
 
   // Effect-level row counts per replication type, for the dropdown labels.
   const typeCounts = useMemo(() => {
@@ -307,7 +318,7 @@ export function ImpactFactorDashboard({
       }
       const journal = journals[paper.j];
       let ifVal: number | null = null;
-      if (basis === "recent") {
+      if (effectiveBasis === "recent") {
         ifVal = journal.recent ? journal.recent[metric] : null;
       } else if (paper.y !== null) {
         const triple = journal.byYear[String(paper.y)];
@@ -329,7 +340,7 @@ export function ImpactFactorDashboard({
         noIF,
       },
     };
-  }, [papers, journals, criterion, metric, basis, threshold]);
+  }, [papers, journals, criterion, metric, effectiveBasis,threshold]);
 
   // Binned rate: split ALL qualifying papers into equal-count IF quantiles.
   // Unlike the per-journal scatter, this aggregate view uses every paper (no
@@ -364,7 +375,7 @@ export function ImpactFactorDashboard({
       // Recent basis: the journal's snapshot IF. Publication basis: mean of the
       // per-paper publication-year IFs contributing to this journal.
       let ifVal: number | null = null;
-      if (basis === "recent") {
+      if (effectiveBasis === "recent") {
         ifVal = journals[j].recent ? journals[j].recent![metric] : null;
       } else {
         ifVal = e.ifSum / e.total;
@@ -374,8 +385,13 @@ export function ImpactFactorDashboard({
       // Label the recognizable high-prestige journals (recent 2-year IF > 15),
       // using the same fixed set across every metric so labels stay stable as the
       // x-axis switches; each labeled point still sits at its own metric value.
+      // Nature Communications is always labeled, and on the SCImago SJR view
+      // every point above 10 gets a label too.
       const recent = journals[j].recent;
-      const highImpact = !!recent && (recent[0] ?? 0) > 15;
+      const highImpact =
+        (!!recent && (recent[0] ?? 0) > 15) ||
+        (metric === 4 && ifVal > 10) ||
+        journals[j].name === "Nature Communications";
       out.push({
         name: journals[j].name,
         ifVal,
@@ -387,7 +403,7 @@ export function ImpactFactorDashboard({
       });
     }
     return out.sort((a, b) => a.ifVal - b.ifVal);
-  }, [qualified, journals, basis, metric, minPapers]);
+  }, [qualified, journals, effectiveBasis,metric, minPapers]);
 
   // Per-journal correlation between replication rate and each impact-factor
   // metric, over the same journals shown in the scatter (>= minPapers papers,
@@ -407,7 +423,7 @@ export function ImpactFactorDashboard({
         if (determinate === 0 || paper.j < 0) continue;
         const jrec = journals[paper.j];
         let ifVal: number | null = null;
-        if (basis === "recent") ifVal = jrec.recent ? jrec.recent[m] : null;
+        if (effectiveBasis === "recent") ifVal = jrec.recent ? jrec.recent[m] : null;
         else if (paper.y !== null) {
           const triple = jrec.byYear[String(paper.y)];
           ifVal = triple ? triple[m] : null;
@@ -423,44 +439,50 @@ export function ImpactFactorDashboard({
       const rates: number[] = [];
       for (const [j, e] of byJournal) {
         if (e.total < minPapers) continue;
-        const ifVal = basis === "recent" ? journals[j].recent?.[m] ?? null : e.ifSum / e.total;
+        const ifVal = effectiveBasis === "recent" ? journals[j].recent?.[m] ?? null : e.ifSum / e.total;
         if (ifVal === null || !Number.isFinite(ifVal)) continue;
         ifs.push(ifVal);
         rates.push((e.rep / e.total) * 100);
       }
       return { label: opt.label, r: pearson(ifs, rates), rho: spearman(ifs, rates), n: ifs.length };
     });
-  }, [papers, journals, criterion, threshold, basis, minPapers]);
+  }, [papers, journals, criterion, threshold, effectiveBasis,minPapers]);
 
   const metricLabel = METRIC_OPTIONS[metric].label;
-  const basisLabel = basis === "recent" ? `recent (${meta.snapshotYear})` : "at publication year";
   // Noun for chart/section titles. Each metric has its own proper name; the two
   // self-computed impact factors (0,1) share the "OpenAlex-derived" label.
   // Title case for headings, lower case for mid-sentence use.
   const metricNoun =
     metric === 2 ? "CiteScore"
     : metric === 3 ? "OpenAlex 2-Year Mean Citedness"
-    : metric === 4 ? "SCImago SJR"
+    : metric === 4 ? "SCImago SJR Score"
+    : metric === 5 ? "Citations per Citable Document (SCImago, 3-yr)"
     : "OpenAlex-derived Impact Factor";
   const metricNounLower =
     metric === 2 ? "CiteScore"
     : metric === 3 ? "OpenAlex 2-year mean citedness"
-    : metric === 4 ? "SCImago SJR"
+    : metric === 4 ? "SCImago SJR score"
+    : metric === 5 ? "citations per citable document (SCImago, 3-yr)"
     : "OpenAlex-derived impact factor";
+
+  // OpenAlex 2yr mean citedness is a single live snapshot as of the JSON build
+  // date, not the self-computed-IF snapshot year: label it with the build year.
+  const generatedYear = Number(String(meta.generated).slice(0, 4)) || meta.snapshotYear;
+  const snapYear = SNAPSHOT_ONLY_METRICS.has(metric) ? generatedYear : meta.snapshotYear;
 
   // X-axis titles reflect the basis: publication-year IF is the journal's IF in
   // the year the original study was published; recent is a fixed snapshot.
   const ifPhrase =
-    basis === "recent"
-      ? `${metricLabel} in ${meta.snapshotYear}`
+    effectiveBasis === "recent"
+      ? `${metricLabel} in ${snapYear}`
       : `${metricLabel} at time of original study's publication`;
   const quintileAxis = `Journal ${ifPhrase} (quintile range)`;
-  const widthAxis = `Journal ${ifPhrase} (equal-width bins)`;
+  const widthAxis = `Journal ${ifPhrase}`;
   // Scatter points aggregate a journal's papers; in publication-year basis the
   // x-value is the mean of the per-paper publication-year IFs, hence "Average".
   const scatterAxis =
-    basis === "recent"
-      ? `Journal ${metricLabel} in ${meta.snapshotYear}`
+    effectiveBasis === "recent"
+      ? `Journal ${metricLabel} in ${snapYear}`
       : `Average ${metricLabel} at time of original study's publication`;
 
   return (
@@ -469,22 +491,12 @@ export function ImpactFactorDashboard({
         <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
           Replication Rate by Journal {metricNoun}
         </h1>
-        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-          Does research published in higher-impact journals replicate more or less
-          often? Each original paper is matched to its journal&rsquo;s {metricNounLower} and
-          classified as &ldquo;replicated&rdquo; if at least{" "}
-          {Math.round(threshold * 100)}% of its effect replications succeeded under the
-          selected criterion. Metric shown: {metricLabel}, {basisLabel}.
-          {SNAPSHOT_ONLY_METRICS.has(metric) && (
-            <>
-              {" "}
-              <span className="italic">
-                {metricLabel} is a single current snapshot from the OpenAlex API, so it does
-                not vary by publication year.
-              </span>
-            </>
-          )}
-        </p>
+        {SNAPSHOT_ONLY_METRICS.has(metric) && (
+          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 italic">
+            {metricLabel} is a single current snapshot from the OpenAlex API (as of {snapYear}),
+            so it does not vary by publication year; the basis is fixed to that snapshot.
+          </p>
+        )}
       </div>
 
       {/* Controls */}
@@ -522,12 +534,16 @@ export function ImpactFactorDashboard({
         <label className="flex flex-col gap-1 text-sm">
           <span className="text-gray-600 dark:text-gray-300">Basis</span>
           <select
-            value={basis}
+            value={effectiveBasis}
             onChange={(e) => setBasis(e.target.value as "pub" | "recent")}
-            className="border border-gray-300 dark:border-gray-600 rounded px-2 py-1 bg-white dark:bg-gray-800 text-sm"
+            disabled={lockBasis}
+            title={lockBasis ? "Locked: this metric is a single current snapshot" : undefined}
+            className={`border border-gray-300 dark:border-gray-600 rounded px-2 py-1 bg-white dark:bg-gray-800 text-sm${
+              lockBasis ? " opacity-50 cursor-not-allowed" : ""
+            }`}
           >
             <option value="pub">At publication year</option>
-            <option value="recent">Recent ({meta.snapshotYear})</option>
+            <option value="recent">Recent ({snapYear})</option>
           </select>
         </label>
 
@@ -586,12 +602,24 @@ export function ImpactFactorDashboard({
             ))}
           </select>
         </label>
+
+        <label className="flex items-center gap-2 text-sm cursor-pointer pb-1.5">
+          <input
+            type="checkbox"
+            checked={showCI}
+            onChange={(e) => setShowCI(e.target.checked)}
+            className="h-4 w-4 accent-blue-600"
+          />
+          <span className="text-gray-600 dark:text-gray-300">
+            Show 95% confidence intervals
+          </span>
+        </label>
       </div>
 
       <p className="text-sm text-gray-500 dark:text-gray-400">
         {stats.classified.toLocaleString()} papers plotted &middot;{" "}
-        {stats.noIF.toLocaleString()} excluded (no {basis === "recent" ? "recent" : "publication-year"} impact factor) &middot;{" "}
-        {stats.noOutcome.toLocaleString()} excluded (no determinate outcome)
+        {stats.noIF.toLocaleString()} excluded (no {effectiveBasis === "recent" ? "recent" : "publication-year"} impact factor) &middot;{" "}
+        {stats.noOutcome.toLocaleString()} excluded (inconclusive outcome)
       </p>
 
       {/* Binned chart */}
@@ -604,13 +632,14 @@ export function ImpactFactorDashboard({
         ) : (
           <div>
             <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-1.5 w-fit max-w-full">
-              <BinnedChart bins={bins} xTitle={quintileAxis} />
+              <BinnedChart bins={bins} xTitle={quintileAxis} showCI={showCI} />
             </div>
             <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
               All papers with a publication-year impact factor, split into five equal-count
-              bins. Whiskers are 95% intervals from a journal-cluster bootstrap ({BOOTSTRAP_ITERS.toLocaleString()}{" "}
-              resamples of journals with replacement), which widens them to account for papers
-              within a journal not being independent.
+              bins.{" "}
+              {showCI
+                ? `Whiskers are 95% intervals from a journal-cluster bootstrap (${BOOTSTRAP_ITERS.toLocaleString()} resamples of journals with replacement), which widens them to account for papers within a journal not being independent.`
+                : "Hover a bar for its journal-cluster bootstrap 95% interval."}
             </p>
           </div>
         )}
@@ -626,13 +655,13 @@ export function ImpactFactorDashboard({
         ) : (
           <div>
             <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-1.5 w-fit max-w-full">
-              <BinnedChart bins={widthBins} xTitle={widthAxis} />
+              <BinnedChart bins={widthBins} xTitle={widthAxis} showCI={showCI} />
             </div>
             <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
               The same papers as above, grouped into equal-width impact-factor intervals
               (the top bin is a catch-all for IF &ge; 16). Unlike the equal-count quintiles,
               this shows the trend against a true impact-factor scale; most papers fall in the
-              low bins. Whiskers are cluster-bootstrap 95% intervals.
+              low bins.{showCI ? " Whiskers are cluster-bootstrap 95% intervals." : ""}
             </p>
           </div>
         )}
@@ -714,7 +743,13 @@ export function ImpactFactorDashboard({
           from the OpenAlex API as a single current snapshot (it does not vary by year).{" "}
           <em>SCImago SJR</em> is a prestige-weighted metric (citations weighted by the
           citing journal&rsquo;s standing) taken per publication year from SCImago; papers
-          before 1999 use the 1999 ranking.
+          before 1999 use the 1999 ranking. <em>Citations per citable document (SCImago,
+          3-yr)</em> is a CiteScore-style ratio &mdash; SCImago&rsquo;s Total Citations
+          (3&nbsp;years) divided by its Citable Docs (3&nbsp;years) &mdash; per publication
+          year (pre-1999 uses 1999). Because its denominator counts only <em>citable</em>
+          documents (excluding news, editorials and other front-matter), it is normalized
+          like the real JIF/CiteScore and, unlike the self-computed IFs above, does not
+          deflate high-front-matter journals such as <em>Nature</em> and <em>Science</em>.
         </p>
         <p>
           <strong>Matching.</strong> Journal names in the replications database are matched
@@ -747,9 +782,11 @@ export function ImpactFactorDashboard({
 function BinnedChart({
   bins,
   xTitle = "Journal impact factor (quintile range)",
+  showCI = false,
 }: {
   bins: Bin[];
   xTitle?: string;
+  showCI?: boolean;
 }) {
   const W = 720;
   const H = 320;
@@ -757,7 +794,7 @@ function BinnedChart({
   const plotW = W - M.left - M.right;
   const plotH = H - M.top - M.bottom;
   const bandW = plotW / bins.length;
-  const barW = bandW * 0.6;
+  const barW = bandW * 0.5;
   const y = (pct: number) => M.top + plotH * (1 - pct / 100);
 
   const fmt = (v: number) => (v >= 10 ? v.toFixed(0) : v.toFixed(1));
@@ -784,17 +821,21 @@ function BinnedChart({
           const top = y(b.rate);
           return (
             <g key={i}>
-              <rect x={bx} y={top} width={barW} height={M.top + plotH - top} rx={2} fill={REPLICATED} opacity={0.85}>
+              <rect x={bx} y={top} width={barW} height={M.top + plotH - top} rx={2} fill={BAR_COLOR} opacity={0.85}>
                 <title>
                   {`IF ${fmt(b.lo)}–${fmt(b.hi)}: ${b.rate.toFixed(1)}% replicated (${b.replicated}/${b.count}), cluster-bootstrap 95% CI [${b.ciLow.toFixed(0)}–${b.ciHigh.toFixed(0)}%]`}
                 </title>
               </rect>
-              {/* CI whisker */}
-              <line x1={cx} x2={cx} y1={y(b.ciLow)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
-              <line x1={cx - 5} x2={cx + 5} y1={y(b.ciLow)} y2={y(b.ciLow)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
-              <line x1={cx - 5} x2={cx + 5} y1={y(b.ciHigh)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
-              {/* rate label, above the upper CI whisker */}
-              <text x={cx} y={y(b.ciHigh) - 6} textAnchor="middle" fontSize={12} fontWeight={600} fill="currentColor">
+              {showCI && (
+                <>
+                  {/* CI whisker */}
+                  <line x1={cx} x2={cx} y1={y(b.ciLow)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
+                  <line x1={cx - 5} x2={cx + 5} y1={y(b.ciLow)} y2={y(b.ciLow)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
+                  <line x1={cx - 5} x2={cx + 5} y1={y(b.ciHigh)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
+                </>
+              )}
+              {/* rate label, above the bar (or the upper CI whisker) */}
+              <text x={cx} y={(showCI ? Math.min(y(b.ciHigh), top) : top) - 6} textAnchor="middle" fontSize={12} fontWeight={600} fill="currentColor">
                 {b.rate.toFixed(0)}%
               </text>
               {/* x labels */}
@@ -1074,7 +1115,25 @@ function ScatterChart({
         >
           Replication rate (%)
         </text>
-        <ChartWatermark rightX={W - M.right - 8} y={M.top + 4} />
+        <ChartWatermark x={M.left + 8} y={M.top + 4} />
+        {/* legend for the CI whiskers (upper right) */}
+        <g>
+          <line
+            x1={W - M.right - 104}
+            x2={W - M.right - 104}
+            y1={M.top + 7}
+            y2={M.top + 27}
+            stroke={POINT}
+            strokeWidth={1.5}
+            opacity={0.5}
+          />
+          <text x={W - M.right - 97} y={M.top + 14} fontSize={10} className="fill-gray-600 dark:fill-gray-300">
+            Wilson 95%
+          </text>
+          <text x={W - M.right - 97} y={M.top + 26} fontSize={10} className="fill-gray-600 dark:fill-gray-300">
+            Confidence Interval
+          </text>
+        </g>
       </svg>
     </div>
   );

@@ -4,18 +4,7 @@ import { useState, useMemo } from "react";
 import { BreakdownChart, Segment, HoverTrial } from "./screening/BreakdownChart";
 import { ResultsTable, TrialRow } from "./ResultsTable";
 import { YearChart } from "./YearChart";
-import { CountryMap, type CountryCount } from "@/components/CountryMap";
-
-/** Distinct-trial count per (canonical) country, for the "Trials by country" map. */
-function countriesOf(rows: TrialRow[]): CountryCount[] {
-  const counts = new Map<string, number>();
-  for (const r of rows) {
-    for (const c of new Set(r.countries)) counts.set(c, (counts.get(c) ?? 0) + 1);
-  }
-  return [...counts.entries()]
-    .map(([country, count]) => ({ country, count }))
-    .sort((a, b) => b.count - a.count);
-}
+import { CountryFilterCard, countriesOf } from "@/components/CountryFilterCard";
 
 const DESIGN_LABELS: Record<string, string> = {
   RCT: "RCT",
@@ -140,25 +129,18 @@ export function ResultsClientWrapper({
   const ingredientKey = (t: TrialRow) => t.ingredient || "unspecified";
   const ingredientFilter = (t: TrialRow) => !ingredient || ingredientKey(t) === ingredient;
 
-  // Country multi-select filter (toggled by clicking countries on the "Trials by
-  // country" map or removing bubbles). Empty set = no country filter (all pass);
+  // Country multi-select filter, driven by the "Filter by country" card
+  // (checkboxes + collapsible map). Empty set = no country filter (all pass);
   // otherwise a trial passes if it lists ANY selected country.
   const [selectedCountries, setSelectedCountries] = useState<Set<string>>(new Set());
   const countryFilter = (t: TrialRow) =>
     selectedCountries.size === 0 || t.countries.some((c) => selectedCountries.has(c));
-  const toggleCountry = (c: string) =>
-    setSelectedCountries((prev) => {
-      const next = new Set(prev);
-      if (next.has(c)) next.delete(c); else next.add(c);
-      return next;
-    });
-  // "Select all" = every country present in the data (built once from all trials).
+  // Full country universe (built once from all trials) — the card's reference
+  // set for "exclude one" seeding and full-set collapse.
   const allCountryNames = useMemo(
     () => [...new Set(trials.flatMap((t) => t.countries))].sort((a, b) => a.localeCompare(b)),
     [trials]
   );
-  const selectAllCountries = () => setSelectedCountries(new Set(allCountryNames));
-  const clearAllCountries = () => setSelectedCountries(new Set());
 
   // Top-level trial-outcome-focus filter: a checkbox per outcome type, all checked
   // by default. Each trial falls in exactly one bucket (by its primary outcome domain).
@@ -273,56 +255,17 @@ export function ResultsClientWrapper({
     [filteredTrials]
   );
 
-  // "Trials by country" map. Like the ingredient chart, it reacts to the other
-  // filters but NOT to the country selection, so every country stays visible —
-  // a click filters the dashboard (click the same country again to clear).
+  // "Filter by country" card data. Like the ingredient chart, it reacts to the
+  // other filters but NOT to the country selection, so every country stays
+  // visible (with live counts) while some are selected.
   const countryChartBase = useMemo(
     () => afterIngredientNoCountry.filter((t) => typeFilter(t) && designFilter(t)),
     [afterIngredientNoCountry, selectedTypes, selectedDesigns]
   );
   const allCountries = useMemo(() => countriesOf(countryChartBase), [countryChartBase]);
-  // Selected-country bubbles, sorted for stable display.
-  const selectedCountryList = useMemo(
-    () => [...selectedCountries].sort((a, b) => a.localeCompare(b)),
-    [selectedCountries]
-  );
-
-  // "Trials by country" — moved to the TOP of the page. Multi-select: click a
-  // country (or use Select all) to add it; remove via the × bubbles or Unselect all.
-  const countrySection = (
-    <div className="mb-8 border border-border rounded-lg p-4">
-      <div className="flex items-center gap-3 mb-2 flex-wrap">
-        <h3 className="font-semibold text-lg text-foreground">Trials by country</h3>
-        <span className="text-xs text-foreground/50">
-          {selectedCountries.size === 0
-            ? "Click a country to filter the dashboard. Select multiple to combine."
-            : `Filtering to ${selectedCountries.size} ${selectedCountries.size === 1 ? "country" : "countries"} (${filteredTrials.length} of ${trials.length} trials).`}
-        </span>
-        <button onClick={selectAllCountries} className="text-xs text-blue-600 hover:text-blue-700 ml-auto">Select all</button>
-        <button onClick={clearAllCountries} className="text-xs text-blue-600 hover:text-blue-700">Unselect all</button>
-      </div>
-      {selectedCountryList.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 mb-3">
-          {selectedCountryList.map((c) => (
-            <span key={c} className="inline-flex items-center gap-1.5 text-xs bg-blue-600/10 text-blue-700 border border-blue-600/20 rounded-full px-2.5 py-1">
-              {c}
-              <button onClick={() => toggleCountry(c)} className="hover:text-blue-900 font-semibold leading-none" aria-label={`Remove ${c} filter`}>×</button>
-            </span>
-          ))}
-        </div>
-      )}
-      <CountryMap
-        allCountries={allCountries}
-        selectedCountries={selectedCountryList}
-        onCountryClick={toggleCountry}
-      />
-    </div>
-  );
 
   return (
     <>
-      {countrySection}
-
       {/* Trial-outcome-focus filter (checkboxes, one per outcome type) */}
       <div className={cardBg(typesActive)}>
         <div className="flex items-center gap-3 mb-2">
@@ -388,7 +331,7 @@ export function ResultsClientWrapper({
       </div>
 
       {/* Drug filter — the outermost filter; narrows everything below. */}
-      <div className={`mb-8 border border-border rounded-lg p-4 ${ingredient ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`}>
+      <div className={`mb-4 border border-border rounded-lg p-4 ${ingredient ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`}>
         <div className="flex items-center gap-3 flex-wrap">
           <span className="text-sm font-medium text-foreground">Filter by drug</span>
           <select
@@ -411,6 +354,16 @@ export function ResultsClientWrapper({
           )}
         </div>
       </div>
+
+      {/* Country filter — always the LAST filter card (checkboxes + collapsible map). */}
+      <CountryFilterCard
+        allCountries={allCountries}
+        allCountryNames={allCountryNames}
+        selectedCountries={selectedCountries}
+        onSelectionChange={setSelectedCountries}
+        filteredCount={filteredTrials.length}
+        totalCount={countryChartBase.length}
+      />
 
       {/* Breakdown charts */}
       {Object.keys(ingredientVerdictChart).length > 0 && (

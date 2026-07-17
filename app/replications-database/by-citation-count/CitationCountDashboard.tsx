@@ -41,7 +41,7 @@ function spearman(xs: number[], ys: number[]): number | null {
 // Yang et al. (2020) Fig. 1 palette: teal = passed, coral = failed.
 const PASSED = "#12a5a5";
 const FAILED = "#f4837d";
-const REPLICATED = "#10b981"; // bar color shared with the other by-* pages
+const REPLICATED = "#2563eb"; // blue, matching the by-year page's rate bars
 
 const CRITERION_OPTIONS = [
   { value: 0, label: "Reported result (success / failure column)" },
@@ -253,6 +253,7 @@ export function CitationCountDashboard({
   // Trajectory statistic: median is the default because citation counts are
   // heavily right-skewed (mean ≈ 3x median in this sample).
   const [stat, setStat] = useState<"median" | "mean">("median");
+  const [showCI, setShowCI] = useState(false);
 
   const currentYear = meta.lastCompleteYear + 1;
 
@@ -505,6 +506,18 @@ export function CitationCountDashboard({
             ))}
           </select>
         </label>
+
+        <label className="flex items-center gap-2 text-sm cursor-pointer pb-1.5">
+          <input
+            type="checkbox"
+            checked={showCI}
+            onChange={(e) => setShowCI(e.target.checked)}
+            className="h-4 w-4 accent-blue-600"
+          />
+          <span className="text-gray-600 dark:text-gray-300">
+            Show 95% confidence intervals
+          </span>
+        </label>
       </div>
 
       {/* Trajectory chart */}
@@ -547,34 +560,20 @@ export function CitationCountDashboard({
       <p className="text-sm text-gray-500 dark:text-gray-400">
         {(trajectory.nPassed + trajectory.nFailed).toLocaleString()} papers in the trajectory
         chart &middot; {trajectory.noCitations.toLocaleString()} excluded (no OpenAlex match
-        or publication year) &middot; {trajectory.noOutcome.toLocaleString()} excluded (no
-        determinate outcome)
+        or publication year) &middot; {trajectory.noOutcome.toLocaleString()} excluded
+        (inconclusive outcome)
       </p>
 
       {/* Fixed-bin chart */}
       <section className="space-y-3">
         <h2 className="text-xl md:text-2xl font-semibold tracking-tight">
-          Replication rate by {metricLabel.toLowerCase()} (fixed ranges)
+          Replication rate by {metricLabel.toLowerCase()}
         </h2>
         {fixedBins.length === 0 ? (
           <p className="text-sm text-gray-500">Not enough data for this selection.</p>
         ) : (
-          <div>
-            <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-1.5 w-fit max-w-full">
-              <BinnedChart bins={fixedBins} xTitle={fixedAxis} />
-            </div>
-            <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-              All determinate effect-level replications whose original paper matched in
-              OpenAlex, grouped into fixed citation ranges. Each replication attempt counts
-              once. Citation counts are heavily right-skewed, so the ranges widen roughly
-              geometrically. Total citations are age-confounded (older papers have had
-              longer to accumulate them; Spearman &rho; &asymp; &minus;0.36 vs publication
-              year in this sample) &mdash; the first-5-years window (default) and the
-              per-year rate compare papers on an age-adjusted footing. Whiskers are 95% intervals from a paper-cluster bootstrap
-              ({BOOTSTRAP_ITERS.toLocaleString()} resamples of original papers with
-              replacement), which widens them to account for multiple replications of the
-              same paper not being independent.
-            </p>
+          <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-1.5 w-fit max-w-full">
+            <BinnedChart bins={fixedBins} xTitle={fixedAxis} showCI={showCI} />
           </div>
         )}
       </section>
@@ -832,7 +831,7 @@ function TrajectoryChart({ points, stat }: { points: TrajPoint[]; stat: "median"
   );
 }
 
-function BinnedChart({ bins, xTitle }: { bins: Bin[]; xTitle: string }) {
+function BinnedChart({ bins, xTitle, showCI = false }: { bins: Bin[]; xTitle: string; showCI?: boolean }) {
   const W = 720;
   const H = 320;
   const M = { top: 20, right: 20, bottom: 64, left: 62 };
@@ -874,12 +873,16 @@ function BinnedChart({ bins, xTitle }: { bins: Bin[]; xTitle: string }) {
                   {`${b.label ?? `${fmt(b.lo)}–${fmt(b.hi)} citations`}: ${b.rate.toFixed(1)}% replicated (${b.replicated}/${b.count}), cluster-bootstrap 95% CI [${b.ciLow.toFixed(0)}–${b.ciHigh.toFixed(0)}%]`}
                 </title>
               </rect>
-              {/* CI whisker */}
-              <line x1={cx} x2={cx} y1={y(b.ciLow)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
-              <line x1={cx - 5} x2={cx + 5} y1={y(b.ciLow)} y2={y(b.ciLow)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
-              <line x1={cx - 5} x2={cx + 5} y1={y(b.ciHigh)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
-              {/* rate label, above the upper CI whisker */}
-              <text x={cx} y={y(b.ciHigh) - 6} textAnchor="middle" fontSize={12} fontWeight={600} fill="currentColor">
+              {showCI && (
+                <>
+                  {/* paper-cluster bootstrap 95% CI whisker */}
+                  <line x1={cx} x2={cx} y1={y(b.ciLow)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
+                  <line x1={cx - 5} x2={cx + 5} y1={y(b.ciLow)} y2={y(b.ciLow)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
+                  <line x1={cx - 5} x2={cx + 5} y1={y(b.ciHigh)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
+                </>
+              )}
+              {/* rate label, above the bar (or the upper CI whisker) */}
+              <text x={cx} y={(showCI ? y(b.ciHigh) : top) - 6} textAnchor="middle" fontSize={12} fontWeight={600} fill="currentColor">
                 {b.rate.toFixed(0)}%
               </text>
               {/* x labels */}

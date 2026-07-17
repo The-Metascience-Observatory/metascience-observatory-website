@@ -50,10 +50,8 @@ function spearman(xs: number[], ys: number[]): number | null {
   return pearson(rank(xs), rank(ys));
 }
 
-const REPLICATED = "#10b981";
+const REPLICATED = "#4f77bd";
 const POINT = "#2563eb";
-// Q1..Q4 fill colors (Q1 = best/most-prestigious).
-const QUARTILE_COLORS = ["#2563eb", "#10b981", "#f59e0b", "#ef4444"];
 
 const CRITERION_OPTIONS = [
   { value: 0, label: "Reported result (success / failure column)" },
@@ -249,11 +247,12 @@ export function RankDashboard({
   csvName: string;
 }) {
   const [criterion, setCriterion] = useState(0);
-  const [metric, setMetric] = useState(PERCENTILE);
+  const [metric, setMetric] = useState(RANK);
   const [basis, setBasis] = useState<"pub" | "recent">("pub");
   const [threshold, setThreshold] = useState(0.75);
   const [minPapers, setMinPapers] = useState(15);
   const [repType, setRepType] = useState(-1); // -1 = all types
+  const [showCI, setShowCI] = useState(false);
 
   // Effect-level row counts per replication type, for the dropdown labels.
   const typeCounts = useMemo(() => {
@@ -464,11 +463,6 @@ export function RankDashboard({
 
   const metricLabel = METRIC_OPTIONS[metric].label;
   const basisLabel = basis === "recent" ? `recent (${meta.snapshotYear ?? "latest"})` : "at publication year";
-  const metricNoun =
-    metric === PERCENTILE ? "SJR Percentile"
-    : metric === QUARTILE ? "SJR Quartile"
-    : metric === RANK ? "SJR Overall Rank"
-    : "Journal h-index";
   const metricNounLower =
     metric === PERCENTILE ? "SJR percentile"
     : metric === QUARTILE ? "SJR quartile"
@@ -482,9 +476,10 @@ export function RankDashboard({
       : `${metricLabel} at time of original study's publication`;
   const quintileAxis = `Journal ${phrase} (quintile range)`;
   const scatterAxis =
-    basis === "recent"
+    (basis === "recent"
       ? `Journal ${metricLabel} (${meta.snapshotYear ?? "latest"})`
-      : `Average ${metricLabel} at time of original study's publication`;
+      : `Average ${metricLabel} at time of original study's publication`) +
+    (metric === RANK ? " — log scale" : "");
 
   // Higher rank/percentile prestige direction, for prose.
   const higherMeansMorePrestigious = !LOWER_IS_BETTER.has(metric);
@@ -493,7 +488,7 @@ export function RankDashboard({
     <div className="max-w-5xl mx-auto space-y-8">
       <div>
         <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
-          Replication Rate by Journal {metricNoun}
+          Replication Rate by Journal Rank
         </h1>
         <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
           Do papers published in more prestigious journals replicate more or less often? Each
@@ -612,12 +607,24 @@ export function RankDashboard({
             ))}
           </select>
         </label>
+
+        <label className="flex items-center gap-2 text-sm cursor-pointer pb-1.5 self-end">
+          <input
+            type="checkbox"
+            checked={showCI}
+            onChange={(e) => setShowCI(e.target.checked)}
+            className="h-4 w-4 accent-blue-600"
+          />
+          <span className="text-gray-600 dark:text-gray-300">
+            Show 95% confidence intervals
+          </span>
+        </label>
       </div>
 
       <p className="text-sm text-gray-500 dark:text-gray-400">
         {stats.classified.toLocaleString()} papers plotted &middot;{" "}
         {stats.noMetric.toLocaleString()} excluded (no {basis === "recent" ? "recent" : "publication-year"} {metricNounLower}) &middot;{" "}
-        {stats.noOutcome.toLocaleString()} excluded (no determinate outcome)
+        {stats.noOutcome.toLocaleString()} excluded (inconclusive outcome)
       </p>
 
       {/* Quartile bar chart */}
@@ -630,7 +637,7 @@ export function RankDashboard({
         ) : (
           <div>
             <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-1.5 w-fit max-w-full">
-              <QuartileChart bins={quartileBins} />
+              <QuartileChart bins={quartileBins} showCI={showCI} />
             </div>
             <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
               All papers grouped by their journal&rsquo;s SCImago best-quartile in the
@@ -653,7 +660,7 @@ export function RankDashboard({
         ) : (
           <div>
             <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-1.5 w-fit max-w-full">
-              <BinnedChart bins={bins} xTitle={quintileAxis} lowerIsBetter={LOWER_IS_BETTER.has(metric)} />
+              <BinnedChart bins={bins} xTitle={quintileAxis} lowerIsBetter={LOWER_IS_BETTER.has(metric)} showCI={showCI} />
             </div>
             <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
               All papers with a publication-year {metricNounLower}, split into five equal-count
@@ -676,7 +683,7 @@ export function RankDashboard({
         ) : (
           <div>
             <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-1.5 w-fit max-w-full">
-              <ScatterChart points={scatter} metricLabel={metricLabel} xTitle={scatterAxis} />
+              <ScatterChart points={scatter} metricLabel={metricLabel} xTitle={scatterAxis} logScale={metric === RANK} />
             </div>
             <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
               One point per journal with at least {minPapers} plotted papers. Point size
@@ -778,10 +785,12 @@ function BinnedChart({
   bins,
   xTitle,
   lowerIsBetter,
+  showCI = false,
 }: {
   bins: Bin[];
   xTitle: string;
   lowerIsBetter?: boolean;
+  showCI?: boolean;
 }) {
   const W = 720;
   const H = 320;
@@ -823,10 +832,14 @@ function BinnedChart({
                   {`${fmt(b.lo)}–${fmt(b.hi)}: ${b.rate.toFixed(1)}% replicated (${b.replicated}/${b.count}), cluster-bootstrap 95% CI [${b.ciLow.toFixed(0)}–${b.ciHigh.toFixed(0)}%]`}
                 </title>
               </rect>
-              <line x1={cx} x2={cx} y1={y(b.ciLow)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
-              <line x1={cx - 5} x2={cx + 5} y1={y(b.ciLow)} y2={y(b.ciLow)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
-              <line x1={cx - 5} x2={cx + 5} y1={y(b.ciHigh)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
-              <text x={cx} y={y(b.ciHigh) - 6} textAnchor="middle" fontSize={12} fontWeight={600} fill="currentColor">
+              {showCI && (
+                <>
+                  <line x1={cx} x2={cx} y1={y(b.ciLow)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
+                  <line x1={cx - 5} x2={cx + 5} y1={y(b.ciLow)} y2={y(b.ciLow)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
+                  <line x1={cx - 5} x2={cx + 5} y1={y(b.ciHigh)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
+                </>
+              )}
+              <text x={cx} y={(showCI ? y(b.ciHigh) : top) - 6} textAnchor="middle" fontSize={12} fontWeight={600} fill="currentColor">
                 {b.rate.toFixed(0)}%
               </text>
               <line x1={cx} x2={cx} y1={M.top + plotH} y2={M.top + plotH + 5} stroke="#000000" strokeWidth={1} />
@@ -851,8 +864,8 @@ function BinnedChart({
   );
 }
 
-// Discrete Q1–Q4 bar chart, one colored bar per quartile.
-function QuartileChart({ bins }: { bins: Bin[] }) {
+// Discrete Q1–Q4 bar chart, one bar per quartile.
+function QuartileChart({ bins, showCI = false }: { bins: Bin[]; showCI?: boolean }) {
   const W = 720;
   const H = 320;
   const M = { top: 20, right: 20, bottom: 48, left: 62 };
@@ -881,18 +894,21 @@ function QuartileChart({ bins }: { bins: Bin[] }) {
           const bx = cx - barW / 2;
           const top = y(b.rate);
           const qi = Math.round(b.lo) - 1;
-          const color = QUARTILE_COLORS[qi] ?? REPLICATED;
           return (
             <g key={i}>
-              <rect x={bx} y={top} width={barW} height={M.top + plotH - top} rx={2} fill={color} opacity={0.85}>
+              <rect x={bx} y={top} width={barW} height={M.top + plotH - top} rx={2} fill={REPLICATED} opacity={0.85}>
                 <title>
                   {`Q${qi + 1}: ${b.rate.toFixed(1)}% replicated (${b.replicated}/${b.count}), cluster-bootstrap 95% CI [${b.ciLow.toFixed(0)}–${b.ciHigh.toFixed(0)}%]`}
                 </title>
               </rect>
-              <line x1={cx} x2={cx} y1={y(b.ciLow)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
-              <line x1={cx - 5} x2={cx + 5} y1={y(b.ciLow)} y2={y(b.ciLow)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
-              <line x1={cx - 5} x2={cx + 5} y1={y(b.ciHigh)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
-              <text x={cx} y={y(b.ciHigh) - 6} textAnchor="middle" fontSize={12} fontWeight={600} fill="currentColor">
+              {showCI && (
+                <>
+                  <line x1={cx} x2={cx} y1={y(b.ciLow)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
+                  <line x1={cx - 5} x2={cx + 5} y1={y(b.ciLow)} y2={y(b.ciLow)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
+                  <line x1={cx - 5} x2={cx + 5} y1={y(b.ciHigh)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
+                </>
+              )}
+              <text x={cx} y={(showCI ? y(b.ciHigh) : top) - 6} textAnchor="middle" fontSize={12} fontWeight={600} fill="currentColor">
                 {b.rate.toFixed(0)}%
               </text>
               <line x1={cx} x2={cx} y1={M.top + plotH} y2={M.top + plotH + 5} stroke="#000000" strokeWidth={1} />
@@ -987,10 +1003,12 @@ function ScatterChart({
   points,
   metricLabel,
   xTitle,
+  logScale = false,
 }: {
   points: { name: string; val: number; rate: number; ciLow: number; ciHigh: number; n: number; highImpact: boolean }[];
   metricLabel: string;
   xTitle: string;
+  logScale?: boolean;
 }) {
   const W = 720;
   const H = 380;
@@ -1020,41 +1038,60 @@ function ScatterChart({
     };
   }, [points]);
 
-  // Generic linear x-scale spanning the data with a little padding, and ~6 ticks
-  // at "nice" round steps (handles percentile 0–100, rank up to tens of
-  // thousands, and h-index alike).
   const minV = Math.min(...points.map((p) => p.val));
   const maxV = Math.max(...points.map((p) => p.val));
-  const span = maxV - minV || 1;
-  const niceStep = (raw: number) => {
-    const mag = Math.pow(10, Math.floor(Math.log10(raw)));
-    const norm = raw / mag;
-    const step = norm >= 5 ? 5 : norm >= 2 ? 2 : 1;
-    return step * mag;
-  };
-  const step = niceStep(span / 5);
-  const xMin = Math.floor(minV / step) * step;
-  const xMax = Math.ceil(maxV / step) * step;
-  const denom = xMax - xMin || 1;
 
-  const x = (v: number) => M.left + plotW * ((v - xMin) / denom);
   const y = (pct: number) => M.top + plotH * (1 - pct / 100);
   const maxN = Math.max(...points.map((p) => p.n));
   const r = (n: number) => 3 + 7 * Math.sqrt(n / maxN);
 
-  // Build ticks, deduping any that collapse to the same rounded value when the
-  // data spans a very narrow range (step < 0.01) — otherwise identical labels
-  // overlap and React sees duplicate keys.
-  const ticks: number[] = [];
-  const seenTicks = new Set<number>();
-  for (let t = xMin; t <= xMax + step / 2; t += step) {
-    const rounded = Math.round(t * 100) / 100;
-    if (!seenTicks.has(rounded)) {
-      seenTicks.add(rounded);
-      ticks.push(rounded);
+  // On a log scale (used for SJR overall rank, which spans 1 to tens of
+  // thousands) the domain snaps to enclosing powers of ten and ticks fall on
+  // each decade; otherwise a generic linear scale spans the data with ~6 ticks
+  // at "nice" round steps (percentile 0–100, h-index, etc.).
+  let x: (v: number) => number;
+  let ticks: number[];
+  let fmtTick: (t: number) => string;
+
+  if (logScale) {
+    // Guard against non-positive values (log undefined); rank is always >= 1.
+    const lo = Math.max(1, minV);
+    const loExp = Math.floor(Math.log10(lo));
+    const hiExp = Math.ceil(Math.log10(Math.max(maxV, lo * 10)));
+    const lx = Math.pow(10, loExp);
+    const hx = Math.pow(10, hiExp);
+    const lDenom = Math.log10(hx) - Math.log10(lx) || 1;
+    x = (v: number) => M.left + plotW * ((Math.log10(Math.max(v, 1)) - Math.log10(lx)) / lDenom);
+    ticks = [];
+    for (let e = loExp; e <= hiExp; e++) ticks.push(Math.pow(10, e));
+    fmtTick = (t: number) => t.toLocaleString();
+  } else {
+    const span = maxV - minV || 1;
+    const niceStep = (raw: number) => {
+      const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+      const norm = raw / mag;
+      const step = norm >= 5 ? 5 : norm >= 2 ? 2 : 1;
+      return step * mag;
+    };
+    const step = niceStep(span / 5);
+    const xMin = Math.floor(minV / step) * step;
+    const xMax = Math.ceil(maxV / step) * step;
+    const denom = xMax - xMin || 1;
+    x = (v: number) => M.left + plotW * ((v - xMin) / denom);
+    // Build ticks, deduping any that collapse to the same rounded value when the
+    // data spans a very narrow range (step < 0.01) — otherwise identical labels
+    // overlap and React sees duplicate keys.
+    ticks = [];
+    const seenTicks = new Set<number>();
+    for (let t = xMin; t <= xMax + step / 2; t += step) {
+      const rounded = Math.round(t * 100) / 100;
+      if (!seenTicks.has(rounded)) {
+        seenTicks.add(rounded);
+        ticks.push(rounded);
+      }
     }
+    fmtTick = (t: number) => (Number.isInteger(t) ? t.toLocaleString() : t.toFixed(1));
   }
-  const fmtTick = (t: number) => (Number.isInteger(t) ? t.toLocaleString() : t.toFixed(1));
 
   return (
     <div className="overflow-x-auto">
@@ -1090,7 +1127,7 @@ function ScatterChart({
           </g>
         ))}
         {layoutLabels(
-          points.filter((p) => p.highImpact),
+          points.filter((p) => p.highImpact && p.name !== "Journal of Consumer Research"),
           (p) => x(p.val),
           (p) => y(p.rate),
           (p) => r(p.n),
@@ -1125,7 +1162,7 @@ function ScatterChart({
         <text transform={`translate(14 ${M.top + plotH / 2}) rotate(-90)`} textAnchor="middle" fontSize={14} fontWeight={700} className="fill-black dark:fill-gray-100">
           Replication rate (%)
         </text>
-        <ChartWatermark rightX={W - M.right - 8} y={M.top + 4} />
+        <ChartWatermark x={M.left + 8} y={M.top + 4} />
       </svg>
     </div>
   );

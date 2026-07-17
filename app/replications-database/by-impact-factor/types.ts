@@ -5,7 +5,10 @@
 // The first three are self-computed ("OpenAlex-derived"); index 3 is OpenAlex's
 // own published 2-year mean citedness (a current snapshot, same on every year
 // entry); index 4 is the SCImago SJR for that publication year.
+// One value per metric in _meta.metrics (currently 6): if2, if5, citescore,
+// openalex_2yr_mean_citedness, scimago_sjr, scimago_cites_per_citable_doc_3yr.
 export type MetricTriple = [
+  number | null,
   number | null,
   number | null,
   number | null,

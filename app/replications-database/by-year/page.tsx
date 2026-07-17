@@ -23,16 +23,11 @@ const SUCCESS_DEF_OPTIONS: { value: SuccessDef; label: string }[] = [
   { value: "rep_in_orig_ci", label: "Replication effect size in original 95% confidence interval?" },
 ];
 
-type YearDim = "replication_year" | "original_year";
-
-const YEAR_DIM_OPTIONS: { value: YearDim; label: string }[] = [
-  { value: "replication_year", label: "Year the replication was published" },
-  { value: "original_year", label: "Year the original study was published" },
-];
-
 const SUCCESS_COLOR = "#10b981";
 const FAILURE_COLOR = "#f87171";
 const OTHER_COLOR = "#cbd5e1";
+// Bars in the success-rate charts (the counts chart keeps the green/red stack).
+const RATE_BAR_COLOR = "#4f77bd";
 
 // Years before this are aggregated into a single "< 1970" bin in the rate chart.
 const BIN_START = 1970;
@@ -79,7 +74,9 @@ function classifyRow(row: AnyRecord, def: SuccessDef): "success" | "failure" | n
   if (def === "reported") {
     const res = String(row.result ?? "").trim().toLowerCase();
     if (res === "success") return "success";
-    if (res === "failure") return "failure";
+    // A reversal (significant effect in the opposite direction) is a
+    // determinate non-replication, matching the other by-* pages.
+    if (res === "failure" || res === "reversal") return "failure";
     return null;
   }
   const outcome = getOutcomeForRow(row, def);
@@ -105,11 +102,13 @@ function YearCountBars({
   xLabel,
   yLabel = "Number of replications",
   unit = "replication",
+  unitPlural,
 }: {
   counts: YearCount[];
   xLabel: string;
   yLabel?: string;
   unit?: string;
+  unitPlural?: string;
 }) {
   const width = 720;
   const height = 260;
@@ -139,7 +138,6 @@ function YearCountBars({
         className="max-w-full h-auto"
       >
         <g transform={`translate(${margin.left},${margin.top})`}>
-          <rect x={0} y={0} width={innerW} height={innerH} fill="#f3f4f6" />
           {yTicks.map((t) => (
             <g key={`y-${t}`}>
               <line x1={0} y1={yScale(t)} x2={innerW} y2={yScale(t)} stroke="#d1d5db" strokeWidth={0.5} />
@@ -160,7 +158,7 @@ function YearCountBars({
             return (
               <g key={c.year}>
                 <title>
-                  {`${c.year}: ${c.total.toLocaleString()} ${unit}${c.total === 1 ? "" : "s"} — ${c.success} successful, ${c.failure} failed, ${c.other} inconclusive/unclassified`}
+                  {`${c.year}: ${c.total.toLocaleString()} ${c.total === 1 ? unit : unitPlural ?? `${unit}s`} — ${c.success} successful, ${c.failure} failed, ${c.other} inconclusive/unclassified`}
                 </title>
                 {/* full-column hover target so tooltips work on short bars too */}
                 <rect x={i * step} y={0} width={step} height={innerH} fill="transparent" />
@@ -235,8 +233,8 @@ function YearCountBars({
   );
 }
 
-// Replication success rate per 5-year bin, with Wilson 95% CI whiskers.
-function YearRateBars({ bins, xLabel, unit, showN = true }: { bins: YearBin[]; xLabel: string; unit: string; showN?: boolean }) {
+// Replication success rate per 5-year bin, with optional Wilson 95% CI whiskers.
+function YearRateBars({ bins, xLabel, unit, showN = true, showCI = false, showRate = true }: { bins: YearBin[]; xLabel: string; unit: string; showN?: boolean; showCI?: boolean; showRate?: boolean }) {
   const width = 720;
   const height = 318;
   const margin = { top: 10, right: 16, bottom: 74, left: 62 };
@@ -261,7 +259,6 @@ function YearRateBars({ bins, xLabel, unit, showN = true }: { bins: YearBin[]; x
         className="max-w-full h-auto"
       >
         <g transform={`translate(${margin.left},${margin.top})`}>
-          <rect x={0} y={0} width={innerW} height={innerH} fill="#f3f4f6" />
           {yTicks.map((t) => (
             <g key={`y-${t}`}>
               <line x1={0} y1={yScale(t)} x2={innerW} y2={yScale(t)} stroke="#d1d5db" strokeWidth={0.5} />
@@ -295,16 +292,41 @@ function YearRateBars({ bins, xLabel, unit, showN = true }: { bins: YearBin[]; x
                   </text>
                 ) : (
                   <>
-                    <rect x={bx} y={by} width={barWidth} height={Math.max(barH, 2)} fill={SUCCESS_COLOR} fillOpacity={0.85} rx={1} />
-                    {/* Wilson 95% CI whisker */}
-                    <line x1={cx} x2={cx} y1={yScale(bin.ciLow)} y2={yScale(bin.ciHigh)} stroke="#111827" strokeWidth={1} strokeOpacity={0.5} />
-                    <line x1={cx - 4} x2={cx + 4} y1={yScale(bin.ciHigh)} y2={yScale(bin.ciHigh)} stroke="#111827" strokeWidth={1} strokeOpacity={0.5} />
-                    <line x1={cx - 4} x2={cx + 4} y1={yScale(bin.ciLow)} y2={yScale(bin.ciLow)} stroke="#111827" strokeWidth={1} strokeOpacity={0.5} />
-                    {showN && (
-                      <text x={cx} y={yScale(bin.ciHigh) - 4} textAnchor="middle" className="fill-current" style={{ fontSize: 9, opacity: 0.75 }}>
-                        n={bin.total}
-                      </text>
+                    <rect x={bx} y={by} width={barWidth} height={Math.max(barH, 2)} fill={RATE_BAR_COLOR} fillOpacity={0.85} rx={1} />
+                    {showCI && (
+                      <>
+                        {/* Wilson 95% CI whisker */}
+                        <line x1={cx} x2={cx} y1={yScale(bin.ciLow)} y2={yScale(bin.ciHigh)} stroke="#111827" strokeWidth={1} strokeOpacity={0.5} />
+                        <line x1={cx - 4} x2={cx + 4} y1={yScale(bin.ciHigh)} y2={yScale(bin.ciHigh)} stroke="#111827" strokeWidth={1} strokeOpacity={0.5} />
+                        <line x1={cx - 4} x2={cx + 4} y1={yScale(bin.ciLow)} y2={yScale(bin.ciLow)} stroke="#111827" strokeWidth={1} strokeOpacity={0.5} />
+                      </>
                     )}
+                    {/* rate label above the bar (or the upper CI whisker), clamped
+                        so labels on ~100% bars stay inside the plot */}
+                    {(() => {
+                      const anchor = Math.max(showCI ? Math.min(yScale(bin.ciHigh), by) : by, showN && showRate ? 30 : 16);
+                      return (
+                        <>
+                          {showN && (
+                            <text x={cx} y={anchor - 4} textAnchor="middle" className="fill-current" style={{ fontSize: 9, opacity: 0.75 }}>
+                              n={bin.total}
+                            </text>
+                          )}
+                          {showRate && (
+                            <text
+                              x={cx}
+                              y={anchor - (showN ? (barWidth < 30 ? 15 : 16) : 5)}
+                              textAnchor="middle"
+                              fontWeight={600}
+                              fill="currentColor"
+                              style={{ fontSize: barWidth < 30 ? 10 : 12 }}
+                            >
+                              {bin.rate.toFixed(0)}%
+                            </text>
+                          )}
+                        </>
+                      );
+                    })()}
                   </>
                 )}
                 <text
@@ -337,13 +359,13 @@ export default function ByYearPage() {
   const [data, setData] = useState<FredResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [yearDim, setYearDim] = useState<YearDim>("original_year");
   const [successDef, setSuccessDef] = useState<SuccessDef>("reported");
   const [discipline, setDiscipline] = useState<string>("all");
   const [replicationType, setReplicationType] = useState<string>("all");
-  const [analysisLevel, setAnalysisLevel] = useState<"effect" | "paper">("effect");
-  const [paperThreshold, setPaperThreshold] = useState<number>(0.5);
+  const [analysisLevel, setAnalysisLevel] = useState<"effect" | "paper">("paper");
+  const [paperThreshold, setPaperThreshold] = useState<number>(0.75);
   const [minN, setMinN] = useState<number>(10);
+  const [showCI, setShowCI] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -389,166 +411,191 @@ export default function ByYearPage() {
 
   const agg = useMemo(() => {
     if (!data) return null;
-    const perYear = new Map<number, { success: number; failure: number; other: number }>();
-    for (const row of data.rows) {
+    // The counts chart is keyed by the replication's publication year; the
+    // success-rate charts are keyed by the original study's publication year.
+    const parseYear = (v: unknown): number | null => {
+      const y = toNumber(v);
+      if (y == null || !Number.isFinite(y) || y <= 1900 || y >= 2100) return null;
+      return Math.round(y);
+    };
+
+    // Counts chart: distinct replication studies grouped by replication_url,
+    // placed at the study's earliest replication year. This chart is always
+    // study-level — it ignores the level-of-analysis and threshold controls.
+    const studyMap = new Map<string, { year: number | null; success: number; denom: number }>();
+    // Effect-level success/failure tallies by original-study year.
+    const rateOrigYear = new Map<number, { success: number; failure: number }>();
+    // Paper-level grouping by original_url for the rate charts, keyed by the
+    // original study's publication year. classifyRow handles every definition
+    // (incl. "reported"), so inconclusive/blank rows stay out of the
+    // denominators and reversals count as failures — consistent with the
+    // effect level.
+    const paperMap = new Map<string, { origYear: number | null; success: number; denom: number }>();
+
+    for (let i = 0; i < data.rows.length; i++) {
+      const row = data.rows[i];
       if (discipline !== "all" && String(row.discipline ?? "").trim() !== discipline) continue;
       if (replicationType !== "all" && String(row.replication_type ?? "").trim() !== replicationType) continue;
-      const y = toNumber(row[yearDim]);
-      if (y == null || !Number.isFinite(y) || y <= 1900 || y >= 2100) continue;
-      const yr = Math.round(y);
-      let e = perYear.get(yr);
-      if (!e) {
-        e = { success: 0, failure: 0, other: 0 };
-        perYear.set(yr, e);
-      }
+      const repYear = parseYear(row.replication_year);
+      const origYear = parseYear(row.original_year);
       const outcome = classifyRow(row, successDef);
-      if (outcome === "success") e.success++;
-      else if (outcome === "failure") e.failure++;
-      else e.other++;
-    }
-    if (perYear.size === 0) return null;
 
-    const years = Array.from(perYear.keys());
-    const minYear = Math.min(...years);
-    const maxYear = Math.max(...years);
+      // Study grouping for the counts chart (rows without a replication URL
+      // each count as their own study).
+      const repUrl = String(row.replication_url ?? "").trim();
+      const studyKey = repUrl || `row-${i}`;
+      let s = studyMap.get(studyKey);
+      if (!s) {
+        s = { year: null, success: 0, denom: 0 };
+        studyMap.set(studyKey, s);
+      }
+      if (repYear != null) s.year = s.year == null ? repYear : Math.min(s.year, repYear);
+      if (outcome != null) {
+        s.denom++;
+        if (outcome === "success") s.success++;
+      }
 
-    // 5-year rate bins, with everything before BIN_START collapsed into one bin.
-    // Bins stop at 2024 — later years are still filling in.
-    const binMax = Math.min(maxYear, 2024);
-    const binDefs: { label: string; lo: number; hi: number }[] = [];
-    const start = Math.max(BIN_START, Math.floor(minYear / 5) * 5);
-    if (minYear < start) binDefs.push({ label: `< ${start}`, lo: -Infinity, hi: start });
-    for (let lo = start; lo <= binMax; lo += 5) {
-      const hiYear = Math.min(lo + 4, binMax);
-      binDefs.push({ label: hiYear === lo ? `${lo}` : `${lo}–${String(hiYear).slice(2)}`, lo, hi: lo + 5 });
-    }
-    // Success/failure tallies per year for the rate chart, at the selected level
-    // of analysis. Effect level counts each replication row; paper level groups
-    // rows by original_url and calls the paper a success when at least the
-    // threshold share of its effect replications succeeded (same rule as the
-    // main replications-database page).
-    let rateByYear: Map<number, { success: number; failure: number }>;
-    // At paper level, per-year paper tallies for the counts chart (papers with no
-    // classified outcome under the current definition land in `other`).
-    let paperPerYear: Map<number, { success: number; failure: number; other: number }> | null = null;
-    if (analysisLevel === "effect") {
-      rateByYear = perYear;
-    } else {
-      const paperMap = new Map<string, { year: number; success: number; denom: number }>();
-      for (const row of data.rows) {
-        if (discipline !== "all" && String(row.discipline ?? "").trim() !== discipline) continue;
-        if (replicationType !== "all" && String(row.replication_type ?? "").trim() !== replicationType) continue;
-        const y = toNumber(row[yearDim]);
-        if (y == null || !Number.isFinite(y) || y <= 1900 || y >= 2100) continue;
+      if (analysisLevel === "effect") {
+        if (origYear != null && outcome != null) {
+          let e = rateOrigYear.get(origYear);
+          if (!e) {
+            e = { success: 0, failure: 0 };
+            rateOrigYear.set(origYear, e);
+          }
+          if (outcome === "success") e.success++;
+          else e.failure++;
+        }
+      } else {
         const url = String(row.original_url ?? "").trim();
         if (!url) continue;
-        const yr = Math.round(y);
-        let e = paperMap.get(url);
-        if (!e) {
-          e = { year: yr, success: 0, denom: 0 };
-          paperMap.set(url, e);
+        let p = paperMap.get(url);
+        if (!p) {
+          p = { origYear: null, success: 0, denom: 0 };
+          paperMap.set(url, p);
         }
-        e.year = Math.min(e.year, yr);
-        if (successDef === "reported") {
-          const res = String(row.result ?? "").trim().toLowerCase();
-          if (res) {
-            e.denom++;
-            if (res === "success") e.success++;
-          }
-        } else {
-          const o = classifyRow(row, successDef);
-          if (o != null) {
-            e.denom++;
-            if (o === "success") e.success++;
-          }
+        if (origYear != null) p.origYear = p.origYear == null ? origYear : Math.min(p.origYear, origYear);
+        if (outcome != null) {
+          p.denom++;
+          if (outcome === "success") p.success++;
         }
       }
+    }
+
+    // Per-year study tallies for the counts chart. A study counts as a
+    // success when at least half of its classified effect replications
+    // succeeded; studies with no classified effects land in `other`.
+    const countSource = new Map<number, { success: number; failure: number; other: number }>();
+    for (const s of Array.from(studyMap.values())) {
+      if (s.year == null) continue;
+      let c = countSource.get(s.year);
+      if (!c) {
+        c = { success: 0, failure: 0, other: 0 };
+        countSource.set(s.year, c);
+      }
+      if (s.denom === 0) c.other++;
+      else if (s.success / s.denom >= 0.5) c.success++;
+      else c.failure++;
+    }
+
+    // Success/failure per original-study year for the rate charts, at the
+    // selected level of analysis. Paper level calls a paper a success when at
+    // least the threshold share of its classified effect replications
+    // succeeded (same rule as the main replications-database page).
+    let rateByYear: Map<number, { success: number; failure: number }>;
+    if (analysisLevel === "effect") {
+      rateByYear = rateOrigYear;
+    } else {
       rateByYear = new Map();
-      paperPerYear = new Map();
       for (const p of Array.from(paperMap.values())) {
-        let c = paperPerYear.get(p.year);
-        if (!c) {
-          c = { success: 0, failure: 0, other: 0 };
-          paperPerYear.set(p.year, c);
-        }
-        if (p.denom === 0) {
-          c.other++;
-          continue;
-        }
+        if (p.origYear == null || p.denom === 0) continue;
         const ok = p.success / p.denom >= paperThreshold;
-        if (ok) c.success++;
-        else c.failure++;
-        let e = rateByYear.get(p.year);
+        let e = rateByYear.get(p.origYear);
         if (!e) {
           e = { success: 0, failure: 0 };
-          rateByYear.set(p.year, e);
+          rateByYear.set(p.origYear, e);
         }
         if (ok) e.success++;
         else e.failure++;
       }
     }
+    if (countSource.size === 0 && rateByYear.size === 0) return null;
 
-    // Counts chart: effect replications per year, or papers per year at the
-    // paper level of analysis. The chart starts at 1945; the handful of earlier
-    // rows still count toward the header totals and the "< 1970" rate bin.
-    const countSource = paperPerYear ?? perYear;
+    // The counts chart starts at 1945; earlier rows still count toward the
+    // rate bins.
     const counts: YearCount[] = [];
-    for (let y = Math.max(minYear, 1945); y <= maxYear; y++) {
-      const e = countSource.get(y) ?? { success: 0, failure: 0, other: 0 };
-      counts.push({ year: y, ...e, total: e.success + e.failure + e.other });
-    }
-
-    const bins: YearBin[] = binDefs.map((b) => {
-      let success = 0;
-      let failure = 0;
-      for (const [yr, e] of Array.from(rateByYear.entries())) {
-        if (yr >= b.lo && yr < b.hi) {
-          success += e.success;
-          failure += e.failure;
-        }
+    if (countSource.size > 0) {
+      const countYears = Array.from(countSource.keys());
+      const cMin = Math.min(...countYears);
+      const cMax = Math.max(...countYears);
+      for (let y = Math.max(cMin, 1945); y <= cMax; y++) {
+        const e = countSource.get(y) ?? { success: 0, failure: 0, other: 0 };
+        counts.push({ year: y, ...e, total: e.success + e.failure + e.other });
       }
-      const total = success + failure;
-      const [ciLow, ciHigh] = wilsonCI(success, total);
-      return {
-        label: b.label,
-        success,
-        failure,
-        total,
-        rate: total >= minN ? (success / total) * 100 : -1,
-        ciLow,
-        ciHigh,
-      };
-    });
-
-    // Single-year rate bins, 2005–2024 (recent years are still filling in, so
-    // they are excluded). Years without enough data are trimmed from both ends.
-    let recentBins: YearBin[] = [];
-    for (let yr = 2005; yr <= Math.min(maxYear, 2024); yr++) {
-      const e = rateByYear.get(yr) ?? { success: 0, failure: 0 };
-      const total = e.success + e.failure;
-      const [ciLow, ciHigh] = wilsonCI(e.success, total);
-      recentBins.push({
-        label: String(yr),
-        success: e.success,
-        failure: e.failure,
-        total,
-        rate: total >= minN ? (e.success / total) * 100 : -1,
-        ciLow,
-        ciHigh,
-      });
     }
-    const firstValid = recentBins.findIndex((b) => b.rate >= 0);
-    const lastValid = recentBins.length - 1 - [...recentBins].reverse().findIndex((b) => b.rate >= 0);
-    recentBins = firstValid < 0 ? [] : recentBins.slice(firstValid, lastValid + 1);
 
-    const sourceEntries = Array.from(countSource.values());
-    const totalRows = sourceEntries.reduce((s, e) => s + e.success + e.failure + e.other, 0);
-    const totalClassified = sourceEntries.reduce((s, e) => s + e.success + e.failure, 0);
-    const rateUnits = bins.reduce((s, b) => s + b.total, 0);
-    return { counts, bins, recentBins, totalRows, totalClassified, rateUnits };
-  }, [data, yearDim, successDef, discipline, replicationType, analysisLevel, paperThreshold, minN]);
+    // 5-year rate bins over original-study years, with everything before
+    // BIN_START collapsed into one bin. Bins stop at 2024 — later years are
+    // still filling in.
+    let bins: YearBin[] = [];
+    let recentBins: YearBin[] = [];
+    if (rateByYear.size > 0) {
+      const rateYears = Array.from(rateByYear.keys());
+      const minYear = Math.min(...rateYears);
+      const maxYear = Math.max(...rateYears);
+      const binMax = Math.min(maxYear, 2024);
+      const binDefs: { label: string; lo: number; hi: number }[] = [];
+      const start = Math.max(BIN_START, Math.floor(minYear / 5) * 5);
+      if (minYear < start) binDefs.push({ label: `< ${start}`, lo: -Infinity, hi: start });
+      for (let lo = start; lo <= binMax; lo += 5) {
+        const hiYear = Math.min(lo + 4, binMax);
+        binDefs.push({ label: hiYear === lo ? `${lo}` : `${lo}–${String(hiYear).slice(2)}`, lo, hi: lo + 5 });
+      }
 
-  const yearDimLabel = YEAR_DIM_OPTIONS.find((o) => o.value === yearDim)?.label ?? "";
+      bins = binDefs.map((b) => {
+        let success = 0;
+        let failure = 0;
+        for (const [yr, e] of Array.from(rateByYear.entries())) {
+          if (yr >= b.lo && yr < b.hi) {
+            success += e.success;
+            failure += e.failure;
+          }
+        }
+        const total = success + failure;
+        const [ciLow, ciHigh] = wilsonCI(success, total);
+        return {
+          label: b.label,
+          success,
+          failure,
+          total,
+          rate: total >= minN ? (success / total) * 100 : -1,
+          ciLow,
+          ciHigh,
+        };
+      });
+
+      // Single-year rate bins, 2005–2024 (recent years are still filling in, so
+      // they are excluded). Years without enough data are trimmed from both ends.
+      for (let yr = 2005; yr <= Math.min(maxYear, 2024); yr++) {
+        const e = rateByYear.get(yr) ?? { success: 0, failure: 0 };
+        const total = e.success + e.failure;
+        const [ciLow, ciHigh] = wilsonCI(e.success, total);
+        recentBins.push({
+          label: String(yr),
+          success: e.success,
+          failure: e.failure,
+          total,
+          rate: total >= minN ? (e.success / total) * 100 : -1,
+          ciLow,
+          ciHigh,
+        });
+      }
+      const firstValid = recentBins.findIndex((b) => b.rate >= 0);
+      const lastValid = recentBins.length - 1 - [...recentBins].reverse().findIndex((b) => b.rate >= 0);
+      recentBins = firstValid < 0 ? [] : recentBins.slice(firstValid, lastValid + 1);
+    }
+
+    return { counts, bins, recentBins };
+  }, [data, successDef, discipline, replicationType, analysisLevel, paperThreshold, minN]);
 
   if (loading) return <main className="min-h-screen px-6 py-10">Loading…</main>;
   if (error || !data) return <main className="min-h-screen px-6 py-10">Failed to load: {error || "No data"}</main>;
@@ -559,24 +606,12 @@ export default function ByYearPage() {
       <main className="pt-24 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-24 py-10 flex-1">
         <div className="max-w-4xl mx-auto space-y-8">
           <div>
-            <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">Replications by year</h1>
-            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-              {analysisLevel === "paper" ? "Paper-level analysis" : "Effect-level analysis"}: each{" "}
-              {analysisLevel === "paper" ? "replicated paper" : "replication"} in the database is placed
-              on a timeline by publication year — of either the replication study or the original study
-              it targeted.
-              {agg && (
-                <>
-                  {" "}
-                  {agg.totalRows.toLocaleString()} {analysisLevel === "paper" ? "papers" : "replications"}{" "}
-                  have a recorded year under the current view, of which{" "}
-                  {agg.totalClassified.toLocaleString()} have a success/failure outcome under the current
-                  definition.
-                </>
-              )}{" "}
-              Rate bins with fewer than {minN} classified replications are not scored. Whiskers are
-              Wilson 95% confidence intervals.
+            <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+              <Link href="/replications-database" className="text-blue-600 dark:text-blue-400 hover:underline">
+                ← Back to the replications database
+              </Link>
             </p>
+            <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">Replications by year</h1>
           </div>
 
           {/* Controls */}
@@ -618,20 +653,6 @@ export default function ByYearPage() {
               </select>
             </label>
             <label className="flex items-center gap-2 text-sm">
-              <span className="text-gray-600 dark:text-gray-300">Group by:</span>
-              <select
-                value={yearDim}
-                onChange={(e) => setYearDim(e.target.value as YearDim)}
-                className="border border-gray-300 dark:border-gray-600 rounded px-2 py-1 bg-white dark:bg-gray-800 text-sm max-w-md"
-              >
-                {YEAR_DIM_OPTIONS.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="flex items-center gap-2 text-sm">
               <span className="text-gray-600 dark:text-gray-300">Definition of replication success:</span>
               <select
                 value={successDef}
@@ -655,7 +676,7 @@ export default function ByYearPage() {
               <label className="flex items-center gap-2 text-sm">
                 <span
                   className="text-gray-600 dark:text-gray-300 cursor-help"
-                  title="A paper is considered successfully replicated if X% of effect replications for effects reported in that paper were successful. The threshold X can be shifted with the dropdown. At the paper level, a paper's year is the earliest year among its replications (or its original publication year). Applies to the success-rate charts below."
+                  title="Applies to the success-rate charts only. A paper is considered successfully replicated if X% of effect replications for effects reported in that paper were successful. The threshold X can be shifted with the dropdown."
                 >
                   Level of analysis:
                 </span>
@@ -707,6 +728,17 @@ export default function ByYearPage() {
                   ))}
                 </select>
               </label>
+              <label className="flex items-center gap-2 text-sm cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={showCI}
+                  onChange={(e) => setShowCI(e.target.checked)}
+                  className="h-4 w-4 accent-blue-600"
+                />
+                <span className="text-gray-600 dark:text-gray-300">
+                  Show Wilson 95% confidence intervals
+                </span>
+              </label>
             </div>
           </div>
 
@@ -716,49 +748,52 @@ export default function ByYearPage() {
             </p>
           ) : (
             <>
-              {/* Counts per year */}
-              <section className="space-y-3">
-                <h2 className="text-xl md:text-2xl font-semibold tracking-tight">
-                  {analysisLevel === "paper" ? "Replication papers per year" : "Replications per year"}
-                  {discipline !== "all" ? ` — ${discipline}` : ""}
-                </h2>
-                <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-1.5 w-fit max-w-full">
-                  <YearCountBars
-                    counts={agg.counts}
-                    xLabel={
-                      analysisLevel === "paper"
-                        ? yearDim === "replication_year"
-                          ? "Year the replication paper was published"
-                          : "Year the original paper was published"
-                        : yearDimLabel
-                    }
-                    yLabel={analysisLevel === "paper" ? "# replication papers" : "Number of replications"}
-                    unit={analysisLevel === "paper" ? "replication paper" : "replication"}
-                  />
-                </div>
-              </section>
+              {/* Counts per year (studies by replication publication year;
+                  always study-level, independent of the level-of-analysis
+                  controls) */}
+              {agg.counts.length > 0 && (
+                <section className="space-y-3">
+                  <h2 className="text-xl md:text-2xl font-semibold tracking-tight">
+                    Studies publishing a replication per year
+                    {discipline !== "all" ? ` — ${discipline}` : ""}
+                  </h2>
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-1.5 w-fit max-w-full">
+                    <YearCountBars
+                      counts={agg.counts}
+                      xLabel="Year the replication study was published"
+                      yLabel="# of replication studies"
+                      unit="replication study"
+                      unitPlural="replication studies"
+                    />
+                  </div>
+                </section>
+              )}
 
-              {/* Success rate by 5-year bin */}
-              <section className="space-y-3">
-                <h2 className="text-xl md:text-2xl font-semibold tracking-tight">
-                  Replication success rate by year{discipline !== "all" ? ` — ${discipline}` : ""}
-                </h2>
-                <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-1.5 w-fit max-w-full">
-                  <YearRateBars bins={agg.bins} xLabel={yearDimLabel} unit={analysisLevel === "effect" ? "replications" : "papers"} />
-                </div>
-              </section>
+              {/* Success rate by 5-year bin (by original publication year) */}
+              {agg.bins.length > 0 && (
+                <section className="space-y-3">
+                  <h2 className="text-xl md:text-2xl font-semibold tracking-tight">
+                    Replication success rate by year{analysisLevel === "paper" ? " (paper level)" : ""}{discipline !== "all" ? ` — ${discipline}` : ""}
+                  </h2>
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-1.5 w-fit max-w-full">
+                    <YearRateBars bins={agg.bins} xLabel="Year the original study was published" unit={analysisLevel === "effect" ? "replications" : "papers"} showCI={showCI} />
+                  </div>
+                </section>
+              )}
 
               {/* Success rate per single year, 2005–present */}
               {agg.recentBins.length > 0 && (
                 <section className="space-y-3">
                   <h2 className="text-xl md:text-2xl font-semibold tracking-tight">
-                    Replication success rate by year, 2005–2024{discipline !== "all" ? ` — ${discipline}` : ""}
+                    Replication success rate by year, 2005–2024{analysisLevel === "paper" ? " (paper level)" : ""}{discipline !== "all" ? ` — ${discipline}` : ""}
                   </h2>
                   <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-1.5 w-fit max-w-full">
                     <YearRateBars
                       bins={agg.recentBins}
-                      xLabel={yearDimLabel}
+                      xLabel="Year the original study was published"
                       unit={analysisLevel === "effect" ? "replications" : "papers"}
+                      showCI={showCI}
+                      showRate={false}
                     />
                   </div>
                 </section>

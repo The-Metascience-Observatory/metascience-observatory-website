@@ -41,7 +41,7 @@ export const ReplicationsNavbar = () => {
               </Link>
             </Button>
             <Button variant="outline-gradient" size="sm" asChild className="border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
-              <Link href="https://explore.metascienceobservatory.org/" target="_blank" rel="noopener noreferrer">
+              <Link href="https://explore.metascienceobservatory.org/">
                 Explorer
               </Link>
             </Button>
@@ -101,7 +101,7 @@ export const ReplicationsNavbar = () => {
                 </Link>
               </Button>
               <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
-                <Link href="https://explore.metascienceobservatory.org/" target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)}>
+                <Link href="https://explore.metascienceobservatory.org/" onClick={() => setIsMobileMenuOpen(false)}>
                   Explorer
                 </Link>
               </Button>

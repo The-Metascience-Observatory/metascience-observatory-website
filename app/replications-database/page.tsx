@@ -808,15 +808,17 @@ function ReplicationsDatabaseContent() {
             />
           </div>
           <div className="md:col-span-2">
-            <label htmlFor="search" className="block text-sm font-medium opacity-80 mb-1">Search</label>
-            <div className="flex items-center gap-3">
-              <Input
-                id="search"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search titles, authors, description, tags, or references"
-                className="h-10 flex-1"
-              />
+            <div className="flex items-end gap-3">
+              <div className="flex-1">
+                <label htmlFor="search" className="block text-sm font-medium opacity-80 mb-1">Search</label>
+                <Input
+                  id="search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search titles, authors, description, tags, or references"
+                  className="h-10 w-full"
+                />
+              </div>
               <div className="flex flex-col items-end shrink-0">
                 <a href="/replications-database/by-discipline" className="text-sm underline hover:opacity-80 whitespace-nowrap">
                   Replication rate by discipline
@@ -824,21 +826,31 @@ function ReplicationsDatabaseContent() {
                 <a href="/replications-database/by-journal" className="text-sm underline hover:opacity-80 whitespace-nowrap">
                   Replication rate by journal
                 </a>
-                <a href="/replications-database/by-p-value" className="text-sm underline hover:opacity-80 whitespace-nowrap">
-                  Replication rate by original p-value
-                </a>
-                <a href="/replications-database/by-impact-factor" className="text-sm underline hover:opacity-80 whitespace-nowrap">
-                  Replication rate by journal impact factor
-                </a>
-                <a href="/replications-database/by-journal-rank" className="text-sm underline hover:opacity-80 whitespace-nowrap">
-                  Replication rate by journal rank
-                </a>
-                <a href="/replications-database/by-citation-count" className="text-sm underline hover:opacity-80 whitespace-nowrap">
-                  Replication rate by citation count
-                </a>
-                <a href="/replications-database/by-h-index" className="text-sm underline hover:opacity-80 whitespace-nowrap">
-                  Replication rate by author h-index
-                </a>
+                <details className="relative">
+                  <summary className="text-sm underline hover:opacity-80 whitespace-nowrap cursor-pointer list-none text-right">
+                    Show other pages
+                  </summary>
+                  <div className="absolute right-0 z-20 mt-1 flex w-max flex-col items-start gap-1 rounded-md border bg-background p-3 shadow-md">
+                    <a href="/replications-database/by-p-value" className="text-sm underline hover:opacity-80 whitespace-nowrap">
+                      Replication rate by original p-value
+                    </a>
+                    <a href="/replications-database/by-impact-factor" className="text-sm underline hover:opacity-80 whitespace-nowrap">
+                      Replication rate by journal impact factor
+                    </a>
+                    <a href="/replications-database/by-journal-rank" className="text-sm underline hover:opacity-80 whitespace-nowrap">
+                      Replication rate by journal rank
+                    </a>
+                    <a href="/replications-database/by-citation-count" className="text-sm underline hover:opacity-80 whitespace-nowrap">
+                      Replication rate by citation count
+                    </a>
+                    <a href="/replications-database/by-h-index" className="text-sm underline hover:opacity-80 whitespace-nowrap">
+                      Replication rate by author h-index
+                    </a>
+                    <a href="/replications-database/by-year" className="text-sm underline hover:opacity-80 whitespace-nowrap">
+                      Replication rate by year
+                    </a>
+                  </div>
+                </details>
               </div>
             </div>
           </div>
@@ -971,7 +983,7 @@ function ReplicationsDatabaseContent() {
               href="/replications-database/by-year"
               className="text-xs underline hover:opacity-80 ml-4 shrink-0"
             >
-              detailed view
+              more info
             </a>
           </div>
           <div className="mt-2">
@@ -1498,12 +1510,8 @@ function InlineYearBars({ bins, threshold, binSize }: { bins: YearBin[]; thresho
                   </text>
                 ) : (
                   <>
-                    <rect x={bx} y={by} width={barWidth} height={Math.max(barH, 2)} fill="#10b981" fillOpacity={0.85} rx={1} />
-                    {/* Wilson 95% CI whisker */}
-                    <line x1={cx} x2={cx} y1={yScale(ciLow)} y2={yScale(ciHigh)} stroke="#111827" strokeWidth={1} strokeOpacity={0.5} />
-                    <line x1={cx - 3} x2={cx + 3} y1={yScale(ciHigh)} y2={yScale(ciHigh)} stroke="#111827" strokeWidth={1} strokeOpacity={0.5} />
-                    <line x1={cx - 3} x2={cx + 3} y1={yScale(ciLow)} y2={yScale(ciLow)} stroke="#111827" strokeWidth={1} strokeOpacity={0.5} />
-                    <text x={cx} y={yScale(ciHigh) - 4} textAnchor="middle" className="fill-current" style={{ fontSize: 9, opacity: 0.7 }}>{bin.total}</text>
+                    <rect x={bx} y={by} width={barWidth} height={Math.max(barH, 2)} fill="#2563eb" fillOpacity={0.85} rx={1} />
+                    <text x={cx} y={by - 4} textAnchor="middle" className="fill-current" style={{ fontSize: 9, opacity: 0.7 }}>{bin.total}</text>
                   </>
                 )}
                 <text x={bx + barWidth / 2} y={innerH + 12} textAnchor="end" transform={`rotate(-45, ${bx + barWidth / 2}, ${innerH + 12})`} className="fill-current" style={{ fontSize: 9, opacity: 0.7 }}>{bin.label}</text>

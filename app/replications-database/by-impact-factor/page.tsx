@@ -21,7 +21,7 @@ const STAT_METHODS: OutcomeMethod[] = ["significance", "orig_in_rep_ci", "rep_in
 type AnyRecord = Record<string, unknown>;
 
 // Metric arrays are length 5: [if2, if5, citescore, openalex_2yr, scimago_sjr].
-type Metric5 = [number | null, number | null, number | null, number | null, number | null];
+type Metric5 = [number | null, number | null, number | null, number | null, number | null, number | null];
 interface RawIFEntry {
   sid: string;
   recentYear: number | null;

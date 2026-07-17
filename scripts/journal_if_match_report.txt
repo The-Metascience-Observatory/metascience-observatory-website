@@ -1,17 +1,18 @@
-journal_impact_factors match report - generated 2026-07-14
+journal_impact_factors match report - generated 2026-07-15
 CSV: replications_database_2026_07_14_182338.csv
 
 Unique journal names: 1625
 Match tiers: aggressive=136, denylist=12, light=1220, override=16, subtitle+aggressive=2, subtitle+light=28, unmatched=211
 Matched names: 1402 (86.3%)
-Result-bearing rows total: 6200; with a journal: 6102
-  on a matched journal: 5906 (96.8%)
-  on a journal with >=1 exact publication-year IF: 5905 (96.8%)
+Result-bearing rows total: 6203; with a journal: 6105
+  on a matched journal: 5909 (96.8%)
+  on a journal with >=1 exact publication-year IF: 5908 (96.8%)
 Journals emitted: 1402; snapshot year: 2024
 
 External metric coverage (of emitted journals):
   OpenAlex 2yr_mean_citedness: 1399 (99.8%)
   SCImago SJR (>=1 year matched): 1308 (93.3%)
+  SCImago citable-doc CiteScore (>=1 year matched): 1286 (91.7%)
   SCImago rank/quartile/h-index (journals emitted to rank JSON): 1308
   SJR CSV year range: 1999-2025 (27 files)
 

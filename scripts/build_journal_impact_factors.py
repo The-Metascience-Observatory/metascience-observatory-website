@@ -6,9 +6,9 @@ one listed in data/version_history.txt) to per-year impact-factor metrics in
 the SciSciNet dashboard's journals.db, and emits a compact JSON committed to
 the repo so the website never needs the (offline, external-drive) database.
 
-Each journal-year holds a 5-metric tuple
+Each journal-year holds a 6-metric tuple
     [impact_factor_2yr, impact_factor_5yr, citescore,
-     openalex_2yr_mean_citedness, scimago_sjr]
+     openalex_2yr_mean_citedness, scimago_sjr, scimago_cites_per_citable_doc_3yr]
 The first three are SELF-COMPUTED from OpenAlex/SciSciNet-v2 citation data by the
 metascience-observatory-explorer ETL (no document-type filtering, no self-citation
 exclusion); they run systematically lower than official Clarivate JIF / Scopus
@@ -16,6 +16,10 @@ CiteScore and must be labeled "OpenAlex-derived". Index 3 is OpenAlex's own
 published 2-year mean citedness (fetched live from the OpenAlex API; a single
 current snapshot, so it populates only `recent`). Index 4 is the SCImago SJR for
 that publication year (per-year CSVs; pre-1999 papers use the 1999 ranking).
+Index 5 is a CiteScore-style metric = SCImago 'Total Citations (3years)' /
+'Citable Docs. (3years)' for that year - unlike the self-computed IFs its
+denominator is restricted to CITABLE documents, so it is normalized like the real
+JIF/CiteScore and does not deflate high-front-matter journals (Nature/Science).
 
 RE-RUN THIS SCRIPT whenever a new replications_database_*.csv version lands
 (it only stores the journal/year pairs the CSV references). It is idempotent:
@@ -78,6 +82,7 @@ METRICS = (
     "citescore",
     "openalex_2yr_mean_citedness",
     "scimago_sjr",
+    "scimago_cites_per_citable_doc_3yr",
 )
 N_METRICS = len(METRICS)
 # A journal-year needs this many trailing years of citation data to be
@@ -340,6 +345,43 @@ def load_sjr_by_year(sjr_dir: Path):
     return issn_year, name_year, sorted(years)
 
 
+def load_citescore_by_year(sjr_dir: Path):
+    """Return (issn -> {year: ratio}, name_key -> {year: ratio}, sorted years).
+
+    A CiteScore-style, citable-items-normalized metric computed from the same
+    'scimagojr <year>.csv' files as the SJR:
+        ratio = 'Total Citations (3years)' / 'Citable Docs. (3years)'
+    SCImago's "Citable Docs" excludes non-citable front-matter, so unlike the
+    self-computed IFs this is not deflated by news/editorials (Nature/Science).
+    Keyed by every ISSN listed, with aggressively-normalized Title as fallback.
+    """
+    issn_year: dict[str, dict[int, float]] = defaultdict(dict)
+    name_year: dict[str, dict[int, float]] = defaultdict(dict)
+    years: list[int] = []
+    for path in sorted(sjr_dir.glob("scimagojr *.csv")):
+        m = re.search(r"(\d{4})", path.name)
+        if not m:
+            continue
+        year = int(m.group(1))
+        years.append(year)
+        with open(path, encoding="utf-8", newline="") as f:
+            reader = csv.DictReader(f, delimiter=";")
+            for row in reader:
+                cites = parse_sjr_value(row.get("Total Citations (3years)", ""))
+                citable = parse_sjr_value(row.get("Citable Docs. (3years)", ""))
+                if cites is None or not citable:  # None or 0 -> undefined ratio
+                    continue
+                ratio = cites / citable
+                for issn in (row.get("Issn") or "").split(","):
+                    n = norm_issn(issn)
+                    if len(n) == 8:
+                        issn_year[n].setdefault(year, ratio)
+                key = normalize_aggressive(row.get("Title") or "")
+                if key:
+                    name_year[key].setdefault(year, ratio)
+    return issn_year, name_year, sorted(years)
+
+
 def parse_quartile(raw: str):
     """Map 'Q1'..'Q4' to 1..4 (1=best). '-' / blank / junk -> None."""
     s = (raw or "").strip().upper()
@@ -567,18 +609,22 @@ def main() -> None:
     oa2yr_by_sid = {sid: (v.get("oa2yr") if isinstance(v.get("oa2yr"), (int, float)) else None)
                     for sid, v in oa_stats.items()}
 
-    # ---- SCImago SJR per year (index 4) ---------------------------------
+    # ---- SCImago SJR (index 4) + citable-doc CiteScore (index 5) --------
     sjr_dir = Path(args.sjr_dir)
     if sjr_dir.exists():
         print(f"Loading SCImago SJR CSVs from {sjr_dir}...")
         sjr_issn, sjr_name, sjr_years = load_sjr_by_year(sjr_dir)
         print(f"  {len(sjr_years)} SJR years ({sjr_years[0]}-{sjr_years[-1]}), "
               f"{len(sjr_issn)} ISSNs indexed")
+        print("Loading SCImago citable-doc CiteScore (Total Citations 3yr / Citable Docs 3yr)...")
+        cs_issn, cs_name, cs_years = load_citescore_by_year(sjr_dir)
+        print(f"  {len(cs_years)} CiteScore years, {len(cs_issn)} ISSNs indexed")
         print("Loading SCImago rank/quartile/h-index...")
         rank_issn, rank_name, rank_years = load_sjr_rank_by_year(sjr_dir)
     else:
-        print(f"WARN: SJR dir {sjr_dir} not found - SJR/rank metrics will be empty.")
+        print(f"WARN: SJR dir {sjr_dir} not found - SJR/CiteScore/rank metrics will be empty.")
         sjr_issn, sjr_name, sjr_years = {}, {}, []
+        cs_issn, cs_name, cs_years = {}, {}, []
         rank_issn, rank_name, rank_years = {}, {}, []
 
     def _series_for(issn_idx, name_idx, sourceid: str, name: str) -> dict:
@@ -598,6 +644,9 @@ def main() -> None:
     def sjr_series_for(sourceid: str, name: str) -> dict[int, float]:
         return _series_for(sjr_issn, sjr_name, sourceid, name)
 
+    def citescore_series_for(sourceid: str, name: str) -> dict[int, float]:
+        return _series_for(cs_issn, cs_name, sourceid, name)
+
     snapshot_year = pick_snapshot_year(if_rows, max_year=date.today().year)
     print(f"Snapshot year: {snapshot_year}")
 
@@ -605,14 +654,18 @@ def main() -> None:
     exact_year_rows = 0
     sjr_matched = 0
     oa_matched = 0
+    cs_matched = 0
     for name, (sourceid, _display, _tier) in matches.items():
         per_year = if_rows.get(sourceid, {})
         oa2yr = round1(oa2yr_by_sid.get(sourceid))
         sjr_series = sjr_series_for(sourceid, name)
+        cs_series = citescore_series_for(sourceid, name)
         if sjr_series:
             sjr_matched += 1
         if oa2yr is not None:
             oa_matched += 1
+        if cs_series:
+            cs_matched += 1
 
         # Union of years we need entries for: any referenced pub-year, plus every
         # year the self-computed IF has data. Each tuple is length N_METRICS.
@@ -622,11 +675,13 @@ def main() -> None:
             vals = per_year.get(year)  # (if2, if5, cs) or None
             if3 = [round1(v) for v in vals] if vals else [None, None, None]
             sjr_v = round2(sjr_for_year(sjr_series, year, sjr_years)) if sjr_series else None
+            # citable-doc CiteScore, per publication year (pre-1999 -> 1999, like SJR).
+            cs_v = round1(sjr_for_year(cs_series, year, cs_years)) if cs_series else None
             # oa2yr is a single snapshot; store it on every year entry so pub-year
             # basis has a value to show (it does not vary by year in OpenAlex).
-            tuple5 = [if3[0], if3[1], if3[2], oa2yr, sjr_v]
-            if any(v is not None for v in tuple5):
-                by_year[str(year)] = tuple5
+            tuple6 = [if3[0], if3[1], if3[2], oa2yr, sjr_v, cs_v]
+            if any(v is not None for v in tuple6):
+                by_year[str(year)] = tuple6
 
         # Recent snapshot: latest year <= snapshot_year with a non-null 2yr IF.
         recent, recent_year = None, None
@@ -636,12 +691,13 @@ def main() -> None:
                 recent = [round1(vals[0]), round1(vals[1]), round1(vals[2])]
                 recent_year = year
                 break
-        # Fill SJR/OA into the recent tuple even if the IF snapshot is missing.
+        # Fill SJR/OA/CiteScore into the recent tuple even if the IF snapshot is missing.
         recent_sjr = round2(sjr_series[max(sjr_series)]) if sjr_series else None
-        if recent is None and (oa2yr is not None or recent_sjr is not None):
+        recent_cs = round1(cs_series[max(cs_series)]) if cs_series else None
+        if recent is None and (oa2yr is not None or recent_sjr is not None or recent_cs is not None):
             recent = [None, None, None]
         if recent is not None:
-            recent = recent + [oa2yr, recent_sjr]
+            recent = recent + [oa2yr, recent_sjr, recent_cs]
 
         if not by_year and recent is None:
             continue  # matched but no usable data of any kind: omit
@@ -656,12 +712,17 @@ def main() -> None:
     out = {
         "_meta": {
             "generated": date.today().isoformat(),
-            "source": "SciSciNet-v2/OpenAlex self-computed IF + OpenAlex 2yr_mean_citedness + SCImago SJR",
-            "note": ("Metric order [if2,if5,citescore,openalex_2yr_mean_citedness,scimago_sjr]. "
-                     "The first three are self-computed (no doc-type filtering / self-citation "
-                     "exclusion), systematically lower than Clarivate JIF - not Journal Impact "
-                     "Factor(TM). Index 3 is OpenAlex's published 2-year mean citedness (current "
-                     "snapshot). Index 4 is SCImago SJR for the publication year (pre-1999 uses 1999)."),
+            "source": ("SciSciNet-v2/OpenAlex self-computed IF + OpenAlex 2yr_mean_citedness "
+                       "+ SCImago SJR + SCImago citable-doc CiteScore"),
+            "note": ("Metric order [if2,if5,citescore,openalex_2yr_mean_citedness,scimago_sjr,"
+                     "scimago_cites_per_citable_doc_3yr]. The first three are self-computed (no "
+                     "doc-type filtering / self-citation exclusion), systematically lower than "
+                     "Clarivate JIF - not Journal Impact Factor(TM). Index 3 is OpenAlex's published "
+                     "2-year mean citedness (current snapshot). Index 4 is SCImago SJR for the "
+                     "publication year (pre-1999 uses 1999). Index 5 is a CiteScore-style metric = "
+                     "SCImago 'Total Citations (3years)' / 'Citable Docs. (3years)' per publication "
+                     "year (pre-1999 uses 1999); its citable-doc denominator normalizes like the real "
+                     "JIF/CiteScore, so it does NOT deflate high-front-matter journals."),
             "attribution": ("SCImago SJR data: SCImago, (n.d.). SJR - SCImago Journal & Country Rank "
                             "[Portal]. Retrieved from https://www.scimagojr.com - used non-commercially."),
             "csv": csv_name,
@@ -760,6 +821,8 @@ def main() -> None:
     report.append("External metric coverage (of emitted journals):")
     report.append(f"  OpenAlex 2yr_mean_citedness: {oa_matched} ({100 * oa_matched / n_emit:.1f}%)")
     report.append(f"  SCImago SJR (>=1 year matched): {sjr_matched} ({100 * sjr_matched / n_emit:.1f}%)")
+    report.append(f"  SCImago citable-doc CiteScore (>=1 year matched): {cs_matched} "
+                  f"({100 * cs_matched / n_emit:.1f}%)")
     report.append(f"  SCImago rank/quartile/h-index (journals emitted to rank JSON): {len(rank_out)}")
     if sjr_years:
         report.append(f"  SJR CSV year range: {sjr_years[0]}-{sjr_years[-1]} ({len(sjr_years)} files)")

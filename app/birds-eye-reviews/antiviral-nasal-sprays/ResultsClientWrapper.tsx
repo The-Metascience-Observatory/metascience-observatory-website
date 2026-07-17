@@ -5,16 +5,7 @@ import { Segment, HoverTrial } from "./screening/BreakdownChart";
 import { TrialRectList } from "@/components/TrialRectList";
 import { ResultsTable, TrialRow } from "./ResultsTable";
 import { YearChart } from "./YearChart";
-/** Distinct-trial count per (canonical) country, for the country filter card. */
-function countriesOf(rows: TrialRow[]): { country: string; count: number }[] {
-  const counts = new Map<string, number>();
-  for (const r of rows) {
-    for (const c of new Set(r.countries)) counts.set(c, (counts.get(c) ?? 0) + 1);
-  }
-  return [...counts.entries()]
-    .map(([country, count]) => ({ country, count }))
-    .sort((a, b) => b.count - a.count);
-}
+import { CountryFilterCard, countriesOf } from "@/components/CountryFilterCard";
 
 const DESIGN_LABELS: Record<string, string> = {
   RCT: "RCT",
@@ -210,37 +201,18 @@ export function ResultsClientWrapper({
   const ingredientKey = (t: TrialRow) => t.ingredient || "unspecified";
   const ingredientFilter = (t: TrialRow) => !ingredient || ingredientKey(t) === ingredient;
 
-  // Country multi-select filter (toggled by clicking countries on the "Trials by
-  // country" map or removing bubbles). Empty set = no country filter (all pass);
+  // Country multi-select filter, driven by the "Filter by country" card
+  // (checkboxes + collapsible map). Empty set = no country filter (all pass);
   // otherwise a trial passes if it lists ANY selected country.
   const [selectedCountries, setSelectedCountries] = useState<Set<string>>(new Set());
   const countryFilter = (t: TrialRow) =>
     selectedCountries.size === 0 || t.countries.some((c) => selectedCountries.has(c));
+  // Full country universe (built once from all trials) — the card's reference
+  // set for "exclude one" seeding and full-set collapse.
   const allCountryNames = useMemo(
     () => [...new Set(trials.flatMap((t) => t.countries))].sort((a, b) => a.localeCompare(b)),
     [trials]
   );
-  const clearAllCountries = () => setSelectedCountries(new Set());
-
-  // Checkbox-card toggle for countries. Empty selectedCountries = no filter (all pass),
-  // which is displayed as "all checked". Unchecking a country when the set is empty
-  // means "exclude just this one" = add all others to the include set.
-  const toggleCountryCard = (c: string) =>
-    setSelectedCountries((prev) => {
-      if (prev.size === 0) {
-        return new Set(allCountryNames.filter((cc) => cc !== c));
-      }
-      const next = new Set(prev);
-      if (next.has(c)) {
-        next.delete(c);
-      } else {
-        next.add(c);
-        if (allCountryNames.length > 0 && allCountryNames.every((n) => next.has(n))) {
-          return new Set();
-        }
-      }
-      return next;
-    });
 
   // Delivery-method multi-select filter (spray vs drops vs ...), checkbox panel.
   // Default: nasal spray only.
@@ -353,7 +325,6 @@ export function ResultsClientWrapper({
   const deliveryActive = selectedDeliveries.size !== allDeliveryList.length;
   const typesActive = selectedTypes.size !== OUTCOME_TYPES.length;
   const designsActive = selectedDesigns.size !== allDesignList.length;
-  const countriesActive = selectedCountries.size > 0;
 
   // Breakdowns recomputed from the trial-type-filtered set so the charts react.
   // Trials with no canonical ingredient are bucketed as "unspecified" so the
@@ -387,9 +358,9 @@ export function ResultsClientWrapper({
     [filteredTrials]
   );
 
-  // "Trials by country" map. Like the ingredient chart, it reacts to the other
-  // filters but NOT to the country selection, so every country stays visible —
-  // a click filters the dashboard (click the same country again to clear).
+  // "Filter by country" card data. Like the ingredient chart, it reacts to the
+  // other filters but NOT to the country selection, so every country stays
+  // visible (with live counts) while some are selected.
   const countryChartBase = useMemo(
     () => afterIngredientNoCountry.filter((t) => deliveryFilter(t) && typeFilter(t) && designFilter(t)),
     [afterIngredientNoCountry, selectedDeliveries, selectedTypes, selectedDesigns]
@@ -493,39 +464,8 @@ export function ResultsClientWrapper({
         </div>
       </div>
 
-      {/* Country filter — checkbox card showing all countries with trial counts. */}
-      <div className={cardBg(countriesActive)}>
-        <div className="flex items-center gap-3 mb-2">
-          <span className="text-sm font-medium text-foreground">Filter by country</span>
-          <span className="text-xs text-foreground/50">
-            ({filteredTrials.length} of {countryChartBase.length} trials selected)
-          </span>
-          <button onClick={clearAllCountries} className="text-xs text-blue-600 hover:text-blue-700 ml-auto">Select all</button>
-        </div>
-        <div className="flex flex-wrap gap-x-4 gap-y-1.5 max-h-40 overflow-y-auto pr-1">
-          {allCountries.map(({ country, count }) => {
-            const checked = !countriesActive || selectedCountries.has(country);
-            return (
-              <label key={country}
-                className={`inline-flex items-center gap-1.5 cursor-pointer text-sm rounded px-1.5 py-0.5 ${checked ? "" : "bg-foreground/[0.08]"}`}>
-                <input
-                  type="checkbox"
-                  checked={checked}
-                  onChange={() => toggleCountryCard(country)}
-                  className="rounded border-foreground/30 text-blue-600 focus:ring-blue-500"
-                />
-                <span className={checked ? "text-foreground" : "text-foreground/50"}>
-                  {country}
-                </span>
-                <span className="text-xs text-foreground/40">({count})</span>
-              </label>
-            );
-          })}
-        </div>
-      </div>
-
       {/* Ingredient filter — the outermost filter; narrows everything below. */}
-      <div className={`mb-8 border border-border rounded-lg p-4 ${ingredient ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`}>
+      <div className={`mb-4 border border-border rounded-lg p-4 ${ingredient ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`}>
         <div className="flex items-center gap-3 flex-wrap">
           <span className="text-sm font-medium text-foreground">Filter by ingredient</span>
           <select
@@ -548,6 +488,16 @@ export function ResultsClientWrapper({
           )}
         </div>
       </div>
+
+      {/* Country filter — always the LAST filter card (checkboxes + collapsible map). */}
+      <CountryFilterCard
+        allCountries={allCountries}
+        allCountryNames={allCountryNames}
+        selectedCountries={selectedCountries}
+        onSelectionChange={setSelectedCountries}
+        filteredCount={filteredTrials.length}
+        totalCount={countryChartBase.length}
+      />
 
       {/* Trials by Ingredient — long-covid rectangle-list style (one rectangle per
           trial, coloured by result; hover for details, click to filter). */}
