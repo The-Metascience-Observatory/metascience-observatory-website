@@ -1461,6 +1461,34 @@ def merge_into_master(master_df, match_idx, incoming_row, force_replace_fields=N
     return filled
 
 
+def apply_custom_merge(master_df, match_idx, incoming_row, field_values):
+    """Apply a GUI 'custom merge': run the standard merge first (fills empty
+    fields across all columns), then overwrite the user-edited fields with
+    their exact values. An empty edited value clears the field.
+    Returns (fields_filled_by_merge, user_edits_applied)."""
+    filled = merge_into_master(master_df, match_idx, incoming_row)
+    applied = 0
+    for col, val in (field_values or {}).items():
+        if col not in master_df.columns:
+            continue
+        if isinstance(val, str):
+            val = val.strip()
+            if val == '':
+                val = float('nan')
+            elif pd.api.types.is_numeric_dtype(master_df[col]):
+                try:
+                    val = float(val)
+                except ValueError:
+                    pass
+        try:
+            master_df.at[match_idx, col] = val
+        except (ValueError, TypeError):
+            master_df[col] = master_df[col].astype(object)
+            master_df.at[match_idx, col] = val
+        applied += 1
+    return filled, applied
+
+
 def prompt_duplicate_action(new_row, master_df, match_indices, ingest_idx, total_ingest,
                             dup_number=None, total_dups=None):
     """
@@ -1951,6 +1979,12 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
                     filled = merge_into_master(master_df, target, row, force_replace)
                     merged_count += 1
                     print(f"  ✓ Merged row {idx + 1} into master row {target} ({filled} fields filled)")
+                elif action == 'custom_merge' and target is not None:
+                    filled, applied = apply_custom_merge(
+                        master_df, target, row, decision.get('field_values'))
+                    merged_count += 1
+                    print(f"  ✓ Custom-merged row {idx + 1} into master row {target} "
+                          f"({filled} fields auto-filled, {applied} fields edited)")
                 else:
                     duplicates_found += 1
 

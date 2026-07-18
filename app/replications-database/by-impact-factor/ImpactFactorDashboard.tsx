@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { ChartWatermark } from "@/components/ChartWatermark";
+import { useIsMobile } from "@/components/useIsMobile";
 import type { IFMeta, JournalIF, PaperRow } from "./types";
 
 // Wilson score 95% CI for a proportion k/n (percentage points).
@@ -788,9 +789,16 @@ function BinnedChart({
   xTitle?: string;
   showCI?: boolean;
 }) {
-  const W = 720;
-  const H = 320;
-  const M = { top: 20, right: 20, bottom: 64, left: 62 };
+  const isMobile = useIsMobile();
+  const W = isMobile ? 380 : 720;
+  const H = isMobile ? 300 : 320;
+  const M = isMobile ? { top: 16, right: 8, bottom: 60, left: 40 } : { top: 20, right: 20, bottom: 64, left: 62 };
+  const F = isMobile
+    ? { tick: 10, xlab: 9, val: 10, title: 11, sub: 8 }
+    : { tick: 12, xlab: 12, val: 12, title: 14, sub: 10 };
+  const whisker = isMobile ? 4 : 5;
+  // Long metric titles overflow a 380-unit viewBox at 11px — shrink to fit.
+  const titleFs = !isMobile ? F.title : xTitle.length > 60 ? 8.5 : xTitle.length > 45 ? 9.5 : F.title;
   const plotW = W - M.left - M.right;
   const plotH = H - M.top - M.bottom;
   const bandW = plotW / bins.length;
@@ -801,13 +809,13 @@ function BinnedChart({
 
   return (
     <div className="overflow-x-auto">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full min-w-[560px]" role="img">
+      <svg viewBox={`0 0 ${W} ${H}`} className={isMobile ? "w-full" : "w-full min-w-[560px]"} role="img">
         {/* y gridlines + ticks */}
         {[0, 25, 50, 75, 100].map((g) => (
           <g key={g}>
             <line x1={M.left} x2={W - M.right} y1={y(g)} y2={y(g)} stroke="currentColor" strokeOpacity={0.12} />
             <line x1={M.left - 6} x2={M.left} y1={y(g)} y2={y(g)} stroke="#000000" strokeWidth={1} />
-            <text x={M.left - 10} y={y(g) + 4} textAnchor="end" fontSize={12} className="fill-black dark:fill-gray-100">
+            <text x={M.left - (isMobile ? 8 : 10)} y={y(g) + 4} textAnchor="end" fontSize={F.tick} className="fill-black dark:fill-gray-100">
               {g}%
             </text>
           </g>
@@ -830,20 +838,20 @@ function BinnedChart({
                 <>
                   {/* CI whisker */}
                   <line x1={cx} x2={cx} y1={y(b.ciLow)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
-                  <line x1={cx - 5} x2={cx + 5} y1={y(b.ciLow)} y2={y(b.ciLow)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
-                  <line x1={cx - 5} x2={cx + 5} y1={y(b.ciHigh)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
+                  <line x1={cx - whisker} x2={cx + whisker} y1={y(b.ciLow)} y2={y(b.ciLow)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
+                  <line x1={cx - whisker} x2={cx + whisker} y1={y(b.ciHigh)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
                 </>
               )}
               {/* rate label, above the bar (or the upper CI whisker) */}
-              <text x={cx} y={(showCI ? Math.min(y(b.ciHigh), top) : top) - 6} textAnchor="middle" fontSize={12} fontWeight={600} fill="currentColor">
+              <text x={cx} y={(showCI ? Math.min(y(b.ciHigh), top) : top) - 6} textAnchor="middle" fontSize={F.val} fontWeight={600} fill="currentColor">
                 {b.rate.toFixed(0)}%
               </text>
               {/* x labels */}
               <line x1={cx} x2={cx} y1={M.top + plotH} y2={M.top + plotH + 5} stroke="#000000" strokeWidth={1} />
-              <text x={cx} y={H - M.bottom + 18} textAnchor="middle" fontSize={12} className="fill-black dark:fill-gray-100">
+              <text x={cx} y={H - M.bottom + (isMobile ? 14 : 18)} textAnchor="middle" fontSize={F.xlab} className="fill-black dark:fill-gray-100">
                 {b.label ?? `${fmt(b.lo)}–${fmt(b.hi)}`}
               </text>
-              <text x={cx} y={H - M.bottom + 34} textAnchor="middle" fontSize={10} fill="currentColor" opacity={0.5}>
+              <text x={cx} y={H - M.bottom + (isMobile ? 28 : 34)} textAnchor="middle" fontSize={F.sub} fill="currentColor" opacity={0.5}>
                 n={b.count}
               </text>
             </g>
@@ -853,16 +861,16 @@ function BinnedChart({
           x={M.left + plotW / 2}
           y={H - 6}
           textAnchor="middle"
-          fontSize={14}
+          fontSize={titleFs}
           fontWeight={700}
           className="fill-black dark:fill-gray-100"
         >
           {xTitle}
         </text>
         <text
-          transform={`translate(14 ${M.top + plotH / 2}) rotate(-90)`}
+          transform={`translate(${isMobile ? 10 : 14} ${M.top + plotH / 2}) rotate(-90)`}
           textAnchor="middle"
-          fontSize={14}
+          fontSize={F.title}
           fontWeight={700}
           className="fill-black dark:fill-gray-100"
         >
@@ -960,9 +968,13 @@ function ScatterChart({
   metricLabel: string;
   xTitle: string;
 }) {
-  const W = 720;
+  const isMobile = useIsMobile();
+  const W = isMobile ? 380 : 720;
   const H = 380;
-  const M = { top: 20, right: 20, bottom: 52, left: 62 };
+  const M = isMobile ? { top: 16, right: 10, bottom: 44, left: 40 } : { top: 20, right: 20, bottom: 52, left: 62 };
+  const F = isMobile ? { tick: 9, title: 11 } : { tick: 12, title: 14 };
+  // Long metric titles overflow a 380-unit viewBox at 11px — shrink to fit.
+  const titleFs = !isMobile ? F.title : xTitle.length > 60 ? 8.5 : xTitle.length > 45 ? 9.5 : F.title;
   const plotW = W - M.left - M.right;
   const plotH = H - M.top - M.bottom;
 
@@ -1002,21 +1014,22 @@ function ScatterChart({
   const x = (ifVal: number) => M.left + plotW * ((ifVal - xMin) / (xMax - xMin));
   const y = (pct: number) => M.top + plotH * (1 - pct / 100);
   const maxN = Math.max(...points.map((p) => p.n));
-  const r = (n: number) => 3 + 7 * Math.sqrt(n / maxN);
+  const r = (n: number) => (isMobile ? 2.5 + 5 * Math.sqrt(n / maxN) : 3 + 7 * Math.sqrt(n / maxN));
 
-  // Ticks: the axis start plus every multiple of 5.
+  // Ticks: the axis start plus every multiple of 5 (10 on mobile for wide ranges).
+  const tickStep = isMobile && xMax > 25 ? 10 : 5;
   const ticks: number[] = [xMin];
-  for (let t = 5; t <= xMax; t += 5) ticks.push(t);
+  for (let t = tickStep; t <= xMax; t += tickStep) ticks.push(t);
 
   return (
     <div className="overflow-x-auto">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full min-w-[560px]" role="img">
+      <svg viewBox={`0 0 ${W} ${H}`} className={isMobile ? "w-full" : "w-full min-w-[560px]"} role="img">
         {/* y gridlines + ticks */}
         {[0, 25, 50, 75, 100].map((g) => (
           <g key={g}>
             <line x1={M.left} x2={W - M.right} y1={y(g)} y2={y(g)} stroke="currentColor" strokeOpacity={0.12} />
             <line x1={M.left - 6} x2={M.left} y1={y(g)} y2={y(g)} stroke="#000000" strokeWidth={1} />
-            <text x={M.left - 10} y={y(g) + 4} textAnchor="end" fontSize={12} className="fill-black dark:fill-gray-100">
+            <text x={M.left - (isMobile ? 8 : 10)} y={y(g) + 4} textAnchor="end" fontSize={F.tick} className="fill-black dark:fill-gray-100">
               {g}%
             </text>
           </g>
@@ -1026,7 +1039,7 @@ function ScatterChart({
           <g key={t}>
             <line x1={x(t)} x2={x(t)} y1={M.top} y2={M.top + plotH} stroke="currentColor" strokeOpacity={0.08} />
             <line x1={x(t)} x2={x(t)} y1={M.top + plotH} y2={M.top + plotH + 5} stroke="#000000" strokeWidth={1} />
-            <text x={x(t)} y={M.top + plotH + 17} textAnchor="middle" fontSize={12} className="fill-black dark:fill-gray-100">
+            <text x={x(t)} y={M.top + plotH + (isMobile ? 15 : 17)} textAnchor="middle" fontSize={F.tick} className="fill-black dark:fill-gray-100">
               {Number.isInteger(t) ? t : t.toFixed(1)}
             </text>
           </g>
@@ -1047,8 +1060,9 @@ function ScatterChart({
         ))}
         {/* label layer: drawn after ALL points so no marker or whisker can paint
             over a label's white box. Boxes are laid out with a collision pass so
-            labels for nearby journals (e.g. the economics cluster) never overlap. */}
-        {layoutLabels(
+            labels for nearby journals (e.g. the economics cluster) never overlap.
+            Skipped on mobile — the boxes cannot fit in a ~330-unit plot. */}
+        {!isMobile && layoutLabels(
           points.filter((p) => p.highImpact),
           (p) => x(p.ifVal),
           (p) => y(p.rate),
@@ -1100,16 +1114,16 @@ function ScatterChart({
           x={M.left + plotW / 2}
           y={H - 6}
           textAnchor="middle"
-          fontSize={14}
+          fontSize={titleFs}
           fontWeight={700}
           className="fill-black dark:fill-gray-100"
         >
           {xTitle}
         </text>
         <text
-          transform={`translate(14 ${M.top + plotH / 2}) rotate(-90)`}
+          transform={`translate(${isMobile ? 10 : 14} ${M.top + plotH / 2}) rotate(-90)`}
           textAnchor="middle"
-          fontSize={14}
+          fontSize={F.title}
           fontWeight={700}
           className="fill-black dark:fill-gray-100"
         >

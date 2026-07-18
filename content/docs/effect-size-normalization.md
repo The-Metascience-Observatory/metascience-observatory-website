@@ -281,7 +281,7 @@ $$V = \sqrt{\frac{\chi^2}{N}} = \phi$$
 
 In this special case, Cramér's $V$ equals the phi coefficient, which is in turn equal to the absolute value of the Pearson correlation coefficient computed on the two binary variables:
 
-$$V = \phi = |r| \quad \text{(2{\times}2 tables only)}$$
+$$V = \phi = |r| \quad (2 \times 2 \text{ tables only})$$
 
 No conversion formula is needed — the value can be used directly as $r$.
 

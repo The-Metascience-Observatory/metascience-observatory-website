@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ChartWatermark } from "@/components/ChartWatermark";
+import { useIsMobile } from "@/components/useIsMobile";
 import type { CoverageStats, EffectRow, HIndexMeta, PaperHIndex } from "./types";
 
 // Pearson correlation of two equal-length numeric arrays (null if degenerate).
@@ -439,9 +440,15 @@ export function HIndexDashboard({
 }
 
 function BinnedChart({ bins, xTitle }: { bins: Bin[]; xTitle: string }) {
-  const W = 720;
-  const H = 320;
-  const M = { top: 20, right: 20, bottom: 64, left: 62 };
+  const isMobile = useIsMobile();
+  const W = isMobile ? 380 : 720;
+  const H = isMobile ? 300 : 320;
+  const M = isMobile ? { top: 16, right: 8, bottom: 60, left: 40 } : { top: 20, right: 20, bottom: 64, left: 62 };
+  const F = isMobile
+    ? { tick: 10, xlab: 9, val: 10, title: 11, sub: 8 }
+    : { tick: 12, xlab: 12, val: 12, title: 14, sub: 10 };
+  // Long metric titles overflow a 380-unit viewBox at 11px — shrink to fit.
+  const titleFs = !isMobile ? F.title : xTitle.length > 60 ? 8.5 : xTitle.length > 45 ? 9.5 : F.title;
   const plotW = W - M.left - M.right;
   const plotH = H - M.top - M.bottom;
   const bandW = plotW / bins.length;
@@ -455,13 +462,13 @@ function BinnedChart({ bins, xTitle }: { bins: Bin[]; xTitle: string }) {
 
   return (
     <div className="overflow-x-auto">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full min-w-[560px]" role="img">
+      <svg viewBox={`0 0 ${W} ${H}`} className={isMobile ? "w-full" : "w-full min-w-[560px]"} role="img">
         {/* y gridlines + ticks */}
         {[0, 25, 50, 75, 100].map((g) => (
           <g key={g}>
             <line x1={M.left} x2={W - M.right} y1={y(g)} y2={y(g)} stroke="currentColor" strokeOpacity={0.12} />
             <line x1={M.left - 6} x2={M.left} y1={y(g)} y2={y(g)} stroke="#000000" strokeWidth={1} />
-            <text x={M.left - 10} y={y(g) + 4} textAnchor="end" fontSize={12} className="fill-black dark:fill-gray-100">
+            <text x={M.left - (isMobile ? 8 : 10)} y={y(g) + 4} textAnchor="end" fontSize={F.tick} className="fill-black dark:fill-gray-100">
               {g}%
             </text>
           </g>
@@ -481,15 +488,15 @@ function BinnedChart({ bins, xTitle }: { bins: Bin[]; xTitle: string }) {
                 </title>
               </rect>
               {/* rate label, above the bar */}
-              <text x={cx} y={top - 6} textAnchor="middle" fontSize={12} fontWeight={600} fill="currentColor">
+              <text x={cx} y={top - 6} textAnchor="middle" fontSize={F.val} fontWeight={600} fill="currentColor">
                 {b.rate.toFixed(0)}%
               </text>
               {/* x labels */}
               <line x1={cx} x2={cx} y1={M.top + plotH} y2={M.top + plotH + 5} stroke="#000000" strokeWidth={1} />
-              <text x={cx} y={H - M.bottom + 18} textAnchor="middle" fontSize={12} className="fill-black dark:fill-gray-100">
+              <text x={cx} y={H - M.bottom + (isMobile ? 14 : 18)} textAnchor="middle" fontSize={F.xlab} className="fill-black dark:fill-gray-100">
                 {b.label ?? `${fmt(b.lo)}–${fmt(b.hi)}`}
               </text>
-              <text x={cx} y={H - M.bottom + 34} textAnchor="middle" fontSize={10} fill="currentColor" opacity={0.5}>
+              <text x={cx} y={H - M.bottom + (isMobile ? 28 : 34)} textAnchor="middle" fontSize={F.sub} fill="currentColor" opacity={0.5}>
                 n={b.count.toLocaleString()}
               </text>
             </g>
@@ -499,16 +506,16 @@ function BinnedChart({ bins, xTitle }: { bins: Bin[]; xTitle: string }) {
           x={M.left + plotW / 2}
           y={H - 6}
           textAnchor="middle"
-          fontSize={14}
+          fontSize={titleFs}
           fontWeight={700}
           className="fill-black dark:fill-gray-100"
         >
           {xTitle}
         </text>
         <text
-          transform={`translate(14 ${M.top + plotH / 2}) rotate(-90)`}
+          transform={`translate(${isMobile ? 10 : 14} ${M.top + plotH / 2}) rotate(-90)`}
           textAnchor="middle"
-          fontSize={14}
+          fontSize={F.title}
           fontWeight={700}
           className="fill-black dark:fill-gray-100"
         >

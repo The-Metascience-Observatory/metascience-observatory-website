@@ -72,3 +72,7 @@ replications_database_2026_07_13_201507.csv # added eerp_2016_extraction.json
 replications_database_2026_07_14_182338.csv # added EROE effect sizes/CIs/Ns from OSF reproduction kit (osf.io/sk82q)
 replications_database_2026_07_15_124050.csv # backfilled 6 missing original DOIs via Crossref (verified against OpenAlex); filled 14 Asch 1946 rows' replication metadata (Pavlović 2023, osf.io/74892)
 replications_database_2026_07_15_155104.csv # recovered original DOIs+citations for 20 PsychFileDrawer rows (parsed archived HTML, resolved via Crossref, verified via OpenAlex); added replication journal metadata for the one row whose PFD replication was itself published
+replications_database_2026_07_18_113908.csv # added openmct_marketing_replications_to_ingest.csv
+replications_database_2026_07_18_123526.csv # folded marketing discipline into psychology (subdiscipline "consumer psychology / marketing"), 49 rows; removed marketing from ontology
+replications_database_2026_07_18_143916.csv # merged 12 duplicate consumer psychology / marketing rows (7 Data Replicada collisions with pre-existing validated rows, 2 preprint/published pairs, 1 PsychFileDrawer/OSF pair, 2 Super Size Me repeats); sharpened 13 same-paper multi-experiment descriptions
+replications_database_2026_07_18_150513.csv # reclassified 4 Data Replicada rows inconclusive->failure per posts' own language (datacolada 82/84/90/97); post 87 kept inconclusive (right-direction, combined p=.071)

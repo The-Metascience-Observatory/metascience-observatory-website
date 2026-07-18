@@ -6,6 +6,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { getOutcomeForRow, toNumber, type OutcomeMethod, type AnyRecord } from "@/lib/replicationOutcome";
 import { ChartWatermark } from "@/components/ChartWatermark";
+import { useIsMobile } from "@/components/useIsMobile";
 
 type FredResponse = {
   columns: string[];
@@ -110,9 +111,10 @@ function YearCountBars({
   unit?: string;
   unitPlural?: string;
 }) {
-  const width = 720;
-  const height = 260;
-  const margin = { top: 10, right: 16, bottom: 46, left: 62 };
+  const isMobile = useIsMobile();
+  const width = isMobile ? 380 : 720;
+  const height = isMobile ? 240 : 260;
+  const margin = isMobile ? { top: 8, right: 8, bottom: 40, left: 36 } : { top: 10, right: 16, bottom: 46, left: 62 };
   const innerW = width - margin.left - margin.right;
   const innerH = height - margin.top - margin.bottom;
 
@@ -126,23 +128,24 @@ function YearCountBars({
   const yScale = (v: number) => innerH - (v / yMax) * innerH;
 
   const range = counts[n - 1].year - counts[0].year;
-  const tickEvery = range > 12 ? 5 : range > 6 ? 2 : 1;
+  // Year labels need a wider pitch on mobile (~34 units per "1975" at 9px).
+  const tickEvery = isMobile
+    ? range > 30 ? 10 : range > 12 ? 5 : 2
+    : range > 12 ? 5 : range > 6 ? 2 : 1;
 
   return (
     <div className="relative">
       <svg
-        width={width}
-        height={height}
         viewBox={`0 0 ${width} ${height}`}
         preserveAspectRatio="xMidYMid meet"
-        className="max-w-full h-auto"
+        className="w-full max-w-[720px] mx-auto h-auto"
       >
         <g transform={`translate(${margin.left},${margin.top})`}>
           {yTicks.map((t) => (
             <g key={`y-${t}`}>
               <line x1={0} y1={yScale(t)} x2={innerW} y2={yScale(t)} stroke="#d1d5db" strokeWidth={0.5} />
               <line x1={-6} x2={0} y1={yScale(t)} y2={yScale(t)} stroke="#000000" strokeWidth={1} />
-              <text x={-10} y={yScale(t)} dy="0.32em" textAnchor="end" className="text-xs fill-black dark:fill-gray-100">
+              <text x={isMobile ? -8 : -10} y={yScale(t)} dy="0.32em" textAnchor="end" className="fill-black dark:fill-gray-100" style={{ fontSize: isMobile ? 9 : 12 }}>
                 {t.toLocaleString()}
               </text>
             </g>
@@ -180,16 +183,16 @@ function YearCountBars({
             return (
               <g key={`x-${c.year}`}>
                 <line x1={cx} x2={cx} y1={innerH} y2={innerH + 5} stroke="#000000" strokeWidth={1} />
-                <text x={cx} y={innerH + 17} textAnchor="middle" className="fill-black dark:fill-gray-100" style={{ fontSize: 11 }}>
+                <text x={cx} y={innerH + (isMobile ? 15 : 17)} textAnchor="middle" className="fill-black dark:fill-gray-100" style={{ fontSize: isMobile ? 9 : 11 }}>
                   {c.year}
                 </text>
               </g>
             );
           })}
-          <text x={-innerH / 2} y={-48} textAnchor="middle" transform="rotate(-90)" className="fill-black dark:fill-gray-100" style={{ fontSize: 14, fontWeight: 700 }}>
+          <text x={-innerH / 2} y={isMobile ? -26 : -48} textAnchor="middle" transform="rotate(-90)" className="fill-black dark:fill-gray-100" style={{ fontSize: isMobile ? 11 : 14, fontWeight: 700 }}>
             {yLabel}
           </text>
-          <text x={innerW / 2} y={innerH + 40} textAnchor="middle" className="fill-black dark:fill-gray-100" style={{ fontSize: 14, fontWeight: 700 }}>
+          <text x={innerW / 2} y={innerH + (isMobile ? 34 : 40)} textAnchor="middle" className="fill-black dark:fill-gray-100" style={{ fontSize: isMobile ? 11 : 14, fontWeight: 700 }}>
             {xLabel}
           </text>
           {/* arrow marking 2005 */}
@@ -212,16 +215,16 @@ function YearCountBars({
           })()}
           <ChartWatermark />
           {/* legend (top-left of the plot, publication style) */}
-          <g transform="translate(12,24)">
-            <rect x={0} y={0} width={186} height={60} fill="#ffffff" stroke="#9ca3af" strokeWidth={0.75} />
+          <g transform={isMobile ? "translate(10,20)" : "translate(12,24)"}>
+            <rect x={0} y={0} width={isMobile ? 150 : 186} height={isMobile ? 48 : 60} fill="#ffffff" stroke="#9ca3af" strokeWidth={0.75} />
             {[
               { label: "Successful", color: SUCCESS_COLOR },
               { label: "Failed", color: FAILURE_COLOR },
               { label: "Inconclusive / unclassified", color: OTHER_COLOR },
             ].map((item, i) => (
-              <g key={item.label} transform={`translate(9,${9 + i * 15})`}>
-                <rect x={0} y={0} width={10} height={10} fill={item.color} />
-                <text x={16} y={9} fill="#000000" style={{ fontSize: 11 }}>
+              <g key={item.label} transform={isMobile ? `translate(7,${7 + i * 13})` : `translate(9,${9 + i * 15})`}>
+                <rect x={0} y={0} width={isMobile ? 8 : 10} height={isMobile ? 8 : 10} fill={item.color} />
+                <text x={isMobile ? 13 : 16} y={isMobile ? 7.5 : 9} fill="#000000" style={{ fontSize: isMobile ? 9 : 11 }}>
                   {item.label}
                 </text>
               </g>
@@ -235,14 +238,15 @@ function YearCountBars({
 
 // Replication success rate per 5-year bin, with optional Wilson 95% CI whiskers.
 function YearRateBars({ bins, xLabel, unit, showN = true, showCI = false, showRate = true }: { bins: YearBin[]; xLabel: string; unit: string; showN?: boolean; showCI?: boolean; showRate?: boolean }) {
-  const width = 720;
-  const height = 318;
-  const margin = { top: 10, right: 16, bottom: 74, left: 62 };
+  const isMobile = useIsMobile();
+  const width = isMobile ? 380 : 720;
+  const height = isMobile ? 300 : 318;
+  const margin = isMobile ? { top: 8, right: 8, bottom: 64, left: 36 } : { top: 10, right: 16, bottom: 74, left: 62 };
   const innerW = width - margin.left - margin.right;
   const innerH = height - margin.top - margin.bottom;
 
-  const barGap = 8;
-  const barWidth = Math.max(14, Math.min(70, (innerW - barGap * (bins.length - 1)) / bins.length));
+  const barGap = isMobile ? 5 : 8;
+  const barWidth = Math.max(isMobile ? 10 : 14, Math.min(isMobile ? 44 : 70, (innerW - barGap * (bins.length - 1)) / bins.length));
   const totalBarsWidth = bins.length * barWidth + (bins.length - 1) * barGap;
   const offsetX = (innerW - totalBarsWidth) / 2;
 
@@ -252,18 +256,16 @@ function YearRateBars({ bins, xLabel, unit, showN = true, showCI = false, showRa
   return (
     <div className="relative">
       <svg
-        width={width}
-        height={height}
         viewBox={`0 0 ${width} ${height}`}
         preserveAspectRatio="xMidYMid meet"
-        className="max-w-full h-auto"
+        className="w-full max-w-[720px] mx-auto h-auto"
       >
         <g transform={`translate(${margin.left},${margin.top})`}>
           {yTicks.map((t) => (
             <g key={`y-${t}`}>
               <line x1={0} y1={yScale(t)} x2={innerW} y2={yScale(t)} stroke="#d1d5db" strokeWidth={0.5} />
               <line x1={-6} x2={0} y1={yScale(t)} y2={yScale(t)} stroke="#000000" strokeWidth={1} />
-              <text x={-10} y={yScale(t)} dy="0.32em" textAnchor="end" className="text-xs fill-black dark:fill-gray-100">
+              <text x={isMobile ? -8 : -10} y={yScale(t)} dy="0.32em" textAnchor="end" className="fill-black dark:fill-gray-100" style={{ fontSize: isMobile ? 10 : 12 }}>
                 {t}%
               </text>
             </g>
@@ -308,7 +310,7 @@ function YearRateBars({ bins, xLabel, unit, showN = true, showCI = false, showRa
                       return (
                         <>
                           {showN && (
-                            <text x={cx} y={anchor - 4} textAnchor="middle" className="fill-current" style={{ fontSize: 9, opacity: 0.75 }}>
+                            <text x={cx} y={anchor - 4} textAnchor="middle" className="fill-current" style={{ fontSize: isMobile ? 8 : 9, opacity: 0.75 }}>
                               n={bin.total}
                             </text>
                           )}
@@ -319,7 +321,7 @@ function YearRateBars({ bins, xLabel, unit, showN = true, showCI = false, showRa
                               textAnchor="middle"
                               fontWeight={600}
                               fill="currentColor"
-                              style={{ fontSize: barWidth < 30 ? 10 : 12 }}
+                              style={{ fontSize: isMobile ? (barWidth < 30 ? 9 : 10) : barWidth < 30 ? 10 : 12 }}
                             >
                               {bin.rate.toFixed(0)}%
                             </text>
@@ -335,7 +337,7 @@ function YearRateBars({ bins, xLabel, unit, showN = true, showCI = false, showRa
                   textAnchor="end"
                   transform={`rotate(-40 ${cx} ${innerH + 14})`}
                   className="fill-black dark:fill-gray-100"
-                  style={{ fontSize: 11 }}
+                  style={{ fontSize: isMobile ? 9 : 11 }}
                 >
                   {bin.label}
                 </text>
@@ -343,10 +345,10 @@ function YearRateBars({ bins, xLabel, unit, showN = true, showCI = false, showRa
             );
           })}
           <ChartWatermark />
-          <text x={-innerH / 2} y={-48} textAnchor="middle" transform="rotate(-90)" className="fill-black dark:fill-gray-100" style={{ fontSize: 14, fontWeight: 700 }}>
+          <text x={-innerH / 2} y={isMobile ? -26 : -48} textAnchor="middle" transform="rotate(-90)" className="fill-black dark:fill-gray-100" style={{ fontSize: isMobile ? 11 : 14, fontWeight: 700 }}>
             Replication Success Rate (%)
           </text>
-          <text x={innerW / 2} y={innerH + 68} textAnchor="middle" className="fill-black dark:fill-gray-100" style={{ fontSize: 14, fontWeight: 700 }}>
+          <text x={innerW / 2} y={innerH + (isMobile ? 56 : 68)} textAnchor="middle" className="fill-black dark:fill-gray-100" style={{ fontSize: isMobile ? 11 : 14, fontWeight: 700 }}>
             {xLabel}
           </text>
         </g>

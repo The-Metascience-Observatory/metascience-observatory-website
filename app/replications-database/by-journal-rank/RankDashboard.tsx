@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { ChartWatermark } from "@/components/ChartWatermark";
+import { useIsMobile } from "@/components/useIsMobile";
 import type { RankMeta, JournalRank, PaperRow } from "./types";
 
 // Wilson score 95% CI for a proportion k/n (percentage points). Kept identical
@@ -792,9 +793,16 @@ function BinnedChart({
   lowerIsBetter?: boolean;
   showCI?: boolean;
 }) {
-  const W = 720;
-  const H = 320;
-  const M = { top: 20, right: 20, bottom: 64, left: 62 };
+  const isMobile = useIsMobile();
+  const W = isMobile ? 380 : 720;
+  const H = isMobile ? 310 : 320;
+  const M = isMobile ? { top: 16, right: 8, bottom: 70, left: 40 } : { top: 20, right: 20, bottom: 64, left: 62 };
+  const F = isMobile
+    ? { tick: 10, xlab: 9, val: 10, title: 11, sub: 8 }
+    : { tick: 12, xlab: 11, val: 12, title: 14, sub: 10 };
+  const whisker = isMobile ? 4 : 5;
+  // Long metric titles overflow a 380-unit viewBox at 11px — shrink to fit.
+  const titleFs = !isMobile ? F.title : xTitle.length > 60 ? 8.5 : xTitle.length > 45 ? 9.5 : F.title;
   const plotW = W - M.left - M.right;
   const plotH = H - M.top - M.bottom;
   const bandW = plotW / bins.length;
@@ -809,12 +817,12 @@ function BinnedChart({
 
   return (
     <div className="overflow-x-auto">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full min-w-[560px]" role="img">
+      <svg viewBox={`0 0 ${W} ${H}`} className={isMobile ? "w-full" : "w-full min-w-[560px]"} role="img">
         {[0, 25, 50, 75, 100].map((g) => (
           <g key={g}>
             <line x1={M.left} x2={W - M.right} y1={y(g)} y2={y(g)} stroke="currentColor" strokeOpacity={0.12} />
             <line x1={M.left - 6} x2={M.left} y1={y(g)} y2={y(g)} stroke="#000000" strokeWidth={1} />
-            <text x={M.left - 10} y={y(g) + 4} textAnchor="end" fontSize={12} className="fill-black dark:fill-gray-100">
+            <text x={M.left - (isMobile ? 8 : 10)} y={y(g) + 4} textAnchor="end" fontSize={F.tick} className="fill-black dark:fill-gray-100">
               {g}%
             </text>
           </g>
@@ -835,27 +843,36 @@ function BinnedChart({
               {showCI && (
                 <>
                   <line x1={cx} x2={cx} y1={y(b.ciLow)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
-                  <line x1={cx - 5} x2={cx + 5} y1={y(b.ciLow)} y2={y(b.ciLow)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
-                  <line x1={cx - 5} x2={cx + 5} y1={y(b.ciHigh)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
+                  <line x1={cx - whisker} x2={cx + whisker} y1={y(b.ciLow)} y2={y(b.ciLow)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
+                  <line x1={cx - whisker} x2={cx + whisker} y1={y(b.ciHigh)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
                 </>
               )}
-              <text x={cx} y={(showCI ? y(b.ciHigh) : top) - 6} textAnchor="middle" fontSize={12} fontWeight={600} fill="currentColor">
+              <text x={cx} y={(showCI ? y(b.ciHigh) : top) - 6} textAnchor="middle" fontSize={F.val} fontWeight={600} fill="currentColor">
                 {b.rate.toFixed(0)}%
               </text>
               <line x1={cx} x2={cx} y1={M.top + plotH} y2={M.top + plotH + 5} stroke="#000000" strokeWidth={1} />
-              <text x={cx} y={H - M.bottom + 18} textAnchor="middle" fontSize={11} className="fill-black dark:fill-gray-100">
+              {/* Rank quintile labels are locale-formatted integers that overflow a
+                  ~66-unit band on mobile — rotate them there. */}
+              <text
+                x={cx}
+                y={H - M.bottom + (isMobile ? 14 : 18)}
+                textAnchor={isMobile ? "end" : "middle"}
+                transform={isMobile ? `rotate(-35 ${cx} ${H - M.bottom + 14})` : undefined}
+                fontSize={F.xlab}
+                className="fill-black dark:fill-gray-100"
+              >
                 {b.label ?? `${fmt(b.lo)}–${fmt(b.hi)}`}
               </text>
-              <text x={cx} y={H - M.bottom + 34} textAnchor="middle" fontSize={10} fill="currentColor" opacity={0.5}>
+              <text x={cx} y={H - M.bottom + (isMobile ? 54 : 34)} textAnchor="middle" fontSize={F.sub} fill="currentColor" opacity={0.5}>
                 n={b.count}
               </text>
             </g>
           );
         })}
-        <text x={M.left + plotW / 2} y={H - 6} textAnchor="middle" fontSize={14} fontWeight={700} className="fill-black dark:fill-gray-100">
+        <text x={M.left + plotW / 2} y={H - 6} textAnchor="middle" fontSize={titleFs} fontWeight={700} className="fill-black dark:fill-gray-100">
           {xTitle}
         </text>
-        <text transform={`translate(14 ${M.top + plotH / 2}) rotate(-90)`} textAnchor="middle" fontSize={14} fontWeight={700} className="fill-black dark:fill-gray-100">
+        <text transform={`translate(${isMobile ? 10 : 14} ${M.top + plotH / 2}) rotate(-90)`} textAnchor="middle" fontSize={F.title} fontWeight={700} className="fill-black dark:fill-gray-100">
           Replication rate (%)
         </text>
         <ChartWatermark x={M.left + 8} y={M.top + 4} />
@@ -866,9 +883,14 @@ function BinnedChart({
 
 // Discrete Q1–Q4 bar chart, one bar per quartile.
 function QuartileChart({ bins, showCI = false }: { bins: Bin[]; showCI?: boolean }) {
-  const W = 720;
-  const H = 320;
-  const M = { top: 20, right: 20, bottom: 48, left: 62 };
+  const isMobile = useIsMobile();
+  const W = isMobile ? 380 : 720;
+  const H = isMobile ? 280 : 320;
+  const M = isMobile ? { top: 16, right: 8, bottom: 50, left: 40 } : { top: 20, right: 20, bottom: 48, left: 62 };
+  const F = isMobile
+    ? { tick: 10, xlab: 11, val: 10, title: 11, sub: 8 }
+    : { tick: 12, xlab: 13, val: 12, title: 14, sub: 10 };
+  const whisker = isMobile ? 4 : 5;
   const plotW = W - M.left - M.right;
   const plotH = H - M.top - M.bottom;
   const bandW = plotW / bins.length;
@@ -877,12 +899,12 @@ function QuartileChart({ bins, showCI = false }: { bins: Bin[]; showCI?: boolean
 
   return (
     <div className="overflow-x-auto">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full min-w-[560px]" role="img">
+      <svg viewBox={`0 0 ${W} ${H}`} className={isMobile ? "w-full" : "w-full min-w-[560px]"} role="img">
         {[0, 25, 50, 75, 100].map((g) => (
           <g key={g}>
             <line x1={M.left} x2={W - M.right} y1={y(g)} y2={y(g)} stroke="currentColor" strokeOpacity={0.12} />
             <line x1={M.left - 6} x2={M.left} y1={y(g)} y2={y(g)} stroke="#000000" strokeWidth={1} />
-            <text x={M.left - 10} y={y(g) + 4} textAnchor="end" fontSize={12} className="fill-black dark:fill-gray-100">
+            <text x={M.left - (isMobile ? 8 : 10)} y={y(g) + 4} textAnchor="end" fontSize={F.tick} className="fill-black dark:fill-gray-100">
               {g}%
             </text>
           </g>
@@ -904,27 +926,27 @@ function QuartileChart({ bins, showCI = false }: { bins: Bin[]; showCI?: boolean
               {showCI && (
                 <>
                   <line x1={cx} x2={cx} y1={y(b.ciLow)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
-                  <line x1={cx - 5} x2={cx + 5} y1={y(b.ciLow)} y2={y(b.ciLow)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
-                  <line x1={cx - 5} x2={cx + 5} y1={y(b.ciHigh)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
+                  <line x1={cx - whisker} x2={cx + whisker} y1={y(b.ciLow)} y2={y(b.ciLow)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
+                  <line x1={cx - whisker} x2={cx + whisker} y1={y(b.ciHigh)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
                 </>
               )}
-              <text x={cx} y={(showCI ? y(b.ciHigh) : top) - 6} textAnchor="middle" fontSize={12} fontWeight={600} fill="currentColor">
+              <text x={cx} y={(showCI ? y(b.ciHigh) : top) - 6} textAnchor="middle" fontSize={F.val} fontWeight={600} fill="currentColor">
                 {b.rate.toFixed(0)}%
               </text>
               <line x1={cx} x2={cx} y1={M.top + plotH} y2={M.top + plotH + 5} stroke="#000000" strokeWidth={1} />
-              <text x={cx} y={H - M.bottom + 20} textAnchor="middle" fontSize={13} fontWeight={600} className="fill-black dark:fill-gray-100">
+              <text x={cx} y={H - M.bottom + (isMobile ? 16 : 20)} textAnchor="middle" fontSize={F.xlab} fontWeight={600} className="fill-black dark:fill-gray-100">
                 {b.label}
               </text>
-              <text x={cx} y={H - M.bottom + 35} textAnchor="middle" fontSize={10} fill="currentColor" opacity={0.5}>
+              <text x={cx} y={H - M.bottom + (isMobile ? 30 : 35)} textAnchor="middle" fontSize={F.sub} fill="currentColor" opacity={0.5}>
                 n={b.count}
               </text>
             </g>
           );
         })}
-        <text transform={`translate(14 ${M.top + plotH / 2}) rotate(-90)`} textAnchor="middle" fontSize={14} fontWeight={700} className="fill-black dark:fill-gray-100">
+        <text transform={`translate(${isMobile ? 10 : 14} ${M.top + plotH / 2}) rotate(-90)`} textAnchor="middle" fontSize={F.title} fontWeight={700} className="fill-black dark:fill-gray-100">
           Replication rate (%)
         </text>
-        <text x={M.left + plotW / 2} y={H - 6} textAnchor="middle" fontSize={14} fontWeight={700} className="fill-black dark:fill-gray-100">
+        <text x={M.left + plotW / 2} y={H - 6} textAnchor="middle" fontSize={F.title} fontWeight={700} className="fill-black dark:fill-gray-100">
           SCImago best quartile (Q1 = most prestigious)
         </text>
         <ChartWatermark rightX={W - M.right - 8} y={M.top + 4} />
@@ -1010,9 +1032,13 @@ function ScatterChart({
   xTitle: string;
   logScale?: boolean;
 }) {
-  const W = 720;
+  const isMobile = useIsMobile();
+  const W = isMobile ? 380 : 720;
   const H = 380;
-  const M = { top: 20, right: 20, bottom: 52, left: 62 };
+  const M = isMobile ? { top: 16, right: 10, bottom: 44, left: 40 } : { top: 20, right: 20, bottom: 52, left: 62 };
+  const F = isMobile ? { tick: 9, title: 11 } : { tick: 12, title: 14 };
+  // Long metric titles overflow a 380-unit viewBox at 11px — shrink to fit.
+  const titleFs = !isMobile ? F.title : xTitle.length > 60 ? 8.5 : xTitle.length > 45 ? 9.5 : F.title;
   const plotW = W - M.left - M.right;
   const plotH = H - M.top - M.bottom;
 
@@ -1043,7 +1069,7 @@ function ScatterChart({
 
   const y = (pct: number) => M.top + plotH * (1 - pct / 100);
   const maxN = Math.max(...points.map((p) => p.n));
-  const r = (n: number) => 3 + 7 * Math.sqrt(n / maxN);
+  const r = (n: number) => (isMobile ? 2.5 + 5 * Math.sqrt(n / maxN) : 3 + 7 * Math.sqrt(n / maxN));
 
   // On a log scale (used for SJR overall rank, which spans 1 to tens of
   // thousands) the domain snaps to enclosing powers of ten and ticks fall on
@@ -1064,7 +1090,8 @@ function ScatterChart({
     x = (v: number) => M.left + plotW * ((Math.log10(Math.max(v, 1)) - Math.log10(lx)) / lDenom);
     ticks = [];
     for (let e = loExp; e <= hiExp; e++) ticks.push(Math.pow(10, e));
-    fmtTick = (t: number) => t.toLocaleString();
+    // Compact decade labels on mobile ("10k" not "10,000") so neighbors don't collide.
+    fmtTick = (t: number) => (isMobile && t >= 1000 ? `${t / 1000}k` : t.toLocaleString());
   } else {
     const span = maxV - minV || 1;
     const niceStep = (raw: number) => {
@@ -1095,12 +1122,12 @@ function ScatterChart({
 
   return (
     <div className="overflow-x-auto">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full min-w-[560px]" role="img">
+      <svg viewBox={`0 0 ${W} ${H}`} className={isMobile ? "w-full" : "w-full min-w-[560px]"} role="img">
         {[0, 25, 50, 75, 100].map((g) => (
           <g key={g}>
             <line x1={M.left} x2={W - M.right} y1={y(g)} y2={y(g)} stroke="currentColor" strokeOpacity={0.12} />
             <line x1={M.left - 6} x2={M.left} y1={y(g)} y2={y(g)} stroke="#000000" strokeWidth={1} />
-            <text x={M.left - 10} y={y(g) + 4} textAnchor="end" fontSize={12} className="fill-black dark:fill-gray-100">
+            <text x={M.left - (isMobile ? 8 : 10)} y={y(g) + 4} textAnchor="end" fontSize={F.tick} className="fill-black dark:fill-gray-100">
               {g}%
             </text>
           </g>
@@ -1109,7 +1136,7 @@ function ScatterChart({
           <g key={ti}>
             <line x1={x(t)} x2={x(t)} y1={M.top} y2={M.top + plotH} stroke="currentColor" strokeOpacity={0.08} />
             <line x1={x(t)} x2={x(t)} y1={M.top + plotH} y2={M.top + plotH + 5} stroke="#000000" strokeWidth={1} />
-            <text x={x(t)} y={M.top + plotH + 17} textAnchor="middle" fontSize={12} className="fill-black dark:fill-gray-100">
+            <text x={x(t)} y={M.top + plotH + (isMobile ? 15 : 17)} textAnchor="middle" fontSize={F.tick} className="fill-black dark:fill-gray-100">
               {fmtTick(t)}
             </text>
           </g>
@@ -1126,7 +1153,8 @@ function ScatterChart({
             </circle>
           </g>
         ))}
-        {layoutLabels(
+        {/* Label boxes cannot fit in a ~330-unit plot — skip them on mobile. */}
+        {!isMobile && layoutLabels(
           points.filter((p) => p.highImpact && p.name !== "Journal of Consumer Research"),
           (p) => x(p.val),
           (p) => y(p.rate),
@@ -1156,10 +1184,10 @@ function ScatterChart({
             </g>
           );
         })}
-        <text x={M.left + plotW / 2} y={H - 6} textAnchor="middle" fontSize={14} fontWeight={700} className="fill-black dark:fill-gray-100">
+        <text x={M.left + plotW / 2} y={H - 6} textAnchor="middle" fontSize={titleFs} fontWeight={700} className="fill-black dark:fill-gray-100">
           {xTitle}
         </text>
-        <text transform={`translate(14 ${M.top + plotH / 2}) rotate(-90)`} textAnchor="middle" fontSize={14} fontWeight={700} className="fill-black dark:fill-gray-100">
+        <text transform={`translate(${isMobile ? 10 : 14} ${M.top + plotH / 2}) rotate(-90)`} textAnchor="middle" fontSize={F.title} fontWeight={700} className="fill-black dark:fill-gray-100">
           Replication rate (%)
         </text>
         <ChartWatermark x={M.left + 8} y={M.top + 4} />

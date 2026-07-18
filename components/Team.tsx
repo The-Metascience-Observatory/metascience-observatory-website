@@ -33,7 +33,7 @@ export const Team = () => {
               <div className="flex flex-col md:flex-row gap-6 items-start">
                 <Image 
                   src="/assets/greg_fitzgerald.png"
-                  alt="Greg Fitzgerald"
+                  alt="Greg Fitzgerald, Ph.D."
                   width={192}
                   height={192}
                   className="w-48 h-48 object-cover rounded-lg"
@@ -41,10 +41,10 @@ export const Team = () => {
                 <div>
                   <h3 className="text-lg font-semibold mb-2">
                       <span>Greg Fitzgerald</span>
-                      <span className="ml-2 font-normal text-foreground/80">- Prompt Engineer and meta-analysis expert</span>
+                      <span className="ml-2 font-normal text-foreground/80">- meta-analysis and statistics expert</span>
                     </h3>
                   <p className="text-foreground/90 leading-relaxed">
-                    Greg Fitzgerald is a neuroscience Ph.D. student at the State University of New York, Albany. 
+                    Greg Fitzgerald is a behavioral neuroscientist with expertise in meta-analysis and evidence synthesis. He obtained his Ph.D. in Neuroscience from the State University of New York, Albany. His website is <a href="https://greg-fitzgerald.com">greg-fitzgerald.com</a>.
                   </p>
                 </div>
               </div>

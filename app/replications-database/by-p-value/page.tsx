@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { useIsMobile } from "@/components/useIsMobile";
 import { getOutcomeForRow, toNumber, type OutcomeMethod, type AnyRecord } from "@/lib/replicationOutcome";
 import { absZFromR, fitZCurve, type ZCurveResult } from "@/lib/zcurve";
 
@@ -94,28 +95,30 @@ function classifyRow(row: AnyRecord, def: SuccessDef): "success" | "failure" | n
 }
 
 function PValueBars({ bins }: { bins: PBin[] }) {
-  const width = 720;
-  const height = 320;
-  const margin = { top: 16, right: 16, bottom: 70, left: 52 };
+  const isMobile = useIsMobile();
+  const width = isMobile ? 380 : 720;
+  const height = isMobile ? 300 : 320;
+  const margin = isMobile ? { top: 12, right: 8, bottom: 62, left: 36 } : { top: 16, right: 16, bottom: 70, left: 52 };
   const innerW = width - margin.left - margin.right;
   const innerH = height - margin.top - margin.bottom;
 
-  const barGap = 10;
-  const barWidth = Math.max(20, Math.min(70, (innerW - barGap * (bins.length - 1)) / bins.length));
+  const barGap = isMobile ? 6 : 10;
+  const barWidth = Math.max(isMobile ? 16 : 20, Math.min(isMobile ? 44 : 70, (innerW - barGap * (bins.length - 1)) / bins.length));
   const totalBarsWidth = bins.length * barWidth + (bins.length - 1) * barGap;
   const offsetX = (innerW - totalBarsWidth) / 2;
 
   const yScale = (v: number) => innerH - (v / 100) * innerH;
   const yTicks = [0, 20, 40, 60, 80, 100];
 
+  // "0.001–0.01" → ".001–.01": shorter labels fit the ~50-unit mobile band pitch.
+  const binLabel = (label: string) => (isMobile ? label.replace(/0\./g, ".") : label);
+
   return (
     <div className="relative">
       <svg
-        width={width}
-        height={height}
         viewBox={`0 0 ${width} ${height}`}
         preserveAspectRatio="xMidYMid meet"
-        className="max-w-full h-auto"
+        className="w-full max-w-[720px] mx-auto h-auto"
       >
         <g transform={`translate(${margin.left},${margin.top})`}>
           <rect x={0} y={0} width={innerW} height={innerH} fill="#f3f4f6" />
@@ -123,7 +126,7 @@ function PValueBars({ bins }: { bins: PBin[] }) {
             <g key={`y-${t}`}>
               <line x1={0} y1={yScale(t)} x2={innerW} y2={yScale(t)} stroke="#d1d5db" strokeWidth={0.5} />
               <line x1={-6} x2={0} y1={yScale(t)} y2={yScale(t)} stroke="#111827" strokeWidth={1} />
-              <text x={-10} y={yScale(t)} dy="0.32em" textAnchor="end" className="text-xs fill-current" style={{ opacity: 0.7 }}>{t}%</text>
+              <text x={isMobile ? -8 : -10} y={yScale(t)} dy="0.32em" textAnchor="end" className="fill-current" style={{ opacity: 0.7, fontSize: isMobile ? 10 : 12 }}>{t}%</text>
             </g>
           ))}
           {/* Enclosing axis lines that hug the plot (left + bottom), matching the by-year charts */}
@@ -155,15 +158,15 @@ function PValueBars({ bins }: { bins: PBin[] }) {
                     <line x1={cx} x2={cx} y1={yScale(bin.ciLow)} y2={yScale(bin.ciHigh)} stroke="#111827" strokeWidth={1} strokeOpacity={0.5} />
                     <line x1={cx - 4} x2={cx + 4} y1={yScale(bin.ciHigh)} y2={yScale(bin.ciHigh)} stroke="#111827" strokeWidth={1} strokeOpacity={0.5} />
                     <line x1={cx - 4} x2={cx + 4} y1={yScale(bin.ciLow)} y2={yScale(bin.ciLow)} stroke="#111827" strokeWidth={1} strokeOpacity={0.5} />
-                    <text x={cx} y={yScale(bin.ciHigh) - 4} textAnchor="middle" className="fill-current" style={{ fontSize: 10, opacity: 0.75 }}>n={bin.total}</text>
+                    <text x={cx} y={yScale(bin.ciHigh) - 4} textAnchor="middle" className="fill-current" style={{ fontSize: isMobile ? 9 : 10, opacity: 0.75 }}>n={bin.total}</text>
                   </>
                 )}
-                <text x={cx} y={innerH + 16} textAnchor="middle" className="fill-current" style={{ fontSize: 11, opacity: 0.75 }}>{bin.label}</text>
+                <text x={cx} y={innerH + 16} textAnchor="middle" className="fill-current" style={{ fontSize: isMobile ? 9 : 11, opacity: 0.75 }}>{binLabel(bin.label)}</text>
               </g>
             );
           })}
-          <text x={-innerH / 2} y={-40} textAnchor="middle" transform="rotate(-90)" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 11 }}>Replication Success Rate (%)</text>
-          <text x={innerW / 2} y={innerH + 48} textAnchor="middle" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 11 }}>p-value of the Original Finding</text>
+          <text x={-innerH / 2} y={isMobile ? -26 : -40} textAnchor="middle" transform="rotate(-90)" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: isMobile ? 10 : 11 }}>Replication Success Rate (%)</text>
+          <text x={innerW / 2} y={innerH + 48} textAnchor="middle" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: isMobile ? 10 : 11 }}>p-value of the Original Finding</text>
         </g>
       </svg>
     </div>
@@ -174,19 +177,23 @@ function PValueBars({ bins }: { bins: PBin[] }) {
 // group of imputed "p < X" bound bars (amber), so studies whose original p was only
 // reported as an upper bound are visible rather than silently dropped.
 function PValueBarsWithBounds({ rangeBins, boundBars }: { rangeBins: PBin[]; boundBars: PBin[] }) {
-  const width = 720;
-  const height = 340;
-  const margin = { top: 16, right: 16, bottom: 84, left: 52 };
+  const isMobile = useIsMobile();
+  const width = isMobile ? 380 : 720;
+  const height = isMobile ? 330 : 340;
+  const margin = isMobile ? { top: 12, right: 8, bottom: 82, left: 36 } : { top: 16, right: 16, bottom: 84, left: 52 };
   const innerW = width - margin.left - margin.right;
   const innerH = height - margin.top - margin.bottom;
 
   const nBars = rangeBins.length + boundBars.length;
-  const barGap = 10;
-  const groupGap = 34; // extra space between the range group and the bound group
+  const barGap = isMobile ? 4 : 10;
+  const groupGap = isMobile ? 16 : 34; // extra space between the range group and the bound group
   const barWidth = Math.max(
-    18,
-    Math.min(60, (innerW - barGap * (nBars - 1) - groupGap) / Math.max(nBars, 1)),
+    isMobile ? 12 : 18,
+    Math.min(isMobile ? 40 : 60, (innerW - barGap * (nBars - 1) - groupGap) / Math.max(nBars, 1)),
   );
+
+  // "0.001–0.01" → ".001–.01": shorter labels for the narrow mobile bands.
+  const binLabel = (label: string) => (isMobile ? label.replace(/0\./g, ".") : label);
   const totalBarsWidth = nBars * barWidth + (nBars - 1) * barGap + (boundBars.length > 0 ? groupGap : 0);
   const offsetX = (innerW - totalBarsWidth) / 2;
 
@@ -209,11 +216,9 @@ function PValueBarsWithBounds({ rangeBins, boundBars }: { rangeBins: PBin[]; bou
   return (
     <div className="relative">
       <svg
-        width={width}
-        height={height}
         viewBox={`0 0 ${width} ${height}`}
         preserveAspectRatio="xMidYMid meet"
-        className="max-w-full h-auto"
+        className="w-full max-w-[720px] mx-auto h-auto"
       >
         <g transform={`translate(${margin.left},${margin.top})`}>
           <rect x={0} y={0} width={innerW} height={innerH} fill="#f3f4f6" />
@@ -221,7 +226,7 @@ function PValueBarsWithBounds({ rangeBins, boundBars }: { rangeBins: PBin[]; bou
             <g key={`y-${t}`}>
               <line x1={0} y1={yScale(t)} x2={innerW} y2={yScale(t)} stroke="#d1d5db" strokeWidth={0.5} />
               <line x1={-6} x2={0} y1={yScale(t)} y2={yScale(t)} stroke="#111827" strokeWidth={1} />
-              <text x={-10} y={yScale(t)} dy="0.32em" textAnchor="end" className="text-xs fill-current" style={{ opacity: 0.7 }}>{t}%</text>
+              <text x={isMobile ? -8 : -10} y={yScale(t)} dy="0.32em" textAnchor="end" className="fill-current" style={{ opacity: 0.7, fontSize: isMobile ? 10 : 12 }}>{t}%</text>
             </g>
           ))}
           {dividerX != null && (
@@ -252,24 +257,34 @@ function PValueBarsWithBounds({ rangeBins, boundBars }: { rangeBins: PBin[]; bou
                     <line x1={cx} x2={cx} y1={yScale(bin.ciLow)} y2={yScale(bin.ciHigh)} stroke="#111827" strokeWidth={1} strokeOpacity={0.5} />
                     <line x1={cx - 4} x2={cx + 4} y1={yScale(bin.ciHigh)} y2={yScale(bin.ciHigh)} stroke="#111827" strokeWidth={1} strokeOpacity={0.5} />
                     <line x1={cx - 4} x2={cx + 4} y1={yScale(bin.ciLow)} y2={yScale(bin.ciLow)} stroke="#111827" strokeWidth={1} strokeOpacity={0.5} />
-                    <text x={cx} y={yScale(bin.ciHigh) - 4} textAnchor="middle" className="fill-current" style={{ fontSize: 10, opacity: 0.75 }}>n={bin.total}</text>
+                    <text x={cx} y={yScale(bin.ciHigh) - 4} textAnchor="middle" className="fill-current" style={{ fontSize: isMobile ? 8.5 : 10, opacity: 0.75 }}>n={bin.total}</text>
                   </>
                 )}
-                <text x={cx} y={innerH + 16} textAnchor="middle" className="fill-current" style={{ fontSize: 10, opacity: 0.75 }}>{bin.label}</text>
+                {/* Rotated on mobile: up to ~10 bars leave only a ~32-unit pitch per label. */}
+                <text
+                  x={cx}
+                  y={innerH + (isMobile ? 12 : 16)}
+                  textAnchor={isMobile ? "end" : "middle"}
+                  transform={isMobile ? `rotate(-40 ${cx} ${innerH + 12})` : undefined}
+                  className="fill-current"
+                  style={{ fontSize: isMobile ? 8.5 : 10, opacity: 0.75 }}
+                >
+                  {binLabel(bin.label)}
+                </text>
               </g>
             );
           })}
           {rangeBins.length > 0 && (
-            <text x={xAt(0)} y={innerH + 44} textAnchor="start" className="fill-current" style={{ fontSize: 10, opacity: 0.55 }}>
-              exact p-values (by range)
+            <text x={xAt(0)} y={innerH + (isMobile ? 52 : 44)} textAnchor="start" className="fill-current" style={{ fontSize: isMobile ? 9 : 10, opacity: 0.55 }}>
+              {isMobile ? "green: exact p-values" : "exact p-values (by range)"}
             </text>
           )}
           {boundBars.length > 0 && (
-            <text x={xAt(rangeBins.length)} y={innerH + 44} textAnchor="start" style={{ fontSize: 10, fill: "#b45309" }}>
-              reported only as a bound
+            <text x={isMobile ? xAt(0) : xAt(rangeBins.length)} y={innerH + (isMobile ? 64 : 44)} textAnchor="start" style={{ fontSize: isMobile ? 9 : 10, fill: "#b45309" }}>
+              {isMobile ? "amber: reported only as a bound" : "reported only as a bound"}
             </text>
           )}
-          <text x={-innerH / 2} y={-40} textAnchor="middle" transform="rotate(-90)" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 11 }}>Replication Success Rate (%)</text>
+          <text x={-innerH / 2} y={isMobile ? -26 : -40} textAnchor="middle" transform="rotate(-90)" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: isMobile ? 10 : 11 }}>Replication Success Rate (%)</text>
         </g>
       </svg>
     </div>
@@ -278,9 +293,10 @@ function PValueBarsWithBounds({ rangeBins, boundBars }: { rangeBins: PBin[]; bou
 
 // Histogram of significant |z| with the fitted z-curve mixture density overlaid.
 function ZCurvePlot({ fit }: { fit: ZCurveResult }) {
-  const width = 720;
-  const height = 300;
-  const margin = { top: 16, right: 16, bottom: 50, left: 52 };
+  const isMobile = useIsMobile();
+  const width = isMobile ? 380 : 720;
+  const height = isMobile ? 250 : 300;
+  const margin = isMobile ? { top: 12, right: 8, bottom: 44, left: 36 } : { top: 16, right: 16, bottom: 50, left: 52 };
   const innerW = width - margin.left - margin.right;
   const innerH = height - margin.top - margin.bottom;
 
@@ -313,11 +329,11 @@ function ZCurvePlot({ fit }: { fit: ZCurveResult }) {
   const xScale = (z: number) => ((z - zCrit) / (zMax - zCrit)) * innerW;
   const yScale = (d: number) => innerH - (d / yMax) * innerH;
 
-  const xTicks = [1.96, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6];
+  const xTicks = isMobile ? [1.96, 3, 4, 5, 6] : [1.96, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6];
 
   return (
     <div className="relative">
-      <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet" className="max-w-full h-auto">
+      <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet" className="w-full max-w-[720px] mx-auto h-auto">
         <g transform={`translate(${margin.left},${margin.top})`}>
           <rect x={0} y={0} width={innerW} height={innerH} fill="#f9fafb" />
           {/* histogram bars */}
@@ -336,18 +352,18 @@ function ZCurvePlot({ fit }: { fit: ZCurveResult }) {
           />
           {/* significance threshold */}
           <line x1={xScale(zCrit)} x2={xScale(zCrit)} y1={0} y2={innerH} stroke="#ef4444" strokeWidth={1} strokeDasharray="4 3" />
-          <text x={xScale(zCrit) + 4} y={12} className="fill-current" style={{ fontSize: 10, fill: "#ef4444" }}>z = 1.96</text>
+          <text x={xScale(zCrit) + 4} y={12} className="fill-current" style={{ fontSize: isMobile ? 9 : 10, fill: "#ef4444" }}>z = 1.96</text>
           {/* x axis */}
           {xTicks.map((t) => (
             <g key={t}>
               <line x1={xScale(t)} x2={xScale(t)} y1={innerH} y2={innerH + 5} stroke="#111827" strokeWidth={1} />
-              <text x={xScale(t)} y={innerH + 17} textAnchor="middle" className="fill-current" style={{ fontSize: 10, opacity: 0.7 }}>{t}</text>
+              <text x={xScale(t)} y={innerH + 17} textAnchor="middle" className="fill-current" style={{ fontSize: isMobile ? 9 : 10, opacity: 0.7 }}>{t}</text>
             </g>
           ))}
-          <text x={innerW / 2} y={innerH + 38} textAnchor="middle" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 11 }}>
+          <text x={innerW / 2} y={innerH + (isMobile ? 34 : 38)} textAnchor="middle" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: isMobile ? 10 : 11 }}>
             Absolute z-score of the original finding
           </text>
-          <text x={-innerH / 2} y={-40} textAnchor="middle" transform="rotate(-90)" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 11 }}>
+          <text x={-innerH / 2} y={isMobile ? -26 : -40} textAnchor="middle" transform="rotate(-90)" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: isMobile ? 10 : 11 }}>
             Density
           </text>
         </g>

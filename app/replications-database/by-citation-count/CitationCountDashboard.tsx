@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ChartWatermark } from "@/components/ChartWatermark";
+import { useIsMobile } from "@/components/useIsMobile";
 import type { CitationsMeta, CoverageStats, EffectRow, PaperCitations } from "./types";
 
 // Pearson correlation of two equal-length numeric arrays (null if degenerate).
@@ -663,9 +664,11 @@ export function CitationCountDashboard({
 // Yang-Fig.-1-style line chart: median or mean cumulative citations (linear
 // y) for the two groups, x = years since publication, anchored at (0,0).
 function TrajectoryChart({ points, stat }: { points: TrajPoint[]; stat: "median" | "mean" }) {
-  const W = 720;
-  const H = 378;
-  const M = { top: 24, right: 24, bottom: 56, left: 70 };
+  const isMobile = useIsMobile();
+  const W = isMobile ? 380 : 720;
+  const H = isMobile ? 340 : 378;
+  const M = isMobile ? { top: 20, right: 10, bottom: 46, left: 44 } : { top: 24, right: 24, bottom: 56, left: 70 };
+  const F = isMobile ? { tick: 10, title: 11, legend: 11 } : { tick: 12, title: 14, legend: 13 };
   const plotW = W - M.left - M.right;
   const plotH = H - M.top - M.bottom;
 
@@ -705,7 +708,7 @@ function TrajectoryChart({ points, stat }: { points: TrajPoint[]; stat: "median"
   const yStep = [1, 2, 5, 10].map((m) => m * pow).find((s) => yMax / s <= 6) ?? 10 * pow;
   const yTicks: number[] = [];
   for (let v = 0; v <= yMax; v += yStep) yTicks.push(v);
-  const xStep = maxX <= 12 ? 1 : maxX <= 24 ? 2 : 5;
+  const xStep = (maxX <= 12 ? 1 : maxX <= 24 ? 2 : 5) * (isMobile ? 2 : 1);
   const xTicks: number[] = [];
   for (let t = 0; t <= maxX; t += xStep) xTicks.push(t);
 
@@ -730,13 +733,13 @@ function TrajectoryChart({ points, stat }: { points: TrajPoint[]; stat: "median"
 
   return (
     <div className="overflow-x-auto">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full min-w-[560px]" role="img">
+      <svg viewBox={`0 0 ${W} ${H}`} className={isMobile ? "w-full" : "w-full min-w-[560px]"} role="img">
         {/* y gridlines + ticks */}
         {yTicks.map((g) => (
           <g key={g}>
             <line x1={M.left} x2={W - M.right} y1={ly(g)} y2={ly(g)} stroke="currentColor" strokeOpacity={0.12} />
             <line x1={M.left - 6} x2={M.left} y1={ly(g)} y2={ly(g)} stroke="#000000" strokeWidth={1} />
-            <text x={M.left - 10} y={ly(g) + 4} textAnchor="end" fontSize={12} className="fill-black dark:fill-gray-100">
+            <text x={M.left - (isMobile ? 8 : 10)} y={ly(g) + 4} textAnchor="end" fontSize={F.tick} className="fill-black dark:fill-gray-100">
               {fmtTick(g)}
             </text>
           </g>
@@ -745,7 +748,7 @@ function TrajectoryChart({ points, stat }: { points: TrajPoint[]; stat: "median"
         {xTicks.map((t) => (
           <g key={t}>
             <line x1={x(t)} x2={x(t)} y1={M.top + plotH} y2={M.top + plotH + 5} stroke="#000000" strokeWidth={1} />
-            <text x={x(t)} y={M.top + plotH + 18} textAnchor="middle" fontSize={12} className="fill-black dark:fill-gray-100">
+            <text x={x(t)} y={M.top + plotH + (isMobile ? 16 : 18)} textAnchor="middle" fontSize={F.tick} className="fill-black dark:fill-gray-100">
               {t}
             </text>
           </g>
@@ -787,15 +790,17 @@ function TrajectoryChart({ points, stat }: { points: TrajPoint[]; stat: "median"
         {/* legend */}
         <g>
           {series.map((s, i) => {
-            const cy = M.top + 14 + i * 20;
+            const cy = M.top + 14 + i * (isMobile ? 17 : 20);
+            const x0 = M.left + (isMobile ? 8 : 12);
+            const swatch = isMobile ? 16 : 22;
             return (
               <g key={s.key}>
-                <rect x={M.left + 12} y={cy - 5} width={22} height={10} fill={s.color} opacity={0.18} rx={2} />
-                <line x1={M.left + 12} x2={M.left + 34} y1={cy} y2={cy} stroke={s.color} strokeWidth={2.5} />
+                <rect x={x0} y={cy - 5} width={swatch} height={10} fill={s.color} opacity={0.18} rx={2} />
+                <line x1={x0} x2={x0 + swatch} y1={cy} y2={cy} stroke={s.color} strokeWidth={2.5} />
                 <text
-                  x={M.left + 42}
+                  x={x0 + swatch + (isMobile ? 6 : 8)}
                   y={cy + 4}
-                  fontSize={13}
+                  fontSize={F.legend}
                   fontWeight={600}
                   className="fill-black dark:fill-gray-100"
                 >
@@ -810,31 +815,40 @@ function TrajectoryChart({ points, stat }: { points: TrajPoint[]; stat: "median"
           x={M.left + plotW / 2}
           y={H - 6}
           textAnchor="middle"
-          fontSize={14}
+          fontSize={F.title}
           fontWeight={700}
           className="fill-black dark:fill-gray-100"
         >
           Years since publication
         </text>
         <text
-          transform={`translate(14 ${M.top + plotH / 2}) rotate(-90)`}
+          transform={`translate(${isMobile ? 10 : 14} ${M.top + plotH / 2}) rotate(-90)`}
           textAnchor="middle"
-          fontSize={14}
+          fontSize={F.title}
           fontWeight={700}
           className="fill-black dark:fill-gray-100"
         >
           {get.yLabel}
         </text>
-        <ChartWatermark rightX={W - M.right - 8} y={M.top + 4} />
+        {/* On mobile the top-left legend + top-right watermark would overlap in a
+            380-unit viewBox; the bottom-right corner is empty (lines rise left→right). */}
+        <ChartWatermark rightX={W - M.right - 8} y={isMobile ? M.top + plotH - 18 : M.top + 4} />
       </svg>
     </div>
   );
 }
 
 function BinnedChart({ bins, xTitle, showCI = false }: { bins: Bin[]; xTitle: string; showCI?: boolean }) {
-  const W = 720;
-  const H = 320;
-  const M = { top: 20, right: 20, bottom: 64, left: 62 };
+  const isMobile = useIsMobile();
+  const W = isMobile ? 380 : 720;
+  const H = isMobile ? 300 : 320;
+  const M = isMobile ? { top: 16, right: 8, bottom: 60, left: 40 } : { top: 20, right: 20, bottom: 64, left: 62 };
+  const F = isMobile
+    ? { tick: 10, xlab: 9, val: 10, title: 11, sub: 8 }
+    : { tick: 12, xlab: 12, val: 12, title: 14, sub: 10 };
+  const whisker = isMobile ? 4 : 5;
+  // Long metric titles overflow a 380-unit viewBox at 11px — shrink to fit.
+  const titleFs = !isMobile ? F.title : xTitle.length > 60 ? 8.5 : xTitle.length > 45 ? 9.5 : F.title;
   const plotW = W - M.left - M.right;
   const plotH = H - M.top - M.bottom;
   const bandW = plotW / bins.length;
@@ -848,13 +862,13 @@ function BinnedChart({ bins, xTitle, showCI = false }: { bins: Bin[]; xTitle: st
 
   return (
     <div className="overflow-x-auto">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full min-w-[560px]" role="img">
+      <svg viewBox={`0 0 ${W} ${H}`} className={isMobile ? "w-full" : "w-full min-w-[560px]"} role="img">
         {/* y gridlines + ticks */}
         {[0, 25, 50, 75, 100].map((g) => (
           <g key={g}>
             <line x1={M.left} x2={W - M.right} y1={y(g)} y2={y(g)} stroke="currentColor" strokeOpacity={0.12} />
             <line x1={M.left - 6} x2={M.left} y1={y(g)} y2={y(g)} stroke="#000000" strokeWidth={1} />
-            <text x={M.left - 10} y={y(g) + 4} textAnchor="end" fontSize={12} className="fill-black dark:fill-gray-100">
+            <text x={M.left - (isMobile ? 8 : 10)} y={y(g) + 4} textAnchor="end" fontSize={F.tick} className="fill-black dark:fill-gray-100">
               {g}%
             </text>
           </g>
@@ -877,20 +891,20 @@ function BinnedChart({ bins, xTitle, showCI = false }: { bins: Bin[]; xTitle: st
                 <>
                   {/* paper-cluster bootstrap 95% CI whisker */}
                   <line x1={cx} x2={cx} y1={y(b.ciLow)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
-                  <line x1={cx - 5} x2={cx + 5} y1={y(b.ciLow)} y2={y(b.ciLow)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
-                  <line x1={cx - 5} x2={cx + 5} y1={y(b.ciHigh)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
+                  <line x1={cx - whisker} x2={cx + whisker} y1={y(b.ciLow)} y2={y(b.ciLow)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
+                  <line x1={cx - whisker} x2={cx + whisker} y1={y(b.ciHigh)} y2={y(b.ciHigh)} stroke="currentColor" strokeWidth={1.5} opacity={0.7} />
                 </>
               )}
               {/* rate label, above the bar (or the upper CI whisker) */}
-              <text x={cx} y={(showCI ? y(b.ciHigh) : top) - 6} textAnchor="middle" fontSize={12} fontWeight={600} fill="currentColor">
+              <text x={cx} y={(showCI ? y(b.ciHigh) : top) - 6} textAnchor="middle" fontSize={F.val} fontWeight={600} fill="currentColor">
                 {b.rate.toFixed(0)}%
               </text>
               {/* x labels */}
               <line x1={cx} x2={cx} y1={M.top + plotH} y2={M.top + plotH + 5} stroke="#000000" strokeWidth={1} />
-              <text x={cx} y={H - M.bottom + 18} textAnchor="middle" fontSize={12} className="fill-black dark:fill-gray-100">
+              <text x={cx} y={H - M.bottom + (isMobile ? 14 : 18)} textAnchor="middle" fontSize={F.xlab} className="fill-black dark:fill-gray-100">
                 {b.label ?? `${fmt(b.lo)}–${fmt(b.hi)}`}
               </text>
-              <text x={cx} y={H - M.bottom + 34} textAnchor="middle" fontSize={10} fill="currentColor" opacity={0.5}>
+              <text x={cx} y={H - M.bottom + (isMobile ? 28 : 34)} textAnchor="middle" fontSize={F.sub} fill="currentColor" opacity={0.5}>
                 n={b.count.toLocaleString()}
               </text>
             </g>
@@ -900,16 +914,16 @@ function BinnedChart({ bins, xTitle, showCI = false }: { bins: Bin[]; xTitle: st
           x={M.left + plotW / 2}
           y={H - 6}
           textAnchor="middle"
-          fontSize={14}
+          fontSize={titleFs}
           fontWeight={700}
           className="fill-black dark:fill-gray-100"
         >
           {xTitle}
         </text>
         <text
-          transform={`translate(14 ${M.top + plotH / 2}) rotate(-90)`}
+          transform={`translate(${isMobile ? 10 : 14} ${M.top + plotH / 2}) rotate(-90)`}
           textAnchor="middle"
-          fontSize={14}
+          fontSize={F.title}
           fontWeight={700}
           className="fill-black dark:fill-gray-100"
         >

@@ -11,7 +11,8 @@ import pandas as pd
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QLabel, QComboBox, QPushButton, QScrollArea, QTabWidget,
-    QFrame, QCheckBox, QSizePolicy, QGroupBox, QStackedWidget, QLineEdit
+    QFrame, QCheckBox, QSizePolicy, QGroupBox, QStackedWidget, QLineEdit,
+    QGridLayout
 )
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QColor, QPalette
@@ -76,8 +77,12 @@ class MatchCard(QFrame):
         header.addStretch()
 
         self.action_combo = QComboBox()
-        self.action_combo.addItems(["No action", "Merge into this row", "Replace this row"])
+        self.action_combo.addItems([
+            "No action", "Merge into this row", "Replace this row",
+            "Custom merge into this row"
+        ])
         self.action_combo.setMinimumWidth(180)
+        self.action_combo.currentIndexChanged.connect(self._on_action_changed)
         header.addWidget(self.action_combo)
         layout.addLayout(header)
 
@@ -130,17 +135,74 @@ class MatchCard(QFrame):
         grid.addStretch()
         layout.addLayout(grid)
 
+        # ── Custom merge editor (shown only for "Custom merge into this row") ──
+        # One editable field per display column, pre-filled with what a standard
+        # merge would produce (existing value, or incoming if existing is empty;
+        # for description, whichever is longer).
+        self.custom_fields = {}      # col -> QLineEdit
+        self._custom_defaults = {}   # col -> pre-filled default value
+        self.custom_panel = QGroupBox("Custom merge — edit the final values for this master row")
+        panel_layout = QGridLayout(self.custom_panel)
+        panel_layout.setVerticalSpacing(3)
+
+        for r, col in enumerate(DISPLAY_COLS):
+            existing_val = _norm(master_row.get(col))
+            incoming_val = _norm(incoming_row.get(col))
+            if col == 'description':
+                default = incoming_val if len(incoming_val) > len(existing_val) else existing_val
+            else:
+                default = existing_val if existing_val else incoming_val
+
+            edit = QLineEdit(default)
+            edit.setToolTip(f"existing: {existing_val or '—'}\nincoming: {incoming_val or '—'}")
+            self.custom_fields[col] = edit
+            self._custom_defaults[col] = default
+
+            use_ext = QPushButton("use existing")
+            use_ext.setToolTip(existing_val or '—')
+            use_ext.setEnabled(bool(existing_val))
+            use_ext.clicked.connect(lambda _, e=edit, v=existing_val: e.setText(v))
+
+            use_inc = QPushButton("use incoming")
+            use_inc.setToolTip(incoming_val or '—')
+            use_inc.setEnabled(bool(incoming_val))
+            use_inc.clicked.connect(lambda _, e=edit, v=incoming_val: e.setText(v))
+
+            panel_layout.addWidget(QLabel(f"<b>{col}</b>"), r, 0)
+            panel_layout.addWidget(edit, r, 1)
+            panel_layout.addWidget(use_ext, r, 2)
+            panel_layout.addWidget(use_inc, r, 3)
+
+        panel_layout.setColumnStretch(1, 1)
+        self.custom_panel.setVisible(False)
+        layout.addWidget(self.custom_panel)
+
+    def _on_action_changed(self, index):
+        self.custom_panel.setVisible(
+            self.action_combo.currentText().startswith("Custom merge"))
+
+    def _edited_field_values(self):
+        """Return only the fields the user changed from the pre-filled default."""
+        edited = {}
+        for col, edit in self.custom_fields.items():
+            text = edit.text().strip()
+            if text != self._custom_defaults[col]:
+                edited[col] = text
+        return edited
+
     def get_action(self):
-        """Return action string, master row index, and force-replace fields."""
+        """Return (action, master row index, force-replace fields, custom field edits)."""
         text = self.action_combo.currentText()
         force_replace = set()
         if self.replace_result_cb and self.replace_result_cb.isChecked():
             force_replace.add('result')
         if text == "Merge into this row":
-            return 'merge', self.master_row_idx, force_replace
+            return 'merge', self.master_row_idx, force_replace, None
         elif text == "Replace this row":
-            return 'replace', self.master_row_idx, force_replace
-        return None, None, force_replace
+            return 'replace', self.master_row_idx, force_replace, None
+        elif text.startswith("Custom merge"):
+            return 'custom_merge', self.master_row_idx, force_replace, self._edited_field_values()
+        return None, None, force_replace, None
 
 
 class DuplicateCard(QWidget):
@@ -232,16 +294,19 @@ class DuplicateCard(QWidget):
 
     def get_decision(self):
         """Return the user's decision for this incoming row."""
-        # Check match cards first for merge/replace
+        # Check match cards first for merge/replace/custom merge
         for card in self.match_cards:
-            action, target, force_replace = card.get_action()
+            action, target, force_replace, field_values = card.get_action()
             if action:
-                return {
+                decision = {
                     'incoming_idx': self.incoming_idx,
                     'action': action,
                     'target_master_idx': target,
                     'force_replace_fields': force_replace
                 }
+                if field_values is not None:
+                    decision['field_values'] = field_values
+                return decision
 
         # Fall back to incoming action
         incoming_text = self.incoming_action.currentText()
@@ -406,7 +471,16 @@ class DuplicateReviewWindow(QMainWindow):
         """
         super().__init__()
         self.setWindowTitle("Duplicate Review")
-        self.setMinimumSize(1200, 800)
+        # Small minimum so the window can always be shrunk; size to fit the
+        # available screen (content scrolls, so a smaller window still works)
+        self.setMinimumSize(700, 450)
+        screen = QApplication.primaryScreen()
+        if screen is not None:
+            avail = screen.availableGeometry()
+            self.resize(min(1200, int(avail.width() * 0.9)),
+                        min(800, int(avail.height() * 0.9)))
+        else:
+            self.resize(1200, 800)
         self.results = None
         self.current_dup_idx = 0
         self.visited_pages = {0}  # page 0 is visible on open
@@ -596,6 +670,12 @@ def launch_duplicate_review(potential_dups, auto_skipped, processed_df, master_d
     app = QApplication.instance()
     if app is None:
         app = QApplication(sys.argv)
+
+    # Keep text compact so the dialog fits on smaller screens
+    font = app.font()
+    if font.pointSize() > 9:
+        font.setPointSize(9)
+        app.setFont(font)
 
     window = DuplicateReviewWindow(
         potential_dups, auto_skipped, processed_df, master_df,
