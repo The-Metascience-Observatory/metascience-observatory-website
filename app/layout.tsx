@@ -2,6 +2,7 @@ import "./globals.css";
 import { ReactNode } from "react";
 import { Providers } from "@/components/Providers";
 import { Analytics } from "@vercel/analytics/next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata = {
   title: "The Metascience Observatory | Analyzing Scientific Reproducibility",
@@ -27,6 +28,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           {children}
         </Providers>
         <Analytics />
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        )}
       </body>
     </html>
   );

@@ -4,7 +4,7 @@
 (NOTE: THIS PAGE IS AI GENERATED!! )
 
 
-*A metascience-level read of the aggregate [replications database](https://metascienceobservatory.org/replications-database). Figures below are computed from database version `2026_07_13` (**7,545 replication pairs**) and will be refreshed as the database grows.*
+*A metascience-level read of the aggregate [replications database](https://metascienceobservatory.org/replications-database). The corpus-wide figures (sections 1–4) are computed from database version `2026_07_13` (**7,545 replication pairs**); the per-discipline breakdowns in sections 5–6 have been recomputed on version `2026_07_18` (**7,551 pairs**) after recent discipline-classification cleanups. All figures will be refreshed as the database grows.*
 
 > **How to read these numbers first.** This database is a **convenience corpus** assembled from systematic replication initiatives plus AI-assisted harvesting of the published literature — it is **not a random sample of science**. The rates below describe *this collection*, not "the fraction of all published science that replicates." About **73%** of rows are AI-curated and not yet human-validated, and the meaning of "success" varies by source (original judgment by replication authors, by a human curator, or by the AI). Treat every headline number as conditional on these caveats, which are spelled out at the bottom.
 
@@ -96,28 +96,28 @@ Breaking representative-sampled and literature-harvested replications down by fi
 
 | Discipline | Representative-sampled initiatives | Literature-harvested |
 |---|---|---|
-| Psychology | 67% (n=465) | 59% (n=2,206) |
-| Medical fields | 41% (n=27) | 59% (n=1,149) |
-| Neuroscience | 80% (n=44) | 59% (n=664) |
-| Biomedical | 33% (n=217) | 50% (n=344) |
-| Economics | 66% (n=41) | 63% (n=266) |
-| Education | 79% (n=24) | 86% (n=73) |
-| Political science | 76% (n=38) | 53% (n=19) |
-| Sociology | 58% (n=19) | 50% (n=30) |
+| Psychology | 65% (n=557) | 58% (n=2,224) |
+| Biomedical | 31% (n=227) | 50% (n=349) |
+| Economics | 54% (n=50) | 59% (n=285) |
+| Education | 68% (n=28) | 84% (n=75) |
+| Political science | 71% (n=41) | 43% (n=23) |
+| Sociology | 42% (n=26) | 50% (n=30) |
+| Sports & exercise science | 30% (n=23) | — |
+| Medical fields | — (n=4) | 58% (n=1,158) |
 
-*Cells show definitive-outcome success rate (success / (success + failure)); n is the definitive-row count. Small-n cells — the medical, economics, marketing, and sociology representative samples in particular — should be read with caution.*
+*Cells show definitive-outcome success rate (success / (success + failure)); n is the definitive-row count. Small-n cells — the economics, sociology, sports-science, and medical representative samples in particular — should be read with caution. Medical fields has almost no representative-sampled rows (4 development-health RCTs) now that sports/exercise science is broken out on its own.*
 
 **Which initiatives feed each representative cell** (initiative → definitive n). Several projects span multiple fields, so their rows are assigned by each paper's home discipline rather than lumped under one label:
 
-- **Psychology** (465): [Student Replication Projects](https://royalsocietypublishing.org/doi/10.1098/rsos.231240) 138, [Life Outcomes of Personality](https://doi.org/10.1177/0956797619831612) 117, [DARPA SCORE](https://doi.org/10.1038/s41586-025-10078-y) 82, [RP:Psychology](https://www.science.org/doi/10.1126/science.aac4716) 49, [X-Phi](https://zenodo.org/records/14296259/files/fulltext.pdf?download=1) 25, [EROE](https://www.nature.com/articles/s41562-024-02062-9) 22, [Sensory Marketing](https://www.frontiersin.org/journals/communication/articles/10.3389/fcomm.2022.1048896/full) 19, [Social Science Replication Project](https://pure.eur.nl/files/37359856/Camerer_et_al._2018_Evaluating_the_replicability_of_social_science_experiments_in_Nature_and_Science_between_2010_and_2015.pdf) 13
-- **Medical fields** (27): [Sports & Exercise Science](https://doi.org/10.1007/s40279-025-02201-w) 23, [3ie](https://www.3ieimpact.org/evidence-hub/publications/replication-papers) 4
-- **Neuroscience** (44): the neuroscience slices of [RP:Psychology](https://www.science.org/doi/10.1126/science.aac4716) 22, [X-Phi](https://zenodo.org/records/14296259/files/fulltext.pdf?download=1) 15, [EROE](https://www.nature.com/articles/s41562-024-02062-9) 4, [Student Replication](https://royalsocietypublishing.org/doi/10.1098/rsos.231240) 3
-- **Biomedical** (217): [Cancer Biology](https://elifesciences.org/articles/71601) 122, [Brazilian Reproducibility Initiative](https://www.biorxiv.org/content/10.1101/2025.04.02.645026v4) 95
-- **Economics** (41): [DARPA SCORE](https://doi.org/10.1038/s41586-025-10078-y) 18, [Experimental Economics Replication Project](https://www.science.org/cms/asset/febfa588-66f1-493b-afb8-268e0aaeb6a9/pap.pdf) 18, [3ie](https://www.3ieimpact.org/evidence-hub/publications/replication-papers) 5
-- **Education** (24), **Political science** (38), **Marketing** (23): [DARPA SCORE](https://doi.org/10.1038/s41586-025-10078-y) only
-- **Sociology** (19): [DARPA SCORE](https://doi.org/10.1038/s41586-025-10078-y) 17, [Student Replication](https://royalsocietypublishing.org/doi/10.1098/rsos.231240) 2
+- **Psychology** (557): [Student Replication Projects](https://royalsocietypublishing.org/doi/10.1098/rsos.231240) 145, [DARPA SCORE](https://doi.org/10.1038/s41586-025-10078-y) 123, [Life Outcomes of Personality](https://doi.org/10.1177/0956797619831612) 118, [RP:Psychology](https://www.science.org/doi/10.1126/science.aac4716) 71, [X-Phi](https://zenodo.org/records/14296259/files/fulltext.pdf?download=1) 40, [EROE](https://www.nature.com/articles/s41562-024-02062-9) 26, [Sensory Marketing](https://www.frontiersin.org/journals/communication/articles/10.3389/fcomm.2022.1048896/full) 21, [Social Science Replication Project](https://pure.eur.nl/files/37359856/Camerer_et_al._2018_Evaluating_the_replicability_of_social_science_experiments_in_Nature_and_Science_between_2010_and_2015.pdf) 13
+- **Biomedical** (227): [Cancer Biology](https://elifesciences.org/articles/71601) 132, [Brazilian Reproducibility Initiative](https://www.biorxiv.org/content/10.1101/2025.04.02.645026v4) 95
+- **Economics** (50): [DARPA SCORE](https://doi.org/10.1038/s41586-025-10078-y) 27, [Experimental Economics Replication Project](https://www.science.org/cms/asset/febfa588-66f1-493b-afb8-268e0aaeb6a9/pap.pdf) 18, [3ie](https://www.3ieimpact.org/evidence-hub/publications/replication-papers) 5
+- **Sports & exercise science** (23): [Replication in Sports & Exercise Science](https://doi.org/10.1007/s40279-025-02201-w) 23
+- **Medical fields** (4): [3ie](https://www.3ieimpact.org/evidence-hub/publications/replication-papers) 4 (HIV / public-health development RCTs)
+- **Education** (28), **Political science** (41): [DARPA SCORE](https://doi.org/10.1038/s41586-025-10078-y) only
+- **Sociology** (26): [DARPA SCORE](https://doi.org/10.1038/s41586-025-10078-y) 24, [Student Replication](https://royalsocietypublishing.org/doi/10.1098/rsos.231240) 2
 
-The clearest test is psychology, where both buckets are well-populated: **random-sampled psychology initiatives replicate *better* (67%) than one-off psychology replications harvested from the literature (59%)** — the opposite of the "systematic looks worse" story (the deliberately-targeted contested findings, covered in section 5 above, sit far lower at **12%**). Biomedical shows representative samples replicating *below* the literature (33% vs 50%), a reminder that "representative" still means "whatever effects that particular initiative chose to sample," and field-specific selection cuts both ways. Note that the smaller fields (education, political science, marketing, and part of sociology) are populated almost entirely by **DARPA SCORE**, a deliberately cross-field initiative that sampled 60+ social-science journals; its papers are split to their home disciplines above. Marketing has no literature-harvested comparison at all, so its cell reflects the SCORE sample alone.
+The clearest test is psychology, where both buckets are well-populated: **random-sampled psychology initiatives replicate *better* (65%) than one-off psychology replications harvested from the literature (58%)** — the opposite of the "systematic looks worse" story (the deliberately-targeted contested findings, covered in section 5 above, sit far lower at **12%**). Biomedical shows representative samples replicating *below* the literature (31% vs 50%), a reminder that "representative" still means "whatever effects that particular initiative chose to sample," and field-specific selection cuts both ways. Note that the smaller social-science fields (education, political science, and part of sociology) are populated almost entirely by **DARPA SCORE**, a deliberately cross-field initiative that sampled 60+ social-science journals; its papers are split to their home disciplines above. Sports & exercise science and the tiny medical-fields representative cell (4 development-health RCTs) are the narrowest samples and should be read with the most caution.
 
 ---
 
@@ -127,14 +127,14 @@ Restricting to disciplines with at least 40 rows (rates are confounded by which 
 
 | Discipline | n | Success rate | Original mean $\lvert r \rvert$ | Replication mean $\lvert r \rvert$ |
 |---|---|---|---|---|
-| Psychology | 3,602 | 55% | 0.339 | 0.191 |
-| Medical fields | 1,449 | 58% | 0.257 | 0.187 |
-| Neuroscience | 827 | 60% | 0.419 | 0.229 |
-| Biomedical | 694 | 43% | 0.674 | 0.385 |
-| Economics | 394 | 64% | 0.402 | 0.257 |
-| Education | 118 | 85% | 0.198 | 0.173 |
+| Psychology | 3,699 | 54% | 0.339 | 0.190 |
+| Medical fields | 1,424 | 58% | 0.204 | 0.161 |
+| Neuroscience | 767 | 58% | 0.394 | 0.201 |
+| Biomedical | 694 | 42% | 0.674 | 0.385 |
+| Economics | 394 | 58% | 0.402 | 0.257 |
+| Education | 118 | 80% | 0.344 | 0.189 |
 
-**Conclusion:** the headline success rate varies by field, but **effect-size attenuation is universal** — replication magnitudes run ~55–75% of originals in every discipline measured except education, the smallest cell (32 effect-size pairs), where they retain ~87%. The shrinkage pattern, in particular, is not a quirk of any one field.
+**Conclusion:** the headline success rate varies by field, but **effect-size attenuation is universal** — replication magnitudes run ~50–75% of originals in every discipline measured. The shrinkage pattern, in particular, is not a quirk of any one field.
 
 ---
 
