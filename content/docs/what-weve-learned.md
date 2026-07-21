@@ -4,7 +4,7 @@
 (NOTE: THIS PAGE IS AI GENERATED!! )
 
 
-*A metascience-level read of the aggregate [replications database](https://metascienceobservatory.org/replications-database). The corpus-wide figures (sections 1–4) are computed from database version `2026_07_13` (**7,545 replication pairs**); the per-discipline breakdowns in sections 5–6 have been recomputed on version `2026_07_18` (**7,551 pairs**) after recent discipline-classification cleanups. All figures will be refreshed as the database grows.*
+*A metascience-level read of the aggregate [replications database](https://metascienceobservatory.org/replications-database). The corpus-wide figures (sections 1–4) are computed from database version `2026_07_13` (**7,545 replication pairs**); the per-discipline breakdowns in sections 5–6 have been recomputed on version `2026_07_19` (**7,551 pairs**) after recent discipline-classification cleanups. All figures will be refreshed as the database grows.*
 
 > **How to read these numbers first.** This database is a **convenience corpus** assembled from systematic replication initiatives plus AI-assisted harvesting of the published literature — it is **not a random sample of science**. The rates below describe *this collection*, not "the fraction of all published science that replicates." About **73%** of rows are AI-curated and not yet human-validated, and the meaning of "success" varies by source (original judgment by replication authors, by a human curator, or by the AI). Treat every headline number as conditional on these caveats, which are spelled out at the bottom.
 
@@ -96,14 +96,14 @@ Breaking representative-sampled and literature-harvested replications down by fi
 
 | Discipline | Representative-sampled initiatives | Literature-harvested |
 |---|---|---|
-| Psychology | 65% (n=557) | 58% (n=2,224) |
-| Biomedical | 31% (n=227) | 50% (n=349) |
+| Psychology | 65% (n=557) | 59% (n=2,339) |
+| Biomedical | 31% (n=227) | 50% (n=353) |
 | Economics | 54% (n=50) | 59% (n=285) |
 | Education | 68% (n=28) | 84% (n=75) |
 | Political science | 71% (n=41) | 43% (n=23) |
 | Sociology | 42% (n=26) | 50% (n=30) |
 | Sports & exercise science | 30% (n=23) | — |
-| Medical fields | — (n=4) | 58% (n=1,158) |
+| Medical fields | — (n=4) | 58% (n=1,165) |
 
 *Cells show definitive-outcome success rate (success / (success + failure)); n is the definitive-row count. Small-n cells — the economics, sociology, sports-science, and medical representative samples in particular — should be read with caution. Medical fields has almost no representative-sampled rows (4 development-health RCTs) now that sports/exercise science is broken out on its own.*
 
@@ -117,7 +117,7 @@ Breaking representative-sampled and literature-harvested replications down by fi
 - **Education** (28), **Political science** (41): [DARPA SCORE](https://doi.org/10.1038/s41586-025-10078-y) only
 - **Sociology** (26): [DARPA SCORE](https://doi.org/10.1038/s41586-025-10078-y) 24, [Student Replication](https://royalsocietypublishing.org/doi/10.1098/rsos.231240) 2
 
-The clearest test is psychology, where both buckets are well-populated: **random-sampled psychology initiatives replicate *better* (65%) than one-off psychology replications harvested from the literature (58%)** — the opposite of the "systematic looks worse" story (the deliberately-targeted contested findings, covered in section 5 above, sit far lower at **12%**). Biomedical shows representative samples replicating *below* the literature (31% vs 50%), a reminder that "representative" still means "whatever effects that particular initiative chose to sample," and field-specific selection cuts both ways. Note that the smaller social-science fields (education, political science, and part of sociology) are populated almost entirely by **DARPA SCORE**, a deliberately cross-field initiative that sampled 60+ social-science journals; its papers are split to their home disciplines above. Sports & exercise science and the tiny medical-fields representative cell (4 development-health RCTs) are the narrowest samples and should be read with the most caution.
+The clearest test is psychology, where both buckets are well-populated: **random-sampled psychology initiatives replicate *better* (65%) than one-off psychology replications harvested from the literature (59%)** — the opposite of the "systematic looks worse" story (the deliberately-targeted contested findings, covered in section 5 above, sit far lower at **12%**). Biomedical shows representative samples replicating *below* the literature (31% vs 50%), a reminder that "representative" still means "whatever effects that particular initiative chose to sample," and field-specific selection cuts both ways. Note that the smaller social-science fields (education, political science, and part of sociology) are populated almost entirely by **DARPA SCORE**, a deliberately cross-field initiative that sampled 60+ social-science journals; its papers are split to their home disciplines above. Sports & exercise science and the tiny medical-fields representative cell (4 development-health RCTs) are the narrowest samples and should be read with the most caution.
 
 ---
 
@@ -127,10 +127,10 @@ Restricting to disciplines with at least 40 rows (rates are confounded by which 
 
 | Discipline | n | Success rate | Original mean $\lvert r \rvert$ | Replication mean $\lvert r \rvert$ |
 |---|---|---|---|---|
-| Psychology | 3,699 | 54% | 0.339 | 0.190 |
-| Medical fields | 1,424 | 58% | 0.204 | 0.161 |
-| Neuroscience | 767 | 58% | 0.394 | 0.201 |
-| Biomedical | 694 | 42% | 0.674 | 0.385 |
+| Psychology | 3,827 | 55% | 0.339 | 0.191 |
+| Medical fields | 1,434 | 58% | 0.207 | 0.162 |
+| Neuroscience | 624 | 56% | 0.398 | 0.172 |
+| Biomedical | 698 | 43% | 0.669 | 0.383 |
 | Economics | 394 | 58% | 0.402 | 0.257 |
 | Education | 118 | 80% | 0.344 | 0.189 |
 

@@ -25,12 +25,11 @@
     ],
     "economics": [
       "development economics",
-      "behavioral economics",
+      "behavioral and experimental economics",
       "macroeconomics",
       "labor economics",
       "econometric methods",
       "political economy",
-      "finance",
       "energy & environmental economics",
       "economic history",
       "finance & financial economics"
@@ -54,7 +53,8 @@
       "nursing education",
       "medical education",
       "higher education",
-      "mathematics education"
+      "mathematics education",
+      "second language education"
     ],
     "linguistics": [
       "second language acquisition",
@@ -76,13 +76,11 @@
       "computational neuroscience"
     ],
     "biology": [
-      "cellular biology",
       "cell biology",
       "molecular biology",
       "genetics",
       "physiology",
       "cancer biology",
-      "immunology",
       "sports genetics",
       "behavioral genetics"
     ],
@@ -188,7 +186,9 @@
   "computer science": {
     "AI and machine learning": [],
     "software engineering": [],
-    "algorithms": ["number theory"],
+    "algorithms": [
+      "number theory"
+    ],
     "computer science education": [],
     "human-computer interaction": [],
     "computer networks and communications": []

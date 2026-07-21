@@ -1,3 +1,4 @@
+
 replications_database_2025_11_04_190602.csv
 replications_database_2025_11_04_191503.csv
 replications_database_2025_11_04_2.csv
@@ -77,3 +78,22 @@ replications_database_2026_07_18_123526.csv # folded marketing discipline into p
 replications_database_2026_07_18_143916.csv # merged 12 duplicate consumer psychology / marketing rows (7 Data Replicada collisions with pre-existing validated rows, 2 preprint/published pairs, 1 PsychFileDrawer/OSF pair, 2 Super Size Me repeats); sharpened 13 same-paper multi-experiment descriptions
 replications_database_2026_07_18_150513.csv # reclassified 4 Data Replicada rows inconclusive->failure per posts' own language (datacolada 82/84/90/97); post 87 kept inconclusive (right-direction, combined p=.071)
 replications_database_2026_07_18_193346.csv # reclassified 60 tagged neuroscience rows (RP:P/XPHIR/EROE/SRP/ML2/ML3/SPRRR) to psychology (field->social sciences, cognitive neuroscience->cognitive psychology); moved 25 RSESR sports/exercise rows to new "sports and exercise science" discipline
+replications_database_2026_07_19_193346.csv # stage 2: evaluated the 767 untagged neuroscience rows (multi-agent classify + adversarial verify on title/description); moved 143 rows (120 papers) out of neuroscience to best-fit discipline (107 psychology, 8 medical fields, 4 biology, 1 linguistics); 624 rows stayed neuroscience
+replications_database_2026_07_19_203904.csv # added l2_replication_marsden2018_to_ingest.csv
+replications_database_2026_07_19_204049.csv # merged 2 duplicate rows from the L2R:Marsden2018 ingest: dropped an exact double-add of the Oskarsson (1973) self-replication (added twice via the identical-title prompt); merged the Hewitt & Stephenson replication of Phillips into its pre-existing untagged linguistics row (the incoming row had no original-side DOI so the ingestor's DOI-pair dedup missed it)
+replications_database_2026_07_19_210235.csv # added fred_2_4_2_new_rows.csv
+replications_database_2026_07_19_211008.csv # added flora_new_rows.csv
+replications_database_2026_07_19_214405.csv # deduped FLoRa/FReD overlap (1 row)
+replications_database_2026_07_19_214639.csv # subdiscipline backfill (tag_disciplines.py)
+replications_database_2026_07_19_214751.csv # fix discipline casing + neuroscience subdiscipline
+replications_database_2026_07_20_163037.csv # es_r backfill (improved test-stat parser)
+replications_database_2026_07_21_100445.csv # added original-study labels to FLoRa/FReD descriptions
+
+replications_database_2026_07_21_103212.csv # backfilled 8 L2R:Marsden2018 original studies recoverable after fixing the corr-orig(colM) lookup bug (self-referential/compound IDs); original DOIs resolved+verified via Crossref
+replications_database_2026_07_21_115419.csv # Tier-2 backfill: identified 16 L2R:Marsden2018 original studies coded as book/None journals, via S2 col-DH citations + Appendix S1 + Crossref/web; DOIs (or VIAL/no-DOI fallback) verified. 31B left blank (coder: no comparable original)
+replications_database_2026_07_21_120923.csv # URL backfill for L2R:Marsden2018: resolved 38 missing original_url/replication_url on already-identified rows via Crossref (DOI) + ERIC/landing fallback, verified title-sim>=0.85 + year; 3 genuinely pre-DOI/unindexed items (Bruhn 1999, Keating&Farley 2008 Hispania, Oskarsson 1973) left blank
+replications_database_2026_07_21_143027.csv # reclassified 16 instruction/teaching-focused L2R:Marsden2018 rows to discipline=education / subdiscipline="second language education" (new ontology subdiscipline); 51 acquisition-focused rows stay linguistics/second language acquisition
+replications_database_2026_07_21_143454.csv # ontology compliance Stage 1: remap invalid disc/subdisc pairs, merge behavioral+experimental economics, immunology->medical only, dedupe cell/finance synonyms (edge rows pending AI)
+replications_database_2026_07_21_144042.csv # ontology compliance Stage 2: AI-reviewed 55 neuro/psych/biology edge rows to final valid disc/subdisc
+replications_database_2026_07_21_172737.csv # added flora_nondoi_recovered_rows.csv
+replications_database_2026_07_21_172743.csv # backfilled source column on 18 ExECON rows (Camerer et al. 2016 Table S1); removed data_ingestor/eerp_2016_extraction.json

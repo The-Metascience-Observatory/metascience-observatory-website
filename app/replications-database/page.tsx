@@ -1415,7 +1415,7 @@ function InlineScatter({ points, showReversal = true }: { points: ScatterPoint[]
             return (
               <g key={i} transform={`translate(${x(p.oAdj)},${y(p.rAdj)})`}>
                 <title>{p.desc}</title>
-                <circle r={3} fill={fill} fillOpacity={0.85} />
+                <circle r={2} fill={fill} fillOpacity={0.85} />
               </g>
             );
           })}
@@ -1657,9 +1657,9 @@ function RawESScatter({ points }: { points: RawScatterPoint[] }) {
               <g key={i} transform={`translate(${cx},${cy})`}>
                 <title>{`${p.desc}\n${p.esType}: orig=${p.origES}, rep=${p.repES}`}</title>
                 {clamped ? (
-                  <polygon points="0,-4 3.5,3 -3.5,3" fill={fill} fillOpacity={0.6} />
+                  <polygon points="0,-2.7 2.3,2 -2.3,2" fill={fill} fillOpacity={0.6} />
                 ) : (
-                  <circle r={3} fill={fill} fillOpacity={0.85} />
+                  <circle r={2} fill={fill} fillOpacity={0.85} />
                 )}
               </g>
             );
