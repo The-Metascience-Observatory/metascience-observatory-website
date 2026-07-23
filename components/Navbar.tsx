@@ -31,8 +31,8 @@ export const Navbar = () => {
               </Link>
             </Button>
             <Button variant="outline-gradient" size="sm" asChild className="border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
-              <Link href="/docs">
-                Docs
+              <Link href="/articles">
+                Articles
               </Link>
             </Button>
             <Button variant="outline-gradient" size="sm" asChild className="border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
@@ -91,8 +91,8 @@ export const Navbar = () => {
                 </Link>
               </Button>
               <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
-                <Link href="/docs" onClick={() => setIsMobileMenuOpen(false)}>
-                  Docs
+                <Link href="/articles" onClick={() => setIsMobileMenuOpen(false)}>
+                  Articles
                 </Link>
               </Button>
               <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">

@@ -4,9 +4,9 @@
 (NOTE: THIS PAGE IS AI GENERATED!! )
 
 
-*A metascience-level read of the aggregate [replications database](https://metascienceobservatory.org/replications-database). The corpus-wide figures (sections 1–4) are computed from database version `2026_07_13` (**7,545 replication pairs**); the per-discipline breakdowns in sections 5–6 have been recomputed on version `2026_07_19` (**7,551 pairs**) after recent discipline-classification cleanups. All figures will be refreshed as the database grows.*
+*A metascience-level read of the aggregate [replications database](https://metascienceobservatory.org/replications-database). The headline replication rates in section 1 are computed from database version `2026_07_21` (**8,610 replication pairs**); sections 2–4 were computed on version `2026_07_13` (7,545 pairs); the per-discipline breakdowns in sections 5–6 have been recomputed on version `2026_07_19` (7,551 pairs) after recent discipline-classification cleanups. All figures will be refreshed as the database grows.*
 
-> **How to read these numbers first.** This database is a **convenience corpus** assembled from systematic replication initiatives plus AI-assisted harvesting of the published literature — it is **not a random sample of science**. The rates below describe *this collection*, not "the fraction of all published science that replicates." About **73%** of rows are AI-curated and not yet human-validated, and the meaning of "success" varies by source (original judgment by replication authors, by a human curator, or by the AI). Treat every headline number as conditional on these caveats, which are spelled out at the bottom.
+> **How to read these numbers first.** This database is a **convenience corpus** assembled from systematic replication initiatives plus AI-assisted harvesting of the published literature — it is **not a random sample of science**. The rates below describe *this collection*, not "the fraction of all published science that replicates." About **65%** of rows are AI-curated and not yet human-validated, and the meaning of "success" varies by source (original judgment by replication authors, by a human curator, or by the AI). Treat every headline number as conditional on these caveats, which are spelled out at the bottom.
 
 With that framing, several findings are robust enough to state plainly.
 
@@ -14,16 +14,16 @@ With that framing, several findings are robust enough to state plainly.
 
 ## 1. Roughly 45% of published findings replicate — and the number sharpens as the method tightens
 
-Across all 7,545 rows, the raw outcome split is **success 46.4% · failure 35.7% · inconclusive 14.1% · reversal 1.8%**. Counting only definitive outcomes (excluding inconclusive), success / (success + failure) = **56.5%**.
+Across all 8,610 rows, the raw outcome split is **success 46.4% · failure 34.9% · inconclusive 15.5% · reversal 1.6%**. Counting only definitive outcomes (excluding inconclusive), success / (success + failure) = **57.1%**.
 
 But that loose figure is inflated by lenient replication designs. As you restrict to the most rigorous subset, the rate converges on a lower, more credible value:
 
 | Subset | n | Success / (success + failure) |
 |---|---|---|
-| All definitive rows | 6,199 | 56.5% |
-| Major coordinated replication initiatives | 1,524 | **46%** |
+| All definitive rows | 7,004 | 57.1% |
+| Major coordinated replication initiatives | 1,602 | **47%** |
 | Direct replications only | 2,065 | **44%** |
-| Direct **and** human-validated ("gold standard") | 1,869 | **45%** |
+| Direct **and** human-validated ("gold standard") | 2,319 | **46%** |
 
 **Conclusion:** when judged by the cleanest available evidence — direct, human-validated replications from coordinated initiatives — **a little under half of published effects replicate**. This holds across fields, not just psychology.
 

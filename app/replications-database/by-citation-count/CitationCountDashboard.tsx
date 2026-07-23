@@ -42,7 +42,7 @@ function spearman(xs: number[], ys: number[]): number | null {
 // Yang et al. (2020) Fig. 1 palette: teal = passed, coral = failed.
 const PASSED = "#12a5a5";
 const FAILED = "#f4837d";
-const REPLICATED = "#2563eb"; // blue, matching the by-year page's rate bars
+const REPLICATED = "#60a5fa"; // lighter blue (Tailwind blue-400)
 
 const CRITERION_OPTIONS = [
   { value: 0, label: "Reported result (success / failure column)" },

@@ -47,7 +47,7 @@ const THRESHOLD_OPTIONS = [
   { value: 1.0, label: "100%" },
 ];
 
-function BarCell({ d }: { d: DisciplineRow }) {
+function BarCell({ d, showCI }: { d: DisciplineRow; showCI: boolean }) {
   return (
     <td className="p-2">
       <div
@@ -63,9 +63,13 @@ function BarCell({ d }: { d: DisciplineRow }) {
             <div className="absolute top-0 h-full" style={{ left: `${d.replicatedPct}%`, width: `${d.notReplicatedPct}%`, background: "#f87171" }} />
           )}
         </div>
-        <div className="absolute bg-white" style={{ top: "calc(50% - 1px)", height: "2px", left: `${d.ciLow}%`, width: `${d.ciHigh - d.ciLow}%`, zIndex: 9 }} />
-        <div className="absolute bg-white" style={{ top: "25%", height: "50%", width: "2px", left: `${d.ciLow}%`, zIndex: 10 }} />
-        <div className="absolute bg-white" style={{ top: "25%", height: "50%", width: "2px", left: `${d.ciHigh}%`, zIndex: 10 }} />
+        {showCI && (
+          <>
+            <div className="absolute bg-white" style={{ top: "calc(50% - 1px)", height: "2px", left: `${d.ciLow}%`, width: `${d.ciHigh - d.ciLow}%`, zIndex: 9 }} />
+            <div className="absolute bg-white" style={{ top: "25%", height: "50%", width: "2px", left: `${d.ciLow}%`, zIndex: 10 }} />
+            <div className="absolute bg-white" style={{ top: "25%", height: "50%", width: "2px", left: `${d.ciHigh}%`, zIndex: 10 }} />
+          </>
+        )}
         <div className="absolute top-0 h-full flex items-center text-base font-bold text-gray-900 dark:text-gray-100 pointer-events-none" style={{ left: `${d.replicatedPct}%`, transform: "translateX(-50%)", zIndex: 12, textShadow: "0 0 4px rgba(255,255,255,0.9), 0 0 8px rgba(255,255,255,0.7)" }}>{d.replicatedPct.toFixed(0)}%</div>
       </div>
     </td>
@@ -101,6 +105,7 @@ export default function ByDisciplinePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [threshold, setThreshold] = useState(0.75);
+  const [showCI, setShowCI] = useState(false);
   const [sortKey, setSortKey] = useState<SortKey>("total");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
   const [subSortKey, setSubSortKey] = useState<SortKey>("total");
@@ -355,6 +360,18 @@ export default function ByDisciplinePage() {
               </select>
             </label>
 
+            <label className="flex items-center gap-2 text-sm cursor-pointer">
+              <input
+                type="checkbox"
+                checked={showCI}
+                onChange={(e) => setShowCI(e.target.checked)}
+                className="h-4 w-4 accent-blue-600"
+              />
+              <span className="text-gray-600 dark:text-gray-300">
+                Show Wilson 95% confidence intervals
+              </span>
+            </label>
+
             {/* Legend */}
             <div className="flex gap-6 text-sm">
               <span className="flex items-center gap-2">
@@ -391,7 +408,7 @@ export default function ByDisciplinePage() {
                         {d.discipline}
                       </Link>
                     </td>
-                    <BarCell d={d} />
+                    <BarCell d={d} showCI={showCI} />
                     <td className="p-2 text-right tabular-nums">{d.total}</td>
                   </tr>
                 ))}
@@ -446,7 +463,7 @@ export default function ByDisciplinePage() {
                         {d.discipline}
                       </Link>
                     </td>
-                    <BarCell d={d} />
+                    <BarCell d={d} showCI={showCI} />
                     <td className="p-2 text-right tabular-nums">{d.total}</td>
                   </tr>
                 ))}

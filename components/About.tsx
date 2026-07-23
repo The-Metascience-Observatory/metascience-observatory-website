@@ -2,6 +2,33 @@ import { Card } from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
 
+interface ProjectMeta {
+  href: string;
+  title: string;
+  description: string;
+}
+
+const projects: ProjectMeta[] = [
+  {
+    href: "/replication-database-overview",
+    title: "Replications Database",
+    description:
+      "The world's largest collection information on replication experiments, spanning all of science, enabling research on how reproducibility varies across fields.",
+  },
+  {
+    href: "/forensic-metascience-agent",
+    title: "Forensic Metascience Agent",
+    description:
+      "An AI agent equipped with 30+ tools for detecting statistical inconsistencies and data-integrity anomalies in scientific papers.",
+  },
+  {
+    href: "/birds-eye-review-overview",
+    title: "Bird's Eye Reviews",
+    description:
+      "A new form of AI-powered high-level literature review where results are displayed in an interactive dashboard with filtering options.",
+  },
+];
+
 export const About = () => {
   return (
     <section id="about" className="pt-8 pb-8 scroll-mt-1">
@@ -9,9 +36,12 @@ export const About = () => {
         <div className="max-w-6xl mx-auto space-y-6">
           <div className="text-center space-y-4">
             <h2 className="font-clarendon text-2xl md:text-3xl font-bold">About</h2>
+            <p className="text-foreground/90 leading-relaxed">
+              The Metascience Observatory has three major projects:
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-5 gap-10 items-center" >
+          <div className="grid md:grid-cols-5 gap-10 items-center">
             <div className="flex justify-center md:justify-start md:col-span-2">
               <Image
                 src="/assets/woodcut-looking-at-world.jpeg"
@@ -23,26 +53,30 @@ export const About = () => {
               />
             </div>
 
-            <Card className="p-[30px] md:p-[38px] shadow-lg hover:shadow-xl transition-shadow md:col-span-3">
-              <div className="space-y-4 text-sm text-foreground/90 leading-relaxed">
-              <p>
-                The first major project of The Metascience Observatory is to build a <Link href="/replications-database" className="underline">public database of experimental replications across all of science</Link>. There have already been several great studies assessing reproducibility, most famously in <Link href="https://www.science.org/doi/10.1126/science.aac4716" target="_blank" rel="noopener noreferrer" className="underline">psychology</Link> and <Link href="https://www.cos.io/rpcb" target="_blank" rel="noopener noreferrer" className="underline">cancer biology</Link>. These were large, concerted efforts requiring large teams and lots of funding.
-              </p>
-              <p>
-                However, there are also one-off "garden variety" replication attempts. They are rare (perhaps 1% of papers), but there are thousands out there. Using both manual curation and AI/LLMs, we are creating a database of replications and compiling statistics on how reproducibility varies across fields, including fields like materials science and engineering, where insights into reproducibility are scarce.
-              </p>
-              <p>
-                A database of replications will enable new avenues of metascience research looking at "correlates of reproducibility". Additionally, we will be able to do p-curve analysis, z-curve analysis, and funnel plots at a larger scale than was possible before.
-              </p>
-              <p>
-                Longer term, we hope to create a reproducibility ranking for journals. Reproducibility rankings for journals could improve science by shifting focus away from impact factor (citation counts) towards the actual quality and rigor of scientific work. Previous work <Link href="https://www.pnas.org/doi/10.1073/pnas.1909046117" target="_blank" rel="noopener noreferrer" className="underline">shows that</Link> citation counts are not correlated with reproducibility and that citation count is positively correlated with the chance that a paper will be retracted.
-              </p>
-              </div>
-            </Card>
+            <div className="md:col-span-3 space-y-4">
+              {projects.map((project) => (
+                <Card
+                  key={project.href}
+                  className="p-6 shadow-lg hover:shadow-xl transition-shadow"
+                >
+                  <h3 className="font-clarendon font-semibold text-lg text-foreground mb-2">
+                    {project.title}
+                  </h3>
+                  <p className="text-sm text-foreground/90 leading-relaxed">
+                    {project.description}{" "}
+                    <Link
+                      href={project.href}
+                      className="font-medium text-blue-600 hover:text-blue-700 underline"
+                    >
+                      Read more &rarr;
+                    </Link>
+                  </p>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
       </div>
     </section>
   );
 };
-

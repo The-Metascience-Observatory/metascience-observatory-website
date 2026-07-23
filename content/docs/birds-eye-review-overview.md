@@ -1,7 +1,5 @@
 # About Bird's Eye Reviews
 
-*(page under construction)*
-
 The Metascience Observatory is pioneering a new form of AI-assisted literature review we call the [Bird’s Eye Review](/birds-eye-reviews). 
 
 Bird’s Eye Reviews give people summary data on _all_ papers published on a given topic. Previously there has been no interface that enables what Bird’s Eye Reviews enable. 

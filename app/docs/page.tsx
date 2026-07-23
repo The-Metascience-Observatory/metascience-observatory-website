@@ -26,14 +26,6 @@ const documentation: DocMeta[] = [
     title: "Mathematical methods for classifying replication outcomes",
   },
   {
-    href: "/replication-initiatives",
-    title: "Replication initiatives",
-  },
-  {
-    href: "/docs/previous-initiatives",
-    title: "Previous replication database initiatives",
-  },
-  {
     href: "/docs/ontology",
     title: "Our Ontology for Classifying Paper Subjects",
   },
@@ -42,16 +34,8 @@ const documentation: DocMeta[] = [
     title: "V6 extraction pipeline evaluation",
   },
   {
-    href: "/docs/about-birds-eye-reviews",
-    title: "About Bird's Eye Reviews",
-  },
-  {
     href: "https://explore.metascienceobservatory.org/about",
     title: "Metascience Observatory Explorer Data Sources",
-  },
-  {
-    href: "/roadmap",
-    title: "Roadmap",
   },
 ];
 
@@ -61,7 +45,14 @@ export default function DocsPage() {
       <Navbar />
       <main className="pt-20 pb-16">
         <div className="container mx-auto px-4 py-12 max-w-3xl">
-          <h1 className="text-3xl font-bold mb-8 text-foreground">Documentation (continually updated)</h1>
+          <h1 className="text-3xl font-bold mb-3 text-foreground">Technical Documentation</h1>
+          <p className="mb-8 text-foreground/70">
+            Essay-style pieces now live on the{" "}
+            <Link href="/articles" className="text-blue-600 hover:text-blue-700 underline">
+              Articles
+            </Link>{" "}
+            page.
+          </p>
           <div className="space-y-4">
             {documentation.map((doc) => (
               <div key={doc.href}>

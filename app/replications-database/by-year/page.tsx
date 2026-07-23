@@ -138,7 +138,7 @@ function YearCountBars({
       <svg
         viewBox={`0 0 ${width} ${height}`}
         preserveAspectRatio="xMidYMid meet"
-        className="w-full max-w-[720px] mx-auto h-auto"
+        className="w-full h-auto"
       >
         <g transform={`translate(${margin.left},${margin.top})`}>
           {yTicks.map((t) => (
@@ -258,7 +258,7 @@ function YearRateBars({ bins, xLabel, unit, showN = true, showCI = false, showRa
       <svg
         viewBox={`0 0 ${width} ${height}`}
         preserveAspectRatio="xMidYMid meet"
-        className="w-full max-w-[720px] mx-auto h-auto"
+        className="w-full h-auto"
       >
         <g transform={`translate(${margin.left},${margin.top})`}>
           {yTicks.map((t) => (
@@ -759,7 +759,7 @@ export default function ByYearPage() {
                     Studies publishing a replication per year
                     {discipline !== "all" ? ` — ${discipline}` : ""}
                   </h2>
-                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-1.5 w-fit max-w-full">
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-1.5 w-full max-w-[752px]">
                     <YearCountBars
                       counts={agg.counts}
                       xLabel="Year the replication study was published"
@@ -777,7 +777,7 @@ export default function ByYearPage() {
                   <h2 className="text-xl md:text-2xl font-semibold tracking-tight">
                     Replication success rate by year{analysisLevel === "paper" ? " (paper level)" : ""}{discipline !== "all" ? ` — ${discipline}` : ""}
                   </h2>
-                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-1.5 w-fit max-w-full">
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-1.5 w-full max-w-[752px]">
                     <YearRateBars bins={agg.bins} xLabel="Year the original study was published" unit={analysisLevel === "effect" ? "replications" : "papers"} showCI={showCI} />
                   </div>
                 </section>
@@ -789,7 +789,7 @@ export default function ByYearPage() {
                   <h2 className="text-xl md:text-2xl font-semibold tracking-tight">
                     Replication success rate by year, 2005–2024{analysisLevel === "paper" ? " (paper level)" : ""}{discipline !== "all" ? ` — ${discipline}` : ""}
                   </h2>
-                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-1.5 w-fit max-w-full">
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-1.5 w-full max-w-[752px]">
                     <YearRateBars
                       bins={agg.recentBins}
                       xLabel="Year the original study was published"

@@ -1,0 +1,124 @@
+{
+  "slug": "nattokinase_for_cardiovascular_disease_prevention",
+  "route": "nattokinase-for-cardiovascular-disease-prevention",
+  "title": "Nattokinase for cardiovascular disease prevention \u2014 Human Clinical Trials",
+  "intervention_noun": "Intervention",
+  "wide_min_trials": 10,
+  "outcome_types": [
+    {
+      "key": "other",
+      "label": "Other",
+      "domains": [
+        "other"
+      ]
+    }
+  ],
+  "panels_rendered": [
+    {
+      "key": "intervention_grid",
+      "label": "Trials by intervention"
+    },
+    {
+      "key": "year_chart",
+      "label": "Trials by year"
+    },
+    {
+      "key": "country_map",
+      "label": "Trials by country"
+    }
+  ],
+  "panels_skipped": [
+    {
+      "key": "prisma",
+      "label": "Screening flow",
+      "reason": "needs prisma.json"
+    }
+  ],
+  "available_panels": [
+    {
+      "key": "design_breakdown",
+      "label": "Study types",
+      "why": "RCT vs observational vs preclinical \u2014 exposes gaps like 'no RCTs'.",
+      "requires": [
+        "trial_extractions.jsonl"
+      ]
+    },
+    {
+      "key": "heatmap",
+      "label": "Intervention x outcome landscape",
+      "why": "Which treatment/outcome pairs are studied, and which are empty.",
+      "requires": [
+        "trial_extractions.jsonl"
+      ]
+    },
+    {
+      "key": "blinding_significance",
+      "label": "Blinding vs significance",
+      "why": "Whether open-label trials report more positive results.",
+      "requires": [
+        "trial_extractions.jsonl"
+      ]
+    },
+    {
+      "key": "forest_plots",
+      "label": "Meta-analysis",
+      "why": "Pooled effects \u2014 only when the topic supports pooling.",
+      "requires": [
+        "meta_analysis.json"
+      ]
+    }
+  ],
+  "feasibility": {
+    "overall": "not_possible",
+    "n_papers": 30,
+    "n_with_contrast": 0,
+    "n_outcomes": 61,
+    "n_pooled": 0,
+    "recommendation": "No meta-analysis is possible for this topic: none of the 30 extracted papers report a usable comparison between groups. The literature here is dominated by outcomes with no quantitative data at all. Your review is an evidence map \u2014 which is a finding about the field, not a gap in your search.",
+    "domains": [
+      {
+        "domain": "other",
+        "n_outcomes": 61,
+        "n_pooled": 0,
+        "n_trials": 0,
+        "n_instruments": 31,
+        "top_instrument": "casein",
+        "top_instrument_share": 0.15,
+        "verdict": "none",
+        "reason": "no trial reports a usable comparison here"
+      }
+    ],
+    "blockers": [
+      {
+        "code": "no_quantitative_data",
+        "n": 26,
+        "explanation": "outcomes with no quantitative data at all"
+      },
+      {
+        "code": "no_arms_recorded",
+        "n": 13,
+        "explanation": "papers with no study arms recorded (often preclinical)"
+      },
+      {
+        "code": "no_variance",
+        "n": 12,
+        "explanation": "results reported without a standard deviation, CI or standard error"
+      },
+      {
+        "code": "binary_no_path",
+        "n": 4,
+        "explanation": "binary outcomes reporting events but no usable effect size"
+      },
+      {
+        "code": "effect_without_value",
+        "n": 3,
+        "explanation": "effects mentioned but with no number attached"
+      },
+      {
+        "code": "single_arm_no_contrast",
+        "n": 3,
+        "explanation": "single-arm studies, which cannot produce a comparison"
+      }
+    ]
+  }
+}

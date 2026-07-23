@@ -48,7 +48,7 @@ export default function BirdsEyeReviewsPage() {
           />
           <div className="mb-6">
             <Link
-              href="/docs/about-birds-eye-reviews"
+              href="/birds-eye-review-overview"
               className="text-blue-600 hover:text-blue-700 underline"
             >
               About Bird&rsquo;s Eye Reviews

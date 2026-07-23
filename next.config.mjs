@@ -32,13 +32,8 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/articles',
-        destination: '/docs',
-        permanent: true,
-      },
-      {
-        source: '/approach',
-        destination: '/roadmap',
+        source: '/docs/about-birds-eye-reviews',
+        destination: '/birds-eye-review-overview',
         permanent: true,
       },
     ];

@@ -7,7 +7,7 @@ import { ReplicationsNavbar } from "@/components/ReplicationsNavbar";
 import { Footer } from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import { generateCitationHtml, transformCitationHtmlToExplorer, citationSearchText } from "@/lib/citations";
-import { toNumber, getOutcomeForRow } from "@/lib/replicationOutcome";
+import { toNumber, toValidR, getOutcomeForRow } from "@/lib/replicationOutcome";
 import INITIATIVE_TAG_NAMES from "@/data/initiative_tag_names.json";
 import TOPIC_ONTOLOGY from "@/data/metascience_observatory_topic_ontology.json";
 
@@ -510,8 +510,8 @@ function ReplicationsDatabaseContent() {
     }> = [];
 
     for (const r of filteredRows) {
-      const eO = toNumber(r.original_es_r);
-      const eR = toNumber(r.replication_es_r);
+      const eO = toValidR(r.original_es_r);
+      const eR = toValidR(r.replication_es_r);
       const hasESR = eO != null && eR != null && eO !== 0 && eR !== 0;
 
       // Also check if row has raw ES data (for CI/significance fallback)
@@ -1386,14 +1386,14 @@ function InlineScatter({ points, showReversal = true }: { points: ScatterPoint[]
           <rect x={0} y={0} width={innerW} height={innerH} fill="#f3f4f6" />
           {xTicks.map((t) => (
             <g key={`x-${t}`} transform={`translate(${x(t)},${innerH})`}>
-              <line y1={0} y2={6} stroke="#111827" strokeWidth={1} />
-              <text y={20} textAnchor="middle" className="text-xs fill-current" style={{ opacity: 0.7 }}>{t}</text>
+              <line y1={0} y2={6} stroke="#000000" strokeWidth={1} />
+              <text y={20} textAnchor="middle" className="text-xs" fill="#000000">{t}</text>
             </g>
           ))}
           {yTicks.map((t) => (
             <g key={`y-${t}`} transform={`translate(0,${y(t)})`}>
-              <line x1={-6} x2={0} stroke="#111827" strokeWidth={1} />
-              <text x={-10} dy="0.32em" textAnchor="end" className="text-xs fill-current" style={{ opacity: 0.7 }}>{t}</text>
+              <line x1={-6} x2={0} stroke="#000000" strokeWidth={1} />
+              <text x={-10} dy="0.32em" textAnchor="end" className="text-xs" fill="#000000">{t}</text>
             </g>
           ))}
           {/* Diagonal line representing perfect replication */}
@@ -1406,10 +1406,13 @@ function InlineScatter({ points, showReversal = true }: { points: ScatterPoint[]
           })()}
           {/* Horizontal line at y=0 showing direction boundary */}
           <line x1={0} y1={y(0)} x2={innerW} y2={y(0)} stroke="#9ca3af" strokeWidth={1} strokeDasharray="2 2" />
+          {/* Axis spines */}
+          <line x1={0} y1={innerH} x2={innerW} y2={innerH} stroke="#000000" strokeWidth={1} />
+          <line x1={0} y1={0} x2={0} y2={innerH} stroke="#000000" strokeWidth={1} />
           {/* X-axis label */}
-          <text x={innerW / 2} y={innerH + 40} textAnchor="middle" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 10 }}>Original Effect Size (Pearson's r equivalent)</text>
+          <text x={innerW / 2} y={innerH + 40} textAnchor="middle" className="text-xs" fill="#000000" style={{ fontSize: 10 }}>Original Effect Size (Pearson's r equivalent)</text>
           {/* Y-axis label */}
-          <text x={-innerH / 2} y={-38} textAnchor="middle" transform="rotate(-90)" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 10 }}>Replication Effect Size (Pearson's r equivalent)</text>
+          <text x={-innerH / 2} y={-38} textAnchor="middle" transform="rotate(-90)" className="text-xs" fill="#000000" style={{ fontSize: 10 }}>Replication Effect Size (Pearson's r equivalent)</text>
           {points.map((p, i) => {
             const fill = color(p.outcome);
             return (
@@ -1488,8 +1491,8 @@ function InlineYearBars({ bins, threshold, binSize }: { bins: YearBin[]; thresho
           {yTicks.map((t) => (
             <g key={`y-${t}`}>
               <line x1={0} y1={yScale(t)} x2={innerW} y2={yScale(t)} stroke="#d1d5db" strokeWidth={0.5} />
-              <line x1={-6} x2={0} y1={yScale(t)} y2={yScale(t)} stroke="#111827" strokeWidth={1} />
-              <text x={-10} y={yScale(t)} dy="0.32em" textAnchor="end" className="text-xs fill-current" style={{ opacity: 0.7 }}>{t}%</text>
+              <line x1={-6} x2={0} y1={yScale(t)} y2={yScale(t)} stroke="#000000" strokeWidth={1} />
+              <text x={-10} y={yScale(t)} dy="0.32em" textAnchor="end" className="text-xs" fill="#000000">{t}%</text>
             </g>
           ))}
           {bins.map((bin, i) => {
@@ -1514,12 +1517,15 @@ function InlineYearBars({ bins, threshold, binSize }: { bins: YearBin[]; thresho
                     <text x={cx} y={by - 4} textAnchor="middle" className="fill-current" style={{ fontSize: 9, opacity: 0.7 }}>{bin.total}</text>
                   </>
                 )}
-                <text x={bx + barWidth / 2} y={innerH + 12} textAnchor="end" transform={`rotate(-45, ${bx + barWidth / 2}, ${innerH + 12})`} className="fill-current" style={{ fontSize: 9, opacity: 0.7 }}>{bin.label}</text>
+                <text x={bx + barWidth / 2} y={innerH + 12} textAnchor="end" transform={`rotate(-45, ${bx + barWidth / 2}, ${innerH + 12})`} fill="#000000" style={{ fontSize: 9 }}>{bin.label}</text>
               </g>
             );
           })}
-          <text x={-innerH / 2} y={-38} textAnchor="middle" transform="rotate(-90)" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 10 }}>Replication Success Rate (%)</text>
-          <text x={innerW / 2} y={innerH + 44} textAnchor="middle" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 10 }}>Year of Original Publication (5-year bins)</text>
+          {/* Axis spines */}
+          <line x1={0} y1={innerH} x2={innerW} y2={innerH} stroke="#000000" strokeWidth={1} />
+          <line x1={0} y1={0} x2={0} y2={innerH} stroke="#000000" strokeWidth={1} />
+          <text x={-innerH / 2} y={-38} textAnchor="middle" transform="rotate(-90)" className="text-xs" fill="#000000" style={{ fontSize: 10 }}>Replication Success Rate (%)</text>
+          <text x={innerW / 2} y={innerH + 44} textAnchor="middle" className="text-xs" fill="#000000" style={{ fontSize: 10 }}>Year of Original Publication (5-year bins)</text>
         </g>
       </svg>
     </div>

@@ -20,6 +20,16 @@ export function toNumber(value: unknown): number | null {
 }
 
 /**
+ * Parse a value expected to be a Pearson r. Values with |r| > 1 are invalid
+ * (typically raw coefficients or bad conversions leaked into the _es_r columns)
+ * and are treated as missing rather than allowed to distort r-based stats.
+ */
+export function toValidR(value: unknown): number | null {
+  const n = toNumber(value);
+  return n !== null && Math.abs(n) <= 1 ? n : null;
+}
+
+/**
  * Compute two-tailed p-value from correlation coefficient r and sample size N.
  * Uses t-test: t = r * sqrt((N-2)/(1-r^2)), df = N-2
  * This matches the FReD R package's p_from_r() function.
@@ -268,8 +278,8 @@ export function getOutcomeForRow(
   outcomeMethod: OutcomeMethod
 ): "success" | "failure" | "reversal" | "inconclusive" {
   // Normalized Pearson r values (for significance methods and CI fallback)
-  const eO_r = toNumber(row.original_es_r);
-  const eR_r = toNumber(row.replication_es_r);
+  const eO_r = toValidR(row.original_es_r);
+  const eR_r = toValidR(row.replication_es_r);
   const nO = toNumber(row.original_n ?? row.n_original);
   const nR = toNumber(row.replication_n ?? row.n_replication);
 

@@ -39,7 +39,7 @@ function spearman(xs: number[], ys: number[]): number | null {
   return pearson(rank(xs), rank(ys));
 }
 
-const REPLICATED = "#10b981"; // bar color shared with the other by-* pages
+const REPLICATED = "#4f77bd"; // light blue, matching the rate bars on by-year
 
 const CRITERION_OPTIONS = [
   { value: 0, label: "Reported result (success / failure column)" },
