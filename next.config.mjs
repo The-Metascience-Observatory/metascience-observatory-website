@@ -36,6 +36,11 @@ const nextConfig = {
         destination: '/birds-eye-review-overview',
         permanent: true,
       },
+      {
+        source: '/donate',
+        destination: '/#donate',
+        permanent: true,
+      },
     ];
   },
 };
