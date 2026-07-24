@@ -19,8 +19,9 @@ export const ReplicationsNavbar = () => {
               height={40}
               unoptimized
             />
-            <h1 className="font-clarendon font-bold text-lg sm:text-xl text-foreground">
-              The Metascience Observatory: Replications Database
+            <h1 className="font-clarendon font-bold text-base sm:text-xl text-foreground leading-tight">
+              <span className="sm:hidden">Replications Database</span>
+              <span className="hidden sm:inline">The Metascience Observatory: Replications Database</span>
             </h1>
           </Link>
 

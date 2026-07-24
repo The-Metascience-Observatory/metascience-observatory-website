@@ -72,24 +72,24 @@ export const Hero = () => {
                 ) : null}
 
                 <form onSubmit={handleSubmit}>
-                  <p className="text-xs text-muted-foreground mt-3">Subscribe to our newsletter: </p>
-                  <div className="flex flex-col sm:flex-row gap-3">
+                  <p className="text-xs text-muted-foreground mt-3">Subscribe to our newsletter:</p>
+                  <div className="mt-1.5 flex gap-2">
                   <Input
                     type="email"
                     placeholder="you@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="flex-1 h-12 text-sm"
+                    className="flex-1 h-9 text-sm"
                     disabled={isSubmitting}
                   />
                   <Button
                     type="submit"
                     variant="hero"
-                    size="lg"
+                    size="sm"
                     disabled={isSubmitting}
-                    className="h-12 px-8"
+                    className="h-9 px-4 shrink-0"
                   >
-                    {isSubmitting ? "Submitting..." : "Subscribe"}
+                    {isSubmitting ? "..." : "Subscribe"}
                   </Button>
                   </div>
                 </form>

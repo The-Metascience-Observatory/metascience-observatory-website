@@ -6,7 +6,8 @@ export const Footer = () => {
       <div className="container px-4 py-12">
         <div className="max-w-4xl mx-auto space-y-8">
 
-          <div className="flex items-center justify-between gap-6">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center justify-center gap-6">
             <a
               href="https://twitter.com/metascience_obs"
               target="_blank"
@@ -51,7 +52,8 @@ export const Footer = () => {
                 <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" />
               </svg>
             </a>
-            <div className="ml-auto text-right">
+            </div>
+            <div className="text-center sm:text-right break-words">
 
               <p className="text-xs text-muted-foreground">
                 © 2025 The Metascience Observatory. Contact us: <a href="mailto:info@metascienceobservatory.org" className="underline hover:text-primary">info@metascienceobservatory.org</a>

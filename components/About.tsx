@@ -31,49 +31,51 @@ const projects: ProjectMeta[] = [
 
 export const About = () => {
   return (
-    <section id="about" className="pt-8 pb-8 scroll-mt-1">
+    <section id="about" className="pt-8 pb-8 scroll-mt-24">
       <div className="container px-4">
-        <div className="max-w-6xl mx-auto space-y-6">
-          <div className="text-center space-y-4">
-            <h2 className="font-clarendon text-2xl md:text-3xl font-bold">About</h2>
-            <p className="text-foreground/90 leading-relaxed">
-              The Metascience Observatory has three major projects:
-            </p>
+        <div className="max-w-6xl mx-auto space-y-8">
+          {/* Heading + intro overlaid on the woodcut banner */}
+          <div className="relative w-full h-56 sm:h-64 md:h-72 overflow-hidden rounded-lg shadow-lg">
+            <Image
+              src="/assets/woodcut-looking-at-world.jpeg"
+              alt="Woodcut illustration of a person observing the world"
+              fill
+              sizes="(max-width: 1152px) 100vw, 1152px"
+              priority
+              className="object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-black/55" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+              <h2 className="font-clarendon text-3xl md:text-4xl font-bold text-white drop-shadow-lg">
+                About
+              </h2>
+              <p className="mt-2 max-w-xl text-base md:text-lg text-white/90 drop-shadow">
+                The Metascience Observatory has three major projects:
+              </p>
+            </div>
           </div>
 
-          <div className="grid md:grid-cols-5 gap-10 items-center">
-            <div className="flex justify-center md:justify-start md:col-span-2">
-              <Image
-                src="/assets/woodcut-looking-at-world.jpeg"
-                alt="Woodcut illustration of a person observing the world"
-                width={360}
-                height={450}
-                className="max-w-md rounded-lg shadow-lg object-cover h-auto"
-                priority
-              />
-            </div>
-
-            <div className="md:col-span-3 space-y-4">
-              {projects.map((project) => (
-                <Card
-                  key={project.href}
-                  className="p-6 shadow-lg hover:shadow-xl transition-shadow"
-                >
-                  <h3 className="font-clarendon font-semibold text-lg text-foreground mb-2">
-                    {project.title}
-                  </h3>
-                  <p className="text-sm text-foreground/90 leading-relaxed">
-                    {project.description}{" "}
-                    <Link
-                      href={project.href}
-                      className="font-medium text-blue-600 hover:text-blue-700 underline"
-                    >
-                      Read more &rarr;
-                    </Link>
-                  </p>
-                </Card>
-              ))}
-            </div>
+          {/* Project cards */}
+          <div className="grid gap-6 md:grid-cols-3">
+            {projects.map((project) => (
+              <Card
+                key={project.href}
+                className="flex flex-col p-6 shadow-lg hover:shadow-xl transition-shadow"
+              >
+                <h3 className="font-clarendon font-semibold text-lg text-foreground mb-2">
+                  {project.title}
+                </h3>
+                <p className="text-sm text-foreground/90 leading-relaxed">
+                  {project.description}{" "}
+                  <Link
+                    href={project.href}
+                    className="font-medium text-blue-600 hover:text-blue-700 underline"
+                  >
+                    Read more &rarr;
+                  </Link>
+                </p>
+              </Card>
+            ))}
           </div>
         </div>
       </div>
