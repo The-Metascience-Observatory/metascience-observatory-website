@@ -4,6 +4,7 @@ import { csvParse } from "d3-dsv";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { InitiativesList } from "./InitiativesList";
+import { DocsBackLink } from "@/components/DocsBackLink";
 import type { FieldGroup, Project } from "./types";
 
 type CsvRow = Record<string, string>;
@@ -169,6 +170,7 @@ export default function ReplicationProjectsPage() {
       <Navbar />
       <main className="pt-20 pb-16">
         <div className="container mx-auto px-4 py-12 max-w-5xl">
+          <DocsBackLink href="/articles" label="return to articles" />
           <h1 className="text-4xl font-bold mb-4 text-foreground">
             Replication initiatives
           </h1>

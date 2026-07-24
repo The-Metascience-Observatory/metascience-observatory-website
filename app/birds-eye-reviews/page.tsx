@@ -1,5 +1,6 @@
 import { BirdsEyeNavbar } from "@/components/BirdsEyeNavbar";
 import { Footer } from "@/components/Footer";
+import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -54,16 +55,15 @@ export default function BirdsEyeReviewsPage() {
               About Bird&rsquo;s Eye Reviews
             </Link>
           </div>
-          <div className="space-y-4">
+          <div className="grid gap-4 sm:grid-cols-2">
             {reviews.map((review) => (
-              <div key={review.href}>
-                <Link
-                  href={review.href}
-                  className="text-2xl font-bold text-blue-600 hover:text-blue-700 underline"
-                >
-                  {review.title}
-                </Link>
-              </div>
+              <Link key={review.href} href={review.href} className="group block">
+                <Card className="p-5 shadow-sm transition-all hover:shadow-md hover:border-primary/50">
+                  <h2 className="font-clarendon text-xl font-bold text-foreground group-hover:text-blue-700">
+                    {review.title} <span className="text-blue-600">&rarr;</span>
+                  </h2>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>

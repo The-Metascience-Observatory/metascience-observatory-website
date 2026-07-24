@@ -105,6 +105,7 @@ export default function ByDisciplinePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [threshold, setThreshold] = useState(0.75);
+  const [replicationType, setReplicationType] = useState("all");
   const [showCI, setShowCI] = useState(false);
   const [sortKey, setSortKey] = useState<SortKey>("total");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
@@ -145,6 +146,30 @@ export default function ByDisciplinePage() {
     fetchData();
   }, []);
 
+  // Distinct replication types present in the data, most common first.
+  const replicationTypeOptions = useMemo(() => {
+    if (!data) return [];
+    const counts = new Map<string, number>();
+    for (const r of data.rows) {
+      const t = String(r.replication_type ?? "").trim();
+      if (t) counts.set(t, (counts.get(t) ?? 0) + 1);
+    }
+    return Array.from(counts.entries())
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .map(([name, count]) => ({ name, count }));
+  }, [data]);
+
+  // Rows kept under the current replication-type filter. Filtering happens
+  // before the paper-level roll-up, so a paper's success rate reflects only
+  // the replication attempts of the selected type.
+  const filteredRows = useMemo(() => {
+    if (!data) return [];
+    if (replicationType === "all") return data.rows;
+    return data.rows.filter(
+      (r) => String(r.replication_type ?? "").trim() === replicationType
+    );
+  }, [data, replicationType]);
+
   const byDiscipline: DisciplineRow[] = useMemo(() => {
     if (!data) return [];
 
@@ -153,7 +178,7 @@ export default function ByDisciplinePage() {
       { disciplines: string[]; successCount: number; totalCount: number }
     >();
 
-    for (const r of data.rows) {
+    for (const r of filteredRows) {
       const url = String(r.original_url ?? "").trim();
       const raw = String(r.discipline ?? "");
       const parts = raw.split(",").map((s) => s.trim()).filter(Boolean);
@@ -220,7 +245,7 @@ export default function ByDisciplinePage() {
         };
       })
       .filter((d) => d.total >= MIN_PAPERS);
-  }, [data, threshold]);
+  }, [data, filteredRows, threshold]);
 
   const bySubdiscipline: DisciplineRow[] = useMemo(() => {
     if (!data) return [];
@@ -230,7 +255,7 @@ export default function ByDisciplinePage() {
       { subdisciplines: string[]; successCount: number; totalCount: number }
     >();
 
-    for (const r of data.rows) {
+    for (const r of filteredRows) {
       const url = String(r.original_url ?? "").trim();
       const raw = String(r.subdiscipline ?? "");
       const parts = raw.split(",").map((s) => s.trim()).filter(Boolean);
@@ -297,7 +322,7 @@ export default function ByDisciplinePage() {
         };
       })
       .filter((d) => d.total >= MIN_PAPERS_SUBDISCIPLINE);
-  }, [data, threshold]);
+  }, [data, filteredRows, threshold]);
 
   const sortedDisciplines = useMemo(() => {
     const sorted = [...byDiscipline].sort((a, b) => {
@@ -355,6 +380,29 @@ export default function ByDisciplinePage() {
                 {THRESHOLD_OPTIONS.map((opt) => (
                   <option key={opt.value} value={opt.value}>
                     {opt.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            {/* Replication type selector */}
+            <label className="flex items-center gap-2 text-sm">
+              <span className="text-gray-600 dark:text-gray-300">
+                Replication type{" "}
+                <Link href="/docs/defining-replication" className="text-xs text-gray-500 dark:text-gray-400 underline hover:opacity-80">
+                  (more info)
+                </Link>
+                :
+              </span>
+              <select
+                value={replicationType}
+                onChange={(e) => setReplicationType(e.target.value)}
+                className="border border-gray-300 dark:border-gray-600 rounded px-2 py-1 bg-white dark:bg-gray-800 text-sm max-w-md"
+              >
+                <option value="all">All types</option>
+                {replicationTypeOptions.map((opt) => (
+                  <option key={opt.name} value={opt.name}>
+                    {opt.name} ({opt.count.toLocaleString()})
                   </option>
                 ))}
               </select>

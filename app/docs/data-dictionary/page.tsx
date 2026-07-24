@@ -43,7 +43,7 @@ export default function DataDictionaryPage() {
       <Navbar />
       <main className="pt-20 pb-16">
         <div className="container mx-auto px-6 py-12 max-w-6xl">
-          <DocsBackLink />
+          <DocsBackLink href="/articles" label="return to articles" />
           <MarkdownContent content={content} />
         </div>
       </main>

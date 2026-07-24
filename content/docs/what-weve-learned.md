@@ -94,30 +94,43 @@ The load-bearing variable is **what gets picked for replication**, not whether t
 
 Breaking representative-sampled and literature-harvested replications down by field (restricted to cells with enough rows to be worth reading) shows this is not an artifact of psychology dominating the corpus. Where a discipline has both, the two run broadly comparable:
 
-| Discipline | Representative-sampled initiatives | Literature-harvested |
-|---|---|---|
-| Psychology | 65% (n=557) | 59% (n=2,339) |
-| Biomedical | 31% (n=227) | 50% (n=353) |
-| Economics | 54% (n=50) | 59% (n=285) |
-| Education | 68% (n=28) | 84% (n=75) |
-| Political science | 71% (n=41) | 43% (n=23) |
-| Sociology | 42% (n=26) | 50% (n=30) |
-| Sports & exercise science | 30% (n=23) | — |
-| Medical fields | — (n=4) | 58% (n=1,165) |
+The comparison is shown twice, because **design leniency differs sharply between the two columns**: the initiatives are 66% direct replications, while the harvested rows are only 13% direct and mostly looser "close" variants — and design predicts outcome (direct 52%, close extension 70%). The first table therefore compares like with like on design; the second uses everything we have harvested.
 
-*Cells show definitive-outcome success rate (success / (success + failure)); n is the definitive-row count. Small-n cells — the economics, sociology, sports-science, and medical representative samples in particular — should be read with caution. Medical fields has almost no representative-sampled rows (4 development-health RCTs) now that sports/exercise science is broken out on its own.*
+**Table A — initiatives vs. our *direct* replications only**
+
+| Discipline | "Representative-sampled" initiatives | Literature-harvested (direct only) |
+|---|---|---|
+| Psychology | 58% (n=590) | 49% (n=295) |
+| Biomedical | 33% (n=198) | 38% (n=82) |
+| Economics | 49% (n=45) | 53% (n=17) |
+| Education | 70% (n=43) | 80% (n=5) |
+| Political science | 71% (n=41) | 100% (n=1) |
+| Sociology | 42% (n=26) | 86% (n=7) |
+
+**Table B — initiatives vs. *all* harvested replication types**
+
+| Discipline | "Representative-sampled" initiatives | Literature-harvested (all types) |
+|---|---|---|
+| Psychology | 58% (n=590) | 59% (n=2,777) |
+| Biomedical | 33% (n=198) | 50% (n=362) |
+| Economics | 49% (n=45) | 57% (n=315) |
+| Education | 70% (n=43) | 84% (n=131) |
+| Political science | 71% (n=41) | 58% (n=72) |
+| Sociology | 42% (n=26) | 50% (n=50) |
+
+*Cells show definitive-outcome success rate (success / (success + failure)); n is the definitive-row count. **Cells with n < 20 carry no information — read them as blank, not as evidence.** The initiative column is identical in both tables; only the harvested column changes. It is not restricted on the initiative side because several projects (SSRP, LOOPR, EROE, Sensory Marketing) record no rows coded `direct`, so restricting that column would delete those initiatives outright rather than make them comparable. Two disciplines are omitted because only one column is populated and no comparison is possible: sports & exercise science has representative-sampled rows but no literature-harvested ones, and medical fields has 1,165 literature-harvested rows but only 4 representative-sampled ones. 3ie is excluded throughout: it re-analyses the original authors' existing datasets rather than collecting new data, which is reproducibility, not replication.*
 
 **Which initiatives feed each representative cell** (initiative → definitive n). Several projects span multiple fields, so their rows are assigned by each paper's home discipline rather than lumped under one label:
 
-- **Psychology** (557): [Student Replication Projects](https://royalsocietypublishing.org/doi/10.1098/rsos.231240) 145, [DARPA SCORE](https://doi.org/10.1038/s41586-025-10078-y) 123, [Life Outcomes of Personality](https://doi.org/10.1177/0956797619831612) 118, [RP:Psychology](https://www.science.org/doi/10.1126/science.aac4716) 71, [X-Phi](https://zenodo.org/records/14296259/files/fulltext.pdf?download=1) 40, [EROE](https://www.nature.com/articles/s41562-024-02062-9) 26, [Sensory Marketing](https://www.frontiersin.org/journals/communication/articles/10.3389/fcomm.2022.1048896/full) 21, [Social Science Replication Project](https://pure.eur.nl/files/37359856/Camerer_et_al._2018_Evaluating_the_replicability_of_social_science_experiments_in_Nature_and_Science_between_2010_and_2015.pdf) 13
-- **Biomedical** (227): [Cancer Biology](https://elifesciences.org/articles/71601) 132, [Brazilian Reproducibility Initiative](https://www.biorxiv.org/content/10.1101/2025.04.02.645026v4) 95
-- **Economics** (50): [DARPA SCORE](https://doi.org/10.1038/s41586-025-10078-y) 27, [Experimental Economics Replication Project](https://www.science.org/cms/asset/febfa588-66f1-493b-afb8-268e0aaeb6a9/pap.pdf) 18, [3ie](https://www.3ieimpact.org/evidence-hub/publications/replication-papers) 5
-- **Sports & exercise science** (23): [Replication in Sports & Exercise Science](https://doi.org/10.1007/s40279-025-02201-w) 23
-- **Medical fields** (4): [3ie](https://www.3ieimpact.org/evidence-hub/publications/replication-papers) 4 (HIV / public-health development RCTs)
-- **Education** (28), **Political science** (41): [DARPA SCORE](https://doi.org/10.1038/s41586-025-10078-y) only
-- **Sociology** (26): [DARPA SCORE](https://doi.org/10.1038/s41586-025-10078-y) 24, [Student Replication](https://royalsocietypublishing.org/doi/10.1098/rsos.231240) 2
+- **Psychology** (590): [Student Replication Projects](/replication-initiatives#boyce-et-al-student-replication-projects) 145, [DARPA SCORE](/replication-initiatives#tyner-et-al-darpa-score-social-behavioural-sciences-replication-project) 123, [Life Outcomes of Personality](/replication-initiatives#soto-life-outcomes-of-personality-replication-project) 118, [RP:Psychology](/replication-initiatives#reproducibility-project-psychology) 96, [X-Phi](/replication-initiatives#experimental-philosophy-reproducibility-project) 40, [EROE](/replication-initiatives#examining-replicability-of-online-experiments-holzmeister-et-al) 26, [Social Science Replication Project](/replication-initiatives#camerer-et-al-nature-science-social-science-replication-project) 21, [Sensory Marketing](/replication-initiatives#motoki-and-iseki-sensory-marketing-replication) 21
+- **Biomedical** (198): [Cancer Biology](/replication-initiatives#reproducibility-project-cancer-biology) 132, [Brazilian Reproducibility Initiative](/replication-initiatives#brazilian-reproducibility-initiative) 66
+- **Economics** (45): [DARPA SCORE](/replication-initiatives#tyner-et-al-darpa-score-social-behavioural-sciences-replication-project) 27, [Experimental Economics Replication Project](/replication-initiatives#camerer-et-al-experimental-economics-replication-project) 18
+- **Education** (43): [DARPA SCORE](/replication-initiatives#tyner-et-al-darpa-score-social-behavioural-sciences-replication-project) 28, [L2 Replication (Marsden et al.)](https://doi.org/10.1111/lang.12286) 15 · **Political science** (41): [DARPA SCORE](/replication-initiatives#tyner-et-al-darpa-score-social-behavioural-sciences-replication-project) only
+- **Sociology** (26): [DARPA SCORE](/replication-initiatives#tyner-et-al-darpa-score-social-behavioural-sciences-replication-project) 24, [Student Replication](/replication-initiatives#boyce-et-al-student-replication-projects) 2
 
-The clearest test is psychology, where both buckets are well-populated: **random-sampled psychology initiatives replicate *better* (65%) than one-off psychology replications harvested from the literature (59%)** — the opposite of the "systematic looks worse" story (the deliberately-targeted contested findings, covered in section 5 above, sit far lower at **12%**). Biomedical shows representative samples replicating *below* the literature (31% vs 50%), a reminder that "representative" still means "whatever effects that particular initiative chose to sample," and field-specific selection cuts both ways. Note that the smaller social-science fields (education, political science, and part of sociology) are populated almost entirely by **DARPA SCORE**, a deliberately cross-field initiative that sampled 60+ social-science journals; its papers are split to their home disciplines above. Sports & exercise science and the tiny medical-fields representative cell (4 development-health RCTs) are the narrowest samples and should be read with the most caution.
+Psychology is the only discipline with enough rows on both sides of both tables, and it is where the two views disagree — which is the point. Compared against **everything** we have harvested, psychology initiatives (58%) and harvested replications (59%) look identical. Compared against only our **direct** replications, the harvested rate drops to **49%** and the initiatives come out ahead. The harvested corpus's apparent parity is therefore substantially a *design* effect: it is only 13% direct replications, and looser designs succeed more often (close extensions 70% vs direct 52%). Biomedical shows the same movement — 50% on all types, 38% on direct only, against the initiatives' 33%.
+
+Two cautions on reading these tables. First, outside psychology the direct-only column collapses to a handful of rows (n = 1–17), so Table A supports a claim about psychology and, more weakly, biomedicine — nowhere else. Second, the two columns still differ in *what was sampled*, not just how it was replicated: the initiatives each enumerated a defined slice of literature (specific journals and years), while the harvested rows have no sampling frame at all, so this is a comparison across populations and not a clean bias estimate. Note also that the smaller social-science fields (education, political science, and part of sociology) are populated almost entirely by **DARPA SCORE**, a deliberately cross-field initiative that sampled 62 social-science journals; its papers are split to their home disciplines above.
 
 ---
 

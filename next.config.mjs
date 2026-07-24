@@ -39,6 +39,13 @@ const nextConfig = {
       {
         source: '/donate',
         destination: '/#donate',
+        source: '/docs',
+        destination: '/articles',
+        permanent: true,
+      },
+      {
+        source: '/docs/what-weve-learned',
+        destination: '/articles/what-weve-learned',
         permanent: true,
       },
     ];

@@ -121,6 +121,7 @@ const substackArticles: SubstackMeta[] = [
   {
     date: "2025-01-28",
     title: "The golden age of German science (1880 - 1930)",
+    href: "https://moreisdifferent.blog/p/german-scientific-paternalism",
   },
 ];
 
@@ -136,8 +137,8 @@ export default function ArticlesPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {projectOverviews.map((project) => (
               <Link key={project.href} href={project.href} className="group block">
-                <Card className="h-full overflow-hidden border-border transition-colors hover:border-primary/50 hover:shadow-md">
-                  <div className="relative aspect-square overflow-hidden bg-muted">
+                <Card className="aspect-square flex flex-col overflow-hidden border-border transition-colors hover:border-primary/50 hover:shadow-md">
+                  <div className="relative flex-1 min-h-0 overflow-hidden bg-muted">
                     <Image
                       src={project.image}
                       alt={project.alt}
@@ -146,8 +147,8 @@ export default function ArticlesPage() {
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
-                  <div className="p-4">
-                    <h2 className="font-clarendon font-semibold text-lg text-foreground">
+                  <div className="p-3 shrink-0">
+                    <h2 className="font-clarendon font-semibold text-base text-foreground line-clamp-2">
                       {project.title}
                     </h2>
                   </div>
@@ -160,8 +161,8 @@ export default function ArticlesPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {articles.map((article) => (
               <Link key={article.href} href={article.href} className="group block">
-                <Card className="h-full overflow-hidden border-border transition-colors hover:border-primary/50 hover:shadow-md">
-                  <div className="relative aspect-square overflow-hidden bg-muted">
+                <Card className="aspect-square flex flex-col overflow-hidden border-border transition-colors hover:border-primary/50 hover:shadow-md">
+                  <div className="relative flex-1 min-h-0 overflow-hidden bg-muted">
                     <Image
                       src={article.image}
                       alt={article.alt}
@@ -170,8 +171,8 @@ export default function ArticlesPage() {
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
-                  <div className="p-4">
-                    <h2 className="font-clarendon font-semibold text-lg text-foreground">
+                  <div className="p-3 shrink-0">
+                    <h2 className="font-clarendon font-semibold text-base text-foreground line-clamp-2">
                       {article.title}
                     </h2>
                   </div>
@@ -188,7 +189,7 @@ export default function ArticlesPage() {
               <div key={doc.href}>
                 <Link
                   href={doc.href}
-                  className="text-blue-600 hover:text-blue-700 underline"
+                  className="text-foreground hover:text-foreground/70 underline"
                 >
                   {doc.title}
                 </Link>
@@ -197,7 +198,7 @@ export default function ArticlesPage() {
           </div>
 
           <h2 className="text-2xl font-bold mt-16 mb-3 text-foreground">
-            Metascience Substack articles by Metascience Observatory Founder Dan Elton
+            Metascience Substack articles by Dan Elton
           </h2>
           <div className="space-y-4">
             {substackArticles.map((article) => (
@@ -206,7 +207,7 @@ export default function ArticlesPage() {
                 {article.href ? (
                   <Link
                     href={article.href}
-                    className="text-blue-600 hover:text-blue-700 underline"
+                    className="text-foreground hover:text-foreground/70 underline"
                   >
                     {article.title}
                   </Link>
