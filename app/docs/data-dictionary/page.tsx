@@ -17,7 +17,7 @@ function buildMarkdownFromCSV(): string {
 
   const header = `# Data Dictionary
 
-This page documents the columns in the [Replications Database](/replications-database-v2). Each row in the database represents a single effect from an original study paired with a replication attempt of that effect.
+This page documents the columns in the [Replications Database](/replications-database). Each row in the database represents a single effect from an original study paired with a replication attempt of that effect.
 
 | Column Name | Type | Required? | Description |
 |-------------|------|-----------|-------------|`;
