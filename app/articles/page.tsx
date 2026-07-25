@@ -98,14 +98,14 @@ const documentation: DocMeta[] = [
 
 const substackArticles: SubstackMeta[] = [
   {
-    date: "2022-02-28",
-    title: "The deluge of crappy papers must stop",
-    href: "https://moreisdifferent.substack.com/p/the-deluge-of-crappy-papers-must",
+    date: "2025-01-28",
+    title: "The golden age of German science (1880 - 1930)",
+    href: "https://moreisdifferent.blog/p/german-scientific-paternalism",
   },
   {
-    date: "2023-08-05",
-    title: "How common is scientific fraud?",
-    href: "https://moreisdifferent.substack.com/p/how-common-is-scientific-fraud",
+    date: "2024-10-22",
+    title: "A Defense of Peer Review",
+    href: "https://www.asimov.press/p/peer-review",
   },
   {
     date: "2024-10-21",
@@ -114,14 +114,14 @@ const substackArticles: SubstackMeta[] = [
     href: "https://moreisdifferent.blog/p/when-weak-links-in-science-matter",
   },
   {
-    date: "2024-10-22",
-    title: "A Defense of Peer Review",
-    href: "https://www.asimov.press/p/peer-review",
+    date: "2023-08-05",
+    title: "How common is scientific fraud?",
+    href: "https://moreisdifferent.substack.com/p/how-common-is-scientific-fraud",
   },
   {
-    date: "2025-01-28",
-    title: "The golden age of German science (1880 - 1930)",
-    href: "https://moreisdifferent.blog/p/german-scientific-paternalism",
+    date: "2022-02-28",
+    title: "The deluge of crappy papers must stop",
+    href: "https://moreisdifferent.substack.com/p/the-deluge-of-crappy-papers-must",
   },
 ];
 

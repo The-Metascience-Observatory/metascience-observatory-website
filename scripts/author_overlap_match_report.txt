@@ -1,0 +1,476 @@
+Author-overlap match report
+generated: 2026-07-25   csv: replications_database_2026_07_24_204405.csv
+source: SciSciNet-v2 dashboard SQLite snapshot (derived from OpenAlex, backup dated 2026-01-29) + OpenAlex API fallback + CSV author-name matching
+
+CSV rows: 8610; rows missing original DOI: 239; missing replication DOI: 260; with both: 8114
+unique DOIs attempted: 10218; resolved via db: 9730, via API: 390, unresolved: 98
+unique (orig, rep) pairs: 6036; with overlap data: 6024; unresolved (no author info on one side): 12
+pair tiers: {"tier0": 5242, "tier2": 87, "tier1": 695}
+
+overlap distribution: {"0": 4095, "1": 687, "2": 542, "3+": 700} (32.0% of pairs share >= 1 author)
+pairs where original's first/last author is on the replication: 1771 (29.4%)
+pairs relying on name-only matches (nm > 0): 187; name matches vetoed by conflicting ORCIDs: 47
+pairs where original DOI == replication DOI (self-pair, suspect data): 5
+  https://doi.org/10.1016/s1053-8119(01)91779-3
+  https://doi.org/10.1016/0346-251x(78)90029-5
+  https://doi.org/10.1007/bf02928182
+  https://doi.org/10.1136/injuryprev-2018-043127
+  https://doi.org/10.1167/iovs.14-15390
+
+name-only matches for spot-checking (187 pairs):
+  https://doi.org/10.1038/s41598-017-10669-4 | https://doi.org/10.1098/rsos.210641
+    Andrea Reiter  <->  Andrea M.F. Reiter
+  https://doi.org/10.1177/0261927x01020004004 | https://doi.org/10.31219/osf.io/q56rk
+    Dagmar Stahlberg  <->  Dagmar Stahlberg
+  https://doi.org/10.1002/acp.1376 | https://doi.org/10.1037/h0101833
+    Kazuo Mori  <->  Kazuo Mori
+  https://doi.org/10.1016/s0020-7462(01)00110-x | https://doi.org/10.1371/journal.pone.0051382
+    R.J. Zwaan  <->  Rolf A. Zwaan
+  https://doi.org/10.1016/j.biochi.2013.02.013 | https://doi.org/10.1101/2025.04.02.645026
+    Daniel Silva  <->  Daniela Costa Silva
+  https://doi.org/10.1891/0886-6708.26.6.703 | https://doi.org/10.1177/0886260512447579
+    Jeff Ackerman  <->  Jeffrey Ackerman
+  https://doi.org/10.3758/s13423-014-0663-9 | https://doi.org/10.1016/j.jecp.2015.12.009
+    Olivier Houdé  <->  Olivier Houdé
+  https://doi.org/10.2501/jar-40-1-2-29-34 | https://doi.org/10.2501/jar-40-1-2-35-42
+    Anand Kumar  <->  Anand Kumar
+  https://doi.org/10.1038/s41598-022-24919-7 | https://doi.org/10.1038/s41598-024-63724-2
+    Vasilisa Akselevich  <->  Vasilisa Akselevich
+  https://doi.org/10.1007/s00221-012-3266-6 | https://doi.org/10.1080/00222895.2014.898608
+    Jason Boyle  <->  Jason B. Boyle
+  https://doi.org/10.1097/00004703-200604002-00013 | https://doi.org/10.1177/0145445518786463
+    MILA AMERINE-DICKENS  <->  Mila Amerine Dickens
+  https://doi.org/10.1007/s12369-023-01076-z | https://doi.org/10.1007/s12369-024-01207-0
+    Val Morrison  <->  Val Morrison
+  https://doi.org/10.1037/0022-3514.95.1.18 | https://doi.org/10.1080/23743603.2019.1684821
+    Aaron C. Kay  <->  Aaron C. Kay
+  https://doi.org/10.1097/hjh.0b013e328316bb87 | https://doi.org/10.1093/ajh/hpt163
+    Ji-chun Chen  <->  Jichun Chen
+  https://doi.org/10.1073/pnas.1618923114 | https://doi.org/10.1093/pnasnexus/pgaf327
+    Jay J. Van Bavel  <->  Jay Joseph Van Bavel
+  https://doi.org/10.1017/s0033291700015841 | https://doi.org/10.1192/bjp.135.4.352
+    M. G. Gelder  <->  Michael Gelder
+  https://doi.org/10.1093/schbul/sbi021 | https://doi.org/10.1017/s0033291720003578
+    van Os, J.  <->  Jim van Os
+  https://doi.org/10.1007/s00406-022-01461-w | https://doi.org/10.1186/s13098-023-01044-7
+    Najar, H.  <->  Hemen Najar
+    Karanti, A.  <->  Alina Karanti
+    Landén, M.  <->  Mikael Landén
+  https://doi.org/10.1002/ijc.23859 | https://doi.org/10.1007/s00432-012-1174-6
+    Alicia Beeghly‐Fadiel  <->  Alicia Beeghly‐Fadiel
+    Xiao-Ou Shu  <->  Xiao Ou Shu
+    Yu‐Tang Gao  <->  Yu‐Tang Gao
+  https://doi.org/10.1158/0008-5472.can-07-1683 | https://doi.org/10.1007/s00432-012-1174-6
+    Yu-Tang Gao  <->  Yu‐Tang Gao
+  https://doi.org/10.1093/infdis/jir167 | https://doi.org/10.1007/s00439-014-1449-x
+    Gregory A. Poland  <->  Gregory A. Poland
+  https://doi.org/10.1097/00005537-200004000-00019 | https://doi.org/10.1007/s00455-009-9226-z
+    Steven B. Leder  <->  Steven B. Leder
+  https://doi.org/10.1007/s00455-007-9127-y | https://doi.org/10.1007/s00455-013-9488-3
+    Steven B. Leder  <->  Steven B. Leder
+  https://doi.org/10.1186/s40810-015-0005-9 | https://doi.org/10.1016/j.biopsycho.2021.108188
+    Ron J Swatzyna  <->  Ronald J. Swatzyna
+  https://doi.org/10.1097/00000542-200609000-00020 | https://doi.org/10.1016/j.brs.2008.04.002
+    Scott T. Reeves  <->  Scott T. Reeves
+  https://doi.org/10.1167/iovs.10-5474 | https://doi.org/10.1016/j.ophtha.2012.07.078
+    Dwight Stambolian  <->  Dwight Stambolian
+  https://doi.org/10.1086/500144 | https://doi.org/10.1016/j.vaccine.2012.01.038
+    Gregory A. Poland  <->  Gregory A. Poland
+  https://doi.org/10.1007/s00251-004-0756-0 | https://doi.org/10.1016/j.vaccine.2012.01.038
+    Gregory A. Poland  <->  Gregory A. Poland
+  https://doi.org/10.1002/humu.22471 | https://doi.org/10.1016/j.ymgmr.2019.100470
+    Peter K. Gregersen  <->  Peter K. Gregersen
+  https://doi.org/10.1016/s0920-9964(99)00010-9 | https://doi.org/10.1017/s0033291701003944
+    N Takei  <->  N. Takei
+  https://doi.org/10.1021/pr9004162 | https://doi.org/10.1021/pr400337b
+    Guoxiang Cai  <->  Guoxiang Cai
+  https://doi.org/10.1016/s1474-4422(15)00338-5 | https://doi.org/10.1038/s41598-017-07404-4
+    Paul IW de Bakker  <->  Paul I. W. de Bakker
+  https://doi.org/10.1093/hmg/ddh008 | https://doi.org/10.1038/sj.gene.6364398
+    Judy H. Cho  <->  J H Cho
+    Themistocles Dassopoulos  <->  T. Dassopoulos
+  https://doi.org/10.1016/j.biopsych.2004.05.010 | https://doi.org/10.1086/425588
+    Qing Ying Chen  <->  Qingying Chen
+    Xin Min Liu  <->  Xinmin Liu
+    Guo Feng  <->  Guoyin Feng
+  https://doi.org/10.1016/j.mito.2009.09.004 | https://doi.org/10.1093/carcin/bgv130
+    Jie Shen  <->  Jie Shen
+  https://doi.org/10.1158/1055-9965.epi-12-0790 | https://doi.org/10.1093/carcin/bgw047
+    Erich M. Sturgis  <->  Erich M. Sturgis
+  https://doi.org/10.1093/carcin/bgr100 | https://doi.org/10.1093/carcin/bgw047
+    Michael Abend  <->  Michael Abend
+    Erich M. Sturgis  <->  Erich M. Sturgis
+  https://doi.org/10.1002/lary.23209 | https://doi.org/10.1093/carcin/bgw047
+    Erich M. Sturgis  <->  Erich M. Sturgis
+  https://doi.org/10.1093/gerona/62.1.73 | https://doi.org/10.1093/gerona/glp092
+    R. Bruce Wallace  <->  Robert B. Wallace
+  https://doi.org/10.1093/hmg/ddr414 | https://doi.org/10.1093/glycob/cwaa053
+    Harry Campbell  <->  Harry Campbell
+  https://doi.org/10.1001/jamapsychiatry.2018.1334 | https://doi.org/10.1093/schizbullopen/sgaa009
+    Deanna M. Barch  <->  Deanna M. Barch
+  https://doi.org/10.1109/embc46164.2021.9631007 | https://doi.org/10.1101/2023.08.16.553472
+    Pranav Suresh  <->  Pranav Suresh
+  https://doi.org/10.1371/journal.pcbi.1008484 | https://doi.org/10.1101/2023.10.11.23296870
+    Rayus Kuplicki  <->  Rayus Kuplicki
+  https://doi.org/10.1176/appi.ps.003622012 | https://doi.org/10.1176/appi.ajp.2014.14030357
+    Sarah I. Pratt  <->  Sarah I. Pratt
+    Kenneth Jue  <->  Ken Jue
+  https://doi.org/10.1086/378133 | https://doi.org/10.1186/1471-2350-7-71
+    Madeline Harrison  <->  Madaline B. Harrison
+    Marcy E. MacDonald  <->  Marcy E. MacDonald
+  https://doi.org/10.3758/s13423-018-1464-3 | https://doi.org/10.1186/s41235-025-00703-9
+    Jelena Ristic  <->  Jelena Ristic
+  https://doi.org/10.1371/journal.pgen.1002656 | https://doi.org/10.1371/journal.pgen.1006343
+    Ben Neale  <->  Benjamin M. Neale
+  https://doi.org/10.1523/jneurosci.0816-23.2023 | https://doi.org/10.1523/eneuro.0332-25.2025
+    Virginie van Wassenhove  <->  Virginie van Wassenhove
+  https://doi.org/10.3892/or.2012.1660 | https://doi.org/10.3892/br.2017.963
+    Kazuto Nishio  <->  Kazuto Nishio
+  https://doi.org/10.1037/abn0000277 | https://doi.org/10.1007/s10803-024-06486-0
+    Claire L. T. Derwent  <->  Claire T Derwent
+  https://doi.org/10.1177/088307380201700704 | https://doi.org/10.1016/j.ridd.2016.06.014
+    Patrick R. Thomas  <->  P. K. Thomas
+  https://doi.org/10.1038/s41380-022-01909-9 | https://doi.org/10.1038/s41398-024-02811-4
+    Francis M. Mondimore  <->  Francis M. Mondimore
+  https://doi.org/10.1016/j.jaac.2022.07.864 | https://doi.org/10.1089/cap.2024.0078
+    David G. Daniel  <->  David E. Daniel
+  https://doi.org/10.1521/pedi.2011.25.4.492 | https://doi.org/10.1186/s40479-024-00264-1
+    Carla Sharp  <->  Carla Sharp
+  https://doi.org/10.1038/s41598-022-24919-7 | https://doi.org/10.31234/osf.io/4j8xb
+    Vasilisa Akselevich  <->  Vasilisa Akselevich
+  https://doi.org/10.7759/cureus.53371 | https://doi.org/10.7759/cureus.54109
+    Jessica Dodson  <->  Jessica Dodson
+  https://doi.org/10.1016/j.beth.2007.08.009 | https://doi.org/10.3389/fpsyg.2016.00994
+    Selby, Edward A.  <->  Edward A. Selby
+  https://doi.org/10.1111/gbb.12129 | https://doi.org/10.1371/journal.pone.0193787
+    Anne Speckens  <->  Anne E.M. Speckens
+  https://doi.org/10.1038/sj.mp.4001594 | https://doi.org/10.1002/ajmg.b.30673
+    M.-A. Roy  <->  Marc‐André Roy
+  https://doi.org/10.1038/sj.mp.4001869 | https://doi.org/10.1002/ajmg.b.30872
+    Jan K. Buitelaar  <->  J. Buitelaar
+    Edmund Sonuga‐Barke  <->  E. Sonuga‐Barke
+    Joseph A. Sergeant  <->  J. Sergeant
+  https://doi.org/10.1002/ana.410230509 | https://doi.org/10.1002/ana.410280508
+    Leonard van den Berg  <->  Leonared Berg
+  https://doi.org/10.1095/biolreprod49.4.857 | https://doi.org/10.1002/bem.2250160208
+    Jin‐Moo Lee  <->  J. M. Lee
+  https://doi.org/10.1038/ng.408 | https://doi.org/10.1002/gepi.21707
+    Yuanyuan Xiao  <->  Yuanyuan Xiao
+    Matthew Kosel  <->  Matt L. Kosel
+  https://doi.org/10.1038/ng.926 | https://doi.org/10.1002/gepi.21707
+    Matthew Kosel  <->  Matt L. Kosel
+  https://doi.org/10.1158/0008-5472.can-04-3247 | https://doi.org/10.1002/ijc.23682
+    Ze-Zhong Tang  <->  Ze‐Zhong Tang
+    Xiaoyu Han  <->  Xiao‐You Han
+  https://doi.org/10.1002/npr2.70010 | https://doi.org/10.1002/npr2.70078
+    Yuka Yasuda  <->  Yuka Yasuda
+    Junya Matsumoto  <->  Junya Matsumoto
+    Naohiro Okada  <->  N. OKADA
+    Naoki Hashimoto  <->  Naoki Hashimoto
+    Kazutaka Ohi  <->  Kazutaka Ohi
+    Tsutomu Takahashi  <->  Tsutomu Takahashi
+    Naomi Hasegawa  <->  Naomi Hasegawa
+    Go Okada  <->  Go okada
+    Shusuke Numata  <->  Shusuke Numata
+    Reiji Yoshimura  <->  Reiji Yoshimura
+    Shin Nakagawa  <->  Shin Nakagawa
+    Hidenori Yamasue  <->  Hidenori Yamasue
+    Ryota Hashimoto  <->  Ryota Hashimoto
+  https://doi.org/10.1086/432377 | https://doi.org/10.1002/pros.21443
+    Jianfeng Xu  <->  Jianfen Xu
+    William B. Isaacs  <->  William B. Isaacs
+    Douglas F. Easton  <->  Douglas Easton
+    John L. Hopper  <->  John L. Hopper
+    Chih-Lin Hsieh  <->  Chih‐Lin Hsieh
+  https://doi.org/10.1176/ajp.156.9.1440 | https://doi.org/10.1002/syn.10137
+    Nora D. Volkow  <->  Nora D. Volkow
+    Gene-Jack Wang  <->  Gene‐Jack Wang
+    Yu‐Shin Ding  <->  Yu‐Shin Ding
+  https://doi.org/10.1006/jecp.1997.2409 | https://doi.org/10.1006/ceps.2001.1082
+    Joyce M. Alexander  <->  Joyce M. Alexander
+  https://doi.org/10.1111/j.1469-8986.1982.tb02547.x | https://doi.org/10.1007/bf00844774
+    Herb Stewart  <->  Herbert L. Stewart
+  https://doi.org/10.1007/bf00878974 | https://doi.org/10.1007/bf00880778
+    Steven R. Tulkin  <->  Steve R. Tulkin
+  https://doi.org/10.2307/350175 | https://doi.org/10.1007/bf01542145
+    Günter Schmidt  <->  Günter Schmidt
+  https://doi.org/10.1023/a:1024642508725 | https://doi.org/10.1007/bf03400794
+    Robert L. Sveen  <->  Rob Sveen
+  https://doi.org/10.1038/ng.3916 | https://doi.org/10.1007/s00401-019-02026-8
+    Wolfgang Maier  <->  Wolfgang Maier
+    Ronald C. Petersen  <->  Ronald C. Petersen
+  https://doi.org/10.1002/humu.20209 | https://doi.org/10.1007/s00439-013-1281-8
+    Byung Lae Park  <->  Byung Lae Park
+  https://doi.org/10.1257/aer.101.6.2562 | https://doi.org/10.1007/s10683-020-09658-8
+    Roy Chen  <->  Roy Chen
+  https://doi.org/10.1007/s11136-010-9636-2 | https://doi.org/10.1007/s11136-013-0387-8
+    Albert W. Wu  <->  Albert W. Wu
+  https://doi.org/10.1186/s40411-014-0015-5 | https://doi.org/10.1007/s11219-017-9398-y
+    Patrícia Duarte Lima Machado  <->  Patrícia D. L. Machado
+  https://doi.org/10.1016/j.jneuroim.2013.09.016 | https://doi.org/10.1007/s13365-018-0625-5
+    Mallory D. Witt  <->  Mallory D. Witt
+  https://doi.org/10.1016/0006-3223(88)90119-9 | https://doi.org/10.1016/0006-3223(92)90158-v
+    Michael E. Thase  <->  Michael E. Thase
+    Charles F. Reynolds  <->  Charles F. Reynolds
+    J.R. Jennings  <->  J. Richard Jennings
+    Ellen Frank  <->  Ellen Frank
+    David J. Kupfer  <->  David J. Kupfer
+  https://doi.org/10.1126/science.897671 | https://doi.org/10.1016/0013-4694(81)90020-1
+    D. W. Shucard  <->  David W. Shucard
+    J. L. Shucard  <->  Janet L. Shucard
+    D. G. Thomas  <->  David Thomas
+  https://doi.org/10.1213/00000539-198312000-00005 | https://doi.org/10.1016/0030-4220(86)90212-4
+    Andrew C.N. Chen  <->  A. C.N. Chen
+  https://doi.org/10.1176/ajp.145.12.1564 | https://doi.org/10.1016/0165-0327(92)90038-8
+    Giovanni A. Fava  <->  Giovanni A. Fava
+  https://doi.org/10.1055/s-2007-1017106 | https://doi.org/10.1016/0165-1781(92)90022-u
+    B. Müller‐Oerlinghausen  <->  Bruno Müller-Oerlinghausen
+  https://doi.org/10.1111/j.1530-0277.1988.tb00137.x | https://doi.org/10.1016/0925-4927(93)90004-2
+    Adolf Pfefferbaum  <->  Adolf Pfefferbaum
+  https://doi.org/10.1016/j.appet.2005.08.004 | https://doi.org/10.1016/j.appet.2008.07.010
+    Jan van Leeuwe  <->  J.F.J. van Leeuwe
+  https://doi.org/10.1016/j.brs.2017.05.002 | https://doi.org/10.1016/j.biopsycho.2021.108097
+    J. Leon Kenemans  <->  J. Leon Kenemans
+  https://doi.org/10.1371/journal.pcbi.1008484 | https://doi.org/10.1016/j.biopsycho.2024.108825
+    Rayus Kuplicki  <->  Rayus Kuplicki
+  https://doi.org/10.1136/hrt.2008.150870 | https://doi.org/10.1016/j.hlc.2013.05.015
+    T. Briffa  <->  Tom Briffa
+  https://doi.org/10.1136/hrt.2008.150870 | https://doi.org/10.1016/j.hlc.2017.09.016
+    T. Briffa  <->  Tom Briffa
+  https://doi.org/10.1001/archgenpsychiatry.2010.94 | https://doi.org/10.1016/j.neuroimage.2014.03.007
+    Leila Haddad  <->  Leila Haddad
+  https://doi.org/10.1093/brain/awq239 | https://doi.org/10.1016/j.neuropsychologia.2017.02.016
+    Scott A. Wylie  <->  S.A. Wylie
+  https://doi.org/10.1016/s0920-9964(03)00016-1 | https://doi.org/10.1016/j.psychres.2007.08.013
+    Jürgen Gallinat  <->  Jürgen Gallinat
+  https://doi.org/10.1038/ng.732 | https://doi.org/10.1016/j.rbmo.2013.05.007
+    Han Zhao  <->  Han Zhao
+  https://doi.org/10.1016/j.schres.2015.09.009 | https://doi.org/10.1016/j.scog.2023.100284
+    Anna-Karin Olsson  <->  Anna-Karin Olsson
+  https://doi.org/10.1016/s0006-3223(98)00141-3 | https://doi.org/10.1016/s0006-3223(98)00143-7
+    John C Umhau  <->  John C. Umhau
+    Norman Salem  <->  Norman Salem
+  https://doi.org/10.1016/s0022-3956(98)00029-6 | https://doi.org/10.1016/s0010-440x(99)90089-5
+    Matthias J. Müller  <->  Matthias J. Müller
+  https://doi.org/10.1016/0006-3223(95)00652-4 | https://doi.org/10.1016/s0022-3956(00)00010-8
+    J. Röschke  <->  Joachim Röschke
+    P. K. Wagner  <->  Peter Wagner
+  https://doi.org/10.1212/wnl.53.1.201 | https://doi.org/10.1016/s0022-510x(01)00577-9
+    N. R. Graff-Radford  <->  Neill R. Graff‐Radford
+  https://doi.org/10.1016/s0893-133x(01)00231-7 | https://doi.org/10.1016/s0091-3057(02)01028-6
+    Nicholaas Paul L.G. Verhoeff  <->  Nicolaas P. L. G. Verhoeff
+    Douglas Hussey  <->  Doug Hussey
+    M Lee  <->  Maggie Lee
+  https://doi.org/10.1001/archpsyc.1991.01810250031003 | https://doi.org/10.1016/s0165-0327(00)00275-5
+    Alec Roy  <->  Alec Roy
+  https://doi.org/10.1176/ajp.152.7.1075 | https://doi.org/10.1016/s0165-0327(00)00275-5
+    A. Roy  <->  Alec Roy
+  https://doi.org/10.1016/s0738-3991(00)00178-6 | https://doi.org/10.1016/s0738-3991(03)00022-3
+    J. Hoogstraten  <->  Johan Hoogstraten
+  https://doi.org/10.1037//0735-7028.14.5.642 | https://doi.org/10.1016/s0899-3289(05)80013-6
+    James O. Prochaska  <->  James O. Prochaska
+  https://doi.org/10.1017/s0033291700057779 | https://doi.org/10.1017/s003329170000204x
+    J. R. M. Copeland  <->  J. R. M. Copeland
+  https://doi.org/10.1097/00005053-199910000-00004 | https://doi.org/10.1034/j.1600-0447.2000.101001021.x
+    Kay Roy  <->  K. Roy
+  https://doi.org/10.18053/jctres.05.202004.003 | https://doi.org/10.1038/s41598-021-80995-1
+    Arciniega, H.  <->  Hector Arciniega
+    Kilgore-Gomez, A.  <->  Alexandrea Kilgore-Gomez
+    Berryhill, M.  <->  Marian E. Berryhill
+  https://doi.org/10.1044/1092-4388(2001/052) | https://doi.org/10.1044/1092-4388(2009/07-0012)
+    Margaret T. Lehman-Blake  <->  Margaret Lehman Blake
+  https://doi.org/10.1016/j.jvoice.2022.03.014 | https://doi.org/10.1044/2023_jslhr-22-00694
+    Lorraine A. Ramig  <->  Lorraine O. Ramig
+  https://doi.org/10.1017/s0003480098006757 | https://doi.org/10.1046/j.1469-1809.2001.6540371.x
+    Giulia Maria De Benedictis  <->  G. De Benedictis
+  https://doi.org/10.1038/nature08825 | https://doi.org/10.1053/j.gastro.2010.06.016
+    Andrew J. Muir  <->  Andrew J. Muir
+  https://doi.org/10.1073/pnas.77.11.6729 | https://doi.org/10.1073/pnas.1615198114
+    C. P. Kyriacou  <->  Charalambos P. Kyriacou
+  https://doi.org/10.1093/carcin/16.1.119 | https://doi.org/10.1080/009841098159259
+    Wolfgang Löscher  <->  Wolfgang Löscher
+  https://doi.org/10.1080/02646838.2019.1607968 | https://doi.org/10.1080/02646838.2024.2367499
+    Karena J. Burke  <->  Karena J. Burke
+  https://doi.org/10.1371/journal.pone.0176452 | https://doi.org/10.1080/13218719.2023.2206865
+    Romuald Polczyk  <->  Romuald Polczyk
+  https://doi.org/10.1038/ng.536 | https://doi.org/10.1093/brain/awr007
+    Julie van der Zee  <->  Julie van der Zee
+  https://doi.org/10.1038/nature06014 | https://doi.org/10.1016/j.ajhg.2009.04.006
+    David P. Strachan  <->  David P. Strachan
+  https://doi.org/10.1177/2167702616677312 | https://doi.org/10.1037/abn0000318
+    Sean P. Lane  <->  Sean P Lane
+    Timothy J. Trull  <->  Timothy J Trull
+  https://doi.org/10.1111/desc.1998.1.issue-2 | https://doi.org/10.1080/14616734.2016.1181096
+    Hesse, E.  <->  Erik Hesse
+  https://doi.org/10.1038/ng.1051 | https://doi.org/10.1093/hmg/ddu041
+    Constance Chen  <->  C. T. L. Chen
+    Melissa E. Garcia  <->  M. E. Garcia
+    Sharon L. R. Kardia  <->  Sharon L. R. Kardia
+    Alice M. Arnold  <->  A. M. Arnold
+    Tamara B. Harris  <->  T. B. Harris
+  https://doi.org/10.1007/s00439-010-0878-4 | https://doi.org/10.1093/hmg/ddu041
+    Constance Chen  <->  C. T. L. Chen
+  https://doi.org/10.1158/1055-9965.epi-11-0403 | https://doi.org/10.1093/ije/dyae110
+    Demetrius Albanes  <->  Demetrius Albanes
+  https://doi.org/10.1158/1055-9965.epi-15-0991 | https://doi.org/10.1093/ije/dyae110
+    Demetrius Albanes  <->  Demetrius Albanes
+  https://doi.org/10.1038/ng.571 | https://doi.org/10.1093/ntr/nty218
+    Veikko Salomaa  <->  Veikko Salomaa
+  https://doi.org/10.1136/ard.2009.108571 | https://doi.org/10.1093/rheumatology/ker444
+    Akira Meguro  <->  Akira Meguro
+  https://doi.org/10.7554/elife.76211 | https://doi.org/10.1093/sleep/zsae218
+    Wei Zhu  <->  Wei Zhu
+  https://doi.org/10.1371/journal.pone.0110292 | https://doi.org/10.1097/mpg.0000000000000880
+    Jeong‐Hyun Kim  <->  Jeonghyun Kim
+    Jeong-Meen Seo  <->  Jeong‐Meen Seo
+    Jung-Tak Oh  <->  Jung‐Tak Oh
+    Kwi‐Won Park  <->  K.S. Park
+  https://doi.org/10.1111/j.1530-0277.2009.00945.x | https://doi.org/10.1111/acer.12779
+    Robert B. Voas  <->  Robert Voas
+  https://doi.org/10.4088/jcp.v68n0713 | https://doi.org/10.1111/acps.12959
+    Joseph Zohar  <->  J. Zohar
+    Julien Mendlewicz  <->  J. Mendlewicz
+  https://doi.org/10.1007/s00228-011-1132-2 | https://doi.org/10.1111/bcpt.12070
+    Ron H. N. van Schaik  <->  Ron HN van Schaik
+  https://doi.org/10.1111/j.1365-2052.2009.01856.x | https://doi.org/10.1111/j.1365-2052.2011.02294.x
+    J.‐J. Arranz  <->  J. J. Arranz
+  https://doi.org/10.1111/j.1547-5069.2003.00243.x | https://doi.org/10.1111/j.1547-5069.2006.00093.x
+    Janet S. Secrest  <->  Janet Secrest
+  https://doi.org/10.1007/s007020170037 | https://doi.org/10.1111/j.1600-0404.2005.00433.x
+    K. Blennow  <->  Kaj Blennow
+  https://doi.org/10.1034/j.1600-0447.2000.101006473.x | https://doi.org/10.1111/j.1600-0447.2007.01149.x
+    Christian Osiek  <->  CH. Osiek
+  https://doi.org/10.1111/j.1365-2842.2007.01774.x | https://doi.org/10.1111/joor.12280
+    B. STEGENGA  <->  Boudewijn Stegenga
+  https://doi.org/10.1016/j.cub.2010.03.027 | https://doi.org/10.1111/jsr.12749
+    Robert Stickgold  <->  Robert Stickgold
+  https://doi.org/10.1016/j.jsams.2016.12.076 | https://doi.org/10.1111/sms.13021
+    Andrew Zacharia  <->  André Zacharia
+  https://doi.org/10.1038/ng2099 | https://doi.org/10.1136/jmg.2008.062992
+    H‐Erich Wichmann  <->  H.‐Erich Wichmann
+  https://doi.org/10.1109/icse.2013.6606538 | https://doi.org/10.1145/2652524.2652581
+    Xiao, Lu  <->  Lu Xiao
+    Cai, Yuanfang  <->  Yuanfang Cai
+  https://doi.org/10.1111/j.1600-0447.1997.tb09922.x | https://doi.org/10.1159/000012254
+    Ph. Spinhoven  <->  Philip Spinhoven
+    O. van der Hart  <->  Onno van der Hart
+  https://doi.org/10.1038/sj.mp.4000691 | https://doi.org/10.1159/000074633
+    G Rylander  <->  Gunnar Rylander
+  https://doi.org/10.1192/bjp.118.544.275 | https://doi.org/10.1159/000117595
+    Eugene S. Paykel  <->  E. S. Paykel
+  https://doi.org/10.1002/ana.22403 | https://doi.org/10.1161/strokeaha.111.623090
+    Albert Hofman  <->  Albert Hofman
+  https://doi.org/10.1093/hmg/ddr121 | https://doi.org/10.1167/iovs.11-8068
+    S. Ramalingam  <->  Sudha Ramalingam
+  https://doi.org/10.1176/ajp.142.5.564 | https://doi.org/10.1176/ajp.145.2.251
+    A Wolf  <->  Alfred P. Wolf
+  https://doi.org/10.1038/ng.76 | https://doi.org/10.1186/1476-511x-11-155
+    Shah Ebrahim  <->  Shah Ebrahim
+  https://doi.org/10.1016/j.ajhg.2013.10.019 | https://doi.org/10.1186/s12920-020-00854-2
+    Gail P. Jarvik  <->  Gail P. Jarvik
+  https://doi.org/10.1207/s15327752jpa6802_5 | https://doi.org/10.1207/s15327752jpa7402_3
+    Gregory J. Meyer  <->  Gregory J. Meyer
+  https://doi.org/10.1073/pnas.96.15.8573 | https://doi.org/10.1210/jc.2009-2703
+    Jerome F. Strauss  <->  Jerome F. Strauss
+  https://doi.org/10.1007/s00125-008-1241-3 | https://doi.org/10.1371/journal.pone.0011761
+    R. Zhang  <->  Rong Zhang
+    C. Wang  <->  Congrong Wang
+    X. Ma  <->  Xiaojing Ma
+    Kun Xiang  <->  Kun‐san Xiang
+  https://doi.org/10.1038/ng.401 | https://doi.org/10.1371/journal.pone.0018813
+    Ludwig Kappos  <->  Ludwig Kappos
+    Alastair Compston  <->  A. Compston
+    David A. Hafler  <->  D A Hafler
+  https://doi.org/10.1038/ng.979 | https://doi.org/10.1371/journal.pone.0056732
+    Wei-Hua Yue  <->  Weihua Yue
+    Yan-Yan Ruan  <->  Yanyan Ruan
+    Tian-Lan Lu  <->  Tianlan Lu
+  https://doi.org/10.1515/comm.1998.23.3.255 | https://doi.org/10.1515/comm.2001.26.3.267
+    G.A.J. van der Rijt  <->  Gerrit van der Rijt
+  https://doi.org/10.2190/de.42.4 | https://doi.org/10.15288/jsad.2016.77.958
+    Pearson, M.  <->  Matthew R. Pearson
+  https://doi.org/10.2337/diabetes.53.4.1134 | https://doi.org/10.2337/db08-0719
+    Jonathon Wasson  <->  Jon Wasson
+  https://doi.org/10.2466/pr0.91.6.436-438 | https://doi.org/10.2466/pr0.94.2.733-735
+    BIANCA PEZZAROSSA  <->  Bianca Pezzarossa
+  https://doi.org/10.3382/ps.0721813 | https://doi.org/10.3382/ps.0741561
+    M. Soller  <->  Matthias Soller
+  https://doi.org/10.1080/17470210902782200 | https://doi.org/10.3758/s13414-018-1630-8
+    Luke Jones  <->  Luke A. Jones
+  https://doi.org/10.3758/pbr.17.5.657 | https://doi.org/10.3758/s13428-021-01686-3
+    Rasha Abdel Rahman  <->  Rasha Abdel Rahman
+  https://doi.org/10.1038/mp.2012.100 | https://doi.org/10.1371/journal.pone.0060231
+    R B Innis  <->  Robert B. Innis
+  https://doi.org/10.1038/mp.2011.82 | https://doi.org/10.1371/journal.pone.0060231
+    Marilyn A. Huestis  <->  Marilyn A. Huestis
+  https://doi.org/10.1038/ng.440 | https://doi.org/10.1001/archneurol.2010.147
+    Steven G. Younkin  <->  Steven G. Younkin
+  https://doi.org/10.1038/ng.801 | https://doi.org/10.1001/archneurol.2011.646
+    Robert C. Green  <->  Robert C. Green
+  https://doi.org/10.1136/ard.2007.075424 | https://doi.org/10.1002/art.30320
+    John B. Harley  <->  John B. Harley
+  https://doi.org/10.1002/art.27457 | https://doi.org/10.1002/art.33381
+    Anthony G. Wilson  <->  Anthony G. Wilson
+  https://doi.org/10.1158/1055-9965.1589.13.10 | https://doi.org/10.1002/ijc.23448
+    Paul D.P. Pharoah  <->  Paul D.P. Pharoah
+  https://doi.org/10.1002/ijc.10814 | https://doi.org/10.1002/ijc.23448
+    Paul D.P. Pharoah  <->  Paul D.P. Pharoah
+  https://doi.org/10.1158/0008-5472.can-06-2222 | https://doi.org/10.1002/ijc.23448
+    Paul D.P. Pharoah  <->  Paul D.P. Pharoah
+  https://doi.org/10.1158/0008-5472.can-06-3261 | https://doi.org/10.1002/ijc.23448
+    Robert P. Edwards  <->  Robert P. Edwards
+    Kirsten B. Moysich  <->  Kirsten B. Moysich
+  https://doi.org/10.1038/ng1981 | https://doi.org/10.1002/ijc.23448
+    Jenny Chang‐Claude  <->  Jenny Chang‐Claude
+    Jonathan Beesley  <->  Jonathan Beesley
+    Paul D.P. Pharoah  <->  Paul D.P. Pharoah
+  https://doi.org/10.1002/ajmg.b.31028 | https://doi.org/10.1097/psy.0b013e3181fdd074
+    Gene H. Brody  <->  Gene H. Brody
+  https://doi.org/10.1093/brain/awq154 | https://doi.org/10.1017/s1355617713000738
+    Charles DeCarli  <->  Charles DeCarli
+  https://doi.org/10.1037/xge0000182 | https://doi.org/10.1080/15248372.2017.1346658
+    Chris Young  <->  Christopher J. Young
+  https://doi.org/10.1016/j.psychsport.2019.101567 | https://doi.org/10.1123/jsep.2025-0001
+    Joachim Hüffmeier  <->  Joachim Huffmeier
+  https://doi.org/10.31234/osf.io/7tm3s | https://doi.org/10.1177/19401612251378969
+    Sacha Altay  <->  Sacha Altay
+  https://doi.org/10.1016/j.ridd.2010.02.001 | https://doi.org/10.1007/s10882-010-9212-2
+    Mark F. O’Reilly  <->  Mark F. O’Reilly
+  https://doi.org/10.25656/01:31701 | https://doi.org/10.1007/s11165-012-9320-3
+    Susanne Neumann  <->  Susanne Neumann
+    Martin Hopf  <->  Martin Hopf
+  https://doi.org/10.1016/j.ejpain.2011.07.012 | https://doi.org/10.1097/j.pain.0000000000000657
+    Wenlong Huang  <->  Wenlong Huang
+  https://doi.org/10.1111/add.14403 | https://doi.org/10.1111/acer.14413
+    Stephen A. Maisto  <->  Stephen A. Maisto
+  https://doi.org/10.1371/journal.pgen.1000847 | https://doi.org/10.1111/j.1365-2265.2011.04175.x
+    Yuan-Tsong Chen  <->  Yuan‐Tsong Chen
+  https://doi.org/10.1086/691684 | https://doi.org/10.1177/0022219418775114
+    Philip Capin  <->  Philip Capin
+  https://doi.org/10.1352/1934-9556-56.6.442 | https://doi.org/10.1177/1540796920949448
+    Nannette Hammons  <->  Nanette C. Hammons
+  https://doi.org/10.1007/s11211-023-00407-9 | https://doi.org/10.1177/27000710251401142
+    Mario Gollwitzer  <->  Mario Gollwitzer
+  https://doi.org/10.1016/j.neuroimage.2010.02.068 | https://doi.org/10.3389/fnins.2012.00115
+    Arthur W. Toga  <->  Art Toga
+  https://doi.org/10.1111/acer.15209 | https://doi.org/10.1037/pha0000834
+    Mairead Moloney  <->  Mairead E. Moloney
+    Lee M. Ritterband  <->  Lee Michael Ritterband
+  https://doi.org/10.1037/xge0000232 | https://doi.org/10.1027/1864-9335/a000585
+    Kai Sassenberg  <->  Kai Sassenberg
+  https://doi.org/10.1016/j.paid.2023.112300 | https://doi.org/10.1002/ijop.70199
+    Phillip A. Vernon  <->  Philip A. Vernon
+
+unresolved pairs (12):
+  https://doi.org/10.1097/00002826-199202001-00170 | https://doi.org/10.1016/0006-3223(91)91105-z
+  https://doi.org/10.1111/1467-6494.t01-1-00090 | https://doi.org/10.1177/0956797619831612
+  https://doi.org/10.1016/s0191-8869(97)00198-2 | https://doi.org/10.1177/0956797619831612
+  https://doi.org/10.1016/1054-139x(94)90042-6 | https://doi.org/10.1177/0956797619831612
+  https://doi.org/10.1016/0191-8869(89)90238-7 | https://doi.org/10.1177/0956797619831612
+  https://doi.org/10.1287/orsc.6.5.509 | https://doi.org/10.1023/a/1021350122677
+  https://doi.org/10.1017/s0305000902005469 | https://doi.org/10.1352/0895-8017(2007)112[40/eomiof]2.0.co;2
+  https://doi.org/10.1002/npr2.70058 | https://doi.org/10.1002/npr2.70078
+  https://doi.org/10.1037/cdp0000137.supp | https://doi.org/10.1037/cdp0000775
+  https://doi.org/10.1016/0001-4575(78)90040-4 | https://doi.org/10.1037/xlm0001529
+  https://doi.org/10.4324/9780203122433-11 | https://doi.org/10.1080/10584609.2014.914612
+  https://doi.org/10.4135/9781412939607.n107 | https://doi.org/10.1177/2053168014559094

@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ChartWatermark } from "@/components/ChartWatermark";
 import { useIsMobile } from "@/components/useIsMobile";
+import { fitProbit, probitBand } from "@/lib/probit";
 import type { CoverageStats, EffectRow, HIndexMeta, PaperHIndex } from "./types";
 
 // Pearson correlation of two equal-length numeric arrays (null if degenerate).
@@ -94,6 +95,8 @@ type Bin = {
   rate: number;
   ciLow: number;
   ciHigh: number;
+  /** Mean h-index among the bin's rows — where the bin sits on a continuous axis. */
+  meanVal: number;
   label?: string;
 };
 
@@ -158,9 +161,11 @@ function buildFixedBins(rowsQ: QualRow[], metric: number): Bin[] {
   };
   const rep = new Array(nBins).fill(0);
   const tot = new Array(nBins).fill(0);
+  const sumVal = new Array(nBins).fill(0);
   for (const r of rowsQ) {
     const k = binOf(r.val);
     tot[k]++;
+    sumVal[k] += r.val;
     if (r.success) rep[k]++;
   }
   const cis = bootstrapBinCIs(rowsQ, binOf, nBins);
@@ -174,6 +179,7 @@ function buildFixedBins(rowsQ: QualRow[], metric: number): Bin[] {
       rate: tot[k] > 0 ? (rep[k] / tot[k]) * 100 : 0,
       ciLow: cis[k][0],
       ciHigh: cis[k][1],
+      meanVal: tot[k] > 0 ? sumVal[k] / tot[k] : 0,
       label: labels[k],
     });
   }
@@ -225,6 +231,32 @@ export function HIndexDashboard({
   }, [rows, papers, criterion, metric, repType]);
 
   const fixedBins = useMemo(() => buildFixedBins(qualRows.rows, metric), [qualRows, metric]);
+
+  // ---- Probit model (marginsplot-style curve) ----------------------------
+  // Fit on log10(1 + h), the same transform the correlation table uses, with
+  // the original paper as the cluster for robust standard errors.
+  const probit = useMemo(() => {
+    const r = qualRows.rows;
+    return fitProbit(
+      r.map((q) => Math.log10(1 + q.val)),
+      r.map((q) => q.success),
+      r.map((q) => q.p),
+    );
+  }, [qualRows]);
+
+  // Predicted probability on a grid of raw h-index values. The h-index tail is
+  // long and thin, so the axis stops at the 99th percentile of the current
+  // selection instead of at the single most eminent byline.
+  const probitCurve = useMemo(() => {
+    if (!probit) return null;
+    const vals = qualRows.rows.map((q) => q.val).sort((a, b) => a - b);
+    const p99 = vals[Math.floor(0.99 * (vals.length - 1))];
+    const xCap = Math.max(10, Math.ceil(p99 / 10) * 10);
+    const N = 60;
+    const hGrid = Array.from({ length: N + 1 }, (_, i) => (xCap * i) / N);
+    const band = probitBand(probit, hGrid.map((h) => Math.log10(1 + h)));
+    return { xCap, points: hGrid.map((h, i) => ({ h, ...band[i] })) };
+  }, [probit, qualRows]);
 
   // Row-level correlation between replication success and each h-index
   // metric: point-biserial r on log10(1+value) plus Spearman rho.
@@ -350,6 +382,42 @@ export function HIndexDashboard({
         )}
       </section>
 
+      {/* Probit model curve */}
+      <section className="space-y-3">
+        <div>
+          <h2 className="text-xl md:text-2xl font-semibold tracking-tight">
+            Modeled replication probability by {metricLabel.toLowerCase()}
+          </h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            A probit regression of replication success on log&#8321;&#8320;(1 + h), plotted
+            as a predicted-probability curve with a 95% confidence band &mdash; the same
+            data as the bars above, without the arbitrary bin edges. Bin rates are
+            overlaid as dots for comparison.
+          </p>
+        </div>
+        {probit === null || probitCurve === null ? (
+          <p className="text-sm text-gray-500">Not enough data for a model fit.</p>
+        ) : (
+          <div>
+            <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-1.5 w-fit max-w-full">
+              <ProbitCurveChart curve={probitCurve} bins={fixedBins} xTitle={metricLabel} />
+            </div>
+            <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+              Slope &beta;&#8321; = {probit.beta[1].toFixed(3)} (cluster-robust SE{" "}
+              {probit.se1.toFixed(3)}, z = {probit.z1.toFixed(2)}, p{" "}
+              {probit.p1 < 0.001 ? "< 0.001" : `= ${probit.p1.toFixed(3)}`}) per tenfold
+              increase in 1 + h. On average across the sample, a{" "}
+              <em>doubling</em> of 1 + h shifts the predicted replication probability by{" "}
+              {(probit.ame * Math.log10(2) * 100 >= 0 ? "+" : "") +
+                (probit.ame * Math.log10(2) * 100).toFixed(1)}{" "}
+              percentage points. n = {probit.nObs.toLocaleString()} replications across{" "}
+              {probit.nClusters.toLocaleString()} original papers; standard errors are
+              clustered on the original paper.
+            </p>
+          </div>
+        )}
+      </section>
+
       <p className="text-sm text-gray-500 dark:text-gray-400">
         {qualRows.rows.length.toLocaleString()} replications plotted &middot;{" "}
         {qualRows.excluded.toLocaleString()} determinate rows excluded (no SciSciNet
@@ -427,6 +495,19 @@ export function HIndexDashboard({
           inconclusive rows are excluded. First-author h-index is used as the
           last-author value for single-author papers.
         </p>
+        <p>
+          <strong>Probit model.</strong> The curve is a maximum-likelihood probit fit,
+          P(replicated) = &Phi;(&beta;&#8320; + &beta;&#8321; &middot;
+          log&#8321;&#8320;(1 + h)), on the same determinate rows as the bars. Standard
+          errors use a sandwich estimator clustered on the original paper (with the usual
+          G/(G&minus;1) small-sample correction), and the band is the delta-method 95%
+          interval on the linear predictor pushed back through &Phi;, so it cannot leave
+          0&ndash;100%. This is the equivalent of Stata&rsquo;s{" "}
+          <code>probit, vce(cluster)</code> followed by <code>margins</code> /{" "}
+          <code>marginsplot</code>. The model assumes the probit link is the right shape;
+          where the curve and the binned dots disagree, the dots are the less
+          model-dependent summary.
+        </p>
         <p>Data: {csvName}.</p>
       </section>
 
@@ -435,6 +516,162 @@ export function HIndexDashboard({
           ← Back to the replications database
         </Link>
       </p>
+    </div>
+  );
+}
+
+/**
+ * Marginsplot-style chart: predicted replication probability across the
+ * h-index range with its 95% confidence band, plus the binned rates (with
+ * their cluster-bootstrap intervals) overlaid at each bin's mean h-index.
+ */
+function ProbitCurveChart({
+  curve,
+  bins,
+  xTitle,
+}: {
+  curve: { xCap: number; points: { h: number; p: number; lo: number; hi: number }[] };
+  bins: Bin[];
+  xTitle: string;
+}) {
+  const isMobile = useIsMobile();
+  const W = isMobile ? 380 : 720;
+  const H = isMobile ? 300 : 320;
+  const M = isMobile ? { top: 16, right: 12, bottom: 60, left: 40 } : { top: 20, right: 24, bottom: 64, left: 62 };
+  const F = isMobile
+    ? { tick: 10, val: 10, title: 11, legend: 9 }
+    : { tick: 12, val: 12, title: 14, legend: 11 };
+  const titleFs = !isMobile ? F.title : xTitle.length > 60 ? 8.5 : xTitle.length > 45 ? 9.5 : F.title;
+  const plotW = W - M.left - M.right;
+  const plotH = H - M.top - M.bottom;
+  const y = (pct: number) => M.top + plotH * (1 - pct / 100);
+  const x = (h: number) => M.left + plotW * (h / curve.xCap);
+
+  // Round x tick step (1/2/5 x 10^k) giving at most ~7 ticks.
+  const pow = 10 ** Math.floor(Math.log10(Math.max(curve.xCap, 1) / 5));
+  const xStep =
+    [1, 2, 5, 10].map((m) => m * pow).find((s) => curve.xCap / s <= (isMobile ? 5 : 7)) ?? 10 * pow;
+  const xTicks: number[] = [];
+  for (let v = 0; v <= curve.xCap + 1e-9; v += xStep) xTicks.push(v);
+
+  const pts = curve.points;
+  const bandPoints =
+    pts.map((pt) => `${x(pt.h)},${y(pt.hi * 100)}`).join(" ") +
+    " " +
+    [...pts].reverse().map((pt) => `${x(pt.h)},${y(pt.lo * 100)}`).join(" ");
+
+  const shownBins = bins.filter((b) => b.count > 0 && b.meanVal <= curve.xCap);
+  const fmtEdge = (v: number) => (Number.isFinite(v) ? Math.round(v).toLocaleString() : "∞");
+
+  return (
+    <div className="overflow-x-auto">
+      <svg viewBox={`0 0 ${W} ${H}`} className={isMobile ? "w-full" : "w-full min-w-[560px]"} role="img">
+        {/* y gridlines + ticks */}
+        {[0, 25, 50, 75, 100].map((g) => (
+          <g key={g}>
+            <line x1={M.left} x2={W - M.right} y1={y(g)} y2={y(g)} stroke="currentColor" strokeOpacity={0.12} />
+            <line x1={M.left - 6} x2={M.left} y1={y(g)} y2={y(g)} stroke="#000000" strokeWidth={1} />
+            <text x={M.left - (isMobile ? 8 : 10)} y={y(g) + 4} textAnchor="end" fontSize={F.tick} className="fill-black dark:fill-gray-100">
+              {g}%
+            </text>
+          </g>
+        ))}
+        {/* x ticks */}
+        {xTicks.map((t) => (
+          <g key={t}>
+            <line x1={x(t)} x2={x(t)} y1={M.top + plotH} y2={M.top + plotH + 5} stroke="#000000" strokeWidth={1} />
+            <text x={x(t)} y={M.top + plotH + (isMobile ? 16 : 18)} textAnchor="middle" fontSize={F.tick} className="fill-black dark:fill-gray-100">
+              {t.toLocaleString()}
+            </text>
+          </g>
+        ))}
+        {/* axis lines */}
+        <line x1={M.left} x2={M.left} y1={M.top} y2={M.top + plotH} stroke="#000000" strokeWidth={1} />
+        <line x1={M.left} x2={W - M.right} y1={M.top + plotH} y2={M.top + plotH} stroke="#000000" strokeWidth={1} />
+
+        {/* 95% confidence band */}
+        <polygon points={bandPoints} fill={REPLICATED} fillOpacity={0.16} stroke="none" />
+        {/* fitted curve */}
+        <polyline
+          points={pts.map((pt) => `${x(pt.h)},${y(pt.p * 100)}`).join(" ")}
+          fill="none"
+          stroke={REPLICATED}
+          strokeWidth={2.5}
+          strokeLinejoin="round"
+        />
+
+        {/* binned rates with their cluster-bootstrap intervals */}
+        {shownBins.map((b, i) => (
+          <g key={i} stroke="currentColor" fill="currentColor">
+            <line
+              x1={x(b.meanVal)}
+              x2={x(b.meanVal)}
+              y1={y(b.ciLow)}
+              y2={y(b.ciHigh)}
+              strokeWidth={1.5}
+              strokeOpacity={0.35}
+            />
+            <circle cx={x(b.meanVal)} cy={y(b.rate)} r={3.5} fillOpacity={0.7} stroke="none">
+              <title>
+                {`${b.label ?? `${fmtEdge(b.lo)}–${fmtEdge(b.hi)}`} (mean h ${b.meanVal.toFixed(0)}): ${b.rate.toFixed(1)}% replicated (${b.replicated}/${b.count}), cluster-bootstrap 95% CI [${b.ciLow.toFixed(0)}–${b.ciHigh.toFixed(0)}%]`}
+              </title>
+            </circle>
+          </g>
+        ))}
+
+        {/* invisible hover targets along the curve */}
+        {pts.map((pt, i) =>
+          i % 5 === 0 ? (
+            <circle key={i} cx={x(pt.h)} cy={y(pt.p * 100)} r={9} fill="transparent">
+              <title>
+                {`h = ${pt.h.toFixed(0)}: predicted ${(pt.p * 100).toFixed(1)}% replicated (95% CI ${(pt.lo * 100).toFixed(0)}–${(pt.hi * 100).toFixed(0)}%)`}
+              </title>
+            </circle>
+          ) : null,
+        )}
+
+        {/* legend */}
+        <g>
+          {(() => {
+            const x0 = M.left + (isMobile ? 8 : 12);
+            const swatch = isMobile ? 16 : 22;
+            // Sit in whichever left corner the curve leaves free: a declining
+            // curve is highest at the left, so the legend drops to the bottom.
+            const declining = pts[0].p >= pts[pts.length - 1].p;
+            const cy1 = declining ? M.top + plotH - (isMobile ? 31 : 34) : M.top + 14;
+            const cy2 = cy1 + (isMobile ? 17 : 20);
+            return (
+              <>
+                <rect x={x0} y={cy1 - 5} width={swatch} height={10} fill={REPLICATED} opacity={0.18} rx={2} />
+                <line x1={x0} x2={x0 + swatch} y1={cy1} y2={cy1} stroke={REPLICATED} strokeWidth={2.5} />
+                <text x={x0 + swatch + (isMobile ? 6 : 8)} y={cy1 + 4} fontSize={F.legend} fontWeight={600} className="fill-black dark:fill-gray-100">
+                  Probit fit ± 95% CI
+                </text>
+                <line x1={x0 + swatch / 2} x2={x0 + swatch / 2} y1={cy2 - 5} y2={cy2 + 5} stroke="currentColor" strokeWidth={1.5} strokeOpacity={0.35} />
+                <circle cx={x0 + swatch / 2} cy={cy2} r={3.5} fill="currentColor" fillOpacity={0.7} />
+                <text x={x0 + swatch + (isMobile ? 6 : 8)} y={cy2 + 4} fontSize={F.legend} fontWeight={600} className="fill-black dark:fill-gray-100">
+                  Binned rate ± bootstrap CI
+                </text>
+              </>
+            );
+          })()}
+        </g>
+
+        <text x={M.left + plotW / 2} y={H - 6} textAnchor="middle" fontSize={titleFs} fontWeight={700} className="fill-black dark:fill-gray-100">
+          {xTitle}
+        </text>
+        <text
+          transform={`translate(${isMobile ? 10 : 14} ${M.top + plotH / 2}) rotate(-90)`}
+          textAnchor="middle"
+          fontSize={F.title}
+          fontWeight={700}
+          className="fill-black dark:fill-gray-100"
+        >
+          Replication rate (%)
+        </text>
+        {/* right-anchored so it clears the top-left legend */}
+        <ChartWatermark rightX={W - M.right - 8} y={M.top + 4} />
+      </svg>
     </div>
   );
 }

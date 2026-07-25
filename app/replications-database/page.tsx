@@ -846,6 +846,9 @@ function ReplicationsDatabaseContent() {
                     <a href="/replications-database/by-h-index" className="text-sm underline hover:opacity-80 whitespace-nowrap">
                       Replication rate by author h-index
                     </a>
+                    <a href="/replications-database/by-author-overlap" className="text-sm underline hover:opacity-80 whitespace-nowrap">
+                      Replication rate by author overlap
+                    </a>
                     <a href="/replications-database/by-year" className="text-sm underline hover:opacity-80 whitespace-nowrap">
                       Replication rate by year
                     </a>
