@@ -49,6 +49,9 @@ const nextConfig = {
       {
         source: '/donate',
         destination: '/#donate',
+        permanent: true,
+      },
+      {
         source: '/docs',
         destination: '/articles',
         permanent: true,
