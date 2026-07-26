@@ -3,9 +3,9 @@ data_ingestor/api_cache.json
 data_ingestor/ingestion_checkpoint.csv
 data_ingestor/J_Medline.txt
 
-# Next.js build output (distDir points to ~/.next-metascience, outside Dropbox)
+# Next.js build output. Stays in-project (see scripts/with-dropbox-paused.sh for why an
+# out-of-Dropbox distDir does not work with Next 15).
 .next
-/home/dan/.next-metascience
 .claude
 .cursor
 
@@ -46,3 +46,6 @@ tmp*
 
 # Dropbox sync conflict files (never commit these)
 *conflicted copy*
+
+# Word/Office lock files
+~$*
