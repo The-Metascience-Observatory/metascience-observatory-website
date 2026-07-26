@@ -6,39 +6,6 @@ import { ChartWatermark } from "@/components/ChartWatermark";
 import { useIsMobile } from "@/components/useIsMobile";
 import type { CoverageStats, EffectRow, OverlapMeta, PairOverlap } from "./types";
 
-// Pearson correlation of two equal-length numeric arrays (null if degenerate).
-function pearson(xs: number[], ys: number[]): number | null {
-  const n = xs.length;
-  if (n < 3) return null;
-  const mx = xs.reduce((a, b) => a + b, 0) / n;
-  const my = ys.reduce((a, b) => a + b, 0) / n;
-  let sxy = 0, sxx = 0, syy = 0;
-  for (let i = 0; i < n; i++) {
-    const dx = xs[i] - mx, dy = ys[i] - my;
-    sxy += dx * dy; sxx += dx * dx; syy += dy * dy;
-  }
-  if (sxx === 0 || syy === 0) return null;
-  return sxy / Math.sqrt(sxx * syy);
-}
-
-// Spearman rank correlation (Pearson on ranks; average ranks for ties).
-function spearman(xs: number[], ys: number[]): number | null {
-  const rank = (a: number[]): number[] => {
-    const idx = a.map((v, i) => [v, i] as [number, number]).sort((p, q) => p[0] - q[0]);
-    const r = new Array(a.length).fill(0);
-    let i = 0;
-    while (i < idx.length) {
-      let j = i;
-      while (j + 1 < idx.length && idx[j + 1][0] === idx[i][0]) j++;
-      const avg = (i + j) / 2 + 1;
-      for (let k = i; k <= j; k++) r[idx[k][1]] = avg;
-      i = j + 1;
-    }
-    return r;
-  };
-  return pearson(rank(xs), rank(ys));
-}
-
 const REPLICATED = "#4f77bd"; // light blue, matching the rate bars on by-year
 
 const CRITERION_OPTIONS = [
@@ -55,7 +22,7 @@ const VIEW_OPTIONS = [
 ];
 
 const VIEW_LABELS: string[][] = [
-  ["0 (independent)", "1", "2", "3+"],
+  ["0 (independent)", "1", "2", "3", "4", "5+"],
   ["0% (independent)", "1–33%", "34–66%", "67–100%"],
   ["No shared authors", "Shared co-authors only", "Orig. first/last author on replication"],
 ];
@@ -74,7 +41,7 @@ function overlapOf(pair: PairOverlap, strict: boolean): number {
 // Bin index for one pair under the current view/mode; nBins = labels.length.
 function binFor(pair: PairOverlap, view: number, strict: boolean): number {
   const ov = overlapOf(pair, strict);
-  if (view === 0) return Math.min(ov, 3);
+  if (view === 0) return Math.min(ov, 5);
   if (view === 1) {
     if (ov === 0) return 0;
     const frac = ov / pair.no;
@@ -194,9 +161,10 @@ export function AuthorOverlapDashboard({
 }) {
   const [criterion, setCriterion] = useState(0);
   const [view, setView] = useState(0); // default: number of shared authors
-  const [strict, setStrict] = useState(false);
+  const [strict, setStrict] = useState(true);
   const [repType, setRepType] = useState(-1); // -1 = all types
   const [discipline, setDiscipline] = useState(-1); // -1 = all disciplines
+  const [showCI, setShowCI] = useState(false);
 
   // Effect-level row counts per replication type / discipline, for dropdowns.
   const typeCounts = useMemo(() => {
@@ -238,43 +206,6 @@ export function AuthorOverlapDashboard({
     }));
     return buildBins(rowsQ, VIEW_LABELS[view]);
   }, [filtered, view, strict]);
-
-  // Headline: independent (0 shared authors) vs any shared author.
-  const headline = useMemo(() => {
-    const rowsQ: QualRow[] = filtered.rows.map((r) => ({
-      c: r.c,
-      bin: overlapOf(r.pair, strict) === 0 ? 0 : 1,
-      success: r.success,
-    }));
-    return buildBins(rowsQ, ["Independent teams (no shared authors)", "Original author(s) on the replication"]);
-  }, [filtered, strict]);
-
-  // Row-level correlation between replication success and each overlap
-  // metric, under the current criterion/filters/matching mode.
-  const correlations = useMemo(() => {
-    const metrics: { label: string; value: (p: PairOverlap) => number }[] = [
-      { label: "Number of shared authors", value: (p) => overlapOf(p, strict) },
-      { label: "Shared authors / original byline size", value: (p) => overlapOf(p, strict) / p.no },
-      {
-        label: "Original first/last author involved (0/1)",
-        value: (p) => (overlapOf(p, strict) > 0 && (strict ? p.flStrict : p.fl) ? 1 : 0),
-      },
-    ];
-    return metrics.map((m) => {
-      const xs: number[] = [];
-      const ys: number[] = [];
-      for (const r of filtered.rows) {
-        xs.push(m.value(r.pair));
-        ys.push(r.success ? 1 : 0);
-      }
-      return { label: m.label, r: pearson(xs, ys), rho: spearman(xs, ys), n: xs.length };
-    });
-  }, [filtered, strict]);
-
-  const gap =
-    headline.length === 2 && headline[0].count > 0 && headline[1].count > 0
-      ? headline[1].rate - headline[0].rate
-      : null;
 
   return (
     <div className="max-w-5xl mx-auto space-y-8">
@@ -380,36 +311,19 @@ export function AuthorOverlapDashboard({
             Strict matching (ID-verified shared authors only)
           </span>
         </label>
-      </div>
 
-      {/* Headline: independent vs involved */}
-      {headline.length === 2 && headline[0].count > 0 && headline[1].count > 0 && (
-        <section className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {headline.map((h) => (
-            <div
-              key={h.label}
-              className="border border-gray-200 dark:border-gray-700 rounded-lg px-5 py-4"
-            >
-              <p className="text-sm text-gray-600 dark:text-gray-300">{h.label}</p>
-              <p className="mt-1 text-3xl font-semibold tabular-nums">{h.rate.toFixed(1)}%</p>
-              <p className="mt-1 text-xs text-gray-500 dark:text-gray-400 tabular-nums">
-                {h.replicated.toLocaleString()}/{h.count.toLocaleString()} replicated &middot;
-                95% CI [{h.ciLow.toFixed(0)}&ndash;{h.ciHigh.toFixed(0)}%]
-              </p>
-            </div>
-          ))}
-          {gap !== null && (
-            <p className="sm:col-span-2 text-sm text-gray-500 dark:text-gray-400">
-              Replications with at least one original author replicate{" "}
-              <strong className="text-gray-700 dark:text-gray-200">
-                {Math.abs(gap).toFixed(1)} percentage points {gap >= 0 ? "more" : "less"}
-              </strong>{" "}
-              often than fully independent replications under the current criterion and
-              filters. This gap is descriptive, not causal &mdash; see the caveats below.
-            </p>
-          )}
-        </section>
-      )}
+        <label className="flex items-center gap-2 text-sm cursor-pointer pb-1.5">
+          <input
+            type="checkbox"
+            checked={showCI}
+            onChange={(e) => setShowCI(e.target.checked)}
+            className="h-4 w-4 accent-blue-600"
+          />
+          <span className="text-gray-600 dark:text-gray-300">
+            Show 95% confidence intervals
+          </span>
+        </label>
+      </div>
 
       {/* Binned chart */}
       <section className="space-y-3">
@@ -421,64 +335,25 @@ export function AuthorOverlapDashboard({
         ) : (
           <div>
             <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-1.5 w-fit max-w-full">
-              <BinnedChart bins={chartBins} xTitle={VIEW_X_TITLES[view]} />
+              <BinnedChart bins={chartBins} xTitle={VIEW_X_TITLES[view]} showCI={showCI} />
             </div>
-            <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-              All determinate effect-level replications whose original and replication
-              papers both have DOIs with resolvable author lists. Each replication
-              attempt counts once. Hover a bar for its 95% interval from a cluster
-              bootstrap ({BOOTSTRAP_ITERS.toLocaleString()} resamples of original papers
-              with replacement), which accounts for multiple replications and multiple
-              effects of the same original paper not being independent.
-            </p>
+            {showCI && (
+              <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                Error bars are 95% intervals from a cluster bootstrap (
+                {BOOTSTRAP_ITERS.toLocaleString()} resamples of original papers with
+                replacement), which accounts for multiple replications and multiple
+                effects of the same original paper not being independent.
+              </p>
+            )}
           </div>
         )}
       </section>
 
-      <p className="text-sm text-gray-500 dark:text-gray-400">
-        {filtered.rows.length.toLocaleString()} replications plotted &middot;{" "}
-        {filtered.excluded.toLocaleString()} determinate rows excluded (missing DOI on
-        either side, or no author data found)
-      </p>
-
-      {/* Correlation table */}
-      <section className="space-y-3">
-        <div>
-          <h2 className="text-xl md:text-2xl font-semibold tracking-tight">
-            Correlation between author overlap and replication success
-          </h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            Row-level correlation between each overlap measure and whether the
-            replication attempt succeeded (1) or not (0), under the current criterion,
-            filters and matching mode.
-          </p>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="text-sm border-collapse">
-            <thead>
-              <tr className="border-b border-gray-200 dark:border-gray-700 text-left text-gray-600 dark:text-gray-300">
-                <th className="py-2 pr-6 font-medium">Overlap measure</th>
-                <th className="py-2 pr-6 font-medium text-right">Point-biserial r</th>
-                <th className="py-2 pr-6 font-medium text-right">Spearman &rho;</th>
-                <th className="py-2 font-medium text-right">Replications (n)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {correlations.map((c) => (
-                <tr key={c.label} className="border-b border-gray-100 dark:border-gray-800">
-                  <td className="py-2 pr-6">{c.label}</td>
-                  <td className="py-2 pr-6 text-right tabular-nums">{c.r === null ? "—" : c.r.toFixed(2)}</td>
-                  <td className="py-2 pr-6 text-right tabular-nums">{c.rho === null ? "—" : c.rho.toFixed(2)}</td>
-                  <td className="py-2 text-right tabular-nums">{c.n.toLocaleString()}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
       {/* Methodology */}
       <section className="text-xs text-gray-500 dark:text-gray-400 space-y-2 border-t border-gray-200 dark:border-gray-800 pt-6">
+        <h2 className="text-xl md:text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-100">
+          Method details
+        </h2>
         <p>
           <strong>Author matching.</strong> Both papers of each (original, replication)
           pair are resolved by DOI to their author lists, primarily from a SciSciNet-v2
@@ -487,11 +362,37 @@ export function AuthorOverlapDashboard({
           database&rsquo;s own author-name fields as a last resort. Two authors count as
           the same person when they share a disambiguated OpenAlex author ID, or when
           their normalized names match (diacritics stripped, surname + first initial,
-          &ldquo;Last,&nbsp;First&rdquo; ordering handled). Name matches between authors
-          whose OpenAlex IDs both exist but differ are checked against ORCID: different
-          ORCIDs veto the match, identical ORCIDs confirm it. The &ldquo;strict
-          matching&rdquo; toggle restricts overlap to ID-verified shared authors as a
-          sensitivity check against same-name false positives.
+          &ldquo;Last,&nbsp;First&rdquo; ordering handled, single-character typos
+          tolerated for full given names).
+        </p>
+        <p>
+          <strong>Why differing OpenAlex IDs don&rsquo;t veto a name match.</strong>{" "}
+          OpenAlex&rsquo;s author disambiguation errs heavily toward <em>splitting</em>:
+          the same person often carries several author IDs across their papers
+          (initials-only bylines, typos, name variants, affiliation changes), while
+          wrongly <em>merging</em> two people into one ID is rarer. Sharing an ID is
+          therefore good evidence two byline entries are the same person, but carrying
+          different IDs is <em>weak</em> evidence they are different people. Meanwhile,
+          the same surname and initial appearing on a paper and on its direct
+          replication in the same literature is strong contextual evidence of identity.
+          So a name match is allowed to bridge differing IDs, with ORCID as the
+          tie-breaker where available: different ORCIDs veto the match, identical ORCIDs
+          confirm it, and missing ORCIDs let the name match stand. (A real example from
+          this database: the first author of an Alzheimer&rsquo;s cohort study appears
+          under one OpenAlex ID on the original and under a second ID &mdash; via the
+          typo &ldquo;Leonared&rdquo; &mdash; on its follow-up; only name matching
+          recovers that the two papers share their lead author.)
+        </p>
+        <p>
+          <strong>Strict matching.</strong> The &ldquo;strict matching&rdquo; toggle
+          counts only ID-verified shared authors and discards every name-based match.
+          Because ID splits then misclassify some genuinely author-involved replications
+          as independent, strict mode is a deliberate <em>lower bound</em> on overlap
+          &mdash; biased toward the &ldquo;independent&rdquo; side. Its purpose is
+          falsification: if the gap between independent and author-involved replication
+          rates were an artifact of same-name false positives, it would shrink under
+          strict matching. A gap that survives the toggle cannot be explained by
+          name-matching errors.
         </p>
         <p>
           <strong>Not causal.</strong> Original-author involvement is not randomly
@@ -525,7 +426,7 @@ export function AuthorOverlapDashboard({
           {coverage.rowsWithBothDois.toLocaleString()} rows have both DOIs.
         </p>
         <p>
-          <strong>Units.</strong> The chart and correlations count every determinate
+          <strong>Units.</strong> The chart counts every determinate
           replication attempt once. Reversals count as determinate non-replications;
           inconclusive rows are excluded. Overlap is counted on the original
           paper&rsquo;s byline, so it never exceeds the original&rsquo;s author count.
@@ -542,7 +443,7 @@ export function AuthorOverlapDashboard({
   );
 }
 
-function BinnedChart({ bins, xTitle }: { bins: Bin[]; xTitle: string }) {
+function BinnedChart({ bins, xTitle, showCI }: { bins: Bin[]; xTitle: string; showCI: boolean }) {
   const isMobile = useIsMobile();
   const W = isMobile ? 380 : 720;
   const H = isMobile ? 300 : 320;
@@ -555,7 +456,7 @@ function BinnedChart({ bins, xTitle }: { bins: Bin[]; xTitle: string }) {
   const plotW = W - M.left - M.right;
   const plotH = H - M.top - M.bottom;
   const bandW = plotW / bins.length;
-  const barW = bandW * 0.6;
+  const barW = bandW * 0.5;
   const y = (pct: number) => M.top + plotH * (1 - pct / 100);
 
   // Long categorical labels (lead-author view) wrap onto two lines.
@@ -592,6 +493,8 @@ function BinnedChart({ bins, xTitle }: { bins: Bin[]; xTitle: string }) {
           const bx = cx - barW / 2;
           const top = y(b.rate);
           const labelLines = wrapLabel(b.label);
+          const capW = Math.min(10, barW * 0.5);
+          const labelY = (showCI ? Math.min(top, y(b.ciHigh)) : top) - 6;
           return (
             <g key={i}>
               <rect x={bx} y={top} width={barW} height={M.top + plotH - top} rx={2} fill={REPLICATED} opacity={0.85}>
@@ -599,8 +502,16 @@ function BinnedChart({ bins, xTitle }: { bins: Bin[]; xTitle: string }) {
                   {`${b.label}: ${b.rate.toFixed(1)}% replicated (${b.replicated}/${b.count}), cluster-bootstrap 95% CI [${b.ciLow.toFixed(0)}–${b.ciHigh.toFixed(0)}%]`}
                 </title>
               </rect>
-              {/* rate label, above the bar */}
-              <text x={cx} y={top - 6} textAnchor="middle" fontSize={F.val} fontWeight={600} fill="currentColor">
+              {/* 95% CI whiskers (cluster bootstrap) */}
+              {showCI && b.count > 0 && (
+                <g stroke="currentColor" strokeWidth={1.5} opacity={0.65}>
+                  <line x1={cx} x2={cx} y1={y(b.ciHigh)} y2={y(b.ciLow)} />
+                  <line x1={cx - capW / 2} x2={cx + capW / 2} y1={y(b.ciHigh)} y2={y(b.ciHigh)} />
+                  <line x1={cx - capW / 2} x2={cx + capW / 2} y1={y(b.ciLow)} y2={y(b.ciLow)} />
+                </g>
+              )}
+              {/* rate label, above the bar (and above the whisker when shown) */}
+              <text x={cx} y={labelY} textAnchor="middle" fontSize={F.val} fontWeight={600} fill="currentColor">
                 {b.rate.toFixed(0)}%
               </text>
               {/* x labels */}
@@ -617,7 +528,15 @@ function BinnedChart({ bins, xTitle }: { bins: Bin[]; xTitle: string }) {
                   {ln}
                 </text>
               ))}
-              <text x={cx} y={H - M.bottom + (isMobile ? 36 : 42)} textAnchor="middle" fontSize={F.sub} fill="currentColor" opacity={0.5}>
+              {/* n= sits directly under the tick label, however many lines it wrapped to */}
+              <text
+                x={cx}
+                y={H - M.bottom + (isMobile ? 13 : 16) + labelLines.length * (isMobile ? 10 : 12)}
+                textAnchor="middle"
+                fontSize={F.sub}
+                fill="currentColor"
+                opacity={0.5}
+              >
                 n={b.count.toLocaleString()}
               </text>
             </g>

@@ -12,6 +12,7 @@ from fetch_metadata_from_doi import (
     _authors_have_abbreviations,
     _new_authors_are_better,
 )
+from author_case import standardize_author_name, standardize_authors_cell
 
 
 class TestIsInitialToken(unittest.TestCase):
@@ -159,6 +160,84 @@ class TestNewAuthorsAreBetter(unittest.TestCase):
     def test_quality_override_rejects_low_quality(self):
         # 3/6 vs 0/10: 6 < 7, but 50% < 90% → reject
         self.assertFalse(_new_authors_are_better(self.ABBREV_10, self.MIXED_6))
+
+
+class TestStandardizeAuthorCase(unittest.TestCase):
+    """Case standardization from author_case.py: ALL-CAPS and all-lowercase
+    names become proper case; orgs, initials blocks, credentials, Roman
+    numerals and already-proper names are untouched."""
+
+    def test_allcaps_simple(self):
+        self.assertEqual(standardize_author_name("JAMES R. BEEBE"), "James R. Beebe")
+
+    def test_allcaps_surname_only(self):
+        self.assertEqual(standardize_author_name("Eddy NAHMIAS"), "Eddy Nahmias")
+
+    def test_mc_prefix(self):
+        self.assertEqual(standardize_author_name("SEAN MCCREA"), "Sean McCrea")
+
+    def test_hyphen_compound(self):
+        self.assertEqual(
+            standardize_author_name("MILA AMERINE-DICKENS"), "Mila Amerine-Dickens")
+
+    def test_apostrophe(self):
+        self.assertEqual(standardize_author_name("PATRICK O'BRIEN"), "Patrick O'Brien")
+
+    def test_diacritics(self):
+        self.assertEqual(
+            standardize_author_name("HELGE ARNULF SØLVBERG"), "Helge Arnulf Sølvberg")
+
+    def test_all_lowercase(self):
+        self.assertEqual(standardize_author_name("dean mobbs"), "Dean Mobbs")
+
+    def test_roman_numeral_suffix(self):
+        self.assertEqual(standardize_author_name("JOHN DOE III"), "John Doe III")
+
+    def test_trailing_initials_kept(self):
+        # vowel-free trailing block is always initials
+        self.assertEqual(standardize_author_name("ASCH SE"), "Asch SE")
+        self.assertEqual(standardize_author_name("MCGUIRE WJ"), "McGuire WJ")
+
+    def test_caps_surname_not_mistaken_for_initials(self):
+        # vowel-bearing trailing block outside an initials-style cell
+        self.assertEqual(standardize_author_name("Yu KOU"), "Yu Kou")
+
+    def test_org_names_untouched(self):
+        for org in (
+            "The COVID-19 Host Genetics Initiative",
+            "Avon Longitudinal Study of Parents and Children (ALSPAC)",
+            "Open Science Collaboration",
+        ):
+            self.assertEqual(standardize_author_name(org), org)
+
+    def test_et_al_untouched(self):
+        self.assertEqual(standardize_author_name("et al."), "et al.")
+
+    def test_credentials_untouched(self):
+        self.assertEqual(
+            standardize_author_name("CCC-SLP Steven B. Leder PhD"),
+            "CCC-SLP Steven B. Leder PhD")
+
+    def test_proper_names_untouched(self):
+        for name in ("J. Lukas Thürmer", "Leander de Schutter", "ZoAnn E. Dreyer"):
+            self.assertEqual(standardize_author_name(name), name)
+
+    def test_cell_initials_context(self):
+        # >= 2 "Surname ABC" names in the cell: vowel-bearing blocks are
+        # initials too (ACE), and everything keeps its block
+        cell = "Brown GDA; Lawrence ACE; van Aert RCM"
+        self.assertEqual(standardize_authors_cell(cell), cell)
+
+    def test_cell_mixed(self):
+        self.assertEqual(
+            standardize_authors_cell("JAMES R. BEEBE; WESLEY BUCKWALTER"),
+            "James R. Beebe; Wesley Buckwalter")
+
+    def test_cell_non_string_passthrough(self):
+        self.assertIsNone(standardize_authors_cell(None))
+        self.assertEqual(standardize_authors_cell(""), "")
+        nan = float("nan")
+        self.assertIs(standardize_authors_cell(nan), nan)
 
 
 if __name__ == "__main__":

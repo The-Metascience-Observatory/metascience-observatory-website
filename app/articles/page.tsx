@@ -29,10 +29,10 @@ interface SubstackMeta {
 
 const projectOverviews: ArticleMeta[] = [
   {
-    href: "/replication-database-overview",
-    title: "Replications Database",
-    image: "/assets/herschel-observatory-cropped.png",
-    alt: "Engraving of the Herschel observatory telescope",
+    href: "/overview-replication-database",
+    title: "Replications\nDatabase",
+    image: "/assets/woodcut_square_crops/square_1610_library_Leiden.png",
+    alt: "Engraving of two scholars reading chained books in the 1610 Leiden university library",
   },
   {
     href: "/forensic-metascience-agent",
@@ -41,10 +41,16 @@ const projectOverviews: ArticleMeta[] = [
     alt: "Woodcut of a Crookes radiometer",
   },
   {
-    href: "/birds-eye-review-overview",
-    title: "Bird's Eye Reviews",
+    href: "/overview-birds-eye-reviews",
+    title: "Bird's Eye\nReviews",
     image: "/assets/woodcut_square_crops/flying_machine_square.png",
     alt: "Woodcut of an aerial flying machine",
+  },
+  {
+    href: "/overview-explorer",
+    title: "Metascience Observatory Explorer",
+    image: "/assets/woodcut_square_crops/microscope_square.png",
+    alt: "Engraving of a labeled compound microscope",
   },
 ];
 
@@ -66,6 +72,47 @@ const articles: ArticleMeta[] = [
     title: "Defining replication",
     image: "/assets/woodcut_square_crops/compass_square.png",
     alt: "Woodcut of a weather vane compass",
+  },
+];
+
+// Mirrors the link cluster on the replications database page itself, minus its
+// "Show other pages" disclosure control (which is UI, not a page).
+const replicationsDatabasePages: DocMeta[] = [
+  {
+    href: "/replications-database/by-discipline",
+    title: "Replication rate by discipline",
+  },
+  {
+    href: "/replications-database/by-journal",
+    title: "Replication rate by journal",
+  },
+  {
+    href: "/replications-database/by-p-value",
+    title: "Replication rate by original p-value",
+  },
+  {
+    href: "/replications-database/by-impact-factor",
+    title: "Replication rate by journal impact factor",
+  },
+  {
+    href: "/replications-database/by-journal-rank",
+    title: "Replication rate by journal rank",
+  },
+  {
+    href: "/replications-database/by-citation-count",
+    title: "Replication rate by citation count",
+  },
+  {
+    href: "/replications-database/by-h-index",
+    title: "Replication rate by author h-index",
+  },
+  {
+    href: "/replications-database/by-author-overlap",
+    title: "Replication rate by author overlap",
+  },
+  {
+    href: "/replications-database/by-year",
+    title: "Replication rate by year",
   },
 ];
 
@@ -134,7 +181,7 @@ export default function ArticlesPage() {
           <h1 className="text-3xl font-bold mb-8 text-foreground">Articles</h1>
 
           <h2 className="text-2xl font-bold mb-6 text-foreground">Project Overviews</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {projectOverviews.map((project) => (
               <Link key={project.href} href={project.href} className="group block">
                 <Card className="aspect-square flex flex-col overflow-hidden border-border transition-colors hover:border-primary/50 hover:shadow-md">
@@ -143,12 +190,12 @@ export default function ArticlesPage() {
                       src={project.image}
                       alt={project.alt}
                       fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
                   <div className="p-3 shrink-0">
-                    <h2 className="font-clarendon font-semibold text-base text-foreground line-clamp-2">
+                    <h2 className="font-clarendon font-semibold text-base text-foreground text-center whitespace-pre-line line-clamp-3">
                       {project.title}
                     </h2>
                   </div>
@@ -172,7 +219,7 @@ export default function ArticlesPage() {
                     />
                   </div>
                   <div className="p-3 shrink-0">
-                    <h2 className="font-clarendon font-semibold text-base text-foreground line-clamp-2">
+                    <h2 className="font-clarendon font-semibold text-base text-foreground text-center whitespace-pre-line line-clamp-2">
                       {article.title}
                     </h2>
                   </div>
@@ -181,20 +228,42 @@ export default function ArticlesPage() {
             ))}
           </div>
 
-          <h2 className="text-2xl font-bold mt-16 mb-3 text-foreground">
-            Technical Documentation
-          </h2>
-          <div className="space-y-4">
-            {documentation.map((doc) => (
-              <div key={doc.href}>
-                <Link
-                  href={doc.href}
-                  className="text-foreground hover:text-foreground/70 underline"
-                >
-                  {doc.title}
-                </Link>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mt-16">
+            <div>
+              <h2 className="text-2xl font-bold mb-3 text-foreground">
+                Replications Database Pages
+              </h2>
+              <div className="space-y-4">
+                {replicationsDatabasePages.map((page) => (
+                  <div key={page.href}>
+                    <Link
+                      href={page.href}
+                      className="text-foreground hover:text-foreground/70 underline"
+                    >
+                      {page.title}
+                    </Link>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            <div>
+              <h2 className="text-2xl font-bold mb-3 text-foreground">
+                Technical Documentation
+              </h2>
+              <div className="space-y-4">
+                {documentation.map((doc) => (
+                  <div key={doc.href}>
+                    <Link
+                      href={doc.href}
+                      className="text-foreground hover:text-foreground/70 underline"
+                    >
+                      {doc.title}
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
           <h2 className="text-2xl font-bold mt-16 mb-3 text-foreground">

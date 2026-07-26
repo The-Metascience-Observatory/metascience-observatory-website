@@ -12,7 +12,7 @@ export const metadata = {
 };
 
 function getMarkdownContent(): string {
-  const filePath = path.join(process.cwd(), "content/docs/replication-database-overview.md");
+  const filePath = path.join(process.cwd(), "content/docs/overview-replication-database.md");
   try {
     return fs.readFileSync(filePath, "utf-8");
   } catch {

@@ -293,7 +293,7 @@ function ReplicationsDatabaseContent() {
     new Set(DEFAULT_COLUMNS)
   );
   const [showColumnSelector, setShowColumnSelector] = useState(false);
-  const [outcomeMethod, setOutcomeMethod] = useState<"significance" | "orig_in_rep_ci" | "rep_in_orig_ci">("rep_in_orig_ci");
+  const [outcomeMethod, setOutcomeMethod] = useState<"significance" | "orig_in_rep_ci" | "rep_in_orig_ci">("significance");
 
   useEffect(() => {
     async function fetchData() {
@@ -948,7 +948,7 @@ function ReplicationsDatabaseContent() {
             </div>
             <div className="mt-2">
               <label className="block text-xs font-medium opacity-80 mb-1">
-                Method{" "}
+                Method for determining replication outcome from stats{" "}
                 <a
                   href="/docs/replication-outcome-classification"
                   className="text-[10px] opacity-60 hover:opacity-80 underline"

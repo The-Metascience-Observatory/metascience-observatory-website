@@ -33,7 +33,17 @@ const nextConfig = {
       },
       {
         source: '/docs/about-birds-eye-reviews',
-        destination: '/birds-eye-review-overview',
+        destination: '/overview-birds-eye-reviews',
+        permanent: true,
+      },
+      {
+        source: '/birds-eye-review-overview',
+        destination: '/overview-birds-eye-reviews',
+        permanent: true,
+      },
+      {
+        source: '/replication-database-overview',
+        destination: '/overview-replication-database',
         permanent: true,
       },
       {

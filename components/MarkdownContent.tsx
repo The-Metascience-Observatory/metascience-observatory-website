@@ -28,11 +28,18 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
               {children}
             </h1>
           ),
-          h2: ({ children, id }) => (
-            <h2 id={id} className="text-2xl font-semibold mb-4 mt-10 text-foreground border-b border-border pb-2 scroll-mt-20">
-              {children}
-            </h2>
-          ),
+          // remark-gfm labels the footnote list with an sr-only "Footnotes" h2. Keep it hidden
+          // for screen readers rather than restyling it as a visible section heading.
+          h2: ({ children, id, className }) =>
+            className?.includes("sr-only") ? (
+              <h2 id={id} className="sr-only">
+                {children}
+              </h2>
+            ) : (
+              <h2 id={id} className="text-2xl font-semibold mb-4 mt-10 text-foreground border-b border-border pb-2 scroll-mt-20">
+                {children}
+              </h2>
+            ),
           h3: ({ children, id }) => (
             <h3 id={id} className="text-xl font-semibold mb-3 mt-6 text-foreground scroll-mt-20">
               {children}
@@ -53,8 +60,9 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
               {children}
             </ol>
           ),
-          li: ({ children }) => (
-            <li className="leading-relaxed">
+          li: ({ children, id }) => (
+            // id is carried through so GFM footnote definitions remain jump targets
+            <li id={id} className="leading-relaxed scroll-mt-20">
               {children}
             </li>
           ),
@@ -71,7 +79,17 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
           hr: () => (
             <hr className="my-8 border-border" />
           ),
-          a: ({ href, children }) => {
+          // remark-gfm wraps footnote definitions in <section class="footnotes">. With the label
+          // hidden, this rule is what separates the notes from the body text above them.
+          section: ({ children, className }) =>
+            className?.includes("footnotes") ? (
+              <section className="mt-10 pt-6 border-t border-border text-sm text-foreground/80">
+                {children}
+              </section>
+            ) : (
+              <section className={className}>{children}</section>
+            ),
+          a: ({ href, children, id }) => {
             if (href === "mailto:OBFUSCATED_EMAIL") {
               const email = _de();
               return (
@@ -86,6 +104,8 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
             return (
               <a
                 href={href}
+                // id is carried through so GFM footnote backrefs (↩) can jump back to the marker
+                id={id}
                 className="text-blue-600 hover:text-blue-700 underline"
                 target={href?.startsWith("http") ? "_blank" : undefined}
                 rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}

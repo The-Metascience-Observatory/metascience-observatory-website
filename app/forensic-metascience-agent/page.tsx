@@ -310,17 +310,15 @@ export default function ForensicAgentToolkitPage() {
     <div className="min-h-screen">
       <Navbar />
       <main className="pt-20 pb-16">
-        <div className="container mx-auto px-4 py-12 max-w-5xl">
+        <div className="container mx-auto px-4 py-12 max-w-3xl">
           <DocsBackLink href="/articles" label="return to articles" />
-          <div className="max-w-3xl">
-            <MarkdownContent content={intro} />
-          </div>
+          <MarkdownContent content={intro} />
 
           <section>
             <h2 className="text-2xl font-semibold mb-4 mt-10 text-foreground border-b border-border pb-2">
               The toolkit
             </h2>
-            <p className="mb-8 leading-relaxed text-foreground/90 max-w-3xl">
+            <p className="mb-8 leading-relaxed text-foreground/90">
               The {totalTools} tools fall into the following families. Each check needs only the
               numbers printed in the paper &mdash; no raw data.
             </p>
@@ -329,9 +327,7 @@ export default function ForensicAgentToolkitPage() {
               {toolGroups.map((group) => (
                 <section key={group.title}>
                   <h3 className="text-xl font-semibold text-foreground">{group.title}</h3>
-                  <p className="text-foreground/70 leading-relaxed mt-2 mb-4 max-w-3xl">
-                    {group.blurb}
-                  </p>
+                  <p className="text-foreground/70 leading-relaxed mt-2 mb-4">{group.blurb}</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {group.tools.map((tool) => (
                       <Card key={tool.name} className="h-full p-5 border-border">
@@ -356,7 +352,7 @@ export default function ForensicAgentToolkitPage() {
           </section>
 
           {outro && (
-            <div className="max-w-3xl mt-4">
+            <div className="mt-4">
               <MarkdownContent content={outro} />
             </div>
           )}

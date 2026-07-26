@@ -4,8 +4,10 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "predev": "bash scripts/dropbox-ignore.sh",
     "dev": "NODE_OPTIONS='--max-old-space-size=8192' next dev",
     "dev:safe": "bash scripts/with-dropbox-paused.sh npm run dev",
+    "prebuild": "bash scripts/dropbox-ignore.sh",
     "build": "next build",
     "build:safe": "bash scripts/with-dropbox-paused.sh npm run build",
     "start": "next start",

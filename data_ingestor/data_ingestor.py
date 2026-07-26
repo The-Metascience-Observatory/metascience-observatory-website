@@ -27,6 +27,7 @@ import random
 from datetime import datetime
 from difflib import SequenceMatcher
 from fetch_metadata_from_doi import fetch_metadata_from_doi, _new_authors_are_better, _authors_have_abbreviations
+from author_case import standardize_authors_cell
 from fetch_metadata_from_title import fetch_metadata_from_title
 
 
@@ -630,10 +631,13 @@ def format_author_initial(name):
 
 def format_authors_string(authors_str):
     """
-    Format a semicolon-separated authors string, adding periods after single-letter initials.
+    Format a semicolon-separated authors string: standardize name casing
+    (ALL-CAPS / all-lowercase names → proper case, see author_case.py) and
+    add periods after single-letter initials.
     """
     if not isinstance(authors_str, str) or not authors_str.strip():
         return authors_str
+    authors_str = standardize_authors_cell(authors_str)
     authors = [format_author_initial(a.strip()) for a in authors_str.split(';')]
     return '; '.join(authors)
 
@@ -1712,6 +1716,18 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
             input_df[col] = input_df[col].apply(clean_doi_url)
             input_df[col] = input_df[col].apply(normalize_url_to_doi_url)
             print(f"  Cleaned and normalized {col} (bare DOIs → https://doi.org/ URLs, http → https)")
+
+    # Standardize author-name casing (ALL-CAPS / all-lowercase names → proper
+    # case; organizations, initials blocks and credentials preserved — see
+    # author_case.py). Guarantees no shouting names enter the database even
+    # when API enrichment is skipped.
+    for col in ['original_authors', 'replication_authors']:
+        if col in input_df.columns:
+            before = input_df[col].astype(str)
+            input_df[col] = input_df[col].apply(standardize_authors_cell)
+            changed = int((before != input_df[col].astype(str)).sum())
+            if changed:
+                print(f"  Standardized author-name case in {changed} {col} cell(s)")
 
     # Apply discipline to all rows if specified
     if discipline:
