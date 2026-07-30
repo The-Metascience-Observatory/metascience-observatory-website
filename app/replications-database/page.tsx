@@ -7,7 +7,14 @@ import { ReplicationsNavbar } from "@/components/ReplicationsNavbar";
 import { Footer } from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import { generateCitationHtml, transformCitationHtmlToExplorer, citationSearchText } from "@/lib/citations";
-import { toNumber, toValidR, getOutcomeForRow } from "@/lib/replicationOutcome";
+import {
+  classifyReportedResult,
+  getOutcomeForRow,
+  toBinary,
+  toNumber,
+  toValidR,
+} from "@/lib/replicationOutcome";
+import { SuccessRateNote } from "@/components/SuccessRateNote";
 import INITIATIVE_TAG_NAMES from "@/data/initiative_tag_names.json";
 import TOPIC_ONTOLOGY from "@/data/metascience_observatory_topic_ontology.json";
 
@@ -584,10 +591,29 @@ function ReplicationsDatabaseContent() {
     }
 
     const pct = (v: number) => (n > 0 ? Math.round((v / n) * 1000) / 10 : 0);
-    return { n, success, failure, reversal, inconclusive, pctSuccess: pct(success), pctFailure: pct(failure), pctReversal: pct(reversal), pctInconclusive: pct(inconclusive) };
+    const rateN = success + failure + reversal;
+    return {
+      n,
+      success,
+      failure,
+      reversal,
+      inconclusive,
+      pctSuccess: pct(success),
+      pctFailure: pct(failure),
+      pctReversal: pct(reversal),
+      pctInconclusive: pct(inconclusive),
+      rateN,
+      rate: rateN > 0 ? Math.round((success / rateN) * 1000) / 10 : null,
+    };
   }, [computedOutcomes, outcomeMethod]);
 
-  // Stat for result column-based display
+  // Stat for result column-based display.
+  //
+  // Two distinct quantities live here and must not be confused:
+  //  - the OUTCOME MIX, whose denominator `n` is every row with a recorded
+  //    result (inconclusive included) — this is a composition, not a rate;
+  //  - the SUCCESS RATE, whose denominator `rateN` is success+failure+reversal,
+  //    per SUCCESS_RATE_DEFINITION. This is the number every other page shows.
   const resultStat = useMemo(() => {
     let n = 0;
     let success = 0;
@@ -596,33 +622,46 @@ function ReplicationsDatabaseContent() {
     let inconclusive = 0;
 
     for (const r of filteredRows) {
-      const result = String(r.result ?? "").trim();
-      // Skip rows with no result — they should not count in outcome mix
-      if (!result) continue;
+      const outcome = classifyReportedResult(r.result);
+      // Skip rows with no result at all — they belong to neither quantity.
+      if (!String(r.result ?? "").trim()) continue;
       n++;
-      if (result === "success") {
+      if (outcome === "success") {
         success++;
-      } else if (result === "failure") {
+      } else if (outcome === "failure") {
         failure++;
-      } else if (result === "reversal") {
+      } else if (outcome === "reversal") {
         reversal++;
       } else {
         inconclusive++;
       }
     }
     const pct = (v: number) => (n > 0 ? Math.round((v / n) * 1000) / 10 : 0);
-    return { n, success, failure, reversal, inconclusive, pctSuccess: pct(success), pctFailure: pct(failure), pctReversal: pct(reversal), pctInconclusive: pct(inconclusive) };
+    const rateN = success + failure + reversal;
+    return {
+      n,
+      success,
+      failure,
+      reversal,
+      inconclusive,
+      pctSuccess: pct(success),
+      pctFailure: pct(failure),
+      pctReversal: pct(reversal),
+      pctInconclusive: pct(inconclusive),
+      rateN,
+      rate: rateN > 0 ? Math.round((success / rateN) * 1000) / 10 : null,
+    };
   }, [filteredRows]);
 
   const yearBins = useMemo(() => {
-    const entries: Array<{ year: number; result: string }> = [];
+    const entries: Array<{ year: number; outcome: "success" | "failure" | null }> = [];
     for (const r of filteredRows) {
       const yearRaw = toNumber(r.original_year);
       if (yearRaw == null || yearRaw < 1900 || yearRaw > 2030) continue;
       const year = Math.floor(yearRaw);
       const res = String(r.result ?? "").trim();
       if (!res) continue;
-      entries.push({ year, result: res });
+      entries.push({ year, outcome: toBinary(classifyReportedResult(res)) });
     }
     if (entries.length === 0) return [];
 
@@ -637,6 +676,7 @@ function ReplicationsDatabaseContent() {
       success: number;
       failure: number;
       inconclusive: number;
+      rateN: number;
       rate: number;
     }> = [];
 
@@ -644,16 +684,20 @@ function ReplicationsDatabaseContent() {
       const end = start + 4;
       const inBin = entries.filter(e => e.year >= start && e.year <= end);
       const total = inBin.length;
-      const success = inBin.filter(e => e.result === "success").length;
-      const failure = inBin.filter(e => e.result === "failure").length;
+      // Canonical rate: reversal counts as a failure and inconclusive rows are
+      // excluded from the denominator, so `rateN` (not `total`) is the base.
+      const success = inBin.filter(e => e.outcome === "success").length;
+      const failure = inBin.filter(e => e.outcome === "failure").length;
       const inconclusive = total - success - failure;
-      const rate = total >= 20 ? Math.round((success / total) * 1000) / 10 : -1;
+      const rateN = success + failure;
+      const rate = rateN >= 20 ? Math.round((success / rateN) * 1000) / 10 : -1;
       bins.push({
         label: `${start}-${String(end).slice(2)}`,
         total,
         success,
         failure,
         inconclusive,
+        rateN,
         rate,
       });
     }
@@ -926,6 +970,15 @@ function ReplicationsDatabaseContent() {
             })()}
           </div>
           <div className="border-t mt-3 pt-3">
+            <div className="flex items-baseline justify-between gap-2">
+              <span className="text-xs font-medium">Replication success rate</span>
+              <span className="text-lg font-semibold tabular-nums">
+                {resultStat.rate != null ? `${resultStat.rate}%` : "--"}
+              </span>
+            </div>
+            <SuccessRateNote def="reported" unit="effect" n={resultStat.rateN} className="mt-1" />
+          </div>
+          <div className="border-t mt-3 pt-3">
             <div className="text-xs font-medium mb-2">Outcome mix - computed from stats when available <span className="font-bold">({outcomeStat.n} effect replications)</span></div>
             <div className="space-y-1">
               <div className="flex items-center gap-2">
@@ -966,6 +1019,19 @@ function ReplicationsDatabaseContent() {
                 <option value="rep_in_orig_ci">Replication effect size in original 95% confidence interval?</option>
               </select>
             </div>
+            <div className="flex items-baseline justify-between gap-2 mt-3">
+              <span className="text-xs font-medium">Success rate under this method</span>
+              <span className="text-base font-semibold tabular-nums">
+                {outcomeStat.rate != null ? `${outcomeStat.rate}%` : "--"}
+              </span>
+            </div>
+            <SuccessRateNote
+              def={outcomeMethod}
+              unit="effect"
+              n={outcomeStat.rateN}
+              filter="rows with the statistics needed to apply this method"
+              className="mt-1"
+            />
           </div>
         </div>
         <div className="border rounded p-4">
@@ -979,7 +1045,7 @@ function ReplicationsDatabaseContent() {
             <div className="text-xs font-medium">
               Experiment Replication Success Rate by Year of Original Publication{" "}
               <span className="font-bold">
-                ({`${yearBins.filter(b => b.rate >= 0).reduce((s, b) => s + b.total, 0)} effect replications from ${uniquePaperCount} original papers`})
+                ({`${yearBins.filter(b => b.rate >= 0).reduce((s, b) => s + b.rateN, 0)} classified effect replications from ${uniquePaperCount} original papers`})
               </span>
             </div>
             <a
@@ -992,6 +1058,13 @@ function ReplicationsDatabaseContent() {
           <div className="mt-2">
             <InlineYearBars bins={yearBins} threshold={20} binSize={5} />
           </div>
+          <SuccessRateNote
+            def="reported"
+            unit="effect"
+            n={yearBins.filter((b) => b.rate >= 0).reduce((s, b) => s + b.rateN, 0)}
+            filter="rows with a usable original publication year, in bins of 20+"
+            className="mt-2"
+          />
         </div>
         {/* Raw effect sizes scatterplot - hidden for now
         <div className="border rounded p-4">
@@ -1449,10 +1522,13 @@ function InlineScatter({ points, showReversal = true }: { points: ScatterPoint[]
 
 type YearBin = {
   label: string;
+  /** Every row in the bin with a recorded result, inconclusive included. */
   total: number;
   success: number;
   failure: number;
   inconclusive: number;
+  /** Denominator of `rate`: success + failure (reversals already folded in). */
+  rateN: number;
   rate: number;
 };
 
@@ -1504,10 +1580,12 @@ function InlineYearBars({ bins, threshold, binSize }: { bins: YearBin[]; thresho
             const insufficientData = bin.rate < 0;
             const barH = insufficientData ? 0 : (bin.rate / 100) * innerH;
             const by = innerH - barH;
-            const [ciLow, ciHigh] = wilsonCI(bin.success, bin.total);
+            // CI and label share the rate's denominator (rateN), not the bin's
+            // full row count, so the interval matches the bar it sits on.
+            const [ciLow, ciHigh] = wilsonCI(bin.success, bin.rateN);
             return (
               <g key={bin.label}>
-                <title>{insufficientData ? `${bin.label}: insufficient data (${bin.total} replications)` : `${bin.label}: ${bin.rate}% success (${bin.success}/${bin.total}) · 95% CI [${ciLow.toFixed(1)}%–${ciHigh.toFixed(1)}%]`}</title>
+                <title>{insufficientData ? `${bin.label}: insufficient data (${bin.rateN} classified replications)` : `${bin.label}: ${bin.rate}% success (${bin.success}/${bin.rateN} classified; ${bin.inconclusive} inconclusive excluded) · 95% CI [${ciLow.toFixed(1)}%–${ciHigh.toFixed(1)}%]`}</title>
                 {insufficientData ? (
                   <text x={cx} y={innerH - 24} textAnchor="middle" className="fill-current" style={{ fontSize: 7, opacity: 0.4 }}>
                     <tspan x={cx} dy="0">not</tspan>
@@ -1517,7 +1595,7 @@ function InlineYearBars({ bins, threshold, binSize }: { bins: YearBin[]; thresho
                 ) : (
                   <>
                     <rect x={bx} y={by} width={barWidth} height={Math.max(barH, 2)} fill="#2563eb" fillOpacity={0.85} rx={1} />
-                    <text x={cx} y={by - 4} textAnchor="middle" className="fill-current" style={{ fontSize: 9, opacity: 0.7 }}>{bin.total}</text>
+                    <text x={cx} y={by - 4} textAnchor="middle" className="fill-current" style={{ fontSize: 9, opacity: 0.7 }}>{bin.rateN}</text>
                   </>
                 )}
                 <text x={bx + barWidth / 2} y={innerH + 12} textAnchor="end" transform={`rotate(-45, ${bx + barWidth / 2}, ${innerH + 12})`} fill="#000000" style={{ fontSize: 9 }}>{bin.label}</text>

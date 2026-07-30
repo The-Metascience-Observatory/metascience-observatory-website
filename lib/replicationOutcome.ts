@@ -12,6 +12,156 @@ export type AnyRecord = Record<string, unknown>;
 
 export type OutcomeMethod = "significance" | "orig_in_rep_ci" | "rep_in_orig_ci";
 
+/** The four outcomes every definition on the site resolves to. */
+export type ReplicationOutcome = "success" | "failure" | "reversal" | "inconclusive";
+
+/**
+ * Every definition offered anywhere on the site: the database's stored `result`
+ * column ("reported") plus the three statistical criteria.
+ */
+export type SuccessDef = "reported" | OutcomeMethod;
+
+/**
+ * The frozen site-wide success-rate definition. Every page that displays a rate
+ * must use this rule and show this string (via <SuccessRateNote />) so a reader
+ * comparing two pages can see they are comparing like with like.
+ *
+ * Reversal counts as a failure: a statistically significant effect in the
+ * *opposite* direction is a determinate non-replication, not an absence of
+ * information. Inconclusive and unrecorded outcomes are excluded from the
+ * denominator rather than counted as failures, because "we could not tell" is
+ * not the same finding as "it did not replicate".
+ */
+export const SUCCESS_RATE_DEFINITION =
+  "success / (success + failure + reversal); inconclusive and unrecorded outcomes excluded";
+
+/** Human-readable labels for the definition selector, shared by every page. */
+export const SUCCESS_DEF_OPTIONS: { value: SuccessDef; label: string }[] = [
+  { value: "reported", label: "Reported result (as recorded in the database)" },
+  { value: "significance", label: "Statistically significant effect in the same direction?" },
+  { value: "orig_in_rep_ci", label: "Original effect size in replication 95% confidence interval?" },
+  { value: "rep_in_orig_ci", label: "Replication effect size in original 95% confidence interval?" },
+];
+
+/**
+ * Classify the database's stored `result` column.
+ *
+ * Exact match on a trimmed, lowercased value — deliberately NOT a substring
+ * `includes` test. The old per-page copies used `includes("success")` ordered
+ * before `includes("failure")`, which would classify a future value such as
+ * "partial success" or "failure (reversal)" by whichever token happened to be
+ * tested first rather than by its meaning.
+ */
+export function classifyReportedResult(result: unknown): ReplicationOutcome {
+  switch (String(result ?? "").trim().toLowerCase()) {
+    case "success":
+      return "success";
+    case "failure":
+      return "failure";
+    case "reversal":
+      return "reversal";
+    default:
+      // Includes blank and any unrecognised value.
+      return "inconclusive";
+  }
+}
+
+/**
+ * Single entry point for every definition on the site. Use this instead of
+ * branching on `def === "reported"` at each call site — that branching is what
+ * let the stored-result rule drift apart across pages.
+ */
+export function classifyRowByDef(row: AnyRecord, def: SuccessDef): ReplicationOutcome {
+  return def === "reported"
+    ? classifyReportedResult(row.result)
+    : getOutcomeForRow(row, def);
+}
+
+/**
+ * Collapse an outcome to the frozen binary, or null when the row falls outside
+ * the denominator. Reversal is a failure under *every* definition — applying
+ * this uniformly is what removes the by-p-value discontinuity where switching
+ * the criterion dropdown silently moved reversals in and out of the denominator.
+ */
+export function toBinary(outcome: ReplicationOutcome): "success" | "failure" | null {
+  if (outcome === "success") return "success";
+  if (outcome === "failure" || outcome === "reversal") return "failure";
+  return null;
+}
+
+/** Compact per-outcome code, for pages that precompute a code string per row. */
+export function outcomeCode(outcome: ReplicationOutcome): "s" | "f" | "r" | "i" {
+  if (outcome === "success") return "s";
+  if (outcome === "failure") return "f";
+  if (outcome === "reversal") return "r";
+  return "i";
+}
+
+/**
+ * The four definitions in the fixed order used by the compact per-row code
+ * string and by the criterion dropdowns. Index 0 is the stored `result` column.
+ */
+export const SUCCESS_DEFS: SuccessDef[] = [
+  "reported",
+  "significance",
+  "orig_in_rep_ci",
+  "rep_in_orig_ci",
+];
+
+/**
+ * Encode a row as a 4-character code string, one character per definition in
+ * SUCCESS_DEFS order, so a server component can ship one compact field per row
+ * instead of recomputing every statistic in the browser. Index into the string
+ * with the dashboard's selected criterion.
+ */
+export function outcomeCodesForRow(row: AnyRecord): string {
+  return SUCCESS_DEFS.map((def) => outcomeCode(classifyRowByDef(row, def))).join("");
+}
+
+/**
+ * The canonical rate over rows already encoded as code strings by
+ * `outcomeCodesForRow`, selecting the definition by its index in SUCCESS_DEFS.
+ * Lets the pre-encoded dashboards report the same rate as everywhere else
+ * without shipping the raw effect sizes to the browser.
+ */
+export function rateFromCodes(codes: Iterable<string>, criterion: number): SuccessRate {
+  let success = 0;
+  let failure = 0;
+  for (const code of codes) {
+    const c = code[criterion];
+    if (c === "s") success++;
+    else if (c === "f" || c === "r") failure++;
+  }
+  const n = success + failure;
+  return { success, failure, n, pct: n > 0 ? (success / n) * 100 : null };
+}
+
+export type SuccessRate = {
+  success: number;
+  failure: number;
+  /** Denominator: success + failure + reversal. */
+  n: number;
+  /** Percentage, or null when nothing was classifiable. */
+  pct: number | null;
+};
+
+/**
+ * The canonical rate over a set of rows, returning the denominator alongside the
+ * percentage so callers can disclose it. Effect-level (one row = one replication
+ * of one effect) — paper-level roll-ups build on `toBinary` directly.
+ */
+export function successRate(rows: AnyRecord[], def: SuccessDef = "reported"): SuccessRate {
+  let success = 0;
+  let failure = 0;
+  for (const row of rows) {
+    const binary = toBinary(classifyRowByDef(row, def));
+    if (binary === "success") success++;
+    else if (binary === "failure") failure++;
+  }
+  const n = success + failure;
+  return { success, failure, n, pct: n > 0 ? (success / n) * 100 : null };
+}
+
 export function toNumber(value: unknown): number | null {
   if (value == null) return null;
   if (typeof value === "string" && value.trim() === "") return null;

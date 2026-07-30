@@ -5,24 +5,21 @@ import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { useIsMobile } from "@/components/useIsMobile";
-import { getOutcomeForRow, toNumber, type OutcomeMethod, type AnyRecord } from "@/lib/replicationOutcome";
+import {
+  SUCCESS_DEF_OPTIONS,
+  classifyRowByDef,
+  toBinary,
+  toNumber,
+  type AnyRecord,
+  type SuccessDef,
+} from "@/lib/replicationOutcome";
+import { SuccessRateNote } from "@/components/SuccessRateNote";
 import { absZFromR, fitZCurve, type ZCurveResult } from "@/lib/zcurve";
 
 type FredResponse = {
   columns: string[];
   rows: AnyRecord[];
 };
-
-// "reported" uses the database's `result` column directly; the others reuse the
-// same statistical definitions offered on the main replications-database page.
-type SuccessDef = "reported" | OutcomeMethod;
-
-const SUCCESS_DEF_OPTIONS: { value: SuccessDef; label: string }[] = [
-  { value: "reported", label: "Reported result (as recorded in the database)" },
-  { value: "significance", label: "Statistically significant effect in the same direction?" },
-  { value: "orig_in_rep_ci", label: "Original effect size in replication 95% confidence interval?" },
-  { value: "rep_in_orig_ci", label: "Replication effect size in original 95% confidence interval?" },
-];
 
 // Fixed significance-threshold bins for the original finding's p-value.
 // Only originally-significant findings (p < 0.05) are charted, so there is no
@@ -77,21 +74,18 @@ function makeBin(label: string, success: number, failure: number): PBin {
 }
 
 /**
- * Classify a single row as a replication success / failure / excluded, per the
- * chosen definition. Returns null when the row should not count toward any rate
- * (inconclusive, or no recorded outcome).
+ * Classify a single row under the chosen definition, per the frozen site-wide
+ * rule in lib/replicationOutcome: reversal counts as a failure, inconclusive and
+ * unrecorded outcomes are excluded from the denominator. Returns null when the
+ * row falls outside the denominator.
+ *
+ * This is a thin alias over the shared helper so the rule cannot drift: the
+ * previous local copy on this page dropped reversals under "reported" but
+ * counted them as failures under every statistical criterion, so changing the
+ * dropdown silently changed the denominator as well as the criterion.
  */
 function classifyRow(row: AnyRecord, def: SuccessDef): "success" | "failure" | null {
-  if (def === "reported") {
-    const res = String(row.result ?? "").trim().toLowerCase();
-    if (res === "success") return "success";
-    if (res === "failure") return "failure";
-    return null;
-  }
-  const outcome = getOutcomeForRow(row, def);
-  if (outcome === "success") return "success";
-  if (outcome === "failure" || outcome === "reversal") return "failure";
-  return null; // inconclusive
+  return toBinary(classifyRowByDef(row, def));
 }
 
 function PValueBars({ bins }: { bins: PBin[] }) {
@@ -524,6 +518,13 @@ export default function ByPValuePage() {
               not comparable. Bins with fewer than {MIN_N} replications are not scored. Whiskers are
               Wilson 95% confidence intervals.
             </p>
+            <SuccessRateNote
+              def={successDef}
+              unit="effect"
+              n={totalReplications}
+              filter="originals with a recorded p-value below 0.05"
+              className="mt-2"
+            />
             <p className="mt-2 text-xs text-gray-400 dark:text-gray-500">
               Findings just under the conventional p = 0.05 threshold tend to replicate less often.
               About a fifth of original p-values are recorded only as an upper bound

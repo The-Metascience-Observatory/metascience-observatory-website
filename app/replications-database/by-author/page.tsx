@@ -4,6 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { classifyReportedResult, toBinary } from "@/lib/replicationOutcome";
+import { SuccessRateNote } from "@/components/SuccessRateNote";
 
 type AnyRecord = Record<string, unknown>;
 
@@ -110,13 +112,12 @@ export default function ByAuthorPage() {
     for (const r of data.rows) {
       const url = String(r.original_url ?? "").trim();
       const authorsStr = String(r.original_authors ?? "").trim();
-      const result = String(r.result ?? "").toLowerCase();
+      // Canonical rule: reversal counts as a failure, inconclusive and
+      // unrecorded outcomes stay out of the denominator entirely.
+      const outcome = toBinary(classifyReportedResult(r.result));
 
       if (!url || !authorsStr) continue;
-
-      const hasOutcome =
-        result.includes("success") || result.includes("failure");
-      if (!hasOutcome) continue;
+      if (outcome === null) continue;
 
       const authorList = authorsStr
         .split(";")
@@ -130,7 +131,7 @@ export default function ByAuthorPage() {
       }
 
       paper.totalCount++;
-      if (result.includes("success")) {
+      if (outcome === "success") {
         paper.successCount++;
       }
     }
@@ -221,6 +222,13 @@ export default function ByAuthorPage() {
               were successful. Each co-author on the original paper is credited.
               Only authors with {minPapers}+ original papers shown.
             </p>
+            <SuccessRateNote
+              unit="paper"
+              n={totalPaperAuthorships}
+              threshold={threshold}
+              filter={`paper-author pairs, authors with ${minPapers}+ original papers`}
+              className="mt-2"
+            />
           </div>
 
           {/* Controls row */}

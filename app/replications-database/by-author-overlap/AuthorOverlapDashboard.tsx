@@ -4,6 +4,8 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ChartWatermark } from "@/components/ChartWatermark";
 import { useIsMobile } from "@/components/useIsMobile";
+import { SUCCESS_DEFS, rateFromCodes } from "@/lib/replicationOutcome";
+import { SuccessRateNote } from "@/components/SuccessRateNote";
 import type { CoverageStats, EffectRow, OverlapMeta, PairOverlap } from "./types";
 
 const REPLICATED = "#4f77bd"; // light blue, matching the rate bars on by-year
@@ -160,6 +162,11 @@ export function AuthorOverlapDashboard({
   coverage: CoverageStats;
 }) {
   const [criterion, setCriterion] = useState(0);
+
+  // The canonical site-wide rate over this page's rows, under the selected
+  // criterion. Shown so the reader can reconcile this page's coverage-filtered
+  // numbers with the site-wide rate rather than reading them as a contradiction.
+  const siteRate = useMemo(() => rateFromCodes(rows.map((r) => r.o), criterion), [rows, criterion]);
   const [view, setView] = useState(0); // default: number of shared authors
   const [strict, setStrict] = useState(true);
   const [repType, setRepType] = useState(-1); // -1 = all types
@@ -247,6 +254,15 @@ export function AuthorOverlapDashboard({
             ))}
           </select>
         </label>
+
+        <div className="basis-full">
+          <SuccessRateNote
+            def={SUCCESS_DEFS[criterion]}
+            unit="effect"
+            n={siteRate.n}
+            filter="originals matched in the author-overlap dataset"
+          />
+        </div>
 
         <label className="flex flex-col gap-1 text-sm">
           <span className="text-gray-600 dark:text-gray-300">Overlap measure</span>

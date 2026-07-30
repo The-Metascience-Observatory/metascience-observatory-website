@@ -1,0 +1,374 @@
+"use client";
+
+import React, { useMemo, useState } from "react";
+import { ExternalLink } from "lucide-react";
+import { fmt, formatLabel } from "./utils";
+
+export interface TrialRow {
+  doi: string;
+  countries: string[];
+  hoverLabel: string;
+  design: string;
+  n: number | null;
+  rob: string;
+
+  // dose
+  elementalMgPerDay: number | null;
+  serumMmolL: number | null;
+  serumBand: string;
+  saltAssumed: boolean;
+  isPoolable: boolean;
+  exposureStratum: string;
+
+  // duration
+  durationWeeks: number | null;
+
+  // weight result
+  weightMetric: string;
+  weightMetricLabel: string;
+  outcomeName: string;
+  effMeasure: string;
+  effVal: number | null;
+  ciLo: number | null;
+  ciHi: number | null;
+  pVal: number | null;
+  seFromP: boolean;
+
+  summary: string;
+  title: string;
+  authors: string;
+  journal: string;
+  year: string;
+  volume: string;
+  issue: string;
+  pages: string;
+  url: string;
+}
+
+type SortKey =
+  | "year" | "title" | "design" | "n" | "rob"
+  | "elementalMgPerDay" | "serumMmolL" | "durationWeeks" | "effVal";
+
+function rowHref(row: TrialRow): string | null {
+  const base = row.doi.split("#")[0];
+  if (base.startsWith("10.")) return `https://doi.org/${base}`;
+  if (base.startsWith("pmid_")) return `https://pubmed.ncbi.nlm.nih.gov/${base.slice(5)}/`;
+  if (row.url) return row.url;
+  return null;
+}
+
+/** Render a p-value the way journals do. "<0.001" rather than "0.000" (which
+ *  reads as exactly zero), and an em dash — never 1.0 — when none was reported:
+ *  an unreported p-value is missing data, not a null result. */
+function formatP(p: number | null): string {
+  if (p == null) return "—";
+  if (p < 0.001) return "<0.001";
+  return p.toFixed(3);
+}
+
+function CitationLine({ row }: { row: TrialRow }) {
+  const volParts = [row.volume, row.issue && `(${row.issue})`].filter(Boolean).join("");
+  const volPages = [volParts, row.pages].filter(Boolean).join(" ");
+  const segs: React.ReactNode[] = [];
+  if (row.authors)
+    segs.push(row.authors.split(";")[0].trim() + (row.authors.includes(";") ? " et al." : ""));
+  if (row.journal || volPages)
+    segs.push(
+      <>
+        {row.journal && <em>{row.journal}</em>}
+        {row.journal && volPages ? " " : ""}
+        {volPages}
+      </>,
+    );
+  if (row.year) segs.push(`(${row.year})`);
+  if (segs.length === 0) return null;
+  return (
+    <span className="text-foreground/70">
+      {segs.map((s, i) => (
+        <span key={i}>
+          {i > 0 && ". "}
+          {s}
+        </span>
+      ))}
+    </span>
+  );
+}
+
+function Reference({ row }: { row: TrialRow }) {
+  const href = rowHref(row);
+  return (
+    <>
+      {href ? (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:text-blue-700 font-medium leading-snug"
+        >
+          {row.title || row.doi} <ExternalLink size={10} className="inline align-baseline ml-0.5" />
+        </a>
+      ) : (
+        <span className="font-medium leading-snug">{row.title || row.doi}</span>
+      )}
+      {(row.authors || row.journal || row.year) && (
+        <div className="mt-0.5 text-xs">
+          <CitationLine row={row} />
+        </div>
+      )}
+    </>
+  );
+}
+
+/** Dose cell: elemental mg/day over achieved serum level.
+ *
+ *  Both are shown because neither is available for most studies — 96% of arms
+ *  were titrated to a serum target rather than a fixed mg/day, so for many
+ *  trials a trial-level mg/day simply does not exist. An assumed salt (the
+ *  bipolar-population carbonate assumption) is marked so an imputed dose is
+ *  never read as a reported one. */
+function DoseCell({ row }: { row: TrialRow }) {
+  if (row.elementalMgPerDay == null && row.serumMmolL == null)
+    return <span className="text-foreground/40">—</span>;
+  return (
+    <div className="leading-tight">
+      {row.elementalMgPerDay != null && (
+        <div className="tabular-nums">
+          {fmt(row.elementalMgPerDay)} mg
+          {row.saltAssumed && (
+            <span
+              title="Salt form not stated; read as carbonate (bipolar population). Elemental dose is inferred, not reported."
+              className="ml-1 text-amber-600/80 text-[10px]"
+            >
+              ~
+            </span>
+          )}
+          <span className="text-foreground/40 text-[10px]"> elem./day</span>
+        </div>
+      )}
+      {row.serumMmolL != null && (
+        <div className="tabular-nums text-xs text-foreground/60">
+          {fmt(row.serumMmolL)} mmol/L
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** Weight result in the study's OWN metric.
+ *
+ *  Deliberately not converted to a common unit: kg change and "proportion
+ *  gaining >=7%" answer different questions, and the disagreement between them
+ *  is the substantive finding of this literature, not a formatting nuisance. */
+function WeightCell({ row }: { row: TrialRow }) {
+  if (row.effVal == null)
+    return (
+      <span
+        className="text-foreground/40"
+        title={row.outcomeName ? `Reported: ${row.outcomeName}` : undefined}
+      >
+        —
+      </span>
+    );
+  const ci =
+    row.ciLo != null && row.ciHi != null ? `[${fmt(row.ciLo)}, ${fmt(row.ciHi)}]` : "";
+  return (
+    <div className="leading-tight">
+      <div className="tabular-nums">
+        {fmt(row.effVal)}
+        {row.weightMetricLabel && (
+          <span className="text-foreground/40 text-[10px]"> {row.weightMetricLabel}</span>
+        )}
+      </div>
+      {ci && <div className="text-xs text-foreground/50 tabular-nums">{ci}</div>}
+      <div className="text-[10px] text-foreground/40">
+        p {formatP(row.pVal)}
+        {row.seFromP && (
+          <span title="Standard error derived from the reported p-value (no CI given)."> †</span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export function ResultsTable({ rows, pageSize = 100 }: { rows: TrialRow[]; pageSize?: number }) {
+  const [sortKey, setSortKey] = useState<SortKey>("year");
+  const [dir, setDir] = useState<"asc" | "desc">("desc");
+  const [query, setQuery] = useState("");
+  const [shown, setShown] = useState(pageSize);
+
+  const searched = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return rows;
+    return rows.filter(
+      (r) =>
+        r.title.toLowerCase().includes(q) ||
+        r.journal.toLowerCase().includes(q) ||
+        (r.authors ?? "").toLowerCase().includes(q) ||
+        r.doi.toLowerCase().includes(q),
+    );
+  }, [rows, query]);
+
+  const sorted = useMemo(() => {
+    const mult = dir === "asc" ? 1 : -1;
+    // Copy before sorting — mutating would reorder the array the charts index into.
+    return [...searched].sort((a, b) => {
+      const av = a[sortKey];
+      const bv = b[sortKey];
+      // Nulls always last, regardless of direction: "not reported" is not a value.
+      if (av == null || av === "") return 1;
+      if (bv == null || bv === "") return -1;
+      if (typeof av === "number" && typeof bv === "number") return (av - bv) * mult;
+      return String(av).localeCompare(String(bv)) * mult;
+    });
+  }, [searched, sortKey, dir]);
+
+  const visible = sorted.slice(0, shown);
+
+  function sortBy(key: SortKey) {
+    if (key === sortKey) setDir((d) => (d === "asc" ? "desc" : "asc"));
+    else {
+      setSortKey(key);
+      setDir("desc");
+    }
+  }
+
+  return (
+    <section className="mt-6">
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <input
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search title, author, journal, DOI…"
+          className="w-full max-w-sm rounded border border-border px-2 py-1 text-sm"
+        />
+        <span className="text-xs text-foreground/50">
+          {sorted.length.toLocaleString()} stud{sorted.length === 1 ? "y" : "ies"}
+        </span>
+      </div>
+
+      {/* Desktop */}
+      <div className="hidden overflow-x-auto md:block">
+        <table className="w-full border-collapse text-sm">
+          <thead>
+            <tr>
+              <SortTh label="Reference" k="title" active={sortKey} dir={dir} onSort={sortBy} className="w-[34%]" />
+              <SortTh label="Design" k="design" active={sortKey} dir={dir} onSort={sortBy} />
+              <SortTh label="N" k="n" active={sortKey} dir={dir} onSort={sortBy} align="right" />
+              <SortTh label="Dose" k="elementalMgPerDay" active={sortKey} dir={dir} onSort={sortBy} />
+              <SortTh label="Duration" k="durationWeeks" active={sortKey} dir={dir} onSort={sortBy} align="right" />
+              <SortTh label="Weight change" k="effVal" active={sortKey} dir={dir} onSort={sortBy} />
+              <SortTh label="Risk of bias" k="rob" active={sortKey} dir={dir} onSort={sortBy} />
+            </tr>
+          </thead>
+          <tbody>
+            {visible.map((r) => (
+              <tr key={r.doi} className="border-b border-border/50 align-top hover:bg-foreground/5">
+                <td className="px-2 py-2">
+                  <Reference row={r} />
+                </td>
+                <td className="px-2 py-2 text-foreground/70">{formatLabel(r.design)}</td>
+                <td className="px-2 py-2 text-right tabular-nums text-foreground/70">
+                  {r.n?.toLocaleString() ?? "—"}
+                </td>
+                <td className="px-2 py-2 text-foreground/70">
+                  <DoseCell row={r} />
+                </td>
+                <td className="px-2 py-2 text-right tabular-nums text-foreground/70">
+                  {r.durationWeeks != null ? `${fmt(r.durationWeeks)} wk` : "—"}
+                </td>
+                <td className="px-2 py-2 text-foreground/70">
+                  <WeightCell row={r} />
+                </td>
+                <td className="px-2 py-2 text-foreground/70">{formatLabel(r.rob)}</td>
+              </tr>
+            ))}
+            {!visible.length && (
+              <tr>
+                <td colSpan={7} className="py-6 text-center text-sm text-foreground/45">
+                  No studies match the current filters.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Mobile */}
+      <div className="space-y-3 md:hidden">
+        {visible.map((r) => (
+          <div key={r.doi} className="rounded border border-border p-2.5">
+            <Reference row={r} />
+            <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-foreground/60">
+              <span>{formatLabel(r.design)}</span>
+              {r.n != null && <span className="tabular-nums">N = {r.n.toLocaleString()}</span>}
+              {r.durationWeeks != null && (
+                <span className="tabular-nums">{fmt(r.durationWeeks)} wk</span>
+              )}
+              <span>RoB: {formatLabel(r.rob)}</span>
+            </div>
+            <div className="mt-1.5 flex flex-wrap gap-x-4 text-xs">
+              <div>
+                <span className="text-foreground/40">Dose: </span>
+                <DoseCell row={r} />
+              </div>
+              <div>
+                <span className="text-foreground/40">Weight: </span>
+                <WeightCell row={r} />
+              </div>
+            </div>
+          </div>
+        ))}
+        {!visible.length && (
+          <p className="py-6 text-center text-sm text-foreground/45">
+            No studies match the current filters.
+          </p>
+        )}
+      </div>
+
+      {sorted.length > shown && (
+        <button
+          type="button"
+          onClick={() => setShown((n) => n + pageSize)}
+          className="mt-3 w-full rounded border border-border py-1.5 text-sm text-foreground/70 hover:bg-foreground/5"
+        >
+          Show more ({(sorted.length - shown).toLocaleString()} remaining)
+        </button>
+      )}
+
+      <p className="mt-3 text-xs text-foreground/45">
+        Weight is shown in each study&apos;s own metric — kg, BMI, and
+        &ldquo;proportion gaining ≥7%&rdquo; are not interchangeable, and the
+        disagreement between them is itself a finding. &ldquo;~&rdquo; marks a dose
+        inferred from an assumed carbonate salt; &ldquo;†&rdquo; marks a standard
+        error derived from a reported p-value.
+      </p>
+    </section>
+  );
+}
+
+function SortTh({
+  label, k, active, dir, onSort, align = "left", className = "",
+}: {
+  label: string;
+  k: SortKey;
+  active: SortKey;
+  dir: "asc" | "desc";
+  onSort: (k: SortKey) => void;
+  align?: "left" | "right";
+  className?: string;
+}) {
+  const on = active === k;
+  return (
+    <th
+      className={`border-b border-border px-2 py-1.5 text-xs font-semibold text-foreground/60 ${
+        align === "right" ? "text-right" : "text-left"
+      } ${className}`}
+    >
+      <button type="button" onClick={() => onSort(k)} className="hover:text-foreground">
+        {label}
+        {on && <span className="ml-0.5 text-[10px]">{dir === "asc" ? "▲" : "▼"}</span>}
+      </button>
+    </th>
+  );
+}

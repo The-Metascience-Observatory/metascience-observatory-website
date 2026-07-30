@@ -4,6 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { classifyReportedResult, toBinary } from "@/lib/replicationOutcome";
+import { SuccessRateNote } from "@/components/SuccessRateNote";
 
 type AnyRecord = Record<string, unknown>;
 
@@ -91,13 +93,12 @@ export default function ByJournalPage() {
     for (const r of data.rows) {
       const url = String(r.original_url ?? "").trim();
       const journal = String(r.original_journal ?? "").trim();
-      const result = String(r.result ?? "").toLowerCase();
+      // Canonical rule: reversal counts as a failure, inconclusive and
+      // unrecorded outcomes stay out of the denominator entirely.
+      const outcome = toBinary(classifyReportedResult(r.result));
 
       if (!url || !journal) continue;
-
-      const hasOutcome =
-        result.includes("success") || result.includes("failure");
-      if (!hasOutcome) continue;
+      if (outcome === null) continue;
 
       let paper = papers.get(url);
       if (!paper) {
@@ -106,7 +107,7 @@ export default function ByJournalPage() {
       }
 
       paper.totalCount++;
-      if (result.includes("success")) {
+      if (outcome === "success") {
         paper.successCount++;
       }
     }
@@ -198,6 +199,13 @@ export default function ByJournalPage() {
               were successful. Only journals with {MIN_PAPERS}+ original papers
               shown. Click a journal name to view corresponding entries in the database explorer.
             </p>
+            <SuccessRateNote
+              unit="paper"
+              n={totalPapers}
+              threshold={threshold}
+              filter={`journals with ${MIN_PAPERS}+ original papers`}
+              className="mt-2"
+            />
           </div>
 
           {/* Controls row */}

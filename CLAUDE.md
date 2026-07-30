@@ -60,7 +60,7 @@ lib/
   citations.ts              # Citation HTML generation + normalization
 
 data/
-  replications_database_*.csv   # Versioned main database (currently replications_database_2026_02_20_072016.csv)
+  replications_database_*.csv   # Versioned main database (currently replications_database_2026_07_28_211702.csv)
   birds_eye_reviews/
     long_covid_trial_extractions.jsonl  # 9.6 MB, 339 clinical trials
   initiative_tag_names.json             # Tag → full project name mapping
@@ -119,12 +119,26 @@ types/                      # Shared TypeScript type definitions
 ## Data: Replications Database
 
 - **File:** `data/replications_database_YYYY_MM_DD_HHMMSS.csv` (update the filename when a new version is added)
-- ~1400 rows; one row per replication study
+- **`data/` holds exactly ONE of these.** Every superseded version is moved to `data/backup/`. `data_ingestor.py` does this automatically via `archive_superseded_masters()`; if you write a new master by hand, archive the old one yourself.
+- Nothing globs for the master — `app/api/fred/route.ts` and the `scripts/build_*.py` helpers all read the **last non-comment line of `data/version_history.txt`**, so that line must always name a file that exists in `data/`.
+- ~8600 rows; **one row per replicated effect**, not per study or per paper
 - Key columns: `original_title`, `original_url` (full DOI resolver URL), `replication_url`, `replication_initiative_tag`, `original_es_r`, `replication_es_r`, `replication_es_95_CI` (string `[low, high]`), `original_es_type`, `replication_es_type`, `discipline`, `result`
 - DOIs stored as full resolver URLs: `https://doi.org/10.xxxx/...`
 - Effect size CIs stored as strings: `[lower, upper]` — parse with JSON.parse after stripping
 - `replication_initiative_tag` groups rows by project (e.g. `XPHIR`, `RP:P`, `ML1`)
 - `initiative_tag_names.json` maps tags to human-readable project names
+- `upstream_effect_id` (e.g. `fred:1981`) is the row's stable id in its source database — use it to re-match on refresh instead of matching on description text
+- Full column reference: `data/data_dictionary.csv`
+
+### Duplicate detection — read before writing any dedup check
+
+A shared `(original_url, replication_url)` pair is **not** evidence of duplication. ~900 pairs legitimately hold many rows:
+
+- **Multi-lab initiatives** (`ML1`–`ML5`, `RRR`, `SPRRR`, `SRP`, `RP:CB`) store one row per lab or per assay — verbal overshadowing is 56 rows, ego depletion 24. Exclude these tags from every dedup key.
+- **`description` is not a per-effect field.** FReD and Curate Science rows carry the *paper's* claim, so sibling rows describing different outcomes look identical. Never key on it alone.
+- Blank `result` is deliberate: the FReD ingest maps `OS not significant` and `Not calculable` to `""`.
+
+A duplicate needs matching **effect sizes and sample sizes on both sides**, after normalizing DOIs — lowercase, strip the resolver prefix, and **collapse repeated slashes** (legacy APA DOIs are registered as `10.1037//0022-3514...`; leaving them distinct is what let duplicates through in July 2026).
 
 ## Data: Long Covid JSONL
 

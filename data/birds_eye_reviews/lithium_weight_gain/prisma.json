@@ -1,0 +1,55 @@
+{
+  "_note": "Lithium & weight gain. The full-text screen IS this review's eligibility pass \u2014 abstract-level relevance gating was deliberately skipped because weight is usually reported only in a safety table, where an abstract gate produces unrecoverable false negatives. Counts are measured from the pipeline artifacts, not hand-entered.",
+  "sources": [
+    "PubMed",
+    "OpenAlex",
+    "Europe PMC"
+  ],
+  "identified": 24918,
+  "deduplicated": 14895,
+  "excluded_materials_science": 4378,
+  "relevant": 10517,
+  "not_retrieved": 4554,
+  "retrieved": 5963,
+  "screened_fulltext": 5951,
+  "screen_parse_failed": 37,
+  "excluded_no_weight_outcome": 5145,
+  "has_weight_outcome": 769,
+  "excluded_not_human_lithium": 158,
+  "excluded_not_primary_research": 173,
+  "extractable": 438,
+  "extracted": 431,
+  "with_weight_outcome": 214,
+  "poolable": 64,
+  "study_design_breakdown": {
+    "rct": 116,
+    "case_series": 93,
+    "cross_sectional": 69,
+    "prospective_cohort": 56,
+    "retrospective_cohort": 45,
+    "non_randomized_trial": 43,
+    "crossover": 9,
+    "case_control": 3,
+    "ecological": 2,
+    "other": 1,
+    "case_report": 1
+  },
+  "exposure_stratum_breakdown": {
+    "therapeutic": 202,
+    "drinking_water": 6,
+    "anorexia_treatment": 3,
+    "low_dose_clinical": 2,
+    "supplement": 1
+  },
+  "weight_metric_breakdown": {
+    "other": 73,
+    "change_kg": 63,
+    "bmi_kg_m2": 41,
+    "absolute_kg": 34,
+    "proportion_gaining_7pct": 15,
+    "not_applicable": 5,
+    "bmi_change": 3,
+    "proportion_gaining_5pct": 2,
+    "percent_change": 1
+  }
+}

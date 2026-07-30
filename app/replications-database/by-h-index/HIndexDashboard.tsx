@@ -5,6 +5,8 @@ import Link from "next/link";
 import { ChartWatermark } from "@/components/ChartWatermark";
 import { useIsMobile } from "@/components/useIsMobile";
 import { fitProbit, probitBand } from "@/lib/probit";
+import { SUCCESS_DEFS, rateFromCodes } from "@/lib/replicationOutcome";
+import { SuccessRateNote } from "@/components/SuccessRateNote";
 import type { CoverageStats, EffectRow, HIndexMeta, PaperHIndex } from "./types";
 
 // Pearson correlation of two equal-length numeric arrays (null if degenerate).
@@ -202,6 +204,11 @@ export function HIndexDashboard({
   coverage: CoverageStats;
 }) {
   const [criterion, setCriterion] = useState(0);
+
+  // The canonical site-wide rate over this page's rows, under the selected
+  // criterion. Shown so the reader can reconcile this page's coverage-filtered
+  // numbers with the site-wide rate rather than reading them as a contradiction.
+  const siteRate = useMemo(() => rateFromCodes(rows.map((r) => r.o), criterion), [rows, criterion]);
   const [metric, setMetric] = useState(0); // default: mean h-index
   const [repType, setRepType] = useState(-1); // -1 = all types
 
@@ -320,6 +327,15 @@ export function HIndexDashboard({
             ))}
           </select>
         </label>
+
+        <div className="basis-full">
+          <SuccessRateNote
+            def={SUCCESS_DEFS[criterion]}
+            unit="effect"
+            n={siteRate.n}
+            filter="originals matched in the author h-index dataset"
+          />
+        </div>
 
         <label className="flex flex-col gap-1 text-sm">
           <span className="text-gray-600 dark:text-gray-300">h-index metric</span>

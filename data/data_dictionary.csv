@@ -45,3 +45,4 @@ source,string,no,no,notes on the source of the data
 explanation,string,no,no,explanation from the AI 
 confidence,"""low"" OR ""medium"" or ""high""",no,no,"confidence level of the AI-curated result (high, medium, low)"
 ai_version,string,no,no,version number of the AI curation pipeline that generated this row
+upstream_effect_id,string,no,yes,"stable identifier for the row in the upstream source database, prefixed by source (e.g. ""fred:1981"" = effect_id 1981 in FReD v2.4.2). Lets a row be re-matched to its source on later refreshes without relying on description text."

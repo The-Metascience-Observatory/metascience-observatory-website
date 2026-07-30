@@ -4,7 +4,15 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { getOutcomeForRow, toNumber, type OutcomeMethod, type AnyRecord } from "@/lib/replicationOutcome";
+import {
+  SUCCESS_DEF_OPTIONS,
+  classifyRowByDef,
+  toBinary,
+  toNumber,
+  type AnyRecord,
+  type SuccessDef,
+} from "@/lib/replicationOutcome";
+import { SuccessRateNote } from "@/components/SuccessRateNote";
 import { ChartWatermark } from "@/components/ChartWatermark";
 import { useIsMobile } from "@/components/useIsMobile";
 
@@ -12,17 +20,6 @@ type FredResponse = {
   columns: string[];
   rows: AnyRecord[];
 };
-
-// "reported" uses the database's `result` column directly; the others reuse the
-// same statistical definitions offered on the main replications-database page.
-type SuccessDef = "reported" | OutcomeMethod;
-
-const SUCCESS_DEF_OPTIONS: { value: SuccessDef; label: string }[] = [
-  { value: "reported", label: "Reported result (as recorded in the database)" },
-  { value: "significance", label: "Statistically significant effect in the same direction?" },
-  { value: "orig_in_rep_ci", label: "Original effect size in replication 95% confidence interval?" },
-  { value: "rep_in_orig_ci", label: "Replication effect size in original 95% confidence interval?" },
-];
 
 const SUCCESS_COLOR = "#10b981";
 const FAILURE_COLOR = "#f87171";
@@ -67,23 +64,18 @@ function wilsonCI(k: number, n: number): [number, number] {
 }
 
 /**
- * Classify a single row as a replication success / failure / excluded, per the
- * chosen definition. Returns null when the row should not count toward any rate
- * (inconclusive, or no recorded outcome).
+ * Classify a single row under the chosen definition, per the frozen site-wide
+ * rule in lib/replicationOutcome: reversal counts as a failure, inconclusive and
+ * unrecorded outcomes are excluded from the denominator. Returns null when the
+ * row falls outside the denominator.
+ *
+ * This is a thin alias over the shared helper so the rule cannot drift: the
+ * previous local copy on this page dropped reversals under "reported" but
+ * counted them as failures under every statistical criterion, so changing the
+ * dropdown silently changed the denominator as well as the criterion.
  */
 function classifyRow(row: AnyRecord, def: SuccessDef): "success" | "failure" | null {
-  if (def === "reported") {
-    const res = String(row.result ?? "").trim().toLowerCase();
-    if (res === "success") return "success";
-    // A reversal (significant effect in the opposite direction) is a
-    // determinate non-replication, matching the other by-* pages.
-    if (res === "failure" || res === "reversal") return "failure";
-    return null;
-  }
-  const outcome = getOutcomeForRow(row, def);
-  if (outcome === "success") return "success";
-  if (outcome === "failure" || outcome === "reversal") return "failure";
-  return null; // inconclusive
+  return toBinary(classifyRowByDef(row, def));
 }
 
 // Round an axis maximum up to a "nice" value and return the tick positions.
@@ -780,6 +772,13 @@ export default function ByYearPage() {
                   <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-1.5 w-full max-w-[752px]">
                     <YearRateBars bins={agg.bins} xLabel="Year the original study was published" unit={analysisLevel === "effect" ? "replications" : "papers"} showCI={showCI} />
                   </div>
+                  <SuccessRateNote
+                    def={successDef}
+                    unit={analysisLevel}
+                    n={agg.bins.reduce((acc, b) => acc + b.total, 0)}
+                    threshold={analysisLevel === "paper" ? paperThreshold : undefined}
+                    filter={`rows with a usable original publication year, bins of ${minN}+`}
+                  />
                 </section>
               )}
 
@@ -798,6 +797,13 @@ export default function ByYearPage() {
                       showRate={false}
                     />
                   </div>
+                  <SuccessRateNote
+                    def={successDef}
+                    unit={analysisLevel}
+                    n={agg.recentBins.reduce((acc, b) => acc + b.total, 0)}
+                    threshold={analysisLevel === "paper" ? paperThreshold : undefined}
+                    filter={`originals published 2005–2024, bins of ${minN}+`}
+                  />
                 </section>
               )}
 

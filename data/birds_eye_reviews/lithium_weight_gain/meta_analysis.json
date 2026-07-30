@@ -1,0 +1,4884 @@
+{
+  "options": {
+    "model": "random",
+    "tau2_method": "DL",
+    "ci_method": "hksj",
+    "level": 0.95,
+    "min_trials": 3,
+    "prediction_interval": true,
+    "publication_bias": true,
+    "leave_one_out": true,
+    "subgroup_by": "derived.serum_li_band",
+    "regress_on": "derived.mean_serum_li_mmol_L"
+  },
+  "min_trials": 3,
+  "groups": [
+    {
+      "spray_type": "antipsychotic",
+      "outcome_domain": "body_weight",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.1016/j.jad.2010.11.037",
+          "first_author": "Ana",
+          "year": 2011,
+          "effect": 1.0,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.024,
+          "n_total": 1076,
+          "outcome_name": "Mean weight change during the maintenance phase (12 weeks to 2 years)",
+          "weight": null,
+          "subgroup": "not_reported"
+        }
+      ]
+    },
+    {
+      "spray_type": "antipsychotic",
+      "outcome_domain": "clinically_significant_weight_gain",
+      "effect_measure": "risk_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.1080/10401230490453103",
+          "first_author": "Ghaemi",
+          "year": 2004,
+          "effect": 4.29,
+          "ci_low": 1.09,
+          "ci_high": 16.83,
+          "p_value": null,
+          "n_total": 29,
+          "outcome_name": "Weight gain (>5 lbs, clinically attributed to neuroleptic)",
+          "weight": null,
+          "subgroup": "not_reported"
+        }
+      ]
+    },
+    {
+      "spray_type": "antipsychotic",
+      "outcome_domain": "efficacy",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.4088/jcp.15m10261",
+          "first_author": "Martha",
+          "year": 2016,
+          "effect": -7.7,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.003,
+          "n_total": 142,
+          "outcome_name": "MADRS total score change from baseline to week 6 (monotherapy study)",
+          "weight": null,
+          "subgroup": "not_reported"
+        }
+      ]
+    },
+    {
+      "spray_type": "combination",
+      "outcome_domain": "body_weight",
+      "effect_measure": "mean_difference",
+      "n_trials": 5,
+      "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.1016/s0924-9338(10)71438-3",
+          "first_author": "Eduard",
+          "year": 2010,
+          "effect": 0.3,
+          "ci_low": -1.28,
+          "ci_high": 1.88,
+          "p_value": null,
+          "n_total": 283,
+          "outcome_name": "Mean weight change from double-blind endpoint to Week 46 (LOCF)",
+          "weight": 0.3207,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1185/03007991003779380",
+          "first_author": "Eduard",
+          "year": 2010,
+          "effect": 0.3,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": null,
+          "n_total": 283,
+          "outcome_name": "Mean weight change from double-blind endpoint to Week 46 (LOCF)",
+          "weight": 0.3197,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1016/j.jad.2012.11.054",
+          "first_author": "David",
+          "year": 2013,
+          "effect": -0.05,
+          "ci_low": -2.1,
+          "ci_high": 2.0,
+          "p_value": null,
+          "n_total": 337,
+          "outcome_name": "Mean change in body weight from baseline at Week 52, randomized phase (observed cases)",
+          "weight": 0.1536,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1016/j.jad.2004.05.017",
+          "first_author": "Mani",
+          "year": 2004,
+          "effect": -0.8,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": null,
+          "n_total": 40,
+          "outcome_name": "Weight gain (mean increase in kg over 6 months)",
+          "weight": 0.1063,
+          "subgroup": "high"
+        },
+        {
+          "paper_id": "10.1089/cap.2016.0046",
+          "first_author": "Seyed-Ali",
+          "year": 2017,
+          "effect": -2.4,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.065,
+          "n_total": 48,
+          "outcome_name": "Body weight increase (mean rise in body weight, kg)",
+          "weight": 0.0997,
+          "subgroup": "not_reported"
+        }
+      ],
+      "pooled": {
+        "effect": -0.1398,
+        "ci_low": -1.285,
+        "ci_high": 1.0055,
+        "i2": 1.2,
+        "model": "random_effects",
+        "tau2_method": "DL",
+        "ci_method": "hksj",
+        "level": 0.95,
+        "p_value": 0.7518,
+        "tau2": 0.0105,
+        "tau": 0.1026,
+        "q": 4.0472,
+        "q_p": 0.3997,
+        "df": 4,
+        "h2": 1.012,
+        "prediction_low": -1.4905,
+        "prediction_high": 1.211
+      },
+      "publication_bias": {
+        "egger": {
+          "intercept": -3.0686,
+          "se": 1.0491,
+          "t": -2.9249,
+          "df": 3,
+          "p_value": 0.0613
+        },
+        "trim_fill": {
+          "n_imputed": 0,
+          "side": "left",
+          "adjusted_effect": null,
+          "imputed": []
+        },
+        "funnel": {
+          "pooled_effect": -0.1398,
+          "log_scale": false,
+          "points": [
+            {
+              "effect": 0.3,
+              "se": 0.72
+            },
+            {
+              "effect": 0.3,
+              "se": 0.7211
+            },
+            {
+              "effect": -0.05,
+              "se": 1.0459
+            },
+            {
+              "effect": -0.8,
+              "se": 1.259
+            },
+            {
+              "effect": -2.4,
+              "se": 1.3006
+            }
+          ],
+          "max_se": 1.3006
+        }
+      },
+      "leave_one_out": [
+        {
+          "omitted": "10.1016/s0924-9338(10)71438-3",
+          "omitted_author": "Eduard",
+          "effect": -0.4072,
+          "ci_low": -2.163,
+          "ci_high": 1.3485,
+          "i2": 14.4
+        },
+        {
+          "omitted": "10.1185/03007991003779380",
+          "omitted_author": "Eduard",
+          "effect": -0.4068,
+          "ci_low": -2.1623,
+          "ci_high": 1.3487,
+          "i2": 14.5
+        },
+        {
+          "omitted": "10.1016/j.jad.2012.11.054",
+          "omitted_author": "David",
+          "effect": -0.2582,
+          "ci_low": -2.027,
+          "ci_high": 1.5107,
+          "i2": 25.7
+        },
+        {
+          "omitted": "10.1016/j.jad.2004.05.017",
+          "omitted_author": "Mani",
+          "effect": -0.115,
+          "ci_low": -1.7509,
+          "ci_high": 1.521,
+          "i2": 19.7
+        },
+        {
+          "omitted": "10.1089/cap.2016.0046",
+          "omitted_author": "Seyed-Ali",
+          "effect": 0.1121,
+          "ci_low": -0.5424,
+          "ci_high": 0.7667,
+          "i2": 0.0
+        }
+      ],
+      "subgroups": {
+        "by": "derived.serum_li_band",
+        "groups": [
+          {
+            "subgroup": "high",
+            "n_trials": 1,
+            "effect": -0.8,
+            "ci_low": -3.2676,
+            "ci_high": 1.6676,
+            "i2": 0.0,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.5252,
+            "tau2": 0.0,
+            "tau": 0.0,
+            "q": 0.0,
+            "q_p": null,
+            "df": 0,
+            "h2": 1.0
+          },
+          {
+            "subgroup": "not_reported",
+            "n_trials": 4,
+            "effect": -0.115,
+            "ci_low": -1.7509,
+            "ci_high": 1.521,
+            "i2": 19.7,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.8374,
+            "tau2": 0.1962,
+            "tau": 0.443,
+            "q": 3.7362,
+            "q_p": 0.2914,
+            "df": 3,
+            "h2": 1.245,
+            "prediction_low": -2.9694,
+            "prediction_high": 2.7395
+          }
+        ],
+        "q_between": 0.2538,
+        "df": 1,
+        "p_value": 0.6144
+      }
+    },
+    {
+      "spray_type": "combination",
+      "outcome_domain": "clinically_significant_weight_gain",
+      "effect_measure": "adjusted_odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.4088/pcc.09m00891ora",
+          "first_author": "Jeanette",
+          "year": 2010,
+          "effect": 1.89,
+          "ci_low": 1.64,
+          "ci_high": 2.22,
+          "p_value": 0.05,
+          "n_total": 8157,
+          "outcome_name": "Obesity/excessive weight gain (ICD-9 diagnosis codes 278, 278.00, 278.01, 783.1, 783.2)",
+          "weight": null,
+          "subgroup": "not_reported"
+        }
+      ]
+    },
+    {
+      "spray_type": "combination",
+      "outcome_domain": "clinically_significant_weight_gain",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.1002/hup.2752",
+          "first_author": "Wai",
+          "year": 2020,
+          "effect": 1.31,
+          "ci_low": 1.0,
+          "ci_high": 1.72,
+          "p_value": 0.052,
+          "n_total": 3557,
+          "outcome_name": "Weight gain (adverse event, reported as present/absent in patients with vs without adjunctive mood stabilizer)",
+          "weight": null,
+          "subgroup": "not_reported"
+        }
+      ]
+    },
+    {
+      "spray_type": "combination",
+      "outcome_domain": "efficacy",
+      "effect_measure": "hazard_ratio",
+      "n_trials": 7,
+      "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 2,
+      "trials": [
+        {
+          "paper_id": "10.1016/j.jad.2008.06.001",
+          "first_author": "Eduard",
+          "year": 2008,
+          "effect": 3.571428571428571,
+          "ci_low": 2.7027027027027026,
+          "ci_high": 4.761904761904762,
+          "p_value": 0.001,
+          "n_total": 703,
+          "outcome_name": "Time to recurrence of any mood event (mania, depression, or mixed)",
+          "weight": 0.1467,
+          "oriented_flipped": true,
+          "subgroup": "medium"
+        },
+        {
+          "paper_id": "10.1002/da.22136",
+          "first_author": "Trisha",
+          "year": 2013,
+          "effect": 0.32,
+          "ci_low": 0.24,
+          "ci_high": 0.44,
+          "p_value": 0.001,
+          "n_total": 1326,
+          "outcome_name": "Time to recurrence of any mood event (mania, mixed, or depression) during randomized treatment phase",
+          "weight": 0.1463,
+          "subgroup": "medium"
+        },
+        {
+          "paper_id": "10.1016/j.jad.2012.04.014",
+          "first_author": "Eduard",
+          "year": 2012,
+          "effect": 0.29,
+          "ci_low": 0.21,
+          "ci_high": 0.41,
+          "p_value": 0.001,
+          "n_total": 445,
+          "outcome_name": "Time to recurrence of any mood event (mania, depression, or mixed) in patients with mixed index symptoms",
+          "weight": 0.1456,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1016/j.euroneuro.2017.06.013",
+          "first_author": "Joseph",
+          "year": 2017,
+          "effect": 0.71,
+          "ci_low": 0.49,
+          "ci_high": 1.04,
+          "p_value": 0.078,
+          "n_total": 496,
+          "outcome_name": "Time to recurrence of any mood episode (double-blind phase, primary endpoint)",
+          "weight": 0.1447,
+          "subgroup": "medium"
+        },
+        {
+          "paper_id": "10.1038/mp.2015.158",
+          "first_author": "Yatham",
+          "year": 2016,
+          "effect": 0.53,
+          "ci_low": 0.33,
+          "ci_high": 0.86,
+          "p_value": 0.01,
+          "n_total": 159,
+          "outcome_name": "Time to any mood episode",
+          "weight": 0.1419,
+          "subgroup": "medium"
+        },
+        {
+          "paper_id": "10.1111/j.1399-5618.2011.00898.x",
+          "first_author": "Ronald",
+          "year": 2011,
+          "effect": 0.54,
+          "ci_low": 0.33,
+          "ci_high": 0.89,
+          "p_value": 0.014,
+          "n_total": 337,
+          "outcome_name": "Time from randomization to relapse to any mood episode",
+          "weight": 0.1414,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1192/bjp.184.4.337",
+          "first_author": "Tohen",
+          "year": 2004,
+          "effect": 0.8849557522123894,
+          "ci_low": 0.4329004329004329,
+          "ci_high": 1.8181818181818181,
+          "p_value": 0.742,
+          "n_total": 99,
+          "outcome_name": "Time to syndromic relapse into mania or depression",
+          "weight": 0.1335,
+          "oriented_flipped": true,
+          "subgroup": "medium"
+        }
+      ],
+      "pooled": {
+        "effect": 0.6681,
+        "ci_low": 0.3047,
+        "ci_high": 1.4652,
+        "i2": 96.7,
+        "model": "random_effects",
+        "tau2_method": "DL",
+        "ci_method": "hksj",
+        "level": 0.95,
+        "p_value": 0.2556,
+        "tau2": 1.1218,
+        "tau": 1.0592,
+        "q": 181.8705,
+        "q_p": 0.0,
+        "df": 6,
+        "h2": 30.312,
+        "prediction_low": 0.0361,
+        "prediction_high": 12.3756
+      },
+      "publication_bias": {
+        "egger": {
+          "intercept": -3.9133,
+          "se": 8.3341,
+          "t": -0.4696,
+          "df": 5,
+          "p_value": 0.6584
+        },
+        "trim_fill": {
+          "n_imputed": 2,
+          "side": "right",
+          "adjusted_effect": 0.9239,
+          "imputed": [
+            {
+              "effect": 2.949,
+              "se": 0.1707
+            },
+            {
+              "effect": 2.6726,
+              "se": 0.1546
+            }
+          ]
+        },
+        "funnel": {
+          "pooled_effect": 0.6681,
+          "log_scale": true,
+          "points": [
+            {
+              "effect": 3.5714,
+              "se": 0.1445
+            },
+            {
+              "effect": 0.32,
+              "se": 0.1546
+            },
+            {
+              "effect": 0.29,
+              "se": 0.1707
+            },
+            {
+              "effect": 0.71,
+              "se": 0.192
+            },
+            {
+              "effect": 0.53,
+              "se": 0.2444
+            },
+            {
+              "effect": 0.54,
+              "se": 0.2531
+            },
+            {
+              "effect": 0.885,
+              "se": 0.3661
+            }
+          ],
+          "max_se": 0.3661
+        }
+      },
+      "leave_one_out": [
+        {
+          "omitted": "10.1016/j.jad.2008.06.001",
+          "omitted_author": "Eduard",
+          "effect": 0.4813,
+          "ci_low": 0.3059,
+          "ci_high": 0.7574,
+          "i2": 76.4
+        },
+        {
+          "omitted": "10.1002/da.22136",
+          "omitted_author": "Trisha",
+          "effect": 0.7578,
+          "ci_low": 0.3078,
+          "ci_high": 1.8657,
+          "i2": 96.6
+        },
+        {
+          "omitted": "10.1016/j.jad.2012.04.014",
+          "omitted_author": "Eduard",
+          "effect": 0.7702,
+          "ci_low": 0.3199,
+          "ci_high": 1.8542,
+          "i2": 96.6
+        },
+        {
+          "omitted": "10.1016/j.euroneuro.2017.06.013",
+          "omitted_author": "Joseph",
+          "effect": 0.6613,
+          "ci_low": 0.2496,
+          "ci_high": 1.7526,
+          "i2": 97.3
+        },
+        {
+          "omitted": "10.1038/mp.2015.158",
+          "omitted_author": "Yatham",
+          "effect": 0.6942,
+          "ci_low": 0.2638,
+          "ci_high": 1.8267,
+          "i2": 97.2
+        },
+        {
+          "omitted": "10.1111/j.1399-5618.2011.00898.x",
+          "omitted_author": "Ronald",
+          "effect": 0.692,
+          "ci_low": 0.2628,
+          "ci_high": 1.8225,
+          "i2": 97.2
+        },
+        {
+          "omitted": "10.1192/bjp.184.4.337",
+          "omitted_author": "Tohen",
+          "effect": 0.6397,
+          "ci_low": 0.2447,
+          "ci_high": 1.6722,
+          "i2": 97.2
+        }
+      ],
+      "subgroups": {
+        "by": "derived.serum_li_band",
+        "groups": [
+          {
+            "subgroup": "medium",
+            "n_trials": 5,
+            "effect": 0.8261,
+            "ci_low": 0.2657,
+            "ci_high": 2.5692,
+            "i2": 97.2,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.6646,
+            "tau2": 1.3126,
+            "tau": 1.1457,
+            "q": 141.559,
+            "q_p": 0.0,
+            "df": 4,
+            "h2": 35.39,
+            "prediction_low": 0.015,
+            "prediction_high": 45.4582
+          },
+          {
+            "subgroup": "not_reported",
+            "n_trials": 2,
+            "effect": 0.3848,
+            "ci_low": 0.0075,
+            "ci_high": 19.6557,
+            "i2": 75.9,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.1995,
+            "tau2": 0.1467,
+            "tau": 0.383,
+            "q": 4.1474,
+            "q_p": 0.0417,
+            "df": 1,
+            "h2": 4.147
+          }
+        ],
+        "q_between": 2.2217,
+        "df": 1,
+        "p_value": 0.1361
+      },
+      "meta_regression": {
+        "by": "derived.mean_serum_li_mmol_L",
+        "n_points": 5,
+        "scatter": [
+          {
+            "paper_id": "10.1016/j.euroneuro.2017.06.013",
+            "first_author": "Joseph",
+            "year": 2017,
+            "x": 0.6875,
+            "effect": 0.71,
+            "se": 0.192,
+            "weight": 27.1307,
+            "n_total": 496,
+            "subgroup": "medium"
+          },
+          {
+            "paper_id": "10.1016/j.jad.2008.06.001",
+            "first_author": "Eduard",
+            "year": 2008,
+            "x": 0.705,
+            "effect": 3.5714,
+            "se": 0.1445,
+            "weight": 47.8979,
+            "n_total": 703,
+            "subgroup": "medium"
+          },
+          {
+            "paper_id": "10.1002/da.22136",
+            "first_author": "Trisha",
+            "year": 2013,
+            "x": 0.71,
+            "effect": 0.32,
+            "se": 0.1546,
+            "weight": 41.8231,
+            "n_total": 1326,
+            "subgroup": "medium"
+          },
+          {
+            "paper_id": "10.1192/bjp.184.4.337",
+            "first_author": "Tohen",
+            "year": 2004,
+            "x": 0.75,
+            "effect": 0.885,
+            "se": 0.3661,
+            "weight": 7.4611,
+            "n_total": 99,
+            "subgroup": "medium"
+          },
+          {
+            "paper_id": "10.1038/mp.2015.158",
+            "first_author": "Yatham",
+            "year": 2016,
+            "x": 0.7967,
+            "effect": 0.53,
+            "se": 0.2444,
+            "weight": 16.7483,
+            "n_total": 159,
+            "subgroup": "medium"
+          }
+        ],
+        "regression": {
+          "moderator_n": 5,
+          "slope": -5.170278,
+          "slope_se": 11.641803,
+          "slope_ci_low": -42.219691,
+          "slope_ci_high": 31.879136,
+          "intercept": 3.5795,
+          "intercept_se": 8.502931,
+          "p_value": 0.687,
+          "t_stat": -0.4441,
+          "df": 3,
+          "tau2_residual": 1.542281,
+          "tau2_unexplained_ratio": 1.1749,
+          "r2": 0.0,
+          "q_residual": 1.9571,
+          "method": "knapp_hartung",
+          "level": 0.95,
+          "x_min": 0.6875,
+          "x_max": 0.7967
+        },
+        "underpowered": true,
+        "min_k_for_interpretation": 8,
+        "slope_ratio_per_unit": 0.0057
+      }
+    },
+    {
+      "spray_type": "combination",
+      "outcome_domain": "efficacy",
+      "effect_measure": "mean_difference",
+      "n_trials": 8,
+      "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 1,
+      "trials": [
+        {
+          "paper_id": "10.1186/s40345-014-0014-9",
+          "first_author": "Michel",
+          "year": 2014,
+          "effect": -2.69,
+          "ci_low": -4.09,
+          "ci_high": -1.29,
+          "p_value": 0.001,
+          "n_total": 356,
+          "outcome_name": "Young Mania Rating Scale (YMRS) total score change from baseline to day 43",
+          "weight": 0.1807,
+          "subgroup": "medium"
+        },
+        {
+          "paper_id": "10.1111/j.1399-5618.2006.00363.x",
+          "first_author": "Shahin",
+          "year": 2006,
+          "effect": -3.37,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.0004,
+          "n_total": 82,
+          "outcome_name": "Young Mania Rating Scale score",
+          "weight": 0.1654,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1001/archpsyc.59.1.62",
+          "first_author": "Tohen",
+          "year": 2002,
+          "effect": -4.01,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.003,
+          "n_total": 344,
+          "outcome_name": "Young Mania Rating Scale (YMRS) total score",
+          "weight": 0.1383,
+          "subgroup": "medium"
+        },
+        {
+          "paper_id": "10.1002/brb3.2394",
+          "first_author": "Rahim",
+          "year": 2021,
+          "effect": 0.88,
+          "ci_low": -1.78,
+          "ci_high": 3.55,
+          "p_value": 0.51,
+          "n_total": 50,
+          "outcome_name": "Young Mania Rating Scale score",
+          "weight": 0.1377,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1089/cap.2016.0207",
+          "first_author": "Seyed",
+          "year": 2017,
+          "effect": 3.85,
+          "ci_low": 0.15,
+          "ci_high": 7.54,
+          "p_value": 0.04,
+          "n_total": 42,
+          "outcome_name": "Young Mania Rating Scale (YMRS) score",
+          "weight": 0.1057,
+          "subgroup": "high"
+        },
+        {
+          "paper_id": "10.4088/jcp.v67n1105",
+          "first_author": "Roy",
+          "year": 2006,
+          "effect": -0.5,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.797,
+          "n_total": 287,
+          "outcome_name": "Change in Young Mania Rating Scale (YMRS) score from baseline to last study visit",
+          "weight": 0.1026,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1192/bjp.182.2.141",
+          "first_author": "Laksami",
+          "year": 2003,
+          "effect": -4.2,
+          "ci_low": -7.6,
+          "ci_high": 0.54,
+          "p_value": 0.089,
+          "n_total": 151,
+          "outcome_name": "Young Mania Rating Scale (YMRS) score, change from baseline to end-point",
+          "weight": 0.0958,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1016/s0165-0327(02)00086-1",
+          "first_author": "Januel",
+          "year": 2003,
+          "effect": -4.7,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.07,
+          "n_total": 149,
+          "outcome_name": "Percentage reduction in MADRS score between D0 and D11",
+          "weight": 0.0738,
+          "oriented_flipped": true,
+          "subgroup": "low"
+        }
+      ],
+      "pooled": {
+        "effect": -1.8704,
+        "ci_low": -4.2232,
+        "ci_high": 0.4824,
+        "i2": 67.9,
+        "model": "random_effects",
+        "tau2_method": "DL",
+        "ci_method": "hksj",
+        "level": 0.95,
+        "p_value": 0.1022,
+        "tau2": 3.7775,
+        "tau": 1.9436,
+        "q": 21.8132,
+        "q_p": 0.0027,
+        "df": 7,
+        "h2": 3.116,
+        "prediction_low": -7.0912,
+        "prediction_high": 3.3504
+      },
+      "publication_bias": {
+        "egger": {
+          "intercept": 1.1375,
+          "se": 1.6138,
+          "t": 0.7048,
+          "df": 6,
+          "p_value": 0.5073
+        },
+        "trim_fill": {
+          "n_imputed": 1,
+          "side": "right",
+          "adjusted_effect": -1.6417,
+          "imputed": [
+            {
+              "effect": 1.4254,
+              "se": 2.5939
+            }
+          ]
+        },
+        "funnel": {
+          "pooled_effect": -1.8704,
+          "log_scale": false,
+          "points": [
+            {
+              "effect": -2.69,
+              "se": 0.7143
+            },
+            {
+              "effect": -3.37,
+              "se": 0.952
+            },
+            {
+              "effect": -4.01,
+              "se": 1.3512
+            },
+            {
+              "effect": 0.88,
+              "se": 1.3597
+            },
+            {
+              "effect": 3.85,
+              "se": 1.8852
+            },
+            {
+              "effect": -0.5,
+              "se": 1.9438
+            },
+            {
+              "effect": -4.2,
+              "se": 2.0766
+            },
+            {
+              "effect": -4.7,
+              "se": 2.5939
+            }
+          ],
+          "max_se": 2.5939
+        }
+      },
+      "leave_one_out": [
+        {
+          "omitted": "10.1186/s40345-014-0014-9",
+          "omitted_author": "Michel",
+          "effect": -1.6777,
+          "ci_low": -4.5844,
+          "ci_high": 1.229,
+          "i2": 71.7
+        },
+        {
+          "omitted": "10.1111/j.1399-5618.2006.00363.x",
+          "omitted_author": "Shahin",
+          "effect": -1.5664,
+          "ci_low": -4.3801,
+          "ci_high": 1.2473,
+          "i2": 70.1
+        },
+        {
+          "omitted": "10.1001/archpsyc.59.1.62",
+          "omitted_author": "Tohen",
+          "effect": -1.5191,
+          "ci_low": -4.2121,
+          "ci_high": 1.1738,
+          "i2": 69.9
+        },
+        {
+          "omitted": "10.1002/brb3.2394",
+          "omitted_author": "Rahim",
+          "effect": -2.3331,
+          "ci_low": -4.8646,
+          "ci_high": 0.1984,
+          "i2": 62.2
+        },
+        {
+          "omitted": "10.1089/cap.2016.0207",
+          "omitted_author": "Seyed",
+          "effect": -2.5428,
+          "ci_low": -4.3002,
+          "ci_high": -0.7854,
+          "i2": 44.1
+        },
+        {
+          "omitted": "10.4088/jcp.v67n1105",
+          "omitted_author": "Roy",
+          "effect": -2.0223,
+          "ci_low": -4.7693,
+          "ci_high": 0.7248,
+          "i2": 71.4
+        },
+        {
+          "omitted": "10.1192/bjp.182.2.141",
+          "omitted_author": "Laksami",
+          "effect": -1.6135,
+          "ci_low": -4.2722,
+          "ci_high": 1.0451,
+          "i2": 71.3
+        },
+        {
+          "omitted": "10.1016/s0165-0327(02)00086-1",
+          "omitted_author": "Januel",
+          "effect": -1.6373,
+          "ci_low": -4.2473,
+          "ci_high": 0.9727,
+          "i2": 71.3
+        }
+      ],
+      "subgroups": {
+        "by": "derived.serum_li_band",
+        "groups": [
+          {
+            "subgroup": "high",
+            "n_trials": 1,
+            "effect": 3.85,
+            "ci_low": 0.155,
+            "ci_high": 7.545,
+            "i2": 0.0,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.0411,
+            "tau2": 0.0,
+            "tau": 0.0,
+            "q": 0.0,
+            "q_p": null,
+            "df": 0,
+            "h2": 1.0
+          },
+          {
+            "subgroup": "low",
+            "n_trials": 1,
+            "effect": -4.7,
+            "ci_low": -9.784,
+            "ci_high": 0.384,
+            "i2": 0.0,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.07,
+            "tau2": 0.0,
+            "tau": 0.0,
+            "q": 0.0,
+            "q_p": null,
+            "df": 0,
+            "h2": 1.0
+          },
+          {
+            "subgroup": "medium",
+            "n_trials": 2,
+            "effect": -2.9783,
+            "ci_low": -9.9082,
+            "ci_high": 3.9515,
+            "i2": 0.0,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.1153,
+            "tau2": 0.0,
+            "tau": 0.0,
+            "q": 0.7459,
+            "q_p": 0.3878,
+            "df": 1,
+            "h2": 0.746
+          },
+          {
+            "subgroup": "not_reported",
+            "n_trials": 4,
+            "effect": -1.7742,
+            "ci_low": -5.5537,
+            "ci_high": 2.0053,
+            "i2": 63.7,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.232,
+            "tau2": 3.8276,
+            "tau": 1.9564,
+            "q": 8.2732,
+            "q_p": 0.0407,
+            "df": 3,
+            "h2": 2.758,
+            "prediction_low": -11.7595,
+            "prediction_high": 8.2111
+          }
+        ],
+        "q_between": 13.1774,
+        "df": 3,
+        "p_value": 0.0043
+      },
+      "meta_regression": {
+        "by": "derived.mean_serum_li_mmol_L",
+        "n_points": 4,
+        "scatter": [
+          {
+            "paper_id": "10.1016/s0165-0327(02)00086-1",
+            "first_author": "Januel",
+            "year": 2003,
+            "x": 0.5,
+            "effect": -4.7,
+            "se": 2.5939,
+            "weight": 0.1486,
+            "n_total": 149,
+            "subgroup": "low"
+          },
+          {
+            "paper_id": "10.1186/s40345-014-0014-9",
+            "first_author": "Michel",
+            "year": 2014,
+            "x": 0.72,
+            "effect": -2.69,
+            "se": 0.7143,
+            "weight": 1.9599,
+            "n_total": 356,
+            "subgroup": "medium"
+          },
+          {
+            "paper_id": "10.1001/archpsyc.59.1.62",
+            "first_author": "Tohen",
+            "year": 2002,
+            "x": 0.79,
+            "effect": -4.01,
+            "se": 1.3512,
+            "weight": 0.5477,
+            "n_total": 344,
+            "subgroup": "medium"
+          },
+          {
+            "paper_id": "10.1089/cap.2016.0207",
+            "first_author": "Seyed",
+            "year": 2017,
+            "x": 0.925,
+            "effect": 3.85,
+            "se": 1.8852,
+            "weight": 0.2814,
+            "n_total": 42,
+            "subgroup": "high"
+          }
+        ],
+        "regression": {
+          "moderator_n": 4,
+          "slope": 18.297269,
+          "slope_se": 11.138666,
+          "slope_ci_low": -29.628541,
+          "slope_ci_high": 66.22308,
+          "intercept": -15.695476,
+          "intercept_se": 8.47937,
+          "p_value": 0.2422,
+          "t_stat": 1.6427,
+          "df": 2,
+          "tau2_residual": 3.788301,
+          "tau2_unexplained_ratio": 0.546,
+          "r2": 0.454,
+          "q_residual": 2.6323,
+          "method": "knapp_hartung",
+          "level": 0.95,
+          "x_min": 0.5,
+          "x_max": 0.925
+        },
+        "underpowered": true,
+        "min_k_for_interpretation": 8
+      }
+    },
+    {
+      "spray_type": "combination",
+      "outcome_domain": "efficacy",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "reference_higher_is_better": true,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.1111/j.1399-5618.2010.00823.x",
+          "first_author": "David",
+          "year": 2010,
+          "effect": 0.93,
+          "ci_low": 0.87,
+          "ci_high": 0.99,
+          "p_value": 0.02,
+          "n_total": 225,
+          "outcome_name": "BMI as predictor of depression response/remission to lithium+valproate (logistic regression)",
+          "weight": null,
+          "subgroup": "not_reported"
+        }
+      ]
+    },
+    {
+      "spray_type": "combination",
+      "outcome_domain": "other",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.1017/s1092852921000572",
+          "first_author": "Ali",
+          "year": 2022,
+          "effect": -8.68,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.0,
+          "n_total": 47,
+          "outcome_name": "Yale-Brown Obsessive-Compulsive Scale (YBOCS) total score",
+          "weight": null,
+          "subgroup": "not_reported"
+        }
+      ]
+    },
+    {
+      "spray_type": "lithium",
+      "outcome_domain": "bmi",
+      "effect_measure": "adjusted_mean_difference",
+      "n_trials": 3,
+      "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.1289/ehp.1002678",
+          "first_author": "Karin",
+          "year": 2011,
+          "effect": 0.14,
+          "ci_low": -0.059,
+          "ci_high": 0.35,
+          "p_value": 0.16,
+          "n_total": 202,
+          "outcome_name": "Body mass index (BMI)",
+          "weight": 0.4534,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.3390/medicina62040761",
+          "first_author": "Carol",
+          "year": 2026,
+          "effect": -0.37,
+          "ci_low": -0.626,
+          "ci_high": -0.115,
+          "p_value": 0.005,
+          "n_total": 1226,
+          "outcome_name": "Body mass index (BMI, kg/m2) associated with lithium use",
+          "weight": 0.438,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.3389/fpsyt.2026.1750187",
+          "first_author": "Ernesta",
+          "year": 2026,
+          "effect": -1.7018,
+          "ci_low": -3.1698,
+          "ci_high": -0.2337,
+          "p_value": 0.0231,
+          "n_total": 127,
+          "outcome_name": "Change in Body Mass Index (DBMI) over ten-week inpatient treatment",
+          "weight": 0.1086,
+          "subgroup": "not_reported"
+        }
+      ],
+      "pooled": {
+        "effect": -0.2834,
+        "ci_low": -1.9582,
+        "ci_high": 1.3915,
+        "i2": 85.8,
+        "model": "random_effects",
+        "tau2_method": "DL",
+        "ci_method": "hksj",
+        "level": 0.95,
+        "p_value": 0.5423,
+        "tau2": 0.1624,
+        "tau": 0.4029,
+        "q": 14.0828,
+        "q_p": 0.0009,
+        "df": 2,
+        "h2": 7.041,
+        "prediction_low": -6.5199,
+        "prediction_high": 5.9532
+      },
+      "publication_bias": {
+        "egger": {
+          "intercept": -3.1521,
+          "se": 3.0435,
+          "t": -1.0357,
+          "df": 1,
+          "p_value": 0.4888
+        },
+        "trim_fill": {
+          "n_imputed": 2,
+          "side": "right",
+          "adjusted_effect": 0.14,
+          "imputed": [
+            {
+              "effect": 1.9818,
+              "se": 0.749
+            },
+            {
+              "effect": 0.65,
+              "se": 0.1304
+            }
+          ]
+        },
+        "funnel": {
+          "pooled_effect": -0.2834,
+          "log_scale": false,
+          "points": [
+            {
+              "effect": 0.14,
+              "se": 0.1043
+            },
+            {
+              "effect": -0.37,
+              "se": 0.1304
+            },
+            {
+              "effect": -1.7018,
+              "se": 0.749
+            }
+          ],
+          "max_se": 0.749
+        }
+      },
+      "leave_one_out": [
+        {
+          "omitted": "10.1289/ehp.1002678",
+          "omitted_author": "Karin",
+          "effect": -0.8317,
+          "ci_low": -8.8849,
+          "ci_high": 7.2216,
+          "i2": 67.4
+        },
+        {
+          "omitted": "10.3390/medicina62040761",
+          "omitted_author": "Carol",
+          "effect": -0.6316,
+          "ci_low": -12.1778,
+          "ci_high": 10.9147,
+          "i2": 83.1
+        },
+        {
+          "omitted": "10.3389/fpsyt.2026.1750187",
+          "omitted_author": "Ernesta",
+          "effect": -0.109,
+          "ci_low": -3.3482,
+          "ci_high": 3.1302,
+          "i2": 89.3
+        }
+      ]
+    },
+    {
+      "spray_type": "lithium",
+      "outcome_domain": "bmi",
+      "effect_measure": "mean_difference",
+      "n_trials": 5,
+      "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.1186/s40345-022-00268-2",
+          "first_author": "Leonardo",
+          "year": 2022,
+          "effect": 0.7,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.04,
+          "n_total": 1377,
+          "outcome_name": "Body-mass index (BMI) and obesity prevalence, BD-1 vs BD-2 (whole-cohort diagnostic comparison, not restricted to lithium users)",
+          "weight": 0.3021,
+          "subgroup": "low"
+        },
+        {
+          "paper_id": "10.1016/j.heliyon.2020.e04553",
+          "first_author": "Neda",
+          "year": 2020,
+          "effect": 3.55,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.01,
+          "n_total": 87,
+          "outcome_name": "Body Mass Index (BMI)",
+          "weight": 0.2515,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1186/s12888-021-03572-w",
+          "first_author": "Jake",
+          "year": 2021,
+          "effect": -1.1,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.895,
+          "n_total": 129,
+          "outcome_name": "Mean BMI",
+          "weight": 0.2408,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1111/j.1399-5618.2009.00730.x",
+          "first_author": "Cynthia",
+          "year": 2009,
+          "effect": -5.9,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.01,
+          "n_total": 276,
+          "outcome_name": "Body mass index (BMI) by lithium therapeutic effectiveness",
+          "weight": 0.2007,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1034/j.1399-5618.2003.00009.x",
+          "first_author": "Roger",
+          "year": 2003,
+          "effect": 1.93,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.82,
+          "n_total": 38,
+          "outcome_name": "Body mass index (kg/m2)",
+          "weight": 0.005,
+          "subgroup": "high"
+        }
+      ],
+      "pooled": {
+        "effect": -0.3351,
+        "ci_low": -4.8335,
+        "ci_high": 4.1633,
+        "i2": 81.5,
+        "model": "random_effects",
+        "tau2_method": "DL",
+        "ci_method": "hksj",
+        "level": 0.95,
+        "p_value": 0.8462,
+        "tau2": 5.9448,
+        "tau": 2.4382,
+        "q": 21.6352,
+        "q_p": 0.0002,
+        "df": 4,
+        "h2": 5.409,
+        "prediction_low": -9.2094,
+        "prediction_high": 8.5392
+      },
+      "publication_bias": {
+        "egger": {
+          "intercept": -0.862,
+          "se": 1.6681,
+          "t": -0.5168,
+          "df": 3,
+          "p_value": 0.641
+        },
+        "trim_fill": {
+          "n_imputed": 2,
+          "side": "left",
+          "adjusted_effect": -1.8204,
+          "imputed": [
+            {
+              "effect": -5.3998,
+              "se": 19.03
+            },
+            {
+              "effect": -7.0198,
+              "se": 1.156
+            }
+          ]
+        },
+        "funnel": {
+          "pooled_effect": -0.3351,
+          "log_scale": false,
+          "points": [
+            {
+              "effect": 0.7,
+              "se": 0.3408
+            },
+            {
+              "effect": 3.55,
+              "se": 1.156
+            },
+            {
+              "effect": -1.1,
+              "se": 1.288
+            },
+            {
+              "effect": -5.9,
+              "se": 1.783
+            },
+            {
+              "effect": 1.93,
+              "se": 19.03
+            }
+          ],
+          "max_se": 19.03
+        }
+      },
+      "leave_one_out": [
+        {
+          "omitted": "10.1186/s40345-022-00268-2",
+          "omitted_author": "Leonardo",
+          "effect": -0.9529,
+          "ci_low": -7.9751,
+          "ci_high": 6.0694,
+          "i2": 85.8
+        },
+        {
+          "omitted": "10.1016/j.heliyon.2020.e04553",
+          "omitted_author": "Neda",
+          "effect": -1.682,
+          "ci_low": -6.655,
+          "ci_high": 3.2911,
+          "i2": 79.5
+        },
+        {
+          "omitted": "10.1186/s12888-021-03572-w",
+          "omitted_author": "Jake",
+          "effect": -0.1925,
+          "ci_low": -7.0984,
+          "ci_high": 6.7134,
+          "i2": 84.8
+        },
+        {
+          "omitted": "10.1111/j.1399-5618.2009.00730.x",
+          "omitted_author": "Cynthia",
+          "effect": 1.0491,
+          "ci_low": -2.1625,
+          "ci_high": 4.2608,
+          "i2": 62.1
+        },
+        {
+          "omitted": "10.1034/j.1399-5618.2003.00009.x",
+          "omitted_author": "Roger",
+          "effect": -0.36,
+          "ci_low": -6.3381,
+          "ci_high": 5.6181,
+          "i2": 86.1
+        }
+      ],
+      "subgroups": {
+        "by": "derived.serum_li_band",
+        "groups": [
+          {
+            "subgroup": "high",
+            "n_trials": 1,
+            "effect": 1.93,
+            "ci_low": -35.3681,
+            "ci_high": 39.2281,
+            "i2": 0.0,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.9192,
+            "tau2": 0.0,
+            "tau": 0.0,
+            "q": 0.0,
+            "q_p": null,
+            "df": 0,
+            "h2": 1.0
+          },
+          {
+            "subgroup": "low",
+            "n_trials": 1,
+            "effect": 0.7,
+            "ci_low": 0.032,
+            "ci_high": 1.368,
+            "i2": 0.0,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.04,
+            "tau2": 0.0,
+            "tau": 0.0,
+            "q": 0.0,
+            "q_p": null,
+            "df": 0,
+            "h2": 1.0
+          },
+          {
+            "subgroup": "not_reported",
+            "n_trials": 3,
+            "effect": -1.0087,
+            "ci_low": -12.6814,
+            "ci_high": 10.664,
+            "i2": 90.5,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.7457,
+            "tau2": 18.1556,
+            "tau": 4.2609,
+            "q": 21.0983,
+            "q_p": 0.0,
+            "df": 2,
+            "h2": 10.549,
+            "prediction_low": -64.391,
+            "prediction_high": 62.3736
+          }
+        ],
+        "q_between": 0.3949,
+        "df": 2,
+        "p_value": 0.8208
+      }
+    },
+    {
+      "spray_type": "lithium",
+      "outcome_domain": "body_composition",
+      "effect_measure": "adjusted_mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.1007/s12011-021-03077-3",
+          "first_author": "Ngu",
+          "year": 2022,
+          "effect": 1.454,
+          "ci_low": 0.005,
+          "ci_high": 2.902,
+          "p_value": 0.05,
+          "n_total": 150,
+          "outcome_name": "Body fat mass (%) association with plasma lithium",
+          "weight": null,
+          "subgroup": "not_reported"
+        }
+      ]
+    },
+    {
+      "spray_type": "lithium",
+      "outcome_domain": "body_weight",
+      "effect_measure": "mean_difference",
+      "n_trials": 10,
+      "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.1016/j.jad.2007.02.004",
+          "first_author": "Caleb",
+          "year": 2007,
+          "effect": 1.7,
+          "ci_low": 1.1,
+          "ci_high": 2.23,
+          "p_value": null,
+          "n_total": 809,
+          "outcome_name": "Mean change in weight from baseline (combination therapy: quetiapine+Li/DVP vs placebo+Li/DVP)",
+          "weight": 0.2374,
+          "subgroup": "medium"
+        },
+        {
+          "paper_id": "10.1016/s0278-5846(99)00085-8",
+          "first_author": "Trino",
+          "year": 2000,
+          "effect": -0.14,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.89,
+          "n_total": 23,
+          "outcome_name": "Body weight change during treatment",
+          "weight": 0.1967,
+          "subgroup": "low"
+        },
+        {
+          "paper_id": "10.1111/j.1399-5618.2006.00308.x",
+          "first_author": "Gary",
+          "year": 2006,
+          "effect": 3.4,
+          "ci_low": 1.4,
+          "ci_high": 5.4,
+          "p_value": 0.001,
+          "n_total": 583,
+          "outcome_name": "Mean change in weight (kg) from randomization day 1 to week 52 (MMRM, covariate-adjusted)",
+          "weight": 0.1961,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1016/s0149-2918(02)80061-3",
+          "first_author": "Chengappa",
+          "year": 2002,
+          "effect": 7.5,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": null,
+          "n_total": 214,
+          "outcome_name": "Change in body weight",
+          "weight": 0.1455,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.29245/2578-2959/2022/3.1255",
+          "first_author": "Seyed-Shahab",
+          "year": 2022,
+          "effect": -3.7,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.001,
+          "n_total": 28,
+          "outcome_name": "Body weight change from baseline to 6 months",
+          "weight": 0.0771,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1111/j.1600-0447.1988.tb06375.x",
+          "first_author": "Vieweg",
+          "year": 1988,
+          "effect": 1.6,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": null,
+          "n_total": 73,
+          "outcome_name": "Body weight (7 a.m. and 4 p.m., used to derive normalized diurnal weight gain)",
+          "weight": 0.0663,
+          "subgroup": "high"
+        },
+        {
+          "paper_id": "10.1177/070674371405900606",
+          "first_author": "Soham",
+          "year": 2014,
+          "effect": -8.6,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.12,
+          "n_total": 100,
+          "outcome_name": "Weight (kg)",
+          "weight": 0.0619,
+          "subgroup": "medium"
+        },
+        {
+          "paper_id": "10.1007/s11126-006-7963-9",
+          "first_author": "Deanna",
+          "year": 2006,
+          "effect": 4.6,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": null,
+          "n_total": 49,
+          "outcome_name": "Weight change (pounds) over 6 months",
+          "weight": 0.0128,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1186/s40345-026-00425-x",
+          "first_author": "Elena",
+          "year": 2026,
+          "effect": 14.18,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.841,
+          "n_total": 10,
+          "outcome_name": "Clinically relevant weight gain (≥5 kg) during lithium treatment (group-defining outcome; baseline weight prior to lithium exposure)",
+          "weight": 0.0034,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1034/j.1399-5618.2003.00009.x",
+          "first_author": "Roger",
+          "year": 2003,
+          "effect": 1.4,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.82,
+          "n_total": 38,
+          "outcome_name": "Body weight (kg)",
+          "weight": 0.0026,
+          "subgroup": "high"
+        }
+      ],
+      "pooled": {
+        "effect": 1.5338,
+        "ci_low": -1.4402,
+        "ci_high": 4.5079,
+        "i2": 69.2,
+        "model": "random_effects",
+        "tau2_method": "DL",
+        "ci_method": "hksj",
+        "level": 0.95,
+        "p_value": 0.2733,
+        "tau2": 4.4705,
+        "tau": 2.1144,
+        "q": 29.2549,
+        "q_p": 0.0006,
+        "df": 9,
+        "h2": 3.251,
+        "prediction_low": -3.8996,
+        "prediction_high": 6.9672
+      },
+      "publication_bias": {
+        "egger": {
+          "intercept": -0.099,
+          "se": 0.7482,
+          "t": -0.1323,
+          "df": 8,
+          "p_value": 0.898
+        },
+        "trim_fill": {
+          "n_imputed": 1,
+          "side": "left",
+          "adjusted_effect": 1.4986,
+          "imputed": [
+            {
+              "effect": -11.2163,
+              "se": 17.68
+            }
+          ]
+        },
+        "funnel": {
+          "pooled_effect": 1.5338,
+          "log_scale": false,
+          "points": [
+            {
+              "effect": 1.7,
+              "se": 0.2883
+            },
+            {
+              "effect": -0.14,
+              "se": 1.0123
+            },
+            {
+              "effect": 3.4,
+              "se": 1.0204
+            },
+            {
+              "effect": 7.5,
+              "se": 1.72
+            },
+            {
+              "effect": -3.7,
+              "se": 3.09
+            },
+            {
+              "effect": 1.6,
+              "se": 3.44
+            },
+            {
+              "effect": -8.6,
+              "se": 3.605
+            },
+            {
+              "effect": 4.6,
+              "se": 8.938
+            },
+            {
+              "effect": 14.18,
+              "se": 17.68
+            },
+            {
+              "effect": 1.4,
+              "se": 20.13
+            }
+          ],
+          "max_se": 20.13
+        }
+      },
+      "leave_one_out": [
+        {
+          "omitted": "10.1016/j.jad.2007.02.004",
+          "omitted_author": "Caleb",
+          "effect": 1.0968,
+          "ci_low": -2.8975,
+          "ci_high": 5.091,
+          "i2": 72.6
+        },
+        {
+          "omitted": "10.1016/s0278-5846(99)00085-8",
+          "omitted_author": "Trino",
+          "effect": 1.8041,
+          "ci_low": -1.8523,
+          "ci_high": 5.4605,
+          "i2": 68.7
+        },
+        {
+          "omitted": "10.1111/j.1399-5618.2006.00308.x",
+          "omitted_author": "Gary",
+          "effect": 0.9655,
+          "ci_low": -2.6691,
+          "ci_high": 4.6002,
+          "i2": 69.7
+        },
+        {
+          "omitted": "10.1016/s0149-2918(02)80061-3",
+          "omitted_author": "Chengappa",
+          "effect": 0.7913,
+          "ci_low": -1.6415,
+          "ci_high": 3.2241,
+          "i2": 54.9
+        },
+        {
+          "omitted": "10.29245/2578-2959/2022/3.1255",
+          "omitted_author": "Seyed-Shahab",
+          "effect": 1.9814,
+          "ci_low": -1.0754,
+          "ci_high": 5.0381,
+          "i2": 69.4
+        },
+        {
+          "omitted": "10.1111/j.1600-0447.1988.tb06375.x",
+          "omitted_author": "Vieweg",
+          "effect": 1.5023,
+          "ci_low": -1.8673,
+          "ci_high": 4.8718,
+          "i2": 72.7
+        },
+        {
+          "omitted": "10.1177/070674371405900606",
+          "omitted_author": "Soham",
+          "effect": 2.197,
+          "ci_low": -0.1798,
+          "ci_high": 4.5737,
+          "i2": 61.9
+        },
+        {
+          "omitted": "10.1007/s11126-006-7963-9",
+          "omitted_author": "Deanna",
+          "effect": 1.4778,
+          "ci_low": -1.7682,
+          "ci_high": 4.7237,
+          "i2": 72.6
+        },
+        {
+          "omitted": "10.1186/s40345-026-00425-x",
+          "omitted_author": "Elena",
+          "effect": 1.4819,
+          "ci_low": -1.6931,
+          "ci_high": 4.6568,
+          "i2": 72.2
+        },
+        {
+          "omitted": "10.1034/j.1399-5618.2003.00009.x",
+          "omitted_author": "Roger",
+          "effect": 1.519,
+          "ci_low": -1.7234,
+          "ci_high": 4.7614,
+          "i2": 72.7
+        }
+      ],
+      "subgroups": {
+        "by": "derived.serum_li_band",
+        "groups": [
+          {
+            "subgroup": "high",
+            "n_trials": 2,
+            "effect": 1.5943,
+            "ci_low": 1.1724,
+            "ci_high": 2.0163,
+            "i2": 0.0,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.0133,
+            "tau2": 0.0,
+            "tau": 0.0,
+            "q": 0.0001,
+            "q_p": 0.9922,
+            "df": 1,
+            "h2": 0.0
+          },
+          {
+            "subgroup": "low",
+            "n_trials": 1,
+            "effect": -0.14,
+            "ci_low": -2.124,
+            "ci_high": 1.844,
+            "i2": 0.0,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.89,
+            "tau2": 0.0,
+            "tau": 0.0,
+            "q": 0.0,
+            "q_p": null,
+            "df": 0,
+            "h2": 1.0
+          },
+          {
+            "subgroup": "medium",
+            "n_trials": 2,
+            "effect": -2.8232,
+            "ci_low": -67.7736,
+            "ci_high": 62.1273,
+            "i2": 87.7,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.6788,
+            "tau2": 46.5054,
+            "tau": 6.8195,
+            "q": 8.1114,
+            "q_p": 0.0044,
+            "df": 1,
+            "h2": 8.111
+          },
+          {
+            "subgroup": "not_reported",
+            "n_trials": 5,
+            "effect": 3.392,
+            "ci_low": -2.5529,
+            "ci_high": 9.3368,
+            "i2": 63.7,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.1883,
+            "tau2": 10.3087,
+            "tau": 3.2107,
+            "q": 11.0142,
+            "q_p": 0.0264,
+            "df": 4,
+            "h2": 2.754,
+            "prediction_low": -8.8073,
+            "prediction_high": 15.5912
+          }
+        ],
+        "q_between": 4.3848,
+        "df": 3,
+        "p_value": 0.2228
+      },
+      "meta_regression": {
+        "by": "derived.mean_serum_li_mmol_L",
+        "n_points": 5,
+        "scatter": [
+          {
+            "paper_id": "10.1016/s0278-5846(99)00085-8",
+            "first_author": "Trino",
+            "year": 2000,
+            "x": 0.31,
+            "effect": -0.14,
+            "se": 1.0123,
+            "weight": 0.9759,
+            "n_total": 23,
+            "subgroup": "low"
+          },
+          {
+            "paper_id": "10.1177/070674371405900606",
+            "first_author": "Soham",
+            "year": 2014,
+            "x": 0.635,
+            "effect": -8.6,
+            "se": 3.605,
+            "weight": 0.0769,
+            "n_total": 100,
+            "subgroup": "medium"
+          },
+          {
+            "paper_id": "10.1016/j.jad.2007.02.004",
+            "first_author": "Caleb",
+            "year": 2007,
+            "x": 0.76,
+            "effect": 1.7,
+            "se": 0.2883,
+            "weight": 12.0337,
+            "n_total": 809,
+            "subgroup": "medium"
+          },
+          {
+            "paper_id": "10.1111/j.1600-0447.1988.tb06375.x",
+            "first_author": "Vieweg",
+            "year": 1988,
+            "x": 0.9,
+            "effect": 1.6,
+            "se": 3.44,
+            "weight": 0.0845,
+            "n_total": 73,
+            "subgroup": "high"
+          },
+          {
+            "paper_id": "10.1034/j.1399-5618.2003.00009.x",
+            "first_author": "Roger",
+            "year": 2003,
+            "x": 0.92,
+            "effect": 1.4,
+            "se": 20.13,
+            "weight": 0.0025,
+            "n_total": 38,
+            "subgroup": "high"
+          }
+        ],
+        "regression": {
+          "moderator_n": 5,
+          "slope": 3.050909,
+          "slope_se": 9.102793,
+          "slope_ci_low": -25.918241,
+          "slope_ci_high": 32.02006,
+          "intercept": -2.490807,
+          "intercept_se": 6.038334,
+          "p_value": 0.7596,
+          "t_stat": 0.3352,
+          "df": 3,
+          "tau2_residual": 11.993348,
+          "tau2_unexplained_ratio": 3.634,
+          "r2": 0.0,
+          "q_residual": 3.1116,
+          "method": "knapp_hartung",
+          "level": 0.95,
+          "x_min": 0.31,
+          "x_max": 0.92
+        },
+        "underpowered": true,
+        "min_k_for_interpretation": 8
+      }
+    },
+    {
+      "spray_type": "lithium",
+      "outcome_domain": "clinically_significant_weight_gain",
+      "effect_measure": "adjusted_hazard_ratio",
+      "n_trials": 2,
+      "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.1371/journal.pmed.1002058",
+          "first_author": "Joseph",
+          "year": 2016,
+          "effect": 1.62,
+          "ci_low": 1.31,
+          "ci_high": 2.01,
+          "p_value": 0.001,
+          "n_total": 6671,
+          "outcome_name": ">15% weight gain from baseline",
+          "weight": null,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1093/ijnp/pyae059.288",
+          "first_author": "*Shuhei",
+          "year": 2025,
+          "effect": 1.6,
+          "ci_low": 1.01,
+          "ci_high": 2.53,
+          "p_value": null,
+          "n_total": 865,
+          "outcome_name": "Antipsychotic-induced weight gain (AIWG) incidence, weight gain ≥7% of baseline body weight within 12 months",
+          "weight": null,
+          "subgroup": "not_reported"
+        }
+      ]
+    },
+    {
+      "spray_type": "lithium",
+      "outcome_domain": "clinically_significant_weight_gain",
+      "effect_measure": "adjusted_odds_ratio",
+      "n_trials": 3,
+      "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.1186/s40345-022-00268-2",
+          "first_author": "Leonardo",
+          "year": 2022,
+          "effect": 2.6,
+          "ci_low": 1.27,
+          "ci_high": 5.33,
+          "p_value": 0.009,
+          "n_total": 1377,
+          "outcome_name": "Obesity (BMI ≥30 kg/m2), BD-1 vs BD-2 (whole-cohort diagnostic comparison, not restricted to lithium users)",
+          "weight": 0.3644,
+          "subgroup": "low"
+        },
+        {
+          "paper_id": "10.1016/j.jad.2019.08.056",
+          "first_author": "Élise",
+          "year": 2019,
+          "effect": 0.86,
+          "ci_low": 0.35,
+          "ci_high": 2.08,
+          "p_value": 0.737,
+          "n_total": 281,
+          "outcome_name": "Obesity (BMI > 30 kg/m2)",
+          "weight": 0.3463,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1016/j.jpsychires.2012.01.014",
+          "first_author": "Eva",
+          "year": 2012,
+          "effect": 0.17,
+          "ci_low": 0.04,
+          "ci_high": 0.63,
+          "p_value": 0.008,
+          "n_total": 196,
+          "outcome_name": "Important weight gain (>10% of baseline weight) during current drug treatment",
+          "weight": 0.2894,
+          "subgroup": "not_reported"
+        }
+      ],
+      "pooled": {
+        "effect": 0.805,
+        "ci_low": 0.0286,
+        "ci_high": 22.6222,
+        "i2": 84.3,
+        "model": "random_effects",
+        "tau2_method": "DL",
+        "ci_method": "hksj",
+        "level": 0.95,
+        "p_value": 0.806,
+        "tau2": 1.2588,
+        "tau": 1.122,
+        "q": 12.7204,
+        "q_p": 0.0017,
+        "df": 2,
+        "h2": 6.36,
+        "prediction_low": 0.0,
+        "prediction_high": 17356809.3738
+      },
+      "publication_bias": {
+        "egger": {
+          "intercept": -8.1998,
+          "se": 1.6278,
+          "t": -5.0373,
+          "df": 1,
+          "p_value": 0.1248
+        },
+        "trim_fill": {
+          "n_imputed": 0,
+          "side": "left",
+          "adjusted_effect": null,
+          "imputed": []
+        },
+        "funnel": {
+          "pooled_effect": 0.805,
+          "log_scale": true,
+          "points": [
+            {
+              "effect": 2.6,
+              "se": 0.3659
+            },
+            {
+              "effect": 0.86,
+              "se": 0.4546
+            },
+            {
+              "effect": 0.17,
+              "se": 0.7033
+            }
+          ],
+          "max_se": 0.7033
+        }
+      },
+      "leave_one_out": [
+        {
+          "omitted": "10.1186/s40345-022-00268-2",
+          "omitted_author": "Leonardo",
+          "effect": 0.4179,
+          "ci_low": 0.0,
+          "ci_high": 11668.511,
+          "i2": 73.3
+        },
+        {
+          "omitted": "10.1016/j.jad.2019.08.056",
+          "omitted_author": "Élise",
+          "effect": 0.7103,
+          "ci_low": 0.0,
+          "ci_high": 23333647.7838,
+          "i2": 91.6
+        },
+        {
+          "omitted": "10.1016/j.jpsychires.2012.01.014",
+          "omitted_author": "Eva",
+          "effect": 1.5454,
+          "ci_low": 0.0014,
+          "ci_high": 1722.3747,
+          "i2": 72.2
+        }
+      ],
+      "subgroups": {
+        "by": "derived.serum_li_band",
+        "groups": [
+          {
+            "subgroup": "low",
+            "n_trials": 1,
+            "effect": 2.6,
+            "ci_low": 1.2691,
+            "ci_high": 5.3264,
+            "i2": 0.0,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.009,
+            "tau2": 0.0,
+            "tau": 0.0,
+            "q": 0.0,
+            "q_p": null,
+            "df": 0,
+            "h2": 1.0
+          },
+          {
+            "subgroup": "not_reported",
+            "n_trials": 2,
+            "effect": 0.4179,
+            "ci_low": 0.0,
+            "ci_high": 11668.511,
+            "i2": 73.3,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.4746,
+            "tau2": 0.9634,
+            "tau": 0.9815,
+            "q": 3.7473,
+            "q_p": 0.0529,
+            "df": 1,
+            "h2": 3.747
+          }
+        ],
+        "q_between": 4.268,
+        "df": 1,
+        "p_value": 0.0388
+      }
+    },
+    {
+      "spray_type": "lithium",
+      "outcome_domain": "clinically_significant_weight_gain",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.1016/j.jad.2007.02.004",
+          "first_author": "Caleb",
+          "year": 2007,
+          "effect": 4.45,
+          "ci_low": 2.26,
+          "ci_high": 8.75,
+          "p_value": 0.001,
+          "n_total": 809,
+          "outcome_name": "Proportion with >=7% weight gain, monotherapy (QTP vs PBO)",
+          "weight": null,
+          "subgroup": "medium"
+        }
+      ]
+    },
+    {
+      "spray_type": "lithium",
+      "outcome_domain": "clinically_significant_weight_gain",
+      "effect_measure": "risk_ratio",
+      "n_trials": 3,
+      "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.1186/s40345-022-00268-2",
+          "first_author": "Leonardo",
+          "year": 2022,
+          "effect": 2.03,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.007,
+          "n_total": 1377,
+          "outcome_name": "Obesity (BMI ≥30 kg/m2), BD-1 vs BD-2 (whole-cohort diagnostic comparison, not restricted to lithium users)",
+          "weight": 0.3347,
+          "subgroup": "low"
+        },
+        {
+          "paper_id": "10.1007/bf02916252",
+          "first_author": "Greil",
+          "year": 1997,
+          "effect": 2.54,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.001,
+          "n_total": 90,
+          "outcome_name": "Weight gain (side effect, at least once, excluding first 6 months of treatment)",
+          "weight": 0.3337,
+          "subgroup": "low"
+        },
+        {
+          "paper_id": "10.1186/s12991-024-00530-0",
+          "first_author": "Johanna",
+          "year": 2024,
+          "effect": 0.07,
+          "ci_low": 0.04,
+          "ci_high": 0.14,
+          "p_value": null,
+          "n_total": 462661,
+          "outcome_name": "Changes in body weight (weight gain) as an adverse drug reaction, ≥65 vs <65 years, all psychotropic drugs combined",
+          "weight": 0.3316,
+          "subgroup": "not_reported"
+        }
+      ],
+      "pooled": {
+        "effect": 0.7161,
+        "ci_low": 0.0049,
+        "ci_high": 105.3623,
+        "i2": 97.7,
+        "model": "random_effects",
+        "tau2_method": "DL",
+        "ci_method": "hksj",
+        "level": 0.95,
+        "p_value": 0.8006,
+        "tau2": 3.5067,
+        "tau": 1.8726,
+        "q": 86.8696,
+        "q_p": 0.0,
+        "df": 2,
+        "h2": 43.435,
+        "prediction_low": 0.0,
+        "prediction_high": 664909468370.4979
+      },
+      "publication_bias": {
+        "egger": {
+          "intercept": -60.4301,
+          "se": 30.0784,
+          "t": -2.0091,
+          "df": 1,
+          "p_value": 0.294
+        },
+        "trim_fill": {
+          "n_imputed": 0,
+          "side": "left",
+          "adjusted_effect": null,
+          "imputed": []
+        },
+        "funnel": {
+          "pooled_effect": 0.7161,
+          "log_scale": true,
+          "points": [
+            {
+              "effect": 2.03,
+              "se": 0.2625
+            },
+            {
+              "effect": 2.54,
+              "se": 0.2833
+            },
+            {
+              "effect": 0.07,
+              "se": 0.3196
+            }
+          ],
+          "max_se": 0.3196
+        }
+      },
+      "leave_one_out": [
+        {
+          "omitted": "10.1186/s40345-022-00268-2",
+          "omitted_author": "Leonardo",
+          "effect": 0.423,
+          "ci_low": 0.0,
+          "ci_high": 3431114961.8535,
+          "i2": 98.6
+        },
+        {
+          "omitted": "10.1007/bf02916252",
+          "omitted_author": "Greil",
+          "effect": 0.3788,
+          "ci_low": 0.0,
+          "ci_high": 739882725.0664,
+          "i2": 98.5
+        },
+        {
+          "omitted": "10.1186/s12991-024-00530-0",
+          "omitted_author": "Johanna",
+          "effect": 2.2515,
+          "ci_low": 0.5443,
+          "ci_high": 9.3129,
+          "i2": 0.0
+        }
+      ],
+      "subgroups": {
+        "by": "derived.serum_li_band",
+        "groups": [
+          {
+            "subgroup": "low",
+            "n_trials": 2,
+            "effect": 2.2515,
+            "ci_low": 0.5443,
+            "ci_high": 9.3129,
+            "i2": 0.0,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.0871,
+            "tau2": 0.0,
+            "tau": 0.0,
+            "q": 0.3367,
+            "q_p": 0.5617,
+            "df": 1,
+            "h2": 0.337
+          },
+          {
+            "subgroup": "not_reported",
+            "n_trials": 1,
+            "effect": 0.07,
+            "ci_low": 0.0374,
+            "ci_high": 0.131,
+            "i2": 0.0,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.0,
+            "tau2": 0.0,
+            "tau": 0.0,
+            "q": 0.0,
+            "q_p": null,
+            "df": 0,
+            "h2": 1.0
+          }
+        ],
+        "q_between": 105.0999,
+        "df": 1,
+        "p_value": 0.0
+      }
+    },
+    {
+      "spray_type": "lithium",
+      "outcome_domain": "efficacy",
+      "effect_measure": "hazard_ratio",
+      "n_trials": 4,
+      "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.1176/appi.ajp.2008.08020189",
+          "first_author": "Trisha",
+          "year": 2009,
+          "effect": 0.32,
+          "ci_low": 0.24,
+          "ci_high": 0.42,
+          "p_value": 0.0001,
+          "n_total": 623,
+          "outcome_name": "Time to recurrence of any mood event",
+          "weight": 0.2759,
+          "subgroup": "medium"
+        },
+        {
+          "paper_id": "10.1111/j.1399-5618.2010.00836.x",
+          "first_author": "Rasmus",
+          "year": 2010,
+          "effect": 0.92,
+          "ci_low": 0.6,
+          "ci_high": 1.4,
+          "p_value": null,
+          "n_total": 155,
+          "outcome_name": "Time to primary study endpoint (insufficient maintenance treatment, composite endpoints 1a/1b/2a/2b)",
+          "weight": 0.2675,
+          "subgroup": "medium"
+        },
+        {
+          "paper_id": "10.1056/nejm198911303212201",
+          "first_author": "Alan",
+          "year": 1989,
+          "effect": 2.6,
+          "ci_low": 1.3,
+          "ci_high": 5.2,
+          "p_value": 0.004,
+          "n_total": 94,
+          "outcome_name": "Relapse (manic or depressive episode meeting RDC/DSM-III criteria), time to relapse",
+          "weight": 0.2451,
+          "subgroup": "medium"
+        },
+        {
+          "paper_id": "10.1016/j.jaac.2018.07.901",
+          "first_author": "Robert",
+          "year": 2019,
+          "effect": 0.28,
+          "ci_low": 0.1,
+          "ci_high": 0.78,
+          "p_value": 0.015,
+          "n_total": 31,
+          "outcome_name": "Relative risk of study discontinuation for any reason",
+          "weight": 0.2114,
+          "subgroup": "not_reported"
+        }
+      ],
+      "pooled": {
+        "effect": 0.6896,
+        "ci_low": 0.1349,
+        "ci_high": 3.5249,
+        "i2": 92.6,
+        "model": "random_effects",
+        "tau2_method": "DL",
+        "ci_method": "hksj",
+        "level": 0.95,
+        "p_value": 0.5209,
+        "tau2": 0.8133,
+        "tau": 0.9018,
+        "q": 40.627,
+        "q_p": 0.0,
+        "df": 3,
+        "h2": 13.542,
+        "prediction_low": 0.0085,
+        "prediction_high": 55.8801
+      },
+      "publication_bias": {
+        "egger": {
+          "intercept": 3.8064,
+          "se": 4.5059,
+          "t": 0.8448,
+          "df": 2,
+          "p_value": 0.4872
+        },
+        "trim_fill": {
+          "n_imputed": 0,
+          "side": "left",
+          "adjusted_effect": null,
+          "imputed": []
+        },
+        "funnel": {
+          "pooled_effect": 0.6896,
+          "log_scale": true,
+          "points": [
+            {
+              "effect": 0.32,
+              "se": 0.1428
+            },
+            {
+              "effect": 0.92,
+              "se": 0.2162
+            },
+            {
+              "effect": 2.6,
+              "se": 0.3537
+            },
+            {
+              "effect": 0.28,
+              "se": 0.524
+            }
+          ],
+          "max_se": 0.524
+        }
+      },
+      "leave_one_out": [
+        {
+          "omitted": "10.1176/appi.ajp.2008.08020189",
+          "omitted_author": "Trisha",
+          "effect": 0.9317,
+          "ci_low": 0.0646,
+          "ci_high": 13.4341,
+          "i2": 85.0
+        },
+        {
+          "omitted": "10.1111/j.1399-5618.2010.00836.x",
+          "omitted_author": "Rasmus",
+          "effect": 0.6198,
+          "ci_low": 0.0279,
+          "ci_high": 13.7742,
+          "i2": 93.5
+        },
+        {
+          "omitted": "10.1056/nejm198911303212201",
+          "omitted_author": "Alan",
+          "effect": 0.4554,
+          "ci_low": 0.0891,
+          "ci_high": 2.3272,
+          "i2": 88.5
+        },
+        {
+          "omitted": "10.1016/j.jaac.2018.07.901",
+          "omitted_author": "Robert",
+          "effect": 0.8815,
+          "ci_low": 0.0662,
+          "ci_high": 11.7444,
+          "i2": 94.9
+        }
+      ],
+      "subgroups": {
+        "by": "derived.serum_li_band",
+        "groups": [
+          {
+            "subgroup": "medium",
+            "n_trials": 3,
+            "effect": 0.8815,
+            "ci_low": 0.0662,
+            "ci_high": 11.7444,
+            "i2": 94.9,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.8534,
+            "tau2": 0.905,
+            "tau": 0.9513,
+            "q": 39.2234,
+            "q_p": 0.0,
+            "df": 2,
+            "h2": 19.612,
+            "prediction_low": 0.0,
+            "prediction_high": 1144829.4709
+          },
+          {
+            "subgroup": "not_reported",
+            "n_trials": 1,
+            "effect": 0.28,
+            "ci_low": 0.1003,
+            "ci_high": 0.782,
+            "i2": 0.0,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.0151,
+            "tau2": 0.0,
+            "tau": 0.0,
+            "q": 0.0,
+            "q_p": null,
+            "df": 0,
+            "h2": 1.0
+          }
+        ],
+        "q_between": 2.0653,
+        "df": 1,
+        "p_value": 0.1507
+      },
+      "meta_regression": {
+        "by": "derived.mean_serum_li_mmol_L",
+        "n_points": 3,
+        "scatter": [
+          {
+            "paper_id": "10.1056/nejm198911303212201",
+            "first_author": "Alan",
+            "year": 1989,
+            "x": 0.685,
+            "effect": 2.6,
+            "se": 0.3537,
+            "weight": 7.9955,
+            "n_total": 94,
+            "subgroup": "medium"
+          },
+          {
+            "paper_id": "10.1111/j.1399-5618.2010.00836.x",
+            "first_author": "Rasmus",
+            "year": 2010,
+            "x": 0.69,
+            "effect": 0.92,
+            "se": 0.2162,
+            "weight": 21.4035,
+            "n_total": 155,
+            "subgroup": "medium"
+          },
+          {
+            "paper_id": "10.1176/appi.ajp.2008.08020189",
+            "first_author": "Trisha",
+            "year": 2009,
+            "x": 0.725,
+            "effect": 0.32,
+            "se": 0.1428,
+            "weight": 49.0655,
+            "n_total": 623,
+            "subgroup": "medium"
+          }
+        ],
+        "regression": {
+          "moderator_n": 3,
+          "slope": -42.689849,
+          "slope_se": 17.905849,
+          "slope_ci_low": -270.20523,
+          "slope_ci_high": 184.825532,
+          "intercept": 29.765796,
+          "intercept_se": 12.57188,
+          "p_value": 0.2528,
+          "t_stat": -2.3841,
+          "df": 1,
+          "tau2_residual": 0.258791,
+          "tau2_unexplained_ratio": 0.2859,
+          "r2": 0.7141,
+          "q_residual": 1.0,
+          "method": "knapp_hartung",
+          "level": 0.95,
+          "x_min": 0.685,
+          "x_max": 0.725
+        },
+        "underpowered": true,
+        "min_k_for_interpretation": 8,
+        "slope_ratio_per_unit": 0.0
+      }
+    },
+    {
+      "spray_type": "lithium",
+      "outcome_domain": "efficacy",
+      "effect_measure": "mean_difference",
+      "n_trials": 12,
+      "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 2,
+      "trials": [
+        {
+          "paper_id": "10.1212/wnl.0b013e31822dc7a5",
+          "first_author": "Miller",
+          "year": 2011,
+          "effect": 0.19,
+          "ci_low": 0.01,
+          "ci_high": 0.33,
+          "p_value": 0.04,
+          "n_total": 109,
+          "outcome_name": "ALSFRS-R slope (rate of functional decline)",
+          "weight": 0.197,
+          "oriented_flipped": true,
+          "subgroup": "low"
+        },
+        {
+          "paper_id": "10.1192/bjp.128.5.479",
+          "first_author": "Coppen",
+          "year": 1976,
+          "effect": -0.14,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": null,
+          "n_total": 39,
+          "outcome_name": "Affective Morbidity Index (area-under-curve of affective disturbance severity over time)",
+          "weight": 0.1946,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1097/md.0000000000005401",
+          "first_author": "Eric",
+          "year": 2016,
+          "effect": -0.054,
+          "ci_low": -0.26,
+          "ci_high": 0.15,
+          "p_value": 0.716,
+          "n_total": 66,
+          "outcome_name": "Global Deficit Score (GDS) change from baseline to week 24",
+          "weight": 0.1924,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1016/j.jad.2007.04.020",
+          "first_author": "Niufan",
+          "year": 2008,
+          "effect": -0.61,
+          "ci_low": -1.06,
+          "ci_high": -0.15,
+          "p_value": 0.009,
+          "n_total": 140,
+          "outcome_name": "CGI-BP (Overall Severity) mean change from baseline to endpoint",
+          "weight": 0.1567,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1016/j.heliyon.2020.e04528",
+          "first_author": "John",
+          "year": 2020,
+          "effect": -0.462,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.346,
+          "n_total": 23,
+          "outcome_name": "Percentage brain volume change (PBVC)",
+          "weight": 0.0856,
+          "oriented_flipped": true,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1111/j.1399-5618.2006.00276.x",
+          "first_author": "Stuart",
+          "year": 2006,
+          "effect": 0.6,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.41,
+          "n_total": null,
+          "outcome_name": "Change from baseline in Young Mania Rating Scale (YMRS) score, core 3-week study, pooled placebo/topiramate 400/lithium analysis",
+          "weight": 0.0501,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1002/da.22340",
+          "first_author": "Atefeh",
+          "year": 2015,
+          "effect": -2.27,
+          "ci_low": -3.87,
+          "ci_high": -0.67,
+          "p_value": 0.006,
+          "n_total": 48,
+          "outcome_name": "Hamilton Depression Rating Scale (HDRS) score",
+          "weight": 0.0421,
+          "subgroup": "medium"
+        },
+        {
+          "paper_id": "10.1016/j.jad.2008.05.014",
+          "first_author": "Keck",
+          "year": 2009,
+          "effect": -3.0,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.005,
+          "n_total": 480,
+          "outcome_name": "Mean change from baseline in YMRS Total score",
+          "weight": 0.0269,
+          "subgroup": "medium"
+        },
+        {
+          "paper_id": "10.1176/appi.ajp.2017.15050657",
+          "first_author": "Young",
+          "year": 2017,
+          "effect": 3.9,
+          "ci_low": 1.71,
+          "ci_high": 6.09,
+          "p_value": 0.0002,
+          "n_total": 224,
+          "outcome_name": "Young Mania Rating Scale (change from baseline)",
+          "weight": 0.0249,
+          "subgroup": "medium"
+        },
+        {
+          "paper_id": "10.1176/appi.ajp.2013.13070985",
+          "first_author": "Antony",
+          "year": 2014,
+          "effect": -3.6,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.005,
+          "n_total": 348,
+          "outcome_name": "MADRS total score, change from baseline to week 6",
+          "weight": 0.0195,
+          "subgroup": "medium"
+        },
+        {
+          "paper_id": "10.1542/peds.2015-0743",
+          "first_author": "Robert",
+          "year": 2015,
+          "effect": 5.51,
+          "ci_low": 0.51,
+          "ci_high": 10.5,
+          "p_value": 0.03,
+          "n_total": 81,
+          "outcome_name": "Change in Young Mania Rating Scale (YMRS) score from baseline to week 8/ET (LOCF)",
+          "weight": 0.0053,
+          "subgroup": "high"
+        },
+        {
+          "paper_id": "10.1111/j.1600-0447.1993.tb03487.x",
+          "first_author": "Bocchetta",
+          "year": 1993,
+          "effect": -2.3,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": null,
+          "n_total": 30,
+          "outcome_name": "Total HRSD (Hamilton Rating Scale for Depression) score",
+          "weight": 0.0049,
+          "subgroup": "not_reported"
+        }
+      ],
+      "pooled": {
+        "effect": -0.2366,
+        "ci_low": -1.0009,
+        "ci_high": 0.5278,
+        "i2": 80.8,
+        "model": "random_effects",
+        "tau2_method": "DL",
+        "ci_method": "hksj",
+        "level": 0.95,
+        "p_value": 0.5098,
+        "tau2": 0.1728,
+        "tau": 0.4157,
+        "q": 57.3662,
+        "q_p": 0.0,
+        "df": 11,
+        "h2": 5.215,
+        "prediction_low": -1.2532,
+        "prediction_high": 0.78
+      },
+      "publication_bias": {
+        "egger": {
+          "intercept": -0.738,
+          "se": 0.8908,
+          "t": -0.8285,
+          "df": 10,
+          "p_value": 0.4267
+        },
+        "trim_fill": {
+          "n_imputed": 0,
+          "side": "left",
+          "adjusted_effect": null,
+          "imputed": []
+        },
+        "funnel": {
+          "pooled_effect": -0.2366,
+          "log_scale": false,
+          "points": [
+            {
+              "effect": 0.19,
+              "se": 0.0816
+            },
+            {
+              "effect": -0.14,
+              "se": 0.0943
+            },
+            {
+              "effect": -0.054,
+              "se": 0.1046
+            },
+            {
+              "effect": -0.61,
+              "se": 0.23
+            },
+            {
+              "effect": -0.462,
+              "se": 0.4903
+            },
+            {
+              "effect": 0.6,
+              "se": 0.73
+            },
+            {
+              "effect": -2.27,
+              "se": 0.8163
+            },
+            {
+              "effect": -3.0,
+              "se": 1.0687
+            },
+            {
+              "effect": 3.9,
+              "se": 1.1174
+            },
+            {
+              "effect": -3.6,
+              "se": 1.2825
+            },
+            {
+              "effect": 5.51,
+              "se": 2.5485
+            },
+            {
+              "effect": -2.3,
+              "se": 2.66
+            }
+          ],
+          "max_se": 2.66
+        }
+      },
+      "leave_one_out": [
+        {
+          "omitted": "10.1212/wnl.0b013e31822dc7a5",
+          "omitted_author": "Miller",
+          "effect": -0.3628,
+          "ci_low": -1.351,
+          "ci_high": 0.6255,
+          "i2": 78.3
+        },
+        {
+          "omitted": "10.1192/bjp.128.5.479",
+          "omitted_author": "Coppen",
+          "effect": -0.2993,
+          "ci_low": -1.3324,
+          "ci_high": 0.7337,
+          "i2": 81.9
+        },
+        {
+          "omitted": "10.1097/md.0000000000005401",
+          "omitted_author": "Eric",
+          "effect": -0.314,
+          "ci_low": -1.3328,
+          "ci_high": 0.7048,
+          "i2": 82.5
+        },
+        {
+          "omitted": "10.1016/j.jad.2007.04.020",
+          "omitted_author": "Niufan",
+          "effect": -0.1638,
+          "ci_low": -1.028,
+          "ci_high": 0.7005,
+          "i2": 80.2
+        },
+        {
+          "omitted": "10.1016/j.heliyon.2020.e04528",
+          "omitted_author": "John",
+          "effect": -0.2171,
+          "ci_low": -1.0707,
+          "ci_high": 0.6364,
+          "i2": 82.3
+        },
+        {
+          "omitted": "10.1111/j.1399-5618.2006.00276.x",
+          "omitted_author": "Stuart",
+          "effect": -0.2821,
+          "ci_low": -1.1068,
+          "ci_high": 0.5426,
+          "i2": 82.3
+        },
+        {
+          "omitted": "10.1002/da.22340",
+          "omitted_author": "Atefeh",
+          "effect": -0.1438,
+          "ci_low": -0.8797,
+          "ci_high": 0.5921,
+          "i2": 79.9
+        },
+        {
+          "omitted": "10.1016/j.jad.2008.05.014",
+          "omitted_author": "Keck",
+          "effect": -0.1565,
+          "ci_low": -0.8766,
+          "ci_high": 0.5637,
+          "i2": 79.8
+        },
+        {
+          "omitted": "10.1176/appi.ajp.2017.15050657",
+          "omitted_author": "Young",
+          "effect": -0.3053,
+          "ci_low": -0.9279,
+          "ci_high": 0.3173,
+          "i2": 77.8
+        },
+        {
+          "omitted": "10.1176/appi.ajp.2013.13070985",
+          "omitted_author": "Antony",
+          "effect": -0.1655,
+          "ci_low": -0.8789,
+          "ci_high": 0.5479,
+          "i2": 79.8
+        },
+        {
+          "omitted": "10.1542/peds.2015-0743",
+          "omitted_author": "Robert",
+          "effect": -0.2597,
+          "ci_low": -1.0,
+          "ci_high": 0.4806,
+          "i2": 81.0
+        },
+        {
+          "omitted": "10.1111/j.1600-0447.1993.tb03487.x",
+          "omitted_author": "Bocchetta",
+          "effect": -0.2269,
+          "ci_low": -1.0355,
+          "ci_high": 0.5818,
+          "i2": 82.3
+        }
+      ],
+      "subgroups": {
+        "by": "derived.serum_li_band",
+        "groups": [
+          {
+            "subgroup": "high",
+            "n_trials": 1,
+            "effect": 5.51,
+            "ci_low": 0.515,
+            "ci_high": 10.505,
+            "i2": 0.0,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.0306,
+            "tau2": 0.0,
+            "tau": 0.0,
+            "q": 0.0,
+            "q_p": null,
+            "df": 0,
+            "h2": 1.0
+          },
+          {
+            "subgroup": "low",
+            "n_trials": 1,
+            "effect": 0.19,
+            "ci_low": 0.03,
+            "ci_high": 0.35,
+            "i2": 0.0,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.0199,
+            "tau2": 0.0,
+            "tau": 0.0,
+            "q": 0.0,
+            "q_p": null,
+            "df": 0,
+            "h2": 1.0
+          },
+          {
+            "subgroup": "medium",
+            "n_trials": 4,
+            "effect": -1.2407,
+            "ci_low": -6.7342,
+            "ci_high": 4.2529,
+            "i2": 89.6,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.5242,
+            "tau2": 9.4866,
+            "tau": 3.08,
+            "q": 28.8078,
+            "q_p": 0.0,
+            "df": 3,
+            "h2": 9.603,
+            "prediction_low": -16.2379,
+            "prediction_high": 13.7566
+          },
+          {
+            "subgroup": "not_reported",
+            "n_trials": 6,
+            "effect": -0.177,
+            "ci_low": -0.4427,
+            "ci_high": 0.0887,
+            "i2": 28.2,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.1474,
+            "tau2": 0.0145,
+            "tau": 0.1203,
+            "q": 6.9631,
+            "q_p": 0.2234,
+            "df": 5,
+            "h2": 1.393,
+            "prediction_low": -0.609,
+            "prediction_high": 0.2549
+          }
+        ],
+        "q_between": 12.915,
+        "df": 3,
+        "p_value": 0.0048
+      },
+      "meta_regression": {
+        "by": "derived.mean_serum_li_mmol_L",
+        "n_points": 6,
+        "scatter": [
+          {
+            "paper_id": "10.1212/wnl.0b013e31822dc7a5",
+            "first_author": "Miller",
+            "year": 2011,
+            "x": 0.36,
+            "effect": 0.19,
+            "se": 0.0816,
+            "weight": 150.057,
+            "n_total": 109,
+            "subgroup": "low"
+          },
+          {
+            "paper_id": "10.1176/appi.ajp.2013.13070985",
+            "first_author": "Antony",
+            "year": 2014,
+            "x": 0.715,
+            "effect": -3.6,
+            "se": 1.2825,
+            "weight": 0.608,
+            "n_total": 348,
+            "subgroup": "medium"
+          },
+          {
+            "paper_id": "10.1016/j.jad.2008.05.014",
+            "first_author": "Keck",
+            "year": 2009,
+            "x": 0.76,
+            "effect": -3.0,
+            "se": 1.0687,
+            "weight": 0.8755,
+            "n_total": 480,
+            "subgroup": "medium"
+          },
+          {
+            "paper_id": "10.1176/appi.ajp.2017.15050657",
+            "first_author": "Young",
+            "year": 2017,
+            "x": 0.76,
+            "effect": 3.9,
+            "se": 1.1174,
+            "weight": 0.801,
+            "n_total": 224,
+            "subgroup": "medium"
+          },
+          {
+            "paper_id": "10.1002/da.22340",
+            "first_author": "Atefeh",
+            "year": 2015,
+            "x": 0.77,
+            "effect": -2.27,
+            "se": 0.8163,
+            "weight": 1.5006,
+            "n_total": 48,
+            "subgroup": "medium"
+          },
+          {
+            "paper_id": "10.1542/peds.2015-0743",
+            "first_author": "Robert",
+            "year": 2015,
+            "x": 0.98,
+            "effect": 5.51,
+            "se": 2.5485,
+            "weight": 0.154,
+            "n_total": 81,
+            "subgroup": "high"
+          }
+        ],
+        "regression": {
+          "moderator_n": 6,
+          "slope": 4.342098,
+          "slope_se": 8.733889,
+          "slope_ci_low": -19.907066,
+          "slope_ci_high": 28.591262,
+          "intercept": -3.215785,
+          "intercept_se": 6.35974,
+          "p_value": 0.6452,
+          "t_stat": 0.4972,
+          "df": 4,
+          "tau2_residual": 11.192398,
+          "tau2_unexplained_ratio": 2.3482,
+          "r2": 0.0,
+          "q_residual": 4.8076,
+          "method": "knapp_hartung",
+          "level": 0.95,
+          "x_min": 0.36,
+          "x_max": 0.98
+        },
+        "underpowered": true,
+        "min_k_for_interpretation": 8
+      }
+    },
+    {
+      "spray_type": "lithium",
+      "outcome_domain": "efficacy",
+      "effect_measure": "odds_ratio",
+      "n_trials": 3,
+      "scale": "log",
+      "reference_higher_is_better": true,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.1016/j.jaac.2015.09.016",
+          "first_author": "Jay",
+          "year": 2015,
+          "effect": 0.83,
+          "ci_low": 0.43,
+          "ci_high": 1.58,
+          "p_value": 0.565,
+          "n_total": 279,
+          "outcome_name": "CGI-BP Improvement in Depression (CGI-BP-I-D)",
+          "weight": 0.3835,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1001/archgenpsychiatry.2011.1508",
+          "first_author": "Barbara",
+          "year": 2012,
+          "effect": 1.6,
+          "ci_low": 0.8,
+          "ci_high": 3.5,
+          "p_value": 0.2,
+          "n_total": 279,
+          "outcome_name": "Clinical Global Impressions for Bipolar Illness Improvement-Mania (CGI-BP-IM) response (score 1 or 2)",
+          "weight": 0.3689,
+          "subgroup": "high"
+        },
+        {
+          "paper_id": "10.1001/archpsyc.57.7.649",
+          "first_author": "Richard",
+          "year": 2000,
+          "effect": 9.3,
+          "ci_low": 2.2,
+          "ci_high": 40.0,
+          "p_value": 0.004,
+          "n_total": 40,
+          "outcome_name": "Global Clinical Judgements (Consensus) Scale (GCJCS) responder rate",
+          "weight": 0.2476,
+          "subgroup": "high"
+        }
+      ],
+      "pooled": {
+        "effect": 1.9234,
+        "ci_low": 0.1076,
+        "ci_high": 34.3887,
+        "i2": 78.1,
+        "model": "random_effects",
+        "tau2_method": "DL",
+        "ci_method": "hksj",
+        "level": 0.95,
+        "p_value": 0.432,
+        "tau2": 0.6866,
+        "tau": 0.8286,
+        "q": 9.1481,
+        "q_p": 0.0103,
+        "df": 2,
+        "h2": 4.574,
+        "prediction_low": 0.0,
+        "prediction_high": 603483.635
+      },
+      "publication_bias": {
+        "egger": {
+          "intercept": 5.7666,
+          "se": 1.5999,
+          "t": 3.6043,
+          "df": 1,
+          "p_value": 0.1723
+        },
+        "trim_fill": {
+          "n_imputed": 0,
+          "side": "right",
+          "adjusted_effect": null,
+          "imputed": []
+        },
+        "funnel": {
+          "pooled_effect": 1.9234,
+          "log_scale": true,
+          "points": [
+            {
+              "effect": 0.83,
+              "se": 0.332
+            },
+            {
+              "effect": 1.6,
+              "se": 0.3765
+            },
+            {
+              "effect": 9.3,
+              "se": 0.7399
+            }
+          ],
+          "max_se": 0.7399
+        }
+      },
+      "leave_one_out": [
+        {
+          "omitted": "10.1016/j.jaac.2015.09.016",
+          "omitted_author": "Jay",
+          "effect": 3.4375,
+          "ci_low": 0.0001,
+          "ci_high": 224124.3256,
+          "i2": 77.7
+        },
+        {
+          "omitted": "10.1001/archgenpsychiatry.2011.1508",
+          "omitted_author": "Barbara",
+          "effect": 2.538,
+          "ci_low": 0.0,
+          "ci_high": 11291214.0309,
+          "i2": 88.7
+        },
+        {
+          "omitted": "10.1001/archpsyc.57.7.649",
+          "omitted_author": "Richard",
+          "effect": 1.125,
+          "ci_low": 0.0176,
+          "ci_high": 71.9785,
+          "i2": 41.5
+        }
+      ],
+      "subgroups": {
+        "by": "derived.serum_li_band",
+        "groups": [
+          {
+            "subgroup": "high",
+            "n_trials": 2,
+            "effect": 3.4375,
+            "ci_low": 0.0001,
+            "ci_high": 224124.3256,
+            "i2": 77.7,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.3916,
+            "tau2": 1.2042,
+            "tau": 1.0974,
+            "q": 4.4943,
+            "q_p": 0.034,
+            "df": 1,
+            "h2": 4.494
+          },
+          {
+            "subgroup": "not_reported",
+            "n_trials": 1,
+            "effect": 0.83,
+            "ci_low": 0.433,
+            "ci_high": 1.591,
+            "i2": 0.0,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.5746,
+            "tau2": 0.0,
+            "tau": 0.0,
+            "q": 0.0,
+            "q_p": null,
+            "df": 0,
+            "h2": 1.0
+          }
+        ],
+        "q_between": 2.3176,
+        "df": 1,
+        "p_value": 0.1279
+      }
+    },
+    {
+      "spray_type": "lithium",
+      "outcome_domain": "efficacy",
+      "effect_measure": "risk_difference",
+      "n_trials": 2,
+      "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.1176/appi.ajp.162.7.1281",
+          "first_author": "Mauricio",
+          "year": 2005,
+          "effect": 8.8,
+          "ci_low": -0.1,
+          "ci_high": 17.8,
+          "p_value": null,
+          "n_total": 431,
+          "outcome_name": "Symptomatic relapse/recurrence (score >=15 on YMRS or Hamilton depression scale)",
+          "weight": null,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1017/s1748232106000164",
+          "first_author": "Mauricio",
+          "year": 2007,
+          "effect": 8.8,
+          "ci_low": null,
+          "ci_high": -0.1,
+          "p_value": 0.055,
+          "n_total": 431,
+          "outcome_name": "Symptomatic relapse to any mood episode (primary efficacy endpoint)",
+          "weight": null,
+          "subgroup": "not_reported"
+        }
+      ]
+    },
+    {
+      "spray_type": "lithium",
+      "outcome_domain": "metabolic",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.3233/jad-171150",
+          "first_author": "Bradley",
+          "year": 2018,
+          "effect": 1.1,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": null,
+          "n_total": 155,
+          "outcome_name": "Prevalence of obesity (BMI >30 kg/m2)",
+          "weight": null,
+          "subgroup": "not_reported"
+        }
+      ]
+    },
+    {
+      "spray_type": "lithium",
+      "outcome_domain": "other",
+      "effect_measure": "risk_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "reference_higher_is_better": true,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.64719/pb.4433",
+          "first_author": "Jin",
+          "year": 2025,
+          "effect": 1.44,
+          "ci_low": 0.78,
+          "ci_high": 2.66,
+          "p_value": 0.24,
+          "n_total": 223,
+          "outcome_name": "Response rate (>=50% reduction from baseline on HDRS/CGI-S or IDS-C/CGI-BP)",
+          "weight": null,
+          "subgroup": "not_reported"
+        }
+      ]
+    },
+    {
+      "spray_type": "lithium",
+      "outcome_domain": "polydipsia",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.1111/j.1600-0447.1993.tb03336.x",
+          "first_author": "O'Donovan",
+          "year": 1993,
+          "effect": 0.17,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": null,
+          "n_total": 24,
+          "outcome_name": "24-hour urine volume",
+          "weight": null,
+          "subgroup": "medium"
+        }
+      ]
+    },
+    {
+      "spray_type": "other",
+      "outcome_domain": "body_weight",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.3389/fnut.2021.798036",
+          "first_author": "Ryan",
+          "year": 2021,
+          "effect": 0.4,
+          "ci_low": null,
+          "ci_high": null,
+          "p_value": 0.93,
+          "n_total": 30,
+          "outcome_name": "Body mass (kg)",
+          "weight": null,
+          "subgroup": "not_reported"
+        }
+      ]
+    },
+    {
+      "spray_type": "other",
+      "outcome_domain": "other",
+      "effect_measure": "mean_difference",
+      "n_trials": 1,
+      "scale": "linear",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.1176/appi.ajp.2017.16101200",
+          "first_author": "Dorothy",
+          "year": 2018,
+          "effect": -5.76,
+          "ci_low": -10.81,
+          "ci_high": -0.72,
+          "p_value": 0.026,
+          "n_total": 46,
+          "outcome_name": "SIGH-ADS continuous depression score at endpoint",
+          "weight": null,
+          "subgroup": "not_reported"
+        }
+      ]
+    },
+    {
+      "spray_type": "other",
+      "outcome_domain": "other",
+      "effect_measure": "odds_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "reference_higher_is_better": true,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.1176/appi.ajp.2017.16101200",
+          "first_author": "Dorothy",
+          "year": 2018,
+          "effect": 7.5,
+          "ci_low": 1.8,
+          "ci_high": 31.28,
+          "p_value": 0.003,
+          "n_total": 46,
+          "outcome_name": "SIGH-ADS remission rate (score <=8) at weeks 4-6",
+          "weight": null,
+          "subgroup": "not_reported"
+        }
+      ]
+    },
+    {
+      "spray_type": "placebo",
+      "outcome_domain": "efficacy",
+      "effect_measure": "hazard_ratio",
+      "n_trials": 1,
+      "scale": "log",
+      "reference_higher_is_better": false,
+      "n_oriented_flipped": 0,
+      "trials": [
+        {
+          "paper_id": "10.1016/j.jad.2012.11.042",
+          "first_author": "Lakshmi",
+          "year": 2013,
+          "effect": 0.8,
+          "ci_low": 0.3,
+          "ci_high": 1.9,
+          "p_value": 0.59,
+          "n_total": 337,
+          "outcome_name": "Time to relapse of any mood episode",
+          "weight": null,
+          "subgroup": "not_reported"
+        }
+      ]
+    },
+    {
+      "spray_type": "combination",
+      "outcome_domain": "efficacy",
+      "effect_measure": "smd",
+      "n_trials": 10,
+      "scale": "linear",
+      "standardized": true,
+      "combines": [
+        "continuous",
+        "odds_ratio"
+      ],
+      "n_converted": 10,
+      "trials": [
+        {
+          "paper_id": "10.1111/j.1399-5618.2010.00823.x",
+          "first_author": "David",
+          "year": 2010,
+          "effect": -0.04,
+          "ci_low": -0.0756,
+          "ci_high": -0.0044,
+          "p_value": null,
+          "n_total": 225,
+          "outcome_name": "BMI as predictor of depression response/remission to lithium+valproate (logistic regression)",
+          "weight": 0.1587,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1001/archpsyc.59.1.62",
+          "first_author": "Tohen",
+          "year": 2002,
+          "effect": 0.4536,
+          "ci_low": 0.2248,
+          "ci_high": 0.6823,
+          "p_value": null,
+          "n_total": 344,
+          "outcome_name": "Young Mania Rating Scale (YMRS) total score",
+          "weight": 0.1345,
+          "subgroup": "medium"
+        },
+        {
+          "paper_id": "10.4088/jcp.v67n1105",
+          "first_author": "Roy",
+          "year": 2006,
+          "effect": 0.059,
+          "ci_low": -0.1724,
+          "ci_high": 0.2904,
+          "p_value": null,
+          "n_total": 287,
+          "outcome_name": "Change in Young Mania Rating Scale (YMRS) score from baseline to last study visit",
+          "weight": 0.134,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1192/bjp.185.1.37",
+          "first_author": "Frans",
+          "year": 2004,
+          "effect": 0.2574,
+          "ci_low": -0.0291,
+          "ci_high": 0.544,
+          "p_value": null,
+          "n_total": 208,
+          "outcome_name": "17-item Hamilton Rating Scale for Depression (HRSD) score",
+          "weight": 0.1235,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1111/j.1399-5618.2006.00363.x",
+          "first_author": "Shahin",
+          "year": 2006,
+          "effect": 0.8097,
+          "ci_low": 0.3595,
+          "ci_high": 1.26,
+          "p_value": null,
+          "n_total": 82,
+          "outcome_name": "Young Mania Rating Scale score",
+          "weight": 0.0928,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1176/appi.ajp.158.6.906",
+          "first_author": "Charles",
+          "year": 2001,
+          "effect": 0.2906,
+          "ci_low": -0.1653,
+          "ci_high": 0.7466,
+          "p_value": null,
+          "n_total": 117,
+          "outcome_name": "Change from baseline in Hamilton Rating Scale for Depression (first 17 items) total score",
+          "weight": 0.0918,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1002/brb3.2394",
+          "first_author": "Rahim",
+          "year": 2021,
+          "effect": -0.1607,
+          "ci_low": -0.716,
+          "ci_high": 0.3946,
+          "p_value": null,
+          "n_total": 50,
+          "outcome_name": "Young Mania Rating Scale score",
+          "weight": 0.0762,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1186/1471-244x-3-7",
+          "first_author": "Shahin",
+          "year": 2003,
+          "effect": 0.5487,
+          "ci_low": -0.0674,
+          "ci_high": 1.1648,
+          "p_value": null,
+          "n_total": 45,
+          "outcome_name": "Young Mania Rating Scale",
+          "weight": 0.068,
+          "subgroup": "high"
+        },
+        {
+          "paper_id": "10.1089/cap.2016.0207",
+          "first_author": "Seyed",
+          "year": 2017,
+          "effect": -0.6549,
+          "ci_low": -1.2911,
+          "ci_high": -0.0187,
+          "p_value": null,
+          "n_total": 42,
+          "outcome_name": "Young Mania Rating Scale (YMRS) score",
+          "weight": 0.0655,
+          "subgroup": "high"
+        },
+        {
+          "paper_id": "10.18869/mjiri.31.16",
+          "first_author": "Nastaran",
+          "year": 2017,
+          "effect": 0.5947,
+          "ci_low": -0.1366,
+          "ci_high": 1.326,
+          "p_value": null,
+          "n_total": 30,
+          "outcome_name": "Young Mania Rating Scale (YMRS) score",
+          "weight": 0.0551,
+          "subgroup": "high"
+        }
+      ],
+      "pooled": {
+        "effect": 0.2111,
+        "ci_low": -0.0614,
+        "ci_high": 0.4836,
+        "i2": 80.7,
+        "model": "random_effects",
+        "tau2_method": "DL",
+        "ci_method": "hksj",
+        "level": 0.95,
+        "p_value": 0.1137,
+        "tau2": 0.0734,
+        "tau": 0.271,
+        "q": 46.5218,
+        "q_p": 0.0,
+        "df": 9,
+        "h2": 5.169,
+        "prediction_low": -0.4617,
+        "prediction_high": 0.8839
+      },
+      "publication_bias": {
+        "egger": {
+          "intercept": 1.5747,
+          "se": 0.7245,
+          "t": 2.1734,
+          "df": 8,
+          "p_value": 0.0615
+        },
+        "trim_fill": {
+          "n_imputed": 1,
+          "side": "left",
+          "adjusted_effect": 0.1497,
+          "imputed": [
+            {
+              "effect": -0.5114,
+              "se": 0.2297
+            }
+          ]
+        },
+        "funnel": {
+          "pooled_effect": 0.2111,
+          "log_scale": false,
+          "points": [
+            {
+              "effect": -0.04,
+              "se": 0.0182
+            },
+            {
+              "effect": 0.4536,
+              "se": 0.1167
+            },
+            {
+              "effect": 0.059,
+              "se": 0.1181
+            },
+            {
+              "effect": 0.2574,
+              "se": 0.1462
+            },
+            {
+              "effect": 0.8097,
+              "se": 0.2297
+            },
+            {
+              "effect": 0.2906,
+              "se": 0.2326
+            },
+            {
+              "effect": -0.1607,
+              "se": 0.2833
+            },
+            {
+              "effect": 0.5487,
+              "se": 0.3144
+            },
+            {
+              "effect": -0.6549,
+              "se": 0.3246
+            },
+            {
+              "effect": 0.5947,
+              "se": 0.3731
+            }
+          ],
+          "max_se": 0.3731
+        }
+      },
+      "leave_one_out": [
+        {
+          "omitted": "10.1111/j.1399-5618.2010.00823.x",
+          "omitted_author": "David",
+          "effect": 0.2588,
+          "ci_low": -0.0463,
+          "ci_high": 0.5639,
+          "i2": 65.5
+        },
+        {
+          "omitted": "10.1001/archpsyc.59.1.62",
+          "omitted_author": "Tohen",
+          "effect": 0.1695,
+          "ci_low": -0.13,
+          "ci_high": 0.469,
+          "i2": 73.4
+        },
+        {
+          "omitted": "10.4088/jcp.v67n1105",
+          "omitted_author": "Roy",
+          "effect": 0.2357,
+          "ci_low": -0.0831,
+          "ci_high": 0.5546,
+          "i2": 82.7
+        },
+        {
+          "omitted": "10.1192/bjp.185.1.37",
+          "omitted_author": "Frans",
+          "effect": 0.2056,
+          "ci_low": -0.1114,
+          "ci_high": 0.5225,
+          "i2": 81.4
+        },
+        {
+          "omitted": "10.1111/j.1399-5618.2006.00363.x",
+          "omitted_author": "Shahin",
+          "effect": 0.1492,
+          "ci_low": -0.105,
+          "ci_high": 0.4034,
+          "i2": 76.2
+        },
+        {
+          "omitted": "10.1176/appi.ajp.158.6.906",
+          "omitted_author": "Charles",
+          "effect": 0.2034,
+          "ci_low": -0.1063,
+          "ci_high": 0.5131,
+          "i2": 82.1
+        },
+        {
+          "omitted": "10.1002/brb3.2394",
+          "omitted_author": "Rahim",
+          "effect": 0.2427,
+          "ci_low": -0.0517,
+          "ci_high": 0.5372,
+          "i2": 82.7
+        },
+        {
+          "omitted": "10.1186/1471-244x-3-7",
+          "omitted_author": "Shahin",
+          "effect": 0.1864,
+          "ci_low": -0.1083,
+          "ci_high": 0.4811,
+          "i2": 81.5
+        },
+        {
+          "omitted": "10.1089/cap.2016.0207",
+          "omitted_author": "Seyed",
+          "effect": 0.2705,
+          "ci_low": 0.0352,
+          "ci_high": 0.5057,
+          "i2": 81.2
+        },
+        {
+          "omitted": "10.18869/mjiri.31.16",
+          "omitted_author": "Nastaran",
+          "effect": 0.1887,
+          "ci_low": -0.1038,
+          "ci_high": 0.4812,
+          "i2": 81.8
+        }
+      ],
+      "subgroups": {
+        "by": "derived.serum_li_band",
+        "groups": [
+          {
+            "subgroup": "high",
+            "n_trials": 3,
+            "effect": 0.1554,
+            "ci_low": -1.6106,
+            "ci_high": 1.9215,
+            "i2": 78.2,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.7413,
+            "tau2": 0.4055,
+            "tau": 0.6368,
+            "q": 9.1713,
+            "q_p": 0.0102,
+            "df": 2,
+            "h2": 4.586,
+            "prediction_low": -9.5103,
+            "prediction_high": 9.8212
+          },
+          {
+            "subgroup": "medium",
+            "n_trials": 1,
+            "effect": 0.4536,
+            "ci_low": 0.2248,
+            "ci_high": 0.6823,
+            "i2": 0.0,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.0001,
+            "tau2": 0.0,
+            "tau": 0.0,
+            "q": 0.0,
+            "q_p": null,
+            "df": 0,
+            "h2": 1.0
+          },
+          {
+            "subgroup": "not_reported",
+            "n_trials": 6,
+            "effect": 0.1701,
+            "ci_low": -0.1537,
+            "ci_high": 0.494,
+            "i2": 75.2,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.2348,
+            "tau2": 0.0467,
+            "tau": 0.216,
+            "q": 20.1804,
+            "q_p": 0.0012,
+            "df": 5,
+            "h2": 4.036,
+            "prediction_low": -0.5049,
+            "prediction_high": 0.8451
+          }
+        ],
+        "q_between": 2.8826,
+        "df": 2,
+        "p_value": 0.2366
+      },
+      "meta_regression": {
+        "by": "derived.mean_serum_li_mmol_L",
+        "n_points": 4,
+        "scatter": [
+          {
+            "paper_id": "10.1001/archpsyc.59.1.62",
+            "first_author": "Tohen",
+            "year": 2002,
+            "x": 0.79,
+            "effect": 0.4536,
+            "se": 0.1167,
+            "weight": 73.3927,
+            "n_total": 344,
+            "subgroup": "medium"
+          },
+          {
+            "paper_id": "10.1089/cap.2016.0207",
+            "first_author": "Seyed",
+            "year": 2017,
+            "x": 0.925,
+            "effect": -0.6549,
+            "se": 0.3246,
+            "weight": 9.4912,
+            "n_total": 42,
+            "subgroup": "high"
+          },
+          {
+            "paper_id": "10.18869/mjiri.31.16",
+            "first_author": "Nastaran",
+            "year": 2017,
+            "x": 0.94,
+            "effect": 0.5947,
+            "se": 0.3731,
+            "weight": 7.1825,
+            "n_total": 30,
+            "subgroup": "high"
+          },
+          {
+            "paper_id": "10.1186/1471-244x-3-7",
+            "first_author": "Shahin",
+            "year": 2003,
+            "x": 1.1,
+            "effect": 0.5487,
+            "se": 0.3144,
+            "weight": 10.1192,
+            "n_total": 45,
+            "subgroup": "high"
+          }
+        ],
+        "regression": {
+          "moderator_n": 4,
+          "slope": 0.47239,
+          "slope_se": 3.163243,
+          "slope_ci_low": -13.137945,
+          "slope_ci_high": 14.082725,
+          "intercept": -0.198291,
+          "intercept_se": 2.969628,
+          "p_value": 0.895,
+          "t_stat": 0.1493,
+          "df": 2,
+          "tau2_residual": 0.441521,
+          "tau2_unexplained_ratio": 2.3778,
+          "r2": 0.0,
+          "q_residual": 1.9359,
+          "method": "knapp_hartung",
+          "level": 0.95,
+          "x_min": 0.79,
+          "x_max": 1.1
+        },
+        "underpowered": true,
+        "min_k_for_interpretation": 8
+      }
+    },
+    {
+      "spray_type": "lithium",
+      "outcome_domain": "body_weight",
+      "effect_measure": "smd",
+      "n_trials": 4,
+      "scale": "linear",
+      "standardized": true,
+      "combines": [
+        "continuous"
+      ],
+      "n_converted": 4,
+      "trials": [
+        {
+          "paper_id": "10.1016/s0149-2918(02)80061-3",
+          "first_author": "Chengappa",
+          "year": 2002,
+          "effect": 0.0111,
+          "ci_low": -0.2984,
+          "ci_high": 0.3205,
+          "p_value": null,
+          "n_total": 214,
+          "outcome_name": "Change in body weight",
+          "weight": 0.3052,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1034/j.1399-5618.2003.00009.x",
+          "first_author": "Roger",
+          "year": 2003,
+          "effect": 0.0229,
+          "ci_low": -0.6139,
+          "ci_high": 0.6597,
+          "p_value": null,
+          "n_total": 38,
+          "outcome_name": "Body weight (kg)",
+          "weight": 0.2526,
+          "subgroup": "high"
+        },
+        {
+          "paper_id": "10.1007/s11126-006-7963-9",
+          "first_author": "Deanna",
+          "year": 2006,
+          "effect": -0.4065,
+          "ci_low": -1.1745,
+          "ci_high": 0.3615,
+          "p_value": null,
+          "n_total": 49,
+          "outcome_name": "Weight change (pounds) over 6 months",
+          "weight": 0.2291,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.29245/2578-2959/2022/3.1255",
+          "first_author": "Seyed-Shahab",
+          "year": 2022,
+          "effect": 1.6641,
+          "ci_low": 0.8046,
+          "ci_high": 2.5236,
+          "p_value": null,
+          "n_total": 28,
+          "outcome_name": "Body weight change from baseline to 6 months",
+          "weight": 0.2131,
+          "subgroup": "not_reported"
+        }
+      ],
+      "pooled": {
+        "effect": 0.2706,
+        "ci_low": -1.098,
+        "ci_high": 1.6393,
+        "i2": 79.7,
+        "model": "random_effects",
+        "tau2_method": "DL",
+        "ci_method": "hksj",
+        "level": 0.95,
+        "p_value": 0.5738,
+        "tau2": 0.3624,
+        "tau": 0.602,
+        "q": 14.7607,
+        "q_p": 0.002,
+        "df": 3,
+        "h2": 4.92,
+        "prediction_low": -2.7121,
+        "prediction_high": 3.2534
+      },
+      "publication_bias": {
+        "egger": {
+          "intercept": 1.9538,
+          "se": 2.9633,
+          "t": 0.6594,
+          "df": 2,
+          "p_value": 0.5774
+        },
+        "trim_fill": {
+          "n_imputed": 1,
+          "side": "right",
+          "adjusted_effect": 0.4904,
+          "imputed": [
+            {
+              "effect": 1.3827,
+              "se": 0.3918
+            }
+          ]
+        },
+        "funnel": {
+          "pooled_effect": 0.2706,
+          "log_scale": false,
+          "points": [
+            {
+              "effect": 0.0111,
+              "se": 0.1579
+            },
+            {
+              "effect": 0.0229,
+              "se": 0.3249
+            },
+            {
+              "effect": -0.4065,
+              "se": 0.3918
+            },
+            {
+              "effect": 1.6641,
+              "se": 0.4385
+            }
+          ],
+          "max_se": 0.4385
+        }
+      },
+      "leave_one_out": [
+        {
+          "omitted": "10.1016/s0149-2918(02)80061-3",
+          "omitted_author": "Chengappa",
+          "effect": 0.4049,
+          "ci_low": -2.2753,
+          "ci_high": 3.0851,
+          "i2": 85.4
+        },
+        {
+          "omitted": "10.1034/j.1399-5618.2003.00009.x",
+          "omitted_author": "Roger",
+          "effect": 0.3799,
+          "ci_low": -2.2525,
+          "ci_high": 3.0123,
+          "i2": 86.4
+        },
+        {
+          "omitted": "10.1007/s11126-006-7963-9",
+          "omitted_author": "Deanna",
+          "effect": 0.4881,
+          "ci_low": -1.7776,
+          "ci_high": 2.7538,
+          "i2": 84.4
+        },
+        {
+          "omitted": "10.29245/2578-2959/2022/3.1255",
+          "omitted_author": "Seyed-Shahab",
+          "effect": -0.0354,
+          "ci_low": -0.4448,
+          "ci_high": 0.374,
+          "i2": 0.0
+        }
+      ],
+      "subgroups": {
+        "by": "derived.serum_li_band",
+        "groups": [
+          {
+            "subgroup": "high",
+            "n_trials": 1,
+            "effect": 0.0229,
+            "ci_low": -0.6139,
+            "ci_high": 0.6597,
+            "i2": 0.0,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.9437,
+            "tau2": 0.0,
+            "tau": 0.0,
+            "q": 0.0,
+            "q_p": null,
+            "df": 0,
+            "h2": 1.0
+          },
+          {
+            "subgroup": "not_reported",
+            "n_trials": 3,
+            "effect": 0.3799,
+            "ci_low": -2.2525,
+            "ci_high": 3.0123,
+            "i2": 86.4,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.598,
+            "tau2": 0.6522,
+            "tau": 0.8076,
+            "q": 14.6782,
+            "q_p": 0.0006,
+            "df": 2,
+            "h2": 7.339,
+            "prediction_low": -11.7309,
+            "prediction_high": 12.4907
+          }
+        ],
+        "q_between": 0.2655,
+        "df": 1,
+        "p_value": 0.6064
+      }
+    },
+    {
+      "spray_type": "lithium",
+      "outcome_domain": "clinically_significant_weight_gain",
+      "effect_measure": "smd",
+      "n_trials": 4,
+      "scale": "linear",
+      "standardized": true,
+      "combines": [
+        "odds_ratio"
+      ],
+      "n_converted": 4,
+      "trials": [
+        {
+          "paper_id": "10.1016/j.jad.2007.02.004",
+          "first_author": "Caleb",
+          "year": 2007,
+          "effect": -0.8231,
+          "ci_low": -1.1962,
+          "ci_high": -0.4499,
+          "p_value": null,
+          "n_total": 809,
+          "outcome_name": "Proportion with >=7% weight gain, monotherapy (QTP vs PBO)",
+          "weight": 0.2703,
+          "subgroup": "medium"
+        },
+        {
+          "paper_id": "10.1186/s40345-022-00268-2",
+          "first_author": "Leonardo",
+          "year": 2022,
+          "effect": -0.5268,
+          "ci_low": -0.9222,
+          "ci_high": -0.1314,
+          "p_value": null,
+          "n_total": 1377,
+          "outcome_name": "Obesity (BMI ≥30 kg/m2), BD-1 vs BD-2 (whole-cohort diagnostic comparison, not restricted to lithium users)",
+          "weight": 0.2673,
+          "subgroup": "low"
+        },
+        {
+          "paper_id": "10.1016/j.jad.2019.08.056",
+          "first_author": "Élise",
+          "year": 2019,
+          "effect": 0.0832,
+          "ci_low": -0.4081,
+          "ci_high": 0.5744,
+          "p_value": null,
+          "n_total": 281,
+          "outcome_name": "Obesity (BMI > 30 kg/m2)",
+          "weight": 0.2531,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1016/j.jpsychires.2012.01.014",
+          "first_author": "Eva",
+          "year": 2012,
+          "effect": 0.9769,
+          "ci_low": 0.217,
+          "ci_high": 1.7369,
+          "p_value": null,
+          "n_total": 196,
+          "outcome_name": "Important weight gain (>10% of baseline weight) during current drug treatment",
+          "weight": 0.2092,
+          "subgroup": "not_reported"
+        }
+      ],
+      "pooled": {
+        "effect": -0.1379,
+        "ci_low": -1.3563,
+        "ci_high": 1.0806,
+        "i2": 86.1,
+        "model": "random_effects",
+        "tau2_method": "DL",
+        "ci_method": "hksj",
+        "level": 0.95,
+        "p_value": 0.7426,
+        "tau2": 0.3545,
+        "tau": 0.5954,
+        "q": 21.6021,
+        "q_p": 0.0001,
+        "df": 3,
+        "h2": 7.201,
+        "prediction_low": -3.0564,
+        "prediction_high": 2.7806
+      },
+      "publication_bias": {
+        "egger": {
+          "intercept": 9.294,
+          "se": 1.7816,
+          "t": 5.2167,
+          "df": 2,
+          "p_value": 0.0348
+        },
+        "trim_fill": {
+          "n_imputed": 0,
+          "side": "left",
+          "adjusted_effect": null,
+          "imputed": []
+        },
+        "funnel": {
+          "pooled_effect": -0.1379,
+          "log_scale": false,
+          "points": [
+            {
+              "effect": -0.8231,
+              "se": 0.1904
+            },
+            {
+              "effect": -0.5268,
+              "se": 0.2017
+            },
+            {
+              "effect": 0.0832,
+              "se": 0.2507
+            },
+            {
+              "effect": 0.9769,
+              "se": 0.3877
+            }
+          ],
+          "max_se": 0.3877
+        }
+      },
+      "leave_one_out": [
+        {
+          "omitted": "10.1016/j.jad.2007.02.004",
+          "omitted_author": "Caleb",
+          "effect": 0.1196,
+          "ci_low": -1.7196,
+          "ci_high": 1.9587,
+          "i2": 84.3
+        },
+        {
+          "omitted": "10.1186/s40345-022-00268-2",
+          "omitted_author": "Leonardo",
+          "effect": 0.0332,
+          "ci_low": -2.185,
+          "ci_high": 2.2514,
+          "i2": 90.4
+        },
+        {
+          "omitted": "10.1016/j.jad.2019.08.056",
+          "omitted_author": "Élise",
+          "effect": -0.1988,
+          "ci_low": -2.5083,
+          "ci_high": 2.1107,
+          "i2": 88.5
+        },
+        {
+          "omitted": "10.1016/j.jpsychires.2012.01.014",
+          "omitted_author": "Eva",
+          "effect": -0.4444,
+          "ci_low": -1.5739,
+          "ci_high": 0.6852,
+          "i2": 75.9
+        }
+      ],
+      "subgroups": {
+        "by": "derived.serum_li_band",
+        "groups": [
+          {
+            "subgroup": "low",
+            "n_trials": 1,
+            "effect": -0.5268,
+            "ci_low": -0.9222,
+            "ci_high": -0.1314,
+            "i2": 0.0,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.009,
+            "tau2": 0.0,
+            "tau": 0.0,
+            "q": 0.0,
+            "q_p": null,
+            "df": 0,
+            "h2": 1.0
+          },
+          {
+            "subgroup": "medium",
+            "n_trials": 1,
+            "effect": -0.8231,
+            "ci_low": -1.1962,
+            "ci_high": -0.4499,
+            "i2": 0.0,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.0,
+            "tau2": 0.0,
+            "tau": 0.0,
+            "q": 0.0,
+            "q_p": null,
+            "df": 0,
+            "h2": 1.0
+          },
+          {
+            "subgroup": "not_reported",
+            "n_trials": 2,
+            "effect": 0.4811,
+            "ci_low": -5.163,
+            "ci_high": 6.1252,
+            "i2": 73.3,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.4746,
+            "tau2": 0.2928,
+            "tau": 0.5411,
+            "q": 3.7473,
+            "q_p": 0.0529,
+            "df": 1,
+            "h2": 3.747
+          }
+        ],
+        "q_between": 7.4057,
+        "df": 2,
+        "p_value": 0.0247
+      }
+    },
+    {
+      "spray_type": "lithium",
+      "outcome_domain": "efficacy",
+      "effect_measure": "smd",
+      "n_trials": 5,
+      "scale": "linear",
+      "standardized": true,
+      "combines": [
+        "continuous",
+        "odds_ratio"
+      ],
+      "n_converted": 5,
+      "trials": [
+        {
+          "paper_id": "10.1016/j.jaac.2015.09.016",
+          "first_author": "Jay",
+          "year": 2015,
+          "effect": 0.4169,
+          "ci_low": 0.0463,
+          "ci_high": 0.7874,
+          "p_value": null,
+          "n_total": 279,
+          "outcome_name": "CGI-BP Improvement in Depression (CGI-BP-I-D)",
+          "weight": 0.2579,
+          "subgroup": "not_reported"
+        },
+        {
+          "paper_id": "10.1001/archgenpsychiatry.2011.1508",
+          "first_author": "Barbara",
+          "year": 2012,
+          "effect": 0.8873,
+          "ci_low": 0.4584,
+          "ci_high": 1.3162,
+          "p_value": null,
+          "n_total": 279,
+          "outcome_name": "Clinical Global Impressions for Bipolar Illness Improvement-Mania (CGI-BP-IM) response (score 1 or 2)",
+          "weight": 0.235,
+          "subgroup": "high"
+        },
+        {
+          "paper_id": "10.1542/peds.2015-0743",
+          "first_author": "Robert",
+          "year": 2015,
+          "effect": 0.4215,
+          "ci_low": -0.0409,
+          "ci_high": 0.884,
+          "p_value": null,
+          "n_total": 81,
+          "outcome_name": "Change in Young Mania Rating Scale (YMRS) score from baseline to week 8/ET (LOCF)",
+          "weight": 0.2223,
+          "subgroup": "high"
+        },
+        {
+          "paper_id": "10.1001/archpsyc.57.7.649",
+          "first_author": "Richard",
+          "year": 2000,
+          "effect": 0.3541,
+          "ci_low": -0.2705,
+          "ci_high": 0.9788,
+          "p_value": null,
+          "n_total": 40,
+          "outcome_name": "Overt Aggression Scale (OAS) total severity score, change from baseline",
+          "weight": 0.1688,
+          "subgroup": "high"
+        },
+        {
+          "paper_id": "10.1176/appi.ajp.162.1.137",
+          "first_author": "Eric",
+          "year": 2005,
+          "effect": 1.6317,
+          "ci_low": 0.7817,
+          "ci_high": 2.4816,
+          "p_value": null,
+          "n_total": 40,
+          "outcome_name": "Pathological gambling total score on the Yale-Brown Obsessive Compulsive Scale (PG-YBOCS)",
+          "weight": 0.1161,
+          "subgroup": "high"
+        }
+      ],
+      "pooled": {
+        "effect": 0.6589,
+        "ci_low": 0.0943,
+        "ci_high": 1.2234,
+        "i2": 57.8,
+        "model": "random_effects",
+        "tau2_method": "DL",
+        "ci_method": "hksj",
+        "level": 0.95,
+        "p_value": 0.0317,
+        "tau2": 0.0889,
+        "tau": 0.2982,
+        "q": 9.4827,
+        "q_p": 0.0501,
+        "df": 4,
+        "h2": 2.371,
+        "prediction_low": -0.4485,
+        "prediction_high": 1.7662
+      },
+      "publication_bias": {
+        "egger": {
+          "intercept": 2.9787,
+          "se": 2.5045,
+          "t": 1.1893,
+          "df": 3,
+          "p_value": 0.3199
+        },
+        "trim_fill": {
+          "n_imputed": 1,
+          "side": "right",
+          "adjusted_effect": 0.7252,
+          "imputed": [
+            {
+              "effect": 1.1104,
+              "se": 0.3187
+            }
+          ]
+        },
+        "funnel": {
+          "pooled_effect": 0.6589,
+          "log_scale": false,
+          "points": [
+            {
+              "effect": 0.4169,
+              "se": 0.189
+            },
+            {
+              "effect": 0.8873,
+              "se": 0.2188
+            },
+            {
+              "effect": 0.4215,
+              "se": 0.236
+            },
+            {
+              "effect": 0.3541,
+              "se": 0.3187
+            },
+            {
+              "effect": 1.6317,
+              "se": 0.4337
+            }
+          ],
+          "max_se": 0.4337
+        }
+      },
+      "leave_one_out": [
+        {
+          "omitted": "10.1016/j.jaac.2015.09.016",
+          "omitted_author": "Jay",
+          "effect": 0.7537,
+          "ci_low": -0.0808,
+          "ci_high": 1.5882,
+          "i2": 62.1
+        },
+        {
+          "omitted": "10.1001/archgenpsychiatry.2011.1508",
+          "omitted_author": "Barbara",
+          "effect": 0.5963,
+          "ci_low": -0.2298,
+          "ci_high": 1.4224,
+          "i2": 59.0
+        },
+        {
+          "omitted": "10.1542/peds.2015-0743",
+          "omitted_author": "Robert",
+          "effect": 0.7414,
+          "ci_low": -0.0888,
+          "ci_high": 1.5716,
+          "i2": 65.4
+        },
+        {
+          "omitted": "10.1001/archpsyc.57.7.649",
+          "omitted_author": "Richard",
+          "effect": 0.7323,
+          "ci_low": -0.0561,
+          "ci_high": 1.5207,
+          "i2": 65.7
+        },
+        {
+          "omitted": "10.1176/appi.ajp.162.1.137",
+          "omitted_author": "Eric",
+          "effect": 0.5375,
+          "ci_low": 0.1417,
+          "ci_high": 0.9332,
+          "i2": 15.1
+        }
+      ],
+      "subgroups": {
+        "by": "derived.serum_li_band",
+        "groups": [
+          {
+            "subgroup": "high",
+            "n_trials": 4,
+            "effect": 0.7537,
+            "ci_low": -0.0808,
+            "ci_high": 1.5882,
+            "i2": 62.1,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.0638,
+            "tau2": 0.1306,
+            "tau": 0.3614,
+            "q": 7.9151,
+            "q_p": 0.0478,
+            "df": 3,
+            "h2": 2.638,
+            "prediction_low": -1.0963,
+            "prediction_high": 2.6037
+          },
+          {
+            "subgroup": "not_reported",
+            "n_trials": 1,
+            "effect": 0.4169,
+            "ci_low": 0.0463,
+            "ci_high": 0.7874,
+            "i2": 0.0,
+            "model": "random_effects",
+            "tau2_method": "DL",
+            "ci_method": "hksj",
+            "level": 0.95,
+            "p_value": 0.0274,
+            "tau2": 0.0,
+            "tau": 0.0,
+            "q": 0.0,
+            "q_p": null,
+            "df": 0,
+            "h2": 1.0
+          }
+        ],
+        "q_between": 1.0856,
+        "df": 1,
+        "p_value": 0.2975
+      },
+      "meta_regression": {
+        "by": "derived.mean_serum_li_mmol_L",
+        "n_points": 4,
+        "scatter": [
+          {
+            "paper_id": "10.1176/appi.ajp.162.1.137",
+            "first_author": "Eric",
+            "year": 2005,
+            "x": 0.87,
+            "effect": 1.6317,
+            "se": 0.4337,
+            "weight": 5.3174,
+            "n_total": 40,
+            "subgroup": "high"
+          },
+          {
+            "paper_id": "10.1542/peds.2015-0743",
+            "first_author": "Robert",
+            "year": 2015,
+            "x": 0.98,
+            "effect": 0.4215,
+            "se": 0.236,
+            "weight": 17.9601,
+            "n_total": 81,
+            "subgroup": "high"
+          },
+          {
+            "paper_id": "10.1001/archpsyc.57.7.649",
+            "first_author": "Richard",
+            "year": 2000,
+            "x": 1.07,
+            "effect": 0.3541,
+            "se": 0.3187,
+            "weight": 9.8456,
+            "n_total": 40,
+            "subgroup": "high"
+          },
+          {
+            "paper_id": "10.1001/archgenpsychiatry.2011.1508",
+            "first_author": "Barbara",
+            "year": 2012,
+            "x": 1.09,
+            "effect": 0.8873,
+            "se": 0.2188,
+            "weight": 20.8832,
+            "n_total": 279,
+            "subgroup": "high"
+          }
+        ],
+        "regression": {
+          "moderator_n": 4,
+          "slope": -3.442197,
+          "slope_se": 3.247313,
+          "slope_ci_low": -17.414257,
+          "slope_ci_high": 10.529863,
+          "intercept": 4.254152,
+          "intercept_se": 3.300292,
+          "p_value": 0.4002,
+          "t_stat": -1.06,
+          "df": 2,
+          "tau2_residual": 0.203461,
+          "tau2_unexplained_ratio": 1.5581,
+          "r2": 0.0,
+          "q_residual": 1.9123,
+          "method": "knapp_hartung",
+          "level": 0.95,
+          "x_min": 0.87,
+          "x_max": 1.09
+        },
+        "underpowered": true,
+        "min_k_for_interpretation": 8
+      }
+    }
+  ]
+}

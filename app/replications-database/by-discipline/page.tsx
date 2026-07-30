@@ -4,6 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { classifyReportedResult, toBinary } from "@/lib/replicationOutcome";
+import { SuccessRateNote } from "@/components/SuccessRateNote";
 
 type AnyRecord = Record<string, unknown>;
 
@@ -183,13 +185,12 @@ export default function ByDisciplinePage() {
       const raw = String(r.discipline ?? "");
       const parts = raw.split(",").map((s) => s.trim()).filter(Boolean);
       const disciplines = parts.length > 0 ? parts : ["Unspecified"];
-      const result = String(r.result ?? "").toLowerCase();
+      // Canonical rule: reversal counts as a failure, inconclusive and
+      // unrecorded outcomes stay out of the denominator entirely.
+      const outcome = toBinary(classifyReportedResult(r.result));
 
       if (!url) continue;
-
-      const hasOutcome =
-        result.includes("success") || result.includes("failure");
-      if (!hasOutcome) continue;
+      if (outcome === null) continue;
 
       let paper = papers.get(url);
       if (!paper) {
@@ -198,7 +199,7 @@ export default function ByDisciplinePage() {
       }
 
       paper.totalCount++;
-      if (result.includes("success")) {
+      if (outcome === "success") {
         paper.successCount++;
       }
     }
@@ -260,13 +261,10 @@ export default function ByDisciplinePage() {
       const raw = String(r.subdiscipline ?? "");
       const parts = raw.split(",").map((s) => s.trim()).filter(Boolean);
       const subdisciplines = parts.length > 0 ? parts : [];
-      const result = String(r.result ?? "").toLowerCase();
+      const outcome = toBinary(classifyReportedResult(r.result));
 
       if (!url || subdisciplines.length === 0) continue;
-
-      const hasOutcome =
-        result.includes("success") || result.includes("failure");
-      if (!hasOutcome) continue;
+      if (outcome === null) continue;
 
       let paper = papers.get(url);
       if (!paper) {
@@ -275,7 +273,7 @@ export default function ByDisciplinePage() {
       }
 
       paper.totalCount++;
-      if (result.includes("success")) {
+      if (outcome === "success") {
         paper.successCount++;
       }
     }
@@ -363,6 +361,13 @@ export default function ByDisciplinePage() {
               were successful. Only disciplines with {MIN_PAPERS}+ papers shown.
               Click a discipline name to view its entries in the database explorer.
             </p>
+            <SuccessRateNote
+              unit="paper"
+              n={totalPapers}
+              threshold={threshold}
+              filter={`disciplines with ${MIN_PAPERS}+ papers`}
+              className="mt-2"
+            />
           </div>
 
           {/* Controls row */}
@@ -475,6 +480,13 @@ export default function ByDisciplinePage() {
               Same paper-level methodology as above. Only subdisciplines with {MIN_PAPERS_SUBDISCIPLINE}+ papers shown.
               Click a subdiscipline name to view its entries in the database explorer.
             </p>
+            <SuccessRateNote
+              unit="paper"
+              n={totalSubdisciplinePapers}
+              threshold={threshold}
+              filter={`subdisciplines with ${MIN_PAPERS_SUBDISCIPLINE}+ papers`}
+              className="mt-2"
+            />
           </div>
 
           <div className="flex flex-wrap items-center gap-6">

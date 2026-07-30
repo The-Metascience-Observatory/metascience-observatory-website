@@ -4,6 +4,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { ChartWatermark } from "@/components/ChartWatermark";
 import { useIsMobile } from "@/components/useIsMobile";
+import { SUCCESS_DEFS, rateFromCodes } from "@/lib/replicationOutcome";
+import { SuccessRateNote } from "@/components/SuccessRateNote";
 import type { IFMeta, JournalIF, PaperRow } from "./types";
 
 // Wilson score 95% CI for a proportion k/n (percentage points).
@@ -249,6 +251,11 @@ export function ImpactFactorDashboard({
   csvName: string;
 }) {
   const [criterion, setCriterion] = useState(0);
+
+  // The canonical site-wide rate over this page's rows, under the selected
+  // criterion. Shown so the reader can reconcile this page's coverage-filtered
+  // numbers with the site-wide rate rather than reading them as a contradiction.
+  const siteRate = useMemo(() => rateFromCodes(rows.map((r) => r.o), criterion), [rows, criterion]);
   const [metric, setMetric] = useState(3); // default: OpenAlex 2-year mean citedness
   const [basis, setBasis] = useState<"pub" | "recent">("pub");
   // Snapshot-only metrics (OpenAlex 2yr mean citedness) have no per-publication-year
@@ -516,6 +523,15 @@ export function ImpactFactorDashboard({
             ))}
           </select>
         </label>
+
+        <div className="basis-full">
+          <SuccessRateNote
+            def={SUCCESS_DEFS[criterion]}
+            unit="effect"
+            n={siteRate.n}
+            filter="originals whose journal is matched in the impact-factor dataset"
+          />
+        </div>
 
         <label className="flex flex-col gap-1 text-sm">
           <span className="text-gray-600 dark:text-gray-300">Metric</span>

@@ -1,12 +1,62 @@
 # Mathematical Methods for Classifying Replication Outcomes
 
-The Replications Database provides three statistical methods for classifying whether a replication attempt was successful. All methods operate on effect sizes that have been converted to Pearson's $r$ (see [Effect Size Normalization](/docs/effect-size-normalization)).
+The Replications Database provides four definitions of replication success: the outcome **as recorded in the database** (the `result` column), plus three statistical methods computed from the effect sizes. All three statistical methods operate on effect sizes that have been converted to Pearson's $r$ (see [Effect Size Normalization](/docs/effect-size-normalization)).
 
 | Method | Question Asked |
 |--------|----------------|
+| [Reported result](#how-the-replication-rate-is-computed) | What outcome did the replication authors (or our extraction) record? |
 | [Statistically Significant Effect in the Same Direction?](#statistically-significant-effect-in-the-same-direction) | Is the replication effect statistically significant in the same direction as the original? |
 | [Original Effect Size in Replication 95% CI](#original-effect-size-in-replication-95-confidence-interval) | Does the original effect size fall within the replication's 95% confidence interval? |
 | [Replication Effect Size in Original 95% CI](#replication-effect-size-in-original-95-confidence-interval) | Does the replication effect size fall within the original's 95% confidence interval? |
+
+---
+
+## How the Replication Rate Is Computed
+
+Every method above sorts a replication into one of four outcomes: **success**, **failure**, **reversal**, or **inconclusive**. Turning those four buckets into a single percentage requires two further choices — what goes in the denominator, and what counts as one observation. Those choices move the headline number by more than any of the statistical methods do, so both are fixed site-wide and stated on every page that shows a rate.
+
+### The definition
+
+$$\text{replication rate} = \frac{\text{success}}{\text{success} + \text{failure} + \text{reversal}}$$
+
+Two decisions are embedded here:
+
+**A reversal counts as a failure.** A reversal is a statistically significant effect in the *opposite* direction from the original. That is a determinate result, not an absence of one — the replication did not fail to inform us, it contradicted the original. Excluding reversals would let the most decisive contradictions quietly leave the denominator.
+
+**Inconclusive results are excluded, not counted as failures.** "We could not tell" is a different finding from "it did not replicate," and a replication that lacks the statistics needed to classify it says nothing about the original's robustness. Counting these as failures would confound missing data with negative evidence. Rows with no recorded outcome at all are excluded on the same grounds.
+
+### The unit of analysis
+
+The site-wide headline counts one **replication effect** — one row of the database — as one observation. This is the simplest unit to describe, and it introduces no threshold parameter that would need defending.
+
+Some pages also offer a **paper-level** view, which groups a paper's effect replications by the original study and asks whether at least a given share of them succeeded (75% by default). This answers a different question — "what fraction of *papers* hold up?" rather than "what fraction of *findings* hold up?" — and it weights a paper with one replicated effect equally with a paper with twenty. Where a page shows a paper-level rate, it says so and states the threshold.
+
+Note that the effect-level rate gives more weight to heavily-replicated papers, and the paper-level rate gives more weight to lightly-replicated ones. Neither is "correct"; they answer different questions.
+
+### Coverage filters
+
+Several pages restrict the denominator further — to originals with a recorded publication year, or a $p$-value below 0.05, or a match in an external citation, h-index, or journal-metric dataset. Those restrictions change the rate, sometimes by several points, purely by changing which studies are in scope. Each page states its filter and its denominator alongside the rate for exactly this reason.
+
+### Sensitivity of the headline number
+
+The choices above are defensible but not unique, and it is more honest to publish the range than to publish one number. Under the reported-result definition, the effect-level and paper-level rates span roughly **46% to 64%**:
+
+| Definition | Rate |
+|---|---|
+| Success / all rows, including those with no recorded outcome | 46.2% |
+| Success / all recorded outcomes (inconclusive in the denominator) | 47.0% |
+| **Success / (success + failure + reversal)** — the site-wide definition | **55.5%** |
+| Success / (success + failure), reversals dropped | 56.6% |
+| Paper level, every effect must succeed | 56.8% |
+| Paper level, ≥75% of effects succeed | 57.5% |
+| Paper level, ≥50% of effects succeed | 61.8% |
+| Paper level, any one success counts | 63.8% |
+
+<small>Computed from `replications_database_2026_07_28_211702.csv` (8,598 rows: 3,976 success, 3,053 failure, 134 reversal, 1,435 inconclusive or unrecorded). These figures shift by a fraction of a point with each database release; the ordering and the width of the range do not.</small>
+
+The spread is driven almost entirely by the treatment of the ~1,400 inconclusive and unrecorded rows and by the unit of analysis — not by disagreement about individual studies. A reader who wants a one-sentence summary is better served by "somewhere between 46% and 64% depending on how you count, and 55.5% under our stated definition" than by any single figure quoted without its rule.
+
+These figures use the reported-result definition. The three statistical methods apply to the subset of rows carrying the necessary statistics and give their own rates, shown on the main database page.
 
 ---
 

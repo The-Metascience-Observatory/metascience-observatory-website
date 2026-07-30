@@ -1,0 +1,4048 @@
+{
+  "schema_version": 2,
+  "slug": "lithium_weight_gain",
+  "generated_at_utc": "2026-07-29T01:20:26Z",
+  "generator": "13_export_dashboard.py",
+  "sizing": {
+    "n_rows": 426,
+    "rows_bytes": 499384,
+    "feed_bytes": 4648734,
+    "inline_threshold_bytes": 3145728,
+    "mode": "inline"
+  },
+  "inclusion": {
+    "n_input": 426,
+    "n_included": 426,
+    "excluded": {},
+    "excluded_ids": [],
+    "n_excluded_ids_truncated": 0
+  },
+  "vocab": {
+    "verdicts": [
+      "favors_treatment",
+      "favors_control",
+      "no_difference",
+      "mixed",
+      "inconclusive",
+      "unknown"
+    ],
+    "verdict_colors": {
+      "favors_treatment": "#16a34a",
+      "favors_control": "#dc2626",
+      "mixed": "#fdba74",
+      "no_difference": "#94a3b8",
+      "inconclusive": "#cbd5e1",
+      "unknown": "#e2e8f0"
+    },
+    "blinding_order": [
+      "double_blind",
+      "single_blind",
+      "open_label",
+      "unknown"
+    ],
+    "rob_order": [
+      "low",
+      "some_concerns",
+      "moderate",
+      "serious",
+      "high",
+      "critical",
+      "no_information",
+      "unknown"
+    ],
+    "outcome_types": [
+      {
+        "key": "body_weight",
+        "label": "Body weight",
+        "domains": [
+          "body_weight"
+        ]
+      },
+      {
+        "key": "efficacy",
+        "label": "Efficacy",
+        "domains": [
+          "efficacy"
+        ]
+      },
+      {
+        "key": "clinically_significant_weight_gain",
+        "label": "Clinically significant weight gain",
+        "domains": [
+          "clinically_significant_weight_gain"
+        ]
+      },
+      {
+        "key": "bmi",
+        "label": "Bmi",
+        "domains": [
+          "bmi"
+        ]
+      },
+      {
+        "key": "other",
+        "label": "Other",
+        "domains": [
+          "other",
+          "metabolic",
+          "other_adverse_events",
+          "polydipsia",
+          "renal",
+          "body_composition"
+        ]
+      }
+    ],
+    "facet_keys": [
+      "interventionNames",
+      "interventionCategories",
+      "symptomDomains",
+      "countries",
+      "designType",
+      "blinding",
+      "rob",
+      "verdict",
+      "outcomeType"
+    ],
+    "present": {
+      "verdicts": [
+        "favors_treatment",
+        "favors_control",
+        "no_difference",
+        "inconclusive",
+        "unknown"
+      ],
+      "blinding": [
+        "double_blind",
+        "single_blind",
+        "open_label"
+      ],
+      "rob": [
+        "low",
+        "some_concerns",
+        "moderate",
+        "serious",
+        "high",
+        "critical",
+        "no_information"
+      ],
+      "design_types": [
+        "before_after",
+        "case_control",
+        "case_series",
+        "cross_sectional",
+        "crossover",
+        "other",
+        "prospective_cohort",
+        "quasi_experimental",
+        "rct",
+        "retrospective_cohort"
+      ],
+      "countries": [
+        "Africa",
+        "Andorra",
+        "Argentina",
+        "Armenia",
+        "Asia",
+        "Australia",
+        "Austria",
+        "Bangladesh",
+        "Belgium",
+        "Brazil",
+        "Bulgaria",
+        "Canada",
+        "Chile",
+        "China",
+        "Colombia",
+        "Czech Republic",
+        "Denmark",
+        "Eastern Europe",
+        "Ethiopia",
+        "Europe",
+        "European countries",
+        "Finland",
+        "France",
+        "Germany",
+        "Guatemala",
+        "Hong Kong",
+        "Hungary",
+        "India",
+        "Indonesia",
+        "Iran",
+        "Ireland",
+        "Israel",
+        "Italy",
+        "Japan",
+        "Latin America",
+        "Lebanon",
+        "Lithuania",
+        "Malaysia",
+        "Mexico",
+        "Myanmar",
+        "Nepal",
+        "Netherlands",
+        "New Zealand",
+        "North America",
+        "North and South America",
+        "Norway",
+        "PR China",
+        "Pakistan",
+        "Peru",
+        "Poland",
+        "RO Korea",
+        "Romania",
+        "Russia",
+        "Singapore",
+        "Slovakia",
+        "South Africa",
+        "South America",
+        "South Korea",
+        "Spain",
+        "Sri Lanka",
+        "Sweden",
+        "Switzerland",
+        "Taiwan",
+        "Thailand",
+        "Tunisia",
+        "Turkey",
+        "Ukraine",
+        "United Kingdom",
+        "United States",
+        "Venezuela",
+        "Vietnam",
+        "Western Europe",
+        "Yugoslavia",
+        "eight countries",
+        "multiple",
+        "multiple countries across East Asia and the Pacific, Europe and Central Asia, Latin America and the Caribbean, North America, and Sub-Saharan Africa"
+      ],
+      "intervention_categories": [
+        "anticonvulsant",
+        "antidepressant",
+        "antipsychotic",
+        "combination",
+        "lithium",
+        "other",
+        "usual_care"
+      ],
+      "intervention_names": [
+        "acetazolamide (add-on to ongoing lithium treatment)",
+        "amitriptyline",
+        "amitriptyline (add-on) + lithium maintenance",
+        "antipsychotic monotherapy",
+        "aripiprazole",
+        "aripiprazole adjunctive to lithium",
+        "aripiprazole adjunctive to lithium or valproate",
+        "aripiprazole adjunctive to valproate",
+        "aripiprazole plus lamotrigine",
+        "aripiprazole plus lithium or valproate",
+        "atomoxetine (adjunctive to mood stabilizers/antipsychotics, including lithium in 2/12 subjects)",
+        "bright light therapy (not lithium)",
+        "bupropion sr",
+        "carbamazepine",
+        "carbamazepine add-on to lithium",
+        "celecoxib adjunctive to lithium and risperidone",
+        "chlorpromazine",
+        "clomipramine + lithium carbonate",
+        "clozapine",
+        "clozapine + lithium carbonate",
+        "divalproex",
+        "divalproex sodium",
+        "divalproex sodium (adjunct to clozapine)",
+        "divalproex sodium + risperidone",
+        "environmental lithium exposure (drinking water and other sources)",
+        "folic acid (added to ongoing lithium therapy)",
+        "greek yogurt (dietary lithium source) + 12-week exercise training",
+        "haloperidol",
+        "haloperidol plus lithium",
+        "imipramine + lithium carbonate",
+        "imipramine hydrochloride",
+        "iodine-lithium-alpha-dextrin (armenicum)",
+        "kidney transplantation for lithium-associated nephrotoxicity",
+        "kidney transplantation for other etiologies of eskd",
+        "l-sulpiride (add-on) + lithium maintenance",
+        "lamotrigine",
+        "lithium",
+        "lithium (adjunct to clomipramine, mirtazapine, modafinil, olanzapine)",
+        "lithium (adjunct to clozapine)",
+        "lithium (adjunctive lurasidone)",
+        "lithium (adjunctive to aripiprazole)",
+        "lithium (adjunctive to lurasidone)",
+        "lithium (among other mood stabilizers/antipsychotics used in cohort)",
+        "lithium (and/or carbamazepine, valproic acid derivatives)",
+        "lithium (as part of olanzapine + li combination therapy; omega-3 vs placebo randomized on top)",
+        "lithium (as part of placebo + lithium/divalproex group)",
+        "lithium (augmenting topiramate)",
+        "lithium (background therapy) + imipramine",
+        "lithium (background therapy) + paroxetine",
+        "lithium (background therapy) + pioglitazone",
+        "lithium (carbonate)",
+        "lithium (carbonate, sulphate, chloride; various brands)",
+        "lithium (concomitant mood stabilizer, held stable while antipsychotic switched from olanzapine to ziprasidone)",
+        "lithium (continued long-term treatment)",
+        "lithium (discontinued approx. 14 months before examination ii)",
+        "lithium (existing regimen) + oxcarbazepine add-on",
+        "lithium (historical exposure, discontinued at ckd onset ~25 years prior to this report)",
+        "lithium (long-term maintenance treatment)",
+        "lithium (long-term, routine psychiatric care)",
+        "lithium (maternal, in utero exposure)",
+        "lithium (maternal, transferred via breastmilk)",
+        "lithium (mood stabilizer) + aripiprazole augmentation",
+        "lithium (prophylactic)",
+        "lithium (routine clinical use, mixed with other mood stabilizers)",
+        "lithium (slow-release lithium salt)",
+        "lithium (subgroup of larger sample; no dose data reported)",
+        "lithium (subset of combination therapy arm; also includes valproate-treated patients)",
+        "lithium (subset) and/or valproic acid, plus myo-inositol/d-chiro-inositol supplementation",
+        "lithium (sulfate or carbonate)",
+        "lithium (with amiloride added for polyuria)",
+        "lithium (with clozapine and clomipramine)",
+        "lithium + antipsychotic (risperidone, olanzapine, or aripiprazole)",
+        "lithium + haloperidol + allopurinol",
+        "lithium + haloperidol + ritanserin",
+        "lithium + olanzapine + clonazepam + topiramate (adjuvant)",
+        "lithium + risperidone",
+        "lithium + second-generation antipsychotic",
+        "lithium + valproate + second-generation antipsychotic",
+        "lithium + valproate combination",
+        "lithium + valproic acid",
+        "lithium + ziprasidone",
+        "lithium acetate",
+        "lithium add-on to quetiapine xr",
+        "lithium aspartate",
+        "lithium augmentation",
+        "lithium augmentation of tricyclic antidepressant",
+        "lithium carbonate",
+        "lithium carbonate (add-on to tricyclic antidepressant)",
+        "lithium carbonate (concomitant medication)",
+        "lithium carbonate (extended-release)",
+        "lithium carbonate (maternal treatment, infant exposed via breast milk)",
+        "lithium carbonate (priadel) + paroxetine",
+        "lithium carbonate (routine clinical care)",
+        "lithium carbonate (sustained release, priadel)",
+        "lithium carbonate (test dose for lithium clearance methodology, not a therapeutic weight-gain exposure)",
+        "lithium carbonate (tracer dose for clearance measurement)",
+        "lithium carbonate + acetophenazine",
+        "lithium carbonate + butyrophenones",
+        "lithium carbonate + butyrophenones + tricyclics",
+        "lithium carbonate + butyrophenones + tricyclics + ssri",
+        "lithium carbonate + diazepam",
+        "lithium carbonate + dietary advice",
+        "lithium carbonate + risperidone",
+        "lithium carbonate + sodium valproate",
+        "lithium carbonate + tricyclics",
+        "lithium carbonate +/- fluoxetine",
+        "lithium carbonate 150 mg/day (low-dose) + triad approach",
+        "lithium carbonate augmentation",
+        "lithium carbonate augmentation of tricyclic antidepressants",
+        "lithium carbonate er",
+        "lithium carbonate, sustained release",
+        "lithium citrate",
+        "lithium citrate (danish centres) or lithium sulphate (swedish centres)",
+        "lithium or divalproex (li/dvp)",
+        "lithium or divalproex + placebo",
+        "lithium or sodium valproate (not distinguished)",
+        "lithium or valproate (monotherapy, adjunctive placebo)",
+        "lithium or valproate (mood stabilizer)",
+        "lithium or valproate + risperidone/olanzapine (24-weeks group)",
+        "lithium or valproate + risperidone/olanzapine (52-weeks group)",
+        "lithium or valproate monotherapy (adjunctive placebo)",
+        "lithium or valproate monotherapy (placebo added, olanzapine discontinued)",
+        "lithium plus carbamazepine",
+        "lithium plus chlorpromazine",
+        "lithium plus olanzapine",
+        "lithium plus quetiapine",
+        "lithium plus risperidone",
+        "lithium plus valproate",
+        "lithium plus valproic acid",
+        "lithium salts",
+        "lithium sulfate",
+        "lithium sulfate, sustained release",
+        "long-acting injectable risperidone",
+        "lurasidone",
+        "lurasidone (adjunctive to lithium or valproate)",
+        "lurasidone + lithium or valproate (therapeutic-level dosing)",
+        "lurasidone adjunctive to lithium or valproate",
+        "lurasidone monotherapy",
+        "maprotiline",
+        "melatonin (adjunct to olanzapine + lithium carbonate)",
+        "metformin",
+        "mixed psychotropic drugs (lithium subgroup not separately reported)",
+        "mood stabilizer (sodium valproate, lithium, carbamazepine, or lamotrigine) as adjunct to antipsychotic",
+        "mood stabilizers (including lithium) with antipsychotic",
+        "mood stabilizers (lithium, valproate, carbamazepine)",
+        "mood stabilizers (valproate or lithium)",
+        "non-lithium mood stabilizers/antipsychotics/other psychotropics",
+        "olanzapine",
+        "olanzapine (adjunctive)",
+        "olanzapine (with concomitant lithium carbonate and/or divalproex in some patients)",
+        "olanzapine (with optional adjunctive lithium/fluoxetine)",
+        "olanzapine (with prior/concomitant lithium and/or valproate in a subset)",
+        "olanzapine added to lithium or valproate",
+        "olanzapine combination therapy",
+        "olanzapine monotherapy",
+        "olanzapine plus lithium",
+        "olanzapine plus lithium or divalproex",
+        "optimised personalised treatment (no lithium)",
+        "optimized treatment (guideline-informed, evidence-based, personalized treatment without lithium)",
+        "oral atypical antipsychotic (quetiapine/risperidone/olanzapine) continuation",
+        "other mood stabilizers/antipsychotics (no lithium)",
+        "over-the-counter lithium supplement",
+        "oxcarbazepine add-on to lithium",
+        "paroxetine",
+        "placebo added to lithium or valproate",
+        "placebo plus lithium or divalproex",
+        "psychotropic medications other than lithium (valproate, oxcarbazepine, lamotrigine, ssri, other antidepressants, antipsychotics)",
+        "quetiapine",
+        "quetiapine (adjuvant) + lithium + clonazepam",
+        "quetiapine plus lithium",
+        "quetiapine plus lithium (or divalproex)",
+        "quetiapine plus lithium or divalproex",
+        "risperidone",
+        "risperidone (adjunctive)",
+        "risperidone (with concurrent lithium or divalproex in 5 subjects)",
+        "risperidone added to mood stabilizer (lithium, valproate, or carbamazepine)",
+        "risperidone plus lithium",
+        "risperidone plus lithium or divalproex",
+        "sglt2 inhibitor (canagliflozin, dapagliflozin, empagliflozin, ertugliflozin, bexagliflozin, or sotagliflozin)",
+        "short psychodynamic supportive psychotherapy (spsp)",
+        "short psychodynamic supportive psychotherapy plus stepped antidepressant pharmacotherapy (venlafaxine, then ssri, then nortriptyline, then nortriptyline plus lithium addition)",
+        "sodium valproate",
+        "sustained-release lithium carbonate",
+        "topiramate",
+        "topiramate (adjunctive to lithium or valproate)",
+        "topiramate (with concomitant lithium carbonate in some patients)",
+        "triad approach without low-dose lithium",
+        "triiodothyronine (t3)",
+        "valproate",
+        "valproate (adjunctive lurasidone)",
+        "valproate (adjunctive to aripiprazole)",
+        "valproate (divalproex sodium)",
+        "valproate (mood stabilizer) + aripiprazole augmentation",
+        "valproate (sodium valproate and valproic acid)",
+        "valproate + antipsychotic",
+        "valproate + second-generation antipsychotic",
+        "valproate sodium",
+        "valproic acid",
+        "venlafaxine",
+        "venlafaxine or sertraline",
+        "vitamin b6 (adjunct to lithium)",
+        "ziprasidone (adjunctive) plus lithium or valproate",
+        "ziprasidone (replacing patient-identified offending bd medication; lithium was the offending agent in 3/30 and a concomitant medication in 2/30)",
+        "ziprasidone adjunctive to lithium or valproate"
+      ],
+      "symptom_domains": [
+        "bmi",
+        "body_composition",
+        "body_weight",
+        "clinically_significant_weight_gain",
+        "efficacy",
+        "metabolic",
+        "other",
+        "other_adverse_events",
+        "polydipsia",
+        "renal"
+      ],
+      "outcome_type_keys": [
+        "bmi",
+        "body_weight",
+        "clinically_significant_weight_gain",
+        "efficacy",
+        "other"
+      ]
+    }
+  },
+  "totals": {
+    "n_trials": 426,
+    "n_rct": 115,
+    "n_observational": 311,
+    "total_participants": 29374,
+    "n_countries": 76,
+    "n_intervention_categories": 7,
+    "n_interventions": 204,
+    "n_instruments": 99,
+    "n_with_year": 426
+  },
+  "charts": {
+    "by_year": [
+      {
+        "year": 1968,
+        "count": 1
+      },
+      {
+        "year": 1969,
+        "count": 1
+      },
+      {
+        "year": 1970,
+        "count": 2
+      },
+      {
+        "year": 1971,
+        "count": 2
+      },
+      {
+        "year": 1972,
+        "count": 1
+      },
+      {
+        "year": 1973,
+        "count": 2
+      },
+      {
+        "year": 1974,
+        "count": 3
+      },
+      {
+        "year": 1975,
+        "count": 2
+      },
+      {
+        "year": 1976,
+        "count": 6
+      },
+      {
+        "year": 1977,
+        "count": 2
+      },
+      {
+        "year": 1978,
+        "count": 6
+      },
+      {
+        "year": 1979,
+        "count": 2
+      },
+      {
+        "year": 1980,
+        "count": 2
+      },
+      {
+        "year": 1981,
+        "count": 2
+      },
+      {
+        "year": 1982,
+        "count": 4
+      },
+      {
+        "year": 1983,
+        "count": 3
+      },
+      {
+        "year": 1984,
+        "count": 5
+      },
+      {
+        "year": 1985,
+        "count": 2
+      },
+      {
+        "year": 1986,
+        "count": 2
+      },
+      {
+        "year": 1987,
+        "count": 4
+      },
+      {
+        "year": 1988,
+        "count": 5
+      },
+      {
+        "year": 1989,
+        "count": 6
+      },
+      {
+        "year": 1990,
+        "count": 0
+      },
+      {
+        "year": 1991,
+        "count": 4
+      },
+      {
+        "year": 1992,
+        "count": 5
+      },
+      {
+        "year": 1993,
+        "count": 8
+      },
+      {
+        "year": 1994,
+        "count": 5
+      },
+      {
+        "year": 1995,
+        "count": 3
+      },
+      {
+        "year": 1996,
+        "count": 4
+      },
+      {
+        "year": 1997,
+        "count": 2
+      },
+      {
+        "year": 1998,
+        "count": 7
+      },
+      {
+        "year": 1999,
+        "count": 2
+      },
+      {
+        "year": 2000,
+        "count": 6
+      },
+      {
+        "year": 2001,
+        "count": 2
+      },
+      {
+        "year": 2002,
+        "count": 9
+      },
+      {
+        "year": 2003,
+        "count": 8
+      },
+      {
+        "year": 2004,
+        "count": 12
+      },
+      {
+        "year": 2005,
+        "count": 8
+      },
+      {
+        "year": 2006,
+        "count": 15
+      },
+      {
+        "year": 2007,
+        "count": 15
+      },
+      {
+        "year": 2008,
+        "count": 20
+      },
+      {
+        "year": 2009,
+        "count": 10
+      },
+      {
+        "year": 2010,
+        "count": 13
+      },
+      {
+        "year": 2011,
+        "count": 10
+      },
+      {
+        "year": 2012,
+        "count": 15
+      },
+      {
+        "year": 2013,
+        "count": 10
+      },
+      {
+        "year": 2014,
+        "count": 13
+      },
+      {
+        "year": 2015,
+        "count": 15
+      },
+      {
+        "year": 2016,
+        "count": 13
+      },
+      {
+        "year": 2017,
+        "count": 16
+      },
+      {
+        "year": 2018,
+        "count": 10
+      },
+      {
+        "year": 2019,
+        "count": 9
+      },
+      {
+        "year": 2020,
+        "count": 17
+      },
+      {
+        "year": 2021,
+        "count": 13
+      },
+      {
+        "year": 2022,
+        "count": 17
+      },
+      {
+        "year": 2023,
+        "count": 7
+      },
+      {
+        "year": 2024,
+        "count": 8
+      },
+      {
+        "year": 2025,
+        "count": 19
+      },
+      {
+        "year": 2026,
+        "count": 11
+      }
+    ],
+    "by_country": [
+      {
+        "country": "United States",
+        "count": 134
+      },
+      {
+        "country": "Canada",
+        "count": 34
+      },
+      {
+        "country": "Germany",
+        "count": 29
+      },
+      {
+        "country": "United Kingdom",
+        "count": 28
+      },
+      {
+        "country": "Italy",
+        "count": 23
+      },
+      {
+        "country": "Denmark",
+        "count": 15
+      },
+      {
+        "country": "Sweden",
+        "count": 14
+      },
+      {
+        "country": "Iran",
+        "count": 13
+      },
+      {
+        "country": "Japan",
+        "count": 13
+      },
+      {
+        "country": "Australia",
+        "count": 12
+      },
+      {
+        "country": "Netherlands",
+        "count": 12
+      },
+      {
+        "country": "Spain",
+        "count": 12
+      },
+      {
+        "country": "France",
+        "count": 11
+      },
+      {
+        "country": "India",
+        "count": 11
+      },
+      {
+        "country": "South Africa",
+        "count": 10
+      },
+      {
+        "country": "Taiwan",
+        "count": 10
+      },
+      {
+        "country": "China",
+        "count": 9
+      },
+      {
+        "country": "Switzerland",
+        "count": 9
+      },
+      {
+        "country": "Turkey",
+        "count": 9
+      },
+      {
+        "country": "Israel",
+        "count": 7
+      },
+      {
+        "country": "Brazil",
+        "count": 6
+      },
+      {
+        "country": "Europe",
+        "count": 6
+      },
+      {
+        "country": "Asia",
+        "count": 5
+      },
+      {
+        "country": "Austria",
+        "count": 5
+      },
+      {
+        "country": "Hong Kong",
+        "count": 5
+      },
+      {
+        "country": "Norway",
+        "count": 5
+      },
+      {
+        "country": "Poland",
+        "count": 5
+      },
+      {
+        "country": "Argentina",
+        "count": 4
+      },
+      {
+        "country": "Belgium",
+        "count": 4
+      },
+      {
+        "country": "Ireland",
+        "count": 4
+      },
+      {
+        "country": "South Korea",
+        "count": 4
+      },
+      {
+        "country": "Colombia",
+        "count": 3
+      },
+      {
+        "country": "European countries",
+        "count": 3
+      },
+      {
+        "country": "Hungary",
+        "count": 3
+      },
+      {
+        "country": "Nepal",
+        "count": 3
+      },
+      {
+        "country": "Russia",
+        "count": 3
+      },
+      {
+        "country": "Singapore",
+        "count": 3
+      },
+      {
+        "country": "South America",
+        "count": 3
+      },
+      {
+        "country": "Ukraine",
+        "count": 3
+      },
+      {
+        "country": "Chile",
+        "count": 2
+      },
+      {
+        "country": "Czech Republic",
+        "count": 2
+      },
+      {
+        "country": "Latin America",
+        "count": 2
+      },
+      {
+        "country": "Malaysia",
+        "count": 2
+      },
+      {
+        "country": "Mexico",
+        "count": 2
+      },
+      {
+        "country": "New Zealand",
+        "count": 2
+      },
+      {
+        "country": "Thailand",
+        "count": 2
+      },
+      {
+        "country": "Tunisia",
+        "count": 2
+      },
+      {
+        "country": "Venezuela",
+        "count": 2
+      },
+      {
+        "country": "Africa",
+        "count": 1
+      },
+      {
+        "country": "Andorra",
+        "count": 1
+      },
+      {
+        "country": "Armenia",
+        "count": 1
+      },
+      {
+        "country": "Bangladesh",
+        "count": 1
+      },
+      {
+        "country": "Bulgaria",
+        "count": 1
+      },
+      {
+        "country": "Eastern Europe",
+        "count": 1
+      },
+      {
+        "country": "Ethiopia",
+        "count": 1
+      },
+      {
+        "country": "Finland",
+        "count": 1
+      },
+      {
+        "country": "Guatemala",
+        "count": 1
+      },
+      {
+        "country": "Indonesia",
+        "count": 1
+      },
+      {
+        "country": "Lebanon",
+        "count": 1
+      },
+      {
+        "country": "Lithuania",
+        "count": 1
+      },
+      {
+        "country": "Myanmar",
+        "count": 1
+      },
+      {
+        "country": "North America",
+        "count": 1
+      },
+      {
+        "country": "North and South America",
+        "count": 1
+      },
+      {
+        "country": "PR China",
+        "count": 1
+      },
+      {
+        "country": "Pakistan",
+        "count": 1
+      },
+      {
+        "country": "Peru",
+        "count": 1
+      },
+      {
+        "country": "RO Korea",
+        "count": 1
+      },
+      {
+        "country": "Romania",
+        "count": 1
+      },
+      {
+        "country": "Slovakia",
+        "count": 1
+      },
+      {
+        "country": "Sri Lanka",
+        "count": 1
+      },
+      {
+        "country": "Vietnam",
+        "count": 1
+      },
+      {
+        "country": "Western Europe",
+        "count": 1
+      },
+      {
+        "country": "Yugoslavia",
+        "count": 1
+      },
+      {
+        "country": "eight countries",
+        "count": 1
+      },
+      {
+        "country": "multiple",
+        "count": 1
+      },
+      {
+        "country": "multiple countries across East Asia and the Pacific, Europe and Central Asia, Latin America and the Caribbean, North America, and Sub-Saharan Africa",
+        "count": 1
+      }
+    ],
+    "by_design": [
+      {
+        "design_type": "rct",
+        "count": 115
+      },
+      {
+        "design_type": "case_series",
+        "count": 107
+      },
+      {
+        "design_type": "cross_sectional",
+        "count": 82
+      },
+      {
+        "design_type": "retrospective_cohort",
+        "count": 45
+      },
+      {
+        "design_type": "prospective_cohort",
+        "count": 38
+      },
+      {
+        "design_type": "before_after",
+        "count": 11
+      },
+      {
+        "design_type": "other",
+        "count": 11
+      },
+      {
+        "design_type": "quasi_experimental",
+        "count": 10
+      },
+      {
+        "design_type": "crossover",
+        "count": 4
+      },
+      {
+        "design_type": "case_control",
+        "count": 3
+      }
+    ],
+    "by_rob": [
+      {
+        "rob": "serious",
+        "count": 144
+      },
+      {
+        "rob": "critical",
+        "count": 133
+      },
+      {
+        "rob": "some_concerns",
+        "count": 88
+      },
+      {
+        "rob": "high",
+        "count": 28
+      },
+      {
+        "rob": "no_information",
+        "count": 19
+      },
+      {
+        "rob": "moderate",
+        "count": 11
+      },
+      {
+        "rob": "low",
+        "count": 3
+      }
+    ],
+    "by_verdict": [
+      {
+        "verdict": "inconclusive",
+        "count": 194
+      },
+      {
+        "verdict": "unknown",
+        "count": 162
+      },
+      {
+        "verdict": "no_difference",
+        "count": 26
+      },
+      {
+        "verdict": "favors_treatment",
+        "count": 23
+      },
+      {
+        "verdict": "favors_control",
+        "count": 21
+      }
+    ],
+    "by_symptom_domain": [
+      {
+        "domain": "body_weight",
+        "count": 103
+      },
+      {
+        "domain": "efficacy",
+        "count": 73
+      },
+      {
+        "domain": "clinically_significant_weight_gain",
+        "count": 69
+      },
+      {
+        "domain": "bmi",
+        "count": 43
+      },
+      {
+        "domain": "other",
+        "count": 8
+      },
+      {
+        "domain": "metabolic",
+        "count": 5
+      },
+      {
+        "domain": "other_adverse_events",
+        "count": 4
+      },
+      {
+        "domain": "polydipsia",
+        "count": 2
+      },
+      {
+        "domain": "body_composition",
+        "count": 1
+      },
+      {
+        "domain": "renal",
+        "count": 1
+      }
+    ],
+    "by_outcome_type": [
+      {
+        "key": "other",
+        "count": 149
+      },
+      {
+        "key": "body_weight",
+        "count": 103
+      },
+      {
+        "key": "efficacy",
+        "count": 73
+      },
+      {
+        "key": "clinically_significant_weight_gain",
+        "count": 61
+      },
+      {
+        "key": "bmi",
+        "count": 40
+      }
+    ],
+    "by_intervention_category": [
+      {
+        "category": "lithium",
+        "count": 283
+      },
+      {
+        "category": "combination",
+        "count": 86
+      },
+      {
+        "category": "anticonvulsant",
+        "count": 39
+      },
+      {
+        "category": "antipsychotic",
+        "count": 39
+      },
+      {
+        "category": "other",
+        "count": 14
+      },
+      {
+        "category": "antidepressant",
+        "count": 7
+      },
+      {
+        "category": "usual_care",
+        "count": 1
+      }
+    ],
+    "by_intervention": [
+      {
+        "name": "lithium",
+        "count": 151,
+        "verdicts": {
+          "favors_treatment": 5,
+          "favors_control": 6,
+          "no_difference": 8,
+          "mixed": 0,
+          "inconclusive": 80,
+          "unknown": 52
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium carbonate",
+        "count": 83,
+        "verdicts": {
+          "favors_treatment": 5,
+          "favors_control": 6,
+          "no_difference": 3,
+          "mixed": 0,
+          "inconclusive": 40,
+          "unknown": 29
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "quetiapine",
+        "count": 11,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 3,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 5,
+          "unknown": 3
+        },
+        "category": "antipsychotic"
+      },
+      {
+        "name": "lamotrigine",
+        "count": 10,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 2,
+          "mixed": 0,
+          "inconclusive": 8,
+          "unknown": 0
+        },
+        "category": "anticonvulsant"
+      },
+      {
+        "name": "olanzapine",
+        "count": 7,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 1,
+          "no_difference": 1,
+          "mixed": 0,
+          "inconclusive": 2,
+          "unknown": 2
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "valproate",
+        "count": 7,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 1,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 2,
+          "unknown": 3
+        },
+        "category": "anticonvulsant"
+      },
+      {
+        "name": "divalproex sodium",
+        "count": 5,
+        "verdicts": {
+          "favors_treatment": 2,
+          "favors_control": 1,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "quetiapine plus lithium or divalproex",
+        "count": 5,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 2,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 2,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "risperidone",
+        "count": 5,
+        "verdicts": {
+          "favors_treatment": 2,
+          "favors_control": 0,
+          "no_difference": 1,
+          "mixed": 0,
+          "inconclusive": 2,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "aripiprazole",
+        "count": 4,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 3,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lurasidone monotherapy",
+        "count": 4,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 3,
+          "unknown": 0
+        },
+        "category": "antipsychotic"
+      },
+      {
+        "name": "divalproex",
+        "count": 3,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 2,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium augmentation",
+        "count": 3,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 2
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium plus valproate",
+        "count": 3,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 3
+        },
+        "category": "combination"
+      },
+      {
+        "name": "topiramate",
+        "count": 3,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 1,
+          "mixed": 0,
+          "inconclusive": 2,
+          "unknown": 0
+        },
+        "category": "anticonvulsant"
+      },
+      {
+        "name": "aripiprazole adjunctive to lithium or valproate",
+        "count": 2,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 1,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "carbamazepine",
+        "count": 2,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 1,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (adjunct to clozapine)",
+        "count": 2,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 2,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (long-term maintenance treatment)",
+        "count": 2,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 2,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium carbonate augmentation",
+        "count": 2,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 2,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium citrate",
+        "count": 2,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium sulfate",
+        "count": 2,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lurasidone (adjunctive to lithium or valproate)",
+        "count": 2,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "antipsychotic"
+      },
+      {
+        "name": "lurasidone adjunctive to lithium or valproate",
+        "count": 2,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 2,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "olanzapine added to lithium or valproate",
+        "count": 2,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 0,
+          "no_difference": 1,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "sodium valproate",
+        "count": 2,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "valproic acid",
+        "count": 2,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 1,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "acetazolamide (add-on to ongoing lithium treatment)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "combination"
+      },
+      {
+        "name": "amitriptyline",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "amitriptyline (add-on) + lithium maintenance",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "antipsychotic monotherapy",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "aripiprazole adjunctive to lithium",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "combination"
+      },
+      {
+        "name": "aripiprazole adjunctive to valproate",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "combination"
+      },
+      {
+        "name": "aripiprazole plus lamotrigine",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "aripiprazole plus lithium or valproate",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "atomoxetine (adjunctive to mood stabilizers/antipsychotics, including lithium in 2/12 subjects)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "combination"
+      },
+      {
+        "name": "bright light therapy (not lithium)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "other"
+      },
+      {
+        "name": "bupropion sr",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "antidepressant"
+      },
+      {
+        "name": "carbamazepine add-on to lithium",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "combination"
+      },
+      {
+        "name": "celecoxib adjunctive to lithium and risperidone",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 1,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "chlorpromazine",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "clomipramine + lithium carbonate",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 1,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "clozapine",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "clozapine + lithium carbonate",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "divalproex sodium (adjunct to clozapine)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "divalproex sodium + risperidone",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "combination"
+      },
+      {
+        "name": "environmental lithium exposure (drinking water and other sources)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 1,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "folic acid (added to ongoing lithium therapy)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "greek yogurt (dietary lithium source) + 12-week exercise training",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 1,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "other"
+      },
+      {
+        "name": "haloperidol",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "haloperidol plus lithium",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "imipramine + lithium carbonate",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "combination"
+      },
+      {
+        "name": "imipramine hydrochloride",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "iodine-lithium-alpha-dextrin (armenicum)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "other"
+      },
+      {
+        "name": "kidney transplantation for lithium-associated nephrotoxicity",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "other"
+      },
+      {
+        "name": "kidney transplantation for other etiologies of eskd",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "other"
+      },
+      {
+        "name": "l-sulpiride (add-on) + lithium maintenance",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (adjunct to clomipramine, mirtazapine, modafinil, olanzapine)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium (adjunctive lurasidone)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (adjunctive to aripiprazole)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium (adjunctive to lurasidone)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (among other mood stabilizers/antipsychotics used in cohort)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (and/or carbamazepine, valproic acid derivatives)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 1,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium (as part of olanzapine + li combination therapy; omega-3 vs placebo randomized on top)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium (as part of placebo + lithium/divalproex group)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 1,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (augmenting topiramate)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium (background therapy) + imipramine",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium (background therapy) + paroxetine",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium (background therapy) + pioglitazone",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium (carbonate)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (carbonate, sulphate, chloride; various brands)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (concomitant mood stabilizer, held stable while antipsychotic switched from olanzapine to ziprasidone)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (continued long-term treatment)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (discontinued approx. 14 months before examination ii)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (existing regimen) + oxcarbazepine add-on",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium (historical exposure, discontinued at ckd onset ~25 years prior to this report)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (long-term, routine psychiatric care)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (maternal, in utero exposure)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (maternal, transferred via breastmilk)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (mood stabilizer) + aripiprazole augmentation",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (prophylactic)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (routine clinical use, mixed with other mood stabilizers)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (slow-release lithium salt)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (subgroup of larger sample; no dose data reported)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (subset of combination therapy arm; also includes valproate-treated patients)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 1,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium (subset) and/or valproic acid, plus myo-inositol/d-chiro-inositol supplementation",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (sulfate or carbonate)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (with amiloride added for polyuria)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium (with clozapine and clomipramine)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium + antipsychotic (risperidone, olanzapine, or aripiprazole)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium + haloperidol + allopurinol",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium + haloperidol + ritanserin",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium + olanzapine + clonazepam + topiramate (adjuvant)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium + risperidone",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium + second-generation antipsychotic",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium + valproate + second-generation antipsychotic",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium + valproate combination",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium + valproic acid",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium + ziprasidone",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium acetate",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium add-on to quetiapine xr",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium aspartate",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium augmentation of tricyclic antidepressant",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium carbonate (add-on to tricyclic antidepressant)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium carbonate (concomitant medication)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium carbonate (extended-release)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium carbonate (maternal treatment, infant exposed via breast milk)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium carbonate (priadel) + paroxetine",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium carbonate (routine clinical care)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium carbonate (sustained release, priadel)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium carbonate (test dose for lithium clearance methodology, not a therapeutic weight-gain exposure)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium carbonate (tracer dose for clearance measurement)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium carbonate + acetophenazine",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium carbonate + butyrophenones",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium carbonate + butyrophenones + tricyclics",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium carbonate + butyrophenones + tricyclics + ssri",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium carbonate + diazepam",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium carbonate + dietary advice",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 1,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium carbonate + risperidone",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium carbonate + sodium valproate",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium carbonate + tricyclics",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium carbonate +/- fluoxetine",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium carbonate 150 mg/day (low-dose) + triad approach",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "usual_care"
+      },
+      {
+        "name": "lithium carbonate augmentation of tricyclic antidepressants",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium carbonate er",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium carbonate, sustained release",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium citrate (danish centres) or lithium sulphate (swedish centres)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium or divalproex (li/dvp)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 1,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium or divalproex + placebo",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium or sodium valproate (not distinguished)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium or valproate (monotherapy, adjunctive placebo)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium or valproate (mood stabilizer)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium or valproate + risperidone/olanzapine (24-weeks group)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 1,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium or valproate + risperidone/olanzapine (52-weeks group)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 1,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium or valproate monotherapy (adjunctive placebo)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium or valproate monotherapy (placebo added, olanzapine discontinued)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 1,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium plus carbamazepine",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium plus chlorpromazine",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium plus olanzapine",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium plus quetiapine",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium plus risperidone",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium plus valproic acid",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "lithium salts",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "lithium sulfate, sustained release",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "long-acting injectable risperidone",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "antipsychotic"
+      },
+      {
+        "name": "lurasidone",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "antipsychotic"
+      },
+      {
+        "name": "lurasidone + lithium or valproate (therapeutic-level dosing)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "maprotiline",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "melatonin (adjunct to olanzapine + lithium carbonate)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 1,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "metformin",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "other"
+      },
+      {
+        "name": "mixed psychotropic drugs (lithium subgroup not separately reported)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 1,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "mood stabilizer (sodium valproate, lithium, carbamazepine, or lamotrigine) as adjunct to antipsychotic",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 1,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "mood stabilizers (including lithium) with antipsychotic",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "mood stabilizers (lithium, valproate, carbamazepine)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "mood stabilizers (valproate or lithium)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "non-lithium mood stabilizers/antipsychotics/other psychotropics",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 1,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "other"
+      },
+      {
+        "name": "olanzapine (adjunctive)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "antipsychotic"
+      },
+      {
+        "name": "olanzapine (with concomitant lithium carbonate and/or divalproex in some patients)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "combination"
+      },
+      {
+        "name": "olanzapine (with optional adjunctive lithium/fluoxetine)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "olanzapine (with prior/concomitant lithium and/or valproate in a subset)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "antipsychotic"
+      },
+      {
+        "name": "olanzapine combination therapy",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 1,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "olanzapine monotherapy",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 1,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "olanzapine plus lithium",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "olanzapine plus lithium or divalproex",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "optimised personalised treatment (no lithium)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "other"
+      },
+      {
+        "name": "optimized treatment (guideline-informed, evidence-based, personalized treatment without lithium)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "other"
+      },
+      {
+        "name": "oral atypical antipsychotic (quetiapine/risperidone/olanzapine) continuation",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "antipsychotic"
+      },
+      {
+        "name": "other mood stabilizers/antipsychotics (no lithium)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "other"
+      },
+      {
+        "name": "over-the-counter lithium supplement",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "oxcarbazepine add-on to lithium",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "combination"
+      },
+      {
+        "name": "paroxetine",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "placebo added to lithium or valproate",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "placebo plus lithium or divalproex",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "psychotropic medications other than lithium (valproate, oxcarbazepine, lamotrigine, ssri, other antidepressants, antipsychotics)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "other"
+      },
+      {
+        "name": "quetiapine (adjuvant) + lithium + clonazepam",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "quetiapine plus lithium",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 1,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "quetiapine plus lithium (or divalproex)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 1,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "risperidone (adjunctive)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "antipsychotic"
+      },
+      {
+        "name": "risperidone (with concurrent lithium or divalproex in 5 subjects)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "risperidone added to mood stabilizer (lithium, valproate, or carbamazepine)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "risperidone plus lithium",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "risperidone plus lithium or divalproex",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "sglt2 inhibitor (canagliflozin, dapagliflozin, empagliflozin, ertugliflozin, bexagliflozin, or sotagliflozin)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "other"
+      },
+      {
+        "name": "short psychodynamic supportive psychotherapy (spsp)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "other"
+      },
+      {
+        "name": "short psychodynamic supportive psychotherapy plus stepped antidepressant pharmacotherapy (venlafaxine, then ssri, then nortriptyline, then nortriptyline plus lithium addition)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "other"
+      },
+      {
+        "name": "sustained-release lithium carbonate",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "topiramate (adjunctive to lithium or valproate)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 1,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "topiramate (with concomitant lithium carbonate in some patients)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "triad approach without low-dose lithium",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "usual_care"
+      },
+      {
+        "name": "triiodothyronine (t3)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "other"
+      },
+      {
+        "name": "valproate (adjunctive lurasidone)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "valproate (adjunctive to aripiprazole)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "valproate (divalproex sodium)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "anticonvulsant"
+      },
+      {
+        "name": "valproate (mood stabilizer) + aripiprazole augmentation",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "valproate (sodium valproate and valproic acid)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 1,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "valproate + antipsychotic",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "valproate + second-generation antipsychotic",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "valproate sodium",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "venlafaxine",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "venlafaxine or sertraline",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 1,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "vitamin b6 (adjunct to lithium)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 1,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 0
+        },
+        "category": "combination"
+      },
+      {
+        "name": "ziprasidone (adjunctive) plus lithium or valproate",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "lithium"
+      },
+      {
+        "name": "ziprasidone (replacing patient-identified offending bd medication; lithium was the offending agent in 3/30 and a concomitant medication in 2/30)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "unknown": 1
+        },
+        "category": "antipsychotic"
+      },
+      {
+        "name": "ziprasidone adjunctive to lithium or valproate",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 1,
+          "unknown": 0
+        },
+        "category": "combination"
+      }
+    ],
+    "blinding_significance": [
+      {
+        "blinding": "double_blind",
+        "significant": 38,
+        "not_significant": 25,
+        "unknown": 32
+      },
+      {
+        "blinding": "single_blind",
+        "significant": 3,
+        "not_significant": 4,
+        "unknown": 4
+      },
+      {
+        "blinding": "open_label",
+        "significant": 9,
+        "not_significant": 5,
+        "unknown": 64
+      }
+    ]
+  },
+  "feasibility": {
+    "overall": "supported",
+    "n_papers": 426,
+    "n_with_contrast": 74,
+    "n_outcomes": 328,
+    "n_pooled": 88,
+    "domains": [
+      {
+        "domain": "efficacy",
+        "n_outcomes": 78,
+        "n_pooled": 45,
+        "n_trials": 40,
+        "n_instruments": 31,
+        "top_instrument": "ymrs",
+        "top_instrument_share": 0.28,
+        "verdict": "fragmented",
+        "reason": "40 trials but 31 different instruments, none used by more than 28% — few trials measure the same thing"
+      },
+      {
+        "domain": "clinically_significant_weight_gain",
+        "n_outcomes": 74,
+        "n_pooled": 20,
+        "n_trials": 17,
+        "n_instruments": 31,
+        "top_instrument": "clinical",
+        "top_instrument_share": 0.12,
+        "verdict": "fragmented",
+        "reason": "17 trials but 31 different instruments, none used by more than 12% — few trials measure the same thing"
+      },
+      {
+        "domain": "body_weight",
+        "n_outcomes": 109,
+        "n_pooled": 14,
+        "n_trials": 13,
+        "n_instruments": 29,
+        "top_instrument": "body",
+        "top_instrument_share": 0.36,
+        "verdict": "poolable",
+        "reason": "13 trials, and 36% use the same instrument (BODY) — comparable enough to pool"
+      },
+      {
+        "domain": "other",
+        "n_outcomes": 9,
+        "n_pooled": 5,
+        "n_trials": 4,
+        "n_instruments": 7,
+        "top_instrument": "ybocs",
+        "top_instrument_share": 0.22,
+        "verdict": "fragmented",
+        "reason": "4 trials but 7 different instruments, none used by more than 22% — few trials measure the same thing"
+      },
+      {
+        "domain": "bmi",
+        "n_outcomes": 45,
+        "n_pooled": 3,
+        "n_trials": 3,
+        "n_instruments": 13,
+        "top_instrument": "bmi",
+        "top_instrument_share": 0.38,
+        "verdict": "poolable",
+        "reason": "3 trials, and 38% use the same instrument (BMI) — comparable enough to pool"
+      },
+      {
+        "domain": "polydipsia",
+        "n_outcomes": 2,
+        "n_pooled": 1,
+        "n_trials": 1,
+        "n_instruments": 2,
+        "top_instrument": "24-hour urine collec",
+        "top_instrument_share": 0.5,
+        "verdict": "too_few",
+        "reason": "only 1 trial(s) with a usable comparison (need 3)"
+      },
+      {
+        "domain": "body_composition",
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_trials": 0,
+        "n_instruments": 1,
+        "top_instrument": "bia",
+        "top_instrument_share": 1.0,
+        "verdict": "none",
+        "reason": "no trial reports a usable comparison here"
+      },
+      {
+        "domain": "metabolic",
+        "n_outcomes": 5,
+        "n_pooled": 0,
+        "n_trials": 0,
+        "n_instruments": 3,
+        "top_instrument": "ncep",
+        "top_instrument_share": 0.4,
+        "verdict": "none",
+        "reason": "no trial reports a usable comparison here"
+      },
+      {
+        "domain": "other_adverse_events",
+        "n_outcomes": 4,
+        "n_pooled": 0,
+        "n_trials": 0,
+        "n_instruments": 3,
+        "top_instrument": "uku",
+        "top_instrument_share": 0.5,
+        "verdict": "none",
+        "reason": "no trial reports a usable comparison here"
+      },
+      {
+        "domain": "renal",
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_trials": 0,
+        "n_instruments": 1,
+        "top_instrument": "amdrd",
+        "top_instrument_share": 1.0,
+        "verdict": "none",
+        "reason": "no trial reports a usable comparison here"
+      }
+    ],
+    "blockers": [
+      {
+        "code": "single_arm_no_contrast",
+        "n": 142,
+        "explanation": "single-arm studies, which cannot produce a comparison"
+      },
+      {
+        "code": "no_comparator_role",
+        "n": 63,
+        "explanation": "studies with no arm labelled as a comparator"
+      },
+      {
+        "code": "effect_without_value",
+        "n": 17,
+        "explanation": "effects mentioned but with no number attached"
+      },
+      {
+        "code": "no_variance",
+        "n": 9,
+        "explanation": "results reported without a standard deviation, CI or standard error"
+      },
+      {
+        "code": "no_quantitative_data",
+        "n": 8,
+        "explanation": "outcomes with no quantitative data at all"
+      },
+      {
+        "code": "binary_no_path",
+        "n": 1,
+        "explanation": "binary outcomes reporting events but no usable effect size"
+      }
+    ],
+    "recommendation": "A meta-analysis is well supported for 2 outcome domain(s): 'body_weight', 'bmi'. Other domains have too few trials or too many different instruments and are reported without pooling."
+  },
+  "provenance": {
+    "status": "unavailable"
+  },
+  "contract": {
+    "missing_keys": {},
+    "unknown_rob": {},
+    "unknown_arm_type": {
+      "combination": 3
+    },
+    "clean": false
+  },
+  "definitions": {
+    "n_instruments": "global_distinct_normalized",
+    "primary_domain": "meta_lib.outcome_domain on first primary outcome",
+    "verdict_source": "structured_proxy",
+    "verdict_source_counts": {
+      "proxy": 264,
+      "none": 162
+    },
+    "year_source_counts": {
+      "metadata": 426
+    }
+  }
+}

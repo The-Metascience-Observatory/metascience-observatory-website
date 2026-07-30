@@ -3,7 +3,7 @@ import path from "path";
 import { csvParse } from "d3-dsv";
 import { ReplicationsNavbar } from "@/components/ReplicationsNavbar";
 import { Footer } from "@/components/Footer";
-import { getOutcomeForRow, type OutcomeMethod } from "@/lib/replicationOutcome";
+import { outcomeCodesForRow } from "@/lib/replicationOutcome";
 import { CitationCountDashboard } from "./CitationCountDashboard";
 import type { CitationsMeta, CoverageStats, EffectRow, PaperCitations } from "./types";
 
@@ -12,11 +12,6 @@ export const metadata = {
   description:
     "Are highly cited papers more replicable? Citation trajectories of original papers that passed vs. failed replication, reproducing Fig. 1 of Yang, Youyou & Uzzi (PNAS 2020) at ~10x the sample size.",
 };
-
-// The three statistical outcome methods, in the fixed order used by the
-// compact per-row outcome string below (index 1..3). Index 0 is the stored
-// `result` column. Kept in sync with app/replications-database/page.tsx.
-const STAT_METHODS: OutcomeMethod[] = ["significance", "orig_in_rep_ci", "rep_in_orig_ci"];
 
 type AnyRecord = Record<string, unknown>;
 
@@ -33,25 +28,6 @@ function latestCsvFilename(): string {
     .split("\n")
     .filter((line) => line.trim() && !line.trim().startsWith("#"));
   return lines[lines.length - 1].split("#")[0].trim();
-}
-
-// Compact per-outcome code: success | failure | reversal | inconclusive/excluded.
-function code(outcome: string): string {
-  if (outcome === "success") return "s";
-  if (outcome === "failure") return "f";
-  if (outcome === "reversal") return "r";
-  return "i";
-}
-
-// The stored `result` column, mapped to the same code alphabet. Reversal is
-// treated as a determinate non-replication; inconclusive / blank / anything
-// else is excluded from denominators.
-function storedCode(result: string): string {
-  const r = result.toLowerCase();
-  if (r.includes("success")) return "s";
-  if (r.includes("failure")) return "f";
-  if (r.includes("reversal")) return "r";
-  return "i";
 }
 
 function parseYear(value: unknown): number | null {
@@ -121,9 +97,7 @@ export default function ByCitationCountPage() {
     }
     if (doi && papers[paperId].n >= 0) rowsMatched++;
 
-    const outcomes =
-      storedCode(String(row.result ?? "")) +
-      STAT_METHODS.map((m) => code(getOutcomeForRow(row, m))).join("");
+    const outcomes = outcomeCodesForRow(row);
 
     effectRows.push({ p: paperId, o: outcomes, t });
   }

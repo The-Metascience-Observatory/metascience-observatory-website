@@ -126,6 +126,48 @@ def save_api_cache(doi_cache, title_cache):
     logger.info(f"Saved API cache: {len(doi_cache)} DOIs, {len(title_cache)} titles")
 
 
+def archive_superseded_masters(current_filename):
+    """Keep exactly one replications_database_*.csv in data/.
+
+    Every older version is moved into data/backup/. The earlier backup step
+    only *copies* the previous master, so without this the data/ directory
+    accumulates a new CSV on every run and it stops being obvious which one
+    the site is serving.
+
+    A file is only deleted from data/ once an identical-size copy is confirmed
+    in data/backup/, so an interrupted run can never lose a version.
+    """
+    import glob as _glob
+
+    os.makedirs(BACKUP_DIR, exist_ok=True)
+    current_path = os.path.abspath(os.path.join(DATA_DIR, current_filename))
+    archived, kept = [], []
+
+    for path in sorted(_glob.glob(os.path.join(DATA_DIR, 'replications_database_*.csv'))):
+        if os.path.abspath(path) == current_path:
+            continue
+        name = os.path.basename(path)
+        backup_path = os.path.join(BACKUP_DIR, name)
+        try:
+            if not os.path.exists(backup_path):
+                shutil.copy2(path, backup_path)
+            if os.path.getsize(backup_path) != os.path.getsize(path):
+                kept.append((name, 'backup copy differs in size — left in place'))
+                continue
+            os.remove(path)
+            archived.append(name)
+        except OSError as e:
+            kept.append((name, str(e)))
+
+    if archived:
+        print(f"  ✓ Archived {len(archived)} superseded master(s) → data/backup/")
+        for name in archived:
+            print(f"      {name}")
+    for name, why in kept:
+        print(f"  ⚠ Could not archive {name}: {why}")
+    return archived
+
+
 def get_latest_master_database():
     """Get the latest master database filename from version_history.txt.
     Walks backwards through the file to find the most recent entry that
@@ -2180,6 +2222,10 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
         with open(VERSION_HISTORY_PATH, 'w') as f:
             f.write(output_filename + f' # added {input_basename}' + '\n')
     print(f"✓ Added {output_filename} to version_history.txt")
+
+    # data/ holds exactly one master; every older version lives in data/backup/
+    print(f"\nArchiving superseded master databases...")
+    archive_superseded_masters(output_filename)
 
     # Clear checkpoint files after successful completion
     clear_checkpoint()

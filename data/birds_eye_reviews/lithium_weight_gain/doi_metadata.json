@@ -1,0 +1,2984 @@
+{
+  "10.1001/archgenpsychiatry.2011.1508": {
+    "authors": "Barbara Geller",
+    "first_author": "Barbara",
+    "author_count": 1,
+    "journal": "Archives of General Psychiatry",
+    "year": 2012
+  },
+  "10.1001/archpsyc.1975.01760230125010": {
+    "authors": "Shosuke Watanabe",
+    "first_author": "Shosuke",
+    "author_count": 1,
+    "journal": "Archives of General Psychiatry",
+    "year": 1975
+  },
+  "10.1001/archpsyc.1975.01760280108010": {
+    "authors": "Ryo Takahashi",
+    "first_author": "Ryo",
+    "author_count": 1,
+    "journal": "Archives of General Psychiatry",
+    "year": 1975
+  },
+  "10.1001/archpsyc.1984.01790180020002": {
+    "authors": "Magda Campbell",
+    "first_author": "Magda",
+    "author_count": 1,
+    "journal": "Archives of General Psychiatry",
+    "year": 1984
+  },
+  "10.1001/archpsyc.57.7.649": {
+    "authors": "Richard P. Malone; Mary Anne Delaney; James F. Luebbert; Jacqueline Cater; Magda Campbell",
+    "first_author": "Richard",
+    "author_count": 5,
+    "journal": "Archives of General Psychiatry",
+    "year": 2000
+  },
+  "10.1001/archpsyc.59.1.62": {
+    "authors": "Tohen M.; Chengappa KN; Suppes T.; Zarate CA Jr; Calabrese JR; Bowden CL; Sachs GS; Kupfer DJ; Baker RW; Risser RC; Keeter EL; Feldman PD; Tollefson GD; Breier A.",
+    "first_author": "Tohen",
+    "author_count": 14,
+    "journal": "Archives of General Psychiatry",
+    "year": 2002
+  },
+  "10.1002/brb3.2394": {
+    "authors": "Rahim Badrfam; Seyed‐Ali Mostafavi; Ali Khaleghi; Shahin Akhondzadeh; Atefeh Zandifar; Malihe Farid; Nami Mohammadian Khonsari; Mohammad Reza Mohammadi",
+    "first_author": "Rahim",
+    "author_count": 8,
+    "journal": "Brain and Behavior",
+    "year": 2021
+  },
+  "10.1002/da.22136": {
+    "authors": "Trisha Suppes; Eduard Vieta; Urban Gustafsson; Birgit Ekholm",
+    "first_author": "Trisha",
+    "author_count": 4,
+    "journal": "Depression and Anxiety",
+    "year": 2013
+  },
+  "10.1002/da.22340": {
+    "authors": "Atefeh Zeinoddini; Maryam Sorayani; Elmira Hassanzadeh; Mohammad Arbabi; Mehdi Farokhnia; Samrand Salimi; Ali Ghaleiha; Shahin Akhondzadeh",
+    "first_author": "Atefeh",
+    "author_count": 8,
+    "journal": "Depression and Anxiety",
+    "year": 2015
+  },
+  "10.1007/bf02916252": {
+    "authors": "Greil W.; Ludwig-Mayerhofer W.; Erazo N.; Engel RR; Czernik A.; Giedke H.; Müller-Oerlinghausen B.; Osterheider M.; Rudolf GA; Sauer H.; Tegeler J.; Wetterling T.",
+    "first_author": "Greil",
+    "author_count": 12,
+    "journal": "European Archives of Psychiatry and Clinical Neuroscience",
+    "year": 1997
+  },
+  "10.1007/s40263-015-0234-2": {
+    "authors": "Mark Sanford; Sohita Dhillon",
+    "first_author": "Mark",
+    "author_count": 2,
+    "journal": "CNS Drugs",
+    "year": 2015
+  },
+  "10.1016/0022-3956(89)90006-x": {
+    "authors": "Abou-Saleh MT; Coppen A.",
+    "first_author": "Abou-Saleh",
+    "author_count": 2,
+    "journal": "Journal of Psychiatric Research",
+    "year": 1989
+  },
+  "10.1016/0165-0327(86)90043-1": {
+    "authors": "Coppen A.; Chaudhry S.; Swade C.",
+    "first_author": "Coppen",
+    "author_count": 3,
+    "journal": "Journal of Affective Disorders",
+    "year": 1986
+  },
+  "10.1016/j.biopsych.2004.03.013": {
+    "authors": "Carlos A. Zarate; Jennifer L. Payne; Jaskaran Singh; Jorge A. Quiroz; David A. Luckenbaugh; Kirk D. Denicoff; Dennis S. Charney; Husseini K. Manji",
+    "first_author": "Carlos",
+    "author_count": 8,
+    "journal": "Biological Psychiatry",
+    "year": 2004
+  },
+  "10.1016/j.clinthera.2010.01.022": {
+    "authors": "Roger S. McIntyre",
+    "first_author": "Roger",
+    "author_count": 1,
+    "journal": "Clinical Therapeutics",
+    "year": 2010
+  },
+  "10.1016/j.encep.2012.05.001": {
+    "authors": "Samalin L.; Tixeront C.; Llorca PM",
+    "first_author": "Samalin",
+    "author_count": 3,
+    "journal": "L'Encéphale",
+    "year": 2012
+  },
+  "10.1016/j.euroneuro.2011.06.005": {
+    "authors": "David E. Kemp; Onur N. Karayal; Joseph R. Calabrese; Gary S. Sachs; Elizabeth Pappadopulos; Kathleen S. Ice; Cynthia O. Siu; Eduard Vieta",
+    "first_author": "David",
+    "author_count": 8,
+    "journal": "European Neuropsychopharmacology",
+    "year": 2012
+  },
+  "10.1016/j.euroneuro.2017.06.013": {
+    "authors": "Joseph R. Calabrese; Andrei Pikalov; Caroline Streicher; Josephine Cucchiaro; Yongcai Mao; Antony Loebel",
+    "first_author": "Joseph",
+    "author_count": 6,
+    "journal": "European Neuropsychopharmacology",
+    "year": 2017
+  },
+  "10.1016/j.eurpsy.2015.09.009": {
+    "authors": "Conus P.; Berk M.; Cotton SM; Kader L.; Macneil C.; Hasty MK; Hallam K.; Lambert M.; Murphy BP; McGorry PD",
+    "first_author": "Conus",
+    "author_count": 10,
+    "journal": "European Psychiatry",
+    "year": 2015
+  },
+  "10.1016/j.heliyon.2020.e04528": {
+    "authors": "John R. Rinker; William R. Meador; Peter King",
+    "first_author": "John",
+    "author_count": 3,
+    "journal": "Heliyon",
+    "year": 2020
+  },
+  "10.1016/j.jaac.2012.07.001": {
+    "authors": "Benedetto Vitiello; Mark A. Riddle; Gayane Yenokyan; David A. Axelson; Karen D. Wagner; Paramjit Joshi; John T. Walkup; Joan Luby; Boris Birmaher; Neal D. Ryan; Graham Emslie; Adelaide Robb; Rebecca Tillman",
+    "first_author": "Benedetto",
+    "author_count": 13,
+    "journal": "Journal of the American Academy of Child &amp; Adolescent Psychiatry",
+    "year": 2012
+  },
+  "10.1016/j.jaac.2015.09.015": {
+    "authors": "John T. Walkup; Karen Dineen Wagner; Leslie Miller; Gayane Yenokyan; Joan L. Luby; Paramjit T. Joshi; David A. Axelson; Adelaide Robb; Jay A. Salpekar; Dwight Wolf; Abanti Sanyal; Boris Birmaher; Benedetto Vitiello; Mark A. Riddle",
+    "first_author": "John",
+    "author_count": 14,
+    "journal": "Journal of the American Academy of Child &amp; Adolescent Psychiatry",
+    "year": 2015
+  },
+  "10.1016/j.jaac.2015.09.016": {
+    "authors": "Jay A. Salpekar; Paramjit T. Joshi; David A. Axelson; Shauna P. Reinblatt; Gayane Yenokyan; Abanti Sanyal; John T. Walkup; Benedetto Vitiello; Joan L. Luby; Karen Dineen Wagner; Nasima Nusrat; Mark A. Riddle",
+    "first_author": "Jay",
+    "author_count": 12,
+    "journal": "Journal of the American Academy of Child &amp; Adolescent Psychiatry",
+    "year": 2015
+  },
+  "10.1016/j.jaac.2018.07.901": {
+    "authors": "Robert L. Findling; Nora K. McNamara; Mani Pavuluri; Jean A. Frazier; Moira Rynn; Russell Scheffer; Vivian Kafantaris; Adelaide Robb; Melissa DelBello; Robert A. Kowatch; Brieana M. Rowles; Jacqui Lingler; Jian Zhao; Traci Clemons; Karen Martz; Ravinder Anand; Perdita Taylor-Zapata",
+    "first_author": "Robert",
+    "author_count": 17,
+    "journal": "Journal of the American Academy of Child &amp; Adolescent Psychiatry",
+    "year": 2019
+  },
+  "10.1016/j.jad.2007.02.004": {
+    "authors": "Caleb M. Adler; David E. Fleck; Martin Brecher; Stephen M. Strakowski",
+    "first_author": "Caleb",
+    "author_count": 4,
+    "journal": "Journal of Affective Disorders",
+    "year": 2007
+  },
+  "10.1016/j.jad.2007.02.005": {
+    "authors": "Peter F. Buckley; Björn Paulsson; Martin Brecher",
+    "first_author": "Peter",
+    "author_count": 3,
+    "journal": "Journal of Affective Disorders",
+    "year": 2007
+  },
+  "10.1016/j.jad.2007.02.009": {
+    "authors": "Eduard Vieta; Joseph F. Goldberg; Jamie Mullen; Mårten Vågerö; Björn Paulsson",
+    "first_author": "Eduard",
+    "author_count": 5,
+    "journal": "Journal of Affective Disorders",
+    "year": 2007
+  },
+  "10.1016/j.jad.2007.04.020": {
+    "authors": "Gu Niufan; Mauricio Tohen; Ang Qiuqing; Yang Fude; Elizabeth Pope; Heather McElroy; Li Ming; Wang Gaohua; Zhang Xinbao; Li Huichun; Shu Liang",
+    "first_author": "Niufan",
+    "author_count": 11,
+    "journal": "Journal of Affective Disorders",
+    "year": 2008
+  },
+  "10.1016/j.jad.2008.02.004": {
+    "authors": "Suppes T.; Marangell LB; Bernstein IH; Kelly DI; Fischer EG; Zboyan HA; Snow DE; Martinez M.; Al Jurdi R.; Shivakumar G.; Sureddi S.; Gonzalez R.",
+    "first_author": "Suppes",
+    "author_count": 12,
+    "journal": "Journal of Affective Disorders",
+    "year": 2008
+  },
+  "10.1016/j.jad.2008.05.014": {
+    "authors": "Keck PE; Orsulak PJ; Cutler AJ; Sanchez R.; Torbeyns A.; Marcus RN; McQuade RD; Carson WH",
+    "first_author": "Keck",
+    "author_count": 8,
+    "journal": "Journal of Affective Disorders",
+    "year": 2009
+  },
+  "10.1016/j.jad.2008.06.001": {
+    "authors": "Eduard Vieta; Trisha Suppes; Ivan Eggens; Inger Persson; Björn Paulsson; Martin Brecher",
+    "first_author": "Eduard",
+    "author_count": 6,
+    "journal": "Journal of Affective Disorders",
+    "year": 2008
+  },
+  "10.1016/j.jad.2011.09.051": {
+    "authors": "Elisabeth K. Degenhardt; Jennifer L. Gatz; Jayanthi Jacob; Mauricio Tohen",
+    "first_author": "Elisabeth",
+    "author_count": 4,
+    "journal": "Journal of Affective Disorders",
+    "year": 2012
+  },
+  "10.1016/j.jad.2011.11.043": {
+    "authors": "Rif S. El-Mallakh; Ronald Marcus; Christine Baudelet; Robert McQuade; William H. Carson; Randall Owen",
+    "first_author": "Rif",
+    "author_count": 6,
+    "journal": "Journal of Affective Disorders",
+    "year": 2012
+  },
+  "10.1016/j.jad.2012.04.014": {
+    "authors": "Eduard Vieta; Trisha Suppes; Birgit Ekholm; Mattias Udd; Urban Gustafsson",
+    "first_author": "Eduard",
+    "author_count": 5,
+    "journal": "Journal of Affective Disorders",
+    "year": 2012
+  },
+  "10.1016/j.jad.2012.11.042": {
+    "authors": "Lakshmi N. Yatham; Konstantinos N. Fountoulakis; Zia Rahman; Diane Ammerman; Paula Fyans; Sabrina V. Marler; Ross A. Baker; Berit X. Carlson",
+    "first_author": "Lakshmi",
+    "author_count": 8,
+    "journal": "Journal of Affective Disorders",
+    "year": 2013
+  },
+  "10.1016/j.jad.2012.11.054": {
+    "authors": "David E. Kemp; Marc De Hert; Zia Rahman; Paula Fyans; James M. Eudicone; Sabrina V. Marler; Ross A. Baker; Berit X. Carlson",
+    "first_author": "David",
+    "author_count": 8,
+    "journal": "Journal of Affective Disorders",
+    "year": 2013
+  },
+  "10.1016/j.jad.2013.07.031": {
+    "authors": "Louisa G. Sylvia; Edward S. Friedman; James H. Kocsis; Emily E. Bernstein; Benjamin D. Brody; Gustavo Kinrys; David E. Kemp; Richard C. Shelton; Susan L. McElroy; William V. Bobo; Masoud Kamali; Melvin G. McInnis; Mauricio Tohen; Charles L. Bowden; Terence A. Ketter; Thilo Deckersbach; Joseph R. Calabrese; Michael E. Thase; Noreen A. Reilly-Harrington; Vivek Singh; Dustin J. Rabideau; Andrew A. Nierenberg",
+    "first_author": "Louisa",
+    "author_count": 22,
+    "journal": "Journal of Affective Disorders",
+    "year": 2013
+  },
+  "10.1016/j.jad.2013.10.040": {
+    "authors": "Leslie Citrome; Terence A. Ketter; Josephine Cucchiaro; Antony Loebel",
+    "first_author": "Leslie",
+    "author_count": 4,
+    "journal": "Journal of Affective Disorders",
+    "year": 2014
+  },
+  "10.1016/j.jad.2014.05.015": {
+    "authors": "Ali Sahraian; Mohammad Bigdeli; Ahmad Ghanizadeh; Shahin Akhondzadeh",
+    "first_author": "Ali",
+    "author_count": 4,
+    "journal": "Journal of Affective Disorders",
+    "year": 2014
+  },
+  "10.1016/j.jad.2018.09.025": {
+    "authors": "Satyanarayana R. Yaramala; Susan L. McElroy; Jennifer Geske; Stacey Winham; Keming Gao; Noreen A. Reilly-Harrington; Terence A. Ketter; Thilo Deckersbach; Gustavo Kinrys; Masoud Kamali; Louisa G. Sylvia; Melvin G. McInnis; Edward S. Friedman; Machael E. Thase; James H. Kocsis; Mauricio Tohen; Joseph R. Calabrese; Charles L. Bowden; Richard C. Shelton; Andrew A. Nierenberg; William V. Bobo",
+    "first_author": "Satyanarayana",
+    "author_count": 21,
+    "journal": "Journal of Affective Disorders",
+    "year": 2020
+  },
+  "10.1016/j.jpsychires.2016.03.012": {
+    "authors": "Trisha Suppes; Hans Kroger; Andrei Pikalov; Antony Loebel",
+    "first_author": "Trisha",
+    "author_count": 4,
+    "journal": "Journal of Psychiatric Research",
+    "year": 2016
+  },
+  "10.1016/j.pnpbp.2008.10.012": {
+    "authors": "Juruena MF; Ottoni GL; Machado-Vieira R.; Carneiro RM; Weingarthner N.; Marquardt AR; Fleig SS; Broilo L.; Busnello EA",
+    "first_author": "Juruena",
+    "author_count": 9,
+    "journal": "Progress in Neuro-Psychopharmacology and Biological Psychiatry",
+    "year": 2009
+  },
+  "10.1016/s0006-3223(96)00307-1": {
+    "authors": "Baruch Shahal; Edon Piel; Lily Mecz; Ilana Kremer; Ehud Klein",
+    "first_author": "Baruch",
+    "author_count": 5,
+    "journal": "Biological Psychiatry",
+    "year": 1996
+  },
+  "10.1016/s0165-0327(02)00086-1": {
+    "authors": "Januel D.; Poirier MF; D'alche-Biree F.; Dib M.; Olié JP",
+    "first_author": "Januel",
+    "author_count": 5,
+    "journal": "Journal of Affective Disorders",
+    "year": 2003
+  },
+  "10.1016/s0278-5846(99)00085-8": {
+    "authors": "Trino Baptista; Anny Lacruz; Soaira De Mendoza; Marcelo Mendoza Guillén; JoséLuis Burguera; Marcela De Burguera; Luis Hernández",
+    "first_author": "Trino",
+    "author_count": 7,
+    "journal": "Progress in Neuro-Psychopharmacology and Biological Psychiatry",
+    "year": 2000
+  },
+  "10.1016/s0924-9338(10)71438-3": {
+    "authors": "Eduard Vieta; Randall Owen; Christine Baudelet; Robert D. McQuade; Raymond Sanchez; P. Fyans; J.-Y. Loze; Ronald N. Marcus",
+    "first_author": "Eduard",
+    "author_count": 8,
+    "journal": "European Psychiatry",
+    "year": 2010
+  },
+  "10.1016/s0924-977x(03)91922-5": {
+    "authors": "Joseph D. Calabrese; Allan H. Young; C. Bowden; Z. Antonijevic; G. Evoniuk",
+    "first_author": "Joseph",
+    "author_count": 5,
+    "journal": "European Neuropsychopharmacology",
+    "year": 2003
+  },
+  "10.1017/neu.2019.19": {
+    "authors": "Ole Köhler-Forsberg; Louisa G. Sylvia; Charles L. Bowden; Joseph R. Calabrese; Michael E. Thase; Richard C. Shelton; Melvin McInnis; Mauricio Tohen; James H. Kocsis; Terence A. Ketter; Edward S. Friedman; Thilo Deckersbach; Michael J. Ostacher; Dan V. Iosifescu; Susan McElroy; Andrew A. Nierenberg",
+    "first_author": "Ole",
+    "author_count": 16,
+    "journal": "Acta Neuropsychiatrica",
+    "year": 2019
+  },
+  "10.1017/s0033291700003068": {
+    "authors": "Glen AI; Johnson AL; Shepherd M.",
+    "first_author": "Glen",
+    "author_count": 3,
+    "journal": "Psychological Medicine",
+    "year": 1984
+  },
+  "10.1017/s1092852921000572": {
+    "authors": "Ali Sahraian; Bahareh Ghahremanpouri; Arash Mowla",
+    "first_author": "Ali",
+    "author_count": 3,
+    "journal": "CNS Spectrums",
+    "year": 2022
+  },
+  "10.1017/s1092852923001190": {
+    "authors": "Michael Tocco; John W. Newcomer; Yongcai Mao; Andrei Pikalov",
+    "first_author": "Michael",
+    "author_count": 4,
+    "journal": "CNS Spectrums",
+    "year": 2023
+  },
+  "10.1017/s1092852925100564": {
+    "authors": "Suresh Durgam; Hassan Lakkis; Susan G. Kozauer; Changzheng Chen; Roger S. McIntyre",
+    "first_author": "Suresh",
+    "author_count": 5,
+    "journal": "CNS Spectrums",
+    "year": 2025
+  },
+  "10.1017/s1748232106000164": {
+    "authors": "Mauricio Tohen; Daniel Yen Lin",
+    "first_author": "Mauricio",
+    "author_count": 2,
+    "journal": "Progress in Neurotherapeutics and Neuropsychopharmacology",
+    "year": 2007
+  },
+  "10.1038/ki.1987.220": {
+    "authors": "Boer WH; Koomans HA; Dorhout Mees EJ",
+    "first_author": "Boer",
+    "author_count": 3,
+    "journal": "Kidney International",
+    "year": 1987
+  },
+  "10.1038/mp.2015.158": {
+    "authors": "Yatham LN; Beaulieu S.; Schaffer A.; Kauer-Sant'Anna M.; Kapczinski F.; Lafer B.; Sharma V.; Parikh SV; Daigneault A.; Qian H.; Bond DJ; Silverstone PH; Walji N.; Milev R.; Baruch P.; da Cunha A.; Quevedo J.; Dias R.; Kunz M.; Young LT; Lam RW; Wong H.",
+    "first_author": "Yatham",
+    "author_count": 22,
+    "journal": "Molecular Psychiatry",
+    "year": 2016
+  },
+  "10.1042/cs0920397": {
+    "authors": "Carstens J.; Jensen KT; Pedersen EB",
+    "first_author": "Carstens",
+    "author_count": 3,
+    "journal": "Clinical Science",
+    "year": 1997
+  },
+  "10.1056/nejm198911303212201": {
+    "authors": "Alan J. Gelenberg; John M. Kane; Martin B. Keller; Philip Lavori; Jerrold F. Rosenbaum; Karyl Cole; Janet Lavelle",
+    "first_author": "Alan",
+    "author_count": 7,
+    "journal": "New England Journal of Medicine",
+    "year": 1989
+  },
+  "10.1089/cap.2016.0046": {
+    "authors": "Seyed-Ali Mostafavi; Mahmoud Solhi; Mohammad-Reza Mohammadi; Shahin Akhondzadeh",
+    "first_author": "Seyed-Ali",
+    "author_count": 4,
+    "journal": "Journal of Child and Adolescent Psychopharmacology",
+    "year": 2017
+  },
+  "10.1089/cap.2016.0207": {
+    "authors": "Seyed Yaser Mousavi; Rasoul Khezri; Mohammad-Ali Karkhaneh-Yousefi; Payam Mohammadinejad; Faezeh Gholamian; Mohammad Reza Mohammadi; Atefeh Zeinoddini; Shahin Akhondzadeh",
+    "first_author": "Seyed",
+    "author_count": 8,
+    "journal": "Journal of Child and Adolescent Psychopharmacology",
+    "year": 2017
+  },
+  "10.1089/cap.2021.0039": {
+    "authors": "Luis R. Patino; Christina C. Klein; Jeffrey R. Strawn; Thomas J. Blom; Maxwell J. Tallman; Caleb M. Adler; Jeffrey A. Welge; Melissa P. DelBello",
+    "first_author": "Luis",
+    "author_count": 8,
+    "journal": "Journal of Child and Adolescent Psychopharmacology",
+    "year": 2021
+  },
+  "10.1097/00004583-199802000-00009": {
+    "authors": "Geller B.; Cooper TB; Sun K.; Zimerman B.; Frazier J.; Williams M.; Heath J.",
+    "first_author": "Geller",
+    "author_count": 7,
+    "journal": "Journal of the American Academy of Child &amp; Adolescent Psychiatry",
+    "year": 1998
+  },
+  "10.1097/00019442-200504000-00006": {
+    "authors": "Martha Sajatovic; Laszlo Gyulai; Joseph R. Calabrese; Thomas R. Thompson; Barbara G. Wilson; Robin White; Gary Evoniuk",
+    "first_author": "Martha",
+    "author_count": 7,
+    "journal": "The American Journal of Geriatric Psychiatry",
+    "year": 2005
+  },
+  "10.1097/md.0000000000005401": {
+    "authors": "Eric H. Decloedt; Carla Freeman; Fleur Howells; Martine Casson-Crook; Maia Lesosky; Eleni Koutsilieri; Simon Lovestone; Gary Maartens; John A. Joska",
+    "first_author": "Eric",
+    "author_count": 9,
+    "journal": "Medicine",
+    "year": 2016
+  },
+  "10.1097/wnf.0b013e3182055c07": {
+    "authors": "Ho-Jun Seo; Alberto Chiesa; Soo-Jung Lee; Ashwin A. Patkar; Changsu Han; Prakash S. Masand; Alessandro Serretti; Chi-Un Pae",
+    "first_author": "Ho-Jun",
+    "author_count": 8,
+    "journal": "Clinical Neuropharmacology",
+    "year": 2011
+  },
+  "10.1111/acps.12101": {
+    "authors": "Kemp DE; Sylvia LG; Calabrese JR; Nierenberg AA; Thase ME; Reilly-Harrington NA; Ostacher MJ; Leon AC; Ketter TA; Friedman ES; Bowden CL; Rabideau DJ; Pencina M.; Iosifescu DV",
+    "first_author": "Kemp",
+    "author_count": 14,
+    "journal": "Acta Psychiatrica Scandinavica",
+    "year": 2014
+  },
+  "10.1111/acps.12460": {
+    "authors": "McElroy SL; Kemp DE; Friedman ES; Reilly-Harrington NA; Sylvia LG; Calabrese JR; Rabideau DJ; Ketter TA; Thase ME; Singh V.; Tohen M.; Bowden CL; Bernstein EE; Brody BD; Deckersbach T.; Kocsis JH; Kinrys G.; Bobo WV; Kamali M.; McInnis MG; Leon AC; Faraone S.; Nierenberg AA; Shelton RC",
+    "first_author": "McElroy",
+    "author_count": 24,
+    "journal": "Acta Psychiatrica Scandinavica",
+    "year": 2016
+  },
+  "10.1111/bdi.12277": {
+    "authors": "Dawn F. Ionescu; David A. Luckenbaugh; Mark J. Niciu; Erica M. Richards; Carlos A. Zarate",
+    "first_author": "Dawn",
+    "author_count": 5,
+    "journal": "Bipolar Disorders",
+    "year": 2015
+  },
+  "10.1111/j.1399-5618.2006.00276.x": {
+    "authors": "Stuart F. Kushner; Akbar Khan; Rosanne Lane; William H. Olson",
+    "first_author": "Stuart",
+    "author_count": 4,
+    "journal": "Bipolar Disorders",
+    "year": 2006
+  },
+  "10.1111/j.1399-5618.2006.00308.x": {
+    "authors": "Gary Sachs; Charles Bowden; Joseph R. Calabrese; Terence Ketter; Thomas Thompson; Robin White; Beth Bentley",
+    "first_author": "Gary",
+    "author_count": 7,
+    "journal": "Bipolar Disorders",
+    "year": 2006
+  },
+  "10.1111/j.1399-5618.2006.00363.x": {
+    "authors": "Shahin Akhondzadeh; Mehdi Rafiee Milajerdi; Homayoun Amini; Mehdi Tehrani‐Doost",
+    "first_author": "Shahin",
+    "author_count": 4,
+    "journal": "Bipolar Disorders",
+    "year": 2006
+  },
+  "10.1111/j.1399-5618.2010.00836.x": {
+    "authors": "Rasmus W. Licht; Jannie N. Nielsen; Lars F. Gram; Per Vestergaard; Hans Bendz",
+    "first_author": "Rasmus",
+    "author_count": 5,
+    "journal": "Bipolar Disorders",
+    "year": 2010
+  },
+  "10.1111/j.1399-5618.2011.00898.x": {
+    "authors": "Ronald Marcus; Arif Khan; Linda Rollin; Beth Morris; Karen Timko; William Carson; Raymond Sanchez",
+    "first_author": "Ronald",
+    "author_count": 7,
+    "journal": "Bipolar Disorders",
+    "year": 2011
+  },
+  "10.1111/j.1440-1819.2010.02066.x": {
+    "authors": "Hung‐Yu Chan; Shaw‐Hua Jou; Yeong‐Yuh Juang; Ching‐Jui Chang; Jiahn‐Jyh Chen; Chiung‐Hsu Chen; Nan‐Ying Chiu",
+    "first_author": "Hung‐Yu",
+    "author_count": 7,
+    "journal": "Psychiatry and Clinical Neurosciences",
+    "year": 2010
+  },
+  "10.1111/j.1600-0447.1970.tb02117.x": {
+    "authors": "Mangoni A.; Andreoli V.; Cabibbe F.; Mandelli V.",
+    "first_author": "Mangoni",
+    "author_count": 4,
+    "journal": "Acta Psychiatrica Scandinavica",
+    "year": 1970
+  },
+  "10.1111/j.1600-0447.1974.tb08212.x": {
+    "authors": "Lingjaerde O.; Edlund AH; Gormsen CA; Gottfries CG; Haugstad A.; Hermann IL; Hollnagel P.; Mäkimattilla A.; Rasmussen KE; Remvig J.; Robak OH",
+    "first_author": "Lingjaerde",
+    "author_count": 11,
+    "journal": "Acta Psychiatrica Scandinavica",
+    "year": 1974
+  },
+  "10.1111/j.1600-0447.1992.tb01453.x": {
+    "authors": "Coxhead N.; Silverstone T.; Cookson J.",
+    "first_author": "Coxhead",
+    "author_count": 3,
+    "journal": "Acta Psychiatrica Scandinavica",
+    "year": 1992
+  },
+  "10.1111/j.1600-0447.1993.tb03336.x": {
+    "authors": "O'Donovan C.; Hawkes J.; Bowen R.",
+    "first_author": "O'Donovan",
+    "author_count": 3,
+    "journal": "Acta Psychiatrica Scandinavica",
+    "year": 1993
+  },
+  "10.1111/j.1600-0447.1993.tb03487.x": {
+    "authors": "Bocchetta A.; Bernardi F.; Burrai C.; Pedditzi M.; Del Zompo M.",
+    "first_author": "Bocchetta",
+    "author_count": 5,
+    "journal": "Acta Psychiatrica Scandinavica",
+    "year": 1993
+  },
+  "10.1111/j.1600-0447.2007.01059.x": {
+    "authors": "Yatham LN; Fallu A.; Binder CE",
+    "first_author": "Yatham",
+    "author_count": 3,
+    "journal": "Acta Psychiatrica Scandinavica",
+    "year": 2007
+  },
+  "10.1152/jappl.1993.74.5.2166": {
+    "authors": "Olsen NV; Hansen JM; Kanstrup IL; Richalet JP; Leyssac PP",
+    "first_author": "Olsen",
+    "author_count": 5,
+    "journal": "Journal of Applied Physiology",
+    "year": 1993
+  },
+  "10.1161/01.hyp.12.4.450": {
+    "authors": "Gaillard CA; Koomans HA; Rabelink TJ; Braam B.; Boer P.; Dorhout Mees EJ",
+    "first_author": "Gaillard",
+    "author_count": 6,
+    "journal": "Hypertension",
+    "year": 1988
+  },
+  "10.1176/appi.ajp.158.6.906": {
+    "authors": "Charles B. Nemeroff; Dwight L. Evans; Laszlo Gyulai; Gary S. Sachs; Charles L. Bowden; Ivan P. Gergel; Rosemary Oakes; Cornelius D. Pitts",
+    "first_author": "Charles",
+    "author_count": 8,
+    "journal": "American Journal of Psychiatry",
+    "year": 2001
+  },
+  "10.1176/appi.ajp.162.1.137": {
+    "authors": "Eric Hollander; Stefano Pallanti; Andrea Allen; Erica Sood; Nicolo Baldini Rossi",
+    "first_author": "Eric",
+    "author_count": 5,
+    "journal": "American Journal of Psychiatry",
+    "year": 2005
+  },
+  "10.1176/appi.ajp.162.7.1281": {
+    "authors": "Mauricio Tohen; Waldemar Greil; Joseph R. Calabrese; Gary S. Sachs; Lakshmi N. Yatham; Bruno Müller Oerlinghausen; Athanasios Koukopoulos; Giovanni B. Cassano; Heinz Grunze; Rasmus W. Licht; Liliana Dell’Osso; Angela R. Evans; Richard Risser; Robert W. Baker; Heidi Crane; Martin R. Dossenbach; Charles L. Bowden",
+    "first_author": "Mauricio",
+    "author_count": 17,
+    "journal": "American Journal of Psychiatry",
+    "year": 2005
+  },
+  "10.1176/appi.ajp.163.7.1199": {
+    "authors": "Charles L. Bowden; Joseph R. Calabrese; Terence A. Ketter; Gary S. Sachs; Robin L. White; Thomas R. Thompson",
+    "first_author": "Charles",
+    "author_count": 6,
+    "journal": "American Journal of Psychiatry",
+    "year": 2006
+  },
+  "10.1176/appi.ajp.2008.07101560": {
+    "authors": "Eduard Vieta; Caroline T’joen; Robert D. McQuade; William H. Carson; Ronald N. Marcus; Raymond Sanchez; Randall Owen; Laurence Nameche",
+    "first_author": "Eduard",
+    "author_count": 8,
+    "journal": "American Journal of Psychiatry",
+    "year": 2008
+  },
+  "10.1176/appi.ajp.2008.08020189": {
+    "authors": "Trisha Suppes; Eduard Vieta; Sherry Liu; Martin Brecher; Björn Paulsson",
+    "first_author": "Trisha",
+    "author_count": 5,
+    "journal": "American Journal of Psychiatry",
+    "year": 2009
+  },
+  "10.1176/appi.ajp.2013.13070985": {
+    "authors": "Antony Loebel; Josephine Cucchiaro; Robert Silva; Hans Kroger; Kaushik Sarma; Jane Xu; Joseph R. Calabrese",
+    "first_author": "Antony",
+    "author_count": 7,
+    "journal": "American Journal of Psychiatry",
+    "year": 2014
+  },
+  "10.1176/appi.ajp.2017.15050657": {
+    "authors": "Young, Robert C.; Mulsant, Benoit H.; Sajatovic, Martha; Gildengers, Ariel; Gyulai, Laszlo; Al Jurdi, Rayan K.; Beyer, John; Evans, Jovier; Banerjee, Samprit; Greenberg, Rebecca; Marino, Patricia; Kunik, Mark E.; Chen, Peijun; Barrett, Marna; Schulberg, Herbert C.; Bruce, Martha L.; Reynolds, Charles F.; Alexopoulos, George S.; Evans, Laura D.; Klimstra, Sibel; Kotbi, Nabil; Gabriele, Michelle; Jacobson, Christine; Kwentus, Joseph; Marangell, Lauren; Cassidy, Kristin; Dines, Philipp; Ramirez, Luis; Thase, Michael; Etemad, Bijan; Gur, Ruben; Moberg, Paul; Oslin, David; Streim, Joel; TenHave, Thomas; Weiss, David; Connelly, Patrick; Holsinger, Tracey; Krishnan, K.R.R.; Mani, Mike; Miller, Jody; Weisler, Richard; Emanuel, James; Hyams, Adriana; Miranda, Dielle; Pollock, Bruce; Rajii, Tarek K.; Seals, Kari; Whyte, Ellen; Zachariah, Elizabeth; For The Geri-Bd Study Group",
+    "first_author": "Young",
+    "author_count": 51,
+    "journal": "American Journal of Psychiatry",
+    "year": 2017
+  },
+  "10.1176/appi.ajp.2017.16101200": {
+    "authors": "Dorothy K. Sit; James McGowan; Christopher Wiltrout; Rasim Somer Diler; John (Jesse) Dills; James Luther; Amy Yang; Jody D. Ciolino; Howard Seltman; Stephen R. Wisniewski; Michael Terman; Katherine L. Wisner",
+    "first_author": "Dorothy",
+    "author_count": 12,
+    "journal": "American Journal of Psychiatry",
+    "year": 2018
+  },
+  "10.1177/0004867419894067": {
+    "authors": "Mehar G. Kang; Hong Qian; Kamyar Keramatian; Trisha Chakrabarty; Gayatri Saraf; Raymond W. Lam; Hubert Wong; Lakshmi N. Yatham",
+    "first_author": "Mehar",
+    "author_count": 8,
+    "journal": "Australian &amp; New Zealand Journal of Psychiatry",
+    "year": 2020
+  },
+  "10.1177/1359786806063076": {
+    "authors": "Simon Dando; Mauricio Tohen",
+    "first_author": "Simon",
+    "author_count": 2,
+    "journal": "Journal of Psychopharmacology",
+    "year": 2006
+  },
+  "10.1185/030079908x253933": {
+    "authors": "Huafang Li; Cui Ma; Gang Wang; Xiaotong Zhu; Mengye Peng; Niufan Gu",
+    "first_author": "Huafang",
+    "author_count": 6,
+    "journal": "Current Medical Research and Opinion",
+    "year": 2008
+  },
+  "10.1185/03007991003779380": {
+    "authors": "Eduard Vieta; Randall Owen; Christine Baudelet; Robert D. McQuade; Raymond Sanchez; Ronald N. Marcus",
+    "first_author": "Eduard",
+    "author_count": 6,
+    "journal": "Current Medical Research and Opinion",
+    "year": 2010
+  },
+  "10.1186/1471-244x-3-7": {
+    "authors": "Shahin Akhondzadeh; Hassan Mohajari; Mohammad Reza Mohammadi; Homayoun Amini",
+    "first_author": "Shahin",
+    "author_count": 4,
+    "journal": "BMC Psychiatry",
+    "year": 2003
+  },
+  "10.1186/2008-2231-20-43": {
+    "authors": "Toktam Faghihi; Adel Jahed; Javad Mahmoudi-Gharaei; Vandad Sharifi; Shahin Akhondzadeh; Padideh Ghaeli",
+    "first_author": "Toktam",
+    "author_count": 6,
+    "journal": "DARU Journal of Pharmaceutical Sciences",
+    "year": 2012
+  },
+  "10.1186/s12991-016-0096-0": {
+    "authors": "Catherine Datto; William J. Pottorf; Louisa Feeley; Scott LaPorte; Charlie Liss",
+    "first_author": "Catherine",
+    "author_count": 5,
+    "journal": "Annals of General Psychiatry",
+    "year": 2016
+  },
+  "10.1186/s13063-019-3655-2": {
+    "authors": "Giovani Missio; Doris Hupfeld Moreno; Frederico Navas Demetrio; Marcio Gerhardt Soeiro-de-Souza; Fernando dos Santos Fernandes; Vivian Boschesi Barros; Ricardo Alberto Moreno",
+    "first_author": "Giovani",
+    "author_count": 7,
+    "journal": "Trials",
+    "year": 2019
+  },
+  "10.1186/s40345-014-0014-9": {
+    "authors": "Michel S. Bourin; Emanuel Severus; Juan P. Schronen; Peter Gass; Johan Szamosi; Hans Eriksson; Hongally Chandrashekar",
+    "first_author": "Michel",
+    "author_count": 7,
+    "journal": "International Journal of Bipolar Disorders",
+    "year": 2014
+  },
+  "10.1192/bjp.128.5.479": {
+    "authors": "Coppen A.; Montgomery SA; Gupta RK; Bailey JE",
+    "first_author": "Coppen",
+    "author_count": 4,
+    "journal": "British Journal of Psychiatry",
+    "year": 1976
+  },
+  "10.1192/bjp.163.5.574": {
+    "authors": "Joffe RT; Levitt AJ; Bagby RM; MacDonald C.; Singer W.",
+    "first_author": "Joffe",
+    "author_count": 5,
+    "journal": "British Journal of Psychiatry",
+    "year": 1993
+  },
+  "10.1192/bjp.182.2.141": {
+    "authors": "Laksami N. Yatham; Fred Grossman; Ilse Augustyns; Eduard Vieta; Arun Ravindran",
+    "first_author": "Laksami",
+    "author_count": 5,
+    "journal": "British Journal of Psychiatry",
+    "year": 2003
+  },
+  "10.1192/bjp.184.4.337": {
+    "authors": "Tohen M.; Chengappa KN; Suppes T.; Baker RW; Zarate CA; Bowden CL; Sachs GS; Kupfer DJ; Ghaemi SN; Feldman PD; Risser RC; Evans AR; Calabrese JR",
+    "first_author": "Tohen",
+    "author_count": 13,
+    "journal": "British Journal of Psychiatry",
+    "year": 2004
+  },
+  "10.1192/bjp.185.1.37": {
+    "authors": "Frans De Jonghe; Mariëlle Hendricksen; Gerda Van Aalst; Simone Kool; Vjaap Peen; Rien Van; Ellen Van Den Eijnden; Jack Dekker",
+    "first_author": "Frans",
+    "author_count": 8,
+    "journal": "British Journal of Psychiatry",
+    "year": 2004
+  },
+  "10.1192/bjp.bp.115.169375": {
+    "authors": "Jay D. Amsterdam; Lorenzo Lorenzo-Luaces; Irene Soeller; Susan Qing Li; Jun J. Mao; Robert J. DeRubeis",
+    "first_author": "Jay",
+    "author_count": 6,
+    "journal": "British Journal of Psychiatry",
+    "year": 2016
+  },
+  "10.1210/jcem.81.4.8636369": {
+    "authors": "Dorella M.; Giusto M.; Da Tos V.; Campagnolo M.; Palatini P.; Rossi G.; Ceolotto G.; Felice M.; Semplicini A.; Del Prato S.",
+    "first_author": "Dorella",
+    "author_count": 10,
+    "journal": "The Journal of Clinical Endocrinology &amp; Metabolism",
+    "year": 1996
+  },
+  "10.1542/peds.2015-0743": {
+    "authors": "Robert L. Findling; Adelaide Robb; Nora K. McNamara; Mani N. Pavuluri; Vivian Kafantaris; Russell Scheffer; Jean A. Frazier; Moira Rynn; Melissa DelBello; Robert A. Kowatch; Brieana M. Rowles; Jacqui Lingler; Karen Martz; Ravinder Anand; Traci E. Clemons; Perdita Taylor-Zapata",
+    "first_author": "Robert",
+    "author_count": 16,
+    "journal": "Pediatrics",
+    "year": 2015
+  },
+  "10.1586/ern.10.66": {
+    "authors": "Leslie Citrome",
+    "first_author": "Leslie",
+    "author_count": 1,
+    "journal": "Expert Review of Neurotherapeutics",
+    "year": 2010
+  },
+  "10.18869/mjiri.31.16": {
+    "authors": "Nastaran Habibi; Nasrin Dodangi; Ali Nazeri",
+    "first_author": "Nastaran",
+    "author_count": 3,
+    "journal": "Medical Journal of the Islamic Republic Of Iran",
+    "year": 2017
+  },
+  "10.2165/00002018-200427030-00002": {
+    "authors": "Charles L. Bowden; Gregory M. Asnis; Lawrence D. Ginsberg; Beth Bentley; Robert Leadbetter; Robin White",
+    "first_author": "Charles",
+    "author_count": 6,
+    "journal": "Drug Safety",
+    "year": 2004
+  },
+  "10.2165/00023210-200721100-00004": {
+    "authors": "Lewis Warrington; Ilise Lombardo; Antony Loebel; Kathleen Ice",
+    "first_author": "Lewis",
+    "author_count": 4,
+    "journal": "CNS Drugs",
+    "year": 2007
+  },
+  "10.3389/fnut.2021.798036": {
+    "authors": "Ryan W. Baranowski; Lauren E. Skelly; Andrea R. Josse; Val A. Fajardo",
+    "first_author": "Ryan",
+    "author_count": 4,
+    "journal": "Frontiers in Nutrition",
+    "year": 2021
+  },
+  "10.4088/jcp.13m08741": {
+    "authors": "Ivan Aprahamian; Franklin S. Santos; Bernardo dos Santos; Leda Talib; Breno S. Diniz; Márcia Radanovic; Wagner F. Gattaz; Orestes V. Forlenza",
+    "first_author": "Ivan",
+    "author_count": 8,
+    "journal": "The Journal of Clinical Psychiatry",
+    "year": 2014
+  },
+  "10.4088/jcp.15m10261": {
+    "authors": "Martha Sajatovic; Brent P. Forester; Joyce Tsai; Hans Kroger; Andrei Pikalov; Josephine Cucchiaro; Antony Loebel",
+    "first_author": "Martha",
+    "author_count": 7,
+    "journal": "The Journal of Clinical Psychiatry",
+    "year": 2016
+  },
+  "10.4088/jcp.v66n0116": {
+    "authors": "Bowden CL; Grunze H.; Mullen J.; Brecher M.; Paulsson B.; Jones M.; Vågerö M.; Svensson K.",
+    "first_author": "Bowden",
+    "author_count": 8,
+    "journal": "The Journal of Clinical Psychiatry",
+    "year": 2005
+  },
+  "10.4088/jcp.v67n1105": {
+    "authors": "Roy Chengappa KN; Schwarzman LK; Hulihan JF; Xiang J.; Rosenthal NR",
+    "first_author": "Roy",
+    "author_count": 5,
+    "journal": "The Journal of Clinical Psychiatry",
+    "year": 2006
+  },
+  "10.4088/pcc.11m01182": {
+    "authors": "Roger S. McIntyre; Susan L. McElroy; James M. Eudicone; Robert A. Forbes; Berit X. Carlson; Ross A. Baker",
+    "first_author": "Roger",
+    "author_count": 6,
+    "journal": "The Primary Care Companion For CNS Disorders",
+    "year": 2011
+  },
+  "10.64719/pb.4433": {
+    "authors": "Jin Hong Park; Nicolas A. Nuñez; Manuel Gardea-Resendez; Danielle J. Gerberi; Scott Breitinger; Marin Veldic; Mark A. Frye; Balwinder Singh",
+    "first_author": "Jin",
+    "author_count": 8,
+    "journal": "Psychopharmacology Bulletin",
+    "year": 2025
+  },
+  "10.64719/pb.4604": {
+    "authors": "Keming Gao; Jodi G. Arnold; Thomas J. Prihoda; Marlon Quinones; Vivek Singh; Martha Schinagle; Carla Conroy; Nicole D’Arcangelo; Yuanhan Bai; Joseph R. Calabrese; Charles L. Bowden",
+    "first_author": "Keming",
+    "author_count": 11,
+    "journal": "Psychopharmacology Bulletin",
+    "year": 2025
+  },
+  "10.1001/archpsyc.1969.01740150029005": {
+    "authors": "Platman SR; Fieve RR",
+    "first_author": "Platman",
+    "author_count": 2,
+    "journal": "Archives of General Psychiatry",
+    "year": 1969
+  },
+  "10.1001/archpsyc.1973.04200060095015": {
+    "authors": "Leslie Baer",
+    "first_author": "Leslie",
+    "author_count": 1,
+    "journal": "Archives of General Psychiatry",
+    "year": 1973
+  },
+  "10.1001/archpsyc.1982.04290050051010": {
+    "authors": "Edward W. D. Colt",
+    "first_author": "Edward",
+    "author_count": 1,
+    "journal": "Archives of General Psychiatry",
+    "year": 1982
+  },
+  "10.1002/da.20273": {
+    "authors": "Elie Lepkifker; Iulian Iancu; Neta Horesh; Rael D. Strous; Moshe Kotler",
+    "first_author": "Elie",
+    "author_count": 5,
+    "journal": "Depression and Anxiety",
+    "year": 2007
+  },
+  "10.1002/da.22479": {
+    "authors": "Terence A. Ketter; Kaushik Sarma; Robert Silva; Hans Kroger; Josephine Cucchiaro; Antony Loebel",
+    "first_author": "Terence",
+    "author_count": 6,
+    "journal": "Depression and Anxiety",
+    "year": 2016
+  },
+  "10.1002/gps.5517": {
+    "authors": "Marinke Flapper; Els van Melick; Jos van Campen; Natasja Schutter; Rob Kok",
+    "first_author": "Marinke",
+    "author_count": 5,
+    "journal": "International Journal of Geriatric Psychiatry",
+    "year": 2021
+  },
+  "10.1002/hbm.26682": {
+    "authors": "Sean R. McWhinney; Jaroslav Hlinka; Eduard Bakstein; Lorielle M. F. Dietze; Emily L. V. Corkum; Christoph Abé; Martin Alda; Nina Alexander; Francesco Benedetti; Michael Berk; Erlend Bøen; Linda M. Bonnekoh; Birgitte Boye; Katharina Brosch; Erick J. Canales‐Rodríguez; Dara M. Cannon; Udo Dannlowski; Caroline Demro; Ana Diaz‐Zuluaga; Torbjørn Elvsåshagen; Lisa T. Eyler; Lydia Fortea; Janice M. Fullerton; Janik Goltermann; Ian H. Gotlib; Dominik Grotegerd; Bartholomeus Haarman; Tim Hahn; Fleur M. Howells; Hamidreza Jamalabadi; Andreas Jansen; Tilo Kircher; Anna Luisa Klahn; Rayus Kuplicki; Elijah Lahud; Mikael Landén; Elisabeth J. Leehr; Carlos Lopez‐Jaramillo; Scott Mackey; Ulrik Malt; Fiona Martyn; Elena Mazza; Colm McDonald; Genevieve McPhilemy; Sandra Meier; Susanne Meinert; Elisa Melloni; Philip B. Mitchell; Leila Nabulsi; Igor Nenadić; Robert Nitsch; Nils Opel; Roel A. Ophoff; Maria Ortuño; Bronwyn J. Overs; Julian Pineda‐Zapata; Edith Pomarol‐Clotet; Joaquim Radua; Jonathan Repple; Gloria Roberts; Elena Rodriguez‐Cano; Matthew D. Sacchet; Raymond Salvador; Jonathan Savitz; Freda Scheffler; Peter R. Schofield; Navid Schürmeyer; Chen Shen; Kang Sim; Scott R. Sponheim; Dan J. Stein; Frederike Stein; Benjamin Straube; Chao Suo; Henk Temmingh; Lea Teutenberg; Florian Thomas‐Odenthal; Sophia I. Thomopoulos; Snezana Urosevic; Paula Usemann; Neeltje E. M. van Haren; Cristian Vargas; Eduard Vieta; Enric Vilajosana; Annabel Vreeker; Nils R. Winter; Lakshmi N. Yatham; Paul M. Thompson; Ole A. Andreassen; Christopher R. K. Ching; Tomas Hajek",
+    "first_author": "Sean",
+    "author_count": 91,
+    "journal": "Human Brain Mapping",
+    "year": 2024
+  },
+  "10.1002/hup.2413": {
+    "authors": "Soham Rej; Bandar AlAqeel; Marilyn Segal; Nancy C.P. Low; Istvan Mucsi; Christina Holcroft; Karl Looper",
+    "first_author": "Soham",
+    "author_count": 7,
+    "journal": "Human Psychopharmacology: Clinical and Experimental",
+    "year": 2014
+  },
+  "10.1002/hup.2752": {
+    "authors": "Wai Kwong Lim; Qian Hui Chew; Yan‐Ling He; Tian‐Mei Si; Fung‐Kum Helen Chiu; Yu‐Tao Xiang; Takahiro A. Kato; Shigenobu Kanba; Naotaka Shinfuku; Min‐Soo Lee; Seon‐Cheol Park; Yong‐Chon Park; Mian‐Yoon Chong; Shih‐Ku Lin; Shu‐Yu Yang; Adarsh Tripathi; Ajit Avasthi; Sandeep Grover; Roy Abraham Kallivayalil; Pichet Udomratn; Kok Yoon Chee; Andi J. Tanra; Md Golam Rabbani; Afzal Javed; Samudra Kathiarachchi; Dulshika Waas; Wing Aung Myint; Norman Sartorius; Van Cuong Tran; Kim Viet Nguyen; Chay‐Hoon Tan; Ross J. Baldessarini; Kang Sim",
+    "first_author": "Wai",
+    "author_count": 33,
+    "journal": "Human Psychopharmacology: Clinical and Experimental",
+    "year": 2020
+  },
+  "10.1002/hup.783": {
+    "authors": "Renu Kotwal; Anna Guerdjikova; Susan L. McElroy; Paul E. Keck",
+    "first_author": "Renu",
+    "author_count": 4,
+    "journal": "Human Psychopharmacology: Clinical and Experimental",
+    "year": 2006
+  },
+  "10.1002/jcph.2089": {
+    "authors": "Crystal T. Clark; Rebecca L. Newmark; Katherine L. Wisner; Catherine Stika; Michael J. Avram",
+    "first_author": "Crystal",
+    "author_count": 5,
+    "journal": "The Journal of Clinical Pharmacology",
+    "year": 2022
+  },
+  "10.1007/bf01380006": {
+    "authors": "Sing Lee",
+    "first_author": "Sing",
+    "author_count": 1,
+    "journal": "Culture, Medicine and Psychiatry",
+    "year": 1993
+  },
+  "10.1007/bf01427042": {
+    "authors": "Nobuo Mochinaga; Toshifumi Eto; Yasuhiro Maekawa; Tsukasa Tsunoda; Takasi Kanematsu; Motomori Izumi",
+    "first_author": "Nobuo",
+    "author_count": 6,
+    "journal": "Surgery Today",
+    "year": 1994
+  },
+  "10.1007/bf02105412": {
+    "authors": "Peter L. Forster; Frank B. Schoenfeld; Charles R. Marmar; Ariel Janna Lang",
+    "first_author": "Peter",
+    "author_count": 4,
+    "journal": "Journal of Traumatic Stress",
+    "year": 1995
+  },
+  "10.1007/bf02193747": {
+    "authors": "Rolf Axelsson; Agneta Nilsson",
+    "first_author": "Rolf",
+    "author_count": 2,
+    "journal": "European Archives of Psychiatry and Clinical Neuroscience",
+    "year": 1991
+  },
+  "10.1007/s00213-004-2038-9": {
+    "authors": "Hubertus Himmerich; Dagmar Koethe; Andreas Schuld; Alexander Yassouridis; Thomas Pollm�cher",
+    "first_author": "Hubertus",
+    "author_count": 5,
+    "journal": "Psychopharmacology",
+    "year": 2005
+  },
+  "10.1007/s00406-017-0847-1": {
+    "authors": "Fond G.; Resseguier N.; Schürhoff F.; Godin O.; Andrianarisoa M.; Brunel L.; Bulzacka E.; Aouizerate B.; Berna F.; Capdevielle D.; Chereau I.; D'Amato T.; Dubertret C.; Dubreucq J.; Faget C.; Gabayet F.; Lançon C.; Llorca PM; Mallet J.; Misdrahi D.; Passerieux C.; Rey R.; Schandrin A.; Urbach M.; Vidailhet P.; Boyer L.; Leboyer M.",
+    "first_author": "Fond",
+    "author_count": 27,
+    "journal": "European Archives of Psychiatry and Clinical Neuroscience",
+    "year": 2018
+  },
+  "10.1007/s00787-002-0255-5": {
+    "authors": "Martin A.; L'Ecuyer S.",
+    "first_author": "Martin",
+    "author_count": 2,
+    "journal": "European Child &amp; Adolescent Psychiatry",
+    "year": 2002
+  },
+  "10.1007/s00787-006-0552-5": {
+    "authors": "Emiroglu FN; Gencer O.; Ozbek A.",
+    "first_author": "Emiroglu",
+    "author_count": 3,
+    "journal": "European Child &amp; Adolescent Psychiatry",
+    "year": 2006
+  },
+  "10.1007/s11126-006-7963-9": {
+    "authors": "Deanna L. Kelly; Robert R. Conley; Stephanie Feldman; Yang Yu; Robert P. McMahon; Charles M. Richardson",
+    "first_author": "Deanna",
+    "author_count": 6,
+    "journal": "Psychiatric Quarterly",
+    "year": 2006
+  },
+  "10.1007/s11920-006-0056-5": {
+    "authors": "Robert M. Post; Lori L. Altshuler; Mark A. Frye; Trisha Suppes; Susan McElroy; Paul E. Keck; Gabriele S. Leverich; Ralph Kupka; Willem A. Nolen; Heinz Grunze",
+    "first_author": "Robert",
+    "author_count": 10,
+    "journal": "Current Psychiatry Reports",
+    "year": 2006
+  },
+  "10.1007/s12011-021-03077-3": {
+    "authors": "Yi Jing Ngu; Anatoly V. Skalny; Alexey A. Tinkov; Chien-Sung Tsai; Chun-Chao Chang; Yung-Kun Chuang; Vladimir N. Nikolenko; Dmitry A. Zotkin; Ching-Feng Chiu; Jung-Su Chang",
+    "first_author": "Ngu",
+    "author_count": 10,
+    "journal": "Biological Trace Element Research",
+    "year": 2022
+  },
+  "10.1007/s40261-013-0120-y": {
+    "authors": "Hwang-Bin Lee; Bo-Hyun Yoon; Young-Joon Kwon; Young Sup Woo; Jung-Goo Lee; Moon-Doo Kim; Won-Myong Bahk",
+    "first_author": "Hwang-Bin",
+    "author_count": 7,
+    "journal": "Clinical Drug Investigation",
+    "year": 2013
+  },
+  "10.1016/0010-440x(71)90019-8": {
+    "authors": "Ralph A. O'Connell",
+    "first_author": "Ralph",
+    "author_count": 1,
+    "journal": "Comprehensive Psychiatry",
+    "year": 1971
+  },
+  "10.1016/0010-440x(74)90015-7": {
+    "authors": "Russell Noyes; G.Michael Dempsey; Aleksandar Blum; Gary L. Cavanaugh",
+    "first_author": "Russell",
+    "author_count": 4,
+    "journal": "Comprehensive Psychiatry",
+    "year": 1974
+  },
+  "10.1016/0278-5846(83)90118-5": {
+    "authors": "Robert H. Belmaker; Bernard Lerer; Ehud Klein; Newman Michael; Ehud Klein; Dick Earl",
+    "first_author": "Robert",
+    "author_count": 6,
+    "journal": "Progress in Neuro-Psychopharmacology and Biological Psychiatry",
+    "year": 1983
+  },
+  "10.1016/0306-4530(84)90005-2": {
+    "authors": "Johan Beck-Friis; Dietrich von Rosen; Bengt F. Kjellman; Jan-Gustaf Ljunggren; Lennart Wetterberg",
+    "first_author": "Johan",
+    "author_count": 5,
+    "journal": "Psychoneuroendocrinology",
+    "year": 1984
+  },
+  "10.1016/0924-977x(96)88357-x": {
+    "authors": "Trevor Silverstone; Jane Elmslie",
+    "first_author": "Trevor",
+    "author_count": 2,
+    "journal": "European Neuropsychopharmacology",
+    "year": 1996
+  },
+  "10.1016/j.ajo.2014.11.003": {
+    "authors": "Grace L. Paley; Claire A. Sheldon; Evanette K. Burrows; Marianne R. Chilutti; Grant T. Liu; Shana E. McCormack",
+    "first_author": "Grace",
+    "author_count": 6,
+    "journal": "American Journal of Ophthalmology",
+    "year": 2015
+  },
+  "10.1016/j.ajp.2011.02.002": {
+    "authors": "Asma Ezzaher; Dhouha Haj Mouhamed; Anwar Mechri; Fadoua Neffati; Wahiba Douki; Lotfi Gaha; Mohamed Fadhel Najjar",
+    "first_author": "Asma",
+    "author_count": 7,
+    "journal": "Asian Journal of Psychiatry",
+    "year": 2011
+  },
+  "10.1016/j.ando.2007.05.004": {
+    "authors": "Abodo J.; Seux V.; Koffi-Dago P.; Dalco O.; Renaud-Lévy O.; Tassy S.; Million M.; Lokrou A.; Soubeyrand J.; Retornaz F.",
+    "first_author": "Abodo",
+    "author_count": 10,
+    "journal": "Annales d'Endocrinologie",
+    "year": 2007
+  },
+  "10.1016/j.biopsych.2004.07.003": {
+    "authors": "Roos C. Padmos; Lynn Bekris; Esther M. Knijff; Henning Tiemeier; Ralph W. Kupka; Dan Cohen; Willem A. Nolen; Åke Lernmark; Hemmo A. Drexhage",
+    "first_author": "Roos",
+    "author_count": 9,
+    "journal": "Biological Psychiatry",
+    "year": 2004
+  },
+  "10.1016/j.comppsych.2004.07.029": {
+    "authors": "Abdu'l-Missagh Ghadirian; Sorana Marcovitz; Beverley E. Pearson Murphy",
+    "first_author": "Abdu'l-Missagh",
+    "author_count": 3,
+    "journal": "Comprehensive Psychiatry",
+    "year": 2005
+  },
+  "10.1016/j.comppsych.2007.08.002": {
+    "authors": "Franca Centorrino; Stephanie L. Cincotta; Alessandra Talamo; Kate V. Fogarty; Francesca Guzzetta; Mark G. Saadeh; Paola Salvatore; Ross J. Baldessarini",
+    "first_author": "Franca",
+    "author_count": 8,
+    "journal": "Comprehensive Psychiatry",
+    "year": 2008
+  },
+  "10.1016/j.earlhumdev.2011.09.013": {
+    "authors": "van der Lugt NM; van de Maat JS; van Kamp IL; Knoppert-van der Klein EA; Hovens JG; Walther FJ",
+    "first_author": "van",
+    "author_count": 6,
+    "journal": "Early Human Development",
+    "year": 2012
+  },
+  "10.1016/j.eatbeh.2013.01.001": {
+    "authors": "Karen M. Davison",
+    "first_author": "Karen",
+    "author_count": 1,
+    "journal": "Eating Behaviors",
+    "year": 2013
+  },
+  "10.1016/j.ekir.2020.05.015": {
+    "authors": "Gitte R. Hinrichs; Line A. Mortensen; Claus Bistrup; Hans H. Dieperink; Boye L. Jensen",
+    "first_author": "Gitte",
+    "author_count": 5,
+    "journal": "Kidney International Reports",
+    "year": 2020
+  },
+  "10.1016/j.envres.2019.01.012": {
+    "authors": "Camilla Hjelm; Florencia Harari; Marie Vahter",
+    "first_author": "Camilla",
+    "author_count": 3,
+    "journal": "Environmental Research",
+    "year": 2019
+  },
+  "10.1016/j.euroneuro.2018.11.1103": {
+    "authors": "Megan Galbally; Jacqueline Frayne; Stuart J. Watson; Martien Snellen",
+    "first_author": "Megan",
+    "author_count": 4,
+    "journal": "European Neuropsychopharmacology",
+    "year": 2019
+  },
+  "10.1016/j.euroneuro.2018.12.006": {
+    "authors": "Sandra K. Bopp; Urs Heilbronner; Peter Schlattmann; Thomas W. Mühleisen; Tom Bschor; Christoph Richter; Bruno Steinacher; Thomas J. Stamm; Angela Merkl; Stefan Herms; Stephan Köhler; Philipp Sterzer; Rainer Hellweg; Andreas Heinz; Sven Cichon; Undine E. Lang; Thomas G. Schulze; Mazda Adli; Roland Ricken",
+    "first_author": "Sandra",
+    "author_count": 19,
+    "journal": "European Neuropsychopharmacology",
+    "year": 2019
+  },
+  "10.1016/j.euroneuro.2021.09.007": {
+    "authors": "Sandra K. Bopp; Urs Heilbronner; Peter Schlattmann; Pichit J. Buspavanich; Undine E. Lang; Andreas Heinz; Thomas G. Schulze; Mazda Adli; Thomas W. Mühleisen; Roland Ricken",
+    "first_author": "Sandra",
+    "author_count": 10,
+    "journal": "European Neuropsychopharmacology",
+    "year": 2021
+  },
+  "10.1016/j.eurpsy.2004.11.010": {
+    "authors": "Gabriele Masi; Annarita Milone; Giovanna Canepa; Stefania Millepiedi; Maria Mucci; Filippo Muratori",
+    "first_author": "Gabriele",
+    "author_count": 6,
+    "journal": "European Psychiatry",
+    "year": 2006
+  },
+  "10.1016/j.eurpsy.2008.01.658": {
+    "authors": "Yasser Khazaal; Emmanuelle Frésard; Anne Chatton; Daniele Zullino",
+    "first_author": "Yasser",
+    "author_count": 4,
+    "journal": "European Psychiatry",
+    "year": 2008
+  },
+  "10.1016/j.genhosppsych.2007.05.001": {
+    "authors": "Yasser Khazaal; Anne Chatton; Manon Rusca; Martin Preisig; Daniele Zullino",
+    "first_author": "Yasser",
+    "author_count": 5,
+    "journal": "General Hospital Psychiatry",
+    "year": 2007
+  },
+  "10.1016/j.heliyon.2020.e04553": {
+    "authors": "Neda Dolab; Mohammad Zaman Kamkar; Taghi Amiriani; Jale Yuzugulen; Majid Marjani; Abdoljalal Marjani",
+    "first_author": "Neda",
+    "author_count": 6,
+    "journal": "Heliyon",
+    "year": 2020
+  },
+  "10.1016/j.jaac.2022.09.379": {
+    "authors": "Ji-Hoon Kim; Jeong Jiwoon",
+    "first_author": "Ji-Hoon",
+    "author_count": 2,
+    "journal": "Journal of the American Academy of Child &amp; Adolescent Psychiatry",
+    "year": 2022
+  },
+  "10.1016/j.jad.2004.05.017": {
+    "authors": "Mani N. Pavuluri; David B. Henry; Julie A. Carbray; Gwendolyn Sampson; Michael W. Naylor; Philip G. Janicak",
+    "first_author": "Mani",
+    "author_count": 6,
+    "journal": "Journal of Affective Disorders",
+    "year": 2004
+  },
+  "10.1016/j.jad.2005.08.002": {
+    "authors": "Natalie L. Rasgon; Margaret F. Reynolds; Shana Elman; Mohammed Saad; Mark A. Frye; Michael Bauer; Lori L. Altshuler",
+    "first_author": "Natalie",
+    "author_count": 7,
+    "journal": "Journal of Affective Disorders",
+    "year": 2005
+  },
+  "10.1016/j.jad.2006.08.009": {
+    "authors": "Yumru M.; Savas HA; Kurt E.; Kaya MC; Selek S.; Savas E.; Oral ET; Atagun I.",
+    "first_author": "Yumru",
+    "author_count": 8,
+    "journal": "Journal of Affective Disorders",
+    "year": 2007
+  },
+  "10.1016/j.jad.2006.08.015": {
+    "authors": "Gabriel A.",
+    "first_author": "Gabriel",
+    "author_count": 1,
+    "journal": "Journal of Affective Disorders",
+    "year": 2007
+  },
+  "10.1016/j.jad.2007.04.006": {
+    "authors": "Byungsu Kim; Soo-Jung Kim; Jung-In Son; Yeon Ho Joo",
+    "first_author": "Byungsu",
+    "author_count": 4,
+    "journal": "Journal of Affective Disorders",
+    "year": 2008
+  },
+  "10.1016/j.jad.2008.11.011": {
+    "authors": "David E. Kemp; Keming Gao; Stephen J. Ganocy; Emily Caldes; Kathryn Feldman; Philip K. Chan; Carla Conroy; Sarah Bilali; Robert L. Findling; Joseph R. Calabrese",
+    "first_author": "David",
+    "author_count": 10,
+    "journal": "Journal of Affective Disorders",
+    "year": 2009
+  },
+  "10.1016/j.jad.2008.12.018": {
+    "authors": "Hui Hua Chang; Chen Hsi Chou; Po See Chen; Po Wu Gean; Hui Chun Huang; Chia Yin Lin; Yen Kuang Yang; Ru Band Lu",
+    "first_author": "Hui",
+    "author_count": 8,
+    "journal": "Journal of Affective Disorders",
+    "year": 2009
+  },
+  "10.1016/j.jad.2009.10.023": {
+    "authors": "David J. Bond; Marcia Kauer-Sant'Anna; Raymond W. Lam; Lakshmi N. Yatham",
+    "first_author": "David",
+    "author_count": 4,
+    "journal": "Journal of Affective Disorders",
+    "year": 2010
+  },
+  "10.1016/j.jad.2010.11.037": {
+    "authors": "Ana Gonzalez-Pinto; Eduard Vieta; Catherine Reed; Diego Novick; Alessandra Barraco; Jaume Aguado; Josep Maria Haro",
+    "first_author": "Ana",
+    "author_count": 7,
+    "journal": "Journal of Affective Disorders",
+    "year": 2011
+  },
+  "10.1016/j.jad.2017.02.026": {
+    "authors": "Martin Maripuu; Mikael Wikgren; Pontus Karling; Rolf Adolfsson; Karl-Fredrik Norrback",
+    "first_author": "Martin",
+    "author_count": 5,
+    "journal": "Journal of Affective Disorders",
+    "year": 2017
+  },
+  "10.1016/j.jad.2018.10.093": {
+    "authors": "Shang-Ying Tsai; Ariel G. Gildengers; Jung-Lung Hsu; Kuo-Hsuan Chung; Pao-Huan Chen; Yu-Jui Huang",
+    "first_author": "Shang-Ying",
+    "author_count": 6,
+    "journal": "Journal of Affective Disorders",
+    "year": 2019
+  },
+  "10.1016/j.jad.2019.08.056": {
+    "authors": "Élise Morlet; Jean-François Costemale-Lacoste; Emmanuel Poulet; Kibby McMahon; Nicolas Hoertel; Frédéric Limosin; J. Adès; Charles Alezrah; I. Amado; Gilles Amar; Oana Cella Andrei; D. Arbault; G. Archambault; G. Aurifeuille; Sarah Barrière; Céline Bera‐Potelle; Yvonne Blumenstock; H. Bardou; M. Bareil-Guérin; P. Barrau; C. Barrouillet; EMILIE BAUP; Nadine Bazin; Bruno Beaufils; Jalel Ben Ayed; M. Benoit; K. Benyacoub; T. Bichet; F. Blanadet; O. Blanc; Julien Blanc-Comiti; Didier Boussiron; A.-M. Bouysse; A Brochard; O. Brochart; B. Bucheron; Maria R. Cabot; Vincent Camus; J.-M. Chabannes; Véronique Charlot; Thomas Charpeaud; C. Clad-Mor; Céline Combes; M. Comisu; B. Cordier; F. Costi; J. P. Courcelles; M. Creixell; H Cuché; Christine-Vanessa Cuervo-Lombard; A. Dammak; David Da Rin; JB Denis; H. Denizot; Anne Deperthuis; E. Diers; S. Dirami; D. Donneau; P. Dreano; Caroline Dubertret; E. Duprat; Didier Duthoit; Christine Fernandez; P. Fonfrede; Nelly Freitas; Pierre Gasnier; J. Gauillard; F. Getten; Fabien Gierski; François Godart; Raphaël Gourévitch; Aude Grassin Delyle; J. Gremion; H. Gres; Véronique Griner; Christophe Guérin-Langlois; C. Guggiari; Olivier Guillin; H Hadaoui; Émmanuel Haffen; Cécile Hanon; Sadeq Haouzir; C. Hazif-Thomas; Anne Héron; B. Hubsch; Isabelle Jalenques; Dominique Januel; Arthur Kaladjian; JF Karnycheff; O Kebir; Marie‐Odile Krebs; C Lajugie; Marion Leboyer; Philippe Legrand; Michel Lejoyeux; Véronique Lemaire; Elizabeth C. LeRoy; D Levy-Chavagnat; A. Leydier; Chantal Liling; PM Llorca; P. Loeffel; P. Louville; S Lucas Navarro; N. Mages; M. Mahi; O. Maillet; Aude Manetti; Catherine Martelli; Paula I. Martin; M Masson; I. Maurs-Ferrer; Joëlle Mauvieux; Sarkis K. Mazmanian; Emmanuelle Mechin; Lila Mékaoui; M. Meniai; A. Metton; Alain Mihoubi; Marie‐Claude Miron; Geneviève Mora; V Niro Adès; Philippe Nubukpo; Cécile Omnès; Stéphanie Papin; P. Paris; C. Passerieux; J. Pellerin; Julie Perlbarg; S. Perron; A. Petit; François Petitjean; Christophe Portefaix; D. Pringuey; A Radtchenko; H. Rahiou; Delphine Raucher‐Chéné; Antoine Rauzy; L. Reinheimer; Marleen Renard; M René; CE Rengade; Philippe Reynaud; Donald A. Robin; C Rodrigues; A. Rollet; Fabien Rondepierre; B. Rousselot; S. Rubingher; Ghassen Saba; JP Salvarelli; JC Samuelian; C. Scemama-Ammar; Franck Schürhoff; J. P. Schuster; D. Sechter; Béatrice Segalas; T. Seguret; AS Seigneurie; A. Semmak; Frédéric Slama; S. Taisne; Mohammed Taresh Taleb; J. L. Terra; D. Thefenne; Eric Tran; R. Tourtauchaux; MN Vacheron; Pierre Vandel; V Vanhoucke; E. Venet; Hélène Verdoux; Annie Viala; Gilles Vidon; M T Vitré; J.L. Vurpas; C. Wagermez; Michel Walter; L. Yon; X. Zendjidjian",
+    "first_author": "Élise",
+    "author_count": 180,
+    "journal": "Journal of Affective Disorders",
+    "year": 2019
+  },
+  "10.1016/j.jad.2020.03.066": {
+    "authors": "Marco Pinna; Mirko Manchia; Caterina Visioli; Leonardo Tondo",
+    "first_author": "Marco",
+    "author_count": 4,
+    "journal": "Journal of Affective Disorders",
+    "year": 2020
+  },
+  "10.1016/j.jad.2026.121702": {
+    "authors": "Balwinder Singh; Raman Baweja",
+    "first_author": "Balwinder",
+    "author_count": 2,
+    "journal": "Journal of Affective Disorders",
+    "year": 2026
+  },
+  "10.1016/j.jpsychires.2011.01.019": {
+    "authors": "Po W. Wang; Shelley J. Hill; Meredith E. Childers; Rebecca A. Chandler; Natalie L. Rasgon; Terence A. Ketter",
+    "first_author": "Wang",
+    "author_count": 6,
+    "journal": "Journal of Psychiatric Research",
+    "year": 2011
+  },
+  "10.1016/j.jpsychires.2012.01.014": {
+    "authors": "Eva Choong; Guido Bondolfi; Manuela Etter; Françoise Jermann; Jean-Michel Aubry; Javier Bartolomei; Mehdi Gholam-Rezaee; Chin B. Eap",
+    "first_author": "Eva",
+    "author_count": 8,
+    "journal": "Journal of Psychiatric Research",
+    "year": 2012
+  },
+  "10.1016/j.jpsychires.2017.10.002": {
+    "authors": "Roland Ricken; Marlene Busche; Peter Schlattmann; Hubertus Himmerich; Sandra Bopp; Tom Bschor; Christoph Richter; Thomas J. Stamm; Andreas Heinz; Rainer Hellweg; Undine E. Lang; Mazda Adli",
+    "first_author": "Roland",
+    "author_count": 12,
+    "journal": "Journal of Psychiatric Research",
+    "year": 2018
+  },
+  "10.1016/j.legalmed.2006.05.003": {
+    "authors": "Masataka Takamiya; Yasuhiro Aoki; Hisae Niitsu; Kiyoshi Saigusa",
+    "first_author": "Masataka",
+    "author_count": 4,
+    "journal": "Legal Medicine",
+    "year": 2006
+  },
+  "10.1016/j.mehy.2020.110047": {
+    "authors": "Rami Bou Khalil; Elie Atallah; Elina Dirani; Maya Kallab; Anthony Kassab; Marc Mourad; Rhéa El Khoury",
+    "first_author": "Rami",
+    "author_count": 7,
+    "journal": "Medical Hypotheses",
+    "year": 2020
+  },
+  "10.1016/j.neulet.2014.02.005": {
+    "authors": "Márcio Gerhardt Soeiro-de-Souza; Philip W. Gold; Andre R. Brunoni; Rafael T. de Sousa; Marcus V. Zanetti; André F. Carvalho; Wagner Farid Gattaz; Rodrigo Machado-Vieira; Antônio Lúcio Teixeira",
+    "first_author": "Márcio",
+    "author_count": 9,
+    "journal": "Neuroscience Letters",
+    "year": 2014
+  },
+  "10.1016/j.pmip.2020.100059": {
+    "authors": "Sudhir Gadh",
+    "first_author": "Sudhir",
+    "author_count": 1,
+    "journal": "Personalized Medicine in Psychiatry",
+    "year": 2020
+  },
+  "10.1016/j.pnpbp.2003.11.001": {
+    "authors": "M.Erkan Ozcan; Burhanettin Kaya; Ruhcan Polat",
+    "first_author": "M.Erkan",
+    "author_count": 3,
+    "journal": "Progress in Neuro-Psychopharmacology and Biological Psychiatry",
+    "year": 2004
+  },
+  "10.1016/j.pnpbp.2013.08.011": {
+    "authors": "Eldar Hochman; Amir Krivoy; Gal Shoval; Avi Valevski; Abraham Weizman; Tsvi Fischel",
+    "first_author": "Eldar",
+    "author_count": 6,
+    "journal": "Progress in Neuro-Psychopharmacology and Biological Psychiatry",
+    "year": 2013
+  },
+  "10.1016/j.pnpbp.2021.110408": {
+    "authors": "Florian Krull; Ibrahim Akkouh; Timothy Hughes; Francesco Bettella; Lavinia Athanasiu; Olav B. Smeland; Kevin S. O'Connell; Hans-Richard Brattbakk; Vidar M. Steen; Nils Eiel Steen; Srdjan Djurovic; Ole A. Andreassen",
+    "first_author": "Florian",
+    "author_count": 12,
+    "journal": "Progress in Neuro-Psychopharmacology and Biological Psychiatry",
+    "year": 2022
+  },
+  "10.1016/j.psiq.2010.12.002": {
+    "authors": "David E. Kemp; Keming Gao; Stephen J. Ganocy; Emily Caldes; Kathryn Feldman; Philip K. Chan; Carla Conroy; Sarah Bilali; Robert L. Findling; Joseph R. Calabrese",
+    "first_author": "David",
+    "author_count": 10,
+    "journal": "Psiquiatría Biológica",
+    "year": 2010
+  },
+  "10.1016/j.psychres.2007.09.003": {
+    "authors": "Jennifer E. Wildes; Marsha D. Marcus; Andrea Fagiolini",
+    "first_author": "Jennifer",
+    "author_count": 3,
+    "journal": "Psychiatry Research",
+    "year": 2008
+  },
+  "10.1016/j.psychres.2015.05.042": {
+    "authors": "Davy Vancampfort; Pascal Sienaert; Sabine Wyckaert; Marc De Hert; Brendon Stubbs; Simon Rosenbaum; Roselien Buys; Michel Probst",
+    "first_author": "Davy",
+    "author_count": 8,
+    "journal": "Psychiatry Research",
+    "year": 2015
+  },
+  "10.1016/j.psychres.2017.08.063": {
+    "authors": "Shuang-Jiang Zhou; Li-Gang Zhang; Hong-Mei Chen; Ju-Yan Li; Ran Li; Xi-Mei Zhang; Ning Wang; Jair C. Soares; Ryan M. Cassidy; Yingjun Zheng; Yuping Ning; Shao-Li Wang; Jing-Xu Chen; Xiang-Yang Zhang",
+    "first_author": "Shuang-Jiang",
+    "author_count": 14,
+    "journal": "Psychiatry Research",
+    "year": 2018
+  },
+  "10.1016/j.psyneuen.2016.04.013": {
+    "authors": "Roland Ricken; Sandra Bopp; Peter Schlattmann; Hubertus Himmerich; Tom Bschor; Christoph Richter; Thomas J. Stamm; Frank Bauer; Andreas Heinz; Rainer Hellweg; Undine E. Lang; Mazda Adli",
+    "first_author": "Roland",
+    "author_count": 12,
+    "journal": "Psychoneuroendocrinology",
+    "year": 2016
+  },
+  "10.1016/s0022-3956(99)00021-7": {
+    "authors": "Haack M.; Hinze-Selch D.; Fenzel T.; Kraus T.; Kühn M.; Schuld A.; Pollmächer T.",
+    "first_author": "Haack",
+    "author_count": 7,
+    "journal": "Journal of Psychiatric Research",
+    "year": 1999
+  },
+  "10.1016/s0140-6736(05)60117-1": {
+    "authors": "de Celis G.; Fiter M.; Latorre X.; Llebaria C.",
+    "first_author": "G.",
+    "author_count": 4,
+    "journal": "The Lancet",
+    "year": 1998
+  },
+  "10.1016/s0149-2918(02)80061-3": {
+    "authors": "Chengappa KN; Chalasani L.; Brar JS; Parepally H.; Houck P.; Levine J.",
+    "first_author": "Chengappa",
+    "author_count": 6,
+    "journal": "Clinical Therapeutics",
+    "year": 2002
+  },
+  "10.1016/s0165-0327(02)00407-x": {
+    "authors": "Benedetti A.; Lattanzi L.; Pini S.; Musetti L.; Dell'Osso L.; Cassano GB",
+    "first_author": "Benedetti",
+    "author_count": 6,
+    "journal": "Journal of Affective Disorders",
+    "year": 2004
+  },
+  "10.1016/s0165-1781(99)00108-0": {
+    "authors": "Claudia Schumann; Gerhard Lenz; Anne Berghöfer; Bruno Müller-Oerlinghausen",
+    "first_author": "Claudia",
+    "author_count": 4,
+    "journal": "Psychiatry Research",
+    "year": 1999
+  },
+  "10.1016/s0278-5846(03)00145-3": {
+    "authors": "Kenneth N. Sokolski; Thomas F. Denson",
+    "first_author": "Kenneth",
+    "author_count": 2,
+    "journal": "Progress in Neuro-Psychopharmacology and Biological Psychiatry",
+    "year": 2003
+  },
+  "10.1016/s0924-9338(10)71416-4": {
+    "authors": "M.L. Imaz; Mercè Torra; C.C. Santos-Lozano; A. Torres; Cristina Marqueta; Jorge Morales Hernández; José Ma Botella Pérez; Irene Teixidó; Rocío Martín‐Santos; Lluïsa García-Esteve",
+    "first_author": "M.L.",
+    "author_count": 10,
+    "journal": "European Psychiatry",
+    "year": 2010
+  },
+  "10.1016/s0924-977x(98)80299-x": {
+    "authors": "Maja Nikolić; M. Vezmar; Marija Zdravković; I. Timotijević",
+    "first_author": "Maja",
+    "author_count": 4,
+    "journal": "European Neuropsychopharmacology",
+    "year": 1998
+  },
+  "10.1016/s2215-0366(22)00100-6": {
+    "authors": "Vincent Millischer; Granville J. Matheson; Sarah E. Bergen; Brandon J. Coombes; Katja Ponzer; Fredrik Wikström; Karolina Jagiello; Martin Lundberg; Peter Stenvinkel; Joanna M. Biernacka; Olof Breuer; Lina Martinsson; Mikael Landén; Lena Backlund; Catharina Lavebratt; Martin Schalling",
+    "first_author": "Vincent",
+    "author_count": 16,
+    "journal": "The Lancet Psychiatry",
+    "year": 2022
+  },
+  "10.1017/s0033291700050066": {
+    "authors": "Murray N.; Hopwood S.; Balfour DJ; Ogston S.; Hewick DS",
+    "first_author": "Murray",
+    "author_count": 5,
+    "journal": "Psychological Medicine",
+    "year": 1983
+  },
+  "10.1017/s0033291723000223": {
+    "authors": "Sean R. McWhinney; Christoph Abé; Martin Alda; Francesco Benedetti; Erlend Bøen; Caterina del Mar Bonnin; Tiana Borgers; Katharina Brosch; Erick J. Canales-Rodríguez; Dara M. Cannon; Udo Dannlowski; Ana M. Diaz-Zuluaga; Lorielle M.F. Dietze; Torbjørn Elvsåshagen; Lisa T. Eyler; Janice M. Fullerton; Jose M. Goikolea; Janik Goltermann; Dominik Grotegerd; Bartholomeus C. M. Haarman; Tim Hahn; Fleur M. Howells; Martin Ingvar; Neda Jahanshad; Tilo T. J. Kircher; Axel Krug; Rayus T. Kuplicki; Mikael Landén; Hannah Lemke; Benny Liberg; Carlos Lopez-Jaramillo; Ulrik F. Malt; Fiona M. Martyn; Elena Mazza; Colm McDonald; Genevieve McPhilemy; Sandra Meier; Susanne Meinert; Tina Meller; Elisa M. T. Melloni; Philip B. Mitchell; Leila Nabulsi; Igor Nenadic; Nils Opel; Roel A. Ophoff; Bronwyn J. Overs; Julia-Katharina Pfarr; Julian A. Pineda-Zapata; Edith Pomarol-Clotet; Joaquim Raduà; Jonathan Repple; Maike Richter; Kai G. Ringwald; Gloria Roberts; Alex Ross; Raymond Salvador; Jonathan Savitz; Simon Schmitt; Peter R. Schofield; Kang Sim; Dan J. Stein; Frederike Stein; Henk S. Temmingh; Katharina Thiel; Sophia I. Thomopoulos; Neeltje E. M. van Haren; Cristian Vargas; Eduard Vieta; Annabel Vreeker; Lena Waltemate; Lakshmi N. Yatham; Christopher R. K. Ching; Ole A. Andreassen; Paul M. Thompson; Tomas Hajek",
+    "first_author": "Sean",
+    "author_count": 75,
+    "journal": "Psychological Medicine",
+    "year": 2023
+  },
+  "10.1017/s1461145703003870": {
+    "authors": "Stefan Bender; Thomas Linka; Jörg Wolstein; Susanne Gehendges; Hermann-Josef Paulus; Ulrich Schall; Markus Gastpar",
+    "first_author": "Stefan",
+    "author_count": 7,
+    "journal": "The International Journal of Neuropsychopharmacology",
+    "year": 2004
+  },
+  "10.1034/j.1399-5618.2000.020408.x": {
+    "authors": "Joerg Walden; Lars Schaerer; Sandra Schloesser; Heinz Grunze",
+    "first_author": "Joerg",
+    "author_count": 4,
+    "journal": "Bipolar Disorders",
+    "year": 2000
+  },
+  "10.1034/j.1399-5618.2002.01189.x": {
+    "authors": "Roger S. McIntyre; Deborah A. Mancini; Sonia McCann; Janaki Srinivasan; Doron Sagman; Sidney H. Kennedy",
+    "first_author": "Roger",
+    "author_count": 6,
+    "journal": "Bipolar Disorders",
+    "year": 2002
+  },
+  "10.1034/j.1399-5618.2002.01211.x": {
+    "authors": "Po W. Wang; Claudia Santosa; Matthew Schumacher; Mirène E. Winsberg; Connie Strong; Terence A. Ketter",
+    "first_author": "Wang",
+    "author_count": 6,
+    "journal": "Bipolar Disorders",
+    "year": 2002
+  },
+  "10.1034/j.1399-5618.2003.00009.x": {
+    "authors": "Roger S. McIntyre; Deborah A. Mancini; Sonia McCann; Janaki Srinivasan; Sidney H. Kennedy",
+    "first_author": "Roger",
+    "author_count": 5,
+    "journal": "Bipolar Disorders",
+    "year": 2003
+  },
+  "10.1038/clpt.1994.47": {
+    "authors": "Robert A. Reiss; Curtis E. Haas; Shyam D. Karki; Barry Gumbiner; Stephen L. Welle; Stanley W. Carson",
+    "first_author": "Robert",
+    "author_count": 6,
+    "journal": "Clinical Pharmacology and Therapeutics",
+    "year": 1994
+  },
+  "10.1038/s41380-024-02784-2": {
+    "authors": "Lorielle M. F. Dietze; Sean R. McWhinney; Pauline Favre; Christoph Abé; Nina Alexander; Carlotta Barkhau; Francesco Benedetti; Michael Berk; Erlend Bøen; Birgitte Boye; Katharina Brosch; Erick J. Canales-Rodríguez; Dara M. Cannon; Sean P. Carruthers; Emily L. V. Corkum; Udo Dannlowski; Ana M. Díaz-Zuluaga; Katharina Dohm; Torbjørn Elvsåshagen; Kira Flinkenflügel; Lydia Fortea; Lisa S. Furlong; Benjamin I. Goldstein; Dominik Grotegerd; Marius Gruber; Bartholomeus C. M. Haarman; Fleur M. Howells; Neda Jahanshad; Hamidreza Jamalabadi; Andreas Jansen; James A. Karantonis; Kody G. Kennedy; Tilo T. J. Kircher; Anna Luisa Klahn; Peter Kochunov; Anna Kraus; Mikael Landén; Carlos López-Jaramillo; Bradley J. MacIntosh; Elena Mazza; Colm McDonald; Andrew M. McIntosh; Hannah Meinert; Susanne Meinert; Elisa M. T. Melloni; Philip B. Mitchell; Igor Nenadić; Nils Opel; Mary Phillips; Camille Piguet; Mircea Polosan; Edith Pomarol-Clotet; Arnaud Pouchon; Joaquim Radua; Gloria Roberts; Alex J. Ross; Susan L. Rossell; Raymond Salvador; Kang Sim; Jair C. Soares; Giovana B. Zunta-Soares; Frederike Stein; Benjamin Straube; Chao Suo; Lea Teutenberg; Florian Thomas-Odenthal; Sophia I. Thomopoulos; Paula Usemann; Tamsyn E. Van Rheenen; Amelia Versace; Eduard Vieta; Enric Vilajosana; Benson Mwangi; Wei Wen; Heather C. Whalley; Mon-Ju Wu; Ole A. Andreassen; Christopher R. K. Ching; Paul M. Thompson; Josselin Houenou; Tomas Hajek; Edith Pomarol-Clotet; Tamsyn E. Van Rheenen",
+    "first_author": "Lorielle",
+    "author_count": 83,
+    "journal": "Molecular Psychiatry",
+    "year": 2025
+  },
+  "10.1038/s41467-025-67026-7": {
+    "authors": "Sun Yi; Huang Wen Xin; Qigang Fan; Xiaoping Yue; Yanbing Lin; Xueyu Chen; Jun Xie; Peize Li; Shuaishuai Xing; Yang Chen; Qiong Lei; Manli Wang; Guo Geng; Zhao De peng; Zhang Hui dong",
+    "first_author": "Sun",
+    "author_count": 15,
+    "journal": "Nature Communications",
+    "year": 2025
+  },
+  "10.1038/s41598-025-99698-y": {
+    "authors": "Mohammad Mahdi Khakshoor; Naser Pariz; Vahid Reza Askari; Mohammad Reza Fayyazi Bordbar; Sara Honari; Matin Shirazinia; Vafa Baradaran Rahimi; Mohammad Bagher Naghibi Sistani",
+    "first_author": "Mohammad",
+    "author_count": 8,
+    "journal": "Scientific Reports",
+    "year": 2025
+  },
+  "10.1042/cs0770337": {
+    "authors": "Pasquale Strazzullo; Francesco P. Cappuccio; Maurizio Trevisan; Licia Iacoviello; Roberto Iacone; Fabrizio Jossa; Nicola Giorgione; Eduardo Farinaro; Mario Mancini",
+    "first_author": "Pasquale",
+    "author_count": 9,
+    "journal": "Clinical Science",
+    "year": 1989
+  },
+  "10.1046/j.1365-277x.1996.00444.x": {
+    "authors": "Robert W. Holt; Eleni Maunder",
+    "first_author": "Robert",
+    "author_count": 2,
+    "journal": "Journal of Human Nutrition and Dietetics",
+    "year": 1996
+  },
+  "10.1055/a-2018-4946": {
+    "authors": "Jacopo Pruccoli; Antonia Parmeggiani",
+    "first_author": "Jacopo",
+    "author_count": 2,
+    "journal": "Pharmacopsychiatry",
+    "year": 2023
+  },
+  "10.1055/s-0028-1094484": {
+    "authors": "Fieve RR; Dunner DL; Kumbaraci T.; Stallone F.",
+    "first_author": "Fieve",
+    "author_count": 4,
+    "journal": "Pharmacopsychiatry",
+    "year": 1976
+  },
+  "10.1055/s-0028-1094574": {
+    "authors": "Häfner H.; Höffler D.; Seidl H.; Friedrich G.",
+    "first_author": "Häfner",
+    "author_count": 4,
+    "journal": "Pharmacopsychiatry",
+    "year": 1978
+  },
+  "10.1055/s-0034-1385566": {
+    "authors": "Reininghaus B.; Bengesser SA; Reininghaus E.; Lackner N.; Kapfhammer HP; Birner A.",
+    "first_author": "Reininghaus",
+    "author_count": 6,
+    "journal": "Fortschritte der Neurologie · Psychiatrie",
+    "year": 2014
+  },
+  "10.1055/s-2007-1001133": {
+    "authors": "Koufen H.; Consbruch U.",
+    "first_author": "Koufen",
+    "author_count": 2,
+    "journal": "Fortschritte der Neurologie · Psychiatrie",
+    "year": 1989
+  },
+  "10.1055/s-2007-1017430": {
+    "authors": "Pietzcker A.; Müller-Oerlinghausen B.",
+    "first_author": "Pietzcker",
+    "author_count": 2,
+    "journal": "Pharmacopsychiatry",
+    "year": 1984
+  },
+  "10.1055/s-2007-1019511": {
+    "authors": "Kurek M.; Consbruch U.",
+    "first_author": "Kurek",
+    "author_count": 2,
+    "journal": "Pharmacopsychiatry",
+    "year": 1982
+  },
+  "10.1055/s-2007-979300": {
+    "authors": "Diebold K.; Michel G.; Schweizer J.; Diebold-Dörsam M.; Fiehn W.; Kohl B.",
+    "first_author": "Diebold",
+    "author_count": 6,
+    "journal": "Pharmacopsychiatry",
+    "year": 1998
+  },
+  "10.1055/s-2008-1076723": {
+    "authors": "Arlt S.; Burkhardt D.; Wiedemann K.",
+    "first_author": "Arlt",
+    "author_count": 3,
+    "journal": "Pharmacopsychiatry",
+    "year": 2008
+  },
+  "10.1080/00048670701392841": {
+    "authors": "Srinivasan Tirupati; Ling-Ern Chua",
+    "first_author": "Srinivasan",
+    "author_count": 2,
+    "journal": "Australian &amp; New Zealand Journal of Psychiatry",
+    "year": 2007
+  },
+  "10.1080/00048679309075773": {
+    "authors": "Chun-Chung Chow; Sing Lee; Chi-Chung Shek; Yun-Kwok Wing; Anil Ahuja; Clive S. Cockram",
+    "first_author": "Chun-Chung",
+    "author_count": 6,
+    "journal": "Australian &amp; New Zealand Journal of Psychiatry",
+    "year": 1993
+  },
+  "10.1080/08039480801985229": {
+    "authors": "Jeong-Hyun Kim; Sung-Won Choi; Soo Hyun Joe; Tae Hyon Ha; Hee Jeong Yoo; Jung Eun Choi; Boseok Cha; Kyooseob Ha",
+    "first_author": "Jeong-Hyun",
+    "author_count": 8,
+    "journal": "Nordic Journal of Psychiatry",
+    "year": 2008
+  },
+  "10.1080/10401230490453103": {
+    "authors": "Ghaemi SN; Hsu DJ; Rosenquist KJ; Katzow JJ; Goodwin FK",
+    "first_author": "Ghaemi",
+    "author_count": 5,
+    "journal": "Annals of Clinical Psychiatry",
+    "year": 2004
+  },
+  "10.1080/10401230802177722": {
+    "authors": "Jess G. Fiedorowicz; Narasimha M. Palagummi; Valerie L. Forman-Hoffman; Del D. Miller; William G. Haynes",
+    "first_author": "Jess",
+    "author_count": 5,
+    "journal": "Annals of Clinical Psychiatry",
+    "year": 2008
+  },
+  "10.1089/cap.1995.5.241": {
+    "authors": "ROBERT A. KOWATCH; TRISHA SUPPES; SAUNDRA K. GILFILLAN; REBECCA M. FUENTES; BRUCE D. GRANNEMANN; GRAHAM J. EMSLIE",
+    "first_author": "ROBERT",
+    "author_count": 6,
+    "journal": "Journal of Child and Adolescent Psychopharmacology",
+    "year": 1995
+  },
+  "10.1089/cap.1998.8.49": {
+    "authors": "HERBERT A. SCHREIER",
+    "first_author": "HERBERT",
+    "author_count": 1,
+    "journal": "Journal of Child and Adolescent Psychopharmacology",
+    "year": 1998
+  },
+  "10.1089/cap.2000.10.45": {
+    "authors": "KIKI D. CHANG; TERENCE A. KETTER",
+    "first_author": "KIKI",
+    "author_count": 2,
+    "journal": "Journal of Child and Adolescent Psychopharmacology",
+    "year": 2000
+  },
+  "10.1089/cap.2006.0024": {
+    "authors": "Silzá Tramontina; Cristian Patrick Zeni; Gabriel Pheula; Luis Augusto Rohde",
+    "first_author": "Silzá",
+    "author_count": 4,
+    "journal": "Journal of Child and Adolescent Psychopharmacology",
+    "year": 2007
+  },
+  "10.1089/cap.2006.16.336": {
+    "authors": "Mani N. Pavuluri; David B. Henry; Julie A. Carbray; Gwen A. Sampson; Michael W. Naylor; Philip G. Janicak",
+    "first_author": "Mani",
+    "author_count": 6,
+    "journal": "Journal of Child and Adolescent Psychopharmacology",
+    "year": 2006
+  },
+  "10.1089/cap.2007.0118": {
+    "authors": "Carl E. Petersen; Sandra Amaral; Emily Frosch",
+    "first_author": "Carl",
+    "author_count": 3,
+    "journal": "Journal of Child and Adolescent Psychopharmacology",
+    "year": 2008
+  },
+  "10.1089/cap.2009.0030": {
+    "authors": "Kiki Chang; Daphne Nayar; Meghan Howe; Manasi Rana",
+    "first_author": "Kiki",
+    "author_count": 4,
+    "journal": "Journal of Child and Adolescent Psychopharmacology",
+    "year": 2009
+  },
+  "10.1089/cap.2012.0063": {
+    "authors": "Robert L. Findling; Vivian Kafantaris; Mani Pavuluri; Nora K. McNamara; Jean A. Frazier; Linmarie Sikich; Robert Kowatch; Brieana M. Rowles; Traci E. Clemons; Perdita Taylor-Zapata",
+    "first_author": "Robert",
+    "author_count": 10,
+    "journal": "Journal of Child and Adolescent Psychopharmacology",
+    "year": 2013
+  },
+  "10.1089/cap.2012.2253": {
+    "authors": "Presenters: Ornella Potter; Nadyah John; Discussant: Barbara J. Coffey",
+    "first_author": "Presenters:",
+    "author_count": 3,
+    "journal": "Journal of Child and Adolescent Psychopharmacology",
+    "year": 2012
+  },
+  "10.1089/met.2021.0078": {
+    "authors": "Majid Marjani; Neda Dolab; Mohammad Zaman Kamkar; Taghi Amiriani; Jale Yuzugulen; Abdoljalal Marjani",
+    "first_author": "Majid",
+    "author_count": 6,
+    "journal": "Metabolic Syndrome and Related Disorders",
+    "year": 2022
+  },
+  "10.1093/ijnp/pyae059.288": {
+    "authors": "*Shuhei Ishikawa; Naoki Hashimoto; Ryo Okubo; Ichiro Kusumi",
+    "first_author": "*Shuhei",
+    "author_count": 4,
+    "journal": "International Journal of Neuropsychopharmacology",
+    "year": 2025
+  },
+  "10.1093/ijnp/pyw082": {
+    "authors": "Roland Ricken; Sandra Bopp; Peter Schlattmann; Hubertus Himmerich; Tom Bschor; Christoph Richter; Samuel Elstner; Thomas J. Stamm; Brigitte Schulz-Ratei; Alexandra Lingesleben; Friedel M. Reischies; Philipp Sterzer; Stefan Borgwardt; Michael Bauer; Andreas Heinz; Rainer Hellweg; Undine E. Lang; Mazda Adli",
+    "first_author": "Roland",
+    "author_count": 18,
+    "journal": "International Journal of Neuropsychopharmacology",
+    "year": 2017
+  },
+  "10.1093/occmed/48.8.505": {
+    "authors": "Armond AD",
+    "first_author": "Armond",
+    "author_count": 1,
+    "journal": "Occupational Medicine",
+    "year": 1998
+  },
+  "10.1097/00004583-198805000-00018": {
+    "authors": "NEAL D. RYAN; VIVECA MEYER; SUSAN DACHILLE; DEBORAH MAZZIE; JOAQUIM PUIG-ANTICH",
+    "first_author": "NEAL",
+    "author_count": 5,
+    "journal": "Journal of the American Academy of Child &amp; Adolescent Psychiatry",
+    "year": 1988
+  },
+  "10.1097/00004583-199307000-00028": {
+    "authors": "Laurence Jerome",
+    "first_author": "Laurence",
+    "author_count": 1,
+    "journal": "Journal of the American Academy of Child &amp; Adolescent Psychiatry",
+    "year": 1993
+  },
+  "10.1097/00004583-199512000-00008": {
+    "authors": "OWEN R. HAGINO; ELIZABETH B. WELLER; RONALD A. WELLER; DOUGLAS WASHING; MARY A. FRISTAD; STELLA B. KONTRAS",
+    "first_author": "OWEN",
+    "author_count": 6,
+    "journal": "Journal of the American Academy of Child &amp; Adolescent Psychiatry",
+    "year": 1995
+  },
+  "10.1097/00004714-199202001-00008": {
+    "authors": "JOSEPH R. CALABRESE; PAUL J. MARKOVITZ; SUSAN E. KIMMEL; SUSAN C. WAGNER",
+    "first_author": "JOSEPH",
+    "author_count": 4,
+    "journal": "Journal of Clinical Psychopharmacology",
+    "year": 1992
+  },
+  "10.1097/00004714-199206000-00015": {
+    "authors": "HARLAN KOSSON; JAMES C. -Y. CHOU",
+    "first_author": "HARLAN",
+    "author_count": 2,
+    "journal": "Journal of Clinical Psychopharmacology",
+    "year": 1992
+  },
+  "10.1097/00004714-199410000-00014": {
+    "authors": "GARY REMINGTON; MARTHA ADAMS",
+    "first_author": "GARY",
+    "author_count": 2,
+    "journal": "Journal of Clinical Psychopharmacology",
+    "year": 1994
+  },
+  "10.1097/00004850-200307000-00005": {
+    "authors": "Lakshmi N. Yatham; Carin Binder; Rosanna Riccardelli; Jean Leblanc; Mary Connolly; Vivek Kusumakar",
+    "first_author": "Lakshmi",
+    "author_count": 6,
+    "journal": "International Clinical Psychopharmacology",
+    "year": 2003
+  },
+  "10.1097/00005053-197106000-00001": {
+    "authors": "DENNIS L. MURPHY; WILLIAM E. BUNNEY",
+    "first_author": "DENNIS",
+    "author_count": 2,
+    "journal": "The Journal of Nervous and Mental Disease",
+    "year": 1971
+  },
+  "10.1097/00005053-197807000-00007": {
+    "authors": "NELSON H. HENDLER",
+    "first_author": "NELSON",
+    "author_count": 1,
+    "journal": "The Journal of Nervous and Mental Disease",
+    "year": 1978
+  },
+  "10.1097/00005053-197903000-00009": {
+    "authors": "DIANE PREODOR; EDWARD A. WOLPERT; ABRAHAM GIMBLE; PAUL C. HOLINGER",
+    "first_author": "DIANE",
+    "author_count": 4,
+    "journal": "The Journal of Nervous and Mental Disease",
+    "year": 1979
+  },
+  "10.1097/00007611-198506000-00014": {
+    "authors": "DAVID G. DANIEL; PAULINE L. RABIN",
+    "first_author": "DAVID",
+    "author_count": 2,
+    "journal": "Southern Medical Journal",
+    "year": 1985
+  },
+  "10.1097/00019442-199402040-00010": {
+    "authors": "Suzanne Holroyd; Peter V. Rabins",
+    "first_author": "Suzanne",
+    "author_count": 2,
+    "journal": "The American Journal of Geriatric Psychiatry",
+    "year": 1994
+  },
+  "10.1097/01.chi.0000194569.70912.a7": {
+    "authors": "NICK C. PATEL; MELISSA P. DELBELLO; HOLLY S. BRYAN; CALEB M. ADLER; ROBERT A. KOWATCH; KEVIN STANFORD; STEPHEN M. STRAKOWSKI",
+    "first_author": "NICK",
+    "author_count": 7,
+    "journal": "Journal of the American Academy of Child &amp; Adolescent Psychiatry",
+    "year": 2006
+  },
+  "10.1097/jcp.0000000000002090": {
+    "authors": "Majd Al-Soleiti; Jonathan G. Leung; Teeba Mubaydeen; Matej Markota; Osama Abulseoud; Balwinder Singh; Christopher L. Sola",
+    "first_author": "Majd",
+    "author_count": 7,
+    "journal": "Journal of Clinical Psychopharmacology",
+    "year": 2025
+  },
+  "10.1097/md.0000000000021122": {
+    "authors": "Yi-Hsin Lin; Sheng-Wen Liu; Hsein-Lin Wu; Jung-Cheng Kang; Kuo-Yang Huang; Hsuan Huang",
+    "first_author": "Yi-Hsin",
+    "author_count": 6,
+    "journal": "Medicine",
+    "year": 2020
+  },
+  "10.1111/acps.13733": {
+    "authors": "Susana Gomes‐da‐Costa; Isabel Fernandéz‐Pérez; Roger Borras; Noelia Lopez; Yudith Rivas; Victoria Ruiz; Maria Teresa Pons‐Cabrera; Anna Giménez‐Palomo; Gerard Anmella; Marc Valentí; Michael Berk; Eduard Vieta; Isabella Pacchiarotti",
+    "first_author": "Susana",
+    "author_count": 13,
+    "journal": "Acta Psychiatrica Scandinavica",
+    "year": 2024
+  },
+  "10.1111/apa.16444": {
+    "authors": "Essi Heinonen; Katarina Tötterman; Karin Bäck; Ihsan Sarman; Jenny Svedenkrans; Lisa Forsberg",
+    "first_author": "Essi",
+    "author_count": 6,
+    "journal": "Acta Paediatrica",
+    "year": 2022
+  },
+  "10.1111/bdi.12008": {
+    "authors": "Thomas Sheeran; Rebecca L. Greenberg; Laura A. Davan; Jennifer A. Dealy; Robert C. Young; Martha L. Bruce",
+    "first_author": "Thomas",
+    "author_count": 6,
+    "journal": "Bipolar Disorders",
+    "year": 2012
+  },
+  "10.1111/bdi.12235": {
+    "authors": "James Conor Kinahan; Aoife NiChorcorain; Sean Cunningham; Aideen Freyne; Colm Cooney; Siobhan Barry; Brendan D. Kelly",
+    "first_author": "James",
+    "author_count": 7,
+    "journal": "Bipolar Disorders",
+    "year": 2015
+  },
+  "10.1111/bdi.12328": {
+    "authors": "Adriana Díaz‐Anzaldúa; Yolanda Ocampo‐Mendoza; José Octavio Hernández‐Lagunas; Federico Alejandro Díaz‐Madrid; Francisco Romo‐Nava; Francisco Juárez‐García; Hiram Ortega‐Ortiz; Alejandro Díaz‐Anzaldúa; Doris Gutiérrez‐Mora; Claudia Becerra‐Palars; Carlos Berlanga‐Cisneros",
+    "first_author": "Adriana",
+    "author_count": 11,
+    "journal": "Bipolar Disorders",
+    "year": 2015
+  },
+  "10.1111/bdi.12972": {
+    "authors": "Sara Z. Mehrhof; Lisa M. Fiksenbaum; Ariel M. Bettridge; Benjamin I. Goldstein",
+    "first_author": "Sara",
+    "author_count": 4,
+    "journal": "Bipolar Disorders",
+    "year": 2021
+  },
+  "10.1111/bdi.13172": {
+    "authors": "Sean R. McWhinney; Christoph Abé; Martin Alda; Francesco Benedetti; Erlend Bøen; Caterina del Mar Bonnin; Tiana Borgers; Katharina Brosch; Erick J. Canales‐Rodríguez; Dara M. Cannon; Udo Dannlowski; Ana M. Diaz‐Zuluaga; Lorielle Dietze; Torbjørn Elvsåshagen; Lisa T. Eyler; Janice M. Fullerton; Jose M. Goikolea; Janik Goltermann; Dominik Grotegerd; Bartholomeus C. M. Haarman; Tim Hahn; Fleur M. Howells; Martin Ingvar; Tilo T. J. Kircher; Axel Krug; Rayus T. Kuplicki; Mikael Landén; Hannah Lemke; Benny Liberg; Carlos Lopez‐Jaramillo; Ulrik F. Malt; Fiona M. Martyn; Elena Mazza; Colm McDonald; Genevieve McPhilemy; Sandra Meier; Susanne Meinert; Tina Meller; Elisa M. T. Melloni; Philip B. Mitchell; Leila Nabulsi; Igor Nenadic; Nils Opel; Roel A. Ophoff; Bronwyn J. Overs; Julia‐Katharina Pfarr; Julian A. Pineda‐Zapata; Edith Pomarol‐Clotet; Joaquim Raduà; Jonathan Repple; Maike Richter; Kai G. Ringwald; Gloria Roberts; Alex Ross; Raymond Salvador; Jonathan Savitz; Simon Schmitt; Peter R. Schofield; Kang Sim; Dan J. Stein; Frederike Stein; Henk S. Temmingh; Katharina Thiel; Sophia I. Thomopoulos; Neeltje E. M. van Haren; Holly Van Gestel; Cristian Vargas; Eduard Vieta; Annabel Vreeker; Lena Waltemate; Lakshmi N. Yatham; Christopher R. K. Ching; Ole A. Andreassen; Paul M. Thompson; Tomas Hajek",
+    "first_author": "Sean",
+    "author_count": 75,
+    "journal": "Bipolar Disorders",
+    "year": 2022
+  },
+  "10.1111/bdi.13187": {
+    "authors": "Gordon Parker; Michael J. Spoelma; Nicholas Rhodes",
+    "first_author": "Gordon",
+    "author_count": 3,
+    "journal": "Bipolar Disorders",
+    "year": 2022
+  },
+  "10.1111/ctr.70563": {
+    "authors": "Hannah Cohen; Deric Toro; Dayanna Zuluaga; Giovanni Faddoul; Sidhartha D. Ray; Gavin McAfee; Alex Chiodo Ortiz; Luke Gillenwalters; Nashitah Islam; Mary Ellen Dean; Syed Nazir; Naoru Koizumi; Jorge Ortiz; Sohail Khan",
+    "first_author": "Hannah",
+    "author_count": 14,
+    "journal": "Clinical Transplantation",
+    "year": 2026
+  },
+  "10.1111/head.12872": {
+    "authors": "Ilse F. de Coo; Joost Haan",
+    "first_author": "Ilse",
+    "author_count": 2,
+    "journal": "Headache: The Journal of Head and Face Pain",
+    "year": 2016
+  },
+  "10.1111/j.1365-2125.1977.tb00694.x": {
+    "authors": "Hewick DS; Newbury P.; Hopwood S.; Naylor G.; Moody J.",
+    "first_author": "Hewick",
+    "author_count": 5,
+    "journal": "British Journal of Clinical Pharmacology",
+    "year": 1977
+  },
+  "10.1111/j.1365-2265.1987.tb00839.x": {
+    "authors": "Stewart PM; Grieve J.; Nairn IM; Padfield PL; Edwards CR",
+    "first_author": "Stewart",
+    "author_count": 5,
+    "journal": "Clinical Endocrinology",
+    "year": 1987
+  },
+  "10.1111/j.1399-5618.2005.00201.x": {
+    "authors": "Natalie L. Rasgon; Lori L. Altshuler; Lynn Fairbanks; Shana Elman; Jose Bitran; Rodrigo Labarca; Mohammed Saad; Ralph Kupka; Willem A. Nolen; Mark A. Frye; Trisha Suppes; Susan L. McElroy; Paul E. Keck; Gabriele Leverich; Heinz Grunze; Joerg Walden; Robert Post; Jim Mintz",
+    "first_author": "Natalie",
+    "author_count": 18,
+    "journal": "Bipolar Disorders",
+    "year": 2005
+  },
+  "10.1111/j.1399-5618.2008.00587.x": {
+    "authors": "Tomas Hajek; Margaret Hahn; Claire Slaney; Julie Garnham; Joshua Green; Martina Růžičková; Peter Zvolský; Martin Alda",
+    "first_author": "Tomas",
+    "author_count": 8,
+    "journal": "Bipolar Disorders",
+    "year": 2008
+  },
+  "10.1111/j.1399-5618.2008.00599.x": {
+    "authors": "Antoni Sicras; Javier Rejas; Ruth Navarro; Josep Serrat; Milagrosa Blanca",
+    "first_author": "Antoni",
+    "author_count": 5,
+    "journal": "Bipolar Disorders",
+    "year": 2008
+  },
+  "10.1111/j.1399-5618.2009.00730.x": {
+    "authors": "Cynthia Calkin; Caroline Van De Velde; Martina Růžičková; Claire Slaney; Julie Garnham; Tomas Hajek; Claire O’Donovan; Martin Alda",
+    "first_author": "Cynthia",
+    "author_count": 8,
+    "journal": "Bipolar Disorders",
+    "year": 2009
+  },
+  "10.1111/j.1399-5618.2010.00823.x": {
+    "authors": "David E. Kemp; Keming Gao; Philip K. Chan; Stephen J. Ganocy; Robert L. Findling; Joseph R. Calabrese",
+    "first_author": "David",
+    "author_count": 6,
+    "journal": "Bipolar Disorders",
+    "year": 2010
+  },
+  "10.1111/j.1532-5415.1978.tb01964.x": {
+    "authors": "DINESH MEHTA; SHOBHANA MEHTA; POYANIL MATHEW",
+    "first_author": "DINESH",
+    "author_count": 3,
+    "journal": "Journal of the American Geriatrics Society",
+    "year": 1978
+  },
+  "10.1111/j.1600-0447.1970.tb02116.x": {
+    "authors": "Kerry RJ; Liebling LI; Owen G.",
+    "first_author": "Kerry",
+    "author_count": 3,
+    "journal": "Acta Psychiatrica Scandinavica",
+    "year": 1970
+  },
+  "10.1111/j.1600-0447.1972.tb04373.x": {
+    "authors": "Mellerup ET; Thomsen HG; Bjorum N.; Rafaelsen OJ",
+    "first_author": "Mellerup",
+    "author_count": 4,
+    "journal": "Acta Psychiatrica Scandinavica",
+    "year": 1972
+  },
+  "10.1111/j.1600-0447.1976.tb00067.x": {
+    "authors": "Vendsborg PB; Bech P.; Rafaelsen OJ",
+    "first_author": "Vendsborg",
+    "author_count": 3,
+    "journal": "Acta Psychiatrica Scandinavica",
+    "year": 1976
+  },
+  "10.1111/j.1600-0447.1976.tb00083.x": {
+    "authors": "Vendsborg PB; Bach-Mortensen N.; Rafaelsen OJ",
+    "first_author": "Vendsborg",
+    "author_count": 3,
+    "journal": "Acta Psychiatrica Scandinavica",
+    "year": 1976
+  },
+  "10.1111/j.1600-0447.1977.tb00144.x": {
+    "authors": "Barcai",
+    "first_author": "Barcai",
+    "author_count": 1,
+    "journal": "Acta Psychiatrica Scandinavica",
+    "year": 1977
+  },
+  "10.1111/j.1600-0447.1979.tb03586.x": {
+    "authors": "Mellerup ET; Dam H.; Wildschödtz G.; Rafaelsen OJ",
+    "first_author": "Mellerup",
+    "author_count": 4,
+    "journal": "Acta Psychiatrica Scandinavica",
+    "year": 1979
+  },
+  "10.1111/j.1600-0447.1980.tb00607.x": {
+    "authors": "Vestergaard P.; Amdisen A.; Schou M.",
+    "first_author": "Vestergaard",
+    "author_count": 3,
+    "journal": "Acta Psychiatrica Scandinavica",
+    "year": 1980
+  },
+  "10.1111/j.1600-0447.1981.tb00682.x": {
+    "authors": "Vestergaard P.; Amdisen A.",
+    "first_author": "Vestergaard",
+    "author_count": 2,
+    "journal": "Acta Psychiatrica Scandinavica",
+    "year": 1981
+  },
+  "10.1111/j.1600-0447.1984.tb01203.x": {
+    "authors": "Jensen SB; Rickers H.",
+    "first_author": "Jensen",
+    "author_count": 2,
+    "journal": "Acta Psychiatrica Scandinavica",
+    "year": 1984
+  },
+  "10.1111/j.1600-0447.1988.tb06363.x": {
+    "authors": "Vestergaard P.; Poulstrup I.; Schou M.",
+    "first_author": "Vestergaard",
+    "author_count": 3,
+    "journal": "Acta Psychiatrica Scandinavica",
+    "year": 1988
+  },
+  "10.1111/j.1600-0447.1988.tb06375.x": {
+    "authors": "Vieweg WV; Godleski LS; Hundley PL; Yank GR",
+    "first_author": "Vieweg",
+    "author_count": 4,
+    "journal": "Acta Psychiatrica Scandinavica",
+    "year": 1988
+  },
+  "10.1111/j.1600-0447.1989.tb01331.x": {
+    "authors": "Nilsson A.; Axelsson R.",
+    "first_author": "Nilsson",
+    "author_count": 2,
+    "journal": "Acta Psychiatrica Scandinavica",
+    "year": 1989
+  },
+  "10.1111/j.1600-0447.1989.tb03022.x": {
+    "authors": "Mathew B.; Rao JM; Sundari U.",
+    "first_author": "Mathew",
+    "author_count": 3,
+    "journal": "Acta Psychiatrica Scandinavica",
+    "year": 1989
+  },
+  "10.1111/j.1601-5215.2012.00639.x": {
+    "authors": "József Simkó; Gabriella Nagy; Anikó Dózsa; István Lörincz",
+    "first_author": "József",
+    "author_count": 4,
+    "journal": "Acta Neuropsychiatrica",
+    "year": 2012
+  },
+  "10.1136/bcr-2013-009373": {
+    "authors": "Lukas Frase; Barbara Sixt; Christoph Nissen",
+    "first_author": "Lukas",
+    "author_count": 3,
+    "journal": "BMJ Case Reports",
+    "year": 2013
+  },
+  "10.1136/bcr-2021-246499": {
+    "authors": "Hui Jan Tan; Kuan Yee Lim; Rathika Rajah; Chen Fei Ng",
+    "first_author": "Hui",
+    "author_count": 4,
+    "journal": "BMJ Case Reports",
+    "year": 2021
+  },
+  "10.1136/bcr.05.2011.4267": {
+    "authors": "Takeshi Terao; Shosuke Watanabe; Nobuhiko Hoaki; Takayuki Hoaki",
+    "first_author": "Takeshi",
+    "author_count": 4,
+    "journal": "BMJ Case Reports",
+    "year": 2011
+  },
+  "10.1136/bmj.1.6116.815": {
+    "authors": "Speirs J.; Hirsch SR",
+    "first_author": "Speirs",
+    "author_count": 2,
+    "journal": "BMJ",
+    "year": 1978
+  },
+  "10.1136/bmj.280.6215.684-a": {
+    "authors": "Hendy MS; Dove AF; Arblaster PG",
+    "first_author": "Hendy",
+    "author_count": 3,
+    "journal": "BMJ",
+    "year": 1980
+  },
+  "10.1136/bmj.3.5932.650": {
+    "authors": "John L. Crammer; Rachel M. Rosser; Graham Crane",
+    "first_author": "John",
+    "author_count": 3,
+    "journal": "BMJ",
+    "year": 1974
+  },
+  "10.1139/jpn.0213": {
+    "authors": "Chantal Henry",
+    "first_author": "Chantal",
+    "author_count": 1,
+    "journal": "Journal of Psychiatry and Neuroscience",
+    "year": 2002
+  },
+  "10.1152/ajprenal.00147.2017": {
+    "authors": "Theun de Groot; Joan Doornebal; Birgitte M. Christensen; Simone Cockx; Anne P. Sinke; Ruben Baumgarten; Jennifer J. Bedford; Robert J. Walker; Jack F. M. Wetzels; Peter M. T. Deen",
+    "first_author": "Theun",
+    "author_count": 10,
+    "journal": "American Journal of Physiology-Renal Physiology",
+    "year": 2017
+  },
+  "10.1155/bmri/8884457": {
+    "authors": "Abebe Ejigu Hailu; Solomon Teferra; Ephrem Engidawork",
+    "first_author": "Abebe",
+    "author_count": 3,
+    "journal": "BioMed Research International",
+    "year": 2026
+  },
+  "10.1158/1055-9965.epi-19-0776": {
+    "authors": "Anna George; Susan R. Sturgeon; Susan E. Hankinson; Aladdin H. Shadyab; Robert B. Wallace; Katherine W. Reeves",
+    "first_author": "Anna",
+    "author_count": 6,
+    "journal": "Cancer Epidemiology, Biomarkers &amp; Prevention",
+    "year": 2020
+  },
+  "10.1159/000045219": {
+    "authors": "Jesper Melchior Hansen; Niels Fogh-Andersen; Paul Peter Leyssac; Svend Strandgaard",
+    "first_author": "Jesper",
+    "author_count": 4,
+    "journal": "Nephron",
+    "year": 1998
+  },
+  "10.1159/000065414": {
+    "authors": "Murad Atmaca; Murat Kuloglu; Ertan Tezcan; Bilal Ustundag",
+    "first_author": "Murad",
+    "author_count": 4,
+    "journal": "Neuropsychobiology",
+    "year": 2002
+  },
+  "10.1159/000092219": {
+    "authors": "Gergerlioglu HS; Savas HA; Celik A.; Savas E.; Yumru M.; Tarakcioglu M.; Gergerlioglu N.; Atmaca M.",
+    "first_author": "Gergerlioglu",
+    "author_count": 8,
+    "journal": "Neuropsychobiology",
+    "year": 2006
+  },
+  "10.1159/000117838": {
+    "authors": "Thysell H.; Brante G.; Sjöstedt L.; Lindergård B.; Lindholm T.; Franzén G.; Rorsman B.",
+    "first_author": "Thysell",
+    "author_count": 7,
+    "journal": "Neuropsychobiology",
+    "year": 2008
+  },
+  "10.1159/000117881": {
+    "authors": "Birch NJ; Horsman A.; Hullin RP",
+    "first_author": "Birch",
+    "author_count": 3,
+    "journal": "Neuropsychobiology",
+    "year": 2008
+  },
+  "10.1159/000118217": {
+    "authors": "Vetró A.; Szentistványi I.; Pallag L.; Vargha M.; Szilárd J.",
+    "first_author": "Vetró",
+    "author_count": 5,
+    "journal": "Neuropsychobiology",
+    "year": 2008
+  },
+  "10.1159/000118351": {
+    "authors": "Per Vestergaard; Mogens Schou",
+    "first_author": "Per",
+    "author_count": 2,
+    "journal": "Neuropsychobiology",
+    "year": 2008
+  },
+  "10.1159/000288058": {
+    "authors": "Janusz K. Rybakowski; William L. Dyson; Jay D. Amsterdam",
+    "first_author": "Janusz",
+    "author_count": 3,
+    "journal": "Psychotherapy and Psychosomatics",
+    "year": 2010
+  },
+  "10.1159/000457430": {
+    "authors": "William Borkowsky; Louis Shenkman; Peter Suleski; Claude Sansaricq; Fred Siegal; Rochelle Hirschhorn; Smithwick Elizabeth; Baron Shopsin; Selma Snyderman",
+    "first_author": "William",
+    "author_count": 9,
+    "journal": "Developmental Pharmacology and Therapeutics",
+    "year": 2017
+  },
+  "10.1159/000468091": {
+    "authors": "Fritz A. Freyhan; Ralph A. O’Connell; Julia A. Mayo",
+    "first_author": "Fritz",
+    "author_count": 3,
+    "journal": "International Pharmacopsychiatry",
+    "year": 2017
+  },
+  "10.1159/000468400": {
+    "authors": "Müller-Oerlinghausen B.; Passoth PM; Poser W.; Pudel V.",
+    "first_author": "Müller-Oerlinghausen",
+    "author_count": 4,
+    "journal": "International Pharmacopsychiatry",
+    "year": 2017
+  },
+  "10.1161/01.cir.84.5.2011": {
+    "authors": "Trevisan M.; Laurenzi M.",
+    "first_author": "Trevisan",
+    "author_count": 2,
+    "journal": "Circulation",
+    "year": 1991
+  },
+  "10.1176/ajp.124.12.1702": {
+    "authors": "Kerry RJ; Owen G.",
+    "first_author": "Kerry",
+    "author_count": 2,
+    "journal": "American Journal of Psychiatry",
+    "year": 1968
+  },
+  "10.1176/ajp.133.9.1082": {
+    "authors": "; ; ; ; ",
+    "first_author": "",
+    "author_count": null,
+    "journal": "American Journal of Psychiatry",
+    "year": 1976
+  },
+  "10.1176/ajp.135.8.969": {
+    "authors": "; ",
+    "first_author": "",
+    "author_count": null,
+    "journal": "American Journal of Psychiatry",
+    "year": 1978
+  },
+  "10.1176/ajp.138.1.81": {
+    "authors": "; ; ",
+    "first_author": "",
+    "author_count": null,
+    "journal": "American Journal of Psychiatry",
+    "year": 1981
+  },
+  "10.1176/ajp.139.12.1593": {
+    "authors": "; ; ; ; ; ",
+    "first_author": "",
+    "author_count": null,
+    "journal": "American Journal of Psychiatry",
+    "year": 1982
+  },
+  "10.1176/ajp.143.12.1563": {
+    "authors": "; ",
+    "first_author": "",
+    "author_count": null,
+    "journal": "American Journal of Psychiatry",
+    "year": 1986
+  },
+  "10.1176/ajp.145.7.895a": {
+    "authors": "; ; ",
+    "first_author": "",
+    "author_count": null,
+    "journal": "American Journal of Psychiatry",
+    "year": 1988
+  },
+  "10.1176/appi.ajp.160.1.112": {
+    "authors": "Andrea Fagiolini; David J. Kupfer; Patricia R. Houck; Danielle M. Novick; Ellen Frank",
+    "first_author": "Andrea",
+    "author_count": 5,
+    "journal": "American Journal of Psychiatry",
+    "year": 2003
+  },
+  "10.1176/jnp.4.1.51": {
+    "authors": "; ",
+    "first_author": "",
+    "author_count": null,
+    "journal": "The Journal of Neuropsychiatry and Clinical Neurosciences",
+    "year": 1992
+  },
+  "10.1177/0004867420952551": {
+    "authors": "Shang-Ying Tsai; Ruei-Siang Shen; Chian-Jue Kuo; Pao-Huan Chen; Kuo-Hsuan Chung; Cheng-Yi Hsiao; Shou-Hung Huang",
+    "first_author": "Shang-Ying",
+    "author_count": 7,
+    "journal": "Australian &amp; New Zealand Journal of Psychiatry",
+    "year": 2020
+  },
+  "10.1177/00048674231195571": {
+    "authors": "Penelope A. Lind; Dan J. Siskind; Ian B. Hickie; Lucía Colodro-Conde; Simone Cross; Richard Parker; Nicholas G. Martin; Sarah E. Medland",
+    "first_author": "Penelope",
+    "author_count": 8,
+    "journal": "Australian &amp; New Zealand Journal of Psychiatry",
+    "year": 2023
+  },
+  "10.1177/0269881108089594": {
+    "authors": "Kurt E.; Emul M.; Ozbulut O.; Guler O.; Erdur F.; Sağlam H.; Gecici O.",
+    "first_author": "Kurt",
+    "author_count": 7,
+    "journal": "Journal of Psychopharmacology",
+    "year": 2009
+  },
+  "10.1177/026988119400800412": {
+    "authors": "Hawley CJ; Roberts AG; Walker MH",
+    "first_author": "Hawley",
+    "author_count": 3,
+    "journal": "Journal of Psychopharmacology",
+    "year": 1994
+  },
+  "10.1177/070674371405900606": {
+    "authors": "Soham Rej; Marilyn Segal; Nancy C. P. Low; Istvan Mucsi; Christina Holcroft; Kenneth Shulman; Karl Looper",
+    "first_author": "Soham",
+    "author_count": 7,
+    "journal": "The Canadian Journal of Psychiatry",
+    "year": 2014
+  },
+  "10.1177/07067437251328282": {
+    "authors": "Rebecca Strawbridge; Samuel Myrtle; Pietro Carmellini; Elliot Hampsey; David A. Cousins; Allan H. Young",
+    "first_author": "Rebecca",
+    "author_count": 6,
+    "journal": "The Canadian Journal of Psychiatry",
+    "year": 2025
+  },
+  "10.1177/070674377301800115": {
+    "authors": "Furlong FW",
+    "first_author": "Furlong",
+    "author_count": 1,
+    "journal": "Canadian Psychiatric Association Journal",
+    "year": 1973
+  },
+  "10.1177/070674379303800906": {
+    "authors": "Persad E.; Forbath N.; Merskey H.",
+    "first_author": "Persad",
+    "author_count": 3,
+    "journal": "The Canadian Journal of Psychiatry",
+    "year": 1993
+  },
+  "10.1177/089198870001300104": {
+    "authors": "Subramoniam Madhusoodanan; Ronald Brenner; Angel Alcantra",
+    "first_author": "Subramoniam",
+    "author_count": 3,
+    "journal": "Journal of Geriatric Psychiatry and Neurology",
+    "year": 2000
+  },
+  "10.1177/1049909111434633": {
+    "authors": "Ellen Babinsky; Richard S. Levene",
+    "first_author": "Ellen",
+    "author_count": 2,
+    "journal": "American Journal of Hospice and Palliative Medicine®",
+    "year": 2012
+  },
+  "10.1177/147323000203000112": {
+    "authors": "Cayköylü A.; Capoğlu I.; Unüvar N.; Erdem F.; Cetinkaya R.",
+    "first_author": "Cayköylü",
+    "author_count": 5,
+    "journal": "Journal of International Medical Research",
+    "year": 2002
+  },
+  "10.1177/2050313x20953000": {
+    "authors": "Suzanna Connick Jamison; Kelley Aheron",
+    "first_author": "Suzanna",
+    "author_count": 2,
+    "journal": "SAGE Open Medical Case Reports",
+    "year": 2020
+  },
+  "10.1186/1471-244x-8-73": {
+    "authors": "Yves Chaput; Annick Magnan; Alain Gendron",
+    "first_author": "Yves",
+    "author_count": 3,
+    "journal": "BMC Psychiatry",
+    "year": 2008
+  },
+  "10.1186/1744-859x-9-36": {
+    "authors": "Asma Ezzaher; Dhouha Haj Mouhamed; Anwar Mechri; Manel Araoud; Fadoua Neffati; Wahiba Douki; Lotfi Gaha; Mohamed Fadhel Najjar",
+    "first_author": "Asma",
+    "author_count": 8,
+    "journal": "Annals of General Psychiatry",
+    "year": 2010
+  },
+  "10.1186/s12882-018-0947-9": {
+    "authors": "Emanuela Cataldo; Valeria Columbano; Louise Nielsen; Lurlynis Gendrot; Bianca Covella; Giorgina Barbara Piccoli",
+    "first_author": "Emanuela",
+    "author_count": 6,
+    "journal": "BMC Nephrology",
+    "year": 2018
+  },
+  "10.1186/s12882-022-02934-0": {
+    "authors": "Pingchuan Zhang; Hardik Gandhi; Nader Kassis",
+    "first_author": "Pingchuan",
+    "author_count": 3,
+    "journal": "BMC Nephrology",
+    "year": 2022
+  },
+  "10.1186/s12888-015-0490-1": {
+    "authors": "Sylvie Serret; Susanne Thümmler; Emmanuelle Dor; Stephanie Vesperini; Andreia Santos; Florence Askenazy",
+    "first_author": "Sylvie",
+    "author_count": 6,
+    "journal": "BMC Psychiatry",
+    "year": 2015
+  },
+  "10.1186/s12888-018-1622-1": {
+    "authors": "Louise Öhlund; Michael Ott; Sofia Oja; Malin Bergqvist; Robert Lundqvist; Mikael Sandlund; Ellinor Salander Renberg; Ursula Werneke",
+    "first_author": "Louise",
+    "author_count": 8,
+    "journal": "BMC Psychiatry",
+    "year": 2018
+  },
+  "10.1186/s12888-021-03572-w": {
+    "authors": "Jake Prillo; Jocelyn Fotso Soh; Haley Park; Serge Beaulieu; Outi Linnaranta; Soham Rej",
+    "first_author": "Jake",
+    "author_count": 6,
+    "journal": "BMC Psychiatry",
+    "year": 2021
+  },
+  "10.1186/s12888-024-05550-4": {
+    "authors": "Jarurin Pitanupong; Chavisa Jittpratoom; Kanthee Anantapong",
+    "first_author": "Jarurin",
+    "author_count": 3,
+    "journal": "BMC Psychiatry",
+    "year": 2024
+  },
+  "10.1186/s12888-025-07111-9": {
+    "authors": "Yuanhan Bai; Haichen Yang; Jindong Chen; Lina Wang; Zuowei Wang; Xinhua Shen; Jing Sun; Tiebang Liu",
+    "first_author": "Yuanhan",
+    "author_count": 8,
+    "journal": "BMC Psychiatry",
+    "year": 2025
+  },
+  "10.1186/s12991-024-00530-0": {
+    "authors": "Johanna Seifert; Matthias A. Reinhard; Stefan Bleich; Andreas Erfurth; Waldemar Greil; Sermin Toto; Renate Grohmann; Catherine Glocker",
+    "first_author": "Johanna",
+    "author_count": 8,
+    "journal": "Annals of General Psychiatry",
+    "year": 2024
+  },
+  "10.1186/s13256-021-02879-2": {
+    "authors": "Sara Wallengren; Björn Axel Johansson; Olof Rask",
+    "first_author": "Sara",
+    "author_count": 3,
+    "journal": "Journal of Medical Case Reports",
+    "year": 2021
+  },
+  "10.1186/s40345-017-0075-7": {
+    "authors": "Andrei Pikalov; Joyce Tsai; Yongcai Mao; Robert Silva; Josephine Cucchiaro; Antony Loebel",
+    "first_author": "Andrei",
+    "author_count": 6,
+    "journal": "International Journal of Bipolar Disorders",
+    "year": 2017
+  },
+  "10.1186/s40345-017-0096-2": {
+    "authors": "Leonardo Tondo; Maria Abramowicz; Martin Alda; Michael Bauer; Alberto Bocchetta; Lorenza Bolzani; Cynthia V. Calkin; Caterina Chillotti; Diego Hidalgo-Mazzei; Mirko Manchia; Bruno Müller-Oerlinghausen; Andrea Murru; Giulio Perugi; Marco Pinna; Giuseppe Quaranta; Daniela Reginaldi; Andreas Reif; Philipp Ritter; Janusz K. Rybakowski; David Saiger; Gabriele Sani; Valerio Selle; Thomas Stamm; Gustavo H. Vázquez; Julia Veeh; Eduard Vieta; Ross J. Baldessarini",
+    "first_author": "Leonardo",
+    "author_count": 27,
+    "journal": "International Journal of Bipolar Disorders",
+    "year": 2017
+  },
+  "10.1186/s40345-021-00230-8": {
+    "authors": "Teruhiko Higuchi; Tadafumi Kato; Mari Miyajima; Kei Watabe; Takahiro Masuda; Katsuhiko Hagi; Jun Ishigooka",
+    "first_author": "Teruhiko",
+    "author_count": 7,
+    "journal": "International Journal of Bipolar Disorders",
+    "year": 2021
+  },
+  "10.1186/s40345-022-00268-2": {
+    "authors": "Leonardo Tondo; Alessandro Miola; Marco Pinna; Martina Contu; Ross J. Baldessarini",
+    "first_author": "Leonardo",
+    "author_count": 5,
+    "journal": "International Journal of Bipolar Disorders",
+    "year": 2022
+  },
+  "10.1186/s40345-023-00317-4": {
+    "authors": "Essi Whaites Heinonen; Katarina Tötterman; Karin Bäck; Ihsan Sarman; Lisa Forsberg; Jenny Svedenkrans",
+    "first_author": "Essi",
+    "author_count": 6,
+    "journal": "International Journal of Bipolar Disorders",
+    "year": 2023
+  },
+  "10.1186/s40345-026-00425-x": {
+    "authors": "Elena Schönthaler; Frederike T. Fellendorf; Tobias Madl; Hansjörg Habisch; Susanne Bengesser; Nina Dalkner; Eva Fleischmann; Johanna Georgi; Alfred Häussl; Dino Hasic; Julia Ilic; Amrei Lässer; Melanie Lenger; Alexander Maget; Claudia Mittmannsgruber; Darja Popkova; Robert Queissner; Anna Ramirez-Obermayer; Stefan Smolle; Tatjana Stross; Adelina Tmava-Berisha; Eva Z. Reininghaus",
+    "first_author": "Elena",
+    "author_count": 22,
+    "journal": "International Journal of Bipolar Disorders",
+    "year": 2026
+  },
+  "10.1186/s43055-025-01578-y": {
+    "authors": "Anusha Devalla; Annapurna Srirambhatla; Bhargavi Muddam; SaiKrishna Tikka; Mishu Mangla",
+    "first_author": "Anusha",
+    "author_count": 5,
+    "journal": "Egyptian Journal of Radiology and Nuclear Medicine",
+    "year": 2025
+  },
+  "10.1192/bjo.2022.426": {
+    "authors": "Salah Ateem",
+    "first_author": "Salah",
+    "author_count": 1,
+    "journal": "BJPsych Open",
+    "year": 2022
+  },
+  "10.1192/bjp.128.1.61": {
+    "authors": "Rachel Rosser",
+    "first_author": "Rachel",
+    "author_count": 1,
+    "journal": "British Journal of Psychiatry",
+    "year": 1976
+  },
+  "10.1192/bjp.141.1.87": {
+    "authors": "Coppen A.; Abou-Saleh MT",
+    "first_author": "Coppen",
+    "author_count": 2,
+    "journal": "British Journal of Psychiatry",
+    "year": 1982
+  },
+  "10.1192/bjp.142.4.391": {
+    "authors": "Abou-Saleh MT; Coppen A.",
+    "first_author": "Abou-Saleh",
+    "author_count": 2,
+    "journal": "British Journal of Psychiatry",
+    "year": 1983
+  },
+  "10.1192/bjp.146.1.70": {
+    "authors": "McCreadie RG; Morrison DP",
+    "first_author": "McCreadie",
+    "author_count": 2,
+    "journal": "British Journal of Psychiatry",
+    "year": 1985
+  },
+  "10.1192/bjp.150.2.175": {
+    "authors": "Page C.; Benaim S.; Lappin F.",
+    "first_author": "Page",
+    "author_count": 3,
+    "journal": "British Journal of Psychiatry",
+    "year": 1987
+  },
+  "10.1192/bjp.159.3.341": {
+    "authors": "Cowen PJ; McCance SL; Ware CJ; Cohen PR; Chalmers JS; Julier DL",
+    "first_author": "Cowen",
+    "author_count": 6,
+    "journal": "British Journal of Psychiatry",
+    "year": 1991
+  },
+  "10.1192/bjp.bp.114.152850": {
+    "authors": "Calkin CV; Ruzickova M.; Uher R.; Hajek T.; Slaney CM; Garnham JS; O'Donovan MC; Alda M.",
+    "first_author": "Calkin",
+    "author_count": 8,
+    "journal": "British Journal of Psychiatry",
+    "year": 2015
+  },
+  "10.1192/j.eurpsy.2025.1055": {
+    "authors": "Susana Gomes‐da‐Costa; I. Fernandéz; Anna Giménez‐Palomo; Norman López; Y. Rivas; Victoria Ruíz; María Teresa Pons-Cabrera; G. Anmella; Eduard Vieta; Isabella Pacchiarotti",
+    "first_author": "Susana",
+    "author_count": 10,
+    "journal": "European Psychiatry",
+    "year": 2025
+  },
+  "10.1192/j.eurpsy.2025.384": {
+    "authors": "Cristina Toni; B. Della Rocca; M. De Vincenzo; Enrico Mancuso; V. Dello Stritto; Vincenzo Coppola; G. Sampogna; Mario Luciano; A. Fiorillo",
+    "first_author": "Cristina",
+    "author_count": 9,
+    "journal": "European Psychiatry",
+    "year": 2025
+  },
+  "10.1212/wnl.0b013e31822dc7a5": {
+    "authors": "Miller RG; Moore DH; Forshew DA; Katz JS; Barohn RJ; Valan M.; Bromberg MB; Goslin KL; Graves MC; McCluskey LF; McVey AL; Mozaffar T.; Florence JM; Pestronk A.; Ross M.; Simpson EP; Appel SH",
+    "first_author": "Miller",
+    "author_count": 17,
+    "journal": "Neurology",
+    "year": 2011
+  },
+  "10.1248/yakushi.15-00256": {
+    "authors": "Takashi Tomita; Hidekazu Goto; Kenji Sumiya; Tadashi Yoshida; Katsuya Tanaka; Yukinao Kohda",
+    "first_author": "Takashi",
+    "author_count": 6,
+    "journal": "YAKUGAKU ZASSHI",
+    "year": 2016
+  },
+  "10.1289/ehp.1002678": {
+    "authors": "Karin Broberg; Gabriela Concha; Karin Engström; Magnus Lindvall; Margareta Grandér; Marie Vahter",
+    "first_author": "Karin",
+    "author_count": 6,
+    "journal": "Environmental Health Perspectives",
+    "year": 2011
+  },
+  "10.1371/journal.pmed.1002058": {
+    "authors": "Joseph F. Hayes; Louise Marston; Kate Walters; John R. Geddes; Michael King; David P. J. Osborn",
+    "first_author": "Joseph",
+    "author_count": 6,
+    "journal": "PLOS Medicine",
+    "year": 2016
+  },
+  "10.14712/18059694.2016.101": {
+    "authors": "Alice Walder; Pierre Baumann",
+    "first_author": "Alice",
+    "author_count": 2,
+    "journal": "Acta Medica (Hradec Kralove, Czech Republic)",
+    "year": 2009
+  },
+  "10.1504/ijbt.2007.014252": {
+    "authors": "Levon M. Mkhitaryan; Tigran K. Davtyan; Emil S. Gabrielyan; Levon A. Gevorkyan",
+    "first_author": "Levon",
+    "author_count": 4,
+    "journal": "International Journal of Biotechnology",
+    "year": 2007
+  },
+  "10.15388/amed.2024.31.1.5": {
+    "authors": "Balakumar KE; Vandana Tayal; Vidhya Egambarame; Vandana Roy",
+    "first_author": "Balakumar",
+    "author_count": 4,
+    "journal": "Acta medica Lituanica",
+    "year": 2024
+  },
+  "10.15406/jsrt.2018.04.00104": {
+    "authors": "Afaque Khan",
+    "first_author": "Afaque",
+    "author_count": 1,
+    "journal": "Journal of Stem Cell Research &amp; Therapeutics",
+    "year": 2018
+  },
+  "10.1586/14737167.4.1.9": {
+    "authors": "Dennis A. Revicki",
+    "first_author": "Dennis",
+    "author_count": 1,
+    "journal": "Expert Review of Pharmacoeconomics &amp; Outcomes Research",
+    "year": 2004
+  },
+  "10.1592/phco.27.1.27": {
+    "authors": "Jeff J. Guo; Paul E. Keck; Patricia K. Corey‐Lisle; Hong Li; Dongming Jiang; Raymond Jang; Gilbert J. L'Italien",
+    "first_author": "Jeff",
+    "author_count": 7,
+    "journal": "Pharmacotherapy: The Journal of Human Pharmacology and Drug Therapy",
+    "year": 2007
+  },
+  "10.1592/phco.31.8.806": {
+    "authors": "Maithri Prabhakar; William G. Haynes; William H. Coryell; Elizabeth A. Chrischilles; Del D. Miller; Stephan Arndt; Vicki L. Ellingrod; Lois Warren; Jess G. Fiedorowicz",
+    "first_author": "Maithri",
+    "author_count": 9,
+    "journal": "Pharmacotherapy: The Journal of Human Pharmacology and Drug Therapy",
+    "year": 2011
+  },
+  "10.1708/1600.17456": {
+    "authors": "Michele Raja; Silvia Raja",
+    "first_author": "Michele",
+    "author_count": 2,
+    "journal": "Rivista di Psichiatria",
+    "year": 2014
+  },
+  "10.18203/issn.2454-2156.intjscirep20212392": {
+    "authors": "Deependra Prasad Sarraf; Suraj Nepal",
+    "first_author": "Deependra",
+    "author_count": 2,
+    "journal": "International Journal of Scientific Reports",
+    "year": 2021
+  },
+  "10.2147/dddt.s589767": {
+    "authors": "Keyu Yan; Ruomei Gao; Gehang Ju; Qing Shao; Na Wang",
+    "first_author": "Keyu",
+    "author_count": 5,
+    "journal": "Drug Design, Development and Therapy",
+    "year": 2026
+  },
+  "10.2147/ndt.s172654": {
+    "authors": "Gabriele Masi; Annarita Milone; Giulia Scrinzi; Maria Mucci; Valentina Viglione; Gabriella Bruni; Stefano Berloffa; Simone Pisano",
+    "first_author": "Gabriele",
+    "author_count": 8,
+    "journal": "Neuropsychiatric Disease and Treatment",
+    "year": 2018
+  },
+  "10.2147/ndt.s205780": {
+    "authors": "Ya-Yun Xu; Qian-Hui Xia; Jun Liang; Yin Cao; Feng Shan; Yang Liu; Chun-Yu Yan; Qing-Rong Xia",
+    "first_author": "Ya-Yun",
+    "author_count": 8,
+    "journal": "Neuropsychiatric Disease and Treatment",
+    "year": 2019
+  },
+  "10.2147/ndt.s41557": {
+    "authors": "Fornaro M.; McCarthy MJ; De Berardis D.; De Pasquale C.; Tabaton M.; Martino M.; Colicchio S.; Cattaneo CI; D'Angelo E.; Fornaro P.",
+    "first_author": "Fornaro",
+    "author_count": 10,
+    "journal": "Neuropsychiatric Disease and Treatment",
+    "year": 2013
+  },
+  "10.2147/ndt.s86103": {
+    "authors": "Umberto Albert; David De Cori; Andrea Aguglia; Francesca Barbaro; Fabio Lanfranco; Filippo Bogetto; Giuseppe Maina",
+    "first_author": "Umberto",
+    "author_count": 7,
+    "journal": "Neuropsychiatric Disease and Treatment",
+    "year": 2015
+  },
+  "10.2147/ppa.s56790": {
+    "authors": "Martha Sajatovic; Curtis Tatsuoka; Philipp Dines; Christopher Bialko; Melanie Athey; Tiffany Williams; Kristin Cassidy",
+    "first_author": "Martha",
+    "author_count": 7,
+    "journal": "Patient Preference and Adherence",
+    "year": 2014
+  },
+  "10.2165/0023210-200923010-00004": {
+    "authors": "Gabriele Masi; Annarita Milone; Azzurra Manfredi; Cinzia Pari; Antonella Paziente; Stefania Millepiedi",
+    "first_author": "Gabriele",
+    "author_count": 6,
+    "journal": "CNS Drugs",
+    "year": 2009
+  },
+  "10.2344/23-0031": {
+    "authors": "Makiko Shibuya; Yuya Sakurai; Yukifumi Kimura; Takayuki Hojo; Saori Tada; Toshiaki Fujisawa; Kanta Kido",
+    "first_author": "Makiko",
+    "author_count": 7,
+    "journal": "Anesthesia Progress",
+    "year": 2025
+  },
+  "10.26355/eurrev_202210_29920": {
+    "authors": "Cantelmi T.; Lepore E.; Unfer VR; Unfer V.",
+    "first_author": "Cantelmi",
+    "author_count": 4,
+    "journal": "European review for medical and pharmacological sciences",
+    "year": 2022
+  },
+  "10.2739/kurumemedj.38.307": {
+    "authors": "TADASHI NISHIKAWA; AKIRA TSUDA; MASATOSHI TANAKA; MARIKO NISHIKAWA; ITSUYUKI KOGA; YASUNORI UCHIDA",
+    "first_author": "TADASHI",
+    "author_count": 6,
+    "journal": "The Kurume Medical Journal",
+    "year": 1991
+  },
+  "10.29245/2578-2959/2022/3.1255": {
+    "authors": "Seyed-Shahab Banihashem; Sahar Ashrafzadeh; Mehrshad Poursaied Esfahani; Zeinab Morsalivachin; Alireza Shamsi; Somaye Motazedian; Mohammadreza Mousavipour",
+    "first_author": "Seyed-Shahab",
+    "author_count": 7,
+    "journal": "Journal of Mental Health &amp; Clinical Psychology",
+    "year": 2022
+  },
+  "10.3109/00048679209072069": {
+    "authors": "Sing Lee",
+    "first_author": "Sing",
+    "author_count": 1,
+    "journal": "Australian &amp; New Zealand Journal of Psychiatry",
+    "year": 1992
+  },
+  "10.3109/02699058709034444": {
+    "authors": "Allen Childs",
+    "first_author": "Allen",
+    "author_count": 1,
+    "journal": "Brain Injury",
+    "year": 1987
+  },
+  "10.3126/nmcj.v28i1.92042": {
+    "authors": "Abhishek Singh; Gajendra Prasad Rauniar; Suraj Nepal; Rajendra Kumar Chaudhari; Deependra Prasad Sarraf; Rakesh Verma; Shailendra Yadav; Hemanta Chaudhary; Priyanka Mehta",
+    "first_author": "Abhishek",
+    "author_count": 9,
+    "journal": "Nepal Medical College Journal",
+    "year": 2026
+  },
+  "10.3233/jad-170744": {
+    "authors": "Val Andrew Fajardo; Val Andrei Fajardo; Paul J. LeBlanc; Rebecca E.K. MacPherson",
+    "first_author": "Val",
+    "author_count": 4,
+    "journal": "Journal of Alzheimer's Disease",
+    "year": 2017
+  },
+  "10.3233/jad-171150": {
+    "authors": "Bradley J. Baranowski; Grant C. Hayward; Val A. Fajardo; Rebecca E.K. MacPherson",
+    "first_author": "Bradley",
+    "author_count": 4,
+    "journal": "Journal of Alzheimer’s Disease",
+    "year": 2018
+  },
+  "10.33450/fpn.2019.12.002": {
+    "authors": "Agnieszka Słopień",
+    "first_author": "Agnieszka",
+    "author_count": 1,
+    "journal": "Pharmacotherapy in Psychiatry and Neurology",
+    "year": 2020
+  },
+  "10.33620/fc.2173-9218.(2025).13": {
+    "authors": "Mateos-Lardiés AM",
+    "first_author": "Mateos-Lardiés",
+    "author_count": 1,
+    "journal": "Farmacéuticos Comunitarios",
+    "year": 2025
+  },
+  "10.3389/fpsyt.2022.875636": {
+    "authors": "Anna Levy; Etienne Very; François Montastruc; Philippe Birmes; Adeline Jullien; Louis Richaud",
+    "first_author": "Anna",
+    "author_count": 6,
+    "journal": "Frontiers in Psychiatry",
+    "year": 2022
+  },
+  "10.3389/fpsyt.2022.880031": {
+    "authors": "Zhuo, Chuanjun; Liu, Wei; Jiang, Ronghuan; Li, Ranli; Yu, Haiping; Chen, Guangdong; Shan, Jianmin; Zhu, Jingjing; Cai, Ziyao; Lin, Chongguang; Cheng, Langlang; Xu, Yong; Liu, Sha; Luo, Qinghua; Jin, Shili; Liu, Chuanxin; Chen, Jiayue; Wang, Lina; Yang, Lei; Zhang, Qiuyu; Li, Qianchen; Tian, Hongjun; Song, Xueqin; China Multiple Organs Damage In The Mental Disorder Cmodmd Group",
+    "first_author": "Zhuo",
+    "author_count": 24,
+    "journal": "Frontiers in Psychiatry",
+    "year": 2022
+  },
+  "10.3389/fpsyt.2023.1151293": {
+    "authors": "Ilaria Secci; Lucie Petigas; Alexandra Cuenod; Paul Klauser; Carole Kapp; Audrey Novatti; Marco Armando",
+    "first_author": "Ilaria",
+    "author_count": 7,
+    "journal": "Frontiers in Psychiatry",
+    "year": 2023
+  },
+  "10.3389/fpsyt.2025.1741734": {
+    "authors": "Marie Geiser; Nicolas Guggisberg; Josephine Convertini; Severine Crettol; Nicolas Ansermot; Vincent Guinchat",
+    "first_author": "Marie",
+    "author_count": 6,
+    "journal": "Frontiers in Psychiatry",
+    "year": 2026
+  },
+  "10.3389/fpsyt.2026.1750187": {
+    "authors": "Ernesta Panarello; Francesco Monaco; Valeria Di Stefano; Annarita Vignapiano; Roberta Zaffonte; Ilaria Pullano; Giulio Corrivetti; Luca Steardo; Michele Fornaro",
+    "first_author": "Ernesta",
+    "author_count": 9,
+    "journal": "Frontiers in Psychiatry",
+    "year": 2026
+  },
+  "10.3389/fsurg.2025.1744520": {
+    "authors": "SiJun Xie; XiaoTian Pang; ZhengHang Yu; ZhongYang Zhang; Yuan Zhang; YiXing Ren",
+    "first_author": "SiJun",
+    "author_count": 6,
+    "journal": "Frontiers in Surgery",
+    "year": 2026
+  },
+  "10.3390/biomedicines9111558": {
+    "authors": "Chih-Wei Hsu; Shang-Ying Tsai; Liang-Jen Wang; Chih-Sung Liang; Andre F. Carvalho; Marco Solmi; Eduard Vieta; Pao-Yen Lin; Chien-An Hu; Hung-Yu Kao",
+    "first_author": "Chih-Wei",
+    "author_count": 10,
+    "journal": "Biomedicines",
+    "year": 2021
+  },
+  "10.3390/jcm13020324": {
+    "authors": "Krzysztof Cezary Lewandowski; Joanna Kawalec; Michał Kusiński; Katarzyna Dąbrowska; Aleksandra Ewa Matusiak; Iga Dudek; Andrzej Lewiński",
+    "first_author": "Krzysztof",
+    "author_count": 7,
+    "journal": "Journal of Clinical Medicine",
+    "year": 2024
+  },
+  "10.3390/jcm14030954": {
+    "authors": "Vassilis Martiadis; Enrico Pessina; Fabiola Raffone; Azzurra Martini; Matteo Di Vincenzo; Bianca Della Rocca; Domenico De Berardis; Carlo Ignazio Cattaneo; Gaia Sampogna",
+    "first_author": "Vassilis",
+    "author_count": 9,
+    "journal": "Journal of Clinical Medicine",
+    "year": 2025
+  },
+  "10.3390/medicina57010009": {
+    "authors": "Gabriele Di Salvo; Giuseppe Maina; Enrico Pessina; Elena Teobaldi; Francesca Barbaro; Azzurra Martini; Umberto Albert; Gianluca Rosso",
+    "first_author": "Gabriele",
+    "author_count": 8,
+    "journal": "Medicina",
+    "year": 2020
+  },
+  "10.3390/medicina62040761": {
+    "authors": "Carol K. Chan; Kasia G. Rothenberg; Farren B. S. Briggs; Amulya Mallu; Nicole M. Fiorelli; Osvaldo P. Almeida; Kürşat Altınbaş; Vicent Balanzá-Martinez; Izabela G. Barbosa; Hilary P. Blumberg; Peijun Chen; Leon Flicker; Ariel Gildengers; Bartholomeus C. M. Haarman; Federica Klaus; Beny Lafer; Paula V. Nunes; Andrew T. Olagunju; Stephen O. Oluwaniyi; Melis Orhan; Regan E. Patrick; Edith Pomarol-Clotet; Joaquim Radua; Soham Rej; Jair C. Saores; Antonio L. Teixeira; Shangying Tsai; Sonia L. L. Vidal-Rubio; Eduard Vieta; Sara L. Weisenbach; Lisa T. Eyler; Annemiek Dols; Martha Sajatovic",
+    "first_author": "Carol",
+    "author_count": 33,
+    "journal": "Medicina",
+    "year": 2026
+  },
+  "10.3390/nu13010076": {
+    "authors": "Martina Platzer; Frederike T. Fellendorf; Susanne A. Bengesser; Armin Birner; Nina Dalkner; Carlo Hamm; Melanie Lenger; Alexander Maget; René Pilz; Robert Queissner; Bernd Reininghaus; Alexandra Reiter; Harald Mangge; Sieglinde Zelzer; Hans-Peter Kapfhammer; Eva Z. Reininghaus",
+    "first_author": "Martina",
+    "author_count": 16,
+    "journal": "Nutrients",
+    "year": 2020
+  },
+  "10.4088/jcp.14m09358": {
+    "authors": "Frederik Vandenberghe; Mehdi Gholam-Rezaee; Núria Saigí-Morgui; Aurélie Delacrétaz; Eva Choong; Alessandra Solida-Tozzi; Stéphane Kolly; Jacques Thonney; Sylfa Fassassi Gallo; Ahmed Hedjal; Anne-Emmanuelle Ambresin; Armin von Gunten; Philippe Conus; Chin B. Eap",
+    "first_author": "Frederik",
+    "author_count": 14,
+    "journal": "The Journal of Clinical Psychiatry",
+    "year": 2015
+  },
+  "10.4088/jcp.v62n0410": {
+    "authors": "Sanger TM; Grundy SL; Gibson PJ; Namjoshi MA; Greaney MG; Tohen MF",
+    "first_author": "Sanger",
+    "author_count": 6,
+    "journal": "The Journal of Clinical Psychiatry",
+    "year": 2001
+  },
+  "10.4088/jcp.v63n0509": {
+    "authors": "Jonathan M. Meyer",
+    "first_author": "Jonathan",
+    "author_count": 1,
+    "journal": "The Journal of Clinical Psychiatry",
+    "year": 2002
+  },
+  "10.4088/jcp.v65n0518": {
+    "authors": "Charles L. Bowden; Joyce E. Myers; Fred Grossman; Yang Xie",
+    "first_author": "Charles",
+    "author_count": 4,
+    "journal": "The Journal of Clinical Psychiatry",
+    "year": 2004
+  },
+  "10.4088/pcc.09m00891ora": {
+    "authors": "Jeanette M. Jerrell; Roger S. McIntyre",
+    "first_author": "Jeanette",
+    "author_count": 2,
+    "journal": "The Primary Care Companion to The Journal of Clinical Psychiatry",
+    "year": 2010
+  },
+  "10.4088/pcc.v02n0304": {
+    "authors": "Sanjay Gupta; Prakash S. Masand; Bradford L. Frank; Kari L. Lockwood; Peggy L. Keller",
+    "first_author": "Sanjay",
+    "author_count": 5,
+    "journal": "The Primary Care Companion For CNS Disorders",
+    "year": 2000
+  },
+  "10.4103/psychiatry.indianjpsychiatry_168_17": {
+    "authors": "Pattanayak RD; Rajhans P.; Shakya P.; Gautam N.; Khandelwal SK",
+    "first_author": "Pattanayak",
+    "author_count": 5,
+    "journal": "Indian Journal of Psychiatry",
+    "year": 2017
+  },
+  "10.5281/zenodo.4500538": {
+    "authors": "Dr. Deependra Prasad Sarraf",
+    "first_author": "Dr.",
+    "author_count": 1,
+    "journal": "",
+    "year": 2021
+  },
+  "10.5455/bcp.20120412021518": {
+    "authors": "Abdullah Genc; Tevfik Kalelioglu; Akif Tasdemir; Esra Sena Genc; Ismail Ozver; Dilek Yesilbas; Kursat Altinbas; Erhan Kurt",
+    "first_author": "Abdullah",
+    "author_count": 8,
+    "journal": "Klinik Psikofarmakoloji Bülteni-Bulletin of Clinical Psychopharmacology",
+    "year": 2012
+  },
+  "10.5498/wjp.v15.i11.111807": {
+    "authors": "Hasan Gokcay; Uğur Takım; Tarık Sağlam",
+    "first_author": "Hasan",
+    "author_count": 3,
+    "journal": "World Journal of Psychiatry",
+    "year": 2025
+  },
+  "10.5546/aap.2018.e319": {
+    "authors": "Marín Gabriel MA; Malalana Martínez AM; Olza Fernández I.",
+    "first_author": "Marín",
+    "author_count": 3,
+    "journal": "Archivos Argentinos de Pediatria",
+    "year": 2018
+  },
+  "10.5694/mja13.10435": {
+    "authors": "Milton Roxanas; Blair S. Grace; Charles R. P. George",
+    "first_author": "Milton",
+    "author_count": 3,
+    "journal": "Medical Journal of Australia",
+    "year": 2014
+  },
+  "10.64719/pb.4576": {
+    "authors": "Sereen Rose Thomson; Navin Patil; Balaji Ommurugan; Rajesh Krishna Bhandary",
+    "first_author": "Sereen",
+    "author_count": 4,
+    "journal": "Psychopharmacology Bulletin",
+    "year": 2025
+  },
+  "10.7326/0003-4819-88-4-576_2": {
+    "authors": "TREVOR R.P. PRICE; PAUL J. BEISSWENGER",
+    "first_author": "TREVOR",
+    "author_count": 2,
+    "journal": "Annals of Internal Medicine",
+    "year": 1978
+  },
+  "10.7717/peerj.17841": {
+    "authors": "Joseph F. Hayes; Fehmi Ben Abdesslem; Sandra Eloranta; David P. J. Osborn; Magnus Boman",
+    "first_author": "Joseph",
+    "author_count": 5,
+    "journal": "PeerJ",
+    "year": 2024
+  },
+  "10.7759/cureus.50225": {
+    "authors": "Noah N. Kronk; Brooke K. Kronk; Ahmed T. Robbie",
+    "first_author": "Noah",
+    "author_count": 3,
+    "journal": "Cureus",
+    "year": 2023
+  },
+  "10.7759/cureus.72049": {
+    "authors": "Tiffany Wut; Anastasiya Vynnytska; Aisha Ali; Frederick Tiesenga",
+    "first_author": "Tiffany",
+    "author_count": 4,
+    "journal": "Cureus",
+    "year": 2024
+  },
+  "10.7759/cureus.88526": {
+    "authors": "Stylianos Kopanos; Joachim Feldkamp",
+    "first_author": "Stylianos",
+    "author_count": 2,
+    "journal": "Cureus",
+    "year": 2025
+  },
+  "10.7860/jcdr/2017/24009.9873": {
+    "authors": "Shah A.; Yadav PP; Chaudhari M.; Vataliya A.; Kantharia ND; Mehta R.",
+    "first_author": "Shah",
+    "author_count": 6,
+    "journal": "JOURNAL OF CLINICAL AND DIAGNOSTIC RESEARCH",
+    "year": 2017
+  },
+  "10.9740/mhc.2026.02.034": {
+    "authors": "Jesse R. Burson; Jonathan G. Leung",
+    "first_author": "Jesse",
+    "author_count": 2,
+    "journal": "Mental Health Clinician",
+    "year": 2026
+  },
+  "10.9758/cpn.2016.14.3.318": {
+    "authors": "Abdulkader Alam; Sherief Raouf; Fernando O. Recio",
+    "first_author": "Abdulkader",
+    "author_count": 3,
+    "journal": "Clinical Psychopharmacology and Neuroscience",
+    "year": 2016
+  },
+  "10.9758/cpn.2020.18.4.599": {
+    "authors": "Norio Yasui-Furukori; Naoto Adachi; Yukihisa Kubota; Takaharu Azekawa; Eiichiro Goto; Koji Edagawa; Eiichi Katsumoto; Seiji Hongo; Hitoshi Ueda; Kazuhira Miki; Masaki Kato; Reiji Yoshimura; Atsuo Nakagawa; Toshiaki Kikuchi; Takashi Tsuboi; Koichiro Watanabe; Kazutaka Shimoda",
+    "first_author": "Norio",
+    "author_count": 17,
+    "journal": "Clinical Psychopharmacology and Neuroscience",
+    "year": 2020
+  }
+}
