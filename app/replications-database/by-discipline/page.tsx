@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { RetentionSwarm } from "./RetentionSwarm";
 import { classifyReportedResult, toBinary } from "@/lib/replicationOutcome";
 import { SuccessRateNote } from "@/components/SuccessRateNote";
 
@@ -530,6 +531,16 @@ export default function ByDisciplinePage() {
               </tbody>
             </table>
           </div>
+        </div>
+
+        {/* Effect-size retention. The tables above count OUTCOMES (did it
+            replicate?); this shows MAGNITUDE (how much of the effect survived),
+            which a success/failure split cannot express -- a replication that
+            keeps 90% of the effect and one that keeps 20% can both be counted a
+            success. Reads the same filtered rows, so the replication-type
+            filter applies here too. */}
+        <div className="max-w-4xl mx-auto mt-16">
+          <RetentionSwarm rows={filteredRows} />
         </div>
       </main>
       <Footer />
