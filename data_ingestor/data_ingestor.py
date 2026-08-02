@@ -273,6 +273,7 @@ ESTYPE_MAP = {
     # Standardized mean differences (Cohen's d, Hedges' g, Glass' delta)
     "d": "d",
     "cohen's d": "d",
+    "g": "d",
     "hedges' g": "d",
     "hedges'g": "d",
     "hedge's g": "d",
@@ -523,8 +524,8 @@ def convert_effect_size(es_value, es_type, n1=None, n2=None):
     # Normalize effect size type
     es_type_lower = str(es_type).lower().strip()
 
-    # Replace curly apostrophes with straight ones
-    es_type_lower = es_type_lower.replace("'", "'")
+    # Replace curly apostrophes (U+2019/U+2018) with straight ones
+    es_type_lower = es_type_lower.replace("’", "'").replace("‘", "'")
 
     # Check if this is a non-convertible type
     if es_type_lower in [t.lower() for t in CANNOT_CONVERT]:
@@ -546,7 +547,10 @@ def convert_effect_size(es_value, es_type, n1=None, n2=None):
 
     # Perform conversion based on canonical type
     if canonical_type == "r":
-        # Already r or phi, return as-is
+        # Already r or phi — but a correlation cannot exceed 1 in magnitude.
+        # (A raw regression coefficient of 566.5 once passed through here.)
+        if abs(es_value) > 1:
+            return None
         return es_value
 
     elif canonical_type == "r2":
@@ -619,8 +623,9 @@ def calculate_effect_sizes(df):
                         pass
 
                 r_value = convert_effect_size(original_es, original_es_type, n1, n2)
-                # Only store non-zero values (0 indicates failed conversion or meaningless data)
-                if r_value is not None and r_value != 0:
+                # A genuine r of exactly 0 is legitimate (and for a replication,
+                # maximally informative); failed conversions return None.
+                if r_value is not None:
                     df.at[idx, 'original_es_r'] = r_value
                     original_filled += 1
 
@@ -643,8 +648,9 @@ def calculate_effect_sizes(df):
                         pass
 
                 r_value = convert_effect_size(replication_es, replication_es_type, n1, n2)
-                # Only store non-zero values (0 indicates failed conversion or meaningless data)
-                if r_value is not None and r_value != 0:
+                # A genuine r of exactly 0 is legitimate (and for a replication,
+                # maximally informative); failed conversions return None.
+                if r_value is not None:
                     df.at[idx, 'replication_es_r'] = r_value
                     replication_filled += 1
 
@@ -1935,6 +1941,109 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
         processed_df.to_csv(CHECKPOINT_PATH, index=False)
         save_checkpoint_metadata(input_csv, len(input_df))
         print(f"  ✓ Checkpoint saved — restart will skip to duplicate review")
+
+    # Step 4v: Validation gate — type-conditional sanity checks (codebook_rules.json).
+    # Rows failing a REJECT rule (|r|>1, p outside [0,1], negative OR, n='TESTING'...)
+    # are NOT ingested until fixed, blanked, or rejected in the review GUI
+    # (quarantine_review_gui.py). Every decision is logged to data/quarantine_log.jsonl.
+    print(f"\n{'='*60}")
+    print(f"STEP 4v: VALIDATION GATE (sanity checks on incoming data)")
+    print(f"{'='*60}")
+    from validation_rules import RowValidator, has_rejects
+    validator = RowValidator()
+
+    gate_flagged = []      # (idx, violations) — warnings only, row still ingests
+    gate_quarantined = []  # (idx, violations) — contains a blocking violation
+    for idx, row in processed_df.iterrows():
+        violations = validator.validate_row(row)
+        if not violations:
+            continue
+        if has_rejects(violations):
+            gate_quarantined.append((idx, violations))
+        else:
+            gate_flagged.append((idx, violations))
+
+    quarantine_log_path = os.path.join(DATA_DIR, 'quarantine_log.jsonl')
+
+    def _log_quarantine(action, idx, violations, final_row=None, comment=''):
+        record = {
+            'ts': datetime.now().isoformat(timespec='seconds'),
+            'input_file': os.path.basename(input_csv),
+            'row_index': int(idx),
+            'action': action,
+            'violations': [{'rule': v.rule_id, 'severity': v.severity,
+                            'column': v.column, 'value': v.value,
+                            'message': v.message} for v in violations],
+            'original': {k: ('' if pd.isna(val) else str(val))
+                         for k, val in processed_df.loc[idx].items()},
+            'final': final_row,
+            'comment': comment,
+        }
+        with open(quarantine_log_path, 'a', encoding='utf-8') as f:
+            f.write(json.dumps(record, ensure_ascii=False) + '\n')
+
+    if gate_flagged:
+        flag_counts = {}
+        for _, violations in gate_flagged:
+            for v in violations:
+                flag_counts[v.rule_id] = flag_counts.get(v.rule_id, 0) + 1
+        print(f"  ⚠ {len(gate_flagged)} row(s) with warnings (ingested, listed here):")
+        for rule_id, count in sorted(flag_counts.items(), key=lambda kv: -kv[1]):
+            print(f"    {rule_id}: {count}")
+
+    gate_stats = {'fixed': 0, 'blanked': 0, 'rejected': 0, 'quarantined_to_file': 0}
+
+    def _quarantine_to_file():
+        """No-GUI fallback: exclude failing rows, write them + reasons to a CSV."""
+        q_indices = [i for i, _ in gate_quarantined]
+        qdf = processed_df.loc[q_indices].copy()
+        qdf['_violations'] = ['; '.join(f"{v.rule_id}: {v.column}={v.value!r} ({v.message})"
+                                        for v in vs if v.severity == 'reject')
+                              for _, vs in gate_quarantined]
+        qpath = os.path.join(SCRIPT_DIR,
+                             f"quarantine_{datetime.now().strftime('%Y_%m_%d_%H%M%S')}.csv")
+        qdf.to_csv(qpath, index=False)
+        for i, vs in gate_quarantined:
+            _log_quarantine('quarantined_to_file', i, vs)
+        gate_stats['quarantined_to_file'] = len(q_indices)
+        print(f"  ✖ {len(q_indices)} row(s) quarantined to {qpath}")
+        print(f"    Fix the flagged values (drop the _violations column) and re-ingest that file.")
+        return processed_df.drop(q_indices)
+
+    if gate_quarantined:
+        print(f"  ✖ {len(gate_quarantined)} row(s) failed a blocking rule:")
+        for i, vs in gate_quarantined:
+            for v in vs:
+                if v.severity == 'reject':
+                    print(f"    Row {i + 1}: {v.column} = {v.value!r} — {v.message}")
+        if no_gui:
+            processed_df = _quarantine_to_file()
+        else:
+            from quarantine_review_gui import launch_quarantine_review
+            print(f"\n  Launching quarantine review GUI...")
+            decisions = launch_quarantine_review(gate_quarantined, processed_df, validator)
+            if decisions is None:
+                print(f"  Window closed without applying — quarantining all failing rows.")
+                processed_df = _quarantine_to_file()
+            else:
+                drop_indices = []
+                for d in decisions:
+                    idx = d['incoming_idx']
+                    _log_quarantine(d['action'], idx, d['violations'],
+                                    final_row=d['final_row'], comment=d['comment'])
+                    if d['action'] == 'rejected':
+                        drop_indices.append(idx)
+                    else:
+                        for col, val in d['final_row'].items():
+                            if col in processed_df.columns:
+                                processed_df.at[idx, col] = val
+                    gate_stats[d['action']] += 1
+                if drop_indices:
+                    processed_df = processed_df.drop(drop_indices)
+        print(f"  Gate summary: {gate_stats['fixed']} fixed, {gate_stats['blanked']} blanked, "
+              f"{gate_stats['rejected']} rejected, {gate_stats['quarantined_to_file']} quarantined to file")
+    else:
+        print(f"  ✓ No blocking violations")
 
     # Step 4b: Detect identical title pairs (likely self-paired / within-paper errors)
     print(f"\n{'='*60}")

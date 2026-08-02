@@ -1,0 +1,800 @@
+{
+ "schema_version": "0.2-draft",
+ "revision": "2026-07-29b",
+ "source_csv": "replications_database_2026_07_26_092212.csv",
+ "rows": 8610,
+ "authored_by": "Greg Fitzgerald",
+ "status": "DRAFT for Dan's review. Supersedes data/data_dictionary.csv, which is a glossary.",
+ "root_finding_polymorphic_columns": [
+  {
+   "column": "original_es / replication_es",
+   "jobs": [
+    "a numeric effect size",
+    "a structured test-statistic string such as F(2, 154) = 12.47"
+   ],
+   "count": 297,
+   "declared": "float",
+   "consequence": "Every numeric rule silently skips the string cells, because parsing coerces them to null. They are invisible to every range check. And a CORRECT refusal to convert (F with df1>1 cannot become one correlation) is indistinguishable from a parse failure -- both leave es_r empty.",
+   "origin": "Not corruption and not the AI: 294 of these declare es_type='test statistic', all are validated=yes, and all arrive from the FReD v2.4.2 June 2026 import. Keeping F(2,154)=12.47 verbatim is BETTER provenance than a bare 12.47. The defect is that one column stores two kinds of thing.",
+   "fix": [
+    "es_value            float, the effect size only",
+    "test_statistic_type enum: t | F | chi2 | z",
+    "test_statistic      float",
+    "test_df1, test_df2  integer",
+    "test_n              integer",
+    "conversion_status   enum: converted | refused_df1_gt_1 | unparseable"
+   ]
+  },
+  {
+   "column": "original_es_95_CI / replication_es_95_CI",
+   "jobs": [
+    "a lower bound",
+    "an upper bound"
+   ],
+   "count": 1386,
+   "declared": "[float, float]",
+   "consequence": "Two numbers in one string need a parser, and the parser is ambiguous: the cell '0.008-0.850' reads as lower 0.008, upper -0.850 because the hyphen is taken as a minus sign. That single ambiguity produced one of two reported inverted intervals and one of twelve reported containment failures -- both were parser bugs, not data defects.",
+   "origin": "A display convention ('[lo, hi]') stored as data.",
+   "fix": [
+    "es_ci_lower  float",
+    "es_ci_upper  float",
+    "es_ci_level  float, default 0.95",
+    "es_ci_scale  enum: same_as_es | log -- 4 ratio rows store a LOG-scale interval against a ratio-scale estimate, which no containment check can currently detect"
+   ]
+  },
+  {
+   "column": "original_p_value_type / replication_p_value_type",
+   "jobs": [
+    "the comparator (= < >) when the paper reported a bound",
+    "the name of the statistical test"
+   ],
+   "count": 307,
+   "declared": "string",
+   "consequence": "307 cells hold test names or free text -- 't', 'chi-squared', 'genome-wide meta-analysis', 'cluster-wise corrected p (permutation test)'. Any check that recomputes p from an effect size and n assumes a two-tailed t, and this column is the only place the data says otherwise. I made exactly that error: I reported 18 rows as statistically inconsistent, and at most 2-4 survive once the declared test is respected.",
+   "origin": "One column asked to describe two different aspects of a p-value.",
+   "fix": [
+    "p_value_comparator enum: eq | lt | gt",
+    "test_statistic_type enum, shared with the es split above",
+    "p_value_adjustment enum: none | bonferroni | fdr | permutation | cluster | other",
+    "p_value_tails enum: one | two  (currently five spellings for two concepts)"
+   ]
+  }
+ ],
+ "families": {
+  "correlation": {
+   "members": [
+    "r",
+    "pearson r",
+    "pearsons r",
+    "pearson's r",
+    "correlation",
+    "phi 2x2",
+    "partial correlation",
+    "partial r",
+    "semipartial correlation",
+    "point biserial",
+    "rank bis",
+    "spearman's r",
+    "spearmans r",
+    "spearman's rho",
+    "rho",
+    "kendall's tau",
+    "tauu",
+    "wilcoxon r",
+    "icc",
+    "kappa",
+    "cliff's delta",
+    "cliffs delta"
+   ],
+   "lo": -1,
+   "hi": 1,
+   "null": 0,
+   "directional": true,
+   "sign_carries_direction": true,
+   "pass_through": [
+    "r",
+    "pearson r",
+    "pearsons r",
+    "pearson's r",
+    "correlation"
+   ],
+   "note": "bounded by construction (a standardised covariance / cosine); |value|>1 impossible"
+  },
+  "standardised_mean_diff": {
+   "members": [
+    "d",
+    "cohen's d",
+    "cohens d",
+    "smd",
+    "g",
+    "hedges g",
+    "hedges' g",
+    "glass' delta",
+    "glass's delta",
+    "glass delta"
+   ],
+   "lo": null,
+   "hi": null,
+   "null": 0,
+   "directional": true,
+   "sign_carries_direction": true,
+   "implausible_abs": 6,
+   "note": "unbounded signal-to-noise ratio; |d|>6 is possible but should be verified"
+  },
+  "paired_smd": {
+   "members": [
+    "dz",
+    "d z",
+    "cohen's dz",
+    "cohens dz",
+    "d sample (dep)"
+   ],
+   "lo": null,
+   "hi": null,
+   "null": 0,
+   "directional": true,
+   "sign_carries_direction": true,
+   "implausible_abs": 20,
+   "note": "d_z = mean difference / SD OF DIFFERENCES, so it depends on the within-subject correlation and is NOT on the between-groups d metric. The same true effect gives d_z from 0.21 (r=0) to 2.12 (r=0.99). Must not be converted with the between-groups formula, and must not be pooled with d."
+  },
+  "ratio": {
+   "members": [
+    "or",
+    "odds ratio",
+    "rr",
+    "risk ratio",
+    "relative risk",
+    "relative risk ratio",
+    "rrr",
+    "hr",
+    "hazard ratio",
+    "irr",
+    "incidence rate ratio",
+    "bayes factor"
+   ],
+   "lo": 0,
+   "hi": null,
+   "null": 1,
+   "strict_lo": true,
+   "directional": true,
+   "sign_carries_direction": false,
+   "note": "strictly positive; <=0 is impossible. DIRECTIONAL, but the direction is position relative to 1, not sign. OR=0.33 is a negative effect and correctly converts to a NEGATIVE r -- 171 cells do exactly that and must not be flagged."
+  },
+  "log_ratio": {
+   "members": [
+    "log rom",
+    "log_rom",
+    "log odds ratio",
+    "log_odds_ratio",
+    "log rr",
+    "log hr",
+    "ird",
+    "incidence rate difference"
+   ],
+   "lo": null,
+   "hi": null,
+   "null": 0,
+   "directional": true,
+   "sign_carries_direction": true,
+   "note": "a LOG ratio (or a rate DIFFERENCE) is signed and unbounded, null 0. Negative whenever the treated group is lower. 86 of 190 log-ROM cells are negative; a positivity constraint here would quarantine correct data."
+  },
+  "variance_share": {
+   "members": [
+    "eta2",
+    "etasq",
+    "eta squared",
+    "partial eta2",
+    "partial etasq",
+    "partial eta squared",
+    "etasq (partial)",
+    "omega2",
+    "omegasq",
+    "omega squared",
+    "r2",
+    "r squared",
+    "heritability (a2)"
+   ],
+   "lo": 0,
+   "hi": 1,
+   "null": 0,
+   "directional": false,
+   "sign_carries_direction": false,
+   "note": "a proportion of variance; outside [0,1] impossible, and it carries NO direction"
+  },
+  "nonneg_unbounded": {
+   "members": [
+    "f",
+    "cohen's f",
+    "f2",
+    "cohen's f2",
+    "chi2",
+    "chi squared",
+    "w",
+    "cohen's w",
+    "kendall's w",
+    "f test",
+    "f statistic"
+   ],
+   "lo": 0,
+   "hi": null,
+   "null": 0,
+   "directional": false,
+   "sign_carries_direction": false,
+   "soft_hi": 1,
+   "soft_hi_note": "phi and Cohen's w are bounded by sqrt(k-1) for a k x k table, so >1 is legal but needs the table dimensions to check. Flag, do not reject.",
+   "note": "non-negative and unbounded; a negative value is impossible (3 w cells are negative)"
+  },
+  "cramers_v": {
+   "members": [
+    "cramer's v",
+    "cramers v",
+    "v"
+   ],
+   "lo": 0,
+   "hi": 1,
+   "null": 0,
+   "directional": false,
+   "sign_carries_direction": false,
+   "note": "V = sqrt(chi2 / (N * min(r-1, c-1))) -- a square root, so NEVER negative. It equals |phi| only for a 2x2 table; for anything larger it is not a Pearson r and MUST NOT be passed through to es_r."
+  },
+  "probability_of_superiority": {
+   "members": [
+    "auc",
+    "roc area",
+    "a",
+    "common language effect size",
+    "cles"
+   ],
+   "lo": 0,
+   "hi": 1,
+   "null": 0.5,
+   "directional": true,
+   "sign_carries_direction": false,
+   "note": "probability a random positive outranks a random negative. NULL IS 0.5, not 0. Converting via sqrt() -- the variance-share route -- turns a null AUC of 0.50 into r = 0.71. Correct route is d = sqrt(2) * Phi^-1(AUC)."
+  },
+  "uninterpretable_without_units": {
+   "members": [
+    "beta",
+    "beta (std)",
+    "beta (unstd)",
+    "b",
+    "b (unstd)",
+    "b unstd",
+    "beta (mmol/l per allele)",
+    "unstandardized coefficient",
+    "ser method",
+    "other"
+   ],
+   "lo": null,
+   "hi": null,
+   "null": 0,
+   "directional": true,
+   "sign_carries_direction": true,
+   "poolable": false,
+   "note": "raw regression coefficients are in ARBITRARY UNITS and unbounded. Excluded from pooling and from es_r by construction. This is the same class of object as the 566.5 stored as a correlation."
+  }
+ },
+ "pass_through_types": [
+  "correlation",
+  "pearson r",
+  "pearson's r",
+  "pearsons r",
+  "r"
+ ],
+ "columns": {
+  "original_url": {
+   "name": "original_url",
+   "dtype": "doi_url",
+   "required": true,
+   "provenance": "ingest: derived from title via Crossref when absent",
+   "definition": "Canonical URL of the paper containing the original experiment.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "rules": [
+    "normalise before comparison: lowercase, strip the doi.org prefix, strip trailing slash",
+    "MUST NOT equal replication_url. 5 rows are identical; 4 are genuine (the original's DOI copied into the replication slot) and 1 is blank on both sides.",
+    "reject a doubled prefix (https://doi.org/https://doi.org/...)"
+   ]
+  },
+  "description": {
+   "name": "description",
+   "dtype": "text",
+   "required": true,
+   "provenance": "human or AI",
+   "definition": "One sentence naming the effect the replication targeted. THIS IS THE UNIT OF ANALYSIS: one row is one effect, not one paper.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them."
+  },
+  "result": {
+   "name": "result",
+   "dtype": "enum",
+   "required": true,
+   "provenance": "human for validated rows, AI otherwise -- WHICH IS NOT RECORDED",
+   "definition": "Outcome of the replication attempt.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "values": {
+    "success": "the effect was observed again",
+    "failure": "it was not",
+    "inconclusive": "insufficient information to judge",
+    "reversal": "a significant effect in the OPPOSITE direction",
+    "[proposed] informative_failure": "FReD: the success condition is not met -- same direction but not significant, opposite-direction significant, or a null",
+    "[proposed] practical_failure": "FReD: the replication could not be interpreted at all (target n not reached, study discontinued). WE HAVE NO EQUIVALENT, so a discontinued trial and a genuine non-replication are currently identical."
+   },
+   "rules": [
+    "CONSISTENCY WITH THE ROW'S OWN NUMBERS IS UNCHECKED, and this is the most consequential missing rule in the file: 87 rows are 'success' with a replication p above .05, and 152 are 'failure' with p below .05.",
+    "reversal is NOT a kind of success and must not be pooled with it silently",
+    "a blank result with validated=yes is a contradiction (139 rows)",
+    "PROVENANCE GAP: add outcome_basis (author_statement | curator | ai)",
+    "MEANS TWO DIFFERENT THINGS depending on original_claim_direction. The rule `if pOrig >= .05: return pRep >= .05 ? success : failure` drops the direction check that FReD requires, and assumes the original was seeking an effect. See the null-findings documentation draft.",
+    "'both non-significant = success' needs an EQUIVALENCE test, not p > .05. Two underpowered nulls agreeing is not confirmation."
+   ]
+  },
+  "original_claim_direction": {
+   "name": "original_claim_direction",
+   "dtype": "enum",
+   "required": false,
+   "provenance": "human -- NEW FIELD, not yet populated",
+   "definition": "What the ORIGINAL paper claimed. Without this the outcome of a null-original replication is undecidable: the same numbers mean opposite things depending on whether the original was hunting for an effect or demonstrating its absence.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "values": {
+    "effect_present": "the paper's contribution was a positive finding",
+    "effect_absent": "the paper's contribution was the null (non-inferiority, equivalence, a registered debunking)",
+    "unspecified": "not yet coded -- the honest default for the 8,610-row backlog"
+   },
+   "rules": [
+    "13.8% of rows with both p-values have a non-significant original, and their current `result` coding is near-random: replications that found a significant effect are labelled success 40 times and failure 15 times",
+    "when original_claim_direction == 'effect_absent', a significant replication is a genuine FAILURE of the original's claim; when it is 'effect_present', the same pattern usually means the original was underpowered",
+    "do not infer this from the p-value -- that is exactly the confusion the field is meant to resolve"
+   ]
+  },
+  "replication_type": {
+   "name": "replication_type",
+   "dtype": "enum",
+   "required": true,
+   "provenance": "human or AI",
+   "definition": "How closely the replication matched the original.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "values": {
+    "direct": "as close as practicable",
+    "close experiment": "one or two deliberate changes",
+    "close extension": "small generalisation to a new setting",
+    "conceptual": "same claim, substantially different procedure",
+    "close": "DEPRECATED, 92 rows -- fold into close experiment",
+    "direct or close": "NOT IN THE SCHEMA, 1,873 rows (21.8%). Either resolve it or declare it a legitimate 'not further specified' level."
+   },
+   "rules": [
+    "NOT STABLE ACROSS EXPORTS: 127 rows changed between the 22 and 24 July exports, which alone moved the strict direct-and-validated rate from 28.4% to 30.8%",
+    "adopt a facet-scored taxonomy (LeBel et al. 2018) and record the FACETS, not just the label -- and note it does not transfer cleanly to fields where population is a substantive variable rather than a nuisance one (GWAS, ecology)"
+   ]
+  },
+  "original_year": {
+   "name": "original_year",
+   "dtype": "year",
+   "required": false,
+   "provenance": "ingest: Crossref",
+   "definition": "Publication year of the original paper.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "lo": 1600,
+   "hi": 2026,
+   "rules": [
+    "reject years beyond the current year (one row reads 2106)",
+    "replication_year earlier than original_year is a FLAG, NOT an error: preprint versus journal dates and registered reports both produce it legitimately. 23 rows."
+   ]
+  },
+  "original_n": {
+   "name": "original_n",
+   "dtype": "positive_integer",
+   "required": false,
+   "provenance": "human or AI",
+   "definition": "Total units of observation -- subjects, animals, cultures. NOT per group.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "lo": 1,
+   "rules": [
+    "must be a whole number; stored as '135.0', so naive int() parsing fails on the column",
+    "reject 0 and negatives; flag n<2 as uninformative (27 rows)",
+    "reject non-numeric strings. Two rows hold the literal 'TESTING' and are invisible to every numeric rule because parsing coerces them to null.",
+    "flag rather than reject above 100,000: GWAS and pooled analyses legitimately reach millions (max here 49.2M)",
+    "CAPTURE n1 AND n2 SEPARATELY for between-groups designs -- the d->r conversion assumes a 50/50 split, which overstates r by up to 67% at a 10/90 split (66% at the small effect sizes typical here). Paired designs need the within-subject correlation instead; correlational designs need only N."
+   ]
+  },
+  "original_es": {
+   "name": "original_es",
+   "dtype": "float",
+   "required": false,
+   "provenance": "human or AI",
+   "definition": "The effect size as printed in the paper, in its own native units.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "rules": [
+    "LEGAL RANGE IS CONDITIONAL ON original_es_type. This one rule, absent today, is what allowed 566.5 to be stored with es_type='r'.",
+    "POLYMORPHIC: 176 cells hold a test-statistic string rather than a number. See the three-columns section.",
+    "167 rows declare a type with no value. This is INCOMPLETENESS, not a contradiction -- 646 rows have a derived es_r with es blank, so the pipeline routinely fills the analysable field without the raw one. Severity INFO."
+   ]
+  },
+  "original_es_type": {
+   "name": "original_es_type",
+   "dtype": "controlled_vocabulary",
+   "required": false,
+   "provenance": "human or AI",
+   "definition": "Which effect-size statistic original_es is.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "rules": [
+    "60 distinct spellings per side for roughly 20 concepts",
+    "normalise with NFKD before matching, or the superscript form of f-squared is missed -- 92 cells, the largest non-negative family in the file",
+    "387 of 5027 type cells (7.7%) match no family, so the conditional-range rule does nothing for them",
+    "'test statistic', 'ser_method' and 'other' are NOT effect-size types. They are mapped here only so a rule can refuse them; they must never be pooled.",
+    "188 rows have DIFFERENT types on the two sides. Comparing those two numbers is the database's core operation."
+   ]
+  },
+  "original_es_r": {
+   "name": "original_es_r",
+   "dtype": "float",
+   "required": false,
+   "provenance": "ingest: computed when absent",
+   "definition": "original_es converted to a Pearson correlation for cross-study comparability.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "lo": -1,
+   "hi": 1,
+   "rules": [
+    "bounded [-1, 1]. All 4,959 stored values are in range, so this bound is currently being respected -- the out-of-range problem lives in the raw es column.",
+    "for a pass-through type (r, pearson r, correlation) es_r MUST equal es. 262 cells violate this, and they are wholesale replacements rather than sign flips (es=-0.002 alongside es_r=-0.433) -- evidence of an undocumented p-value-derived route.",
+    "Cramer's V and Spearman's rho are NOT pass-throughs: V is not a Pearson r for tables larger than 2x2, and rho is a rank correlation",
+    "a NEGATIVE es_r is correct for a ratio family: OR=0.33 is a negative effect. 166 cells do this correctly and must not be flagged.",
+    "only the genuinely non-directional families (eta2, R2, chi2, F) cannot express direction. 120 rows use them on BOTH sides and therefore cannot be coded as reversals. For ratios direction IS recoverable, from position relative to 1.",
+    "record which conversion produced the value, and the allocation assumed"
+   ]
+  },
+  "original_es_95_CI": {
+   "name": "original_es_95_CI",
+   "dtype": "interval -- REPLACE WITH TWO FLOAT COLUMNS",
+   "required": false,
+   "provenance": "human or AI",
+   "definition": "95% confidence interval for original_es. Currently two numbers in one string.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "rules": [
+    "SPLIT into es_ci_lower and es_ci_upper. The string form is ambiguous: '0.008-0.850' parses as lower 0.008, upper -0.850.",
+    "after splitting: lower <= upper; the interval must contain es; reject non-numeric literals such as [0.62, 'Inf']",
+    "SCOPE THE CONTAINMENT RULE PER FAMILY. 7 of 12 apparent containment failures are a raw-scale interval against a standardised estimate, and 4 ratio rows store a log-scale interval. Only 3 are genuine same-scale contradictions.",
+    "ADD A WIDTH CHECK: the half-width implied by es and n is a strong test. 20 rows are off by more than 3x (one is 102x too wide).",
+    "ADD A CI-VS-P CHECK: an interval excluding the null implies p<0.05. This needs no distributional assumption, so unlike a recomputed t it survives chi-square, F, permutation and cluster-corrected p-values. 6 rows fail it."
+   ]
+  },
+  "original_p_value": {
+   "name": "original_p_value",
+   "dtype": "probability",
+   "required": false,
+   "provenance": "human or AI",
+   "definition": "The p-value as reported.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "lo": 0,
+   "hi": 1,
+   "lo_exclusive": true,
+   "rules": [
+    "must be in (0, 1]. 125 cells report exactly 0, which is not a possible p-value for a continuous statistic -- it is a rounding artefact.",
+    "DO NOT recompute p from es_r and n as a general consistency check unless the declared test is a Pearson t. I made that mistake."
+   ]
+  },
+  "original_p_value_type": {
+   "name": "original_p_value_type",
+   "dtype": "enum -- REPLACE WITH THREE COLUMNS",
+   "required": false,
+   "provenance": "human or AI",
+   "definition": "Nominally the comparator. Actually holds two variables.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "values": {
+    "=": "exact",
+    "<": "upper bound",
+    ">": "lower bound"
+   },
+   "rules": [
+    "307 cells hold test names or free text. See the three-columns section. 'lt' means '<'.",
+    "761 rows have a p-value with this column blank, so bound-versus-exact is unrecoverable"
+   ]
+  },
+  "original_p_value_tails": {
+   "name": "original_p_value_tails",
+   "dtype": "enum",
+   "required": false,
+   "provenance": "human or AI",
+   "definition": "One- or two-tailed.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "values": {
+    "one": "one-tailed",
+    "two": "two-tailed"
+   },
+   "rules": [
+    "five spellings for two concepts (one, two, one-sided, two-sided, two-tailed) across 1,345 non-blank cells. Normalise to one|two."
+   ]
+  },
+  "original_issue": {
+   "name": "original_issue",
+   "dtype": "string",
+   "required": false,
+   "provenance": "ingest: Crossref",
+   "definition": "Journal issue as printed. A STRING, not an integer.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "rules": [
+    "398 cells are legitimately non-numeric: '7-8', 'S1', '15_suppl', '1-3'. An integer type with a minimum of 1 would reject all of them.",
+    "genuine defects to keep flagging: values below 1 (5 cells), and one cell reading '01/02/26', which is Excel having eaten '1/2'"
+   ]
+  },
+  "field": {
+   "name": "field",
+   "dtype": "enum",
+   "required": false,
+   "provenance": "ingest: derived from discipline",
+   "definition": "Top level of the subject ontology.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "values": {
+    "social sciences": "",
+    "biological sciences": "",
+    "computer science": "",
+    "physical sciences": ""
+   },
+   "rules": [
+    "clean 1:1 hierarchy with discipline; no discipline spans two fields. Verified."
+   ]
+  },
+  "discipline": {
+   "name": "discipline",
+   "dtype": "enum",
+   "required": true,
+   "provenance": "human or AI",
+   "definition": "Second level of the subject ontology, 24 values.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "rules": [
+    "18 of 24 disciplines draw 50%+ of their rows from one provenance bucket, INCLUDING psychology at 63%. Only political science (22%), education (37%) and linguistics (43%) are genuinely mixed. Publish a concentration index beside any per-discipline figure."
+   ]
+  },
+  "validated": {
+   "name": "validated",
+   "dtype": "enum",
+   "required": true,
+   "provenance": "human",
+   "definition": "Whether a human has checked the core fields at least once.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "values": {
+    "yes": "checked",
+    "no": "not checked",
+    "partially": "NOT IN THE SCHEMA, 298 rows",
+    "partial": "NOT IN THE SCHEMA, duplicate spelling, 95 rows"
+   },
+   "rules": [
+    "NOT A QUALITY FLAG. It is stamped at batch level, so all 139 rows with a BLANK result are marked validated=yes. Enforce per row, or rename to source_is_human_curated, which is what it measures.",
+    "two spellings of one concept (393 rows) break any exact-match filter"
+   ]
+  },
+  "confidence": {
+   "name": "confidence",
+   "dtype": "enum",
+   "required": false,
+   "provenance": "AI",
+   "definition": "The model's stated confidence in the row.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "values": {
+    "low": "16 rows",
+    "medium": "201 rows",
+    "high": "4,779 rows"
+   },
+   "rules": [
+    "95.7% 'high' and blank on 3,614 rows -- no discriminating power. Do not offer as a filter or as evidence of quality."
+   ]
+  },
+  "ai_version": {
+   "name": "ai_version",
+   "dtype": "string -- SPLIT",
+   "required": false,
+   "provenance": "ingest",
+   "definition": "Which curation route produced the row.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "rules": [
+    "MIXED: numeric pipeline versions (7.0-8.5) alongside model names (claude-sonnet-4-6, claude-fable-5) and a bespoke tag (l2-marsden2018-v1). Split into pipeline_version and model_id.",
+    "blank on 3,640 rows (42%), so the machine-coded fraction cannot be bounded exactly",
+    "4,960 rows carry an AI attribution; 4,600 are V7/V8.x and 360 come from three later or bespoke routes. NO ROW carries version 6, yet the published pipeline evaluation describes V6."
+   ]
+  },
+  "replication_url": {
+   "name": "replication_url",
+   "dtype": "doi_url",
+   "required": true,
+   "provenance": "ingest: derived from title via Crossref when absent",
+   "definition": "Canonical URL of the paper containing the replication experiment.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "rules": [
+    "normalise before comparison: lowercase, strip the doi.org prefix, strip trailing slash",
+    "MUST NOT equal replication_url. 5 rows are identical; 4 are genuine (the replication's DOI copied into the replication slot) and 1 is blank on both sides.",
+    "reject a doubled prefix (https://doi.org/https://doi.org/...)"
+   ]
+  },
+  "replication_year": {
+   "name": "replication_year",
+   "dtype": "year",
+   "required": false,
+   "provenance": "ingest: Crossref",
+   "definition": "Publication year of the replication paper.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "lo": 1600,
+   "hi": 2026,
+   "rules": [
+    "reject years beyond the current year (one row reads 2106)",
+    "replication_year earlier than replication_year is a FLAG, NOT an error: preprint versus journal dates and registered reports both produce it legitimately. 23 rows."
+   ]
+  },
+  "replication_n": {
+   "name": "replication_n",
+   "dtype": "positive_integer",
+   "required": false,
+   "provenance": "human or AI",
+   "definition": "Total units of observation -- subjects, animals, cultures. NOT per group.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "lo": 1,
+   "rules": [
+    "must be a whole number; stored as '135.0', so naive int() parsing fails on the column",
+    "reject 0 and negatives; flag n<2 as uninformative (27 rows)",
+    "reject non-numeric strings. Two rows hold the literal 'TESTING' and are invisible to every numeric rule because parsing coerces them to null.",
+    "flag rather than reject above 100,000: GWAS and pooled analyses legitimately reach millions (max here 49.2M)",
+    "CAPTURE n1 AND n2 SEPARATELY for between-groups designs -- the d->r conversion assumes a 50/50 split, which overstates r by up to 67% at a 10/90 split (66% at the small effect sizes typical here). Paired designs need the within-subject correlation instead; correlational designs need only N."
+   ]
+  },
+  "replication_es": {
+   "name": "replication_es",
+   "dtype": "float",
+   "required": false,
+   "provenance": "human or AI",
+   "definition": "The effect size as printed in the paper, in its own native units.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "rules": [
+    "LEGAL RANGE IS CONDITIONAL ON replication_es_type. This one rule, absent today, is what allowed 566.5 to be stored with es_type='r'.",
+    "POLYMORPHIC: 176 cells hold a test-statistic string rather than a number. See the three-columns section.",
+    "167 rows declare a type with no value. This is INCOMPLETENESS, not a contradiction -- 646 rows have a derived es_r with es blank, so the pipeline routinely fills the analysable field without the raw one. Severity INFO."
+   ]
+  },
+  "replication_es_type": {
+   "name": "replication_es_type",
+   "dtype": "controlled_vocabulary",
+   "required": false,
+   "provenance": "human or AI",
+   "definition": "Which effect-size statistic replication_es is.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "rules": [
+    "60 distinct spellings per side for roughly 20 concepts",
+    "normalise with NFKD before matching, or the superscript form of f-squared is missed -- 92 cells, the largest non-negative family in the file",
+    "387 of 5027 type cells (7.7%) match no family, so the conditional-range rule does nothing for them",
+    "'test statistic', 'ser_method' and 'other' are NOT effect-size types. They are mapped here only so a rule can refuse them; they must never be pooled.",
+    "188 rows have DIFFERENT types on the two sides. Comparing those two numbers is the database's core operation."
+   ]
+  },
+  "replication_es_r": {
+   "name": "replication_es_r",
+   "dtype": "float",
+   "required": false,
+   "provenance": "ingest: computed when absent",
+   "definition": "replication_es converted to a Pearson correlation for cross-study comparability.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "lo": -1,
+   "hi": 1,
+   "rules": [
+    "bounded [-1, 1]. All 4,959 stored values are in range, so this bound is currently being respected -- the out-of-range problem lives in the raw es column.",
+    "for a pass-through type (r, pearson r, correlation) es_r MUST equal es. 262 cells violate this, and they are wholesale replacements rather than sign flips (es=-0.002 alongside es_r=-0.433) -- evidence of an undocumented p-value-derived route.",
+    "Cramer's V and Spearman's rho are NOT pass-throughs: V is not a Pearson r for tables larger than 2x2, and rho is a rank correlation",
+    "a NEGATIVE es_r is correct for a ratio family: OR=0.33 is a negative effect. 166 cells do this correctly and must not be flagged.",
+    "only the genuinely non-directional families (eta2, R2, chi2, F) cannot express direction. 120 rows use them on BOTH sides and therefore cannot be coded as reversals. For ratios direction IS recoverable, from position relative to 1.",
+    "record which conversion produced the value, and the allocation assumed"
+   ]
+  },
+  "replication_es_95_CI": {
+   "name": "replication_es_95_CI",
+   "dtype": "interval -- REPLACE WITH TWO FLOAT COLUMNS",
+   "required": false,
+   "provenance": "human or AI",
+   "definition": "95% confidence interval for replication_es. Currently two numbers in one string.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "rules": [
+    "SPLIT into es_ci_lower and es_ci_upper. The string form is ambiguous: '0.008-0.850' parses as lower 0.008, upper -0.850.",
+    "after splitting: lower <= upper; the interval must contain es; reject non-numeric literals such as [0.62, 'Inf']",
+    "SCOPE THE CONTAINMENT RULE PER FAMILY. 7 of 12 apparent containment failures are a raw-scale interval against a standardised estimate, and 4 ratio rows store a log-scale interval. Only 3 are genuine same-scale contradictions.",
+    "ADD A WIDTH CHECK: the half-width implied by es and n is a strong test. 20 rows are off by more than 3x (one is 102x too wide).",
+    "ADD A CI-VS-P CHECK: an interval excluding the null implies p<0.05. This needs no distributional assumption, so unlike a recomputed t it survives chi-square, F, permutation and cluster-corrected p-values. 6 rows fail it."
+   ]
+  },
+  "replication_p_value": {
+   "name": "replication_p_value",
+   "dtype": "probability",
+   "required": false,
+   "provenance": "human or AI",
+   "definition": "The p-value as reported.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "lo": 0,
+   "hi": 1,
+   "lo_exclusive": true,
+   "rules": [
+    "must be in (0, 1]. 125 cells report exactly 0, which is not a possible p-value for a continuous statistic -- it is a rounding artefact.",
+    "DO NOT recompute p from es_r and n as a general consistency check unless the declared test is a Pearson t. I made that mistake."
+   ]
+  },
+  "replication_p_value_type": {
+   "name": "replication_p_value_type",
+   "dtype": "enum -- REPLACE WITH THREE COLUMNS",
+   "required": false,
+   "provenance": "human or AI",
+   "definition": "Nominally the comparator. Actually holds two variables.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "values": {
+    "=": "exact",
+    "<": "upper bound",
+    ">": "lower bound"
+   },
+   "rules": [
+    "307 cells hold test names or free text. See the three-columns section. 'lt' means '<'.",
+    "761 rows have a p-value with this column blank, so bound-versus-exact is unrecoverable"
+   ]
+  },
+  "replication_p_value_tails": {
+   "name": "replication_p_value_tails",
+   "dtype": "enum",
+   "required": false,
+   "provenance": "human or AI",
+   "definition": "One- or two-tailed.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "values": {
+    "one": "one-tailed",
+    "two": "two-tailed"
+   },
+   "rules": [
+    "five spellings for two concepts (one, two, one-sided, two-sided, two-tailed) across 1,345 non-blank cells. Normalise to one|two."
+   ]
+  },
+  "replication_issue": {
+   "name": "replication_issue",
+   "dtype": "string",
+   "required": false,
+   "provenance": "ingest: Crossref",
+   "definition": "Journal issue as printed. A STRING, not an integer.",
+   "missing": "BLANK IS AMBIGUOUS AND MUST BE SPLIT. A blank cell may mean (a) the paper did not report it, (b) it was not extracted, or (c) it is not applicable to this design. These are different facts and the file cannot distinguish them.",
+   "rules": [
+    "398 cells are legitimately non-numeric: '7-8', 'S1', '15_suppl', '1-3'. An integer type with a minimum of 1 would reject all of them.",
+    "genuine defects to keep flagging: values below 1 (5 cells), and one cell reading '01/02/26', which is Excel having eaten '1/2'"
+   ]
+  }
+ },
+ "cross_field_rules": [
+  "replication_year >= original_year  [FLAG only -- preprints and registered reports break it]",
+  "normalised original_url != normalised replication_url",
+  "if es_type is present then es or a test statistic must be present  [INFO, not error]",
+  "if family(es_type) == 'correlation' or 'cramers_v' then -1 <= es <= 1",
+  "if family(es_type) == 'ratio' then es > 0",
+  "if family(es_type) in ('variance_share','probability_of_superiority') then 0 <= es <= 1",
+  "if family(es_type) == 'nonneg_unbounded' then es >= 0  [flag, do not reject, above 1]",
+  "if es_type in PASS_THROUGH then abs(es_r - es) <= 0.01",
+  "if family(es_type) is non-directional then es_r >= 0  [ratios EXCLUDED -- they are directional]",
+  "if family(es_type) == 'uninterpretable_without_units' then es_r must be NULL",
+  "es_ci_lower <= es_ci_upper, and the interval must contain es, WHEN es_ci_scale == same_as_es",
+  "the CI half-width must be within 3x of what es and n imply",
+  "a CI excluding the null implies p < 0.05  [use this INSTEAD of recomputing p from es_r]",
+  "0 < p_value <= 1",
+  "result must not contradict the row's own p-value and effect-size signs",
+  "result != '' whenever validated == 'yes'"
+ ],
+ "empirical_counts": {
+  "rows": 8610,
+  "type_cells": 5027,
+  "unmapped_cells": 387,
+  "unmapped_pct": 7.7,
+  "distinct_types_per_side": 60,
+  "original_es_nonnumeric": 176,
+  "original_es_blank_with_type": 167,
+  "original_esr_without_es": 646,
+  "replication_es_nonnumeric": 121,
+  "replication_es_blank_with_type": 135,
+  "replication_esr_without_es": 588,
+  "ci_polymorphic": 1386,
+  "pvt_nonoperator": 307,
+  "p_exactly_zero": 125,
+  "issue_nonint": 398,
+  "neg_esr_in_ratio": 166,
+  "nondirectional_both": 120,
+  "original_passthrough_violation": 129,
+  "replication_passthrough_violation": 133,
+  "result_vs_p_success": 87,
+  "result_vs_p_failure": 152,
+  "metric_mismatch": 188
+ },
+ "quarantine_policy": "A row failing a rule goes to a quarantine table WITH THE RULE ID and is excluded from published figures until resolved. Never silently dropped, never silently passed. A rule that fires on legitimate data is worse than no rule, because it gets the whole gate switched off -- four rules in the previous revision did exactly that."
+}

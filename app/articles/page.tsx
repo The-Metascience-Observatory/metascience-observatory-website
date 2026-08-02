@@ -73,6 +73,12 @@ const articles: ArticleMeta[] = [
     image: "/assets/woodcut_square_crops/compass_square.png",
     alt: "Woodcut of a weather vane compass",
   },
+  {
+    href: "/articles/nature-2016-reproducibility-survey",
+    title: "Nature's 2016 reproducibility survey",
+    image: "/assets/herschel-observatory-cropped.png",
+    alt: "Engraving of the Herschel observatory telescope",
+  },
 ];
 
 // Mirrors the link cluster on the replications database page itself, minus its
@@ -131,15 +137,11 @@ const documentation: DocMeta[] = [
   },
   {
     href: "/docs/ontology",
-    title: "Our Ontology for Classifying Paper Subjects",
+    title: "Our ontology for classifying paper subjects",
   },
   {
     href: "/docs/pipeline-evaluation",
     title: "V6 extraction pipeline evaluation",
-  },
-  {
-    href: "https://explore.metascienceobservatory.org/about",
-    title: "Metascience Observatory Explorer Data Sources",
   },
 ];
 
@@ -169,6 +171,19 @@ const substackArticles: SubstackMeta[] = [
     date: "2022-02-28",
     title: "The deluge of crappy papers must stop",
     href: "https://moreisdifferent.substack.com/p/the-deluge-of-crappy-papers-must",
+  },
+];
+
+const newsletters: SubstackMeta[] = [
+  {
+    date: "2026-04-23",
+    title: "Newsletter #2 — Q1, 2026",
+    href: "https://metascienceobservatory.substack.com/p/the-metascience-observatory-newsletter",
+  },
+  {
+    date: "2026-01-29",
+    title: "Newsletter #1",
+    href: "https://metascienceobservatory.substack.com/p/metascience-observatory-newsletter",
   },
 ];
 
@@ -205,7 +220,7 @@ export default function ArticlesPage() {
           </div>
 
           <h2 className="text-2xl font-bold mt-16 mb-6 text-foreground">Articles</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {articles.map((article) => (
               <Link key={article.href} href={article.href} className="group block">
                 <Card className="aspect-square flex flex-col overflow-hidden border-border transition-colors hover:border-primary/50 hover:shadow-md">
@@ -214,12 +229,12 @@ export default function ArticlesPage() {
                       src={article.image}
                       alt={article.alt}
                       fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
                   <div className="p-3 shrink-0">
-                    <h2 className="font-clarendon font-semibold text-base text-foreground text-center whitespace-pre-line line-clamp-2">
+                    <h2 className="font-clarendon font-semibold text-base text-foreground text-center whitespace-pre-line line-clamp-3">
                       {article.title}
                     </h2>
                   </div>
@@ -266,25 +281,52 @@ export default function ArticlesPage() {
             </div>
           </div>
 
-          <h2 className="text-2xl font-bold mt-16 mb-3 text-foreground">
-            Metascience Substack articles by Dan Elton
-          </h2>
-          <div className="space-y-4">
-            {substackArticles.map((article) => (
-              <div key={article.title}>
-                <span className="text-foreground/60 mr-2">{article.date}</span>
-                {article.href ? (
-                  <Link
-                    href={article.href}
-                    className="text-foreground hover:text-foreground/70 underline"
-                  >
-                    {article.title}
-                  </Link>
-                ) : (
-                  <span className="text-foreground">{article.title}</span>
-                )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mt-16">
+            <div>
+              <h2 className="text-2xl font-bold mb-3 text-foreground">
+                Metascience Substack articles by Dan Elton
+              </h2>
+              <div className="space-y-4">
+                {substackArticles.map((article) => (
+                  <div key={article.title}>
+                    <span className="text-foreground/60 mr-2">{article.date}</span>
+                    {article.href ? (
+                      <Link
+                        href={article.href}
+                        className="text-foreground hover:text-foreground/70 underline"
+                      >
+                        {article.title}
+                      </Link>
+                    ) : (
+                      <span className="text-foreground">{article.title}</span>
+                    )}
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            <div>
+              <h2 className="text-2xl font-bold mb-3 text-foreground">
+                Newsletters
+              </h2>
+              <div className="space-y-4">
+                {newsletters.map((item) => (
+                  <div key={item.title}>
+                    <span className="text-foreground/60 mr-2">{item.date}</span>
+                    {item.href ? (
+                      <Link
+                        href={item.href}
+                        className="text-foreground hover:text-foreground/70 underline"
+                      >
+                        {item.title}
+                      </Link>
+                    ) : (
+                      <span className="text-foreground">{item.title}</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </main>

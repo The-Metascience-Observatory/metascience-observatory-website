@@ -66,3 +66,29 @@ New rows are checked against the master database using a composite key of `origi
 ## Output
 
 Each run produces a timestamped CSV file (`replications_database_YYYY_MM_DD_HHMMSS.csv`) in the `../data/` directory and updates `version_history.txt`.
+
+## Validation Gate (STEP 4v)
+
+Every incoming row is checked against `codebook_rules.json` before the
+duplicate scan. The legal range of an effect size is conditional on its
+declared type (a correlation must lie in [−1, 1], an odds ratio is strictly
+positive, a variance share in [0, 1]); p-values must lie in [0, 1]; sample
+sizes must be positive numbers; and confidence intervals must be ordered and
+contain their own estimate. Rules and severities live in
+`validation_rules.py`, which can also audit any export standalone:
+
+```bash
+python validation_rules.py ../data/replications_database_<version>.csv [--out violations.csv]
+```
+
+Rows failing a **reject**-severity rule are not ingested. With the GUI
+(`quarantine_review_gui.py`) each failing row can be fixed, have exactly the
+offending cells blanked, or be rejected outright — and edits are re-validated
+before they are accepted. With `--no-gui`, failing rows are written to
+`quarantine_<timestamp>.csv` (with a `_violations` column) for repair and
+re-ingestion. **Flag**-severity findings (p exactly 0, |d| > 6, enum drift…)
+are printed and logged but do not block.
+
+Every quarantine decision is appended to `../data/quarantine_log.jsonl`:
+timestamp, input file, violations, the row's original values, the values as
+ingested (blanked cells included), and a free-text comment.
