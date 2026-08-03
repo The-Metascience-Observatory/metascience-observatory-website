@@ -21,39 +21,6 @@ function wilsonCI(k: number, n: number): [number, number] {
   return [Math.max(0, center - margin) * 100, Math.min(1, center + margin) * 100];
 }
 
-// Pearson correlation of two equal-length numeric arrays (null if degenerate).
-function pearson(xs: number[], ys: number[]): number | null {
-  const n = xs.length;
-  if (n < 3) return null;
-  const mx = xs.reduce((a, b) => a + b, 0) / n;
-  const my = ys.reduce((a, b) => a + b, 0) / n;
-  let sxy = 0, sxx = 0, syy = 0;
-  for (let i = 0; i < n; i++) {
-    const dx = xs[i] - mx, dy = ys[i] - my;
-    sxy += dx * dy; sxx += dx * dx; syy += dy * dy;
-  }
-  if (sxx === 0 || syy === 0) return null;
-  return sxy / Math.sqrt(sxx * syy);
-}
-
-// Spearman rank correlation (Pearson on ranks; average ranks for ties).
-function spearman(xs: number[], ys: number[]): number | null {
-  const rank = (a: number[]): number[] => {
-    const idx = a.map((v, i) => [v, i] as [number, number]).sort((p, q) => p[0] - q[0]);
-    const r = new Array(a.length).fill(0);
-    let i = 0;
-    while (i < idx.length) {
-      let j = i;
-      while (j + 1 < idx.length && idx[j + 1][0] === idx[i][0]) j++;
-      const avg = (i + j) / 2 + 1;
-      for (let k = i; k <= j; k++) r[idx[k][1]] = avg;
-      i = j + 1;
-    }
-    return r;
-  };
-  return pearson(rank(xs), rank(ys));
-}
-
 const REPLICATED = "#10b981";
 const NOT_REPLICATED = "#f87171";
 // Bars in the binned rate charts, matching the by-year page.
@@ -413,49 +380,6 @@ export function ImpactFactorDashboard({
     return out.sort((a, b) => a.ifVal - b.ifVal);
   }, [qualified, journals, effectiveBasis,metric, minPapers]);
 
-  // Per-journal correlation between replication rate and each impact-factor
-  // metric, over the same journals shown in the scatter (>= minPapers papers,
-  // current criterion/threshold/basis). Replication classification does not
-  // depend on the metric, so only the IF value differs across the three rows.
-  const correlations = useMemo(() => {
-    return METRIC_OPTIONS.map((opt) => {
-      const m = opt.value;
-      const byJournal = new Map<number, { rep: number; total: number; ifSum: number }>();
-      for (const paper of papers) {
-        let success = 0, determinate = 0;
-        for (const c of paper.codes) {
-          const o = c[criterion];
-          if (o === "s") { success++; determinate++; }
-          else if (o === "f" || o === "r") determinate++;
-        }
-        if (determinate === 0 || paper.j < 0) continue;
-        const jrec = journals[paper.j];
-        let ifVal: number | null = null;
-        if (effectiveBasis === "recent") ifVal = jrec.recent ? jrec.recent[m] : null;
-        else if (paper.y !== null) {
-          const triple = jrec.byYear[String(paper.y)];
-          ifVal = triple ? triple[m] : null;
-        }
-        if (ifVal === null || !Number.isFinite(ifVal) || ifVal <= 0) continue;
-        const e = byJournal.get(paper.j) || { rep: 0, total: 0, ifSum: 0 };
-        e.total++;
-        e.ifSum += ifVal;
-        if (success / determinate >= threshold) e.rep++;
-        byJournal.set(paper.j, e);
-      }
-      const ifs: number[] = [];
-      const rates: number[] = [];
-      for (const [j, e] of byJournal) {
-        if (e.total < minPapers) continue;
-        const ifVal = effectiveBasis === "recent" ? journals[j].recent?.[m] ?? null : e.ifSum / e.total;
-        if (ifVal === null || !Number.isFinite(ifVal)) continue;
-        ifs.push(ifVal);
-        rates.push((e.rep / e.total) * 100);
-      }
-      return { label: opt.label, r: pearson(ifs, rates), rho: spearman(ifs, rates), n: ifs.length };
-    });
-  }, [papers, journals, criterion, threshold, effectiveBasis,minPapers]);
-
   const metricLabel = METRIC_OPTIONS[metric].label;
   // Noun for chart/section titles. Each metric has its own proper name; the two
   // self-computed impact factors (0,1) share the "OpenAlex-derived" label.
@@ -603,7 +527,7 @@ export function ImpactFactorDashboard({
         <label className="flex flex-col gap-1 text-sm">
           <span
             className="text-gray-600 dark:text-gray-300 cursor-help"
-            title="Minimum number of plotted papers a journal needs to appear as a point in the per-journal scatterplot (and the correlation table). Journals with few papers have high-variance rate estimates. The quintile chart above always uses all papers."
+            title="Minimum number of plotted papers a journal needs to appear as a point in the per-journal scatterplot. Journals with few papers have high-variance rate estimates. The quintile chart above always uses all papers."
           >
             Min papers per journal
           </span>
@@ -704,47 +628,6 @@ export function ImpactFactorDashboard({
             </p>
           </div>
         )}
-      </section>
-
-      {/* Correlation table */}
-      <section className="space-y-3">
-        <div>
-          <h2 className="text-xl md:text-2xl font-semibold tracking-tight">
-            Replication rate correlation vs metric
-          </h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            Correlation between a journal&rsquo;s replication rate and each journal-impact
-            metric, across the {correlations[0]?.n ?? 0} journals with at least {minPapers}{" "}
-            plotted papers. Every metric is shown so you can compare their signals side by side.
-          </p>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="text-sm border-collapse">
-            <thead>
-              <tr className="border-b border-gray-200 dark:border-gray-700 text-left text-gray-600 dark:text-gray-300">
-                <th className="py-2 pr-6 font-medium">Metric</th>
-                <th className="py-2 pr-6 font-medium text-right">Pearson r</th>
-                <th className="py-2 pr-6 font-medium text-right">Spearman &rho;</th>
-                <th className="py-2 font-medium text-right">Journals (n)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {correlations.map((c) => (
-                <tr key={c.label} className="border-b border-gray-100 dark:border-gray-800">
-                  <td className="py-2 pr-6">{c.label}</td>
-                  <td className="py-2 pr-6 text-right tabular-nums">{c.r === null ? "—" : c.r.toFixed(2)}</td>
-                  <td className="py-2 pr-6 text-right tabular-nums">{c.rho === null ? "—" : c.rho.toFixed(2)}</td>
-                  <td className="py-2 text-right tabular-nums">{c.n}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p className="text-xs text-gray-500 dark:text-gray-400">
-          Correlations use the current success criterion, threshold, and basis. A negative
-          value means higher-ranked journals replicate less often. Spearman is more
-          robust to the heavy right-skew of these metrics.
-        </p>
       </section>
 
       {/* Methodology */}

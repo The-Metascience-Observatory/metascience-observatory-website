@@ -1424,7 +1424,7 @@ type ScatterPoint = {
 
 function InlineScatter({ points, showReversal = true }: { points: ScatterPoint[]; showReversal?: boolean }) {
   const width = 600;
-  const height = 240;
+  const height = 476;
   const margin = { top: 10, right: 10, bottom: 45, left: 45 };
   const innerW = width - margin.left - margin.right;
   const innerH = height - margin.top - margin.bottom;

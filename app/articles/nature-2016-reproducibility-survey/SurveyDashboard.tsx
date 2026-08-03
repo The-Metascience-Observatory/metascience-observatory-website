@@ -47,17 +47,28 @@ const pctLabel = (v: number) => `${v.toFixed(1)}%`;
 
 // ── Shared building blocks ───────────────────────────────────────────
 function ChartSection({
+  id,
   title,
   subtitle,
   children,
 }: {
+  id: string;
   title: string;
   subtitle?: string;
   children: React.ReactNode;
 }) {
   return (
-    <div>
-      <h3 className="font-semibold text-lg text-foreground">{title}</h3>
+    <div id={id} className="scroll-mt-24">
+      <h3 className="group font-semibold text-lg text-foreground">
+        {title}{" "}
+        <a
+          href={`#${id}`}
+          aria-label={`Link to section: ${title}`}
+          className="text-foreground/40 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity hover:text-foreground"
+        >
+          #
+        </a>
+      </h3>
       {subtitle && <p className="text-sm text-foreground/50 mb-3">{subtitle}</p>}
       {!subtitle && <div className="mb-3" />}
       {children}
@@ -256,12 +267,14 @@ export function SurveyDashboard(props: SurveyDashboardProps) {
       {/* Opinion donuts */}
       <div className="grid md:grid-cols-2 gap-8">
         <ChartSection
+          id="reproducibility-crisis"
           title="Is there a reproducibility crisis?"
           subtitle="Which statement about a 'crisis of reproducibility' do you agree with?"
         >
           <OpinionDonut data={props.crisis} colors={CRISIS_COLORS} />
         </ChartSection>
         <ChartSection
+          id="established-procedures"
           title="Have you established procedures for reproducibility?"
           subtitle="Share of all respondents, by when the procedures were established"
         >
@@ -271,6 +284,7 @@ export function SurveyDashboard(props: SurveyDashboardProps) {
 
       {/* Publishing replication attempts */}
       <ChartSection
+        id="publishing-replication-attempts"
         title="Publishing replication attempts"
         subtitle="Have you ever tried to publish a reproduction attempt? Share of all 1,576 respondents"
       >
@@ -282,7 +296,7 @@ export function SurveyDashboard(props: SurveyDashboardProps) {
                 layout="vertical"
                 margin={{ left: 10, right: 45, top: 5, bottom: 5 }}
                 barCategoryGap="25%"
-                barGap={6}
+                barGap={0}
               >
                 <CartesianGrid strokeDasharray="3 3" opacity={0.3} horizontal={false} />
                 <XAxis
@@ -335,35 +349,15 @@ export function SurveyDashboard(props: SurveyDashboardProps) {
             </div>
             <p className="text-sm text-foreground/70 mt-2">
               of researchers ({publishedAny.anyCount.toLocaleString()} of 1,576) have published a
-              replication attempt of some kind &mdash; a figure not reported in the original
-              article.
+              replication attempt of some kind.
             </p>
-            <ul className="text-sm text-foreground/70 mt-3 space-y-1">
-              <li>
-                <span className="font-semibold text-foreground">
-                  {publishedAny.successfulPct.toFixed(1)}%
-                </span>{" "}
-                published a successful replication ({publishedAny.successfulCount})
-              </li>
-              <li>
-                <span className="font-semibold text-foreground">
-                  {publishedAny.failedPct.toFixed(1)}%
-                </span>{" "}
-                published a failed replication ({publishedAny.failedCount})
-              </li>
-              <li>
-                <span className="font-semibold text-foreground">
-                  {publishedAny.bothPct.toFixed(1)}%
-                </span>{" "}
-                published both kinds ({publishedAny.bothCount})
-              </li>
-            </ul>
           </Card>
         </div>
       </ChartSection>
 
       {/* Failed to reproduce by discipline */}
       <ChartSection
+        id="failed-to-reproduce"
         title="Have you failed to reproduce an experiment?"
         subtitle="Share answering yes, by discipline &mdash; most scientists have experienced failure to reproduce results"
       >
@@ -373,7 +367,7 @@ export function SurveyDashboard(props: SurveyDashboardProps) {
             layout="vertical"
             margin={{ left: 10, right: 30, top: 5, bottom: 5 }}
             barCategoryGap="25%"
-            barGap={4}
+            barGap={0}
           >
             <CartesianGrid strokeDasharray="3 3" opacity={0.3} horizontal={false} />
             <XAxis
@@ -411,6 +405,7 @@ export function SurveyDashboard(props: SurveyDashboardProps) {
 
       {/* Estimated reproducibility of the field, by discipline */}
       <ChartSection
+        id="how-much-is-reproducible"
         title="How much published work in your field is reproducible?"
         subtitle="Distribution of answers within each discipline, ordered from most to least confident in the literature. Each panel shows the share of that discipline's respondents giving each estimate."
       >
@@ -443,13 +438,6 @@ export function SurveyDashboard(props: SurveyDashboardProps) {
                     )}
                     tickFormatter={(v) => `${v}%`}
                   />
-                  <Tooltip
-                    cursor={{ fill: "transparent" }}
-                    formatter={(value: number, _name, entry) => [
-                      `${value}% of respondents (${entry.payload.count})`,
-                      `Estimated ${entry.payload.bucket} reproducible`,
-                    ]}
-                  />
                   <Bar dataKey="pct" fill={BLUE} radius={[3, 3, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
@@ -460,6 +448,7 @@ export function SurveyDashboard(props: SurveyDashboardProps) {
 
       {/* Likert grids */}
       <ChartSection
+        id="contributing-factors"
         title="What factors contribute to irreproducible research?"
         subtitle="Share of all respondents rating each factor's contribution to failures to reproduce"
       >
@@ -473,6 +462,7 @@ export function SurveyDashboard(props: SurveyDashboardProps) {
       </ChartSection>
 
       <ChartSection
+        id="what-would-improve"
         title="What would improve reproducibility?"
         subtitle="Share of all respondents rating how likely each approach is to improve reproducibility"
       >

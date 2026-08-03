@@ -20,39 +20,6 @@ function wilsonCI(k: number, n: number): [number, number] {
   return [Math.max(0, center - margin) * 100, Math.min(1, center + margin) * 100];
 }
 
-// Pearson correlation of two equal-length numeric arrays (null if degenerate).
-function pearson(xs: number[], ys: number[]): number | null {
-  const n = xs.length;
-  if (n < 3) return null;
-  const mx = xs.reduce((a, b) => a + b, 0) / n;
-  const my = ys.reduce((a, b) => a + b, 0) / n;
-  let sxy = 0, sxx = 0, syy = 0;
-  for (let i = 0; i < n; i++) {
-    const dx = xs[i] - mx, dy = ys[i] - my;
-    sxy += dx * dy; sxx += dx * dx; syy += dy * dy;
-  }
-  if (sxx === 0 || syy === 0) return null;
-  return sxy / Math.sqrt(sxx * syy);
-}
-
-// Spearman rank correlation (Pearson on ranks; average ranks for ties).
-function spearman(xs: number[], ys: number[]): number | null {
-  const rank = (a: number[]): number[] => {
-    const idx = a.map((v, i) => [v, i] as [number, number]).sort((p, q) => p[0] - q[0]);
-    const r = new Array(a.length).fill(0);
-    let i = 0;
-    while (i < idx.length) {
-      let j = i;
-      while (j + 1 < idx.length && idx[j + 1][0] === idx[i][0]) j++;
-      const avg = (i + j) / 2 + 1;
-      for (let k = i; k <= j; k++) r[idx[k][1]] = avg;
-      i = j + 1;
-    }
-    return r;
-  };
-  return pearson(rank(xs), rank(ys));
-}
-
 const REPLICATED = "#4f77bd";
 const POINT = "#2563eb";
 
@@ -75,7 +42,7 @@ const QUARTILE = 1;
 const RANK = 2;
 const HINDEX = 3;
 // Metrics where a LOWER value means a higher-status journal (rank 1 = best,
-// quartile 1 = best). Correlations and the "higher rank replicates…" phrasing
+// quartile 1 = best). The charts and the "higher rank replicates…" phrasing
 // account for this so the direction is reported honestly.
 const LOWER_IS_BETTER = new Set([QUARTILE, RANK]);
 // h-index is a per-journal snapshot (constant across years), so the
@@ -421,54 +388,6 @@ export function RankDashboard({
     return out.sort((a, b) => a.val - b.val);
   }, [qualified, journals, basis, metric, minPapers]);
 
-  // Per-journal correlation between replication rate and each rank metric, over
-  // journals with >= minPapers papers. Classification is metric-independent, so
-  // only the x-value differs across rows.
-  const correlations = useMemo(() => {
-    return METRIC_OPTIONS.map((opt) => {
-      const m = opt.value;
-      const byJournal = new Map<number, { rep: number; total: number; valSum: number }>();
-      for (const paper of papers) {
-        let success = 0, determinate = 0;
-        for (const c of paper.codes) {
-          const o = c[criterion];
-          if (o === "s") { success++; determinate++; }
-          else if (o === "f" || o === "r") determinate++;
-        }
-        if (determinate === 0 || paper.j < 0) continue;
-        const jr = journals[paper.j];
-        let val: number | null = null;
-        if (basis === "recent") val = jr.recent ? jr.recent[m] : null;
-        else if (paper.y !== null) {
-          const quad = jr.byYear[String(paper.y)];
-          val = quad ? quad[m] : null;
-        }
-        if (val === null || !Number.isFinite(val)) continue;
-        const e = byJournal.get(paper.j) || { rep: 0, total: 0, valSum: 0 };
-        e.total++;
-        e.valSum += val;
-        if (success / determinate >= threshold) e.rep++;
-        byJournal.set(paper.j, e);
-      }
-      const vals: number[] = [];
-      const rates: number[] = [];
-      for (const [j, e] of byJournal) {
-        if (e.total < minPapers) continue;
-        const val = basis === "recent" ? journals[j].recent?.[m] ?? null : e.valSum / e.total;
-        if (val === null || !Number.isFinite(val)) continue;
-        vals.push(val);
-        rates.push((e.rep / e.total) * 100);
-      }
-      return {
-        label: opt.label,
-        r: pearson(vals, rates),
-        rho: spearman(vals, rates),
-        n: vals.length,
-        lowerIsBetter: LOWER_IS_BETTER.has(m),
-      };
-    });
-  }, [papers, journals, criterion, threshold, basis, minPapers]);
-
   const metricLabel = METRIC_OPTIONS[metric].label;
   const basisLabel = basis === "recent" ? `recent (${meta.snapshotYear ?? "latest"})` : "at publication year";
   const metricNounLower =
@@ -608,7 +527,7 @@ export function RankDashboard({
         <label className="flex flex-col gap-1 text-sm">
           <span
             className="text-gray-600 dark:text-gray-300 cursor-help"
-            title="Minimum number of plotted papers a journal needs to appear as a point in the per-journal scatterplot (and the correlation table). Journals with few papers have high-variance rate estimates. The quantile and quartile charts above always use all papers."
+            title="Minimum number of plotted papers a journal needs to appear as a point in the per-journal scatterplot. Journals with few papers have high-variance rate estimates. The quantile and quartile charts above always use all papers."
           >
             Min papers per journal
           </span>
@@ -709,51 +628,6 @@ export function RankDashboard({
             </p>
           </div>
         )}
-      </section>
-
-      {/* Correlation table */}
-      <section className="space-y-3">
-        <div>
-          <h2 className="text-xl md:text-2xl font-semibold tracking-tight">
-            Replication rate correlation vs rank metric
-          </h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            Correlation between a journal&rsquo;s replication rate and each rank metric, across
-            the {correlations[0]?.n ?? 0} journals with at least {minPapers} plotted papers.
-          </p>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="text-sm border-collapse">
-            <thead>
-              <tr className="border-b border-gray-200 dark:border-gray-700 text-left text-gray-600 dark:text-gray-300">
-                <th className="py-2 pr-6 font-medium">Metric</th>
-                <th className="py-2 pr-6 font-medium text-right">Pearson r</th>
-                <th className="py-2 pr-6 font-medium text-right">Spearman &rho;</th>
-                <th className="py-2 font-medium text-right">Journals (n)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {correlations.map((c) => (
-                <tr key={c.label} className="border-b border-gray-100 dark:border-gray-800">
-                  <td className="py-2 pr-6">
-                    {c.label}
-                    {c.lowerIsBetter && <span className="text-xs opacity-60"> (lower = better)</span>}
-                  </td>
-                  <td className="py-2 pr-6 text-right tabular-nums">{c.r === null ? "—" : c.r.toFixed(2)}</td>
-                  <td className="py-2 pr-6 text-right tabular-nums">{c.rho === null ? "—" : c.rho.toFixed(2)}</td>
-                  <td className="py-2 text-right tabular-nums">{c.n}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p className="text-xs text-gray-500 dark:text-gray-400">
-          Correlations use the current success criterion, threshold, and basis. For percentile
-          and h-index (higher = more prestigious), a negative value means more-prestigious
-          journals replicate less often. For rank and quartile (marked &ldquo;lower =
-          better&rdquo;), the sign is reversed: a <em>positive</em> value means more-prestigious
-          journals replicate less often. Spearman is robust to each metric&rsquo;s skew.
-        </p>
       </section>
 
       {/* Methodology */}

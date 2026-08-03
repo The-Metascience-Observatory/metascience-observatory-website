@@ -1,0 +1,78 @@
+Bias-check figures for content/docs/checking-for-bias.md
+master: replications_database_2026_08_01_120356.csv  (8,445 rows)
+rate = success / (success + failure + reversal); inconclusive excluded
+
+CRUDE SPLIT
+  coordinated initiatives (excl 3ie): 1,439 rows, 40%
+  literature-harvested             : 6,996 rows, 59%
+  gap: 19 points
+
+SELECTION STRATEGY
+  | Representative / systematically-sampled | 916 | 52% |
+  | Targeted mega-replications | 350 | 11% |
+  | Ad-hoc / literature-harvested | 5,731 | 59% |
+  residual gap (representative vs harvested): 7 points, p = 0.000036
+
+DESIGN MIX
+  representative initiatives: 75% direct
+  literature-harvested      : 13% direct
+  direct 42%  |  close extension 66%
+
+PER-INITIATIVE
+  SRP                    46% (n=156)
+  ML3                    6% (n=144)
+  RP:CB                  31% (n=132)
+  Soto et al LOPPRP      86% (n=118)
+  RRR                    11% (n=107)
+  socsci_2026            53% (n=105)
+  RP:P                   40% (n=96)
+  BRI                    32% (n=95)
+  L2R:Marsden2018        71% (n=65)
+  XPHIR                  78% (n=40)
+  SPRRR                  36% (n=39)
+  EROE                   54% (n=26)
+  RSESR                  30% (n=23)
+  ML5                    10% (n=21)
+  SMR                    57% (n=21)
+  SSRP                   62% (n=21)
+  ML2                    15% (n=20)
+  ExECON                 61% (n=18)
+  ML4                    6% (n=18)
+  3ie                    100% (n=9)
+  ML1                    0% (n=1)
+
+TABLE A - initiatives vs. direct replications only (paste-ready)
+| Discipline | "Representative-sampled" initiatives | Literature-harvested (direct only) |
+|---|---|---|
+| Psychology | 58% (n=551) | 49% (n=302) |
+| Biology | 33% (n=198) | 38% (n=82) |
+| Neuroscience | 21% (n=29) | 56% (n=105) |
+| Economics | 59% (n=29) | 53% (n=17) |
+
+TABLE B - initiatives vs. all harvested types (paste-ready)
+| Discipline | "Representative-sampled" initiatives | Literature-harvested (all types) |
+|---|---|---|
+| Psychology | 58% (n=551) | 59% (n=2,770) |
+| Biology | 33% (n=198) | 50% (n=361) |
+| Neuroscience | 21% (n=29) | 56% (n=549) |
+| Linguistics | 66% (n=59) | 64% (n=121) |
+| Economics | 59% (n=29) | 57% (n=315) |
+
+INITIATIVE ATTRIBUTION (definitive n)
+  psychology (551): SRP 145, Soto et al LOPPRP 118, RP:P 96, socsci_2026 84, XPHIR 40, EROE 26, SSRP 21, SMR 21
+  biology (198): RP:CB 132, BRI 66
+  neuroscience (29): BRI 29
+  linguistics (59): L2R:Marsden2018 50, SRP 9
+  economics (29): ExECON 18, socsci_2026 11
+
+OMITTED DISCIPLINES (one column below n=20)
+  discipline: representative n / harvested n
+  AI and machine learning: 0 / 23
+  business & management: 4 / 49
+  education: 16 / 131
+  environmental science: 0 / 22
+  medical fields: 0 / 1204
+  political science: 4 / 72
+  sociology: 2 / 50
+  software engineering: 0 / 38
+  sports and exercise science: 23 / 0

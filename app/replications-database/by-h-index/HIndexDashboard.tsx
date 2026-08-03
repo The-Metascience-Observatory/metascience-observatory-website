@@ -9,39 +9,6 @@ import { SUCCESS_DEFS, rateFromCodes } from "@/lib/replicationOutcome";
 import { SuccessRateNote } from "@/components/SuccessRateNote";
 import type { CoverageStats, EffectRow, HIndexMeta, PaperHIndex } from "./types";
 
-// Pearson correlation of two equal-length numeric arrays (null if degenerate).
-function pearson(xs: number[], ys: number[]): number | null {
-  const n = xs.length;
-  if (n < 3) return null;
-  const mx = xs.reduce((a, b) => a + b, 0) / n;
-  const my = ys.reduce((a, b) => a + b, 0) / n;
-  let sxy = 0, sxx = 0, syy = 0;
-  for (let i = 0; i < n; i++) {
-    const dx = xs[i] - mx, dy = ys[i] - my;
-    sxy += dx * dy; sxx += dx * dx; syy += dy * dy;
-  }
-  if (sxx === 0 || syy === 0) return null;
-  return sxy / Math.sqrt(sxx * syy);
-}
-
-// Spearman rank correlation (Pearson on ranks; average ranks for ties).
-function spearman(xs: number[], ys: number[]): number | null {
-  const rank = (a: number[]): number[] => {
-    const idx = a.map((v, i) => [v, i] as [number, number]).sort((p, q) => p[0] - q[0]);
-    const r = new Array(a.length).fill(0);
-    let i = 0;
-    while (i < idx.length) {
-      let j = i;
-      while (j + 1 < idx.length && idx[j + 1][0] === idx[i][0]) j++;
-      const avg = (i + j) / 2 + 1;
-      for (let k = i; k <= j; k++) r[idx[k][1]] = avg;
-      i = j + 1;
-    }
-    return r;
-  };
-  return pearson(rank(xs), rank(ys));
-}
-
 const REPLICATED = "#4f77bd"; // light blue, matching the rate bars on by-year
 
 const CRITERION_OPTIONS = [
@@ -240,8 +207,8 @@ export function HIndexDashboard({
   const fixedBins = useMemo(() => buildFixedBins(qualRows.rows, metric), [qualRows, metric]);
 
   // ---- Probit model (marginsplot-style curve) ----------------------------
-  // Fit on log10(1 + h), the same transform the correlation table uses, with
-  // the original paper as the cluster for robust standard errors.
+  // Fit on log10(1 + h), with the original paper as the cluster for robust
+  // standard errors.
   const probit = useMemo(() => {
     const r = qualRows.rows;
     return fitProbit(
@@ -264,25 +231,6 @@ export function HIndexDashboard({
     const band = probitBand(probit, hGrid.map((h) => Math.log10(1 + h)));
     return { xCap, points: hGrid.map((h, i) => ({ h, ...band[i] })) };
   }, [probit, qualRows]);
-
-  // Row-level correlation between replication success and each h-index
-  // metric: point-biserial r on log10(1+value) plus Spearman rho.
-  const correlations = useMemo(() => {
-    return METRIC_OPTIONS.map((opt) => {
-      const xs: number[] = [];
-      const ys: number[] = [];
-      for (const r of rows) {
-        if (repType >= 0 && r.t !== repType) continue;
-        const o = r.o[criterion];
-        if (o !== "s" && o !== "f" && o !== "r") continue;
-        const val = metricValue(papers[r.p], opt.value);
-        if (val === null) continue;
-        xs.push(Math.log10(1 + val));
-        ys.push(o === "s" ? 1 : 0);
-      }
-      return { label: opt.label, r: pearson(xs, ys), rho: spearman(xs, ys), n: xs.length };
-    });
-  }, [rows, papers, criterion, repType]);
 
   const metricLabel = METRIC_OPTIONS[metric].label;
 
@@ -440,47 +388,6 @@ export function HIndexDashboard({
         match{metric >= 2 ? " or that author has no h-index record" : ""})
       </p>
 
-      {/* Correlation table */}
-      <section className="space-y-3">
-        <div>
-          <h2 className="text-xl md:text-2xl font-semibold tracking-tight">
-            Correlation between author h-index and replication success
-          </h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            Row-level correlation between an original paper&rsquo;s author h-index metric
-            and whether the replication attempt succeeded (1) or not (0), under the
-            current criterion and replication-type filter.
-          </p>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="text-sm border-collapse">
-            <thead>
-              <tr className="border-b border-gray-200 dark:border-gray-700 text-left text-gray-600 dark:text-gray-300">
-                <th className="py-2 pr-6 font-medium">h-index metric</th>
-                <th className="py-2 pr-6 font-medium text-right">Point-biserial r</th>
-                <th className="py-2 pr-6 font-medium text-right">Spearman &rho;</th>
-                <th className="py-2 font-medium text-right">Replications (n)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {correlations.map((c) => (
-                <tr key={c.label} className="border-b border-gray-100 dark:border-gray-800">
-                  <td className="py-2 pr-6">{c.label}</td>
-                  <td className="py-2 pr-6 text-right tabular-nums">{c.r === null ? "—" : c.r.toFixed(2)}</td>
-                  <td className="py-2 pr-6 text-right tabular-nums">{c.rho === null ? "—" : c.rho.toFixed(2)}</td>
-                  <td className="py-2 text-right tabular-nums">{c.n.toLocaleString()}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p className="text-xs text-gray-500 dark:text-gray-400">
-          Point-biserial r is computed on log&#8321;&#8320;(1 + h) to tame the
-          right-skew; Spearman &rho; is rank-based and scale-free. Values near zero mean
-          author eminence carries little information about replicability.
-        </p>
-      </section>
-
       {/* Methodology */}
       <section className="text-xs text-gray-500 dark:text-gray-400 space-y-2 border-t border-gray-200 dark:border-gray-800 pt-6">
         <p>
@@ -506,7 +413,7 @@ export function HIndexDashboard({
           SciSciNet record are excluded from the charts.
         </p>
         <p>
-          <strong>Units.</strong> The chart and correlations count every determinate
+          <strong>Units.</strong> The chart counts every determinate
           replication attempt once. Reversals count as determinate non-replications;
           inconclusive rows are excluded. First-author h-index is used as the
           last-author value for single-author papers.

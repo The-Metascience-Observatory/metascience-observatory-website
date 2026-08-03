@@ -236,8 +236,17 @@ export function RetentionSwarm({ rows }: { rows: AnyRecord[] }) {
   ];
 
   return (
-    <div className="mt-8">
-      <h3 className="text-lg font-semibold mb-1">How much of the original effect survived</h3>
+    <div id="effect-retention" className="mt-8 scroll-mt-24">
+      <h3 className="group text-lg font-semibold mb-1">
+        How much of the original effect survived{" "}
+        <a
+          href="#effect-retention"
+          aria-label="Link to section: How much of the original effect survived"
+          className="text-gray-400 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity hover:text-gray-700 dark:hover:text-gray-200"
+        >
+          #
+        </a>
+      </h3>
       <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
         One point per study pair: the replication&rsquo;s correlation divided by the
         original&rsquo;s, signed so the original is positive. Bar = median, box = IQR.

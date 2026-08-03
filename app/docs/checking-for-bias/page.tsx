@@ -5,16 +5,22 @@ import { Footer } from "@/components/Footer";
 import { MarkdownContent } from "@/components/MarkdownContent";
 import { DocsBackLink } from "@/components/DocsBackLink";
 
+export const metadata = {
+  title: "Checking for bias | The Metascience Observatory",
+  description:
+    "Testing whether our literature-harvested replications are biased by comparing them against replication initiatives that defined a sampling frame in advance.",
+};
+
 function getMarkdownContent(): string {
-  const filePath = path.join(process.cwd(), "content/docs/what-weve-learned.md");
+  const filePath = path.join(process.cwd(), "content/docs/checking-for-bias.md");
   try {
     return fs.readFileSync(filePath, "utf-8");
   } catch {
-    return "# What we've learned so far\n\nContent coming soon.";
+    return "# Checking for bias\n\nContent coming soon.";
   }
 }
 
-export default function WhatWeveLearnedPage() {
+export default function CheckingForBiasPage() {
   const content = getMarkdownContent();
 
   return (

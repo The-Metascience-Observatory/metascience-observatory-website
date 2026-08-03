@@ -58,8 +58,8 @@ const articles: ArticleMeta[] = [
   {
     href: "/replication-initiatives",
     title: "Replication initiatives",
-    image: "/assets/woodcut_square_crops/watch_square.png",
-    alt: "Woodcut of an ornate watch face marked with many cities",
+    image: "/assets/woodcut_square_crops/john_milton_watch_1631.png",
+    alt: "Engraving of John Milton's 1631 pocket watch",
   },
   {
     href: "/docs/previous-initiatives",
@@ -76,8 +76,8 @@ const articles: ArticleMeta[] = [
   {
     href: "/articles/nature-2016-reproducibility-survey",
     title: "Nature's 2016 reproducibility survey",
-    image: "/assets/herschel-observatory-cropped.png",
-    alt: "Engraving of the Herschel observatory telescope",
+    image: "/assets/woodcut_square_crops/carriage_clock.png",
+    alt: "Woodcut of an ornate carriage clock",
   },
 ];
 
@@ -142,6 +142,10 @@ const documentation: DocMeta[] = [
   {
     href: "/docs/pipeline-evaluation",
     title: "V6 extraction pipeline evaluation",
+  },
+  {
+    href: "/docs/checking-for-bias",
+    title: 'Checking for bias by comparing with "random sampled" replication initiatives',
   },
 ];
 

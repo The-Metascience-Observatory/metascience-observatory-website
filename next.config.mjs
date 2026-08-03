@@ -56,9 +56,17 @@ const nextConfig = {
         destination: '/articles',
         permanent: true,
       },
+      // The "what we've learned" article was retired in August 2026; its
+      // selection-bias section became /docs/checking-for-bias and the rest was
+      // dropped. Both old URLs point at the surviving content.
       {
         source: '/docs/what-weve-learned',
-        destination: '/articles/what-weve-learned',
+        destination: '/docs/checking-for-bias',
+        permanent: true,
+      },
+      {
+        source: '/articles/what-weve-learned',
+        destination: '/docs/checking-for-bias',
         permanent: true,
       },
     ];
