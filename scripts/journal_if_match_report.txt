@@ -1,32 +1,34 @@
-journal_impact_factors match report - generated 2026-07-15
-CSV: replications_database_2026_07_14_182338.csv
+journal_impact_factors match report - generated 2026-08-03
+CSV: replications_database_2026_08_01_120356.csv
 
-Unique journal names: 1625
-Match tiers: aggressive=136, denylist=12, light=1220, override=16, subtitle+aggressive=2, subtitle+light=28, unmatched=211
-Matched names: 1402 (86.3%)
-Result-bearing rows total: 6203; with a journal: 6105
-  on a matched journal: 5909 (96.8%)
-  on a journal with >=1 exact publication-year IF: 5908 (96.8%)
-Journals emitted: 1402; snapshot year: 2024
+Unique journal names: 1792
+Match tiers: aggressive=147, denylist=19, light=1338, override=19, subtitle+aggressive=2, subtitle+light=25, unmatched=242
+Matched names: 1531 (85.4%)
+Result-bearing rows total: 6907; with a journal: 6825
+  on a matched journal: 6555 (96.0%)
+  on a journal with >=1 exact publication-year IF: 6553 (96.0%)
+Journals emitted: 1531; snapshot year: 2024
 
 External metric coverage (of emitted journals):
-  OpenAlex 2yr_mean_citedness: 1399 (99.8%)
-  SCImago SJR (>=1 year matched): 1308 (93.3%)
-  SCImago citable-doc CiteScore (>=1 year matched): 1286 (91.7%)
-  SCImago rank/quartile/h-index (journals emitted to rank JSON): 1308
+  OpenAlex 2yr_mean_citedness: 1524 (99.5%)
+  SCImago SJR (>=1 year matched): 1436 (93.8%)
+  SCImago citable-doc CiteScore (>=1 year matched): 1412 (92.2%)
+  SCImago rank/quartile/h-index (journals emitted to rank JSON): 1436
   SJR CSV year range: 1999-2025 (27 files)
 
-Denylisted: 18; overrides: 17
+Denylisted: 25; overrides: 20
 
-UNMATCHED NAMES (211), sorted by result-bearing row count.
+UNMATCHED NAMES (242), sorted by result-bearing row count.
 Add high-count real journals to scripts/journal_if_overrides.json 'overrides';
 add books/preprints/conference venues to 'denylist'.
   [  16 rows] Personality Disorders and the Five-factor Model of Personality (2nd Ed.).  | near: S&T ;; IV ;; Order
   [   3 rows] Chinese Journal of Psychology  | near: RNA ;; PS ;; U
   [   3 rows] Journal of Neuropsychiatry and Clinical Neurosciences  | near: Science ;; Neuroscience ;; Psychiatry and Clinical Neurosciences
+  [   3 rows] Learner English on Computer (S. Granger, Ed.)  | near: Computer ;; U ;; AN
   [   2 rows] Panel Data Research  | near: PA ;; Research ;; AN
   [   2 rows] Humr
   [   2 rows] Individual Differences Research  | near: U ;; IV ;; Research
+  [   2 rows] Psychological Monographs: General and Applied  | near: Gene ;; PS ;; AN
   [   2 rows] Journal of Child Psychiatry and Psychology  | near: RNA ;; Psychiatry ;; PS
   [   2 rows] Self Portrait with Gorget Portrait of Rembrandt with a Gorget  | near: AN ;; OR ;; AI
   [   1 rows] Academy Letters  | near: Academy ;; AcA ;; E
@@ -34,7 +36,6 @@ add books/preprints/conference venues to 'denylist'.
   [   1 rows] Public Policy Brief  | near: U ;; Public ;; Brief
   [   1 rows] Industrial and Labor Relations Review  | near: U ;; Review ;; AN
   [   1 rows] Psychotherapy: Theory, Research, Practice, Training  | near: Psychotherapy ;; PS ;; Research
-  [   1 rows] Psychological Monographs: General and Applied  | near: Gene ;; PS ;; AN
   [   1 rows] Proceedings of the 51st ACM Technical Symposium on Computer Science Education  | near: Science ;; Proceedings ;; Computer
   [   1 rows] The Science of Giving: Experimental Approaches to the Study of Charity (Eds DM Oppenheimer, CY Olivola)  | near: Science ;; U ;; IV
   [   1 rows] Motivation, Language Identity and the L2 Self  | near: Language ;; U ;; AGE
@@ -171,6 +172,29 @@ add books/preprints/conference venues to 'denylist'.
   [   1 rows] Journal of Universal Computer Science  | near: Science ;; Computer ;; Computer Science
   [   1 rows] MasterABA  | near: Aster ;; E ;; ER
   [   1 rows] Nature Genetics and Others  | near: Nature ;; Gene ;; Genetics
+  [   1 rows] Spanish Applied Linguistics  | near: Linguistics ;; Applied Linguistics ;; U
+  [   1 rows] Does output promote noticing and second language acquisition? TESOL Quarterly  | near: Language ;; TESOL Quarterly ;; U
+  [   1 rows] Automatization in second language acquisition: What does the coefficient of variation tell us? Applied Psycholinguistics  | near: Language ;; Linguistics ;; PS
+  [   1 rows] Second Language Acquisition in a Study Abroad Context  | near: Language ;; U ;; AGE
+  [   1 rows] Proceedings of the 2019 CHI Conference on Human Factors in Computing Systems  | near: Proceedings ;; Man ;; System
+  [   1 rows] Single Case in the Social Sciences  | near: Science ;; Social Sciences ;; The Social Sciences
+  [   1 rows] Behavioral Development Bulletin  | near: Development ;; U ;; Development
+  [   1 rows] Oxford Handbooks Online  | near: Books ;; Hand ;; Online
+  [   1 rows] White Party, White Government  | near: PA ;; RN ;; E
+  [   1 rows] Modelling and Assessing Vocabulary Knowledge  | near: U ;; AN ;; Knowledge
+  [   1 rows] The Canadian Modern Language Review  | near: Language ;; U ;; AGE
+  [   1 rows] Proceedings of the 4th Annual ACM Web Science Conference  | near: Science ;; Proceedings ;; Proceedings
+  [   1 rows] Proceedings of the 17th International Conference on Mining Software Repositories  | near: Proceedings ;; RNA ;; Proceedings
+  [   1 rows] Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems  | near: Proceedings ;; Man ;; System
+  [   1 rows] IPN - Leibniz-Institut für die Pädagogik der Naturwissenschaften und Mathematik : Kiel  | near: U ;; Pädagogik ;; PA
+  [   1 rows] Professional and Practice-based Learning,Human Fallibility  | near: Man ;; U ;; AN
+  [   1 rows] Proceedings of the 19th ACM SIGSOFT symposium and the 13th European conference on Foundations of software engineering  | near: Proceedings ;; Proceedings ;; U
+  [   1 rows] Evaluating Second Language Education  | near: Language ;; Education ;; U
+  [   1 rows] Language in Mind  | near: Mind ;; Language ;; U
+  [   1 rows] Multilevel Analysis of Educational Data  | near: Analysis ;; Education ;; U
+  [   1 rows] Investigative Opthalmology & Visual Science  | near: Science ;; U ;; IV
+  [   1 rows] Proceedings of the 41st Annual Meeting of the Cognitive Science Society  | near: Science ;; Proceedings ;; Cognitive Science
+  [   1 rows] Eastern Illinois University  | near: University ;; U ;; IV
   [   0 rows] Nations and Households in Economic Growth: Essays in Honor of Mozes Abramowitz  | near: U ;; AN ;; Oz
   [   0 rows] Credit and Banking  | near: Journal of money credit and banking ;; Bank ;; AN
   [   0 rows] 5 th International Symposium on Empirical Software Engineering and Measurement (ESEM)  | near: Measurement ;; RNA ;; U
@@ -232,6 +256,13 @@ add books/preprints/conference venues to 'denylist'.
   [   0 rows] Journal on Behavior, Health & Social Issues  | near: RNA ;; U ;; Health
   [   0 rows] Adult Learning: a Reader (Book Chapter, Kogan Page)  | near: U ;; AGE ;; PA
   [   0 rows] Strategic Management Journal and Other Management Journals  | near: Man ;; RNA ;; Strategic Management Journal
+  [   0 rows] Proceedings of the 2018 CHI Conference on Human Factors in Computing Systems  | near: Proceedings ;; Man ;; System
+  [   0 rows] The Tie That Binds: Identity and Political Attitudes in the Post-Civil Rights Generation  | near: Gene ;; Politica ;; U
+  [   0 rows] Proceedings of the Fourth international Workshop on Computing Education Research  | near: Proceedings ;; Work ;; RNA
+  [   0 rows] Advances in Experimental Moral Psychology  | near: PS ;; Psychology ;; AN
+  [   0 rows] Proceedings of the 30th international conference on Software engineering  | near: Proceedings ;; RNA ;; International Conference on Software Engineering
+  [   0 rows] Findings of the Association for Computational Linguistics: EMNLP 2020  | near: Linguistics ;; U ;; Computational Linguistics
+  [   0 rows] Proceedings of the 22nd ACM Internet Measurement Conference  | near: Proceedings ;; Measurement ;; Proceedings
 
 AMBIGUOUS NORMALIZED NAMES (runner-up >25% of winner) - first 200 shown:
   'genome biology': kept S81160022 ('Genome biology', 5058 papers) over S4210206758 ('Genome Biology', 2863 papers)

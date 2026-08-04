@@ -29,6 +29,14 @@ export default function CheckingForBiasPage() {
       <main className="pt-20 pb-16">
         <div className="container mx-auto px-4 py-12 max-w-3xl">
           <DocsBackLink href="/articles" label="return to articles" />
+          <div
+            role="alert"
+            className="mb-8 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md text-sm text-red-800 dark:text-red-200"
+          >
+            <strong>Alert</strong> &mdash; the content in this page was written by AI (Opus 5).
+            The data in the tables have been checked and stress-tested by a human working with
+            the Opus 5 model.
+          </div>
           <MarkdownContent content={content} />
         </div>
       </main>

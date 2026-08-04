@@ -2,6 +2,8 @@ data_ingestor/ingestion_complete
 data_ingestor/api_cache.json
 data_ingestor/ingestion_checkpoint.csv
 data_ingestor/J_Medline.txt
+private_docs
+
 
 # Next.js build output. Stays in-project (see scripts/with-dropbox-paused.sh for why an
 # out-of-Dropbox distDir does not work with Next 15).

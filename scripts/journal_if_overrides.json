@@ -1,9 +1,13 @@
 {
   "_comment": "Manual curation for scripts/build_journal_impact_factors.py. 'overrides' maps the exact original_journal string from the replications CSV to an OpenAlex sourceid in journals.db (resolved by looking the journal up in journal_summary). 'denylist' lists venues that must stay unmatched (books, preprints, conference proceedings, artworks, placeholders - no impact factor exists). Re-run the build script after editing.",
+  "_comment_the_prefix": "OpenAlex carries stub duplicate sources for several journals whose name begins with 'The'. The bare spelling matches the stub (no ISSNs, no citations) and the 'The ...' spelling matches the real source, so the same journal appeared twice with wildly different impact factors - and the bare spelling is usually the commoner one in our CSV. Each pair below is pinned to the real source; re-check for new ones with the no-ISSN sweep whenever a new CSV lands.",
   "overrides": {
     "PNAS": "S125754415",
     "Proceedings of the National Academy of Sciences USA": "S125754415",
     "Cancer Res": "S168522863",
+    "Lancet": "S49861241",
+    "Journal of Clinical Psychiatry": "S17992710",
+    "Journal of Infectious Diseases": "S54542293",
     "J Med Genet": "S112540174",
     "Cell Immunology": "S193466101",
     "Canadian Journal of Experimental Psychology": "S181082468",
@@ -22,6 +26,13 @@
   "denylist": [
     "MIT Press",
     "PsyArXiv Preprints",
+    "PsyArXiv",
+    "medRxiv",
+    "PsycEXTRA Dataset",
+    "International Conference on Machine Learning",
+    "International Conference on Software Engineering (ICSE)",
+    "National Center for Education Statistics (NCES)",
+    "Unknown (Likely Biological Psychiatry or Similar)",
     "Personality disorders and the five-factor model of personality (2nd ed.).",
     "Cognition and Categorization",
     "Self portrait with gorget Portrait of Rembrandt with a gorget",

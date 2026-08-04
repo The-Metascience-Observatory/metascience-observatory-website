@@ -10,9 +10,15 @@ Each journal-year holds a 6-metric tuple
     [impact_factor_2yr, impact_factor_5yr, citescore,
      openalex_2yr_mean_citedness, scimago_sjr, scimago_cites_per_citable_doc_3yr]
 The first three are SELF-COMPUTED from OpenAlex/SciSciNet-v2 citation data by the
-metascience-observatory-explorer ETL (no document-type filtering, no self-citation
-exclusion); they run systematically lower than official Clarivate JIF / Scopus
-CiteScore and must be labeled "OpenAlex-derived". Index 3 is OpenAlex's own
+metascience-observatory-explorer ETL (no document-type filtering) and must be
+labeled "OpenAlex-derived". They differ from the official Clarivate JIF / Scopus
+CiteScore in two ways that push OPPOSITE directions: the denominator counts every
+document rather than only "citable items", which deflates, while the numerator
+draws on a broader citation graph than Web of Science, which inflates. Deflation
+usually wins - 85% of journals fall below the index-5 citable-denominator metric
+(median ratio 0.80) - but 12% come out above it, so "systematically lower" is
+wrong as a blanket claim. Note self-citations are NOT a difference: the standard
+JIF includes them too. Index 3 is OpenAlex's own
 published 2-year mean citedness (fetched live from the OpenAlex API; a single
 current snapshot, so it populates only `recent`). Index 4 is the SCImago SJR for
 that publication year (per-year CSVs; pre-1999 papers use the 1999 ranking).

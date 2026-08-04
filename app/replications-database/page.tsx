@@ -10,11 +10,11 @@ import { generateCitationHtml, transformCitationHtmlToExplorer, citationSearchTe
 import {
   classifyReportedResult,
   getOutcomeForRow,
+  isOriginalSignificant,
   toBinary,
   toNumber,
   toValidR,
 } from "@/lib/replicationOutcome";
-import { SuccessRateNote } from "@/components/SuccessRateNote";
 import INITIATIVE_TAG_NAMES from "@/data/initiative_tag_names.json";
 import TOPIC_ONTOLOGY from "@/data/metascience_observatory_topic_ontology.json";
 
@@ -514,6 +514,7 @@ function ReplicationsDatabaseContent() {
       oAdj: number;
       rAdj: number;
       desc: string;
+      origNonsig: boolean;
     }> = [];
 
     for (const r of filteredRows) {
@@ -543,7 +544,8 @@ function ReplicationsDatabaseContent() {
         outcome,
         oAdj,
         rAdj,
-        desc: String(r.description || r.tags || "")
+        desc: String(r.description || r.tags || ""),
+        origNonsig: isOriginalSignificant(r) === false,
       });
     }
 
@@ -976,7 +978,6 @@ function ReplicationsDatabaseContent() {
                 {resultStat.rate != null ? `${resultStat.rate}%` : "--"}
               </span>
             </div>
-            <SuccessRateNote def="reported" unit="effect" n={resultStat.rateN} className="mt-1" />
           </div>
           <div className="border-t mt-3 pt-3">
             <div className="text-xs font-medium mb-2">Outcome mix - computed from stats when available <span className="font-bold">({outcomeStat.n} effect replications)</span></div>
@@ -1025,19 +1026,12 @@ function ReplicationsDatabaseContent() {
                 {outcomeStat.rate != null ? `${outcomeStat.rate}%` : "--"}
               </span>
             </div>
-            <SuccessRateNote
-              def={outcomeMethod}
-              unit="effect"
-              n={outcomeStat.rateN}
-              filter="rows with the statistics needed to apply this method"
-              className="mt-1"
-            />
           </div>
         </div>
         <div className="border rounded p-4">
           <div className="text-xs font-medium mb-2">Replication Effect Size vs Original Effect Size - Converted to Standard Scale <span className="font-bold">({computedOutcomes.filter(p => p.outcome !== "inconclusive" && Number.isFinite(p.oAdj)).length} effect replications)</span></div>
           <div className="mt-2">
-            <InlineScatter points={computedOutcomes.filter(p => p.outcome !== "inconclusive" && Number.isFinite(p.oAdj) && Number.isFinite(p.rAdj))} showReversal={outcomeMethod === "significance"} />
+            <InlineScatter points={computedOutcomes.filter(p => p.outcome !== "inconclusive" && Number.isFinite(p.oAdj) && Number.isFinite(p.rAdj))} showReversal={outcomeMethod === "significance"} markOrigNonsig={outcomeMethod === "significance"} />
           </div>
         </div>
         <div className="border rounded p-4">
@@ -1058,13 +1052,6 @@ function ReplicationsDatabaseContent() {
           <div className="mt-2">
             <InlineYearBars bins={yearBins} threshold={20} binSize={5} />
           </div>
-          <SuccessRateNote
-            def="reported"
-            unit="effect"
-            n={yearBins.filter((b) => b.rate >= 0).reduce((s, b) => s + b.rateN, 0)}
-            filter="rows with a usable original publication year, in bins of 20+"
-            className="mt-2"
-          />
         </div>
         {/* Raw effect sizes scatterplot - hidden for now
         <div className="border rounded p-4">
@@ -1420,12 +1407,13 @@ type ScatterPoint = {
   rAdj: number;
   desc: string;
   outcome: "success" | "failure" | "reversal" | "inconclusive";
+  origNonsig: boolean;
 };
 
-function InlineScatter({ points, showReversal = true }: { points: ScatterPoint[]; showReversal?: boolean }) {
+function InlineScatter({ points, showReversal = true, markOrigNonsig = false }: { points: ScatterPoint[]; showReversal?: boolean; markOrigNonsig?: boolean }) {
   const width = 600;
   const height = 476;
-  const margin = { top: 10, right: 10, bottom: 45, left: 45 };
+  const margin = { top: 10, right: 10, bottom: 45, left: 58 };
   const innerW = width - margin.left - margin.right;
   const innerH = height - margin.top - margin.bottom;
 
@@ -1459,7 +1447,6 @@ function InlineScatter({ points, showReversal = true }: { points: ScatterPoint[]
     <div className="relative">
       <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet" className="max-w-full h-auto">
         <g transform={`translate(${margin.left},${margin.top})`}>
-          <rect x={0} y={0} width={innerW} height={innerH} fill="#f3f4f6" />
           {xTicks.map((t) => (
             <g key={`x-${t}`} transform={`translate(${x(t)},${innerH})`}>
               <line y1={0} y2={6} stroke="#000000" strokeWidth={1} />
@@ -1486,15 +1473,19 @@ function InlineScatter({ points, showReversal = true }: { points: ScatterPoint[]
           <line x1={0} y1={innerH} x2={innerW} y2={innerH} stroke="#000000" strokeWidth={1} />
           <line x1={0} y1={0} x2={0} y2={innerH} stroke="#000000" strokeWidth={1} />
           {/* X-axis label */}
-          <text x={innerW / 2} y={innerH + 40} textAnchor="middle" className="text-xs" fill="#000000" style={{ fontSize: 10 }}>Original Effect Size (Pearson's r equivalent)</text>
+          <text x={innerW / 2} y={innerH + 40} textAnchor="middle" className="text-xs" fill="#000000" style={{ fontSize: 12 }}>Original Effect Size (Pearson's r equivalent)</text>
           {/* Y-axis label */}
-          <text x={-innerH / 2} y={-38} textAnchor="middle" transform="rotate(-90)" className="text-xs" fill="#000000" style={{ fontSize: 10 }}>Replication Effect Size (Pearson's r equivalent)</text>
+          <text x={-innerH / 2} y={-46} textAnchor="middle" transform="rotate(-90)" className="text-xs" fill="#000000" style={{ fontSize: 12 }}>Replication Effect Size (Pearson's r equivalent)</text>
           {points.map((p, i) => {
-            const fill = color(p.outcome);
+            const hollow = markOrigNonsig && p.origNonsig;
             return (
               <g key={i} transform={`translate(${x(p.oAdj)},${y(p.rAdj)})`}>
                 <title>{p.desc}</title>
-                <circle r={2} fill={fill} fillOpacity={0.85} />
+                {hollow ? (
+                  <circle r={2} fill="#9ca3af" fillOpacity={0.85} />
+                ) : (
+                  <circle r={2} fill={color(p.outcome)} fillOpacity={0.85} />
+                )}
               </g>
             );
           })}
@@ -1502,17 +1493,23 @@ function InlineScatter({ points, showReversal = true }: { points: ScatterPoint[]
       </svg>
       <div className="mt-1 flex flex-wrap items-center gap-3 text-[10px]">
         <div className="flex items-center gap-1.5">
-          <span className="inline-block w-2.5 h-2.5 rounded" style={{ background: "#10b981" }} />
+          <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ background: "#10b981" }} />
           <span>Success</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="inline-block w-2.5 h-2.5 rounded" style={{ background: "#f87171" }} />
+          <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ background: "#f87171" }} />
           <span>Failure</span>
         </div>
         {showReversal && (
           <div className="flex items-center gap-1.5">
-            <span className="inline-block w-2.5 h-2.5 rounded" style={{ background: "#b91c1c" }} />
+            <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ background: "#b91c1c" }} />
             <span>Reversal</span>
+          </div>
+        )}
+        {markOrigNonsig && (
+          <div className="flex items-center gap-1.5">
+            <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ background: "#9ca3af" }} />
+            <span>Original effect not significant</span>
           </div>
         )}
       </div>
@@ -1642,7 +1639,7 @@ function niceStep(range: number): number {
 function RawESScatter({ points }: { points: RawScatterPoint[] }) {
   const width = 600;
   const height = 240;
-  const margin = { top: 10, right: 10, bottom: 45, left: 50 };
+  const margin = { top: 10, right: 10, bottom: 45, left: 58 };
   const innerW = width - margin.left - margin.right;
   const innerH = height - margin.top - margin.bottom;
 
@@ -1708,17 +1705,16 @@ function RawESScatter({ points }: { points: RawScatterPoint[] }) {
     <div className="relative">
       <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet" className="max-w-full h-auto">
         <g transform={`translate(${margin.left},${margin.top})`}>
-          <rect x={0} y={0} width={innerW} height={innerH} fill="#f3f4f6" />
           {xTicks.map((t) => (
             <g key={`x-${t}`} transform={`translate(${x(t)},${innerH})`}>
-              <line y1={0} y2={6} stroke="#111827" strokeWidth={1} />
-              <text y={20} textAnchor="middle" className="text-xs fill-current" style={{ opacity: 0.7 }}>{t}</text>
+              <line y1={0} y2={6} stroke="#000000" strokeWidth={1} />
+              <text y={20} textAnchor="middle" className="text-xs" fill="#000000">{t}</text>
             </g>
           ))}
           {yTicks.map((t) => (
             <g key={`y-${t}`} transform={`translate(0,${y(t)})`}>
-              <line x1={-6} x2={0} stroke="#111827" strokeWidth={1} />
-              <text x={-10} dy="0.32em" textAnchor="end" className="text-xs fill-current" style={{ opacity: 0.7 }}>{t}</text>
+              <line x1={-6} x2={0} stroke="#000000" strokeWidth={1} />
+              <text x={-10} dy="0.32em" textAnchor="end" className="text-xs" fill="#000000">{t}</text>
             </g>
           ))}
           {/* Diagonal y=x line */}
@@ -1733,8 +1729,8 @@ function RawESScatter({ points }: { points: RawScatterPoint[] }) {
           {xMin <= 0 && xMax >= 0 && (
             <line x1={x(0)} y1={0} x2={x(0)} y2={innerH} stroke="#9ca3af" strokeWidth={1} strokeDasharray="2 2" />
           )}
-          <text x={innerW / 2} y={innerH + 40} textAnchor="middle" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 10 }}>Original Effect Size (raw)</text>
-          <text x={-innerH / 2} y={-42} textAnchor="middle" transform="rotate(-90)" className="text-xs fill-current" style={{ opacity: 0.6, fontSize: 10 }}>Replication Effect Size (raw)</text>
+          <text x={innerW / 2} y={innerH + 40} textAnchor="middle" className="text-xs" fill="#000000" style={{ fontSize: 12 }}>Original Effect Size (raw)</text>
+          <text x={-innerH / 2} y={-46} textAnchor="middle" transform="rotate(-90)" className="text-xs" fill="#000000" style={{ fontSize: 12 }}>Replication Effect Size (raw)</text>
           {points.map((p, i) => {
             const cx = x(clampX(p.origES));
             const cy = y(clampY(p.repES));

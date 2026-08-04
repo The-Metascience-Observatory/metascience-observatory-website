@@ -41,38 +41,54 @@ PER-INITIATIVE
   3ie                    100% (n=9)
   ML1                    0% (n=1)
 
+CLUSTERING (rows are replication attempts, not independent findings)
+  representative: 1,061 rows from 594 papers = 1.79 rows/paper
+  harvested     : 6,996 rows from 5,134 papers = 1.36 rows/paper
+  worst offender: RP:CB 188 rows from 23 papers = 8.17 rows/paper
+
 TABLE A - initiatives vs. direct replications only (paste-ready)
 | Discipline | "Representative-sampled" initiatives | Literature-harvested (direct only) |
 |---|---|---|
 | Psychology | 58% (n=551) | 49% (n=302) |
-| Biology | 33% (n=198) | 38% (n=82) |
-| Neuroscience | 21% (n=29) | 56% (n=105) |
+| Biomedical | 31% (n=227) | 38% (n=82) |
 | Economics | 59% (n=29) | 53% (n=17) |
+| Education | 75% (n=16) | 90% (n=21) |
 
 TABLE B - initiatives vs. all harvested types (paste-ready)
 | Discipline | "Representative-sampled" initiatives | Literature-harvested (all types) |
 |---|---|---|
 | Psychology | 58% (n=551) | 59% (n=2,770) |
-| Biology | 33% (n=198) | 50% (n=361) |
-| Neuroscience | 21% (n=29) | 56% (n=549) |
+| Biomedical | 31% (n=227) | 50% (n=361) |
 | Linguistics | 66% (n=59) | 64% (n=121) |
 | Economics | 59% (n=29) | 57% (n=315) |
+| Education | 75% (n=16) | 84% (n=131) |
+| Business & management | 50% (n=4) | 67% (n=49) |
+| Political science | 25% (n=4) | 58% (n=72) |
+| Sociology | 50% (n=2) | 50% (n=50) |
 
-INITIATIVE ATTRIBUTION (definitive n)
-  psychology (551): SRP 145, Soto et al LOPPRP 118, RP:P 96, socsci_2026 84, XPHIR 40, EROE 26, SSRP 21, SMR 21
-  biology (198): RP:CB 132, BRI 66
-  neuroscience (29): BRI 29
-  linguistics (59): L2R:Marsden2018 50, SRP 9
-  economics (29): ExECON 18, socsci_2026 11
+INITIATIVE ATTRIBUTION (definitive n; papers = distinct originals)
+  Psychology (551; 395 papers): SRP 145, Soto et al LOPPRP 118, RP:P 96, socsci_2026 84, XPHIR 40, EROE 26, SSRP 21, SMR 21
+  Biomedical (227; 68 papers): RP:CB 132, BRI 95
+  Linguistics (59; 51 papers): L2R:Marsden2018 50, SRP 9
+  Economics (29; 29 papers): ExECON 18, socsci_2026 11
+  Education (16; 16 papers): L2R:Marsden2018 15, socsci_2026 1
+  Business & management (4; 5 papers): socsci_2026 4
+  Political science (4; 5 papers): socsci_2026 4
+  Sociology (2; 1 papers): SRP 2
 
-OMITTED DISCIPLINES (one column below n=20)
-  discipline: representative n / harvested n
-  AI and machine learning: 0 / 23
-  business & management: 4 / 49
-  education: 16 / 131
-  environmental science: 0 / 22
-  medical fields: 0 / 1204
-  political science: 4 / 72
-  sociology: 2 / 50
-  software engineering: 0 / 38
-  sports and exercise science: 23 / 0
+THIN ROWS shown anyway - the page footnote MUST disclose these
+  discipline: representative n / #initiatives - why
+  Education: 16 / 2 initiative(s) - below n=20
+  Business & management: 4 / 1 initiative(s) - below n=20
+  Political science: 4 / 1 initiative(s) - below n=20
+  Sociology: 2 / 1 initiative(s) - below n=20
+
+OMITTED DISCIPLINES (either column >= n=20)
+  discipline: representative n / harvested n  - reason
+  sports and exercise science: 23 / 0  - no harvested rows
+  criminology: 1 / 3  - harvested column below n=20
+  environmental science: 0 / 22  - no representative rows
+  medical fields: 0 / 1204  - no representative rows
+  software engineering: 0 / 38  - no representative rows
+  neuroscience: 0 / 549  - no representative rows
+  AI and machine learning: 0 / 23  - no representative rows

@@ -62,11 +62,31 @@ EXCLUDED = {"3ie"}
 STRICT_FRAMES = {"random_frame", "exhaustive_frame",
                  "quasi_random_frame_feasibility", "method_stratified"}
 
-# Disciplines shown in Tables A and B, in page order. A discipline earns a row
-# only where both columns are populated; see MIN_CELL.
-TABLE_DISCIPLINES = ["psychology", "biology", "neuroscience", "linguistics", "economics"]
-MIN_CELL = 20   # cells below this carry no information and are read as blank
-MIN_TABLE_A = 10  # a Table A row needs MORE harvested direct rows than this
+# Initiatives whose rows are counted under a single discipline regardless of
+# the `discipline` column. BRI is one preclinical biomedicine project that
+# stratified on three bench techniques (MTT, RT-PCR, elevated plus maze); only
+# the plus-maze arm is labelled neuroscience, and letting that arm stand as a
+# discipline of its own created a table row comparing 29 rodent anxiety
+# experiments (14 distinct papers) against mostly human fMRI/EEG work.
+FOLD_INTO_DISCIPLINE = {"BRI": "biology"}
+
+# `biology` is shown as "Biomedical": with BRI folded in it spans cancer/cell/
+# molecular biology, genetics and physiology on the harvested side and preclinical
+# animal work on the initiative side, which "biology" undersells.
+DISPLAY_LABEL = {"biology": "Biomedical"}
+
+# Table rows are derived, not hard-coded, so a new database version can add or
+# drop a discipline without anyone editing a list. A field earns a row only when
+# BOTH columns exist — a one-sided row is a coverage fact, not a comparison, and
+# is reported in the omitted list instead (that is what kept a BRI-only
+# "neuroscience" row out once BRI was folded into biomedical).
+MIN_CELL = 20     # a cell below this carries no information and is read as blank
+MIN_TABLE_B = 20  # Table B needs a real harvested sample; the initiative side may be thin
+MIN_TABLE_A = 10  # Table A additionally needs MORE harvested `direct` rows than this
+# A representative column drawn from one project describes that project, not the
+# field. No longer an exclusion (thin fields are shown deliberately) but it is
+# flagged in the report and must be disclosed in the page's footnote.
+MIN_INITIATIVES = 2
 
 
 def resolve_master(repo_root: Path) -> Path:
@@ -85,6 +105,20 @@ def field(row: dict, name: str) -> str:
     return (row.get(name) or "").strip()
 
 
+def discipline_of(row: dict) -> str:
+    """The discipline a row counts under, after folding split initiatives.
+
+    The `discipline` column splits BRI across biology and neuroscience by bench
+    technique; FOLD_INTO_DISCIPLINE keeps a single project in a single row.
+    """
+    tag = field(row, "replication_initiative_tag")
+    return FOLD_INTO_DISCIPLINE.get(tag, field(row, "discipline"))
+
+
+def label_of(discipline: str) -> str:
+    return DISPLAY_LABEL.get(discipline, discipline.capitalize())
+
+
 def rate(rows: list[dict]) -> tuple[int, int]:
     """Return (successes, denominator) under the frozen site-wide definition."""
     success = sum(1 for r in rows if field(r, "result").lower() == "success")
@@ -100,6 +134,30 @@ def pct(rows: list[dict]) -> int | None:
 def cell(rows: list[dict]) -> str:
     s, n = rate(rows)
     return f"{round(100 * s / n)}% (n={n:,})" if n else "—"
+
+
+def papers(rows: list[dict]) -> int:
+    """Distinct original papers behind a set of rows.
+
+    Multi-lab projects contribute one row per participating laboratory, so a
+    cell's row count can far exceed the number of independent findings in it.
+    """
+    return len({field(r, "original_url") for r in rows})
+
+
+def paper_level(rows: list[dict]) -> tuple[int | None, int]:
+    """Rate with each original paper counted once (majority of its effects)."""
+    by: dict[str, list[bool]] = {}
+    for r in rows:
+        v = field(r, "result").lower()
+        if v == "success":
+            by.setdefault(field(r, "original_url"), []).append(True)
+        elif v in ("failure", "reversal"):
+            by.setdefault(field(r, "original_url"), []).append(False)
+    if not by:
+        return None, 0
+    ok = [sum(v) / len(v) >= 0.5 for v in by.values()]
+    return round(100 * sum(ok) / len(ok)), len(ok)
 
 
 def two_proportion_p(a: list[dict], b: list[dict]) -> float:
@@ -164,7 +222,18 @@ def build(rows: list[dict]) -> dict:
             "direct_pct": pct([r for r in rows if field(r, "replication_type").lower() == "direct"]),
             "close_extension_pct": pct([r for r in rows if field(r, "replication_type").lower() == "close extension"]),
         },
+        # Clustering: initiative rows repeat per lab/outcome, harvested rows do
+        # not, so the two columns' n's are not equally strong evidence.
+        "clustering": {
+            "representative": (len(rep), papers(rep), len(rep) / papers(rep)),
+            "harvested": (len(har), papers(har), len(har) / papers(har)),
+            "worst": max(((t, len(g), papers(g), len(g) / papers(g))
+                          for t in REPRESENTATIVE
+                          for g in [[r for r in rows if tagged(r) == t]] if g),
+                         key=lambda x: x[3]),
+        },
         "initiatives": {}, "table_a": [], "table_b": [], "attribution": {}, "omitted": {},
+        "thin": [],
     }
 
     for tag in sorted(REPRESENTATIVE | TARGETED | EXCLUDED):
@@ -172,29 +241,39 @@ def build(rows: list[dict]) -> dict:
         if sub:
             out["initiatives"][tag] = (pct(sub), rate(sub)[1])
 
-    for disc in TABLE_DISCIPLINES:
-        in_disc = lambda rs: [r for r in rs if field(r, "discipline") == disc]  # noqa: E731
-        r_cells = in_disc(rep)
-        h_direct = [r for r in in_disc(har) if field(r, "replication_type").lower() == "direct"]
-        h_all = in_disc(har)
-        if rate(h_direct)[1] > MIN_TABLE_A and rate(r_cells)[1]:
-            out["table_a"].append((disc, cell(r_cells), cell(h_direct)))
-        if rate(h_all)[1] and rate(r_cells)[1]:
-            out["table_b"].append((disc, cell(r_cells), cell(h_all)))
+    # Rank by the size of the initiative column: that is the scarce side, and it
+    # puts the cells worth reading at the top of each table.
+    for disc in sorted({discipline_of(r) for r in rows if discipline_of(r)},
+                       key=lambda d: -rate([r for r in rep if discipline_of(r) == d])[1]):
+        r_cells = [r for r in rep if discipline_of(r) == disc]
+        h_all = [r for r in har if discipline_of(r) == disc]
+        h_direct = [r for r in h_all if field(r, "replication_type").lower() == "direct"]
+        r_n, h_n, hd_n = rate(r_cells)[1], rate(h_all)[1], rate(h_direct)[1]
 
         by_tag = {}
         for r in r_cells:
             by_tag.setdefault(tagged(r), []).append(r)
-        parts = [(t, rate(v)[1]) for t, v in by_tag.items() if rate(v)[1]]
-        if parts:
-            out["attribution"][disc] = (rate(r_cells)[1], sorted(parts, key=lambda kv: -kv[1]))
+        parts = sorted([(t, rate(v)[1]) for t, v in by_tag.items() if rate(v)[1]],
+                       key=lambda kv: -kv[1])
 
-    # Disciplines the tables deliberately leave out, with the reason.
-    for disc in sorted({field(r, "discipline") for r in rows if field(r, "discipline")}):
-        r_n = rate([r for r in rep if field(r, "discipline") == disc])[1]
-        h_n = rate([r for r in har if field(r, "discipline") == disc])[1]
-        if disc not in TABLE_DISCIPLINES and (r_n >= MIN_CELL or h_n >= MIN_CELL):
-            out["omitted"][disc] = (r_n, h_n)
+        # One-sided fields are a coverage fact, not a comparison.
+        if not r_n or not h_n:
+            if r_n >= MIN_CELL or h_n >= MIN_CELL:
+                out["omitted"][disc] = (r_n, h_n,
+                                        "no representative rows" if not r_n else "no harvested rows")
+            continue
+        if h_n < MIN_TABLE_B:
+            out["omitted"][disc] = (r_n, h_n, f"harvested column below n={MIN_TABLE_B}")
+            continue
+
+        out["table_b"].append((disc, cell(r_cells), cell(h_all)))
+        if hd_n > MIN_TABLE_A:
+            out["table_a"].append((disc, cell(r_cells), cell(h_direct)))
+        out["attribution"][disc] = (r_n, parts, papers(r_cells))
+        # Disclosed in the page footnote rather than excluded.
+        if r_n < MIN_CELL or len(parts) < MIN_INITIATIVES:
+            out["thin"].append((disc, r_n, len(parts),
+                                "below n=%d" % MIN_CELL if r_n < MIN_CELL else "single initiative"))
 
     return out
 
@@ -229,21 +308,37 @@ def render(res: dict, master: Path) -> str:
     ]
     for tag, (p, n) in sorted(res["initiatives"].items(), key=lambda kv: -kv[1][1]):
         L.append(f"  {tag:22} {p}% (n={n:,})")
-    L += ["", "TABLE A - initiatives vs. direct replications only (paste-ready)",
-          "| Discipline | \"Representative-sampled\" initiatives | Literature-harvested (direct only) |",
-          "|---|---|---|"]
-    L += [f"| {d.capitalize()} | {a} | {b} |" for d, a, b in res["table_a"]]
+    rc, hc = res["clustering"]["representative"], res["clustering"]["harvested"]
+    wt, wr, wp, wratio = res["clustering"]["worst"]
+    L += [
+        "",
+        "CLUSTERING (rows are replication attempts, not independent findings)",
+        f"  representative: {rc[0]:,} rows from {rc[1]:,} papers = {rc[2]:.2f} rows/paper",
+        f"  harvested     : {hc[0]:,} rows from {hc[1]:,} papers = {hc[2]:.2f} rows/paper",
+        f"  worst offender: {wt} {wr} rows from {wp} papers = {wratio:.2f} rows/paper",
+        "",
+        "TABLE A - initiatives vs. direct replications only (paste-ready)",
+        "| Discipline | \"Representative-sampled\" initiatives | Literature-harvested (direct only) |",
+        "|---|---|---|",
+    ]
+    L += [f"| {label_of(d)} | {a} | {b} |" for d, a, b in res["table_a"]]
     L += ["", "TABLE B - initiatives vs. all harvested types (paste-ready)",
           "| Discipline | \"Representative-sampled\" initiatives | Literature-harvested (all types) |",
           "|---|---|---|"]
-    L += [f"| {d.capitalize()} | {a} | {b} |" for d, a, b in res["table_b"]]
-    L += ["", "INITIATIVE ATTRIBUTION (definitive n)"]
-    for disc, (total, parts) in res["attribution"].items():
-        L.append(f"  {disc} ({total}): " + ", ".join(f"{t} {n}" for t, n in parts))
-    L += ["", f"OMITTED DISCIPLINES (one column below n={MIN_CELL})",
-          "  discipline: representative n / harvested n"]
-    for disc, (r_n, h_n) in res["omitted"].items():
-        L.append(f"  {disc}: {r_n} / {h_n}")
+    L += [f"| {label_of(d)} | {a} | {b} |" for d, a, b in res["table_b"]]
+    L += ["", "INITIATIVE ATTRIBUTION (definitive n; papers = distinct originals)"]
+    for disc, (total, parts, n_papers) in res["attribution"].items():
+        L.append(f"  {label_of(disc)} ({total}; {n_papers} papers): "
+                 + ", ".join(f"{t} {n}" for t, n in parts))
+    L += ["", "THIN ROWS shown anyway - the page footnote MUST disclose these",
+          "  discipline: representative n / #initiatives - why"]
+    for disc, r_n, k, why in res["thin"]:
+        L.append(f"  {label_of(disc)}: {r_n} / {k} initiative(s) - {why}")
+    if not res["thin"]: L.append("  none")
+    L += ["", f"OMITTED DISCIPLINES (either column >= n={MIN_CELL})",
+          "  discipline: representative n / harvested n  - reason"]
+    for disc, (r_n, h_n, reason) in res["omitted"].items():
+        L.append(f"  {disc}: {r_n} / {h_n}  - {reason}")
     return "\n".join(L) + "\n"
 
 
@@ -267,18 +362,25 @@ def check(res: dict, md_path: Path) -> int:
     want("direct rate", f"direct **{res['design']['direct_pct']}%**")
     want("close extension rate", f"close extensions **{res['design']['close_extension_pct']}%**")
     for d, a, b in res["table_a"]:
-        want(f"Table A {d}", f"| {d.capitalize()} | {a} | {b} |")
+        want(f"Table A {d}", f"| {label_of(d)} | {a} | {b} |")
     for d, a, b in res["table_b"]:
-        want(f"Table B {d}", f"| {d.capitalize()} | {a} | {b} |")
+        want(f"Table B {d}", f"| {label_of(d)} | {a} | {b} |")
 
-    # Any discipline row on the page that the data no longer supports.
-    for row in re.findall(r"^\| ([A-Z][a-z ]+) \| \d+% \(n=[\d,]+\) \| \d+% \(n=([\d,]+)\) \|$",
+    # Any discipline row on the page that the rules would not have produced —
+    # this is the check that would have caught the BRI-only "Neuroscience" row.
+    allowed = {label_of(d) for d, _, _ in res["table_a"]} | {label_of(d) for d, _, _ in res["table_b"]}
+    for row in re.findall(r"^\| ([A-Z][A-Za-z& ]+?) \| \d+% \(n=[\d,]+\) \| \d+% \(n=([\d,]+)\) \|$",
                           md, re.MULTILINE):
-        name, n = row[0].strip().lower(), int(row[1].replace(",", ""))
-        if name not in TABLE_DISCIPLINES:
-            problems.append(f"page shows discipline {name!r}, which is not in TABLE_DISCIPLINES")
-        if n <= MIN_TABLE_A:
-            problems.append(f"page shows {name} with harvested n={n}, not above MIN_TABLE_A={MIN_TABLE_A}")
+        name = row[0].strip()
+        if name not in allowed:
+            problems.append(f"page shows a {name!r} row; allowed labels are {sorted(allowed)}")
+
+    # A thin or single-project column may ship, but only if the footnote says so.
+    for disc, r_n, k, why in res["thin"]:
+        label = label_of(disc)
+        if label.lower() not in md.lower():
+            problems.append(f"{label} is a thin row ({why}, n={r_n}, {k} initiative(s)) "
+                            f"but is not named anywhere in the page's caveats")
 
     if problems:
         print(f"DRIFT: {len(problems)} figure(s) on {md_path.name} disagree with the database\n")

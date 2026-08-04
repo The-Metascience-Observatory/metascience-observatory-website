@@ -636,9 +636,18 @@ export function ImpactFactorDashboard({
           <strong>Metric sources.</strong> The <em>2-year</em> and <em>5-year impact
           factors</em> and the <em>CiteScore</em>-style 4-year metric are self-computed from
           the SciSciNet-v2 / OpenAlex citation graph &mdash; not the official Clarivate
-          Journal Impact Factor&trade; or Scopus CiteScore. They use all document types with
-          no self-citation exclusion and run systematically lower than the vendor figures, so
-          treat them as internally consistent relative indicators. <em>OpenAlex 2-year mean
+          Journal Impact Factor&trade; or Scopus CiteScore, which are proprietary. They differ
+          from the vendor figures in two ways that pull in opposite directions. Their
+          denominator counts <em>every</em> document a venue publishes, where the real JIF
+          counts only &ldquo;citable items&rdquo; (articles and reviews), so journals carrying
+          heavy front matter or conference abstracts are pushed down sharply &mdash; the
+          effect is severe enough that <em>Cancer Research</em>, which publishes thousands of
+          meeting abstracts, lands near 0.6. Their numerator, meanwhile, draws on a broader
+          citation graph than Web of Science, which pushes figures up. Deflation usually wins:
+          against the citable-denominator metric below, 85% of journals here come out lower
+          (median ratio 0.80), but 12% come out higher. Treat them as internally consistent
+          relative indicators rather than as JIF estimates, and prefer the citable-denominator
+          metric when comparing across journals of different types. <em>OpenAlex 2-year mean
           citedness</em> is OpenAlex&rsquo;s own published impact-factor-like metric, fetched
           from the OpenAlex API as a single current snapshot (it does not vary by year).{" "}
           <em>SCImago SJR</em> is a prestige-weighted metric (citations weighted by the

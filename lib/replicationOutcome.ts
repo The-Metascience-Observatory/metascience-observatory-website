@@ -267,6 +267,25 @@ export function computeSignificanceOutcome(
 }
 
 /**
+ * Was the original effect statistically significant (p < 0.05)?
+ *
+ * Mirrors the p-value preference of the significance criterion: the stored
+ * original_p_value wins when present; otherwise p is computed from the
+ * normalized r and original N. Returns null when neither source can settle it.
+ */
+export function isOriginalSignificant(row: AnyRecord): boolean | null {
+  const pCSV = toNumber(row.original_p_value);
+  if (pCSV != null && Number.isFinite(pCSV)) return pCSV < 0.05;
+  const eO_r = toValidR(row.original_es_r);
+  const nO = toNumber(row.original_n ?? row.n_original);
+  if (eO_r != null && nO != null) {
+    const p = pValueFromR(eO_r, nO);
+    if (p != null) return p < 0.05;
+  }
+  return null;
+}
+
+/**
  * Compute 95% confidence interval for correlation coefficient using Fisher z-transformation.
  * This matches the FReD R package's compute_ci_r() function.
  *
