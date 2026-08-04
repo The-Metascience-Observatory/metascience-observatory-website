@@ -89,7 +89,9 @@ const articles: ArticleMeta[] = [
 ];
 
 // Mirrors the link cluster on the replications database page itself, minus its
-// "Show other pages" disclosure control (which is UI, not a page).
+// "Show other pages" disclosure control (which is UI, not a page) and minus the
+// correlates-of-reproducibility summary, which is deliberately not surfaced here
+// (it is still linked from the replications database page).
 const replicationsDatabasePages: DocMeta[] = [
   {
     href: "/replications-database/by-discipline",
@@ -126,10 +128,6 @@ const replicationsDatabasePages: DocMeta[] = [
   {
     href: "/replications-database/by-year",
     title: "Replication rate by year",
-  },
-  {
-    href: "/replications-database/correlates-of-reproducibility",
-    title: "Correlates of reproducibility (summary)",
   },
 ];
 
