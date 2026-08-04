@@ -57,14 +57,14 @@ const projectOverviews: ArticleMeta[] = [
 const articles: ArticleMeta[] = [
   {
     href: "https://moreisdifferent.blog/p/what-weve-learned-so-far-at-the-metascience",
-    title: "What we've learned so far",
+    title: "What we've learned\nso far",
     image: "/assets/woodcut_square_crops/1556_agricola_digging.png",
     alt:
       "Woodcut of two miners sorting ore into a pan, from Agricola's De re metallica (1556)",
   },
   {
     href: "/replication-initiatives",
-    title: "Replication initiatives",
+    title: "Replication\ninitiatives",
     image: "/assets/woodcut_square_crops/john_milton_watch_1631.png",
     alt: "Engraving of John Milton's 1631 pocket watch",
   },
@@ -76,7 +76,7 @@ const articles: ArticleMeta[] = [
   },
   {
     href: "/docs/defining-replication",
-    title: "Defining replication",
+    title: "Defining\nreplication",
     image: "/assets/woodcut_square_crops/compass_square.png",
     alt: "Woodcut of a weather vane compass",
   },
@@ -190,6 +190,11 @@ const substackArticles: SubstackMeta[] = [
 ];
 
 const newsletters: SubstackMeta[] = [
+  {
+    date: "2026-08-04",
+    title: "Newsletter #3 — Q2, 2026",
+    href: "https://metascienceobservatory.substack.com/p/newsletter-3-q2-2026",
+  },
   {
     date: "2026-04-23",
     title: "Newsletter #2 — Q1, 2026",
