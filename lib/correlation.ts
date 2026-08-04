@@ -106,3 +106,73 @@ export function correlate(
   const r = method === "spearman" ? spearman(xs, ys) : pearson(xs, ys);
   return inference(r, Math.min(xs.length, ys.length));
 }
+
+// Seeded PRNG — the same convention the dashboard bootstraps use, so the
+// intervals are deterministic at build time.
+function mulberry32(seed: number): () => number {
+  let a = seed >>> 0;
+  return () => {
+    a |= 0;
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/**
+ * Cluster-bootstrap 95% percentile CI for a correlation: resample clusters
+ * (papers) with replacement and recompute the coefficient each draw.
+ *
+ * `inference()`'s Fisher-z interval assumes independent pairs; replication
+ * rows cluster by original paper (multi-lab projects contribute up to eight
+ * rows per paper, and most predictors are constant within paper), so the
+ * independence CI would be anticonservative. Resampling whole papers
+ * propagates that clustering — the same reasoning as bootstrapBinCIs in the
+ * by-* dashboards.
+ */
+export function clusterBootstrapCorrCI(
+  xs: number[],
+  ys: number[],
+  clusters: (number | string)[],
+  method: "pearson" | "spearman" = "pearson",
+  opts?: { iters?: number; seed?: number },
+): { lo: number; hi: number; nClusters: number } {
+  const n = Math.min(xs.length, ys.length, clusters.length);
+  const byCluster = new Map<number | string, number[]>();
+  for (let i = 0; i < n; i++) {
+    const arr = byCluster.get(clusters[i]);
+    if (arr) arr.push(i);
+    else byCluster.set(clusters[i], [i]);
+  }
+  const groups = Array.from(byCluster.values());
+  const nClusters = groups.length;
+  if (nClusters < 2) return { lo: NaN, hi: NaN, nClusters };
+
+  const iters = opts?.iters ?? 1000;
+  const rand = mulberry32((opts?.seed ?? 0x9e3779b9) ^ n);
+  const corr = method === "spearman" ? spearman : pearson;
+  const draws: number[] = [];
+  const bx: number[] = [];
+  const by: number[] = [];
+  for (let b = 0; b < iters; b++) {
+    bx.length = 0;
+    by.length = 0;
+    for (let g = 0; g < nClusters; g++) {
+      const pick = groups[(rand() * nClusters) | 0];
+      for (const i of pick) {
+        bx.push(xs[i]);
+        by.push(ys[i]);
+      }
+    }
+    const r = corr(bx, by);
+    if (Number.isFinite(r)) draws.push(r);
+  }
+  if (draws.length === 0) return { lo: NaN, hi: NaN, nClusters };
+  draws.sort((a, b) => a - b);
+  return {
+    lo: draws[Math.floor(0.025 * (draws.length - 1))],
+    hi: draws[Math.ceil(0.975 * (draws.length - 1))],
+    nClusters,
+  };
+}

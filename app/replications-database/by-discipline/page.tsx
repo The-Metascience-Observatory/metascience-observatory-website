@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { ChevronDown, ChevronRight } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { RetentionSwarm } from "./RetentionSwarm";
@@ -26,6 +27,15 @@ type DisciplineRow = {
   ciHigh: number;
 };
 
+type SubRow = Omit<DisciplineRow, "discipline"> & { subdiscipline: string };
+
+type DisciplineNode = DisciplineRow & { subs: SubRow[] };
+
+type BarStats = Pick<
+  DisciplineRow,
+  "replicated" | "notReplicated" | "total" | "replicatedPct" | "notReplicatedPct" | "ciLow" | "ciHigh"
+>;
+
 // Wilson score 95% CI for a proportion k/n
 function wilsonCI(k: number, n: number): [number, number] {
   if (n === 0) return [0, 100];
@@ -41,7 +51,13 @@ type SortKey = "discipline" | "replicatedPct" | "total";
 type SortDir = "asc" | "desc";
 
 const MIN_PAPERS = 20;
-const MIN_PAPERS_SUBDISCIPLINE = 20;
+const SUB_MIN_PAPERS_OPTIONS = [5, 10, 20];
+
+const REPLICATED_COLOR = "#10b981";
+const NOT_REPLICATED_COLOR = "#f87171";
+// Lighter shades for the subdiscipline child rows
+const REPLICATED_COLOR_SUB = "#6ee7b7";
+const NOT_REPLICATED_COLOR_SUB = "#fca5a5";
 
 const THRESHOLD_OPTIONS = [
   { value: 0.5, label: "50%" },
@@ -50,20 +66,20 @@ const THRESHOLD_OPTIONS = [
   { value: 1.0, label: "100%" },
 ];
 
-function BarCell({ d, showCI }: { d: DisciplineRow; showCI: boolean }) {
+function BarCell({ d, showCI, compact }: { d: BarStats; showCI: boolean; compact?: boolean }) {
   return (
-    <td className="p-2">
+    <td className={compact ? "p-1" : "p-2"}>
       <div
-        className="relative h-7"
+        className={compact ? "relative h-5" : "relative h-7"}
         title={`Replicated: ${d.replicated}/${d.total} (${d.replicatedPct.toFixed(1)}%) · 95% CI: [${d.ciLow.toFixed(1)}%–${d.ciHigh.toFixed(1)}%]`}
       >
         <div className="absolute inset-0 rounded overflow-hidden">
           <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800" />
           {d.replicatedPct > 0 && (
-            <div className="absolute top-0 left-0 h-full" style={{ width: `${d.replicatedPct}%`, background: "#10b981" }} />
+            <div className="absolute top-0 left-0 h-full" style={{ width: `${d.replicatedPct}%`, background: compact ? REPLICATED_COLOR_SUB : REPLICATED_COLOR }} />
           )}
           {d.notReplicatedPct > 0 && (
-            <div className="absolute top-0 h-full" style={{ left: `${d.replicatedPct}%`, width: `${d.notReplicatedPct}%`, background: "#f87171" }} />
+            <div className="absolute top-0 h-full" style={{ left: `${d.replicatedPct}%`, width: `${d.notReplicatedPct}%`, background: compact ? NOT_REPLICATED_COLOR_SUB : NOT_REPLICATED_COLOR }} />
           )}
         </div>
         {showCI && (
@@ -73,7 +89,7 @@ function BarCell({ d, showCI }: { d: DisciplineRow; showCI: boolean }) {
             <div className="absolute bg-white" style={{ top: "25%", height: "50%", width: "2px", left: `${d.ciHigh}%`, zIndex: 10 }} />
           </>
         )}
-        <div className="absolute top-0 h-full flex items-center text-base font-bold text-gray-900 dark:text-gray-100 pointer-events-none" style={{ left: `${d.replicatedPct}%`, transform: "translateX(-50%)", zIndex: 12, textShadow: "0 0 4px rgba(255,255,255,0.9), 0 0 8px rgba(255,255,255,0.7)" }}>{d.replicatedPct.toFixed(0)}%</div>
+        <div className={`absolute top-0 h-full flex items-center ${compact ? "text-xs font-semibold" : "text-base font-bold"} text-gray-900 dark:text-gray-100 pointer-events-none`} style={{ left: `${d.replicatedPct}%`, transform: "translateX(-50%)", zIndex: 12, textShadow: "0 0 4px rgba(255,255,255,0.9), 0 0 8px rgba(255,255,255,0.7)" }}>{d.replicatedPct.toFixed(0)}%</div>
       </div>
     </td>
   );
@@ -112,8 +128,9 @@ export default function ByDisciplinePage() {
   const [showCI, setShowCI] = useState(false);
   const [sortKey, setSortKey] = useState<SortKey>("total");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
-  const [subSortKey, setSubSortKey] = useState<SortKey>("total");
-  const [subSortDir, setSubSortDir] = useState<SortDir>("desc");
+  const [minSubPapers, setMinSubPapers] = useState(10);
+  // Disciplines whose subdiscipline rows are hidden. Empty = all expanded.
+  const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
 
   function toggleSort(key: SortKey) {
     if (sortKey === key) {
@@ -124,13 +141,13 @@ export default function ByDisciplinePage() {
     }
   }
 
-  function toggleSubSort(key: SortKey) {
-    if (subSortKey === key) {
-      setSubSortDir(d => d === "asc" ? "desc" : "asc");
-    } else {
-      setSubSortKey(key);
-      setSubSortDir(key === "discipline" ? "asc" : "desc");
-    }
+  function toggleCollapsed(name: string) {
+    setCollapsed(prev => {
+      const next = new Set(prev);
+      if (next.has(name)) next.delete(name);
+      else next.add(name);
+      return next;
+    });
   }
 
   useEffect(() => {
@@ -173,12 +190,12 @@ export default function ByDisciplinePage() {
     );
   }, [data, replicationType]);
 
-  const byDiscipline: DisciplineRow[] = useMemo(() => {
+  const byDiscipline: DisciplineNode[] = useMemo(() => {
     if (!data) return [];
 
     const papers = new Map<
       string,
-      { disciplines: string[]; successCount: number; totalCount: number }
+      { disciplines: string[]; sub: string; successCount: number; totalCount: number }
     >();
 
     for (const r of filteredRows) {
@@ -186,6 +203,10 @@ export default function ByDisciplinePage() {
       const raw = String(r.discipline ?? "");
       const parts = raw.split(",").map((s) => s.trim()).filter(Boolean);
       const disciplines = parts.length > 0 ? parts : ["Unspecified"];
+      // Subdiscipline is a single ontology term — never comma-split it: the
+      // only comma-containing value is the term "management, monitoring,
+      // policy and law", which splitting would shred into phantom subs.
+      const sub = String(r.subdiscipline ?? "").trim();
       // Canonical rule: reversal counts as a failure, inconclusive and
       // unrecorded outcomes stay out of the denominator entirely.
       const outcome = toBinary(classifyReportedResult(r.result));
@@ -195,7 +216,7 @@ export default function ByDisciplinePage() {
 
       let paper = papers.get(url);
       if (!paper) {
-        paper = { disciplines, successCount: 0, totalCount: 0 };
+        paper = { disciplines, sub, successCount: 0, totalCount: 0 };
         papers.set(url, paper);
       }
 
@@ -207,7 +228,11 @@ export default function ByDisciplinePage() {
 
     const disciplineCounts = new Map<
       string,
-      { replicated: number; notReplicated: number }
+      {
+        replicated: number;
+        notReplicated: number;
+        subs: Map<string, { replicated: number; notReplicated: number }>;
+      }
     >();
 
     for (const paper of papers.values()) {
@@ -217,10 +242,11 @@ export default function ByDisciplinePage() {
       const isReplicated = rate >= threshold;
 
       for (const d of paper.disciplines) {
-        const entry = disciplineCounts.get(d) || {
-          replicated: 0,
-          notReplicated: 0,
-        };
+        let entry = disciplineCounts.get(d);
+        if (!entry) {
+          entry = { replicated: 0, notReplicated: 0, subs: new Map() };
+          disciplineCounts.set(d, entry);
+        }
 
         if (isReplicated) {
           entry.replicated++;
@@ -228,121 +254,65 @@ export default function ByDisciplinePage() {
           entry.notReplicated++;
         }
 
-        disciplineCounts.set(d, entry);
+        // Papers without a subdiscipline count toward the parent only.
+        if (paper.sub) {
+          let subEntry = entry.subs.get(paper.sub);
+          if (!subEntry) {
+            subEntry = { replicated: 0, notReplicated: 0 };
+            entry.subs.set(paper.sub, subEntry);
+          }
+          if (isReplicated) {
+            subEntry.replicated++;
+          } else {
+            subEntry.notReplicated++;
+          }
+        }
       }
     }
+
+    const toStats = (v: { replicated: number; notReplicated: number }): BarStats => {
+      const total = v.replicated + v.notReplicated;
+      const [ciLow, ciHigh] = wilsonCI(v.replicated, total);
+      return {
+        ...v,
+        total,
+        replicatedPct: total > 0 ? (v.replicated / total) * 100 : 0,
+        notReplicatedPct: total > 0 ? (v.notReplicated / total) * 100 : 0,
+        ciLow,
+        ciHigh,
+      };
+    };
 
     return Array.from(disciplineCounts.entries())
-      .map(([discipline, v]) => {
-        const total = v.replicated + v.notReplicated;
-        const [ciLow, ciHigh] = wilsonCI(v.replicated, total);
-        return {
-          discipline,
-          ...v,
-          total,
-          replicatedPct: total > 0 ? (v.replicated / total) * 100 : 0,
-          notReplicatedPct: total > 0 ? (v.notReplicated / total) * 100 : 0,
-          ciLow,
-          ciHigh,
-        };
-      })
+      .map(([discipline, v]) => ({
+        discipline,
+        ...toStats(v),
+        subs: Array.from(v.subs.entries())
+          .map(([subdiscipline, sv]) => ({ subdiscipline, ...toStats(sv) }))
+          // A sub identical in name to its parent (e.g. "sports and exercise
+          // science") would just duplicate the parent row — suppress it.
+          .filter((s) => s.total >= minSubPapers && s.subdiscipline !== discipline),
+      }))
       .filter((d) => d.total >= MIN_PAPERS);
-  }, [data, filteredRows, threshold]);
-
-  const bySubdiscipline: DisciplineRow[] = useMemo(() => {
-    if (!data) return [];
-
-    const papers = new Map<
-      string,
-      { subdisciplines: string[]; successCount: number; totalCount: number }
-    >();
-
-    for (const r of filteredRows) {
-      const url = String(r.original_url ?? "").trim();
-      const raw = String(r.subdiscipline ?? "");
-      const parts = raw.split(",").map((s) => s.trim()).filter(Boolean);
-      const subdisciplines = parts.length > 0 ? parts : [];
-      const outcome = toBinary(classifyReportedResult(r.result));
-
-      if (!url || subdisciplines.length === 0) continue;
-      if (outcome === null) continue;
-
-      let paper = papers.get(url);
-      if (!paper) {
-        paper = { subdisciplines, successCount: 0, totalCount: 0 };
-        papers.set(url, paper);
-      }
-
-      paper.totalCount++;
-      if (outcome === "success") {
-        paper.successCount++;
-      }
-    }
-
-    const subdisciplineCounts = new Map<
-      string,
-      { replicated: number; notReplicated: number }
-    >();
-
-    for (const paper of papers.values()) {
-      if (paper.totalCount === 0) continue;
-
-      const rate = paper.successCount / paper.totalCount;
-      const isReplicated = rate >= threshold;
-
-      for (const s of paper.subdisciplines) {
-        const entry = subdisciplineCounts.get(s) || {
-          replicated: 0,
-          notReplicated: 0,
-        };
-
-        if (isReplicated) {
-          entry.replicated++;
-        } else {
-          entry.notReplicated++;
-        }
-
-        subdisciplineCounts.set(s, entry);
-      }
-    }
-
-    return Array.from(subdisciplineCounts.entries())
-      .map(([discipline, v]) => {
-        const total = v.replicated + v.notReplicated;
-        const [ciLow, ciHigh] = wilsonCI(v.replicated, total);
-        return {
-          discipline,
-          ...v,
-          total,
-          replicatedPct: total > 0 ? (v.replicated / total) * 100 : 0,
-          notReplicatedPct: total > 0 ? (v.notReplicated / total) * 100 : 0,
-          ciLow,
-          ciHigh,
-        };
-      })
-      .filter((d) => d.total >= MIN_PAPERS_SUBDISCIPLINE);
-  }, [data, filteredRows, threshold]);
+  }, [data, filteredRows, threshold, minSubPapers]);
 
   const sortedDisciplines = useMemo(() => {
-    const sorted = [...byDiscipline].sort((a, b) => {
-      if (sortKey === "discipline") return a.discipline.localeCompare(b.discipline);
-      return a[sortKey] - b[sortKey];
-    });
+    const cmpDiscipline = (a: DisciplineNode, b: DisciplineNode) =>
+      sortKey === "discipline" ? a.discipline.localeCompare(b.discipline) : a[sortKey] - b[sortKey];
+    const cmpSub = (a: SubRow, b: SubRow) =>
+      sortKey === "discipline" ? a.subdiscipline.localeCompare(b.subdiscipline) : a[sortKey] - b[sortKey];
+
+    const sorted = byDiscipline.map((d) => {
+      const subs = [...d.subs].sort(cmpSub);
+      if (sortDir === "desc") subs.reverse();
+      return { ...d, subs };
+    }).sort(cmpDiscipline);
     if (sortDir === "desc") sorted.reverse();
     return sorted;
   }, [byDiscipline, sortKey, sortDir]);
 
-  const sortedSubdisciplines = useMemo(() => {
-    const sorted = [...bySubdiscipline].sort((a, b) => {
-      if (subSortKey === "discipline") return a.discipline.localeCompare(b.discipline);
-      return a[subSortKey] - b[subSortKey];
-    });
-    if (subSortDir === "desc") sorted.reverse();
-    return sorted;
-  }, [bySubdiscipline, subSortKey, subSortDir]);
-
   const totalPapers = byDiscipline.reduce((sum, d) => sum + d.total, 0);
-  const totalSubdisciplinePapers = bySubdiscipline.reduce((sum, d) => sum + d.total, 0);
+  const totalSubdisciplines = byDiscipline.reduce((sum, d) => sum + d.subs.length, 0);
 
   if (loading) return <main className="min-h-screen px-6 py-10">Loading…</main>;
   if (error || !data) return <main className="min-h-screen px-6 py-10">Failed to load: {error || "No data"}</main>;
@@ -360,7 +330,9 @@ export default function ByDisciplinePage() {
               Paper-level analysis: a paper is considered &ldquo;replicated&rdquo; if at
               least {Math.round(threshold * 100)}% of its effect replications
               were successful. Only disciplines with {MIN_PAPERS}+ papers shown.
-              Click a discipline name to view its entries in the database explorer.
+              Subdisciplines with {minSubPapers}+ papers are nested under each
+              discipline; click the chevron to collapse them. Click a name to
+              view its entries in the database explorer.
             </p>
             <SuccessRateNote
               unit="paper"
@@ -414,6 +386,24 @@ export default function ByDisciplinePage() {
               </select>
             </label>
 
+            {/* Subdiscipline min-papers selector */}
+            <label className="flex items-center gap-2 text-sm">
+              <span className="text-gray-600 dark:text-gray-300">
+                Min papers per subdiscipline:
+              </span>
+              <select
+                value={minSubPapers}
+                onChange={(e) => setMinSubPapers(Number(e.target.value))}
+                className="border border-gray-300 dark:border-gray-600 rounded px-2 py-1 bg-white dark:bg-gray-800 text-sm"
+              >
+                {SUB_MIN_PAPERS_OPTIONS.map((n) => (
+                  <option key={n} value={n}>
+                    {n}
+                  </option>
+                ))}
+              </select>
+            </label>
+
             <label className="flex items-center gap-2 text-sm cursor-pointer">
               <input
                 type="checkbox"
@@ -429,15 +419,15 @@ export default function ByDisciplinePage() {
             {/* Legend */}
             <div className="flex gap-6 text-sm">
               <span className="flex items-center gap-2">
-                <span className="inline-block w-3 h-3 rounded" style={{ background: "#10b981" }} /> Replicated
+                <span className="inline-block w-3 h-3 rounded" style={{ background: REPLICATED_COLOR }} /> Replicated
               </span>
               <span className="flex items-center gap-2">
-                <span className="inline-block w-3 h-3 rounded" style={{ background: "#f87171" }} /> Not replicated
+                <span className="inline-block w-3 h-3 rounded" style={{ background: NOT_REPLICATED_COLOR }} /> Not replicated
               </span>
             </div>
 
             <span className="text-sm text-gray-500 dark:text-gray-400">
-              {byDiscipline.length} disciplines &middot; {totalPapers} papers
+              {byDiscipline.length} disciplines &middot; {totalSubdisciplines} subdisciplines &middot; {totalPapers} papers
             </span>
           </div>
 
@@ -452,82 +442,58 @@ export default function ByDisciplinePage() {
                 </tr>
               </thead>
               <tbody>
-                {sortedDisciplines.map((d) => (
-                  <tr key={d.discipline} className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900/40">
-                    <td className="p-2 text-left">
-                      <Link
-                        href={`/replications-database?discipline=${encodeURIComponent(d.discipline)}`}
-                        className="text-blue-600 dark:text-blue-400 hover:underline"
-                      >
-                        {d.discipline}
-                      </Link>
-                    </td>
-                    <BarCell d={d} showCI={showCI} />
-                    <td className="p-2 text-right tabular-nums">{d.total}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* Subdiscipline section */}
-        <div className="max-w-4xl mx-auto space-y-8 mt-16">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
-              Paper Replication Success by Subdiscipline
-            </h2>
-            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-              Same paper-level methodology as above. Only subdisciplines with {MIN_PAPERS_SUBDISCIPLINE}+ papers shown.
-              Click a subdiscipline name to view its entries in the database explorer.
-            </p>
-            <SuccessRateNote
-              unit="paper"
-              n={totalSubdisciplinePapers}
-              threshold={threshold}
-              filter={`subdisciplines with ${MIN_PAPERS_SUBDISCIPLINE}+ papers`}
-              className="mt-2"
-            />
-          </div>
-
-          <div className="flex flex-wrap items-center gap-6">
-            <div className="flex gap-6 text-sm">
-              <span className="flex items-center gap-2">
-                <span className="inline-block w-3 h-3 rounded" style={{ background: "#10b981" }} /> Replicated
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="inline-block w-3 h-3 rounded" style={{ background: "#f87171" }} /> Not replicated
-              </span>
-            </div>
-            <span className="text-sm text-gray-500 dark:text-gray-400">
-              {bySubdiscipline.length} subdisciplines &middot; {totalSubdisciplinePapers} papers
-            </span>
-          </div>
-
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-gray-200 dark:border-gray-700">
-                  <SortHeader label="Subdiscipline" sortKey="discipline" currentKey={subSortKey} dir={subSortDir} onSort={toggleSubSort} align="left" />
-                  <SortHeader label="Replication Success Rate" sortKey="replicatedPct" currentKey={subSortKey} dir={subSortDir} onSort={toggleSubSort} align="left" style={{ minWidth: "12rem" }} />
-                  <SortHeader label="Total Papers" sortKey="total" currentKey={subSortKey} dir={subSortDir} onSort={toggleSubSort} align="right" />
-                </tr>
-              </thead>
-              <tbody>
-                {sortedSubdisciplines.map((d) => (
-                  <tr key={d.discipline} className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900/40">
-                    <td className="p-2 text-left">
-                      <Link
-                        href={`/replications-database?subdiscipline=${encodeURIComponent(d.discipline)}`}
-                        className="text-blue-600 dark:text-blue-400 hover:underline"
-                      >
-                        {d.discipline}
-                      </Link>
-                    </td>
-                    <BarCell d={d} showCI={showCI} />
-                    <td className="p-2 text-right tabular-nums">{d.total}</td>
-                  </tr>
-                ))}
+                {sortedDisciplines.map((d) => {
+                  const isCollapsed = collapsed.has(d.discipline);
+                  const hasSubs = d.subs.length > 0;
+                  return (
+                    <Fragment key={d.discipline}>
+                      <tr className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900/40">
+                        <td className="p-2 text-left">
+                          <div className="flex items-center gap-1">
+                            {hasSubs ? (
+                              <button
+                                type="button"
+                                onClick={() => toggleCollapsed(d.discipline)}
+                                aria-expanded={!isCollapsed}
+                                aria-label={`${isCollapsed ? "Expand" : "Collapse"} ${d.discipline} subdisciplines`}
+                                className="shrink-0 p-0.5 rounded text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                              >
+                                {isCollapsed ? <ChevronRight size={14} /> : <ChevronDown size={14} />}
+                              </button>
+                            ) : (
+                              <span className="shrink-0 w-[22px]" aria-hidden="true" />
+                            )}
+                            <Link
+                              href={`/replications-database?discipline=${encodeURIComponent(d.discipline)}`}
+                              className="text-blue-600 dark:text-blue-400 hover:underline"
+                            >
+                              {d.discipline}
+                            </Link>
+                          </div>
+                        </td>
+                        <BarCell d={d} showCI={showCI} />
+                        <td className="p-2 text-right tabular-nums">{d.total}</td>
+                      </tr>
+                      {!isCollapsed && d.subs.map((s) => (
+                        <tr
+                          key={`${d.discipline}::${s.subdiscipline}`}
+                          className="border-b border-gray-50 dark:border-gray-800/60 hover:bg-gray-50 dark:hover:bg-gray-900/40 text-xs"
+                        >
+                          <td className="p-1 pl-8 text-left">
+                            <Link
+                              href={`/replications-database?discipline=${encodeURIComponent(d.discipline)}&subdiscipline=${encodeURIComponent(s.subdiscipline)}`}
+                              className="text-blue-600/90 dark:text-blue-400/90 hover:underline"
+                            >
+                              {s.subdiscipline}
+                            </Link>
+                          </td>
+                          <BarCell d={s} showCI={showCI} compact />
+                          <td className="p-1 text-right tabular-nums text-gray-600 dark:text-gray-400">{s.total}</td>
+                        </tr>
+                      ))}
+                    </Fragment>
+                  );
+                })}
               </tbody>
             </table>
           </div>

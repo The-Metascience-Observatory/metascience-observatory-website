@@ -898,6 +898,9 @@ function ReplicationsDatabaseContent() {
                     <a href="/replications-database/by-year" className="text-sm underline hover:opacity-80 whitespace-nowrap">
                       Replication rate by year
                     </a>
+                    <a href="/replications-database/correlates-of-reproducibility" className="text-sm underline hover:opacity-80 whitespace-nowrap">
+                      Correlates of reproducibility (summary)
+                    </a>
                   </div>
                 </details>
               </div>

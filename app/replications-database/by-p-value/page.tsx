@@ -14,7 +14,7 @@ import {
   type SuccessDef,
 } from "@/lib/replicationOutcome";
 import { SuccessRateNote } from "@/components/SuccessRateNote";
-import { absZFromR, fitZCurve, type ZCurveResult } from "@/lib/zcurve";
+import { absZFromR, errAtReplicationN, fitZCurve, type NAdjustedStudy, type ZCurveResult } from "@/lib/zcurve";
 import { correlate } from "@/lib/correlation";
 
 type FredResponse = {
@@ -244,6 +244,7 @@ function ZCurvePlot({ fit }: { fit: ZCurveResult }) {
   const innerH = height - margin.top - margin.bottom;
 
   const zCrit = 1.96;
+  const zMin = 0;
   const zMax = 6;
   const binW = 0.2;
   const nBins = Math.ceil((zMax - zCrit) / binW);
@@ -267,12 +268,20 @@ function ZCurvePlot({ fit }: { fit: ZCurveResult }) {
     const z = zCrit + (i / steps) * (zMax - zCrit);
     curvePts.push({ x: z, y: fit.density(z) });
   }
-  const yMax = Math.max(...histDensity, ...curvePts.map((p) => p.y), 0.1) * 1.1;
+  // The same fitted mixture without selection: what the full z distribution
+  // would look like with no selection for significance (matches the blue curve
+  // above zCrit; below it shows the expected-but-missing non-significant mass).
+  const expectedPts: { x: number; y: number }[] = [];
+  for (let i = 0; i <= steps; i++) {
+    const z = zMin + (i / steps) * (zMax - zMin);
+    expectedPts.push({ x: z, y: fit.densityUnselected(z) });
+  }
+  const yMax = Math.max(...histDensity, ...curvePts.map((p) => p.y), ...expectedPts.map((p) => p.y), 0.1) * 1.1;
 
-  const xScale = (z: number) => ((z - zCrit) / (zMax - zCrit)) * innerW;
+  const xScale = (z: number) => ((z - zMin) / (zMax - zMin)) * innerW;
   const yScale = (d: number) => innerH - (d / yMax) * innerH;
 
-  const xTicks = isMobile ? [1.96, 3, 4, 5, 6] : [1.96, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6];
+  const xTicks = isMobile ? [0, 1, 2, 3, 4, 5, 6] : [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6];
 
   return (
     <div className="relative">
@@ -285,6 +294,14 @@ function ZCurvePlot({ fit }: { fit: ZCurveResult }) {
             const y = yScale(d);
             return <rect key={i} x={x} y={y} width={Math.max(w - 0.5, 0.5)} height={innerH - y} fill="#cbd5e1" />;
           })}
+          {/* expected distribution with no selection bias (dashed) */}
+          <path
+            d={expectedPts.map((p, i) => `${i === 0 ? "M" : "L"} ${xScale(p.x).toFixed(2)} ${yScale(p.y).toFixed(2)}`).join(" ")}
+            fill="none"
+            stroke="#f59e0b"
+            strokeWidth={2}
+            strokeDasharray="6 4"
+          />
           {/* fitted density curve */}
           <path
             d={curvePts.map((p, i) => `${i === 0 ? "M" : "L"} ${xScale(p.x).toFixed(2)} ${yScale(p.y).toFixed(2)}`).join(" ")}
@@ -294,6 +311,13 @@ function ZCurvePlot({ fit }: { fit: ZCurveResult }) {
           />
           <line x1={0} x2={0} y1={0} y2={innerH} stroke="#000000" strokeWidth={1} />
           <line x1={0} x2={innerW} y1={innerH} y2={innerH} stroke="#000000" strokeWidth={1} />
+          {/* legend */}
+          <g transform={`translate(${innerW - (isMobile ? 165 : 215)}, ${isMobile ? 4 : 6})`}>
+            <line x1={0} x2={22} y1={5} y2={5} stroke="#2563eb" strokeWidth={2} />
+            <text x={27} y={8} className="fill-current" style={{ fontSize: isMobile ? 9 : 10 }}>Fitted z-curve (observed)</text>
+            <line x1={0} x2={22} y1={20} y2={20} stroke="#f59e0b" strokeWidth={2} strokeDasharray="6 4" />
+            <text x={27} y={23} className="fill-current" style={{ fontSize: isMobile ? 9 : 10 }}>Expected if no selection bias</text>
+          </g>
           {/* significance threshold */}
           <line x1={xScale(zCrit)} x2={xScale(zCrit)} y1={0} y2={innerH} stroke="#ef4444" strokeWidth={1} strokeDasharray="4 3" />
           <text x={xScale(zCrit) + 4} y={12} className="fill-current" style={{ fontSize: isMobile ? 9 : 10, fill: "#ef4444" }}>z = 1.96</text>
@@ -448,22 +472,33 @@ export default function ByPValuePage() {
   const zcurve = useMemo(() => {
     if (!data) return null;
     const zValues: number[] = [];
+    const studies: NAdjustedStudy[] = [];
     let success = 0;
     let failure = 0;
     for (const row of data.rows) {
-      const z = absZFromR(toNumber(row.original_es_r), toNumber(row.original_n));
+      const nOrig = toNumber(row.original_n);
+      const z = absZFromR(toNumber(row.original_es_r), nOrig);
       if (z == null || z < 1.96) continue; // significant originals only
       const outcome = classifyRow(row, successDef);
       if (outcome == null) continue; // require a replication outcome
       zValues.push(z);
+      const nRep = toNumber(row.replication_n);
+      studies.push({
+        z,
+        nRatio: nOrig != null && nOrig > 0 && nRep != null && nRep > 0 ? nRep / nOrig : null,
+      });
       if (outcome === "success") success++;
       else failure++;
     }
     const total = success + failure;
     const [obsLo, obsHi] = wilsonCI(success, total);
     const fit: ZCurveResult | null = total >= 20 ? fitZCurve(zValues, { bootstrap: 500 }) : null;
+    // ERR rescaled to each replication's ACTUAL sample size (same fitted
+    // mixture; noncentralities scaled by sqrt(nRep/nOrig)).
+    const errN = fit ? errAtReplicationN(studies, { bootstrap: 500 }) : null;
     return {
       fit,
+      errN,
       total,
       success,
       failure,
@@ -608,19 +643,31 @@ export default function ByPValuePage() {
           )}
 
           {/* z-curve: observed vs expected replication rate */}
-          <section className="pt-8 mt-4 border-t border-gray-200 dark:border-gray-800 space-y-6">
+          <section
+            id="z-curve"
+            className="pt-8 mt-4 border-t border-gray-200 dark:border-gray-800 space-y-6 scroll-mt-24"
+          >
             <div>
               <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
                 Observed vs. Expected Replication Rate (z-curve)
               </h2>
               <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
                 We convert each significant original finding to an absolute z-score and fit a{" "}
-                <strong>z-curve</strong> (Bartoš &amp; Schimmack, 2020): a mixture model that accounts for the
+                <strong>z-curve</strong> (Bartoš &amp; Schimmack, 2022): a mixture model that accounts for the
                 fact that the literature is selected for significance. From it we read off the{" "}
-                <strong>Expected Replication Rate (ERR)</strong> — the mean statistical power of these studies,
-                i.e. the replication rate you would expect if each were re-run at the same sample size — and the{" "}
+                <strong>Expected Replication Rate (ERR)</strong> — the mean power of these studies to reach
+                significance <em>in the original direction</em>, i.e. the replication rate you would expect if
+                each were re-run at the same sample size — and the{" "}
                 <strong>Expected Discovery Rate (EDR)</strong>, which bounds the false-positive contamination.
-                The informative quantity is the <em>gap</em> between the observed and expected rate.
+                The paper argues real replication rates should land <em>between</em> the EDR (worst case:
+                significant originals are no more powerful than the rest) and the ERR (best case: exact
+                replications).
+                Because this database also records each replication&apos;s <em>actual</em> sample size (usually
+                larger than the original&apos;s), we additionally rescale the model to those sample sizes:{" "}
+                <strong>&ldquo;expected at actual replication N&rdquo;</strong> is the rate the same true
+                effects would produce at the N the replicators really used, and is the fairest benchmark for
+                the observed rate — any shortfall against it reflects effects shrinking on re-test, not
+                underpowered replications.
               </p>
             </div>
 
@@ -633,17 +680,39 @@ export default function ByPValuePage() {
               <>
                 <div className="flex flex-wrap gap-3">
                   <Stat label="Observed replication rate" value={pct1(zcurve.observedRate)} sub={`${zcurve.success}/${zcurve.total} · 95% CI ${pct(zcurve.observedCI[0])}–${pct(zcurve.observedCI[1])}`} accent="#10b981" />
-                  <Stat label="Expected (ERR)" value={pct1(zcurve.fit.err)} sub={`95% CI ${pct(zcurve.fit.errCI[0])}–${pct(zcurve.fit.errCI[1])}`} accent="#2563eb" />
-                  <Stat label="Gap (observed − expected)" value={`${zcurve.observedRate - zcurve.fit.err >= 0 ? "+" : ""}${((zcurve.observedRate - zcurve.fit.err) * 100).toFixed(1)} pts`} />
-                  <Stat label="Expected Discovery Rate (EDR)" value={pct1(zcurve.fit.edr)} sub={`95% CI ${pct(zcurve.fit.edrCI[0])}–${pct(zcurve.fit.edrCI[1])}`} />
+                  <Stat label="Expected at same N (ERR)" value={pct1(zcurve.fit.err)} sub={`robust 95% CI ${pct(zcurve.fit.errCI[0])}–${pct(zcurve.fit.errCI[1])}`} accent="#2563eb" />
+                  {zcurve.errN && (
+                    <Stat
+                      label="Expected at actual replication N"
+                      value={pct1(zcurve.errN.err)}
+                      sub={`robust 95% CI ${pct(zcurve.errN.errCI[0])}–${pct(zcurve.errN.errCI[1])} · N known for ${zcurve.errN.nWithRatio}/${zcurve.errN.n}`}
+                      accent="#7c3aed"
+                    />
+                  )}
+                  <Stat
+                    label="Gap (observed − expected at actual N)"
+                    value={(() => {
+                      const expected = zcurve.errN ? zcurve.errN.err : zcurve.fit.err;
+                      const gap = (zcurve.observedRate - expected) * 100;
+                      return `${gap >= 0 ? "+" : ""}${gap.toFixed(1)} pts`;
+                    })()}
+                  />
+                  <Stat label="Expected Discovery Rate (EDR)" value={pct1(zcurve.fit.edr)} sub={`robust 95% CI ${pct(zcurve.fit.edrCI[0])}–${pct(zcurve.fit.edrCI[1])}`} />
                   <Stat label="Max false-discovery rate" value={pct(zcurve.fit.soricFDR)} sub="Soric bound at α = .05" />
                 </div>
 
                 <div className="border border-gray-200 dark:border-gray-700 rounded-lg px-2 py-1 w-fit max-w-full">
                   <ZCurvePlot fit={zcurve.fit} />
                   <p className="mt-1 text-xs text-gray-400 dark:text-gray-500 text-center">
-                    Histogram of {zcurve.fit.nSignificant.toLocaleString()} significant original z-scores (grey)
-                    with the fitted z-curve density (blue). z &gt; 6 is clamped to 6.
+                    Histogram of {zcurve.fit.zValues.length.toLocaleString()} significant original z-scores (grey)
+                    with the fitted z-curve density (blue).
+                    {zcurve.fit.nExtreme > 0 &&
+                      ` A further ${zcurve.fit.nExtreme.toLocaleString()} z-scores above 6 are off the chart; they are not fitted but enter the ERR and EDR with power ≈ 1.`}{" "}
+                    The dashed amber curve is
+                    the same fitted model with the selection for significance removed — the z-scores we would
+                    expect to see if every result were published. It matches the blue curve above z = 1.96 by
+                    construction; the mass to the left of the red line is the non-significant results implied
+                    by the model but missing from the published record.
                   </p>
                 </div>
 
@@ -656,9 +725,24 @@ export default function ByPValuePage() {
                     mean power of the underlying population rather than trusting any single inflated estimate.
                   </p>
                   <p>
+                    <strong>How the &ldquo;actual replication N&rdquo; number is computed.</strong> The plain ERR
+                    assumes an exact same-N re-run because a z-score alone cannot separate effect size from
+                    sample size (z &asymp; effect &times; &radic;N). But the noncentrality of a test scales with
+                    &radic;N, so once we know each replication&apos;s real sample size we can rescale: for each
+                    significant original, we take the fitted model&apos;s posterior over its true noncentrality,
+                    multiply by &radic;(N<sub>rep</sub>/N<sub>orig</sub>), and average the implied probability of
+                    a same-direction significant result. Replications here are usually larger than the originals
+                    (median ratio &asymp; 1.7&times;), which raises power for real effects — but does nothing for
+                    true nulls, whose significance rate stays at &alpha; at any N. This N-adjusted expectation
+                    still assumes each replication probes the <em>same true effect</em> as the original, so an
+                    observed rate below it indicates effects shrinking on re-test (selection inflation,
+                    moderators, or originals near zero) rather than underpowered replications.
+                  </p>
+                  <p>
                     ERR corresponds to a &ldquo;statistically significant effect in the same direction, at the
-                    same N&rdquo; notion of replication, so it is most directly comparable to the observed rate
-                    under the <em>&ldquo;statistically significant effect in the same direction&rdquo;</em>{" "}
+                    same N&rdquo; notion of replication, so it — and its N-adjusted variant — is most directly
+                    comparable to the observed rate under the{" "}
+                    <em>&ldquo;statistically significant effect in the same direction&rdquo;</em>{" "}
                     definition in the dropdown above. ERR and EDR are derived from the original z-scores only and
                     do not change with the success definition; the observed rate and the gap do.
                     z is derived from each study&apos;s original r and N; only studies with a replication outcome

@@ -120,6 +120,10 @@ const replicationsDatabasePages: DocMeta[] = [
     href: "/replications-database/by-year",
     title: "Replication rate by year",
   },
+  {
+    href: "/replications-database/correlates-of-reproducibility",
+    title: "Correlates of reproducibility (summary)",
+  },
 ];
 
 const documentation: DocMeta[] = [
