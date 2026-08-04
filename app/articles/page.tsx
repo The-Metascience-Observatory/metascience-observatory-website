@@ -56,6 +56,13 @@ const projectOverviews: ArticleMeta[] = [
 
 const articles: ArticleMeta[] = [
   {
+    href: "https://moreisdifferent.blog/p/what-weve-learned-so-far-at-the-metascience",
+    title: "What we've learned so far",
+    image: "/assets/woodcut_square_crops/1556_agricola_digging.png",
+    alt:
+      "Woodcut of two miners sorting ore into a pan, from Agricola's De re metallica (1556)",
+  },
+  {
     href: "/replication-initiatives",
     title: "Replication initiatives",
     image: "/assets/woodcut_square_crops/john_milton_watch_1631.png",
@@ -204,7 +211,7 @@ export default function ArticlesPage() {
           <h1 className="text-3xl font-bold mb-8 text-foreground">Articles</h1>
 
           <h2 className="text-2xl font-bold mb-6 text-foreground">Project Overviews</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {projectOverviews.map((project) => (
               <Link key={project.href} href={project.href} className="group block">
                 <Card className="aspect-square flex flex-col overflow-hidden border-border transition-colors hover:border-primary/50 hover:shadow-md">
@@ -213,12 +220,12 @@ export default function ArticlesPage() {
                       src={project.image}
                       alt={project.alt}
                       fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      sizes="(max-width: 1024px) 50vw, 25vw"
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
                   <div className="p-3 shrink-0">
-                    <h2 className="font-clarendon font-semibold text-base text-foreground text-center whitespace-pre-line line-clamp-3">
+                    <h2 className="font-clarendon font-semibold text-sm sm:text-base text-foreground text-center whitespace-pre-line line-clamp-3">
                       {project.title}
                     </h2>
                   </div>
@@ -228,21 +235,29 @@ export default function ArticlesPage() {
           </div>
 
           <h2 className="text-2xl font-bold mt-16 mb-6 text-foreground">Articles</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {articles.map((article) => (
-              <Link key={article.href} href={article.href} className="group block">
+              <Link
+                key={article.href}
+                href={article.href}
+                className="group block"
+                // Some entries point off-site (e.g. the Substack essay).
+                {...(article.href.startsWith("http")
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
+              >
                 <Card className="aspect-square flex flex-col overflow-hidden border-border transition-colors hover:border-primary/50 hover:shadow-md">
                   <div className="relative flex-1 min-h-0 overflow-hidden bg-muted">
                     <Image
                       src={article.image}
                       alt={article.alt}
                       fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      sizes="(max-width: 1024px) 50vw, 25vw"
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
                   <div className="p-3 shrink-0">
-                    <h2 className="font-clarendon font-semibold text-base text-foreground text-center whitespace-pre-line line-clamp-3">
+                    <h2 className="font-clarendon font-semibold text-sm sm:text-base text-foreground text-center whitespace-pre-line line-clamp-3">
                       {article.title}
                     </h2>
                   </div>

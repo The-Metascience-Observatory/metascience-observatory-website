@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import type { CorrTableRow } from "./stats";
-import { signClass } from "./format";
+import { signStyle } from "./format";
 
 /**
  * The correlation table with sortable r / Spearman ρ columns. Rows arrive
@@ -107,11 +107,11 @@ export function CorrTable({ rows }: { rows: CorrTableRow[] }) {
               <td className="py-1.5 pr-3 text-muted-foreground">{row.transformLabel}</td>
               <td className="py-1.5 pr-3 text-right tabular-nums">{fmtN(row.n)}</td>
               <td className="py-1.5 pr-3 text-right tabular-nums">{fmtN(row.nClusters)}</td>
-              <td className={`py-1.5 pr-3 text-right tabular-nums ${signClass(row.pearsonR)}`}>
+              <td className="py-1.5 pr-3 text-right tabular-nums" style={signStyle(row.pearsonR)}>
                 {fmt(row.pearsonR)}
               </td>
               <td className="py-1.5 pr-3 tabular-nums">{fmtCI(row.pearsonLo, row.pearsonHi)}</td>
-              <td className={`py-1.5 pr-3 text-right tabular-nums ${signClass(row.spearmanR)}`}>
+              <td className="py-1.5 pr-3 text-right tabular-nums" style={signStyle(row.spearmanR)}>
                 {fmt(row.spearmanR)}
               </td>
               <td className="py-1.5 tabular-nums">{fmtCI(row.spearmanLo, row.spearmanHi)}</td>

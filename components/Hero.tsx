@@ -97,7 +97,7 @@ export const Hero = () => {
             </div>
           </Card>
 
-          <div className="flex justify-center md:justify-end">
+          <div className="hidden md:flex md:justify-end">
             <Image
               src="/assets/herschel-observatory-cropped.png"
               alt="Historical observatory with telescope"

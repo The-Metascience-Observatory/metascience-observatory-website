@@ -6,7 +6,7 @@ import type { LogitFit } from "@/lib/logit";
 import { buildDataset } from "./data";
 import { buildCorrelationTable, fitModel, LOG10P_FLOOR, type ModelResult, type ModelScale } from "./stats";
 import { CorrTable } from "./CorrTable";
-import { signClass } from "./format";
+import { signStyle } from "./format";
 import { ForestPlot, MODEL_A_COLOR, MODEL_B_COLOR, type ForestTerm } from "./ForestPlot";
 
 export const metadata = {
@@ -220,17 +220,17 @@ export default function CorrelatesPage() {
             <div className="w-fit max-w-full rounded-lg border border-border px-5 pt-5 pb-2.5 space-y-3">
               <div className="flex items-start justify-between gap-4">
                 <div className="space-y-0.5">
-                  <p className="font-semibold">Correlates of reproducibility</p>
+                  <p className="text-lg font-semibold">Correlates of reproducibility</p>
                   <p className="text-[11px] text-muted-foreground">
                     across {fmtN(meta.usableRows)} replicated effects from {fmtN(meta.papers)} papers
                   </p>
                 </div>
                 {/* Same mark as ChartWatermark on the by-* chart pages. */}
-                <div className="flex items-center gap-1.5 shrink-0 opacity-80" style={{ color: "#4b5563" }}>
+                <div className="flex items-center gap-2 shrink-0 opacity-80" style={{ color: "#4b5563" }}>
                   <svg
                     viewBox="0 0 16 16"
-                    width={13}
-                    height={13}
+                    width={20}
+                    height={20}
                     stroke="currentColor"
                     strokeWidth={0.9}
                     strokeLinecap="round"
@@ -241,7 +241,7 @@ export default function CorrelatesPage() {
                     <ellipse cx={8} cy={8} rx={3} ry={7.35} />
                     <ellipse cx={8} cy={8} rx={7.35} ry={3} />
                   </svg>
-                  <span className="text-[10px] whitespace-nowrap">The Metascience Observatory</span>
+                  <span className="text-sm whitespace-nowrap">The Metascience Observatory</span>
                 </div>
               </div>
               <table className="text-sm border-collapse">
@@ -262,13 +262,13 @@ export default function CorrelatesPage() {
                     .map((row) => (
                     <tr key={row.key} className="border-b border-border/60 last:border-b-0">
                       <td className="py-1 pr-3">{row.label}</td>
-                      <td className={`py-1 pr-3 text-right tabular-nums ${signClass(row.pearsonR)}`}>
+                      <td className="py-1 pr-3 text-right tabular-nums" style={signStyle(row.pearsonR)}>
                         {fmt(row.pearsonR, 2)}
                       </td>
                       <td className="py-1 pr-3 tabular-nums text-muted-foreground">
                         {fmtCI(row.pearsonLo, row.pearsonHi)}
                       </td>
-                      <td className={`py-1 pr-3 text-right tabular-nums ${signClass(row.spearmanR)}`}>
+                      <td className="py-1 pr-3 text-right tabular-nums" style={signStyle(row.spearmanR)}>
                         {fmt(row.spearmanR, 2)}
                       </td>
                       <td className="py-1 tabular-nums text-muted-foreground">
