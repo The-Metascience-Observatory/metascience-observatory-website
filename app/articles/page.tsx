@@ -178,6 +178,11 @@ const substackArticles: SubstackMeta[] = [
     href: "https://moreisdifferent.blog/p/when-weak-links-in-science-matter",
   },
   {
+    date: "2024-08-05",
+    title: "WTH is Cerebrolysin, actually?",
+    href: "https://moreisdifferent.blog/p/wth-is-cerebrolysin-actually",
+  },
+  {
     date: "2023-08-05",
     title: "How common is scientific fraud?",
     href: "https://moreisdifferent.substack.com/p/how-common-is-scientific-fraud",
@@ -312,7 +317,7 @@ export default function ArticlesPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mt-16">
             <div>
               <h2 className="text-2xl font-bold mb-3 text-foreground">
-                Metascience Substack articles by Dan Elton
+                Metascience articles by Dan Elton
               </h2>
               <div className="space-y-4">
                 {substackArticles.map((article) => (
