@@ -69,6 +69,20 @@ const nextConfig = {
         destination: '/docs/checking-for-bias',
         permanent: true,
       },
+      // forensicmetascience.org is an alias domain on this Vercel project;
+      // every path on it forwards to the forensic metascience agent page.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'forensicmetascience.org' }],
+        destination: 'https://metascienceobservatory.org/forensic-metascience-agent',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.forensicmetascience.org' }],
+        destination: 'https://metascienceobservatory.org/forensic-metascience-agent',
+        permanent: true,
+      },
     ];
   },
 };
