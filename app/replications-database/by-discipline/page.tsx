@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { MultiSelectDropdown } from "@/components/MultiSelectDropdown";
 import { RetentionSwarm } from "./RetentionSwarm";
 import { classifyReportedResult, toBinary } from "@/lib/replicationOutcome";
 
@@ -123,7 +124,8 @@ export default function ByDisciplinePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [threshold, setThreshold] = useState(0.75);
-  const [replicationType, setReplicationType] = useState("all");
+  // Empty set = all replication types (the MultiSelectDropdown convention).
+  const [replicationTypes, setReplicationTypes] = useState<Set<string>>(new Set());
   const [showCI, setShowCI] = useState(true);
   const [sortKey, setSortKey] = useState<SortKey>("total");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
@@ -184,11 +186,11 @@ export default function ByDisciplinePage() {
   // the replication attempts of the selected type.
   const filteredRows = useMemo(() => {
     if (!data) return [];
-    if (replicationType === "all") return data.rows;
+    if (replicationTypes.size === 0) return data.rows;
     return data.rows.filter(
-      (r) => String(r.replication_type ?? "").trim() === replicationType
+      (r) => replicationTypes.has(String(r.replication_type ?? "").trim())
     );
-  }, [data, replicationType]);
+  }, [data, replicationTypes]);
 
   const byDiscipline: DisciplineNode[] = useMemo(() => {
     if (!data) return [];
@@ -341,7 +343,7 @@ export default function ByDisciplinePage() {
                 type="button"
                 role="switch"
                 aria-checked={nestSubs}
-                aria-label="Nest subdisciplines"
+                aria-label="Show subdisciplines"
                 onClick={() => setNestSubs((v) => !v)}
                 className={`relative inline-flex h-5 w-9 shrink-0 items-center rounded-full transition-colors ${
                   nestSubs ? "bg-blue-600" : "bg-gray-300 dark:bg-gray-600"
@@ -357,7 +359,7 @@ export default function ByDisciplinePage() {
                 className="text-gray-600 dark:text-gray-300"
                 onClick={() => setNestSubs((v) => !v)}
               >
-                Nest subdisciplines
+                Show subdisciplines
               </span>
             </label>
 
@@ -380,7 +382,7 @@ export default function ByDisciplinePage() {
             </label>
 
             {/* Replication type selector */}
-            <label className="flex items-center gap-2 text-sm">
+            <div className="flex items-center gap-2 text-sm">
               <span className="text-gray-600 dark:text-gray-300">
                 Replication type{" "}
                 <Link href="/docs/defining-replication" className="text-xs text-gray-500 dark:text-gray-400 underline hover:opacity-80">
@@ -388,19 +390,19 @@ export default function ByDisciplinePage() {
                 </Link>
                 :
               </span>
-              <select
-                value={replicationType}
-                onChange={(e) => setReplicationType(e.target.value)}
-                className="border border-gray-300 dark:border-gray-600 rounded px-2 py-1 bg-white dark:bg-gray-800 text-sm max-w-md"
-              >
-                <option value="all">All types</option>
-                {replicationTypeOptions.map((opt) => (
-                  <option key={opt.name} value={opt.name}>
-                    {opt.name} ({opt.count.toLocaleString()})
-                  </option>
-                ))}
-              </select>
-            </label>
+              <div className="w-64">
+                <MultiSelectDropdown
+                  id="replication-type"
+                  label="All types"
+                  options={replicationTypeOptions.map((opt) => ({
+                    value: opt.name,
+                    label: `${opt.name} (${opt.count.toLocaleString()})`,
+                  }))}
+                  selected={replicationTypes}
+                  onChange={setReplicationTypes}
+                />
+              </div>
+            </div>
 
             {/* Subdiscipline min-papers selector */}
             {nestSubs && (

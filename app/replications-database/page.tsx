@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ReplicationsNavbar } from "@/components/ReplicationsNavbar";
 import { Footer } from "@/components/Footer";
+import { MultiSelectDropdown } from "@/components/MultiSelectDropdown";
 import { Input } from "@/components/ui/input";
 import { generateCitationHtml, transformCitationHtmlToExplorer, citationSearchText } from "@/lib/citations";
 import {
@@ -58,87 +59,6 @@ function formatSig4(value: unknown): string {
     return s.replace(/(\.\d*?[1-9])0+$/u, "$1").replace(/\.0+$/u, ".0").replace(/\.$/u, "");
   }
   return s;
-}
-
-function MultiSelectDropdown({
-  id,
-  label,
-  options,
-  selected,
-  onChange,
-}: {
-  id: string;
-  label: string;
-  options: Option[];
-  selected: Set<string>;
-  onChange: (next: Set<string>) => void;
-}) {
-  const [open, setOpen] = useState(false);
-  const ref = React.useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    }
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
-
-  const allSelected = selected.size === 0;
-  const buttonLabel = allSelected
-    ? label
-    : selected.size === 1
-    ? Array.from(selected)[0]
-    : `${selected.size} types selected`;
-
-  function toggle(value: string) {
-    const next = new Set(selected);
-    if (next.has(value)) next.delete(value);
-    else next.add(value);
-    onChange(next);
-  }
-
-  function selectAll() { onChange(new Set()); }
-
-  return (
-    <div ref={ref} className="relative">
-      <button
-        id={id}
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        className="w-full h-10 rounded-md border border-border bg-background px-3 text-sm text-left flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-primary"
-      >
-        <span className={allSelected ? "opacity-60" : ""}>{buttonLabel}</span>
-        <svg className="w-4 h-4 opacity-50 shrink-0 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-      {open && (
-        <div className="absolute z-50 mt-1 w-56 rounded-md border border-border bg-background shadow-lg max-h-72 overflow-y-auto">
-          <label className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted cursor-pointer border-b border-border">
-            <input
-              type="checkbox"
-              checked={allSelected}
-              onChange={selectAll}
-              className="shrink-0"
-            />
-            <span className="font-medium">All types</span>
-          </label>
-          {options.filter(o => o.value).map((opt) => (
-            <label key={opt.value} className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted cursor-pointer">
-              <input
-                type="checkbox"
-                checked={selected.has(opt.value)}
-                onChange={() => toggle(opt.value)}
-                className="shrink-0"
-              />
-              <span>{opt.label}</span>
-            </label>
-          ))}
-        </div>
-      )}
-    </div>
-  );
 }
 
 function MiniBar({ value, max, color }: { value: number; max: number; color?: string }) {
@@ -975,14 +895,6 @@ function ReplicationsDatabaseContent() {
             })()}
           </div>
           <div className="border-t mt-3 pt-3">
-            <div className="flex items-baseline justify-between gap-2">
-              <span className="text-xs font-medium">Replication success rate</span>
-              <span className="text-lg font-semibold tabular-nums">
-                {resultStat.rate != null ? `${resultStat.rate}%` : "--"}
-              </span>
-            </div>
-          </div>
-          <div className="border-t mt-3 pt-3">
             <div className="text-xs font-medium mb-2">Outcome mix - computed from stats when available <span className="font-bold">({outcomeStat.n} effect replications)</span></div>
             <div className="space-y-1">
               <div className="flex items-center gap-2">
@@ -1022,12 +934,6 @@ function ReplicationsDatabaseContent() {
                 <option value="orig_in_rep_ci">Original effect size in replication 95% confidence interval?</option>
                 <option value="rep_in_orig_ci">Replication effect size in original 95% confidence interval?</option>
               </select>
-            </div>
-            <div className="flex items-baseline justify-between gap-2 mt-3">
-              <span className="text-xs font-medium">Success rate under this method</span>
-              <span className="text-base font-semibold tabular-nums">
-                {outcomeStat.rate != null ? `${outcomeStat.rate}%` : "--"}
-              </span>
             </div>
           </div>
         </div>
@@ -1415,7 +1321,7 @@ type ScatterPoint = {
 
 function InlineScatter({ points, showReversal = true, markOrigNonsig = false }: { points: ScatterPoint[]; showReversal?: boolean; markOrigNonsig?: boolean }) {
   const width = 600;
-  const height = 476;
+  const height = 428;
   const margin = { top: 10, right: 10, bottom: 45, left: 58 };
   const innerW = width - margin.left - margin.right;
   const innerH = height - margin.top - margin.bottom;
@@ -1546,7 +1452,7 @@ function wilsonCI(k: number, n: number): [number, number] {
 function InlineYearBars({ bins, threshold, binSize }: { bins: YearBin[]; threshold: number; binSize: number }) {
   const width = 600;
   const height = 240;
-  const margin = { top: 10, right: 10, bottom: 45, left: 45 };
+  const margin = { top: 10, right: 10, bottom: 60, left: 50 };
   const innerW = width - margin.left - margin.right;
   const innerH = height - margin.top - margin.bottom;
 
@@ -1566,7 +1472,6 @@ function InlineYearBars({ bins, threshold, binSize }: { bins: YearBin[]; thresho
     <div className="relative">
       <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet" className="max-w-full h-auto">
         <g transform={`translate(${margin.left},${margin.top})`}>
-          <rect x={0} y={0} width={innerW} height={innerH} fill="#f3f4f6" />
           {yTicks.map((t) => (
             <g key={`y-${t}`}>
               <line x1={0} y1={yScale(t)} x2={innerW} y2={yScale(t)} stroke="#d1d5db" strokeWidth={0.5} />
@@ -1605,8 +1510,8 @@ function InlineYearBars({ bins, threshold, binSize }: { bins: YearBin[]; thresho
           {/* Axis spines */}
           <line x1={0} y1={innerH} x2={innerW} y2={innerH} stroke="#000000" strokeWidth={1} />
           <line x1={0} y1={0} x2={0} y2={innerH} stroke="#000000" strokeWidth={1} />
-          <text x={-innerH / 2} y={-38} textAnchor="middle" transform="rotate(-90)" className="text-xs" fill="#000000" style={{ fontSize: 10 }}>Replication Success Rate (%)</text>
-          <text x={innerW / 2} y={innerH + 44} textAnchor="middle" className="text-xs" fill="#000000" style={{ fontSize: 10 }}>Year of Original Publication (5-year bins)</text>
+          <text x={-innerH / 2} y={-42} textAnchor="middle" transform="rotate(-90)" className="text-xs" fill="#000000" style={{ fontSize: 10 }}>Replication Success Rate (%)</text>
+          <text x={innerW / 2} y={innerH + 56} textAnchor="middle" className="text-xs" fill="#000000" style={{ fontSize: 10 }}>Year of Original Publication (5-year bins)</text>
         </g>
       </svg>
     </div>
