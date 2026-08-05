@@ -7,7 +7,6 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { RetentionSwarm } from "./RetentionSwarm";
 import { classifyReportedResult, toBinary } from "@/lib/replicationOutcome";
-import { SuccessRateNote } from "@/components/SuccessRateNote";
 
 type AnyRecord = Record<string, unknown>;
 
@@ -125,10 +124,11 @@ export default function ByDisciplinePage() {
   const [error, setError] = useState<string | null>(null);
   const [threshold, setThreshold] = useState(0.75);
   const [replicationType, setReplicationType] = useState("all");
-  const [showCI, setShowCI] = useState(false);
+  const [showCI, setShowCI] = useState(true);
   const [sortKey, setSortKey] = useState<SortKey>("total");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
   const [minSubPapers, setMinSubPapers] = useState(10);
+  const [nestSubs, setNestSubs] = useState(true);
   // Disciplines whose subdiscipline rows are hidden. Empty = all expanded.
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
 
@@ -329,22 +329,38 @@ export default function ByDisciplinePage() {
             <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
               Paper-level analysis: a paper is considered &ldquo;replicated&rdquo; if at
               least {Math.round(threshold * 100)}% of its effect replications
-              were successful. Only disciplines with {MIN_PAPERS}+ papers shown.
-              Subdisciplines with {minSubPapers}+ papers are nested under each
-              discipline; click the chevron to collapse them. Click a name to
-              view its entries in the database explorer.
+              were successful.
             </p>
-            <SuccessRateNote
-              unit="paper"
-              n={totalPapers}
-              threshold={threshold}
-              filter={`disciplines with ${MIN_PAPERS}+ papers`}
-              className="mt-2"
-            />
           </div>
 
           {/* Controls row */}
           <div className="flex flex-wrap items-center gap-6">
+            {/* Nest subdisciplines toggle */}
+            <label className="flex items-center gap-2 text-sm cursor-pointer">
+              <button
+                type="button"
+                role="switch"
+                aria-checked={nestSubs}
+                aria-label="Nest subdisciplines"
+                onClick={() => setNestSubs((v) => !v)}
+                className={`relative inline-flex h-5 w-9 shrink-0 items-center rounded-full transition-colors ${
+                  nestSubs ? "bg-blue-600" : "bg-gray-300 dark:bg-gray-600"
+                }`}
+              >
+                <span
+                  className={`inline-block h-4 w-4 rounded-full bg-white shadow transform transition-transform ${
+                    nestSubs ? "translate-x-[18px]" : "translate-x-0.5"
+                  }`}
+                />
+              </button>
+              <span
+                className="text-gray-600 dark:text-gray-300"
+                onClick={() => setNestSubs((v) => !v)}
+              >
+                Nest subdisciplines
+              </span>
+            </label>
+
             {/* Threshold selector */}
             <label className="flex items-center gap-2 text-sm">
               <span className="text-gray-600 dark:text-gray-300">
@@ -387,22 +403,24 @@ export default function ByDisciplinePage() {
             </label>
 
             {/* Subdiscipline min-papers selector */}
-            <label className="flex items-center gap-2 text-sm">
-              <span className="text-gray-600 dark:text-gray-300">
-                Min papers per subdiscipline:
-              </span>
-              <select
-                value={minSubPapers}
-                onChange={(e) => setMinSubPapers(Number(e.target.value))}
-                className="border border-gray-300 dark:border-gray-600 rounded px-2 py-1 bg-white dark:bg-gray-800 text-sm"
-              >
-                {SUB_MIN_PAPERS_OPTIONS.map((n) => (
-                  <option key={n} value={n}>
-                    {n}
-                  </option>
-                ))}
-              </select>
-            </label>
+            {nestSubs && (
+              <label className="flex items-center gap-2 text-sm">
+                <span className="text-gray-600 dark:text-gray-300">
+                  Min papers per subdiscipline:
+                </span>
+                <select
+                  value={minSubPapers}
+                  onChange={(e) => setMinSubPapers(Number(e.target.value))}
+                  className="border border-gray-300 dark:border-gray-600 rounded px-2 py-1 bg-white dark:bg-gray-800 text-sm"
+                >
+                  {SUB_MIN_PAPERS_OPTIONS.map((n) => (
+                    <option key={n} value={n}>
+                      {n}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
 
             <label className="flex items-center gap-2 text-sm cursor-pointer">
               <input
@@ -416,18 +434,10 @@ export default function ByDisciplinePage() {
               </span>
             </label>
 
-            {/* Legend */}
-            <div className="flex gap-6 text-sm">
-              <span className="flex items-center gap-2">
-                <span className="inline-block w-3 h-3 rounded" style={{ background: REPLICATED_COLOR }} /> Replicated
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="inline-block w-3 h-3 rounded" style={{ background: NOT_REPLICATED_COLOR }} /> Not replicated
-              </span>
-            </div>
-
             <span className="text-sm text-gray-500 dark:text-gray-400">
-              {byDiscipline.length} disciplines &middot; {totalSubdisciplines} subdisciplines &middot; {totalPapers} papers
+              {byDiscipline.length} disciplines
+              {nestSubs && <> &middot; {totalSubdisciplines} subdisciplines</>}
+              {" "}&middot; {totalPapers} papers
             </span>
           </div>
 
@@ -450,7 +460,7 @@ export default function ByDisciplinePage() {
                       <tr className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900/40">
                         <td className="p-2 text-left">
                           <div className="flex items-center gap-1">
-                            {hasSubs ? (
+                            {nestSubs && hasSubs ? (
                               <button
                                 type="button"
                                 onClick={() => toggleCollapsed(d.discipline)}
@@ -460,9 +470,9 @@ export default function ByDisciplinePage() {
                               >
                                 {isCollapsed ? <ChevronRight size={14} /> : <ChevronDown size={14} />}
                               </button>
-                            ) : (
+                            ) : nestSubs ? (
                               <span className="shrink-0 w-[22px]" aria-hidden="true" />
-                            )}
+                            ) : null}
                             <Link
                               href={`/replications-database?discipline=${encodeURIComponent(d.discipline)}`}
                               className="text-blue-600 dark:text-blue-400 hover:underline"
@@ -474,7 +484,7 @@ export default function ByDisciplinePage() {
                         <BarCell d={d} showCI={showCI} />
                         <td className="p-2 text-right tabular-nums">{d.total}</td>
                       </tr>
-                      {!isCollapsed && d.subs.map((s) => (
+                      {nestSubs && !isCollapsed && d.subs.map((s) => (
                         <tr
                           key={`${d.discipline}::${s.subdiscipline}`}
                           className="border-b border-gray-50 dark:border-gray-800/60 hover:bg-gray-50 dark:hover:bg-gray-900/40 text-xs"
