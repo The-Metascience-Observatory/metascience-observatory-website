@@ -11,9 +11,9 @@ interface ProjectMeta {
 const projects: ProjectMeta[] = [
   {
     href: "/overview-replication-database",
-    title: "Replications Database",
+    title: "Replicat ions Database",
     description:
-      "The world's largest collection information on replication experiments, spanning all of science, enabling research on how reproducibility varies across fields.",
+      "The world's largest collection of information on replication experiments, spanning all of science, enabling research on how reproducibility varies across fields.",
   },
   {
     href: "/forensic-metascience-agent",
