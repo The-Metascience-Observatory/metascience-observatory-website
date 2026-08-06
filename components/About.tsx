@@ -25,7 +25,7 @@ const projects: ProjectMeta[] = [
     href: "/overview-birds-eye-reviews",
     title: "Bird's Eye Reviews",
     description:
-      "A new form of AI-powered high-level literature review where results are displayed in an interactive dashboard with filtering options.",
+      "A new form of AI-powered high-level literature review where results are displayed in an interactive dashboard.",
   },
 ];
 
