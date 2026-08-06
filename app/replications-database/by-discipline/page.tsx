@@ -129,7 +129,7 @@ export default function ByDisciplinePage() {
   const [showCI, setShowCI] = useState(true);
   const [sortKey, setSortKey] = useState<SortKey>("total");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
-  const [minSubPapers, setMinSubPapers] = useState(10);
+  const [minSubPapers, setMinSubPapers] = useState(20);
   const [nestSubs, setNestSubs] = useState(true);
   // Disciplines whose subdiscipline rows are hidden. Empty = all expanded.
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
@@ -330,8 +330,10 @@ export default function ByDisciplinePage() {
             </h1>
             <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
               Paper-level analysis: a paper is considered &ldquo;replicated&rdquo; if at
-              least {Math.round(threshold * 100)}% of its effect replications
-              were successful.
+              least {Math.round(threshold * 100)}% of the effect replications we have
+              in our database for that paper were successful. (Replication work
+              generally focuses on replicating the main effects found in papers, and
+              some papers report more than one main effect.)
             </p>
           </div>
 

@@ -56,7 +56,7 @@ export const Footer = () => {
             <div className="text-center sm:text-right break-words">
 
               <p className="text-xs text-muted-foreground">
-                © 2025 The Metascience Observatory. Contact us: <a href="mailto:info@metascienceobservatory.org" className="underline hover:text-primary">info@metascienceobservatory.org</a>
+                © {new Date().getFullYear()} The Metascience Observatory. Contact us: <a href="mailto:info@metascienceobservatory.org" className="underline hover:text-primary">info@metascienceobservatory.org</a>
               </p>
               <p className="text-xs text-muted-foreground mt-1">
                 The Metascience Observatory is a fiscally sponsored initiative of the <a href="https://mindfirst.foundation/" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">Mind First Foundation</a>, a 501(c)(3) nonprofit based in MA.

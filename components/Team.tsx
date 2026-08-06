@@ -40,8 +40,8 @@ export const Team = () => {
                 />
                 <div>
                   <h3 className="text-lg font-semibold mb-2">
-                      <span>Greg Fitzgerald</span>
-                      <span className="ml-2 font-normal text-foreground/80">- meta-analysis and statistics expert</span>
+                      <span>Greg Fitzgerald, Ph.D.</span>
+                      <span className="ml-2 font-normal text-foreground/80">- Meta-Analysis and Statistics Expert</span>
                     </h3>
                   <p className="text-foreground/90 leading-relaxed">
                     Greg Fitzgerald is a behavioral neuroscientist with expertise in meta-analysis and evidence synthesis. He obtained his Ph.D. in Neuroscience from the State University of New York, Albany. His website is <a href="https://greg-fitzgerald.com">greg-fitzgerald.com</a>.

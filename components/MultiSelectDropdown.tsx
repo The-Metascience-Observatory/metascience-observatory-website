@@ -55,7 +55,13 @@ export function MultiSelectDropdown({
         id={id}
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="w-full h-10 rounded-md border border-border bg-background px-3 text-sm text-left flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-primary"
+        className={[
+          "w-full h-10 rounded-md border bg-background px-3 text-sm text-left",
+          "flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-primary",
+          // Outline in the foreground colour while a subset is selected, matching
+          // the active-filter treatment on the surrounding dropdowns.
+          allSelected ? "border-border" : "border-foreground",
+        ].join(" ")}
       >
         <span className={allSelected ? "opacity-60" : ""}>{buttonLabel}</span>
         <svg className="w-4 h-4 opacity-50 shrink-0 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">

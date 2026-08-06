@@ -42,6 +42,16 @@ type FredResponse = {
 
 type Option = { value: string; label: string };
 
+// Filter dropdowns outline in the foreground colour while a filter is applied,
+// so the active ones read at a glance against the default grey.
+function filterSelectClass(active: boolean): string {
+  return [
+    "w-full h-10 rounded-md border bg-background px-3 text-sm",
+    "focus:outline-none focus:ring-2 focus:ring-primary",
+    active ? "border-foreground" : "border-border",
+  ].join(" ");
+}
+
 function uniqueValues(rows: AnyRecord[], key: string): string[] {
   const s = new Set<string>();
   for (const r of rows) {
@@ -691,7 +701,7 @@ function ReplicationsDatabaseContent() {
                 setDiscipline("");
                 setSubdiscipline("");
               }}
-              className="w-full h-10 rounded-md border border-border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              className={filterSelectClass(!!field)}
             >
               {fieldOptions.map((opt) => (
                 <option key={opt.value || "__all"} value={opt.value}>{opt.label}</option>
@@ -712,7 +722,7 @@ function ReplicationsDatabaseContent() {
                   if (parentField) setField(parentField);
                 }
               }}
-              className="w-full h-10 rounded-md border border-border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              className={filterSelectClass(!!discipline)}
             >
               {disciplineOptions.map((opt) => (
                 <option key={opt.value || "__all"} value={opt.value}>{opt.label}</option>
@@ -739,7 +749,7 @@ function ReplicationsDatabaseContent() {
                   }
                 }
               }}
-              className="w-full h-10 rounded-md border border-border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              className={filterSelectClass(!!subdiscipline)}
             >
               {subdisciplineOptions.map((opt) => (
                 <option key={opt.value || "__all"} value={opt.value}>{opt.label}</option>
@@ -754,7 +764,7 @@ function ReplicationsDatabaseContent() {
               id="initiative"
               value={initiative}
               onChange={(e) => setInitiative(e.target.value)}
-              className="w-full h-10 rounded-md border border-border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              className={filterSelectClass(!!initiative)}
             >
               {initiativeOptions.map((opt) => (
                 <option key={opt.value || "__all"} value={opt.value}>{opt.label}</option>
