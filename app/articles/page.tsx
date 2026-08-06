@@ -57,7 +57,7 @@ const projectOverviews: ArticleMeta[] = [
 const articles: ArticleMeta[] = [
   {
     href: "https://moreisdifferent.blog/p/what-weve-learned-so-far-at-the-metascience",
-    title: "What we've learned\nso far",
+    title: "What we've learned\nso far (Aug 2026)",
     image: "/assets/woodcut_square_crops/1556_agricola_digging.png",
     alt:
       "Woodcut of two miners sorting ore into a pan, from Agricola's De re metallica (1556)",
