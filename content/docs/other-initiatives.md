@@ -11,9 +11,6 @@ The [FLoRA Explorer](https://forrt.org/flora-explorer) presents FLoRA (the FORRT
 ### OpenMKT — Replications of Marketing Studies
 [OpenMKT](https://openmkt.org/research/replications-of-marketing-studies/) maintains a catalog of high-powered, preregistered direct replications of marketing studies, available for browsing and download as a CSV. As of its last update the catalog tracked 43 such replications, of which only 5 were unambiguously successful.
 
-### Social Science Reproduction Platform (SSRP)
-The [Social Science Reproduction Platform](https://www.socialsciencereproduction.org/), developed by the Berkeley Initiative for Transparency in the Social Sciences (BITSS) together with the American Economic Association's Data Editor, crowdsources and catalogs attempts to assess and improve the computational reproducibility of social science research, following a standardized reproduction protocol, and is widely used in teaching. Note that unlike the other databases listed here, it collates *computational reproductions* — re-running the original paper's data and code, what we call [technical replications](https://metascienceobservatory.org/docs/defining-replication) — rather than replications on new data.
-
 ## Past initiatives
 
 ### Curate Science
