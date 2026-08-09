@@ -6,15 +6,15 @@ import { MarkdownContent } from "@/components/MarkdownContent";
 import { DocsBackLink } from "@/components/DocsBackLink";
 
 function getMarkdownContent(): string {
-  const filePath = path.join(process.cwd(), "content/docs/previous-initiatives.md");
+  const filePath = path.join(process.cwd(), "content/docs/other-initiatives.md");
   try {
     return fs.readFileSync(filePath, "utf-8");
   } catch {
-    return "# Previous replication database initiatives\n\nContent coming soon.";
+    return "# Other replication database initiatives\n\nContent coming soon.";
   }
 }
 
-export default function PreviousInitiativesPage() {
+export default function OtherInitiativesPage() {
   const content = getMarkdownContent();
 
   return (

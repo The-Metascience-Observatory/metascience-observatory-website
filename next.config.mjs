@@ -56,17 +56,22 @@ const nextConfig = {
         destination: '/articles',
         permanent: true,
       },
-      // The "what we've learned" article was retired in August 2026; its
-      // selection-bias section became /docs/checking-for-bias and the rest was
-      // dropped. Both old URLs point at the surviving content.
+      {
+        source: '/docs/previous-initiatives',
+        destination: '/docs/other-initiatives',
+        permanent: true,
+      },
+      // The "what we've learned" article was retired in August 2026 and now
+      // lives on the More Is Different blog (its selection-bias section became
+      // /docs/checking-for-bias). Both old URLs point at the blog post.
       {
         source: '/docs/what-weve-learned',
-        destination: '/docs/checking-for-bias',
+        destination: 'https://moreisdifferent.blog/p/what-weve-learned-so-far-at-the-metascience',
         permanent: true,
       },
       {
         source: '/articles/what-weve-learned',
-        destination: '/docs/checking-for-bias',
+        destination: 'https://moreisdifferent.blog/p/what-weve-learned-so-far-at-the-metascience',
         permanent: true,
       },
       // forensicmetascience.org is an alias domain on this Vercel project;

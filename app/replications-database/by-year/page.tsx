@@ -105,7 +105,7 @@ function YearCountBars({
 }) {
   const isMobile = useIsMobile();
   const width = isMobile ? 380 : 720;
-  const height = isMobile ? 240 : 260;
+  const height = isMobile ? 276 : 299;
   const margin = isMobile ? { top: 8, right: 8, bottom: 40, left: 36 } : { top: 10, right: 16, bottom: 46, left: 62 };
   const innerW = width - margin.left - margin.right;
   const innerH = height - margin.top - margin.bottom;
@@ -187,24 +187,6 @@ function YearCountBars({
           <text x={innerW / 2} y={innerH + (isMobile ? 34 : 40)} textAnchor="middle" className="fill-black dark:fill-gray-100" style={{ fontSize: isMobile ? 11 : 14, fontWeight: 700 }}>
             {xLabel}
           </text>
-          {/* arrow marking 2005 */}
-          {(() => {
-            const idx = counts.findIndex((c) => c.year === 2005);
-            if (idx < 0) return null;
-            const cx = idx * step + step / 2;
-            const topY = innerH - (counts[idx].total / yMax) * innerH;
-            return (
-              <g style={{ cursor: "help" }}>
-                <title>
-                  {'John Ioannidis inaugurates the modern metascience movement with his paper "Why Most Published Research Findings Are False"'}
-                </title>
-                {/* invisible hover target so the tooltip is easy to hit */}
-                <rect x={cx - 8} y={topY - 30} width={16} height={28} fill="transparent" />
-                <line x1={cx} x2={cx} y1={topY - 26} y2={topY - 9} stroke="#000000" strokeWidth={1.5} />
-                <polygon points={`${cx - 3.5},${topY - 10} ${cx + 3.5},${topY - 10} ${cx},${topY - 4}`} fill="#000000" />
-              </g>
-            );
-          })()}
           <ChartWatermark />
           {/* legend (top-left of the plot, publication style) */}
           <g transform={isMobile ? "translate(10,20)" : "translate(12,24)"}>

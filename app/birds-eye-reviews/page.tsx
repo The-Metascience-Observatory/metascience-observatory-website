@@ -32,12 +32,10 @@ const reviews: ReviewMeta[] = [
   //   href: "/birds-eye-reviews/me-cfs",
   //   title: "ME/CFS",
   // },
-  // Hidden pending review — the page and its data feed are built and reachable
-  // at /birds-eye-reviews/lithium-weight-gain; uncomment to list it publicly.
-  // {
-  //   href: "/birds-eye-reviews/lithium-weight-gain",
-  //   title: "Lithium & Weight Gain",
-  // },
+  {
+    href: "/birds-eye-reviews/lithium-weight-gain",
+    title: "Lithium and weight gain",
+  },
 ];
 
 export default function BirdsEyeReviewsPage() {

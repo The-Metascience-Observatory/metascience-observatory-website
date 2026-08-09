@@ -354,22 +354,115 @@ export function parseCIString(ciStr: string | null | undefined): { lower: number
 }
 
 /**
+ * Effect-size metric families, mirroring the `families` block of
+ * `data_ingestor/codebook_rules.json`. Duplicated as a literal because that file is
+ * Python-side only (read by `data_ingestor/validation_rules.py`) and is not bundled
+ * for the browser — if a family gains members there, add them here too.
+ */
+const ES_TYPE_FAMILIES: Record<string, string[]> = {
+  correlation: ["r", "pearson r", "pearsons r", "pearson's r", "correlation", "phi 2x2",
+    "partial correlation", "partial r", "semipartial correlation", "point biserial", "rank bis",
+    "spearman's r", "spearmans r", "spearman's rho", "rho", "kendall's tau", "tauu", "wilcoxon r",
+    "icc", "kappa", "cliff's delta", "cliffs delta"],
+  standardised_mean_diff: ["d", "cohen's d", "cohens d", "smd", "g", "hedges g", "hedges' g",
+    "glass' delta", "glass's delta", "glass delta"],
+  paired_smd: ["dz", "d z", "cohen's dz", "cohens dz", "d sample (dep)"],
+  ratio: ["or", "odds ratio", "rr", "risk ratio", "relative risk", "relative risk ratio", "rrr",
+    "hr", "hazard ratio", "irr", "incidence rate ratio", "bayes factor"],
+  log_ratio: ["log rom", "log odds ratio", "log rr", "log hr", "ird", "incidence rate difference"],
+  variance_share: ["eta2", "etasq", "eta squared", "partial eta2", "partial etasq",
+    "partial eta squared", "etasq (partial)", "omega2", "omegasq", "omega squared", "r2",
+    "r squared", "heritability (a2)"],
+  nonneg_unbounded: ["f", "cohen's f", "f2", "cohen's f2", "chi2", "chi squared", "w", "cohen's w",
+    "kendall's w", "f test", "f statistic"],
+  cramers_v: ["cramer's v", "cramers v", "v"],
+  probability_of_superiority: ["auc", "roc area", "a", "common language effect size", "cles"],
+  uninterpretable_without_units: ["beta", "beta (std)", "beta (unstd)", "b", "b (unstd)",
+    "b unstd", "beta (mmol/l per allele)", "unstandardized coefficient", "ser method", "other"],
+};
+
+/** Reverse index: normalized es-type label -> family name. */
+const ES_TYPE_TO_FAMILY: Record<string, string> = (() => {
+  const out: Record<string, string> = {};
+  for (const [family, members] of Object.entries(ES_TYPE_FAMILIES)) {
+    for (const member of members) out[member] = family;
+  }
+  return out;
+})();
+
+/**
+ * Normalize an es-type label for family lookup: lowercase, straight apostrophes, and
+ * hyphen/underscore/whitespace runs collapsed to single spaces. Collapsing hyphens
+ * matters — the master stores `omega-squared` where the codebook lists `omega squared`.
+ */
+export function normalizeESType(raw: unknown): string {
+  return String(raw ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/[‘’]/g, "'")
+    .replace(/[-_\s]+/g, " ")
+    .trim();
+}
+
+/** The metric family for an es-type label, or null if it is not in the codebook. */
+export function esTypeFamily(raw: unknown): string | null {
+  const key = normalizeESType(raw);
+  return key ? (ES_TYPE_TO_FAMILY[key] ?? null) : null;
+}
+
+/**
+ * Are two effect-size metrics on the same scale, so that a raw effect size in one
+ * can meaningfully be compared against a confidence interval reported in the other?
+ *
+ * This gates Strategy 1 of the CI-based outcome definitions, which compare one
+ * study's raw `_es` against the *other* study's stored `_es_95_CI`. That only means
+ * something when both sides share a scale: a between-groups Cohen's d checked against
+ * a within-subject dz interval, or a d against an odds-ratio interval, yields a
+ * success/failure verdict with no interpretation at all.
+ *
+ * Deliberately permissive, because the cost of a false mismatch (silently rerouting
+ * hundreds of correctly-matched rows) is far higher than the cost of a missed one:
+ * - a blank label is not evidence of mismatch — most rows record no es-type;
+ * - two identical labels are comparable whether or not the codebook knows them, so
+ *   types absent from it (e.g. `f²`) keep working;
+ * - if either label is unrecognized we decline to judge and treat them as comparable,
+ *   preserving existing behavior rather than guessing.
+ */
+export function metricsComparable(a: unknown, b: unknown): boolean {
+  const na = normalizeESType(a);
+  const nb = normalizeESType(b);
+  if (!na || !nb) return true;
+  if (na === nb) return true;
+  const famA = esTypeFamily(na);
+  const famB = esTypeFamily(nb);
+  if (famA === null || famB === null) return true;
+  return famA === famB;
+}
+
+/**
  * Assess replication outcome: Original ES in Replication CI
  * Checks whether the original effect size falls within the replication's confidence interval.
  *
  * Strategy:
  * 1. First try: Use raw original ES with pre-computed replication CI (matches original paper methodology)
  * 2. Fallback: Use normalized r with computed CI via Fisher z-transformation
+ *
+ * Strategy 1 is only valid when the two studies report the same effect-size metric,
+ * since it compares the original's raw ES against a CI expressed in the replication's
+ * metric. Callers must pass `skipPrecomputedCI = true` when the metrics differ (see
+ * `metricsComparable`), which routes the row to Strategy 2 — that path compares r
+ * against r and so is metric-safe by construction.
  */
 export function computeOriginalInReplicationCI(
   origESRaw: number | null,
   origESR: number | null,
   repESR: number | null,
   repN: number | null,
-  repCIStr: string | null | undefined
+  repCIStr: string | null | undefined,
+  skipPrecomputedCI = false
 ): "success" | "failure" | "inconclusive" {
   // Strategy 1: Use raw original ES with pre-computed replication CI
-  const precomputedRepCI = parseCIString(repCIStr);
+  const precomputedRepCI = skipPrecomputedCI ? null : parseCIString(repCIStr);
   if (precomputedRepCI !== null && origESRaw != null && Number.isFinite(origESRaw)) {
     if (origESRaw >= precomputedRepCI.lower && origESRaw <= precomputedRepCI.upper) {
       return "success";
@@ -400,16 +493,20 @@ export function computeOriginalInReplicationCI(
  * Strategy:
  * 1. First try: Use raw replication ES with pre-computed original CI (matches original paper methodology)
  * 2. Fallback: Use normalized r with computed CI via Fisher z-transformation
+ *
+ * As with `computeOriginalInReplicationCI`, Strategy 1 assumes both studies share an
+ * effect-size metric. Callers pass `skipPrecomputedCI = true` when they do not.
  */
 export function computeReplicationInOriginalCI(
   repESRaw: number | null,
   repESR: number | null,
   origESR: number | null,
   origN: number | null,
-  origCIStr: string | null | undefined
+  origCIStr: string | null | undefined,
+  skipPrecomputedCI = false
 ): "success" | "failure" | "inconclusive" {
   // Strategy 1: Use raw replication ES with pre-computed original CI
-  const precomputedOrigCI = parseCIString(origCIStr);
+  const precomputedOrigCI = skipPrecomputedCI ? null : parseCIString(origCIStr);
   if (precomputedOrigCI !== null && repESRaw != null && Number.isFinite(repESRaw)) {
     if (repESRaw >= precomputedOrigCI.lower && repESRaw <= precomputedOrigCI.upper) {
       return "success";
@@ -483,11 +580,15 @@ export function getOutcomeForRow(
     return "inconclusive";
   }
 
-  // For CI-based methods: pass both raw and r values; functions will use appropriate strategy
+  // For CI-based methods: pass both raw and r values; functions will use appropriate strategy.
+  // Strategy 1 compares one study's raw ES against the other study's stored CI, which is
+  // only meaningful on a shared metric — when the metrics differ, skip it and let the
+  // r-vs-r Fisher-z fallback answer instead.
+  const skipPrecomputedCI = !metricsComparable(esOType, esRType);
   if (outcomeMethod === "orig_in_rep_ci") {
-    return computeOriginalInReplicationCI(eO_raw, eO_r, eR_r, nR, repCIStr);
+    return computeOriginalInReplicationCI(eO_raw, eO_r, eR_r, nR, repCIStr, skipPrecomputedCI);
   } else {
     // rep_in_orig_ci
-    return computeReplicationInOriginalCI(eR_raw, eR_r, eO_r, nO, origCIStr);
+    return computeReplicationInOriginalCI(eR_raw, eR_r, eO_r, nO, origCIStr, skipPrecomputedCI);
   }
 }

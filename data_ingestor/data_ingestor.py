@@ -496,6 +496,10 @@ def parse_test_statistic(stat_string):
     if chi_match:
         n_val = float(chi_match.group(1))
         chi_val = float(chi_match.group(2))
+        # phi = sqrt(chi2/N) is a correlation and cannot exceed 1; a 1-df chi2
+        # larger than N is internally inconsistent source data, not convertible.
+        if chi_val > n_val:
+            return None
         return math.sqrt(chi_val / n_val)
 
     return None
@@ -549,32 +553,38 @@ def convert_effect_size(es_value, es_type, n1=None, n2=None):
     if canonical_type == "r":
         # Already r or phi — but a correlation cannot exceed 1 in magnitude.
         # (A raw regression coefficient of 566.5 once passed through here.)
-        if abs(es_value) > 1:
-            return None
-        return es_value
+        r = es_value
 
     elif canonical_type == "r2":
-        return r2_to_r(es_value)
+        r = r2_to_r(es_value)
 
     elif canonical_type == "d":
-        return d_to_r(es_value, n1, n2)
+        r = d_to_r(es_value, n1, n2)
 
     elif canonical_type == "or":
-        return or_to_r(es_value)
+        r = or_to_r(es_value)
 
     elif canonical_type == "eta2":
-        return eta2_to_r(es_value)
+        r = eta2_to_r(es_value)
 
     elif canonical_type == "f":
-        return f_to_r(es_value)
+        r = f_to_r(es_value)
 
     elif canonical_type == "f2":
-        return f2_to_r(es_value)
+        r = f2_to_r(es_value)
 
     elif canonical_type == "test-stat":
-        return parse_test_statistic(str(es_value))
+        r = parse_test_statistic(str(es_value))
 
-    return None
+    else:
+        return None
+
+    # No branch may emit an impossible correlation: |r| > 1 means the source
+    # numbers are internally inconsistent (e.g. a 1-df chi2 larger than N),
+    # and refusing to convert is the only correct answer.
+    if r is not None and abs(r) > 1:
+        return None
+    return r
 
 
 def calculate_effect_sizes(df):

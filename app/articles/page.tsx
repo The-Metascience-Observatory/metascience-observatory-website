@@ -69,8 +69,14 @@ const articles: ArticleMeta[] = [
     alt: "Engraving of John Milton's 1631 pocket watch",
   },
   {
-    href: "/docs/previous-initiatives",
-    title: "Previous replication database initiatives",
+    href: "/reanalysis-initiatives",
+    title: "Re-analysis\ninitiatives",
+    image: "/assets/woodcut_square_crops/ancient_table_watch_1525.png",
+    alt: "Engraving of an ornate 1525 table watch",
+  },
+  {
+    href: "/docs/other-initiatives",
+    title: "Other replication database initiatives",
     image: "/assets/woodcut_square_crops/polar_clock_square.png",
     alt: "Woodcut of a telescope on a stand",
   },
