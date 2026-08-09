@@ -222,12 +222,15 @@ function loadTrials(cites: Map<string, Citation>): TrialRow[] {
 export default function ResultsPage() {
   const cites = loadCitations();
   const trials = loadTrials(cites);
-  const hasMetaAnalysis = fs.existsSync(dataPath("meta_analysis.json"));
 
   return (
     <>
       <BirdsEyeNavbar />
-      <main className="container mx-auto px-2 pt-24 pb-16 min-h-screen">
+      {/* Full-width rather than the shared `container` (capped at 1040px in
+          tailwind.config): this page's table carries ten columns and was being
+          squeezed into a narrow strip on a wide monitor. Scoped to this page —
+          changing the theme's container would reflow the whole site. */}
+      <main className="w-full px-3 pt-24 pb-16 min-h-screen">
         <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1">
           <Link href="/birds-eye-reviews" className="text-sm text-blue-600 hover:text-blue-700">
             &larr; Back to Bird&apos;s Eye Reviews
@@ -255,14 +258,6 @@ export default function ResultsPage() {
           >
             View screening process &rarr;
           </Link>
-          {hasMetaAnalysis && (
-            <Link
-              href="/birds-eye-reviews/lithium-weight-gain/meta-analysis"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
-            >
-              View meta-analyses &rarr;
-            </Link>
-          )}
         </div>
 
         <ResultsClientWrapper trials={trials} />
