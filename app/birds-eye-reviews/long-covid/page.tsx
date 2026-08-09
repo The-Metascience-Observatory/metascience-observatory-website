@@ -2,7 +2,6 @@ import fs from "fs";
 import path from "path";
 import { BirdsEyeNavbar } from "@/components/BirdsEyeNavbar";
 import { Footer } from "@/components/Footer";
-import Link from "next/link";
 import { LongCovidDashboard } from "./LongCovidDashboard";
 import type {
   TrialTableRow,
@@ -569,12 +568,6 @@ export default function LongCovidReviewPage() {
       <BirdsEyeNavbar subtitle="Long Covid" />
       <main className="pt-20 pb-16">
         <div className="container mx-auto px-2 py-8 max-w-7xl">
-          <Link
-            href="/birds-eye-reviews"
-            className="text-sm text-foreground/60 hover:text-foreground transition-colors mb-6 inline-block"
-          >
-            &larr; Bird&apos;s Eye Reviews
-          </Link>
           <LongCovidDashboard {...data} />
         </div>
       </main>
