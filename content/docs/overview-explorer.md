@@ -31,6 +31,7 @@ We have ingested almost all the data from SciSci-Net-v2 except for the paper emb
 
 Beyond SciSciNet-V2, we have incorporated data from the following sources:
 
+- [OpenAIRE Graph](https://graph.openaire.eu/) (v11.1.1, June 2026) — a large open scholarly knowledge graph funded by the European Commission, used under a [CC-BY 4.0 license](https://creativecommons.org/licenses/by/4.0/)[^3]. From its bulk data dump we incorporated: open access status for papers (gold/green/bronze/hybrid and diamond-journal flags), links from papers to 3.9 million funded projects from the European Commission and roughly 40 national funding agencies (complementing the NIH and NSF grant data), links from papers to related research datasets and software, institutional project portfolios, and 33.5 million additional DOI-bearing papers that are not present in SciSciNet-V2.
 - [Scopus Source Title List](https://www.scopus.com/sources) (November 2025) — journal metadata, ISSNs, publishers, coverage dates, open access status, and ASJC subject classifications. Used to enrich journal records and to add Scopus-indexed journals that are not present in OpenAlex.
 - [Directory of Open Access Journals (DOAJ)](https://doaj.org/) (December 2025) — open access licensing information, Article Processing Charges (APCs), Library of Congress Classification (LCC) codes, and language coverage for open access journals.
 - [Retraction Watch Database](https://retractionwatch.com/retraction-watch-database-user-guide/) — retracted paper records matched by DOI and PMID, including retraction dates and reasons.
@@ -44,5 +45,7 @@ Beyond SciSciNet-V2, we have incorporated data from the following sources:
 [^1]: Lin, Z., Yin, Y., Liu, L. et al. SciSciNet: A large-scale open data lake for the science of science research. *Sci Data* 10, 315 (2023). [https://doi.org/10.1038/s41597-023-02198-9](https://doi.org/10.1038/s41597-023-02198-9)
 
 [^2]: OpenAlex, [Author disambiguation](https://help.openalex.org/hc/en-us/articles/24347048891543-Author-disambiguation).
+
+[^3]: Manghi, P., Atzori, C., Bardi, A., et al. OpenAIRE Graph Dataset (v11.1.1). *Zenodo*. [https://doi.org/10.5281/zenodo.3516917](https://doi.org/10.5281/zenodo.3516917)
 
 

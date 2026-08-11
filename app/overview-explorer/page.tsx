@@ -8,7 +8,7 @@ import { DocsBackLink } from "@/components/DocsBackLink";
 export const metadata = {
   title: "About the Explorer | The Metascience Observatory",
   description:
-    "The data sources used to construct the Metascience Observatory Explorer, including SciSciNet-V2, OpenAlex, Scopus, DOAJ, Retraction Watch, and MeSH.",
+    "The data sources used to construct the Metascience Observatory Explorer, including SciSciNet-V2, OpenAlex, OpenAIRE Graph, Scopus, DOAJ, Retraction Watch, and MeSH.",
 };
 
 function getMarkdownContent(): string {
