@@ -47,7 +47,95 @@ export interface TrialRow {
 
 type SortKey =
   | "year" | "title" | "design" | "n" | "rob"
-  | "elementalMgPerDay" | "serumMmolL" | "durationWeeks" | "effVal";
+  | "elementalMgPerDay" | "serumMmolL" | "durationWeeks" | "effVal"
+  | "outcomeName" | "serumBand" | "exposureStratum";
+
+/** Achieved serum lithium, banded. This review is about dose-response, so the
+ *  band is the axis that matters — but only ~48% of studies report a level at
+ *  all, and a blank cell must read as "never measured", not "zero". */
+const SERUM_BAND_LABEL: Record<string, string> = {
+  low: "low",
+  medium: "medium",
+  high: "high",
+};
+const SERUM_BAND_STYLE: Record<string, string> = {
+  low: "border-sky-200 bg-sky-50 text-sky-700",
+  medium: "border-amber-200 bg-amber-50 text-amber-700",
+  high: "border-red-200 bg-red-50 text-red-700",
+};
+
+/** How the lithium exposure arose. Nearly all studies are therapeutic dosing;
+ *  the handful that are not (trace levels in drinking water, anorexia
+ *  treatment, sub-therapeutic clinical doses, supplements) are not comparable
+ *  to them and were previously indistinguishable in this table. */
+const EXPOSURE_LABEL: Record<string, string> = {
+  therapeutic: "therapeutic",
+  drinking_water: "drinking water",
+  low_dose_clinical: "low-dose clinical",
+  anorexia_treatment: "anorexia tx",
+  supplement: "supplement",
+};
+const EXPOSURE_STYLE: Record<string, string> = {
+  // The overwhelming majority — muted so the exceptions carry the eye.
+  therapeutic: "border-border text-foreground/45",
+};
+const EXPOSURE_STYLE_DEFAULT = "border-violet-200 bg-violet-50 text-violet-700";
+
+function Badge({ label, className }: { label: string; className: string }) {
+  return (
+    <span
+      className={`inline-block whitespace-nowrap rounded border px-1.5 py-0.5 text-[10px] leading-tight ${className}`}
+    >
+      {label}
+    </span>
+  );
+}
+
+/** The outcome the study actually measured.
+ *
+ *  Only ~21% of rows carry a usable between-group effect, so most Weight-change
+ *  cells read "—". Naming the outcome here is what makes those rows
+ *  informative: "no pooled effect" and "nothing was measured" are very
+ *  different claims, and the table previously could not tell them apart (the
+ *  name existed only in a hover tooltip, and only on the null branch). */
+function OutcomeCell({ row }: { row: TrialRow }) {
+  if (!row.outcomeName) return <span className="text-foreground/40">—</span>;
+  return (
+    <div className="leading-tight">
+      <div className="text-foreground/80">{row.outcomeName}</div>
+      {row.weightMetricLabel && (
+        <div className="text-[10px] text-foreground/40">{row.weightMetricLabel}</div>
+      )}
+    </div>
+  );
+}
+
+function SerumBandCell({ row }: { row: TrialRow }) {
+  const band = row.serumBand;
+  if (!band || band === "not_reported")
+    return (
+      <span className="text-foreground/40" title="No serum lithium level reported.">
+        —
+      </span>
+    );
+  return (
+    <Badge
+      label={SERUM_BAND_LABEL[band] ?? formatLabel(band)}
+      className={SERUM_BAND_STYLE[band] ?? "border-border text-foreground/60"}
+    />
+  );
+}
+
+function ExposureCell({ row }: { row: TrialRow }) {
+  const ex = row.exposureStratum;
+  if (!ex) return <span className="text-foreground/40">—</span>;
+  return (
+    <Badge
+      label={EXPOSURE_LABEL[ex] ?? formatLabel(ex)}
+      className={EXPOSURE_STYLE[ex] ?? EXPOSURE_STYLE_DEFAULT}
+    />
+  );
+}
 
 function rowHref(row: TrialRow): string | null {
   const base = row.doi.split("#")[0];
@@ -252,12 +340,15 @@ export function ResultsTable({ rows, pageSize = 100 }: { rows: TrialRow[]; pageS
         <table className="w-full border-collapse text-sm">
           <thead>
             <tr>
-              <SortTh label="Reference" k="title" active={sortKey} dir={dir} onSort={sortBy} className="w-[34%]" />
+              <SortTh label="Reference" k="title" active={sortKey} dir={dir} onSort={sortBy} className="w-[24%]" />
               <SortTh label="Design" k="design" active={sortKey} dir={dir} onSort={sortBy} />
               <SortTh label="N" k="n" active={sortKey} dir={dir} onSort={sortBy} align="right" />
               <SortTh label="Dose" k="elementalMgPerDay" active={sortKey} dir={dir} onSort={sortBy} />
+              <SortTh label="Serum" k="serumBand" active={sortKey} dir={dir} onSort={sortBy} />
               <SortTh label="Duration" k="durationWeeks" active={sortKey} dir={dir} onSort={sortBy} align="right" />
+              <SortTh label="Outcome" k="outcomeName" active={sortKey} dir={dir} onSort={sortBy} className="w-[18%]" />
               <SortTh label="Weight change" k="effVal" active={sortKey} dir={dir} onSort={sortBy} />
+              <SortTh label="Exposure" k="exposureStratum" active={sortKey} dir={dir} onSort={sortBy} />
               <SortTh label="Risk of bias" k="rob" active={sortKey} dir={dir} onSort={sortBy} />
             </tr>
           </thead>
@@ -274,18 +365,27 @@ export function ResultsTable({ rows, pageSize = 100 }: { rows: TrialRow[]; pageS
                 <td className="px-2 py-2 text-foreground/70">
                   <DoseCell row={r} />
                 </td>
+                <td className="px-2 py-2">
+                  <SerumBandCell row={r} />
+                </td>
                 <td className="px-2 py-2 text-right tabular-nums text-foreground/70">
                   {r.durationWeeks != null ? `${fmt(r.durationWeeks)} wk` : "—"}
                 </td>
+                <td className="px-2 py-2 text-xs text-foreground/70">
+                  <OutcomeCell row={r} />
+                </td>
                 <td className="px-2 py-2 text-foreground/70">
                   <WeightCell row={r} />
+                </td>
+                <td className="px-2 py-2">
+                  <ExposureCell row={r} />
                 </td>
                 <td className="px-2 py-2 text-foreground/70">{formatLabel(r.rob)}</td>
               </tr>
             ))}
             {!visible.length && (
               <tr>
-                <td colSpan={7} className="py-6 text-center text-sm text-foreground/45">
+                <td colSpan={10} className="py-6 text-center text-sm text-foreground/45">
                   No studies match the current filters.
                 </td>
               </tr>
@@ -307,6 +407,29 @@ export function ResultsTable({ rows, pageSize = 100 }: { rows: TrialRow[]; pageS
               )}
               <span>RoB: {formatLabel(r.rob)}</span>
             </div>
+            {/* Badges only when they carry information: a serum band is absent
+                on ~half the studies, and "therapeutic" is the unremarkable
+                default — showing either would just pad every card. */}
+            {(r.exposureStratum && r.exposureStratum !== "therapeutic") ||
+            (r.serumBand && r.serumBand !== "not_reported") ? (
+              <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+                {r.serumBand && r.serumBand !== "not_reported" && (
+                  <SerumBandCell row={r} />
+                )}
+                {r.exposureStratum && r.exposureStratum !== "therapeutic" && (
+                  <ExposureCell row={r} />
+                )}
+              </div>
+            ) : null}
+            {r.outcomeName && (
+              <div className="mt-1.5 text-xs">
+                <span className="text-foreground/40">Outcome: </span>
+                <span className="text-foreground/70">{r.outcomeName}</span>
+                {r.weightMetricLabel && (
+                  <span className="text-foreground/40"> ({r.weightMetricLabel})</span>
+                )}
+              </div>
+            )}
             <div className="mt-1.5 flex flex-wrap gap-x-4 text-xs">
               <div>
                 <span className="text-foreground/40">Dose: </span>
@@ -341,7 +464,12 @@ export function ResultsTable({ rows, pageSize = 100 }: { rows: TrialRow[]; pageS
         &ldquo;proportion gaining ≥7%&rdquo; are not interchangeable, and the
         disagreement between them is itself a finding. &ldquo;~&rdquo; marks a dose
         inferred from an assumed carbonate salt; &ldquo;†&rdquo; marks a standard
-        error derived from a reported p-value.
+        error derived from a reported p-value. <em>Outcome</em> names what the
+        study measured, which is why a row can carry an outcome while its weight
+        change reads &ldquo;—&rdquo;: the outcome was reported, but no usable
+        between-group effect was. An empty <em>Serum</em> cell means the study
+        never reported an achieved lithium level — about half of them do not —
+        not that the level was low.
       </p>
     </section>
   );

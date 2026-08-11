@@ -2,6 +2,15 @@
 
 An ETL (Extract, Transform, Load) pipeline for ingesting, enriching, and standardizing replication experiment data into the master replications database.
 
+> **This directory is the canonical home of the ingestion code.** It was
+> briefly consolidated into `mo_pipeline` (2026-07-13, see the old
+> `DEPRECATED.md`), but development continued here and the consolidation was
+> reversed on 2026-08-09: `mo_pipeline` now covers stages 1–8
+> (search → … → extract/collate) only, and ingestion is run manually from
+> here. `tag_disciplines.py` imports the topic-ontology helpers from the
+> installed `mo_pipeline` package so discipline labels stay in sync with
+> extraction.
+
 ## Overview
 
 The data ingestor takes CSV files containing replication study data, automatically fetches missing metadata from academic APIs, converts effect sizes to a standardized format (Pearson's r), generates HTML citations, and appends new entries to the master database.

@@ -450,11 +450,16 @@ def parse_test_statistic(stat_string):
     """
     Parse APA-formatted test statistics and convert to r.
 
-    Supported formats:
-    - t(df) = value        e.g., "t(10) = 2.5"
+    Supported formats (degrees of freedom and values may be integers or
+    decimals, including leading-dot decimals like ".27"):
+    - t(df) = value        e.g., "t(10) = 2.5", "t(173.36) = 5.37"
     - F(df1, df2) = value  e.g., "F(1, 20) = 4.5" (df1 must be 1)
-    - z = value, N = value e.g., "z = 2.81, N = 34"
-    - χ2(1, N = value) = value  e.g., "χ2(1, N = 12) = 5" (df must be 1)
+    - z = value, N = value e.g., "z = 2.81, N = 34" (trailing text tolerated)
+    - χ2(1, N = value) = value  e.g., "χ2(1, N = 12) = 5" (df must be 1;
+      the "N =" prefix is optional, e.g. "χ2(1, 85) = 7.87")
+
+    Multi-df F/χ² (df1 > 1), inequalities (F < 1), and unsupported statistics
+    return None.
 
     Returns r value or None if cannot be parsed/converted.
     """
@@ -463,39 +468,48 @@ def parse_test_statistic(stat_string):
 
     stat_string = stat_string.strip()
 
+    # Numeric token: integer, decimal, or leading-dot decimal, optionally signed.
+    NUM = r'-?(?:\d+\.?\d*|\.\d+)'
+
     # t-test: t(df) = value
-    t_match = re.match(r'^t\((\d+)\)\s*=\s*(-?\d+\.?\d*)$', stat_string, re.IGNORECASE)
+    t_match = re.match(rf'^t\(\s*({NUM})\s*\)\s*=\s*({NUM})$', stat_string, re.IGNORECASE)
     if t_match:
         df = float(t_match.group(1))
         t_val = float(t_match.group(2))
+        if df <= 0:
+            return None
         return t_val / math.sqrt(t_val ** 2 + df)
 
     # F-test: F(df1, df2) = value
-    f_match = re.match(r'^f\((\d+)\s*,\s*(\d+)\)\s*=\s*(\d+\.?\d*)$', stat_string, re.IGNORECASE)
+    f_match = re.match(rf'^f\(\s*({NUM})\s*,\s*({NUM})\s*\)\s*=\s*({NUM})$', stat_string, re.IGNORECASE)
     if f_match:
         df1 = float(f_match.group(1))
         df2 = float(f_match.group(2))
         f_val = float(f_match.group(3))
-        if df1 == 1:
+        if df1 == 1 and df2 > 0 and f_val >= 0:
             t_val = math.sqrt(f_val)
             return t_val / math.sqrt(t_val ** 2 + df2)
         else:
-            return None  # Cannot convert F with df1 > 1
+            return None  # Cannot convert F with df1 > 1 (omnibus effect)
 
-    # z-test: z = value, N = value
-    z_match = re.match(r'^z\s*=\s*(-?\d+\.?\d*)\s*,\s*n\s*=\s*(\d+)$', stat_string, re.IGNORECASE)
+    # z-test: z = value, N = value (tolerate trailing punctuation/text)
+    z_match = re.match(rf'^z\s*=\s*({NUM})\s*,\s*n\s*=\s*(\d+)', stat_string, re.IGNORECASE)
     if z_match:
         z_val = float(z_match.group(1))
         n_val = float(z_match.group(2))
+        if n_val <= 0:
+            return None
         return z_val / math.sqrt(z_val ** 2 + n_val)
 
-    # Chi-squared: χ2(1, N = value) = value or x2(1, N = value) = value
-    # Replace χ with x for matching
+    # Chi-squared: χ2(1, N = value) = value or x2(1, value) = value
+    # Replace χ with x for matching; the "N =" prefix is optional.
     normalized_stat = re.sub(r'^[χΧ]', 'x', stat_string)
-    chi_match = re.match(r'^x2\(\s*1\s*,\s*n\s*=\s*(\d+)\s*\)\s*=\s*(\d+\.?\d*)$', normalized_stat, re.IGNORECASE)
+    chi_match = re.match(rf'^x2\(\s*1\s*,\s*(?:n\s*=\s*)?(\d+)\s*\)\s*=\s*({NUM})$', normalized_stat, re.IGNORECASE)
     if chi_match:
         n_val = float(chi_match.group(1))
         chi_val = float(chi_match.group(2))
+        if n_val <= 0 or chi_val < 0:
+            return None
         # phi = sqrt(chi2/N) is a correlation and cannot exceed 1; a 1-df chi2
         # larger than N is internally inconsistent source data, not convertible.
         if chi_val > n_val:
