@@ -671,11 +671,9 @@ export default function ForensicAgentToolkitPage() {
               className="group flex flex-col gap-2 rounded-lg border border-black bg-primary/5 p-5 hover:shadow-md transition-shadow"
             >
               <span className="font-clarendon font-semibold text-lg text-cyan-900 leading-snug text-center">
-                See findings
+                See findings and 
                 <br />
-                and PubPeer comments
-                <br />
-                so far
+                PubPeer comments
               </span>
               <svg
                 aria-hidden
