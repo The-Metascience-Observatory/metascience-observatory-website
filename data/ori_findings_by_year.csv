@@ -1,0 +1,34 @@
+year,ori_misconduct_findings,source,note
+1994,11,HHS OGC compilation of ORI case-summary database,
+1995,24,HHS OGC compilation of ORI case-summary database,
+1996,17,HHS OGC compilation of ORI case-summary database,
+1997,14,HHS OGC compilation of ORI case-summary database,
+1998,9,HHS OGC compilation of ORI case-summary database,
+1999,13,HHS OGC compilation of ORI case-summary database,
+2000,6,HHS OGC compilation of ORI case-summary database,
+2001,14,HHS OGC compilation of ORI case-summary database,
+2002,13,HHS OGC compilation of ORI case-summary database,
+2003,12,HHS OGC compilation of ORI case-summary database,
+2004,8,HHS OGC compilation of ORI case-summary database,
+2005,8,HHS OGC compilation of ORI case-summary database,
+2006,15,ORI Data Graphs 2006-2015,
+2007,10,ORI Data Graphs 2006-2015,
+2008,13,ORI Data Graphs 2006-2015,
+2009,11,ORI Data Graphs 2006-2015,
+2010,9,ORI Data Graphs 2006-2015,ORI sources vary 7-9
+2011,13,ORI Data Graphs 2006-2015,
+2012,14,ORI Data Graphs 2006-2015,FR title count gives 15
+2013,12,ORI Data Graphs 2006-2015,matches FR title count
+2014,14,ORI Data Graphs 2006-2015,
+2015,14,ORI Data Graphs 2006-2015,matches FR title count
+2016,7,Federal Register title-exact notice count,matches ORI/press
+2017,7,Federal Register title-exact notice count,Charrow gives 8 (likely counts a Correction)
+2018,14,Federal Register title-exact notice count,matches Charrow
+2019,7,Federal Register title-exact notice count,
+2020,12,Federal Register title-exact notice count,
+2021,3,Federal Register title-exact notice count,matches ORI blog and Retraction Watch
+2022,12,Federal Register title-exact notice count,
+2023,11,Federal Register title-exact notice count,
+2024,6,Federal Register title-exact notice count,matches ORI CY2024 annual report PHS Findings chart
+2025,2,Federal Register title-exact notice count,matches ORI case summaries; Retraction Watch; The Scientist
+2026,3,Federal Register title-exact notice count,PARTIAL - through 2026-08-14

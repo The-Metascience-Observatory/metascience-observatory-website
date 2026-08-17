@@ -1,5 +1,7 @@
 import path from "path";
 
+const isVercel = !!process.env.VERCEL;
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Default .next inside the project. Build artifacts must NOT live outside the project root
@@ -9,7 +11,19 @@ const nextConfig = {
   reactStrictMode: true,
   allowedDevOrigins: ["10.0.0.16"],
   experimental: {
-    externalDir: true
+    externalDir: true,
+    // Already the effective default (no custom `webpack` key), but the two
+    // parallel* flags below hard-error (E101) if the build worker is disabled,
+    // so pin it explicitly.
+    webpackBuildWorker: true,
+    parallelServerCompiles: true,
+    parallelServerBuildTraces: true,
+    // Static generation is the slowest build phase; the default minimum of 25
+    // pages per export worker packs the ~56 routes into just 2-3 workers. Fan
+    // out locally; on Vercel Hobby (~2 vCPU, 8 GB) keep the defaults. Note the
+    // phase's wall time is floored at ~16s regardless of worker count by the
+    // correlates-of-reproducibility bootstrap CIs (buildCorrelationTable).
+    ...(isVercel ? {} : { cpus: 6, staticGenerationMinPagesPerWorker: 6 }),
   },
   images: {
     dangerouslyAllowSVG: true
@@ -19,6 +33,11 @@ const nextConfig = {
   // (e.g., your home folder) just because it finds
   // another lockfile there.
   outputFileTracingRoot: path.join(process.cwd()),
+  // data/backup/ (superseded master CSVs, ~800 MB) is referenced by nothing in
+  // app/ — keep the build-trace walk and Vercel function bundles out of it.
+  outputFileTracingExcludes: {
+    "*": ["./data/backup/**"],
+  },
   async redirects() {
     return [
       {

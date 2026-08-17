@@ -7,11 +7,13 @@ the ingestor's pandas output); writes a new timestamped master and archives the 
 """
 import csv
 import os
+import sys
 from datetime import datetime
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from data_ingestor import convert_effect_size, archive_superseded_masters
 
-DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data")
+DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data")
 OLD = "replications_database_2026_08_07_194614.csv"
 
 

@@ -32,7 +32,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
+REPO_ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = REPO_ROOT / "data"
 VERSION_HISTORY = DATA_DIR / "version_history.txt"
 
@@ -140,7 +140,7 @@ def main() -> int:
     print(f"\nwrote {out_path} and appended to version_history.txt")
 
     # data/ must hold exactly one master; move superseded versions to backup/.
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
     from data_ingestor import archive_superseded_masters
     archive_superseded_masters(new_name)
     return 0

@@ -1,10 +1,13 @@
 import fs from "fs";
 import path from "path";
+import Link from "next/link";
+import { csvParse } from "d3-dsv";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { DocsBackLink } from "@/components/DocsBackLink";
 import { MarkdownContent } from "@/components/MarkdownContent";
+import { OriFindingsChart, OriYearDatum } from "./OriFindingsChart";
 
 export const metadata = {
   title: "The Forensic Metascience Agent | The Metascience Observatory",
@@ -12,17 +15,354 @@ export const metadata = {
     "An AI agent that checks scientific papers for statistical inconsistencies and data-integrity anomalies using 31 forensic metascience tools.",
 };
 
-const TOOLKIT_MARKER = "<!-- TOOLKIT -->";
+// React sections are rendered between the markdown segments these markers delimit,
+// in this order. A missing marker simply yields an empty segment.
+const MARKERS = [
+  "<!-- FINDINGS_CTA -->",
+  "<!-- INTRO_END -->",
+  "<!-- FRAUD_STATS -->",
+  "<!-- ERROR_STATS -->",
+  "<!-- SLOP_STATS -->",
+  "<!-- ORI_CHART -->",
+  "<!-- TOOL_LOGOS -->",
+  "<!-- TOOLKIT -->",
+] as const;
 
-function getMarkdownSections(): { intro: string; outro: string } {
+function getMarkdownSegments(): string[] {
   const filePath = path.join(process.cwd(), "content/docs/forensic-metascience-agent.md");
+  let rest: string;
   try {
-    const content = fs.readFileSync(filePath, "utf-8");
-    const [intro, outro = ""] = content.split(TOOLKIT_MARKER);
-    return { intro, outro };
+    rest = fs.readFileSync(filePath, "utf-8");
   } catch {
-    return { intro: "# The Forensic Metascience Agent\n\nContent coming soon.", outro: "" };
+    rest = "# The Forensic Metascience Agent\n\nContent coming soon.";
   }
+  const segments: string[] = [];
+  for (const marker of MARKERS) {
+    const [before, after = ""] = rest.split(marker);
+    segments.push(before);
+    rest = after;
+  }
+  segments.push(rest);
+  return segments;
+}
+
+function getOriFindings(): OriYearDatum[] {
+  const csvPath = path.join(process.cwd(), "data/ori_findings_by_year.csv");
+  const rows = csvParse(fs.readFileSync(csvPath, "utf-8"));
+  return rows.map((r) => ({
+    year: Number(r.year),
+    findings: Number(r.ori_misconduct_findings),
+    partial: (r.note ?? "").includes("PARTIAL"),
+  }));
+}
+
+interface Stat {
+  value: string;
+  claim: string;
+  source: string;
+  href?: string;
+}
+
+const fraudStats: Stat[] = [
+  {
+    value: "2%",
+    claim: "of researchers admit to fabricating or falsifying data",
+    source: "Anonymous self-report; meta-analysis of surveys (Fanelli 2009)",
+    href: "https://doi.org/10.1371/journal.pone.0005738",
+  },
+  {
+    value: "3.8%",
+    claim: "of papers contain inappropriate image duplication",
+    source: "Bik et al. 2016; 20,621 papers screened by eye",
+    href: "https://doi.org/10.1128/mBio.00809-16",
+  },
+  {
+    value: "14%",
+    claim: "of trials submitted to Anaesthesia contained false data",
+    source: "Carlisle 2021; 526 trials, 2017–2020",
+    href: "https://doi.org/10.1111/anae.15263",
+  },
+  {
+    value: "~14%",
+    claim: "Heathers' estimate for the literature overall",
+    source: "“Approximately 1 in 7 papers are fake” — his 2024 review, which he calls non-systematic",
+    href: "https://metaror.org/kotahi/articles/18/index.html",
+  },
+];
+
+const slopStats: Stat[] = [
+  {
+    value: "190",
+    claim: "formulaic single-association NHANES papers published in 2024 — versus about 4 per year before ChatGPT",
+    source: "Suchak et al., PLOS Biology 2025",
+    href: "https://doi.org/10.1371/journal.pbio.3003152",
+  },
+  {
+    value: "3×",
+    claim: "growth from 2022 to 2025 in papers mined from nine open health datasets, including UK Biobank — 11,600 papers above the pre-LLM trend",
+    source: "Journal of Clinical Epidemiology 2026",
+    href: "https://doi.org/10.1016/j.jclinepi.2026.112203",
+  },
+  {
+    value: "1.5 yrs",
+    claim: "doubling time of suspected paper-mill output; the scientific literature as a whole doubles every 15",
+    source: "Richardson et al., PNAS 2025",
+    href: "https://doi.org/10.1073/pnas.2420092122",
+  },
+  {
+    value: "10,000+",
+    claim: "papers retracted in 2023 — an all-time record, driven mostly by paper-mill cleanup",
+    source: "Nature news analysis, December 2023",
+    href: "https://www.nature.com/articles/d41586-023-03974-8",
+  },
+];
+
+const errorStats: Stat[] = [
+  {
+    value: "50%",
+    claim: "of psychology papers report a p-value that contradicts its own test statistic",
+    source: "statcheck; 250,000 p-values across eight journals (Nuijten et al. 2016)",
+    href: "https://doi.org/10.3758/s13428-015-0664-2",
+  },
+  {
+    value: "1 in 8",
+    claim: "psychology papers contain an error that flips the significance conclusion",
+    source: "Nuijten et al. 2016",
+    href: "https://doi.org/10.3758/s13428-015-0664-2",
+  },
+  {
+    value: "~50%",
+    claim: "of GRIM-testable psychology papers contain an impossible mean",
+    source: "Brown & Heathers 2017; 36 of 71 testable papers",
+    href: "https://doi.org/10.1177/1948550616673876",
+  },
+  {
+    value: "63%",
+    claim: "of meta-analyses had a data-extraction error; 37% enough to change the result",
+    source: "Gøtzsche et al., JAMA 2007",
+    href: "https://doi.org/10.1001/jama.298.4.430",
+  },
+];
+
+// Muted-blue accent (the chart's bar color) for fraud; purple for rigor; green for slop.
+const STAT_TONES = {
+  fraud: { card: "bg-sky-50", value: "text-[#1a5276]" },
+  error: { card: "bg-purple-50", value: "text-purple-950" },
+  slop: { card: "bg-emerald-50", value: "text-emerald-950" },
+} as const;
+
+function StatGrid({ stats, tone }: { stats: Stat[]; tone: keyof typeof STAT_TONES }) {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
+      {stats.map((stat) => (
+        <Card key={stat.value + stat.claim} className={`p-5 border-black ${STAT_TONES[tone].card}`}>
+          <div className="flex items-center gap-4">
+            <p
+              className={`font-clarendon text-4xl font-bold leading-none shrink-0 ${STAT_TONES[tone].value}`}
+            >
+              {stat.value}
+            </p>
+            <div className="min-w-0">
+              <p className="text-sm text-foreground leading-relaxed">{stat.claim}</p>
+              <p className="mt-2 text-xs text-foreground/60">
+                {"("}
+                {stat.href ? (
+                  <a
+                    href={stat.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-foreground underline decoration-foreground/30 underline-offset-2"
+                  >
+                    {stat.source}
+                  </a>
+                ) : (
+                  stat.source
+                )}
+                {")"}
+              </p>
+            </div>
+          </div>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
+// Capability columns of the fit matrix. Add a new column here and tick it in
+// each company's `capabilities` list.
+const CAPABILITIES = [
+  { key: "image_within", label: "Within-paper image duplication" },
+  { key: "image_between", label: "Between-paper image duplication" },
+  { key: "dataset", label: "Dataset copy-paste errors" },
+  { key: "phrases", label: "Tortured phrases" },
+  { key: "plagiarism", label: "Plagiarism detection" },
+  { key: "stats", label: "Check stats" },
+] as const;
+
+type CapabilityKey = (typeof CAPABILITIES)[number]["key"];
+
+interface ToolCompany {
+  name: string;
+  href?: string;
+  /** Logo image; the name renders as text when absent. */
+  src?: string;
+  /** Render the name as text next to the logo. */
+  showName?: boolean;
+  /** This project's row — site-primary accent. */
+  highlight?: boolean;
+  capabilities: CapabilityKey[];
+}
+
+const companies: ToolCompany[] = [
+  {
+    name: "Proofig AI",
+    href: "https://www.proofig.com/",
+    src: "/assets/forensic/proofig_logo.png",
+    capabilities: ["image_within", "image_between"],
+  },
+  {
+    name: "ImageTwin",
+    href: "https://imagetwin.ai/",
+    src: "/assets/forensic/imagetwin_logo.png",
+    capabilities: ["image_within", "image_between"],
+  },
+  {
+    name: "ReviewerZero",
+    href: "https://www.reviewerzero.ai/",
+    src: "/assets/forensic/reviewerzero_logo.png",
+    capabilities: ["image_within", "image_between", "phrases"],
+  },
+  {
+    name: "River Valley Technologies",
+    href: "https://rivervalley.io/",
+    src: "/assets/forensic/river_valley_tech_logo.png",
+    showName: true,
+    capabilities: ["image_within"],
+  },
+  {
+    name: "ScienceDetective.org",
+    href: "https://www.sciencedetective.org/scientific-datasets-are-riddled-with-copy-paste-errors/",
+    src: "/assets/forensic/science_detective_logo.png",
+    capabilities: ["dataset"],
+  },
+  {
+    name: "Refine",
+    href: "https://refine.ink/",
+    src: "/assets/forensic/refine_logo.png",
+    capabilities: ["phrases"],
+  },
+  {
+    name: "iThenticate",
+    href: "https://www.ithenticate.com/",
+    src: "/assets/forensic/ithenticate.png",
+    capabilities: ["plagiarism"],
+  },
+  {
+    name: "The Forensic Metascience Agent",
+    src: "/assets/globe.svg",
+    showName: true,
+    highlight: true,
+    capabilities: ["stats"],
+  },
+];
+
+function CapabilityCheckbox({ checked }: { checked: boolean }) {
+  return (
+    <span
+      className={`inline-flex h-5 w-5 items-center justify-center rounded border ${
+        checked ? "border-primary bg-primary/10" : "border-foreground/25 bg-white"
+      }`}
+    >
+      {checked && (
+        <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 text-primary" aria-hidden>
+          <path
+            d="M2.5 8.5l3.5 3.5 7-8"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      )}
+    </span>
+  );
+}
+
+function FitMatrix() {
+  return (
+    <div className="overflow-x-auto my-8">
+      <table className="border-collapse">
+        <thead>
+          <tr>
+            <th className="w-56" aria-label="Tool" />
+            {CAPABILITIES.map((cap) => (
+              <th key={cap.key} className="relative h-36 w-12 p-0 align-bottom">
+                <div className="absolute bottom-1 left-1/2 origin-bottom-left -rotate-45 whitespace-nowrap text-xs font-medium text-foreground">
+                  {cap.label}
+                </div>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {companies.map((company) => (
+            <tr
+              key={company.name}
+              className={`border-t border-border ${company.highlight ? "bg-primary/5" : ""}`}
+            >
+              <td className="py-2 pr-4">
+                {(() => {
+                  const chipContent = (
+                    <>
+                      {company.src && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={company.src}
+                          alt={`${company.name} logo`}
+                          className="max-h-5 w-auto"
+                        />
+                      )}
+                      {(!company.src || company.showName) && (
+                        <span
+                          className={`${
+                            company.highlight ? "whitespace-normal leading-tight" : "truncate"
+                          } text-xs font-medium text-foreground ${company.src ? "ml-2" : ""}`}
+                        >
+                          {company.name}
+                        </span>
+                      )}
+                    </>
+                  );
+                  const chipClass = `flex ${
+                    company.highlight ? "h-12" : "h-9"
+                  } w-56 items-center rounded border border-border bg-white px-3`;
+                  return company.href ? (
+                    <a
+                      href={company.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={company.name}
+                      className={`${chipClass} hover:shadow-md transition-shadow`}
+                    >
+                      {chipContent}
+                    </a>
+                  ) : (
+                    <div className={chipClass}>{chipContent}</div>
+                  );
+                })()}
+              </td>
+              {CAPABILITIES.map((cap) => (
+                <td key={cap.key} className="px-2 py-2 text-center">
+                  <CapabilityCheckbox checked={company.capabilities.includes(cap.key)} />
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 }
 
 interface ToolMeta {
@@ -304,15 +644,65 @@ const toolGroups: ToolGroup[] = [
 const totalTools = toolGroups.reduce((sum, group) => sum + group.tools.length, 0);
 
 export default function ForensicAgentToolkitPage() {
-  const { intro, outro } = getMarkdownSections();
+  const [
+    beforeFindingsCta,
+    intro,
+    beforeFraudStats,
+    afterFraudStats,
+    afterErrorStats,
+    afterSlopStats,
+    afterOriChart,
+    afterToolLogos,
+    afterToolkit,
+  ] = getMarkdownSegments();
+  const oriData = getOriFindings();
 
   return (
     <div className="min-h-screen">
       <Navbar />
       <main className="pt-20 pb-16">
-        <div className="container mx-auto px-4 py-12 max-w-3xl">
+        <div className="container mx-auto px-4 py-12">
           <DocsBackLink href="/articles" label="return to articles" />
-          <MarkdownContent content={intro} />
+          <MarkdownContent content={beforeFindingsCta} />
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_16rem] gap-6 items-start my-6">
+            <MarkdownContent content={intro} />
+            <Link
+              href="/forensic-metascience-agent/findings"
+              className="group flex flex-col gap-2 rounded-lg border border-black bg-primary/5 p-5 hover:shadow-md transition-shadow"
+            >
+              <span className="font-clarendon font-semibold text-lg text-cyan-900 leading-snug text-center">
+                See findings
+                <br />
+                and PubPeer comments
+                <br />
+                so far
+              </span>
+              <svg
+                aria-hidden
+                viewBox="0 0 32 24"
+                className="h-9 w-12 text-cyan-900 self-center transition-transform group-hover:translate-x-1"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={3}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M2 12h20" />
+                <path d="M21 5.5l9 6.5-9 6.5z" fill="currentColor" stroke="none" />
+              </svg>
+            </Link>
+          </div>
+          <MarkdownContent content={beforeFraudStats} />
+          <StatGrid stats={fraudStats} tone="fraud" />
+          <MarkdownContent content={afterFraudStats} />
+          <StatGrid stats={errorStats} tone="error" />
+          <MarkdownContent content={afterErrorStats} />
+          <StatGrid stats={slopStats} tone="slop" />
+          <MarkdownContent content={afterSlopStats} />
+          <OriFindingsChart data={oriData} />
+          <MarkdownContent content={afterOriChart} />
+          <FitMatrix />
+          <MarkdownContent content={afterToolLogos} />
 
           <section>
             <h2 className="text-2xl font-semibold mb-4 mt-10 text-foreground border-b border-border pb-2">
@@ -330,8 +720,8 @@ export default function ForensicAgentToolkitPage() {
                   <p className="text-foreground/70 leading-relaxed mt-2 mb-4">{group.blurb}</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {group.tools.map((tool) => (
-                      <Card key={tool.name} className="h-full p-5 border-border">
-                        <h4 className="font-clarendon font-semibold text-lg text-foreground mb-2">
+                      <Card key={tool.name} className="h-full p-5 border-black bg-primary/5">
+                        <h4 className="font-clarendon font-semibold text-lg text-primary mb-2">
                           {tool.name}
                         </h4>
                         <p className="text-sm text-foreground/80 leading-relaxed">
@@ -351,9 +741,9 @@ export default function ForensicAgentToolkitPage() {
             </div>
           </section>
 
-          {outro && (
+          {afterToolkit && (
             <div className="mt-4">
-              <MarkdownContent content={outro} />
+              <MarkdownContent content={afterToolkit} />
             </div>
           )}
         </div>
