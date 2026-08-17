@@ -193,10 +193,13 @@ function StatGrid({ stats, tone }: { stats: Stat[]; tone: keyof typeof STAT_TONE
 const CAPABILITIES = [
   { key: "image_within", label: "Within-paper image duplication" },
   { key: "image_between", label: "Between-paper image duplication" },
-  { key: "dataset", label: "Dataset copy-paste errors" },
+  { key: "dataset_si", label: "SI/SM/Dataverse copy-paste errors" },
+  { key: "dataset_repo", label: "Open Source Repo dataset copy-paste errors" },
   { key: "phrases", label: "Tortured phrases" },
+  { key: "ai_text", label: "AI text generation" },
   { key: "plagiarism", label: "Plagiarism detection" },
-  { key: "stats", label: "Check stats" },
+  { key: "stats", label: "Check stats and arithmetic" },
+  { key: "ai_review", label: "AI peer review" },
 ] as const;
 
 type CapabilityKey = (typeof CAPABILITIES)[number]["key"];
@@ -211,6 +214,8 @@ interface ToolCompany {
   /** This project's row — site-primary accent. */
   highlight?: boolean;
   capabilities: CapabilityKey[];
+  /** Capabilities partially covered — rendered as a half-filled (diagonal) box. */
+  partial?: CapabilityKey[];
 }
 
 const companies: ToolCompany[] = [
@@ -230,26 +235,28 @@ const companies: ToolCompany[] = [
     name: "ReviewerZero",
     href: "https://www.reviewerzero.ai/",
     src: "/assets/forensic/reviewerzero_logo.png",
-    capabilities: ["image_within", "image_between", "phrases"],
+    capabilities: ["image_within", "image_between", "phrases", "ai_text", "plagiarism", "ai_review"],
+    partial: ["stats"],
   },
   {
     name: "River Valley Technologies",
     href: "https://rivervalley.io/",
     src: "/assets/forensic/river_valley_tech_logo.png",
     showName: true,
-    capabilities: ["image_within"],
+    capabilities: ["image_within", "phrases"],
   },
   {
     name: "ScienceDetective.org",
     href: "https://www.sciencedetective.org/scientific-datasets-are-riddled-with-copy-paste-errors/",
     src: "/assets/forensic/science_detective_logo.png",
-    capabilities: ["dataset"],
+    showName: true,
+    capabilities: ["dataset_repo"],
   },
   {
     name: "Refine",
     href: "https://refine.ink/",
     src: "/assets/forensic/refine_logo.png",
-    capabilities: ["phrases"],
+    capabilities: ["phrases", "ai_review"],
   },
   {
     name: "iThenticate",
@@ -258,31 +265,28 @@ const companies: ToolCompany[] = [
     capabilities: ["plagiarism"],
   },
   {
-    name: "The Forensic Metascience Agent",
+    name: "Forensic Metascience Agent",
     src: "/assets/globe.svg",
     showName: true,
     highlight: true,
-    capabilities: ["stats"],
+    capabilities: ["stats", "dataset_si", "ai_review"],
+    partial: ["phrases"],
   },
 ];
 
-function CapabilityCheckbox({ checked }: { checked: boolean }) {
+type BoxFill = "full" | "half" | "none";
+
+function CapabilityBox({ fill }: { fill: BoxFill }) {
   return (
     <span
-      className={`inline-flex h-5 w-5 items-center justify-center rounded border ${
-        checked ? "border-primary bg-primary/10" : "border-foreground/25 bg-white"
+      className={`inline-flex h-5 w-5 overflow-hidden rounded border ${
+        fill === "none" ? "border-foreground/25 bg-white" : "border-primary bg-white"
       }`}
     >
-      {checked && (
-        <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 text-primary" aria-hidden>
-          <path
-            d="M2.5 8.5l3.5 3.5 7-8"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
+      {fill === "full" && <span className="h-full w-full bg-primary" />}
+      {fill === "half" && (
+        <svg viewBox="0 0 16 16" className="h-full w-full text-primary" aria-hidden>
+          <polygon points="0,0 16,16 0,16" fill="currentColor" />
         </svg>
       )}
     </span>
@@ -297,7 +301,7 @@ function FitMatrix() {
           <tr>
             <th className="w-56" aria-label="Tool" />
             {CAPABILITIES.map((cap) => (
-              <th key={cap.key} className="relative h-36 w-12 p-0 align-bottom">
+              <th key={cap.key} className="relative h-48 w-12 p-0 align-bottom">
                 <div className="absolute bottom-1 left-1/2 origin-bottom-left -rotate-45 whitespace-nowrap text-xs font-medium text-foreground">
                   {cap.label}
                 </div>
@@ -354,7 +358,15 @@ function FitMatrix() {
               </td>
               {CAPABILITIES.map((cap) => (
                 <td key={cap.key} className="px-2 py-2 text-center">
-                  <CapabilityCheckbox checked={company.capabilities.includes(cap.key)} />
+                  <CapabilityBox
+                    fill={
+                      company.capabilities.includes(cap.key)
+                        ? "full"
+                        : company.partial?.includes(cap.key)
+                          ? "half"
+                          : "none"
+                    }
+                  />
                 </td>
               ))}
             </tr>
