@@ -2,7 +2,7 @@
 
 import { ReactNode, useMemo, useRef, useState } from "react";
 import { ExternalLink } from "lucide-react";
-import { ArmRatePoint } from "./arm-points";
+import { ArmRatePoint, IncidencePoint } from "./arm-points";
 import { fmt, niceTicks, tickLabel } from "./utils";
 
 /** Dose-normalized weight-change charts, one point per lithium arm.
@@ -44,7 +44,7 @@ const MIN_RATE_WEEKS = 2;
 interface Pt {
   x: number;
   y: number;
-  p: ArmRatePoint;
+  p: ArmRatePoint | IncidencePoint;
 }
 
 interface LegendItem {
@@ -81,7 +81,7 @@ function studyHref(doi: string): string | null {
 
 function Scatter({
   title, subtitle, points, xLabel, yLabel, xTicks, xScale = "linear",
-  colorClass, legend, legendTitle, footnote, tooltip,
+  yFloorZero = false, colorClass, legend, legendTitle, footnote, tooltip,
 }: {
   title: string;
   subtitle: string;
@@ -90,6 +90,8 @@ function Scatter({
   yLabel: string;
   xTicks: number[];
   xScale?: "linear" | "log";
+  /** Clamp the y-axis floor at 0 (for percentage axes). */
+  yFloorZero?: boolean;
   colorClass: (p: Pt) => string;
   legend: LegendItem[];
   legendTitle?: string;
@@ -121,17 +123,18 @@ function Scatter({
   const yMin = Math.min(...ys, 0);
   const yMax = Math.max(...ys, 0);
   const yPad = (yMax - yMin) * 0.15 || 1;
+  const yLo = yFloorZero ? 0 : yMin - yPad;
+  const yHi = yMax + yPad;
 
   const sx = (v: number) =>
     M.left + ((tx(v) - xMin) / (xMax - xMin || 1)) * (W - M.left - M.right);
   const sy = (v: number) =>
-    H - M.bottom -
-    ((v - (yMin - yPad)) / ((yMax + yPad) - (yMin - yPad) || 1)) * (H - M.top - M.bottom);
+    H - M.bottom - ((v - yLo) / (yHi - yLo || 1)) * (H - M.top - M.bottom);
 
   // Round-number ticks; because they are multiples of a nice step, 0 is
   // always among them when the data spans zero — so the dashed zero line
   // gets its own labeled tick.
-  const yTicks = niceTicks(yMin - yPad, yMax + yPad);
+  const yTicks = niceTicks(yLo, yHi);
 
   const showTip = (pt: Pt) => (e: React.MouseEvent) => {
     cancelClose();
@@ -156,8 +159,10 @@ function Scatter({
             two-column layout gives it less than its natural 720px. */}
         <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} className="max-w-full h-auto">
           {/* zero line — above it weight was gained, below it lost */}
-          <line x1={M.left} x2={W - M.right} y1={sy(0)} y2={sy(0)}
-                stroke="currentColor" className="text-foreground/25" strokeDasharray="4 3" />
+          {yLo < 0 && (
+            <line x1={M.left} x2={W - M.right} y1={sy(0)} y2={sy(0)}
+                  stroke="currentColor" className="text-foreground/25" strokeDasharray="4 3" />
+          )}
           <line x1={M.left} x2={M.left} y1={M.top} y2={H - M.bottom}
                 stroke="currentColor" className="text-foreground/30" />
           <line x1={M.left} x2={W - M.right} y1={H - M.bottom} y2={H - M.bottom}
@@ -264,14 +269,151 @@ function Scatter({
 
 /** "0.05 kg/wk over 26 wk (+1.3 kg)" — the rate AND what it added up to. */
 function rateTooltip(p: Pt): string {
-  return `${fmt(p.p.kgPerWeek)} kg/week over ${fmt(p.p.weeks)} wk (${p.p.totalKg > 0 ? "+" : ""}${fmt(p.p.totalKg)} kg total)`;
+  const a = p.p as ArmRatePoint;
+  return `${fmt(a.kgPerWeek)} kg/week over ${fmt(a.weeks)} wk (${a.totalKg > 0 ? "+" : ""}${fmt(a.totalKg)} kg total)`;
 }
 
-export function ArmRateCharts({ points }: { points: ArmRatePoint[] }) {
+const THRESH_CLASS = "fill-indigo-700/55 stroke-indigo-800/70";
+const ANYGAIN_CLASS = "fill-sky-400/45 stroke-sky-500/70";
+const DEFINITION_LEGEND: LegendItem[] = [
+  { label: "≥7% / ≥5% body-weight threshold", className: THRESH_CLASS },
+  { label: "Any weight gain / AE report", className: ANYGAIN_CLASS },
+];
+
+/** Distribution of weight-gain incidence across lithium arms, stacked by how
+ *  the study defined "gained weight" — a formal body-weight threshold vs an
+ *  any-gain / adverse-event report. The definitions differ enough that the
+ *  stack matters: threshold outcomes cluster lower than "any gain" counts. */
+function IncidenceHistogram({ points }: { points: IncidencePoint[] }) {
+  if (points.length < 5) return null;
+  const BIN = 10;
+  const bins = Array.from({ length: 10 }, () => ({ thresh: 0, any: 0 }));
+  for (const p of points) {
+    const b = Math.min(Math.floor(p.pct / BIN), 9);
+    if (p.thresholdDefined) bins[b].thresh += 1;
+    else bins[b].any += 1;
+  }
+  const maxCount = Math.max(...bins.map((b) => b.thresh + b.any));
+  const yStep = Math.max(1, Math.ceil(maxCount / 5));
+  const yTop = Math.ceil(maxCount / yStep) * yStep;
+  const plotW = W - M.left - M.right;
+  const plotH = H - M.top - M.bottom;
+  const sy = (v: number) => H - M.bottom - (v / yTop) * plotH;
+  const barW = plotW / 10;
+
+  return (
+    <div className="mb-6 w-fit max-w-full mx-auto rounded-lg border border-border bg-white p-3 sm:p-4">
+      <h2 className="mb-1 text-sm font-medium text-foreground">
+        How often patients on lithium gained weight
+      </h2>
+      <p className="mb-3 max-w-[720px] text-xs text-foreground/50">
+        {points.length} lithium arms reporting the number or percentage of patients
+        with weight gain, binned by incidence.
+      </p>
+      <div className="relative overflow-x-auto">
+        <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} className="max-w-full h-auto">
+          <line x1={M.left} x2={M.left} y1={M.top} y2={H - M.bottom}
+                stroke="currentColor" className="text-foreground/30" />
+          <line x1={M.left} x2={W - M.right} y1={H - M.bottom} y2={H - M.bottom}
+                stroke="currentColor" className="text-foreground/30" />
+          {Array.from({ length: yTop / yStep + 1 }, (_, i) => i * yStep).map((v) => (
+            <g key={v}>
+              <line x1={M.left - 4} x2={M.left} y1={sy(v)} y2={sy(v)}
+                    stroke="currentColor" className="text-foreground/40" />
+              <text x={M.left - 7} y={sy(v) + 3} textAnchor="end"
+                    className="fill-current text-foreground" fontSize={12}>
+                {v}
+              </text>
+            </g>
+          ))}
+          {bins.map((b, i) => {
+            const x = M.left + i * barW + 3;
+            const w = barW - 6;
+            const hAny = (b.any / yTop) * plotH;
+            const hThresh = (b.thresh / yTop) * plotH;
+            return (
+              <g key={i}>
+                {b.any > 0 && (
+                  <rect x={x} y={H - M.bottom - hAny} width={w} height={hAny}
+                        className={ANYGAIN_CLASS} strokeWidth={1} />
+                )}
+                {b.thresh > 0 && (
+                  <rect x={x} y={H - M.bottom - hAny - hThresh} width={w} height={hThresh}
+                        className={THRESH_CLASS} strokeWidth={1} />
+                )}
+              </g>
+            );
+          })}
+          {Array.from({ length: 11 }, (_, i) => i * 10).map((t) => (
+            <text key={t} x={M.left + (t / 100) * plotW} y={H - M.bottom + 15}
+                  textAnchor="middle" className="fill-current text-foreground" fontSize={12}>
+              {t}
+            </text>
+          ))}
+          <text x={(M.left + W - M.right) / 2} y={H - 6} textAnchor="middle"
+                className="fill-current text-foreground" fontSize={13}>
+            Patients with weight gain (%)
+          </text>
+          <text x={14} y={(M.top + H - M.bottom) / 2} textAnchor="middle" fontSize={13}
+                className="fill-current text-foreground"
+                transform={`rotate(-90 14 ${(M.top + H - M.bottom) / 2})`}>
+            Number of lithium arms
+          </text>
+          {/* Legend upper-right: the histogram's mass sits at the left. */}
+          <g>
+            {DEFINITION_LEGEND.map((item, i) => {
+              const y = M.top + 14 + i * 17;
+              const xL = W - M.right - 250;
+              return (
+                <g key={item.label}>
+                  <rect x={xL} y={y - 10} width={10} height={10}
+                        className={item.className} strokeWidth={1} />
+                  <text x={xL + 16} y={y} className="fill-current text-foreground" fontSize={12}>
+                    {item.label}
+                  </text>
+                </g>
+              );
+            })}
+          </g>
+        </svg>
+      </div>
+      <p className="mt-2 max-w-[720px] text-xs text-foreground/45">
+        Definitions vary widely — a formal &ldquo;≥7% of body weight&rdquo; threshold
+        and a spontaneously reported adverse event are not the same bar — so this
+        shows the spread of reported incidences, not one pooled rate. Drinking-water,
+        supplement and anorexia-treatment strata are excluded.
+      </p>
+    </div>
+  );
+}
+
+export function ArmRateCharts({
+  points,
+  incidence = [],
+}: {
+  points: ArmRatePoint[];
+  incidence?: IncidencePoint[];
+}) {
   const plottable = useMemo(
     () => points.filter((p) => PLOTTABLE_STRATA.has(p.stratum)),
     [points],
   );
+  const incPlottable = useMemo(
+    () => incidence.filter((p) => PLOTTABLE_STRATA.has(p.stratum)),
+    [incidence],
+  );
+  const incDosePts: Pt[] = incPlottable
+    .filter((p) => p.doseMg != null)
+    .map((p) => ({ x: p.doseMg as number, y: p.pct, p }));
+  const incExposurePts: Pt[] = incPlottable
+    .filter((p) => p.doseMg != null && p.weeks != null && (p.weeks as number) > 0)
+    .map((p) => ({ x: ((p.doseMg as number) * (p.weeks as number) * 7) / 1000, y: p.pct, p }));
+  const incTooltip = (pt: Pt) => {
+    const ip = pt.p as IncidencePoint;
+    return `${fmt(ip.pct)}% of ${ip.n != null ? ip.n.toLocaleString() : "?"} patients · ${
+      ip.thresholdDefined ? "≥ threshold gain" : "any gain / AE"
+    }`;
+  };
   const excludedStrata = points.length - plottable.length;
 
   const ratePts = plottable.filter((p) => p.weeks >= MIN_RATE_WEEKS);
@@ -321,7 +463,7 @@ export function ArmRateCharts({ points }: { points: ArmRatePoint[] }) {
         xLabel="Elemental lithium (mg/day) — 900 mg carbonate ≈ 169 mg elemental"
         yLabel="Weight change (kg per week)"
         xTicks={doseTicks.filter((t) => t <= maxDose + 50)}
-        colorClass={(pt) => BUCKET_CLASS[durationBucket(pt.p.weeks)]}
+        colorClass={(pt) => BUCKET_CLASS[durationBucket((pt.p as ArmRatePoint).weeks)]}
         legend={DURATION_LEGEND}
         legendTitle="Treatment length"
         tooltip={(pt) => `${fmt(pt.p.doseMg!)} mg/day · ${rateTooltip(pt)}`}
@@ -347,7 +489,7 @@ export function ArmRateCharts({ points }: { points: ArmRatePoint[] }) {
         xTicks={[0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2].filter(
           (t) => t <= Math.max(...serumPts.map((d) => d.x), 1.2) + 0.05,
         )}
-        colorClass={(pt) => BUCKET_CLASS[durationBucket(pt.p.weeks)]}
+        colorClass={(pt) => BUCKET_CLASS[durationBucket((pt.p as ArmRatePoint).weeks)]}
         legend={DURATION_LEGEND}
         legendTitle="Treatment length"
         tooltip={(pt) => `${fmt(pt.p.serum!)} mmol/L · ${rateTooltip(pt)}`}
@@ -363,11 +505,11 @@ export function ArmRateCharts({ points }: { points: ArmRatePoint[] }) {
       <Scatter
         title="Total weight change vs elemental lithium dose"
         subtitle={`Same ${dosePts.length} arms as the rate chart, but showing the UN-normalized total kg change over each study's whole window.`}
-        points={dosePts.map((d) => ({ ...d, y: d.p.totalKg }))}
+        points={dosePts.map((d) => ({ ...d, y: (d.p as ArmRatePoint).totalKg }))}
         xLabel="Elemental lithium (mg/day) — 900 mg carbonate ≈ 169 mg elemental"
         yLabel="Total weight change (kg)"
         xTicks={doseTicks.filter((t) => t <= maxDose + 50)}
-        colorClass={(pt) => BUCKET_CLASS[durationBucket(pt.p.weeks)]}
+        colorClass={(pt) => BUCKET_CLASS[durationBucket((pt.p as ArmRatePoint).weeks)]}
         legend={DURATION_LEGEND}
         legendTitle="Treatment length"
         tooltip={(pt) => `${fmt(pt.p.doseMg!)} mg/day · ${rateTooltip(pt)}`}
@@ -384,13 +526,13 @@ export function ArmRateCharts({ points }: { points: ArmRatePoint[] }) {
       <Scatter
         title="Total weight change vs achieved serum lithium"
         subtitle={`Same ${serumPts.length} arms as the rate chart, but showing the un-normalized total kg change over each study's whole window.`}
-        points={serumPts.map((d) => ({ ...d, y: d.p.totalKg }))}
+        points={serumPts.map((d) => ({ ...d, y: (d.p as ArmRatePoint).totalKg }))}
         xLabel="Achieved serum lithium (mmol/L)"
         yLabel="Total weight change (kg)"
         xTicks={[0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2].filter(
           (t) => t <= Math.max(...serumPts.map((d) => d.x), 1.2) + 0.05,
         )}
-        colorClass={(pt) => BUCKET_CLASS[durationBucket(pt.p.weeks)]}
+        colorClass={(pt) => BUCKET_CLASS[durationBucket((pt.p as ArmRatePoint).weeks)]}
         legend={DURATION_LEGEND}
         legendTitle="Treatment length"
         tooltip={(pt) => `${fmt(pt.p.serum!)} mmol/L · ${rateTooltip(pt)}`}
@@ -415,11 +557,11 @@ export function ArmRateCharts({ points }: { points: ArmRatePoint[] }) {
             t <= Math.max(...exposurePts.map((d) => d.x), 30) * 1.5,
         )}
         xScale="log"
-        colorClass={(pt) => BUCKET_CLASS[durationBucket(pt.p.weeks)]}
+        colorClass={(pt) => BUCKET_CLASS[durationBucket((pt.p as ArmRatePoint).weeks)]}
         legend={DURATION_LEGEND}
         legendTitle="Treatment length"
         tooltip={(pt) =>
-          `${fmt(((pt.p.doseMg as number) * pt.p.weeks * 7) / 1000)} g cumulative · ${rateTooltip(pt)}`
+          `${fmt((((pt.p as ArmRatePoint).doseMg as number) * (pt.p as ArmRatePoint).weeks * 7) / 1000)} g cumulative · ${rateTooltip(pt)}`
         }
         footnote={
           <>
@@ -440,7 +582,7 @@ export function ArmRateCharts({ points }: { points: ArmRatePoint[] }) {
           (t) => t <= Math.max(...durationPts.map((d) => d.x), 52) * 1.1,
         )}
         xScale="log"
-        colorClass={(pt) => (pt.p.isTrial ? TRIAL_CLASS : OBS_CLASS)}
+        colorClass={(pt) => ((pt.p as ArmRatePoint).isTrial ? TRIAL_CLASS : OBS_CLASS)}
         legend={trialLegend}
         tooltip={(pt) => rateTooltip(pt)}
         footnote={
@@ -449,6 +591,66 @@ export function ArmRateCharts({ points }: { points: ArmRatePoint[] }) {
             clinical claim — points should rise across the first months and
             flatten to the right. Very short studies (&lt; 2 weeks) appear here
             even though they are excluded from the rate charts.{strataNote}
+          </>
+        }
+      />
+
+      <IncidenceHistogram points={incPlottable} />
+
+      <Scatter
+        title="Weight-gain incidence vs elemental lithium dose"
+        subtitle={`${incDosePts.length} lithium arms reporting how many patients gained weight, against the arm's daily elemental dose.`}
+        points={incDosePts}
+        xLabel="Elemental lithium (mg/day) — 900 mg carbonate ≈ 169 mg elemental"
+        yLabel="Patients with weight gain (%)"
+        xTicks={[0, 50, 100, 150, 200, 250, 300, 350].filter(
+          (t) => t <= Math.max(...incDosePts.map((d) => d.x), 200) + 50,
+        )}
+        yFloorZero
+        colorClass={(pt) =>
+          (pt.p as IncidencePoint).thresholdDefined ? THRESH_CLASS : ANYGAIN_CLASS
+        }
+        legend={DEFINITION_LEGEND}
+        legendTitle={'How “gained weight” was defined'}
+        tooltip={(pt) => `${fmt((pt.p as IncidencePoint).doseMg!)} mg/day · ${incTooltip(pt)}`}
+        footnote={
+          <>
+            Incidence definitions vary by study (legend), so vertical spread here
+            partly reflects definition rather than biology — compare points of one
+            color. Drinking-water, supplement and anorexia-treatment strata are
+            excluded.
+          </>
+        }
+      />
+
+      <Scatter
+        title="Weight-gain incidence vs cumulative lithium exposure"
+        subtitle={`${incExposurePts.length} lithium arms with an incidence, a daily dose and a treatment length. Cumulative exposure = mean daily elemental dose × days.`}
+        points={incExposurePts}
+        xLabel="Cumulative elemental lithium (grams, log scale)"
+        yLabel="Patients with weight gain (%)"
+        xTicks={[1, 3, 10, 30, 100, 300].filter(
+          (t) =>
+            t >= Math.min(...incExposurePts.map((d) => d.x), 3) / 2 &&
+            t <= Math.max(...incExposurePts.map((d) => d.x), 30) * 1.5,
+        )}
+        xScale="log"
+        yFloorZero
+        colorClass={(pt) =>
+          (pt.p as IncidencePoint).thresholdDefined ? THRESH_CLASS : ANYGAIN_CLASS
+        }
+        legend={DEFINITION_LEGEND}
+        legendTitle={'How “gained weight” was defined'}
+        tooltip={(pt) => {
+          const ip = pt.p as IncidencePoint;
+          return `${fmt(((ip.doseMg as number) * (ip.weeks as number) * 7) / 1000)} g cumulative over ${fmt(ip.weeks!)} wk · ${incTooltip(pt)}`;
+        }}
+        footnote={
+          <>
+            The fraction of an arm reporting weight gain as an adverse event,
+            against total lithium ingested. Longer studies accumulate both more
+            exposure and more chances to record the event — time on the x-axis is
+            also time at risk, so a rightward rise would need cautious reading.
           </>
         }
       />

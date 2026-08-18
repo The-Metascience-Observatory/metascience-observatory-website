@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 import { parseCSV, stripTags, normalizeTitle } from "./csv-utils";
 import { ResultsClientWrapper } from "./ResultsClientWrapper";
 import { TrialRow } from "./ResultsTable";
-import { loadArmRatePoints } from "./arm-points";
+import { loadArmRatePoints, loadIncidencePoints } from "./arm-points";
 import { DESIGN_OVERRIDES, INTERVENTION_OVERRIDES, EXCLUDED_DOIS } from "./utils";
 
 export const metadata = {
@@ -293,11 +293,13 @@ export default function ResultsPage() {
   const trials = loadTrials(cites);
   // Arm-level kg-change points for the dose-normalized charts; hover labels
   // come from the same citation join the table uses.
-  const armPoints = loadArmRatePoints(DATA_DIR).map((p) => {
+  const decorate = <T extends { doi: string; label: string }>(p: T): T => {
     const c = cites.get(p.doi.split("#")[0]);
     const who = hoverLabel(c?.authors ?? "");
     return { ...p, label: who ? `${who}${c?.year ? ` (${c.year})` : ""}` : "" };
-  });
+  };
+  const armPoints = loadArmRatePoints(DATA_DIR).map(decorate);
+  const incidencePoints = loadIncidencePoints(DATA_DIR).map(decorate);
 
   return (
     <>
@@ -334,7 +336,11 @@ export default function ResultsPage() {
               deliberately not linked from here. */}
         </div>
 
-        <ResultsClientWrapper trials={trials} armPoints={armPoints} />
+        <ResultsClientWrapper
+          trials={trials}
+          armPoints={armPoints}
+          incidencePoints={incidencePoints}
+        />
       </main>
       <Footer />
     </>

@@ -4,7 +4,7 @@ import { ReactNode, useState } from "react";
 import { CountryFilterCard, countriesOf } from "@/components/CountryFilterCard";
 import { ResultsTable, TrialRow } from "./ResultsTable";
 import { ArmRateCharts } from "./ArmRateCharts";
-import { ArmRatePoint } from "./arm-points";
+import { ArmRatePoint, IncidencePoint } from "./arm-points";
 import { formatLabel } from "./utils";
 
 /** Selection-set semantics, shared by every card (and CountryFilterCard):
@@ -159,9 +159,11 @@ function countByMulti(rows: TrialRow[], key: (r: TrialRow) => string[]): Record<
 export function ResultsClientWrapper({
   trials,
   armPoints = [],
+  incidencePoints = [],
 }: {
   trials: TrialRow[];
   armPoints?: ArmRatePoint[];
+  incidencePoints?: IncidencePoint[];
 }) {
   // NB the data's design values are not normalized: "RCT" is uppercase and
   // "quasi-experimental" is hyphenated. Defaults must match t.design verbatim.
@@ -296,6 +298,7 @@ export function ResultsClientWrapper({
           its parent study is in the current table selection. */}
       <ArmRateCharts
         points={armPoints.filter((p) => filteredDois.has(p.doi.split("#")[0]))}
+        incidence={incidencePoints.filter((p) => filteredDois.has(p.doi.split("#")[0]))}
       />
 
       <ResultsTable rows={filtered} />

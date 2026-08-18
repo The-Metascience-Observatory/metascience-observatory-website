@@ -73,6 +73,111 @@ function armElementalDose(arm: Rec, derived: Rec): number | null {
   return num(derived.mean_elemental_mg_per_day);
 }
 
+/** One lithium arm's weight-gain INCIDENCE — the proportion of patients who
+ *  gained weight, from binary/threshold outcomes and AE-style counts. */
+export interface IncidencePoint {
+  doi: string;
+  label: string;
+  /** % of the arm's patients with weight gain. */
+  pct: number;
+  n: number | null;
+  /** True when the outcome uses a formal ≥7%/≥5% body-weight threshold;
+   *  false for "any weight gain" / AE-report definitions. */
+  thresholdDefined: boolean;
+  outcomeName: string;
+  doseMg: number | null;
+  serum: number | null;
+  weeks: number | null;
+  stratum: string;
+}
+
+const GAIN_RE = /gain|increas|≥\s*7|≥\s*5|7\s*%|5\s*%/i;
+// Bidirectional or loss outcomes are not "weight gain incidence".
+const NOT_GAIN_RE = /increases and decreases|weight loss|decrease|underweight|overweight or obese status|bmi\s*>|broca/i;
+const CONTINUOUS_METRICS = new Set([
+  "change_kg", "absolute_kg", "bmi_kg_m2", "bmi_change", "percent_change", "waist_cm",
+]);
+
+export function loadIncidencePoints(dataDir: string): IncidencePoint[] {
+  const fp = path.join(process.cwd(), dataDir, "trial_extractions.jsonl");
+  if (!fs.existsSync(fp)) return [];
+  const out: IncidencePoint[] = [];
+
+  for (const line of fs.readFileSync(fp, "utf-8").split("\n")) {
+    const s = line.trim();
+    if (!s) continue;
+    let r: Rec;
+    try { r = JSON.parse(s) as Rec; } catch { continue; }
+    if (r._status && r._status !== "ok") continue;
+
+    const doi = String(r.paper_id ?? "");
+    if (EXCLUDED_DOIS.has(doi.split("#")[0])) continue;
+    const outcomes = asList(r.outcomes).filter(isWeightOutcome);
+    if (outcomes.length === 0) continue;
+
+    const sd = asRec(r.study_design);
+    const derived = asRec(r.derived);
+    const followUp = asRec(r.follow_up);
+    const fallbackWeeks =
+      num(followUp.treatment_duration_weeks) ?? num(followUp.total_duration_weeks);
+
+    const arms = new Map<unknown, Rec>();
+    const lithiumArmIds = new Set<unknown>();
+    for (const a of asList(sd.arms)) {
+      arms.set(a.arm_id, a);
+      if (
+        a.intervention_category === "lithium" ||
+        /lithium/i.test(String(a.intervention_name ?? ""))
+      ) {
+        lithiumArmIds.add(a.arm_id);
+      }
+    }
+
+    for (const o of outcomes) {
+      const metric = String(o.weight_metric ?? "");
+      if (CONTINUOUS_METRICS.has(metric)) continue;
+      const name = String(o.name ?? "");
+      const isThreshold =
+        metric === "proportion_gaining_7pct" || metric === "proportion_gaining_5pct";
+      if (!isThreshold && (!GAIN_RE.test(name) || NOT_GAIN_RE.test(name))) continue;
+
+      const weeksOfTp = new Map<unknown, number | null>();
+      for (const t of asList(o.timepoints)) {
+        weeksOfTp.set(
+          t.timepoint_id,
+          num(t.weeks_from_randomization) ?? num(t.weeks_from_enrollment),
+        );
+      }
+
+      const seen = new Set<unknown>();
+      for (const ar of asList(o.arm_results)) {
+        const armId = ar.arm_id;
+        if (!lithiumArmIds.has(armId) || seen.has(armId)) continue;
+        const events = num(ar.events);
+        const total = num(ar.total);
+        const pct =
+          num(ar.percent) ?? (events != null && total ? (100 * events) / total : null);
+        if (pct == null || pct < 0 || pct > 100) continue;
+        seen.add(armId);
+        const arm = asRec(arms.get(armId));
+        out.push({
+          doi,
+          label: "",
+          pct,
+          n: total ?? num(ar.n_analyzed),
+          thresholdDefined: isThreshold || /≥\s*7|7\s*%/.test(name),
+          outcomeName: name,
+          doseMg: armElementalDose(arm, derived),
+          serum: num(arm.serum_lithium_mmol_L_mean) ?? num(derived.mean_serum_li_mmol_L),
+          weeks: weeksOfTp.get(ar.timepoint_id) ?? fallbackWeeks,
+          stratum: String(derived.exposure_stratum ?? ""),
+        });
+      }
+    }
+  }
+  return out;
+}
+
 export function loadArmRatePoints(dataDir: string): ArmRatePoint[] {
   const fp = path.join(process.cwd(), dataDir, "trial_extractions.jsonl");
   if (!fs.existsSync(fp)) return [];
