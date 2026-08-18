@@ -12,7 +12,7 @@ import { OriFindingsChart, OriYearDatum } from "./OriFindingsChart";
 export const metadata = {
   title: "The Forensic Metascience Agent | The Metascience Observatory",
   description:
-    "An AI agent that checks scientific papers for statistical inconsistencies and data-integrity anomalies using 31 forensic metascience tools.",
+    "An AI agent that does forensic auditing of scientific papers, looking for statistical inconsistencies, data-integrity anomalies, improper image duplication, tortured phrases, and more using 30+ tools.",
 };
 
 // React sections are rendered between the markdown segments these markers delimit,
@@ -66,26 +66,26 @@ interface Stat {
 const fraudStats: Stat[] = [
   {
     value: "2%",
-    claim: "of researchers admit to fabricating or falsifying data",
-    source: "Anonymous self-report; meta-analysis of surveys (Fanelli 2009)",
+    claim: "of researchers admit to fabricating or falsifying data.",
+    source: "Fanelli 2009 meta-analysis of surveys",
     href: "https://doi.org/10.1371/journal.pone.0005738",
   },
   {
     value: "3.8%",
-    claim: "of papers contain inappropriate image duplication",
-    source: "Bik et al. 2016; 20,621 papers screened by eye",
+    claim: "of biomedical papers contain inappropriate image duplication.",
+    source: "Bik et al. 2016",
     href: "https://doi.org/10.1128/mBio.00809-16",
   },
   {
     value: "14%",
-    claim: "of trials submitted to Anaesthesia contained false data",
-    source: "Carlisle 2021; 526 trials, 2017–2020",
+    claim: "of 521 trials submitted to Anaesthesia contained false data.",
+    source: "Carlisle 2021",
     href: "https://doi.org/10.1111/anae.15263",
   },
   {
     value: "~14%",
-    claim: "Heathers' estimate for the literature overall",
-    source: "“Approximately 1 in 7 papers are fake” — his 2024 review, which he calls non-systematic",
+    claim: "papers contain some form of fabricated data.",
+    source: "James Heather's 2024 'non-systematic' review",
     href: "https://metaror.org/kotahi/articles/18/index.html",
   },
 ];
