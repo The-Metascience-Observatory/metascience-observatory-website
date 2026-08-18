@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { DESIGN_OVERRIDES, EXCLUDED_DOIS, SIGN_FLIPPED_CHANGE_DOIS } from "./utils";
+import { DESIGN_OVERRIDES, EXCLUDED_DOIS, CHART_EXCLUDED_DOIS, SIGN_FLIPPED_CHANGE_DOIS } from "./utils";
 
 /** One lithium arm's observed weight change, normalized to a rate.
  *
@@ -111,7 +111,7 @@ export function loadIncidencePoints(dataDir: string): IncidencePoint[] {
     if (r._status && r._status !== "ok") continue;
 
     const doi = String(r.paper_id ?? "");
-    if (EXCLUDED_DOIS.has(doi.split("#")[0])) continue;
+    if (EXCLUDED_DOIS.has(doi.split("#")[0]) || CHART_EXCLUDED_DOIS.has(doi.split("#")[0])) continue;
     const outcomes = asList(r.outcomes).filter(isWeightOutcome);
     if (outcomes.length === 0) continue;
 
@@ -197,7 +197,7 @@ export function loadArmRatePoints(dataDir: string): ArmRatePoint[] {
     const derived = asRec(r.derived);
     const followUp = asRec(r.follow_up);
     const doi = String(r.paper_id ?? "");
-    if (EXCLUDED_DOIS.has(doi.split("#")[0])) continue;
+    if (EXCLUDED_DOIS.has(doi.split("#")[0]) || CHART_EXCLUDED_DOIS.has(doi.split("#")[0])) continue;
     const design = DESIGN_OVERRIDES[doi.split("#")[0]] ?? String(sd.design_type ?? "");
 
     const arms = new Map<unknown, Rec>();

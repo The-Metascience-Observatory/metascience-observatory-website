@@ -103,3 +103,11 @@ export const EXCLUDED_DOIS = new Set(["10.1210/jcem.81.4.8636369"]);
  *  silently reintroduce the bug in the opposite direction. A corpus-wide
  *  sweep found no other paper using the before−during delta convention. */
 export const SIGN_FLIPPED_CHANGE_DOIS = new Set(["10.1016/0022-3956(89)90006-x"]);
+
+/** Excluded from the CHARTS only (the table row stays). Xie et al. 2025 is a
+ *  single-patient case report of severe lithium INTOXICATION — serum
+ *  4.16 mmol/L, nearly 3x the 1.5 mmol/L toxicity cutoff the meta-analysis
+ *  itself excludes — whose −21 kg over 17 weeks reflects acute illness, not
+ *  therapeutic exposure. As an N=1 extreme it dominated every axis it
+ *  touched. */
+export const CHART_EXCLUDED_DOIS = new Set(["10.3389/fsurg.2025.1744520"]);
