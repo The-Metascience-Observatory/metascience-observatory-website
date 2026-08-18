@@ -93,5 +93,13 @@ export const EXCLUDED_DOIS = new Set(["10.1210/jcem.81.4.8636369"]);
  *  during − before. True result: the minimal-dose-reduction arm GAINED
  *  0.9 kg and the largest-reduction arm LOST 0.9 kg (consistent with the
  *  paper's own abstract: lower dose → less weight gain). The tremor table
- *  confirms the convention (pre 0.76 → during 0.46 is printed as Δ +0.28). */
+ *  confirms the convention (pre 0.76 → during 0.46 is printed as Δ +0.28).
+ *
+ *  ⚠ REMOVE THIS OVERRIDE WHEN THE DATA BUNDLE IS NEXT REPUBLISHED. The
+ *  canonical workspace record (trial_extractions_pass2.jsonl, marked with
+ *  extraction_metadata.sign_correction) was fixed at source on 2026-08-18;
+ *  this override only compensates for the CURRENTLY PUBLISHED Jul-28 bundle.
+ *  Left in place against corrected data it would re-flip the record and
+ *  silently reintroduce the bug in the opposite direction. A corpus-wide
+ *  sweep found no other paper using the before−during delta convention. */
 export const SIGN_FLIPPED_CHANGE_DOIS = new Set(["10.1016/0022-3956(89)90006-x"]);
