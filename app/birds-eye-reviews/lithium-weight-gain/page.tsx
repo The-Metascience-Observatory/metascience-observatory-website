@@ -330,12 +330,8 @@ export default function ResultsPage() {
           >
             View screening process &rarr;
           </Link>
-          <Link
-            href="/birds-eye-reviews/lithium-weight-gain/report"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
-          >
-            Read the findings report &rarr;
-          </Link>
+          {/* The findings-report page still exists at /report but is
+              deliberately not linked from here. */}
         </div>
 
         <ResultsClientWrapper trials={trials} armPoints={armPoints} />
