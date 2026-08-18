@@ -82,3 +82,16 @@ export const INTERVENTION_OVERRIDES: Record<string, string[]> = {
  *  clearance tracer, so its (null) BMI result says nothing about lithium and
  *  weight. Independently confirmed spurious by the XML re-extraction pass. */
 export const EXCLUDED_DOIS = new Set(["10.1210/jcem.81.4.8636369"]);
+
+/** Studies whose extracted weight "change_from_baseline" values carry the
+ *  WRONG SIGN and must be negated before plotting.
+ *
+ *  Abou-Saleh & Coppen 1989 (verified against the original PDF, Table 3):
+ *  the paper defines every Δ as "subtracting values during the trial from
+ *  those before" — i.e. Δ = before − during, so a POSITIVE table value means
+ *  the measure went DOWN. The extraction copied the table verbatim as
+ *  during − before. True result: the minimal-dose-reduction arm GAINED
+ *  0.9 kg and the largest-reduction arm LOST 0.9 kg (consistent with the
+ *  paper's own abstract: lower dose → less weight gain). The tremor table
+ *  confirms the convention (pre 0.76 → during 0.46 is printed as Δ +0.28). */
+export const SIGN_FLIPPED_CHANGE_DOIS = new Set(["10.1016/0022-3956(89)90006-x"]);

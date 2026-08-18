@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { DESIGN_OVERRIDES, EXCLUDED_DOIS } from "./utils";
+import { DESIGN_OVERRIDES, EXCLUDED_DOIS, SIGN_FLIPPED_CHANGE_DOIS } from "./utils";
 
 /** One lithium arm's observed weight change, normalized to a rate.
  *
@@ -139,6 +139,8 @@ export function loadArmRatePoints(dataDir: string): ArmRatePoint[] {
 
       const add = (armId: unknown, changeKg: number | null, tpId: unknown) => {
         if (changeKg == null || !lithiumArmIds.has(armId)) return;
+        // Hand-verified sign correction (see SIGN_FLIPPED_CHANGE_DOIS).
+        if (SIGN_FLIPPED_CHANGE_DOIS.has(doi.split("#")[0])) changeKg = -changeKg;
         const weeks = weeksOfTp.get(tpId) ?? fallbackWeeks;
         if (weeks == null || weeks <= 0) return;
         const key = `${armId}|${metric}`;

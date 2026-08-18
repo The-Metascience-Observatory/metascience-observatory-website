@@ -342,9 +342,12 @@ export default function ReportPage() {
             automatic extraction: one record was removed outright (a metformin
             crossover in which lithium appears only as a renal clearance tracer),
             four antipsychotic studies with lithium only in the background regimen
-            were reclassified as &ldquo;lithium + another drug&rdquo;, and three
+            were reclassified as &ldquo;lithium + another drug&rdquo;, three
             studies the extraction left as design &ldquo;other&rdquo; were assigned
-            their actual designs. Each correction is keyed to the paper&apos;s DOI
+            their actual designs, and one trial&apos;s weight changes had their sign
+            corrected against the original PDF (Abou-Saleh &amp; Coppen 1989 print
+            deltas as before-minus-during, so the extraction had every arm&apos;s
+            direction reversed). Each correction is keyed to the paper&apos;s DOI
             and documented in the dashboard source.
           </p>
           <p className="mt-3 text-[15px] leading-relaxed text-foreground/80">
