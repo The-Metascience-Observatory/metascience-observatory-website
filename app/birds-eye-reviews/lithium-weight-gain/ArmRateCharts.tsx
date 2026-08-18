@@ -361,6 +361,49 @@ export function ArmRateCharts({ points }: { points: ArmRatePoint[] }) {
       />
 
       <Scatter
+        title="Total weight change vs elemental lithium dose"
+        subtitle={`Same ${dosePts.length} arms as the rate chart, but showing the UN-normalized total kg change over each study's whole window.`}
+        points={dosePts.map((d) => ({ ...d, y: d.p.totalKg }))}
+        xLabel="Elemental lithium (mg/day) — 900 mg carbonate ≈ 169 mg elemental"
+        yLabel="Total weight change (kg)"
+        xTicks={doseTicks.filter((t) => t <= maxDose + 50)}
+        colorClass={(pt) => BUCKET_CLASS[durationBucket(pt.p.weeks)]}
+        legend={DURATION_LEGEND}
+        legendTitle="Treatment length"
+        tooltip={(pt) => `${fmt(pt.p.doseMg!)} mg/day · ${rateTooltip(pt)}`}
+        footnote={
+          <>
+            Totals accrued over windows from {MIN_RATE_WEEKS} weeks to years, so
+            treatment length (the point color) matters as much as dose here —
+            the rate chart above is the duration-adjusted view of the same
+            arms.{strataNote}
+          </>
+        }
+      />
+
+      <Scatter
+        title="Total weight change vs achieved serum lithium"
+        subtitle={`Same ${serumPts.length} arms as the rate chart, but showing the un-normalized total kg change over each study's whole window.`}
+        points={serumPts.map((d) => ({ ...d, y: d.p.totalKg }))}
+        xLabel="Achieved serum lithium (mmol/L)"
+        yLabel="Total weight change (kg)"
+        xTicks={[0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2].filter(
+          (t) => t <= Math.max(...serumPts.map((d) => d.x), 1.2) + 0.05,
+        )}
+        colorClass={(pt) => BUCKET_CLASS[durationBucket(pt.p.weeks)]}
+        legend={DURATION_LEGEND}
+        legendTitle="Treatment length"
+        tooltip={(pt) => `${fmt(pt.p.serum!)} mmol/L · ${rateTooltip(pt)}`}
+        footnote={
+          <>
+            Serum levels are <em>achieved</em> measurements, never protocol
+            targets. Totals are not duration-adjusted — see the rate chart
+            for the per-week view.{strataNote}
+          </>
+        }
+      />
+
+      <Scatter
         title="Total weight change vs cumulative lithium exposure"
         subtitle={`${exposurePts.length} lithium arms where dose × duration is computable. Cumulative exposure = mean daily elemental dose × days on treatment.`}
         points={exposurePts}
