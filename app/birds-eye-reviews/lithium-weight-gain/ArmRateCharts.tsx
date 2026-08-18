@@ -152,7 +152,9 @@ function Scatter({
       <h2 className="mb-1 text-sm font-medium text-foreground">{title}</h2>
       <p className="mb-3 max-w-[720px] text-xs text-foreground/50">{subtitle}</p>
       <div ref={wrapRef} className="relative overflow-x-auto">
-        <svg width={W} height={H} className="max-w-full">
+        {/* viewBox lets the whole chart scale down proportionally when a
+            two-column layout gives it less than its natural 720px. */}
+        <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} className="max-w-full h-auto">
           {/* zero line — above it weight was gained, below it lost */}
           <line x1={M.left} x2={W - M.right} y1={sy(0)} y2={sy(0)}
                 stroke="currentColor" className="text-foreground/25" strokeDasharray="4 3" />
@@ -307,7 +309,11 @@ export function ArmRateCharts({ points }: { points: ArmRatePoint[] }) {
   ];
 
   return (
-    <div>
+    // Two columns only when both charts can render near full size: at
+    // 1700px viewport the content area (minus the page's 2xl side padding)
+    // gives each column ~680px, a barely-noticeable scale-down. Below that,
+    // one centered column.
+    <div className="grid grid-cols-1 min-[1700px]:grid-cols-2 gap-x-6 items-start">
       <Scatter
         title="Rate of weight change vs elemental lithium dose"
         subtitle={`${dosePts.length} lithium arms reporting a kg change from baseline, a treatment length, and a daily dose. Rate = reported change ÷ weeks of treatment.`}
