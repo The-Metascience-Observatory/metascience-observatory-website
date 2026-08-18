@@ -23,6 +23,13 @@ import { CountryMap, type CountryCount } from "@/components/CountryMap";
 
 export type { CountryCount };
 
+/** Sentinel meaning "nothing selected" (the Clear state). It lives in the
+ *  selection Set so `size > 0` filters as active, but it matches no country,
+ *  so every row is excluded and every checkbox renders unchecked. Dashboards
+ *  never need to know — their `.some((c) => sel.has(c))` predicates already
+ *  treat it correctly. */
+export const NO_COUNTRIES = "__none__";
+
 /** Distinct-trial count per (canonical) country, for the checkbox list + map. */
 export function countriesOf(rows: { countries: string[] }[]): CountryCount[] {
   const counts = new Map<string, number>();
@@ -57,8 +64,14 @@ export function CountryFilterCard({
   totalCount: number;
 }) {
   const [showMap, setShowMap] = useState(false);
+  // The country list is long (40+ checkboxes on some reviews), so it starts
+  // collapsed; the card shows just its header line until expanded. An ACTIVE
+  // filter starts expanded — hiding the boxes that explain why rows are
+  // missing would be worse than the space cost.
+  const [showOptions, setShowOptions] = useState(false);
 
   const active = selectedCountries.size > 0;
+  const expanded = showOptions || active;
 
   // Actual selection only — never the "displayed as checked" list, or an empty
   // set would highlight every polygon and destroy the choropleth.
@@ -68,6 +81,11 @@ export function CountryFilterCard({
   );
 
   const toggleCheckbox = (c: string) => {
+    if (selectedCountries.has(NO_COUNTRIES)) {
+      // Cleared state: the first click just checks that one country.
+      onSelectionChange(new Set([c]));
+      return;
+    }
     if (selectedCountries.size === 0) {
       // All-checked display: unchecking one = include all OTHERS.
       onSelectionChange(new Set(allCountryNames.filter((cc) => cc !== c)));
@@ -87,6 +105,10 @@ export function CountryFilterCard({
   };
 
   const toggleMapCountry = (c: string) => {
+    if (selectedCountries.has(NO_COUNTRIES)) {
+      onSelectionChange(new Set([c]));
+      return;
+    }
     if (selectedCountries.size === 0) {
       // No filter yet: a map click narrows to just this country.
       onSelectionChange(new Set([c]));
@@ -130,7 +152,22 @@ export function CountryFilterCard({
         >
           Select all
         </button>
+        <button
+          onClick={() => onSelectionChange(new Set([NO_COUNTRIES]))}
+          className="text-xs text-blue-600 hover:text-blue-700"
+        >
+          Clear
+        </button>
       </div>
+      {!expanded && (
+        <button
+          onClick={() => setShowOptions(true)}
+          className="text-xs text-blue-600 hover:text-blue-700 underline"
+        >
+          Show filter options
+        </button>
+      )}
+      {expanded && (
       <div className="flex flex-wrap gap-x-4 gap-y-1.5 max-h-40 overflow-y-auto pr-1">
         {allCountries.map(({ country, count }) => {
           const checked = !active || selectedCountries.has(country);
@@ -153,6 +190,15 @@ export function CountryFilterCard({
           );
         })}
       </div>
+      )}
+      {expanded && !active && (
+        <button
+          onClick={() => setShowOptions(false)}
+          className="mt-1.5 text-xs text-blue-600 hover:text-blue-700 underline"
+        >
+          Hide filter options
+        </button>
+      )}
       {showMap && (
         <div className="mt-3 pt-3 border-t border-border">
           <p className="text-xs text-foreground/50 mb-2">

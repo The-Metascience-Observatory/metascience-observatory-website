@@ -9,6 +9,15 @@ export interface TrialRow {
   countries: string[];
   hoverLabel: string;
   design: string;
+  /** Intervention buckets (a study can carry several, e.g. a trial with both
+   *  a monotherapy and an adjunctive lithium arm). */
+  interventions: string[];
+  /** Care-setting bucket + the verbatim setting text (from paper_facets.json). */
+  setting: string;
+  settingText: string;
+  /** Psychiatric-diagnosis bucket + the verbatim diagnosis. */
+  diagnosis: string;
+  diagnosisText: string;
   n: number | null;
   rob: string;
 
@@ -48,7 +57,8 @@ export interface TrialRow {
 type SortKey =
   | "year" | "title" | "design" | "n" | "rob"
   | "elementalMgPerDay" | "serumMmolL" | "durationWeeks" | "effVal"
-  | "outcomeName" | "serumBand" | "exposureStratum";
+  | "outcomeName" | "serumBand" | "exposureStratum"
+  | "diagnosisText" | "setting";
 
 /** Achieved serum lithium, banded. This review is about dose-response, so the
  *  band is the axis that matters — but only ~48% of studies report a level at
@@ -136,6 +146,15 @@ function ExposureCell({ row }: { row: TrialRow }) {
     />
   );
 }
+
+/** Short setting labels for the table cell; the verbatim text is the tooltip. */
+const SETTING_CELL: Record<string, string> = {
+  inpatient: "Inpatient",
+  outpatient: "Outpatient",
+  mixed: "In-/outpatient",
+  community: "Community",
+  other: "—",
+};
 
 function rowHref(row: TrialRow): string | null {
   const base = row.doi.split("#")[0];
@@ -331,7 +350,9 @@ export function ResultsTable({ rows, pageSize = 100 }: { rows: TrialRow[]; pageS
           className="w-full max-w-sm rounded border border-border px-2 py-1 text-sm"
         />
         <span className="text-xs text-foreground/50">
-          {sorted.length.toLocaleString()} stud{sorted.length === 1 ? "y" : "ies"}
+          {visible.length < sorted.length
+            ? `showing ${visible.length.toLocaleString()} of ${sorted.length.toLocaleString()} studies`
+            : `${sorted.length.toLocaleString()} stud${sorted.length === 1 ? "y" : "ies"}`}
         </span>
       </div>
 
@@ -340,8 +361,10 @@ export function ResultsTable({ rows, pageSize = 100 }: { rows: TrialRow[]; pageS
         <table className="w-full border-collapse text-sm">
           <thead>
             <tr>
-              <SortTh label="Reference" k="title" active={sortKey} dir={dir} onSort={sortBy} className="w-[24%]" />
+              <SortTh label="Reference" k="title" active={sortKey} dir={dir} onSort={sortBy} className="w-[22%]" />
               <SortTh label="Design" k="design" active={sortKey} dir={dir} onSort={sortBy} />
+              <SortTh label="Diagnosis" k="diagnosisText" active={sortKey} dir={dir} onSort={sortBy} />
+              <SortTh label="Setting" k="setting" active={sortKey} dir={dir} onSort={sortBy} />
               <SortTh label="N" k="n" active={sortKey} dir={dir} onSort={sortBy} align="right" />
               <SortTh label="Dose" k="elementalMgPerDay" active={sortKey} dir={dir} onSort={sortBy} />
               <SortTh label="Serum" k="serumBand" active={sortKey} dir={dir} onSort={sortBy} />
@@ -359,6 +382,15 @@ export function ResultsTable({ rows, pageSize = 100 }: { rows: TrialRow[]; pageS
                   <Reference row={r} />
                 </td>
                 <td className="px-2 py-2 text-foreground/70">{formatLabel(r.design)}</td>
+                <td className="px-2 py-2 text-xs text-foreground/70">
+                  {r.diagnosisText || <span className="text-foreground/40">—</span>}
+                </td>
+                <td className="px-2 py-2 text-xs text-foreground/70">
+                  {/* Bucket label; the verbatim setting is the hover title. */}
+                  <span title={r.settingText || undefined}>
+                    {SETTING_CELL[r.setting] ?? formatLabel(r.setting)}
+                  </span>
+                </td>
                 <td className="px-2 py-2 text-right tabular-nums text-foreground/70">
                   {r.n?.toLocaleString() ?? "—"}
                 </td>
@@ -385,7 +417,7 @@ export function ResultsTable({ rows, pageSize = 100 }: { rows: TrialRow[]; pageS
             ))}
             {!visible.length && (
               <tr>
-                <td colSpan={10} className="py-6 text-center text-sm text-foreground/45">
+                <td colSpan={12} className="py-6 text-center text-sm text-foreground/45">
                   No studies match the current filters.
                 </td>
               </tr>
@@ -401,6 +433,10 @@ export function ResultsTable({ rows, pageSize = 100 }: { rows: TrialRow[]; pageS
             <Reference row={r} />
             <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-foreground/60">
               <span>{formatLabel(r.design)}</span>
+              {r.diagnosisText && <span>{r.diagnosisText}</span>}
+              {SETTING_CELL[r.setting] && SETTING_CELL[r.setting] !== "—" && (
+                <span>{SETTING_CELL[r.setting]}</span>
+              )}
               {r.n != null && <span className="tabular-nums">N = {r.n.toLocaleString()}</span>}
               {r.durationWeeks != null && (
                 <span className="tabular-nums">{fmt(r.durationWeeks)} wk</span>
@@ -450,13 +486,22 @@ export function ResultsTable({ rows, pageSize = 100 }: { rows: TrialRow[]; pageS
       </div>
 
       {sorted.length > shown && (
-        <button
-          type="button"
-          onClick={() => setShown((n) => n + pageSize)}
-          className="mt-3 w-full rounded border border-border py-1.5 text-sm text-foreground/70 hover:bg-foreground/5"
-        >
-          Show more ({(sorted.length - shown).toLocaleString()} remaining)
-        </button>
+        <div className="mt-3 flex gap-2">
+          <button
+            type="button"
+            onClick={() => setShown((n) => n + pageSize)}
+            className="flex-1 rounded border border-border py-1.5 text-sm text-foreground/70 hover:bg-foreground/5"
+          >
+            Show {Math.min(pageSize, sorted.length - shown).toLocaleString()} more
+          </button>
+          <button
+            type="button"
+            onClick={() => setShown(sorted.length)}
+            className="flex-1 rounded border border-border py-1.5 text-sm text-foreground/70 hover:bg-foreground/5"
+          >
+            Show all {sorted.length.toLocaleString()}
+          </button>
+        </div>
       )}
 
       <p className="mt-3 text-xs text-foreground/45">

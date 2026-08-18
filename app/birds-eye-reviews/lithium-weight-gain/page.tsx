@@ -6,6 +6,8 @@ import { Footer } from "@/components/Footer";
 import { parseCSV, stripTags, normalizeTitle } from "./csv-utils";
 import { ResultsClientWrapper } from "./ResultsClientWrapper";
 import { TrialRow } from "./ResultsTable";
+import { loadArmRatePoints } from "./arm-points";
+import { DESIGN_OVERRIDES, INTERVENTION_OVERRIDES, EXCLUDED_DOIS } from "./utils";
 
 export const metadata = {
   title: "Lithium & Weight Gain | Bird's Eye Reviews | The Metascience Observatory",
@@ -116,7 +118,62 @@ const METRIC_LABEL: Record<string, string> = {
   waist_cm: "waist (cm)",
 };
 
+/** Intervention buckets for the filter, tagged per study from its arms.
+ *
+ *  "Lithium carbonate" lumps every plain-lithium arm whose salt is carbonate
+ *  OR unstated — the review-wide convention already reads an unstated salt in
+ *  a bipolar population as carbonate (that is what the table's "~" marker
+ *  means). Combination arms (lithium given WITH another psychotropic) are a
+ *  separate bucket because their weight signal cannot be attributed to
+ *  lithium alone.
+ */
+const OTHER_SALTS = new Set(["sulfate", "citrate", "acetate", "aspartate", "orotate", "gluconate"]);
+
+function interventionTags(sd: Record<string, unknown>): string[] {
+  const tags = new Set<string>();
+  const arms = Array.isArray(sd.arms) ? (sd.arms as Record<string, unknown>[]) : [];
+  for (const a of arms) {
+    const cat = String(a.intervention_category ?? "");
+    const name = String(a.intervention_name ?? "");
+    const mentionsLi = /lithium/i.test(name);
+    if (cat === "lithium") {
+      const salt = String(a.lithium_salt ?? "");
+      tags.add(OTHER_SALTS.has(salt) ? "lithium_other_salt" : "lithium_carbonate");
+    } else if (cat === "combination" && mentionsLi) {
+      tags.add("lithium_combo");
+    } else if (mentionsLi && cat !== "placebo") {
+      // Lithium hiding in an "other"/misc arm — count it as plain lithium.
+      tags.add("lithium_carbonate");
+    }
+  }
+  if (tags.size === 0) tags.add("unclear");
+  return [...tags];
+}
+
+interface PaperFacet {
+  setting: string;
+  setting_text: string;
+  diagnosis: string;
+  diagnosis_text: string;
+}
+
+/** DOI-keyed setting / psychiatric-diagnosis sidecar, exported from the
+ *  MERGED canonical extractions in the pipeline workspace by
+ *  `lithium_weight_gain_ad_hoc_review/export_dashboard_facets.py`. Kept as a
+ *  separate file so the main published bundle stays untouched until an
+ *  explicit publish decision. */
+function loadFacets(): Record<string, PaperFacet> {
+  const fp = dataPath("paper_facets.json");
+  try {
+    if (!fs.existsSync(fp)) return {};
+    return JSON.parse(fs.readFileSync(fp, "utf-8")) as Record<string, PaperFacet>;
+  } catch {
+    return {};
+  }
+}
+
 function loadTrials(cites: Map<string, Citation>): TrialRow[] {
+  const facets = loadFacets();
   const fp = dataPath("trial_extractions.jsonl");
   if (!fs.existsSync(fp)) return [];
   const out: TrialRow[] = [];
@@ -135,6 +192,7 @@ function loadTrials(cites: Map<string, Citation>): TrialRow[] {
 
     const doi = String(r.paper_id ?? "");
     const baseDoi = doi.split("#")[0];
+    if (EXCLUDED_DOIS.has(baseDoi)) continue;
     const sd = (r.study_design ?? {}) as Record<string, unknown>;
     const ss = (r.sample_sizes ?? {}) as Record<string, unknown>;
     const rob = (r.risk_of_bias ?? {}) as Record<string, unknown>;
@@ -168,14 +226,25 @@ function loadTrials(cites: Map<string, Citation>): TrialRow[] {
       (followUp.total_duration_weeks as number) ??
       null;
 
+    const countries = Array.isArray(sd.countries)
+      ? [...new Set((sd.countries as unknown[]).filter(
+          (x): x is string => typeof x === "string" && x.trim() !== ""))]
+      : [];
+    const facet = facets[baseDoi];
+
     out.push({
       doi,
-      countries: Array.isArray(sd.countries)
-        ? [...new Set((sd.countries as unknown[]).filter(
-            (x): x is string => typeof x === "string" && x.trim() !== ""))]
-        : [],
+      // A row with no country would silently fail every country selection, so
+      // the gap is a filterable value instead of a permanent exclusion.
+      countries: countries.length > 0 ? countries : ["Unknown"],
+      setting: facet?.setting || "other",
+      settingText: facet?.setting_text ?? "",
+      diagnosis: facet?.diagnosis || "other",
+      diagnosisText: facet?.diagnosis_text ?? "",
       hoverLabel: hoverLabel(c?.authors ?? ""),
-      design: String(sd.design_type ?? (r.is_rct ? "rct" : "")),
+      design:
+        DESIGN_OVERRIDES[baseDoi] ?? String(sd.design_type ?? (r.is_rct ? "rct" : "")),
+      interventions: INTERVENTION_OVERRIDES[baseDoi] ?? interventionTags(sd),
       n,
       rob: String(rob.overall_judgment ?? ""),
 
@@ -222,6 +291,13 @@ function loadTrials(cites: Map<string, Citation>): TrialRow[] {
 export default function ResultsPage() {
   const cites = loadCitations();
   const trials = loadTrials(cites);
+  // Arm-level kg-change points for the dose-normalized charts; hover labels
+  // come from the same citation join the table uses.
+  const armPoints = loadArmRatePoints(DATA_DIR).map((p) => {
+    const c = cites.get(p.doi.split("#")[0]);
+    const who = hoverLabel(c?.authors ?? "");
+    return { ...p, label: who ? `${who}${c?.year ? ` (${c.year})` : ""}` : "" };
+  });
 
   return (
     <>
@@ -229,8 +305,10 @@ export default function ResultsPage() {
       {/* Full-width rather than the shared `container` (capped at 1040px in
           tailwind.config): this page's table carries ten columns and was being
           squeezed into a narrow strip on a wide monitor. Scoped to this page —
-          changing the theme's container would reflow the whole site. */}
-      <main className="w-full px-3 pt-24 pb-16 min-h-screen">
+          changing the theme's container would reflow the whole site. The side
+          padding grows to ≈1–2 in on desktop so the content never touches the
+          screen edges. */}
+      <main className="w-full px-4 sm:px-8 lg:px-24 2xl:px-40 pt-24 pb-16 min-h-screen">
         <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1">
           <Link href="/birds-eye-reviews" className="text-sm text-blue-600 hover:text-blue-700">
             &larr; Back to Bird&apos;s Eye Reviews
@@ -247,20 +325,20 @@ export default function ResultsPage() {
         </p>
         <div className="mb-4 flex flex-wrap gap-2">
           <Link
-            href="/birds-eye-reviews/lithium-weight-gain/report"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
-          >
-            Read the findings report &rarr;
-          </Link>
-          <Link
             href="/birds-eye-reviews/lithium-weight-gain/screening"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
           >
             View screening process &rarr;
           </Link>
+          <Link
+            href="/birds-eye-reviews/lithium-weight-gain/report"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
+          >
+            Read the findings report &rarr;
+          </Link>
         </div>
 
-        <ResultsClientWrapper trials={trials} />
+        <ResultsClientWrapper trials={trials} armPoints={armPoints} />
       </main>
       <Footer />
     </>

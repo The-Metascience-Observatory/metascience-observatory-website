@@ -8,6 +8,7 @@ private_docs
 # Next.js build output. Stays in-project (see scripts/with-dropbox-paused.sh for why an
 # out-of-Dropbox distDir does not work with Next 15).
 .next
+.next-dev
 .claude
 .cursor
 

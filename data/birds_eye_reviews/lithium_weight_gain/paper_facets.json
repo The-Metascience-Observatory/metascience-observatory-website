@@ -1,0 +1,2588 @@
+{
+ "10.1001/archgenpsychiatry.2011.1508": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient (5 US academic medical centers)"
+ },
+ "10.1001/archpsyc.1969.01740150029005": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient metabolic research unit"
+ },
+ "10.1001/archpsyc.1973.04200060095015": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient metabolism unit"
+ },
+ "10.1001/archpsyc.1975.01760230125010": {
+  "diagnosis": "mdd",
+  "diagnosis_text": "Unipolar depression (MDD)",
+  "setting": "mixed",
+  "setting_text": "Multicenter inpatient and outpatient (university clinic and three hospitals)"
+ },
+ "10.1001/archpsyc.1975.01760280108010": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Multi-institutional, 28 medical institutions, inpatients and outpatients"
+ },
+ "10.1001/archpsyc.1982.04290050051010": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient metabolic ward (New York State Psychiatric Institute and St Luke's Hospital Center Body Composition Unit)"
+ },
+ "10.1001/archpsyc.1984.01790180020002": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient psychiatric hospital"
+ },
+ "10.1001/archpsyc.57.7.649": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "inpatient",
+  "setting_text": "Single-center, acute-care child and adolescent psychiatric inpatient service"
+ },
+ "10.1001/archpsyc.59.1.62": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Multicenter, 33 US and 5 Canadian centers, mostly outpatient"
+ },
+ "10.1001/archpsyc.60.4.392": {
+  "diagnosis": "other",
+  "diagnosis_text": "",
+  "setting": "other",
+  "setting_text": ""
+ },
+ "10.1002/brb3.2394": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Single-center inpatient/outpatient hospital (Roozbeh Hospital)"
+ },
+ "10.1002/da.20273": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient specialty Lithium Clinic within a tertiary general hospital"
+ },
+ "10.1002/da.22136": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient (study 126: 177 US centers + 37 centers Europe/Australia/South Africa; study 127: 127 US/Canada centers)"
+ },
+ "10.1002/da.22340": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient (Roozbeh Psychiatric Hospital, Tehran University of Medical Sciences; Department of Psychiatry, Hamadan University of Medical Sciences)"
+ },
+ "10.1002/da.22479": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient"
+ },
+ "10.1002/gps.5517": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center hospital (Psychogeriatric Clinic)"
+ },
+ "10.1002/hbm.26682": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": "Multicenter, 19 sites across 13 countries on six continents (ENIGMA-BD working group)"
+ },
+ "10.1002/hup.2413": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient (four geriatric psychiatry and two adult mood disorder clinics)"
+ },
+ "10.1002/hup.2752": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "mixed",
+  "setting_text": "Multicenter, hospital and ambulatory/inpatient settings across 14 Asian countries"
+ },
+ "10.1002/hup.783": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient weight management program"
+ },
+ "10.1002/jcph.2089": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Single-center (Northwestern University Clinical Research Unit and Asher Center), outpatient"
+ },
+ "10.1007/bf01380006": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient lithium clinic (Li Ka Shing Lithium Clinic, general hospital)"
+ },
+ "10.1007/bf01427042": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center hospital (Second Department of Surgery, Nagasaki University Hospital)"
+ },
+ "10.1007/bf02105412": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient PTSD clinic (VA Medical Center, San Francisco)"
+ },
+ "10.1007/bf02193747": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient clinic (University of G\u00f6teborg Department of Psychiatry, Lillhagen Hospital, Sweden)"
+ },
+ "10.1007/bf02916252": {
+  "diagnosis": "schizoaffective",
+  "diagnosis_text": "Schizoaffective",
+  "setting": "outpatient",
+  "setting_text": "Multicentre outpatient (nine psychiatric university hospitals in Germany)"
+ },
+ "10.1007/s00213-004-2038-9": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient, Max Planck Institute of Psychiatry, Munich"
+ },
+ "10.1007/s00406-017-0847-1": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient (10 national Schizophrenia Expert Centres)"
+ },
+ "10.1007/s00787-002-0255-5": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient (Riverview Hospital for Children, Middletown, Connecticut)"
+ },
+ "10.1007/s00787-006-0552-5": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": "Single-center, Dept. of Child and Adolescent Psychiatry, Dokuz Eylul University, Izmir, Turkey"
+ },
+ "10.1007/s11126-006-7963-9": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient research unit"
+ },
+ "10.1007/s11920-006-0056-5": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient (Bipolar Collaborative Network sites, US and Europe)"
+ },
+ "10.1007/s12011-021-03077-3": {
+  "diagnosis": "healthy",
+  "diagnosis_text": "Healthy volunteers",
+  "setting": "other",
+  "setting_text": "Single-center, non-probability volunteer sample, Taipei, Taiwan"
+ },
+ "10.1007/s40261-013-0120-y": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Multicenter, inpatient and outpatient, six nationwide sites in Korea"
+ },
+ "10.1007/s40263-015-0234-2": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multinational, multicenter outpatient phase III trials"
+ },
+ "10.1016/0010-440x(71)90019-8": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "mixed",
+  "setting_text": "Single-center outpatient/inpatient lithium clinic"
+ },
+ "10.1016/0010-440x(74)90015-7": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient (Iowa State Psychopathic Hospital and University of Iowa VA Hospital)"
+ },
+ "10.1016/0022-3956(89)90006-x": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient (MRC Neuropsychiatry Laboratory)"
+ },
+ "10.1016/0165-0327(86)90043-1": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient Lithium Clinic"
+ },
+ "10.1016/0278-5846(83)90118-5": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "other",
+  "setting_text": "Not_reported (Jerusalem Mental Health Center affiliation of corresponding author)"
+ },
+ "10.1016/0306-4530(84)90005-2": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "mixed",
+  "setting_text": "Single-center inpatient/outpatient psychiatric hospital and healthy volunteers"
+ },
+ "10.1016/0924-977x(96)88357-x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single specialised bipolar clinic"
+ },
+ "10.1016/j.ajo.2014.11.003": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center pediatric tertiary hospital (The Children's Hospital of Philadelphia), neuro-ophthalmology service"
+ },
+ "10.1016/j.ajp.2011.02.002": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": "Single-center hospital (psychiatry department, University Hospital of Monastir, Tunisia)"
+ },
+ "10.1016/j.ando.2007.05.004": {
+  "diagnosis": "mdd",
+  "diagnosis_text": "Unipolar depression (MDD)",
+  "setting": "other",
+  "setting_text": "Single-center hospital"
+ },
+ "10.1016/j.biopsych.2004.03.013": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar II",
+  "setting": "community",
+  "setting_text": "Single-center, inpatients and outpatients recruited via NIMH/Howard University Hospital and community referral in Washington, DC"
+ },
+ "10.1016/j.biopsych.2004.07.003": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "mixed",
+  "setting_text": "Multicenter outpatient/inpatient (Stanley Foundation Bipolar Network, US and Netherlands; plus Erasmus MC and University of Washington control recruitment)"
+ },
+ "10.1016/j.clinthera.2010.01.022": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "inpatient",
+  "setting_text": "Multicenter, hospitalized acute mania patients transitioning to maintenance"
+ },
+ "10.1016/j.comppsych.2004.07.029": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient (Seasonal Affective Disorders Clinic, Royal Victoria Hospital, Montreal)"
+ },
+ "10.1016/j.comppsych.2007.08.002": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center psychiatric hospital (McLean Hospital, Belmont, MA)"
+ },
+ "10.1016/j.earlhumdev.2011.09.013": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center (Perinatal Center, Leiden University Medical Center)"
+ },
+ "10.1016/j.eatbeh.2013.01.001": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient survey, Calgary, Alberta"
+ },
+ "10.1016/j.ekir.2020.05.015": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "mixed",
+  "setting_text": "Single-center, nephrology department outpatient/inpatient"
+ },
+ "10.1016/j.encep.2012.05.001": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": ""
+ },
+ "10.1016/j.envres.2019.01.012": {
+  "diagnosis": "healthy",
+  "diagnosis_text": "Healthy volunteers",
+  "setting": "community",
+  "setting_text": "Population-based mother-child cohort, rural Andean villages, Salta province, Argentina"
+ },
+ "10.1016/j.euroneuro.2011.06.005": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multicenter, outpatient"
+ },
+ "10.1016/j.euroneuro.2017.06.013": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multi-regional, multicenter outpatient (94 sites total)"
+ },
+ "10.1016/j.euroneuro.2018.11.1103": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Two tertiary, publicly-funded specialised antenatal clinics for severe mental illness (Mercy Hospital for Women, Melbourne; King Edward Memorial Hospital, Perth)"
+ },
+ "10.1016/j.euroneuro.2018.12.006": {
+  "diagnosis": "mdd",
+  "diagnosis_text": "Unipolar depression (MDD)",
+  "setting": "other",
+  "setting_text": "Multicenter, 12 psychiatric departments of the Berlin Research Network on Depression"
+ },
+ "10.1016/j.euroneuro.2021.09.007": {
+  "diagnosis": "mdd",
+  "diagnosis_text": "Unipolar depression (MDD)",
+  "setting": "other",
+  "setting_text": ""
+ },
+ "10.1016/j.eurpsy.2004.11.010": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "mixed",
+  "setting_text": "Single-center tertiary care child/adolescent psychiatry hospital (inpatient and outpatient)"
+ },
+ "10.1016/j.eurpsy.2008.01.658": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": ""
+ },
+ "10.1016/j.eurpsy.2015.09.009": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Single-center specialist early psychosis service (Early Psychosis Prevention and Intervention Centre, EPPIC), inpatient/outpatient, Melbourne, Australia"
+ },
+ "10.1016/j.genhosppsych.2007.05.001": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center, mood and anxiety disorder treatment unit, University Hospital of Vaud Department of Psychiatry, Lausanne, Switzerland"
+ },
+ "10.1016/j.heliyon.2020.e04528": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "outpatient",
+  "setting_text": "Single VA medical center outpatient clinic (with MRI performed at an affiliated academic medical center); later also recruited from a university MS clinic"
+ },
+ "10.1016/j.heliyon.2020.e04553": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center hospital (5th Education Hospital, Neuropsychiatry department)"
+ },
+ "10.1016/j.jaac.2012.07.001": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multisite academic outpatient"
+ },
+ "10.1016/j.jaac.2015.09.015": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient/academic (6 academic child and adolescent psychiatry centers)"
+ },
+ "10.1016/j.jaac.2015.09.016": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient"
+ },
+ "10.1016/j.jaac.2018.07.901": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multi-center outpatient"
+ },
+ "10.1016/j.jaac.2022.09.379": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient psychiatric department"
+ },
+ "10.1016/j.jad.2004.05.017": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Single-site outpatient Pediatric Mood Disorders Clinic, University of Illinois at Chicago"
+ },
+ "10.1016/j.jad.2005.08.002": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient clinic (Mood Disorders Clinic, Department of Psychiatry, UCLA)"
+ },
+ "10.1016/j.jad.2006.08.009": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Two outpatient psychiatric clinics (Gaziantep University Medical Faculty Mood Disorders Unit; Bakirkoy Mental Hospital Rasit Tahsin Mood Disorders Unit)"
+ },
+ "10.1016/j.jad.2006.08.015": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient psychiatric unit, University of Calgary"
+ },
+ "10.1016/j.jad.2007.02.004": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": "Multicenter"
+ },
+ "10.1016/j.jad.2007.02.005": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Multicenter; patients initially hospitalized, could be discharged from Day 8 to continue as outpatients"
+ },
+ "10.1016/j.jad.2007.02.009": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Multicenter; hospitalized for first 7 days of treatment, outpatient thereafter if clinically appropriate"
+ },
+ "10.1016/j.jad.2007.04.006": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "inpatient",
+  "setting_text": "Single-center closed-ward psychiatric inpatient unit, university hospital (Asan Medical Center), Seoul, Korea"
+ },
+ "10.1016/j.jad.2007.04.020": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Multicenter (7 sites), inpatient and outpatient, China"
+ },
+ "10.1016/j.jad.2008.02.004": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar II",
+  "setting": "outpatient",
+  "setting_text": "Multicenter (2-site) outpatient"
+ },
+ "10.1016/j.jad.2008.05.014": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Multicenter, 46 US study centers; initial 2 weeks inpatient hospitalization, then outpatient"
+ },
+ "10.1016/j.jad.2008.06.001": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "International, multicenter, outpatient (177 centers)"
+ },
+ "10.1016/j.jad.2008.11.011": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient (Mood Disorders Program, University Hospitals Case Medical Center)"
+ },
+ "10.1016/j.jad.2008.12.018": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient clinic (National Cheng Kung University Hospital, Taiwan)"
+ },
+ "10.1016/j.jad.2009.10.023": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient program (University of British Columbia STOP-EM program)"
+ },
+ "10.1016/j.jad.2010.11.037": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multicenter (in- and outpatient), 14 European countries; maintenance-phase subgroup from 10 countries"
+ },
+ "10.1016/j.jad.2011.09.051": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": ""
+ },
+ "10.1016/j.jad.2011.11.043": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": "Multicenter, US study centers; initial acute phase required hospitalization"
+ },
+ "10.1016/j.jad.2012.04.014": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": "Multicenter, pooled from two long-term (up to 104-week) maintenance RCTs"
+ },
+ "10.1016/j.jad.2012.11.042": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient"
+ },
+ "10.1016/j.jad.2012.11.054": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Multicenter outpatient/inpatient (multicenter, randomized, double-blind, placebo-controlled)"
+ },
+ "10.1016/j.jad.2013.07.031": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient"
+ },
+ "10.1016/j.jad.2013.10.040": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": ""
+ },
+ "10.1016/j.jad.2014.05.015": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient psychiatric hospital affiliated to Shiraz University of Medical Sciences"
+ },
+ "10.1016/j.jad.2017.02.026": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient clinic (Affective Unit, Psychiatric Clinic, University Hospital, Ume\u00e5, Sweden)"
+ },
+ "10.1016/j.jad.2018.09.025": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient, 11 academic medical centers"
+ },
+ "10.1016/j.jad.2018.10.093": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Single-center outpatient/inpatient psychiatric hospital"
+ },
+ "10.1016/j.jad.2019.08.056": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Multicenter, French psychiatric public-sector outpatient departments across 64 catchment areas"
+ },
+ "10.1016/j.jad.2020.03.066": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center specialized outpatient clinic (Mood Disorder Lucio Bini Center, Cagliari, Italy)"
+ },
+ "10.1016/j.jad.2026.121702": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "National multicenter EHR network (academic and non-academic centers), United States and some Ex-US sites"
+ },
+ "10.1016/j.jpsychires.2011.01.019": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient (Stanford Bipolar Disorders Clinic)"
+ },
+ "10.1016/j.jpsychires.2012.01.014": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "outpatient",
+  "setting_text": "Two out-patient psychiatric centres of Geneva University Hospital (Jonction and Servette), Switzerland"
+ },
+ "10.1016/j.jpsychires.2016.03.012": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multiregional, multicenter outpatient"
+ },
+ "10.1016/j.jpsychires.2017.10.002": {
+  "diagnosis": "mdd",
+  "diagnosis_text": "Unipolar depression (MDD)",
+  "setting": "other",
+  "setting_text": "Multicenter \u2014 12 psychiatric departments of the Berlin Research Network on Depression"
+ },
+ "10.1016/j.legalmed.2006.05.003": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center forensic/medico-legal autopsy"
+ },
+ "10.1016/j.mehy.2020.110047": {
+  "diagnosis": "mdd",
+  "diagnosis_text": "Unipolar depression (MDD)",
+  "setting": "inpatient",
+  "setting_text": "Single-center psychiatric ward"
+ },
+ "10.1016/j.neulet.2014.02.005": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient (Institute of Psychiatry, University of Sao Paulo, Brazil)"
+ },
+ "10.1016/j.pmip.2020.100059": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "mixed",
+  "setting_text": "Single-center residential and outpatient addiction treatment center (East Village, Manhattan, NY)"
+ },
+ "10.1016/j.pnpbp.2003.11.001": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Single-center university hospital, inpatient psychiatric unit then outpatient clinic"
+ },
+ "10.1016/j.pnpbp.2008.10.012": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient"
+ },
+ "10.1016/j.pnpbp.2013.08.011": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center psychiatric hospital"
+ },
+ "10.1016/j.pnpbp.2021.110408": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "mixed",
+  "setting_text": "Psychiatric inpatient and outpatient units at major hospitals in the Oslo catchment area"
+ },
+ "10.1016/j.psiq.2010.12.002": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient (Mood Disorders Program, University Hospitals Case Medical Center)"
+ },
+ "10.1016/j.psychres.2007.09.003": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient (Pittsburgh site of a multi-center RCT)"
+ },
+ "10.1016/j.psychres.2015.05.042": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "inpatient",
+  "setting_text": "Single-center bipolar disorder observation unit, UPC KU Leuven, campus Kortenberg, Belgium (inpatients)"
+ },
+ "10.1016/j.psychres.2017.08.063": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "mixed",
+  "setting_text": "Single-center psychiatric hospital (inpatient/outpatient)"
+ },
+ "10.1016/j.psyneuen.2016.04.013": {
+  "diagnosis": "mdd",
+  "diagnosis_text": "Unipolar depression (MDD)",
+  "setting": "inpatient",
+  "setting_text": "Multicenter, 12 psychiatric departments of the Berlin Research Network on Depression (mostly inpatient)"
+ },
+ "10.1016/s0006-3223(96)00307-1": {
+  "diagnosis": "mdd",
+  "diagnosis_text": "Unipolar depression (MDD)",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient unit"
+ },
+ "10.1016/s0022-3956(99)00021-7": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "inpatient",
+  "setting_text": "Single-center psychiatric hospital inpatient unit"
+ },
+ "10.1016/s0140-6736(05)60117-1": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center hospital"
+ },
+ "10.1016/s0149-2918(02)80061-3": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center state psychiatric hospital"
+ },
+ "10.1016/s0165-0327(02)00086-1": {
+  "diagnosis": "mdd",
+  "diagnosis_text": "Unipolar depression (MDD)",
+  "setting": "inpatient",
+  "setting_text": "Multicenter (25 sites), inpatient/hospitalized"
+ },
+ "10.1016/s0165-0327(02)00407-x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient/naturalistic follow-up, university department of psychiatry"
+ },
+ "10.1016/s0165-1781(99)00108-0": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Two specialized lithium outpatient clinics (Department of Psychiatry, University of Vienna; Department of Psychiatry, Freie Universit\u00e4t Berlin)"
+ },
+ "10.1016/s0278-5846(03)00145-3": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Single-center VA outpatient psychiatry clinic"
+ },
+ "10.1016/s0278-5846(99)00085-8": {
+  "diagnosis": "healthy",
+  "diagnosis_text": "Healthy volunteers",
+  "setting": "other",
+  "setting_text": "Single-center, medical students, Universidad de los Andes"
+ },
+ "10.1016/s0924-9338(10)71416-4": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center, Perinatal Psychiatry Programme, Hospital Cl\u00ednic-Maternitat"
+ },
+ "10.1016/s0924-9338(10)71438-3": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": "Multicenter"
+ },
+ "10.1016/s0924-977x(03)91922-5": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": "Multicenter"
+ },
+ "10.1016/s0924-977x(98)80299-x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient/day hospital psychiatric institute"
+ },
+ "10.1016/s2215-0366(22)00100-6": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "community",
+  "setting_text": "Two Swedish clinical cohorts: a specialised outpatient clinic for affective disorders (Huddinge Hospital, Stockholm) and a national quality registry (Bipol\u00e4R)"
+ },
+ "10.1017/neu.2019.19": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multisite outpatient"
+ },
+ "10.1017/s0033291700003068": {
+  "diagnosis": "mdd",
+  "diagnosis_text": "Unipolar depression (MDD)",
+  "setting": "mixed",
+  "setting_text": "Multicentre outpatient/inpatient, 71 psychiatrists in 9 centres in the UK"
+ },
+ "10.1017/s0033291700050066": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient psychiatric clinic (Dundee Psychiatric Service)"
+ },
+ "10.1017/s0033291723000223": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "17 multicenter outpatient/research neuroimaging sites, 13 countries, six continents"
+ },
+ "10.1017/s1092852921000572": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": "Single-center hospital (Ebnesina Psychiatry Hospital)"
+ },
+ "10.1017/s1092852923001190": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multicenter, outpatient bipolar depression trials"
+ },
+ "10.1017/s1092852925100564": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar II",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient (pooled post hoc analysis of three multicenter trials)"
+ },
+ "10.1017/s1461145703003870": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center hospital, Department of Psychiatry and Psychotherapy, University of Duisburg-Essen, Germany"
+ },
+ "10.1017/s1748232106000164": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": "Multicenter"
+ },
+ "10.1034/j.1399-5618.2000.020408.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Multicenter outpatient/inpatient, university psychiatric departments"
+ },
+ "10.1034/j.1399-5618.2002.01189.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient (Mood and Anxiety Disorders Program, Bipolar Clinic, Center for Addiction and Mental Health, University of Toronto)"
+ },
+ "10.1034/j.1399-5618.2002.01211.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient bipolar disorders clinic"
+ },
+ "10.1034/j.1399-5618.2003.00009.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center tertiary outpatient bipolar clinic"
+ },
+ "10.1038/clpt.1994.47": {
+  "diagnosis": "healthy",
+  "diagnosis_text": "Healthy volunteers",
+  "setting": "other",
+  "setting_text": "General Clinical Research Center, University of Rochester Medical Center, and Rochester General Hospital"
+ },
+ "10.1038/ki.1987.220": {
+  "diagnosis": "healthy",
+  "diagnosis_text": "Healthy volunteers",
+  "setting": "mixed",
+  "setting_text": "Single-center outpatient/inpatient physiology study"
+ },
+ "10.1038/mp.2015.158": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient (17 CANMAT-affiliated academic centers in Canada and collaborating sites in Brazil)"
+ },
+ "10.1038/s41380-024-02784-2": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Multicenter (20 international research sites, 15 countries, 6 continents)"
+ },
+ "10.1038/s41467-025-67026-7": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center preclinical mouse study (animal work authorized by Ethics Committee of the Eighth Affiliated Hospital of Sun Yat-sen University); human tissue/serum component from the Affiliated Shenzhen Maternity and Child Healthcare Hospital of Southern Medical University"
+ },
+ "10.1038/s41598-025-99698-y": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "inpatient",
+  "setting_text": "Single-center hospital, inpatient psychiatry (Ibn Sina Hospital, Mashhad, Iran)"
+ },
+ "10.1042/cs0770337": {
+  "diagnosis": "healthy",
+  "diagnosis_text": "Healthy volunteers",
+  "setting": "other",
+  "setting_text": "Single occupational site (Olivetti factory workforce, Naples/Pozzuoli area, Italy)"
+ },
+ "10.1042/cs0920397": {
+  "diagnosis": "healthy",
+  "diagnosis_text": "Healthy volunteers",
+  "setting": "other",
+  "setting_text": "Single-center, Research Laboratory of Nephrology and Hypertension, Aarhus University Hospital"
+ },
+ "10.1046/j.1365-277x.1996.00444.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center, outpatient clinic and Mental Health Unit discharge"
+ },
+ "10.1055/a-2018-4946": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center hospital, third-level Regional Center for Feeding and Eating Disorders in Children and Adolescents"
+ },
+ "10.1055/s-0028-1094484": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": ""
+ },
+ "10.1055/s-0028-1094574": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Two hospital departments: nephrology unit (Darmstadt) and psychiatric intensive care unit (Mannheim)"
+ },
+ "10.1055/s-0034-1385566": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Single-center, university psychiatric hospital (inpatient then outpatient specialty bipolar clinic)"
+ },
+ "10.1055/s-2007-1001133": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "community",
+  "setting_text": "Outpatient lithium clinic, single university psychiatric hospital, with collaborating community neuropsychiatrists in Baden-W\u00fcrttemberg"
+ },
+ "10.1055/s-2007-1017430": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center specialized lithium outpatient clinic, Department of Psychiatry, Free University of Berlin"
+ },
+ "10.1055/s-2007-1019511": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "other",
+  "setting_text": "Single private neuropsychiatric practice (Bruchsal/Baden, Germany)"
+ },
+ "10.1055/s-2007-979300": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient psychiatric hospital"
+ },
+ "10.1055/s-2008-1076723": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center hospital (University of Hamburg Medical Center)"
+ },
+ "10.1056/nejm198911303212201": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient (two academic psychiatric centers)"
+ },
+ "10.1080/00048670701392841": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "community",
+  "setting_text": "Psychiatric Rehabilitation Service, Hunter New England Area Health Service (hospital-based unit at Morisset Hospital and community-based centres at Cardiff and Maitland)"
+ },
+ "10.1080/00048679309075773": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center, Prince of Wales Hospital / Li Ka Shing Lithium Clinic, Chinese University of Hong Kong"
+ },
+ "10.1080/08039480801985229": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "mixed",
+  "setting_text": "Single-center outpatient/inpatient psychiatric clinic"
+ },
+ "10.1080/10401230490453103": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Two university-affiliated outpatient psychopharmacology clinics"
+ },
+ "10.1080/10401230802177722": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient psychiatry clinic at a tertiary care hospital"
+ },
+ "10.1089/cap.1995.5.241": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "inpatient",
+  "setting_text": "Single-center, inpatient child/adolescent psychiatry unit"
+ },
+ "10.1089/cap.1998.8.49": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient consultation practice, Department of Psychiatry, Children's Hospital Oakland"
+ },
+ "10.1089/cap.2000.10.45": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient, Stanford University School of Medicine"
+ },
+ "10.1089/cap.2006.0024": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient (Child Psychopharmacology Outpatient Clinic, Hospital de Cl\u00ednicas de Porto Alegre)"
+ },
+ "10.1089/cap.2006.16.336": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-site outpatient (University of Illinois at Chicago)"
+ },
+ "10.1089/cap.2007.0118": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "inpatient",
+  "setting_text": "Single-center pediatric emergency department and inpatient admission"
+ },
+ "10.1089/cap.2009.0030": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient (Pediatric Bipolar Disorders Program, Stanford University School of Medicine)"
+ },
+ "10.1089/cap.2012.0063": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient"
+ },
+ "10.1089/cap.2012.2253": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center pediatric emergency department and university outpatient child psychiatry clinic"
+ },
+ "10.1089/cap.2016.0046": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Two psychiatric outpatient clinics, same raters"
+ },
+ "10.1089/cap.2016.0207": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient hospital"
+ },
+ "10.1089/cap.2021.0039": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": "Single-center hospital (Cincinnati Children's Hospital Medical Center / University of Cincinnati)"
+ },
+ "10.1089/met.2021.0078": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": ""
+ },
+ "10.1093/ijnp/pyae059.288": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "24 general hospitals, 17 psychiatric hospitals, and 3 psychiatric clinics, Japan"
+ },
+ "10.1093/ijnp/pyw082": {
+  "diagnosis": "mdd",
+  "diagnosis_text": "Unipolar depression (MDD)",
+  "setting": "mixed",
+  "setting_text": "Multicenter, inpatient and outpatient psychiatric departments"
+ },
+ "10.1093/occmed/48.8.505": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Lithium clinic (author's practice, UK) vs general practice"
+ },
+ "10.1097/00004583-198805000-00018": {
+  "diagnosis": "mdd",
+  "diagnosis_text": "Unipolar depression (MDD)",
+  "setting": "mixed",
+  "setting_text": "Single-center outpatient/inpatient psychiatric clinic (Western Psychiatric Institute and Clinic)"
+ },
+ "10.1097/00004583-199307000-00028": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single case, sheltered accommodation / outpatient psychiatric follow-up"
+ },
+ "10.1097/00004583-199512000-00008": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "inpatient",
+  "setting_text": "Single-center university hospital children's inpatient psychiatric unit (regional referral center)"
+ },
+ "10.1097/00004583-199802000-00009": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient (Washington University)"
+ },
+ "10.1097/00004714-199202001-00008": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient (Mood Disorders Program)"
+ },
+ "10.1097/00004714-199206000-00015": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient psychiatric hospital"
+ },
+ "10.1097/00004714-199410000-00014": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-patient case report, multiple hospitalizations"
+ },
+ "10.1097/00004850-200307000-00005": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "community",
+  "setting_text": "21 sites (10 academic, 11 community) across Canada, inpatient and outpatient"
+ },
+ "10.1097/00005053-197106000-00001": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient (NIH Clinical Center, Bethesda, Maryland)"
+ },
+ "10.1097/00005053-197807000-00007": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient psychiatric practice"
+ },
+ "10.1097/00005053-197903000-00009": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center hospital (Michael Reese Hospital and Medical Center, Chicago)"
+ },
+ "10.1097/00007611-198506000-00014": {
+  "diagnosis": "schizoaffective",
+  "diagnosis_text": "Schizoaffective",
+  "setting": "other",
+  "setting_text": "Single-center university hospital (Vanderbilt University Hospital)"
+ },
+ "10.1097/00019442-199402040-00010": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center geriatric psychiatric outpatient clinic"
+ },
+ "10.1097/00019442-200504000-00006": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient (secondary analysis of two pivotal Bipolar I maintenance trials, GW2003 and GW2006)"
+ },
+ "10.1097/01.chi.0000194569.70912.a7": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Single-center, adolescent inpatient psychiatric service with outpatient follow-up"
+ },
+ "10.1097/jcp.0000000000002090": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "mixed",
+  "setting_text": "Single-center hospital/residential psychiatric case reports (Mayo Clinic)"
+ },
+ "10.1097/md.0000000000005401": {
+  "diagnosis": "other",
+  "diagnosis_text": "Cognitive impairment/dementia",
+  "setting": "outpatient",
+  "setting_text": "Single-site outpatient trial; participants recruited from Nolungile Site C clinic in Khayelitsha, followed up at the University of Cape Town Clinical Research Centre, Groote Schuur Hospital, Cape Town, South Africa"
+ },
+ "10.1097/md.0000000000021122": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center hospital (Taiwan Adventist Hospital)"
+ },
+ "10.1097/wnf.0b013e3182055c07": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Multicenter, pooled analysis of 12 sponsor (GlaxoSmithKline) trials"
+ },
+ "10.1111/acps.12101": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient \u2014 bipolar/mood disorder specialty clinics; national coordinating center plus six regional centers across the United States"
+ },
+ "10.1111/acps.12460": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I | bipolar II",
+  "setting": "outpatient",
+  "setting_text": "Multi-site outpatient, pragmatic comparative effectiveness trial"
+ },
+ "10.1111/acps.13733": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": ""
+ },
+ "10.1111/apa.16444": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Two-center outpatient clinics (Karolinska University Hospital and Sachs' Children's and Adolescents' Hospital), Stockholm, Sweden"
+ },
+ "10.1111/bdi.12008": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": "19 large Adult Congregate Facilities (senior/supportive housing) across six New York City metropolitan-region counties"
+ },
+ "10.1111/bdi.12235": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "community",
+  "setting_text": "Two community secondary-level psychiatric services (general adult and old age psychiatry)"
+ },
+ "10.1111/bdi.12277": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient research unit (NIH Mood and Anxiety Disorder Research Unit, Bethesda, MD)"
+ },
+ "10.1111/bdi.12328": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center, Instituto Nacional de Psiquiatr\u00eda, Mexico"
+ },
+ "10.1111/bdi.12972": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center tertiary academic health science centre outpatient clinic"
+ },
+ "10.1111/bdi.13172": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Multicenter (14 sites, 13 countries, 6 continents) outpatient/research imaging cohorts"
+ },
+ "10.1111/bdi.13187": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar II",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient psychiatric case study"
+ },
+ "10.1111/ctr.70563": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "community",
+  "setting_text": "National registry (United States)"
+ },
+ "10.1111/head.12872": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient neurology clinic"
+ },
+ "10.1111/j.1365-2125.1977.tb00694.x": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient psychiatric lithium clinic"
+ },
+ "10.1111/j.1365-2125.1994.tb04288.x": {
+  "diagnosis": "other",
+  "diagnosis_text": "",
+  "setting": "other",
+  "setting_text": ""
+ },
+ "10.1111/j.1365-2265.1987.tb00839.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "inpatient",
+  "setting_text": "Single-center hospital (Metabolic Unit)"
+ },
+ "10.1111/j.1399-5618.2005.00201.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient (4 national + 2 international sites within the Stanley Foundation Treatment Network, plus a Chile site)"
+ },
+ "10.1111/j.1399-5618.2006.00276.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "inpatient",
+  "setting_text": "Multicenter, inpatient hospitalized acute mania"
+ },
+ "10.1111/j.1399-5618.2006.00308.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": "Multicenter, two pooled maintenance trials (currently/recently depressed patients; currently/recently manic/hypomanic/mixed patients)"
+ },
+ "10.1111/j.1399-5618.2006.00363.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "inpatient",
+  "setting_text": "Single-center hospital (Roozbeh Psychiatric Hospital, inpatient)"
+ },
+ "10.1111/j.1399-5618.2008.00587.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "community",
+  "setting_text": "Community/primary care registry (Maritime Provinces, Canada) and a single tertiary care teaching hospital outpatient clinic"
+ },
+ "10.1111/j.1399-5618.2008.00599.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Primary care / outpatient psychiatry, five primary care teams under one HMO"
+ },
+ "10.1111/j.1399-5618.2009.00730.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "community",
+  "setting_text": "Community-based multi-province registry, tertiary care sample"
+ },
+ "10.1111/j.1399-5618.2010.00823.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Single-center outpatient/inpatient academic mood disorders program"
+ },
+ "10.1111/j.1399-5618.2010.00836.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Multicenter (8 centres: 5 Danish, 3 Swedish), outpatient/inpatient mixed, mimicking clinical practice"
+ },
+ "10.1111/j.1399-5618.2011.00898.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient"
+ },
+ "10.1111/j.1440-1819.2010.02066.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "inpatient",
+  "setting_text": "Multi-center, hospitalized patients"
+ },
+ "10.1111/j.1532-5415.1978.tb01964.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center hospital (St. Louis State Hospital Complex)"
+ },
+ "10.1111/j.1600-0447.1970.tb02116.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient lithium clinic"
+ },
+ "10.1111/j.1600-0447.1970.tb02117.x": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "inpatient",
+  "setting_text": "Single-center, hospitalized inpatients"
+ },
+ "10.1111/j.1600-0447.1972.tb04373.x": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient clinic"
+ },
+ "10.1111/j.1600-0447.1974.tb08212.x": {
+  "diagnosis": "mdd",
+  "diagnosis_text": "Unipolar depression (MDD)",
+  "setting": "inpatient",
+  "setting_text": "Multicenter, inpatient, psychiatric hospitals"
+ },
+ "10.1111/j.1600-0447.1976.tb00067.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient psychiatric clinic"
+ },
+ "10.1111/j.1600-0447.1976.tb00083.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient psychiatric clinic"
+ },
+ "10.1111/j.1600-0447.1977.tb00144.x": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "mixed",
+  "setting_text": "Single-center outpatient/inpatient psychiatric consultation"
+ },
+ "10.1111/j.1600-0447.1979.tb03586.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "inpatient",
+  "setting_text": "Single-center research ward, Psychiatric Department of Rigshospitalet"
+ },
+ "10.1111/j.1600-0447.1980.tb00607.x": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center, Psychiatric Hospital, Risskov, Denmark"
+ },
+ "10.1111/j.1600-0447.1981.tb00682.x": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "other",
+  "setting_text": "Single-center, Psychiatric Hospital in Risskov, Denmark"
+ },
+ "10.1111/j.1600-0447.1984.tb01203.x": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center, Dept. of Psychiatry, Aalborg Psychiatric Hospital, Denmark"
+ },
+ "10.1111/j.1600-0447.1988.tb06363.x": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center psychiatric hospital outpatient lithium clinic"
+ },
+ "10.1111/j.1600-0447.1988.tb06375.x": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center state psychiatric hospital (chronic care unit), university-affiliated"
+ },
+ "10.1111/j.1600-0447.1989.tb01331.x": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient clinic (Department of Psychiatry 111, Lillhagen Hospital, University of Gothenburg)"
+ },
+ "10.1111/j.1600-0447.1989.tb03022.x": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient lithium clinic"
+ },
+ "10.1111/j.1600-0447.1992.tb01453.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": ""
+ },
+ "10.1111/j.1600-0447.1993.tb03336.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient department of a university hospital"
+ },
+ "10.1111/j.1600-0447.1993.tb03487.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient (Centre of Clinical Psychopharmacology, Department of Neuroscience, University of Cagliari)"
+ },
+ "10.1111/j.1600-0447.2007.01059.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "community",
+  "setting_text": "Multicenter (8 community and academic centers), outpatient"
+ },
+ "10.1111/j.1601-5215.2012.00639.x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center hospital, cardiology department"
+ },
+ "10.1136/bcr-2013-009373": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center sleep laboratory / psychiatric hospital"
+ },
+ "10.1136/bcr-2021-246499": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center hospital"
+ },
+ "10.1136/bcr.05.2011.4267": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center hospital (case report)"
+ },
+ "10.1136/bmj.1.6116.815": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center hospital"
+ },
+ "10.1136/bmj.280.6215.684-a": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center hospital (Department of Medicine, Basingstoke District Hospital)"
+ },
+ "10.1136/bmj.3.5932.650": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center hospital (Institute of Psychiatry / Maudsley Hospital, London)"
+ },
+ "10.1139/jpn.0213": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient psychiatry service"
+ },
+ "10.1152/ajprenal.00147.2017": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Two-site prospective pilot study, outpatient clinics"
+ },
+ "10.1152/jappl.1993.74.5.2166": {
+  "diagnosis": "healthy",
+  "diagnosis_text": "Healthy volunteers",
+  "setting": "other",
+  "setting_text": "Two-center physiology study: sea level (Universite Paris Nord, Bobigny, France) and high altitude (Observatoire Vallot, Mt. Blanc, France, 4350 m)"
+ },
+ "10.1155/bmri/8884457": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "mixed",
+  "setting_text": "Single-center specialized psychiatric hospital outpatient/inpatient population"
+ },
+ "10.1158/1055-9965.epi-19-0776": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Multicenter, 40 clinical centers nationwide (Women's Health Initiative)"
+ },
+ "10.1159/000045219": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "outpatient",
+  "setting_text": "Single-center, renal transplant clinic"
+ },
+ "10.1159/000065414": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "inpatient",
+  "setting_text": "Single-center hospital (inpatient psychiatry department)"
+ },
+ "10.1159/000092219": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient, Mood Disorders Unit, Gaziantep University"
+ },
+ "10.1159/000117838": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center (Department of Nephrology and Psychiatric Institute, University of Lund)"
+ },
+ "10.1159/000117881": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient lithium clinic (High Royds Hospital, Ilkley) with radiograph measurements performed in Leeds"
+ },
+ "10.1159/000118217": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "inpatient",
+  "setting_text": "Single-center hospital, child psychiatric ward"
+ },
+ "10.1159/000118351": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "mixed",
+  "setting_text": "Single-center psychiatric hospital outpatient/inpatient follow-up"
+ },
+ "10.1159/000288058": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient (Depression Research Unit)"
+ },
+ "10.1159/000457430": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center hospital (Bellevue Clinical Research Unit / NYU Medical Center)"
+ },
+ "10.1159/000468091": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "mixed",
+  "setting_text": "Single-center outpatient lithium clinic within a general hospital (some inpatient treatment initiation)"
+ },
+ "10.1159/000468400": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center lithium outpatient clinic (Department of Psychiatry, Free University of Berlin)"
+ },
+ "10.1161/01.cir.84.5.2011": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-town population survey"
+ },
+ "10.1161/01.hyp.12.4.450": {
+  "diagnosis": "healthy",
+  "diagnosis_text": "Healthy volunteers",
+  "setting": "inpatient",
+  "setting_text": "Single-center metabolic ward"
+ },
+ "10.1176/ajp.124.12.1702": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center hospital (Middlewood Hospital, Sheffield; Northern General Hospital, Sheffield)"
+ },
+ "10.1176/ajp.133.9.1082": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient metabolic research ward"
+ },
+ "10.1176/ajp.135.8.969": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient psychiatric hospital"
+ },
+ "10.1176/ajp.138.1.81": {
+  "diagnosis": "schizoaffective",
+  "diagnosis_text": "Schizoaffective",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient research ward (NIMH Adult Psychiatry Branch, St. Elizabeths Hospital)"
+ },
+ "10.1176/ajp.139.12.1593": {
+  "diagnosis": "healthy",
+  "diagnosis_text": "Healthy volunteers",
+  "setting": "other",
+  "setting_text": "Single-center research study, healthy volunteer athletes"
+ },
+ "10.1176/ajp.143.12.1563": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center, Affective Disorders Clinic and Clinical Research Center, Yale New Haven Hospital"
+ },
+ "10.1176/ajp.145.7.895a": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient psychiatric care"
+ },
+ "10.1176/appi.ajp.158.6.906": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient"
+ },
+ "10.1176/appi.ajp.160.1.112": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Single-center outpatient/inpatient psychiatric research clinic"
+ },
+ "10.1176/appi.ajp.162.1.137": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient (Mount Sinai School of Medicine; recruitment ad also from University of Florence collaborators)"
+ },
+ "10.1176/appi.ajp.162.7.1281": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": ""
+ },
+ "10.1176/appi.ajp.163.7.1199": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": "Multicenter, pooled from two 18-month maintenance studies"
+ },
+ "10.1176/appi.ajp.2008.07101560": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient"
+ },
+ "10.1176/appi.ajp.2008.08020189": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": "Multicenter, 127 centers in the United States and Canada"
+ },
+ "10.1176/appi.ajp.2013.13070985": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient, international"
+ },
+ "10.1176/appi.ajp.2017.15050657": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Multicenter (six academic centers), inpatient and ambulatory services"
+ },
+ "10.1176/appi.ajp.2017.16101200": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I | bipolar II",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient (Western Psychiatric Institute and Clinic, University of Pittsburgh Medical Center)"
+ },
+ "10.1176/appi.ps.201200479": {
+  "diagnosis": "other",
+  "diagnosis_text": "",
+  "setting": "other",
+  "setting_text": ""
+ },
+ "10.1176/jnp.4.1.51": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center hospital (Medical Psychiatric Unit, Emory University Hospital)"
+ },
+ "10.1177/0004867419894067": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multicentre outpatient"
+ },
+ "10.1177/0004867420952551": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient clinic, Taipei Medical University Hospital, Taiwan"
+ },
+ "10.1177/00048674231195571": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Nation-wide, Australia; recruited via media publicity campaign, PBS-prescription-based mail-out, and follow-up of the Australian Genetics of Depression Study cohort"
+ },
+ "10.1177/0269881108089594": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient (mood disorder units of two hospitals)"
+ },
+ "10.1177/026988119400800412": {
+  "diagnosis": "mdd",
+  "diagnosis_text": "Unipolar depression (MDD)",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient psychiatry (hospital-affiliated)"
+ },
+ "10.1177/070674371405900606": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient (4 geriatric psychiatry clinics + 2 adult mood disorder clinics at 2 Canadian universities)"
+ },
+ "10.1177/07067437251328282": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "community",
+  "setting_text": "International (English-language) online/offline recruitment; community sample, not restricted to a specific geographic area"
+ },
+ "10.1177/070674377301800115": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center, outpatient follow-up after hospitalization"
+ },
+ "10.1177/070674379303800906": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Psychiatric hospital / outpatient clinic, case reports"
+ },
+ "10.1177/089198870001300104": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient geropsychiatric unit"
+ },
+ "10.1177/1049909111434633": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": "Single-center hospice (home hospice program)"
+ },
+ "10.1177/1359786806063076": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": "Multicenter (co-treatment run-in then randomized double-blind monotherapy)"
+ },
+ "10.1177/147323000203000112": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": "Single-center, Department of Psychiatry/Endocrinology, Atat\u00fcrk University School of Medicine"
+ },
+ "10.1177/2050313x20953000": {
+  "diagnosis": "mdd",
+  "diagnosis_text": "Unipolar depression (MDD)",
+  "setting": "outpatient",
+  "setting_text": "Single-center hospital (Carilion Clinic)"
+ },
+ "10.1185/030079908x253933": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "inpatient",
+  "setting_text": "Multicenter, inpatient psychiatric hospitalization"
+ },
+ "10.1185/03007991003779380": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multicentre, outpatient"
+ },
+ "10.1186/1471-244x-3-7": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient psychiatric hospital"
+ },
+ "10.1186/1471-244x-8-73": {
+  "diagnosis": "mdd",
+  "diagnosis_text": "Unipolar depression (MDD)",
+  "setting": "outpatient",
+  "setting_text": "2 outpatient psychiatric research sites in close proximity, same investigators"
+ },
+ "10.1186/1744-859x-9-36": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Single-center outpatient/inpatient psychiatry department"
+ },
+ "10.1186/2008-2231-20-43": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "mixed",
+  "setting_text": "Single-center, Roozbeh hospital (Tehran University of Medical Sciences), psychiatric inpatient/outpatient"
+ },
+ "10.1186/s12882-018-0947-9": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center hospital (dialysis unit, France)"
+ },
+ "10.1186/s12882-022-02934-0": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "inpatient",
+  "setting_text": "Single-center hospital (primary care presentation, emergency department, and inpatient admissions)"
+ },
+ "10.1186/s12888-015-0490-1": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "mixed",
+  "setting_text": "Single-center inpatient/outpatient child and adolescent psychiatric unit"
+ },
+ "10.1186/s12888-018-1622-1": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Regional psychiatric services, Norrbotten, Sweden (retrospective register/chart-based cohort)"
+ },
+ "10.1186/s12888-021-03572-w": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Combined analysis across tertiary mental health outpatient sites in Montreal, Qu\u00e9bec (Douglas Mental Health University Institute, Jewish General Hospital, McGill University Health Centre)"
+ },
+ "10.1186/s12888-024-05550-4": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient psychiatric clinic, tertiary university hospital"
+ },
+ "10.1186/s12888-025-07111-9": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "inpatient",
+  "setting_text": "Multicenter inpatient (six Chinese hospitals)"
+ },
+ "10.1186/s12991-016-0096-0": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Multicenter"
+ },
+ "10.1186/s12991-024-00530-0": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "inpatient",
+  "setting_text": "107 psychiatric inpatient hospitals participating in the AMSP program"
+ },
+ "10.1186/s13063-019-3655-2": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Single-center (tertiary referral psychiatric unit, including inpatients and outpatients)"
+ },
+ "10.1186/s13256-021-02879-2": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient, Department of Child and Adolescent Psychiatry, Malm\u00f6, Sweden"
+ },
+ "10.1186/s40345-014-0014-9": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Multicenter; inpatient at randomization, then continued as outpatients"
+ },
+ "10.1186/s40345-017-0075-7": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "48 centers, multicenter outpatient, 12 countries across North/South America, Europe, Asia, and Africa"
+ },
+ "10.1186/s40345-017-0096-2": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "12 international specialized mood-disorder outpatient clinics (multicenter)"
+ },
+ "10.1186/s40345-021-00230-8": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "76 centers in Japan, multicenter outpatient"
+ },
+ "10.1186/s40345-022-00268-2": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center academic outpatient clinic (Lucio Bini Psychiatric Center, Cagliari, Sardinia)"
+ },
+ "10.1186/s40345-023-00317-4": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Two-center, Stockholm, Sweden (Karolinska University Hospital and Sachs' Children's and Adolescents' Hospital)"
+ },
+ "10.1186/s40345-026-00425-x": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center, university-affiliated longitudinal cohort (BIPLONG study)"
+ },
+ "10.1186/s43055-025-01578-y": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center hospital, gynecological outpatient department"
+ },
+ "10.1192/bjo.2022.426": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient psychiatry of old age service"
+ },
+ "10.1192/bjp.128.1.61": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center hospital (Maudsley Hospital, London) with referral from Lewisham Hospital"
+ },
+ "10.1192/bjp.128.5.479": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "mixed",
+  "setting_text": "Single-center, lithium clinic outpatients with in-patient admission as needed"
+ },
+ "10.1192/bjp.141.1.87": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient lithium clinic"
+ },
+ "10.1192/bjp.142.4.391": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "mixed",
+  "setting_text": "Single-center lithium clinic (outpatient) and psychiatric in-patient unit"
+ },
+ "10.1192/bjp.146.1.70": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "community",
+  "setting_text": "Single rural community psychiatric service (Crichton Royal Hospital, Dumfries and Galloway Region) plus general practices"
+ },
+ "10.1192/bjp.150.2.175": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "other",
+  "setting_text": "Single consultant psychiatrist's practice, north London"
+ },
+ "10.1192/bjp.159.3.341": {
+  "diagnosis": "mdd",
+  "diagnosis_text": "Unipolar depression (MDD)",
+  "setting": "mixed",
+  "setting_text": "Single-center, in-patients and out-patients"
+ },
+ "10.1192/bjp.163.5.574": {
+  "diagnosis": "mdd",
+  "diagnosis_text": "Unipolar depression (MDD)",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient (Mood Disorders Program)"
+ },
+ "10.1192/bjp.182.2.141": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "inpatient",
+  "setting_text": "Multicenter, international, hospital-based (patients randomised within 7 days of admission, remained inpatient at least 4 days after starting double-blind treatment)"
+ },
+ "10.1192/bjp.184.4.337": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Multicenter, outpatient/inpatient psychiatric trial"
+ },
+ "10.1192/bjp.185.1.37": {
+  "diagnosis": "mdd",
+  "diagnosis_text": "Unipolar depression (MDD)",
+  "setting": "outpatient",
+  "setting_text": "Two out-patient clinics of the Mentrum Mental Health Organisation in Amsterdam"
+ },
+ "10.1192/bjp.bp.114.152850": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "community",
+  "setting_text": "Single-center outpatient Mood Disorders Program and regional bipolar registry"
+ },
+ "10.1192/bjp.bp.115.169375": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar II",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient (Depression Research Unit, University of Pennsylvania)"
+ },
+ "10.1192/j.eurpsy.2025.1055": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient"
+ },
+ "10.1192/j.eurpsy.2025.384": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "other",
+  "setting_text": "Multicenter, 7 Italian university centers"
+ },
+ "10.1210/jcem.81.4.8636369": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center, hospital-based metabolic study"
+ },
+ "10.1212/wnl.0b013e31822dc7a5": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient, 10 sites (Western ALS Study Group)"
+ },
+ "10.1248/yakushi.15-00256": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center hospital, Japan"
+ },
+ "10.1289/ehp.1002678": {
+  "diagnosis": "healthy",
+  "diagnosis_text": "Healthy volunteers",
+  "setting": "community",
+  "setting_text": "Community-based field study in four rural Puna villages (San Antonio de los Cobres, Olacapato, Salar de Pocitos, Tolar Grande), Salta province, Argentina"
+ },
+ "10.1371/journal.pmed.1002058": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "UK primary care, nationwide database (THIN)"
+ },
+ "10.14712/18059694.2016.101": {
+  "diagnosis": "mdd",
+  "diagnosis_text": "Unipolar depression (MDD)",
+  "setting": "other",
+  "setting_text": "Single-center psychiatric hospital"
+ },
+ "10.1504/ijbt.2007.014252": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "mixed",
+  "setting_text": "Single clinical trial center (Armenicum Research Center), HIV-infected outpatients/inpatients"
+ },
+ "10.15388/amed.2024.31.1.5": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "inpatient",
+  "setting_text": "Single-center psychiatry ward"
+ },
+ "10.15406/jsrt.2018.04.00104": {
+  "diagnosis": "schizoaffective",
+  "diagnosis_text": "Schizoaffective",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient psychiatric state hospital"
+ },
+ "10.1542/peds.2015-0743": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient"
+ },
+ "10.1586/14737167.4.1.9": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Review article"
+ },
+ "10.1586/ern.10.66": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient"
+ },
+ "10.1592/phco.27.1.27": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Multistate managed care Medicaid claims database, seven states"
+ },
+ "10.1592/phco.31.8.806": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "mixed",
+  "setting_text": "Single-center tertiary care academic hospital, inpatient and outpatient psychiatry"
+ },
+ "10.1708/1600.17456": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "other",
+  "setting_text": "Single-center private practice"
+ },
+ "10.18203/issn.2454-2156.intjscirep20212392": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient department (psychiatry OPD), tertiary hospital"
+ },
+ "10.18869/mjiri.31.16": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient hospital (Child and Adolescent Psychiatric Unit, Razi psychiatric hospital, University of Social Welfare and Rehabilitation Sciences)"
+ },
+ "10.2147/dddt.s589767": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "inpatient",
+  "setting_text": "Single-center psychiatric inpatient unit, Xi'an Mental Health Center"
+ },
+ "10.2147/ndt.s172654": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "mixed",
+  "setting_text": "Single-center outpatient/inpatient child psychiatry service, Scientific Institute Stella Maris (Pisa)"
+ },
+ "10.2147/ndt.s205780": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center psychiatric hospital"
+ },
+ "10.2147/ndt.s41557": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar II",
+  "setting": "outpatient",
+  "setting_text": "Two private outpatient practice centers (multicenter outpatient)"
+ },
+ "10.2147/ndt.s86103": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center, in- and outpatient psychiatric unit"
+ },
+ "10.2147/ppa.s56790": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient"
+ },
+ "10.2165/00002018-200427030-00002": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient, eight pooled placebo-controlled trials"
+ },
+ "10.2165/00023210-200721100-00004": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "inpatient",
+  "setting_text": "Multicenter inpatient"
+ },
+ "10.2165/0023210-200923010-00004": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "mixed",
+  "setting_text": "Single-center tertiary-care university hospital, inpatients and outpatients"
+ },
+ "10.2344/23-0031": {
+  "diagnosis": "mdd",
+  "diagnosis_text": "Unipolar depression (MDD)",
+  "setting": "other",
+  "setting_text": "Single-center hospital (dental anesthesiology department)"
+ },
+ "10.26355/eurrev_202210_29920": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center, conducted privately at Don Guanella Institute"
+ },
+ "10.2739/kurumemedj.38.307": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center hospital (Seiwakai Nishikawa Hospital)"
+ },
+ "10.29245/2578-2959/2022/3.1255": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient psychiatric clinic (Taleghani Hospital, Shahid Beheshti University of Medical Sciences)"
+ },
+ "10.3109/00048679209072069": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient lithium clinic (general teaching hospital)"
+ },
+ "10.3109/00365519609090589": {
+  "diagnosis": "other",
+  "diagnosis_text": "",
+  "setting": "other",
+  "setting_text": ""
+ },
+ "10.3109/02699058709034444": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient (Brown Schools Healthcare Rehabilitation Center)"
+ },
+ "10.3126/nmcj.v28i1.92042": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "inpatient",
+  "setting_text": "Single-center hospital, Psychiatry Ward"
+ },
+ "10.3233/jad-170744": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "community",
+  "setting_text": "Population-based, county-level analysis across the state of Texas"
+ },
+ "10.3233/jad-171150": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Population-level ecological study of 155 Texas counties (73 rural, 82 urban)"
+ },
+ "10.33450/fpn.2019.12.002": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "mixed",
+  "setting_text": "Single-center outpatient/inpatient, Department of Child and Adolescent Psychiatry, Pozna\u0144 University of Medical Sciences"
+ },
+ "10.33620/fc.2173-9218.(2025).13": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "community",
+  "setting_text": "Single community pharmacy, Spain"
+ },
+ "10.3389/fnut.2021.798036": {
+  "diagnosis": "healthy",
+  "diagnosis_text": "Healthy volunteers",
+  "setting": "other",
+  "setting_text": "Single-center, Brock University, Ontario, Canada"
+ },
+ "10.3389/fpsyt.2022.875636": {
+  "diagnosis": "schizoaffective",
+  "diagnosis_text": "Schizoaffective",
+  "setting": "inpatient",
+  "setting_text": "Single-center psychiatric hospital, inpatient unit"
+ },
+ "10.3389/fpsyt.2022.880031": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient (10 psychiatric hospitals across north, south, east, west China)"
+ },
+ "10.3389/fpsyt.2023.1151293": {
+  "diagnosis": "mdd",
+  "diagnosis_text": "Unipolar depression (MDD)",
+  "setting": "inpatient",
+  "setting_text": "Single-center adolescent psychiatric inpatient unit"
+ },
+ "10.3389/fpsyt.2025.1741734": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center specialized psychiatric crisis unit for individuals with intellectual disabilities"
+ },
+ "10.3389/fpsyt.2026.1750187": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "inpatient",
+  "setting_text": "Single-center specialized inpatient program for eating disorders (AN and BN)"
+ },
+ "10.3389/fsurg.2025.1744520": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": "Single-center hospital (Affiliated Hospital of North Sichuan Medical College)"
+ },
+ "10.3390/biomedicines9111558": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "mixed",
+  "setting_text": "Multicenter, inpatient (and outpatient) psychiatric care, Taiwan"
+ },
+ "10.3390/jcm13020324": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center hospital, Department of Endocrinology and Metabolic Diseases"
+ },
+ "10.3390/jcm14030954": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "community",
+  "setting_text": "Multicenter outpatient Community Mental Health Centers"
+ },
+ "10.3390/medicina57010009": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single mental health department outpatient service (Alba and Bra), Cuneo, Italy"
+ },
+ "10.3390/medicina62040761": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient (18 international sites, 30 studies)"
+ },
+ "10.3390/nu13010076": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center, Department of Psychiatry and Psychotherapeutic Medicine, Medical University of Graz"
+ },
+ "10.4088/jcp.13m08741": {
+  "diagnosis": "other",
+  "diagnosis_text": "Cognitive impairment/dementia",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient"
+ },
+ "10.4088/jcp.14m09358": {
+  "diagnosis": "mixed_mood",
+  "diagnosis_text": "Mixed mood disorder",
+  "setting": "mixed",
+  "setting_text": "Single-center, Department of Psychiatry, Lausanne University Hospital (inpatient and outpatient)"
+ },
+ "10.4088/jcp.15m10261": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Multiregional outpatient, US and 7 other countries"
+ },
+ "10.4088/jcp.v62n0410": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": "Multicenter (open-label extension of a double-blind trial)"
+ },
+ "10.4088/jcp.v63n0509": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "inpatient",
+  "setting_text": "Single-center inpatient state psychiatric hospital"
+ },
+ "10.4088/jcp.v65n0518": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Multicenter, hospitalized then outpatient continuation"
+ },
+ "10.4088/jcp.v66n0116": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": "International, multicenter"
+ },
+ "10.4088/jcp.v67n1105": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "outpatient",
+  "setting_text": "Outpatient, multicenter (implied)"
+ },
+ "10.4088/pcc.09m00891ora": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Statewide Medicaid program, South Carolina"
+ },
+ "10.4088/pcc.11m01182": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "inpatient",
+  "setting_text": "Multicenter, hospitalized (acute phase)"
+ },
+ "10.4088/pcc.v02n0304": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "community",
+  "setting_text": "Single-center outpatient and inpatient (community hospital, continuing day treatment program)"
+ },
+ "10.4103/psychiatry.indianjpsychiatry_168_17": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar II",
+  "setting": "mixed",
+  "setting_text": "Single-center outpatient psychiatry clinic with inpatient admission, All India Institute of Medical Sciences, New Delhi"
+ },
+ "10.5281/zenodo.4500538": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient psychiatry department"
+ },
+ "10.5455/bcp.20120412021518": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient mood disorder unit"
+ },
+ "10.5498/wjp.v15.i11.111807": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient psychiatry clinic (Erzurum City Hospital)"
+ },
+ "10.5546/aap.2018.e319": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "Single-center hospital (Neonatology/Pediatrics dept)"
+ },
+ "10.5694/mja13.10435": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "community",
+  "setting_text": "National dialysis/transplant registry, Australia (nationwide)"
+ },
+ "10.64719/pb.4433": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar II",
+  "setting": "outpatient",
+  "setting_text": "Outpatient (stated for Amsterdam 2016: 'adult outpatients with BD-II depression'; not explicitly stated for Altshuler 2017)"
+ },
+ "10.64719/pb.4576": {
+  "diagnosis": "schizoaffective",
+  "diagnosis_text": "Schizoaffective",
+  "setting": "other",
+  "setting_text": "Single-center hospital (psychiatric department)"
+ },
+ "10.64719/pb.4604": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I | bipolar II",
+  "setting": "outpatient",
+  "setting_text": "Two U.S. academic medical centers, outpatient"
+ },
+ "10.7326/0003-4819-88-4-576_2": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "other",
+  "setting_text": "Single-center hospital (Mary Hitchcock Memorial Hospital)"
+ },
+ "10.7717/peerj.17841": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "other",
+  "setting_text": "National primary care database, UK"
+ },
+ "10.7727/wimj.2013.192": {
+  "diagnosis": "other",
+  "diagnosis_text": "",
+  "setting": "other",
+  "setting_text": ""
+ },
+ "10.7759/cureus.50225": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "inpatient",
+  "setting_text": "Single-center emergency department and inpatient medicine ward"
+ },
+ "10.7759/cureus.72049": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "outpatient",
+  "setting_text": "Single-center outpatient clinic"
+ },
+ "10.7759/cureus.88526": {
+  "diagnosis": "schizoaffective",
+  "diagnosis_text": "Schizoaffective",
+  "setting": "outpatient",
+  "setting_text": "Single-center endocrinological outpatient clinic"
+ },
+ "10.7860/jcdr/2017/24009.9873": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Single-center tertiary care teaching hospital, Psychiatry Outpatient Department"
+ },
+ "10.9740/mhc.2026.02.034": {
+  "diagnosis": "schizoaffective",
+  "diagnosis_text": "Schizoaffective",
+  "setting": "mixed",
+  "setting_text": "Single-center inpatient psychiatric unit with outpatient follow-up"
+ },
+ "10.9758/cpn.2016.14.3.318": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "inpatient",
+  "setting_text": "Single-center hospital, Emergency Department and inpatient admission"
+ },
+ "10.9758/cpn.2020.18.4.599": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "outpatient",
+  "setting_text": "Multicenter outpatient, 176 psychiatric clinics of the Japanese Association of Neuro-Psychiatric Clinics"
+ }
+}

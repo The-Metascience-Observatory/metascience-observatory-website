@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import Link from "next/link";
 import { BirdsEyeNavbar } from "@/components/BirdsEyeNavbar";
 import { Footer } from "@/components/Footer";
+import { EXCLUDED_DOIS } from "../utils";
 
 export const metadata = {
   title:
@@ -66,7 +67,13 @@ function StatCard({ value, label, note, tone = "neutral" }: {
 }
 
 export default function ReportPage() {
-  const p = loadPrisma();
+  const raw = loadPrisma();
+  // Displayed-study count: the extraction total minus the hand-excluded
+  // spurious records (EXCLUDED_DOIS in ../utils), so every number here
+  // matches what the dashboard actually shows.
+  const p = raw
+    ? { ...raw, with_weight_outcome: raw.with_weight_outcome - EXCLUDED_DOIS.size }
+    : null;
 
   return (
     <>
@@ -114,8 +121,8 @@ export default function ReportPage() {
               note="95% CI −1.4 to +4.5 · k=10 · not significant"
             />
             <StatCard
-              value="15"
-              label="Studies linking dose to weight"
+              value="27"
+              label="Studies with a serum level AND a kg change"
               note={`of ${p.with_weight_outcome} reporting any weight outcome`}
               tone="warn"
             />
@@ -141,11 +148,14 @@ export default function ReportPage() {
             <strong>
               whether that effect depends on dose has never actually been measured.
             </strong>{" "}
-            Of {p?.with_weight_outcome ?? 214} studies reporting a weight outcome, only{" "}
-            <strong>15</strong> report both an achieved serum lithium level and a weight
-            change — and their results scatter from −10.3 kg to +6.7 kg with no visible
-            trend. Two of those data points come from the same trial and point in
-            opposite directions.
+            Of {p?.with_weight_outcome ?? 213} studies reporting a weight outcome, only{" "}
+            <strong>27</strong> report both an achieved serum lithium level and a
+            weight change in kilograms (32 lithium arms), and <strong>30</strong>{" "}
+            report a computable daily dose alongside one. Plotted as a rate — kg
+            gained per week of treatment, the dashboard&apos;s dose-response charts —
+            those arms cluster around a median of <strong>≈ 0.05 kg/week</strong>{" "}
+            across the whole 0.3–1.0 mmol/L serum range, with no visible trend in
+            either dose or achieved level.
           </p>
         </Section>
 
@@ -170,6 +180,39 @@ export default function ReportPage() {
           </p>
         </Section>
 
+        <Section title="What the raw exposure curves show">
+          <p className="text-[15px] leading-relaxed text-foreground/80">
+            Because most of this literature is single-arm, the dashboard also plots{" "}
+            <em>within-arm</em> weight change — what patients on lithium experienced,
+            with no comparison group — normalized to a rate. 71 lithium arms report a
+            kg change over a known treatment window; 35 of them also carry a
+            computable elemental dose and 32 a measured serum level.
+          </p>
+          <ul className="mt-3 space-y-2 text-[15px] leading-relaxed text-foreground/80">
+            <li>
+              The median rate is <strong>≈ +0.05 kg per week</strong> (interquartile
+              range −0.04 to +0.22), and neither daily dose nor achieved serum level
+              visibly shifts it within the narrow exposure range studies actually use.
+            </li>
+            <li>
+              Total gain against treatment length is consistent with the common
+              clinical description — most of the accrual is visible within the first
+              6–12 months, with long cohorts adding little beyond it — though the
+              long-duration data is thin.
+            </li>
+            <li>
+              Cumulative exposure (daily elemental dose × days, spanning ~1 g to
+              ~380 g) shows no visible relationship with total gain.
+            </li>
+          </ul>
+          <p className="mt-3 text-[15px] leading-relaxed text-foreground/80">
+            These are exposure curves, not causal effects: bipolar populations gain
+            weight on comparator drugs too, and arms without a comparator cannot
+            separate lithium from its context. No percent-of-body-weight version is
+            possible — no study reports a numeric baseline weight or BMI.
+          </p>
+        </Section>
+
         <Section title="Why the dose question can't be answered">
           <p className="text-[15px] leading-relaxed text-foreground/80">
             Three structural features of how lithium is studied, all measured across this
@@ -177,23 +220,27 @@ export default function ReportPage() {
           </p>
           <ul className="mt-3 space-y-2 text-[15px] leading-relaxed text-foreground/80">
             <li>
-              <strong>96% of lithium arms were titrated to a serum target</strong>, not
-              given a fixed dose — only 7 of 163 arms used a fixed mg/day. For most trials
-              a single trial-level &ldquo;dose&rdquo; does not exist as a number.
+              <strong>Only 12 of 247 lithium arms used a fixed mg/day dose (5%).</strong>{" "}
+              The rest were titrated — to a serum target, to clinical response, or at
+              clinician discretion — so for most studies a single trial-level
+              &ldquo;dose&rdquo; does not exist as a number. Not one study reports its
+              dose as elemental lithium; every elemental value on the dashboard is
+              converted from a stated salt.
             </li>
             <li>
-              <strong>Only 22% of arms state which lithium salt was used.</strong> Checking
-              all 82 unknown-salt papers against their full texts, just 17 mention a salt
-              anywhere — and those mentions are in reference lists and exclusion criteria,
-              not the intervention. Without the salt you cannot convert milligrams of salt
-              into milligrams of elemental lithium: carbonate is 18.8% lithium, citrate
-              9.9%, orotate 3.9% — a 2–5× spread.
+              <strong>Only about a third of lithium arms state which salt was used</strong>{" "}
+              (83 of 247; 152 leave it unstated). Without the salt you cannot convert
+              milligrams of salt into milligrams of elemental lithium: carbonate is
+              18.8% lithium, citrate 9.9%, orotate 4.3% — a 2–5× spread. The dashboard
+              falls back on the bipolar-population convention of reading an unstated
+              salt as carbonate, and marks every such dose as inferred.
             </li>
             <li>
-              <strong>Serum <em>targets</em> are reported far more often than serum{" "}
-              <em>achieved</em></strong> (117 arms vs 75). A protocol target is not an
-              exposure measurement, and imputing the midpoint of a target range would
-              manufacture data.
+              <strong>An achieved serum level — the actual exposure — is reported for
+              only 97 of 247 arms (39%).</strong> Protocol target ranges are stated for
+              75. A target is not an exposure measurement, and imputing the midpoint of
+              a target range would manufacture data, so the dashboard plots only
+              achieved levels.
             </li>
           </ul>
           <p className="mt-3 text-[15px] leading-relaxed text-foreground/80">
@@ -249,7 +296,8 @@ export default function ReportPage() {
           <ol className="space-y-2 text-[15px] leading-relaxed text-foreground/80">
             <li>
               <strong>Report achieved serum levels, not just targets.</strong> The single
-              highest-value change — it would roughly double the usable dose-response data.
+              highest-value change — 61% of lithium arms currently report no achieved
+              level at all.
             </li>
             <li>
               <strong>State the salt form.</strong> One word per paper, and without it no
@@ -258,6 +306,12 @@ export default function ReportPage() {
             <li>
               <strong>Report weight both ways</strong> — mean change in kg <em>and</em>{" "}
               proportion exceeding ≥7%. Only 11 papers currently do.
+            </li>
+            <li>
+              <strong>Report a numeric baseline weight or BMI.</strong> No study in
+              this corpus does, which is why no percent-of-body-weight analysis is
+              possible anywhere in this literature — a 3 kg gain means different
+              things at 60 kg and at 110 kg.
             </li>
             <li>
               <strong>Run a dedicated low-dose study.</strong> The 1 mg/day question is
@@ -284,6 +338,16 @@ export default function ReportPage() {
             )}
           </p>
           <p className="mt-3 text-[15px] leading-relaxed text-foreground/80">
+            A small number of hand-verified corrections are applied on top of the
+            automatic extraction: one record was removed outright (a metformin
+            crossover in which lithium appears only as a renal clearance tracer),
+            four antipsychotic studies with lithium only in the background regimen
+            were reclassified as &ldquo;lithium + another drug&rdquo;, and three
+            studies the extraction left as design &ldquo;other&rdquo; were assigned
+            their actual designs. Each correction is keyed to the paper&apos;s DOI
+            and documented in the dashboard source.
+          </p>
+          <p className="mt-3 text-[15px] leading-relaxed text-foreground/80">
             Pooling is random-effects (DerSimonian–Laird with Hartung–Knapp intervals),
             restricted to lithium-versus-non-lithium comparisons in monotherapy, excluding
             case reports, studies of two or fewer people, serum levels above 1.5 mmol/L
@@ -308,7 +372,9 @@ export default function ReportPage() {
         </Section>
 
         <p className="mt-10 border-t border-border pt-4 text-xs leading-relaxed text-foreground/50">
-          Interim report, generated 28 July 2026. Pooled estimates are unadjudicated by a
+          Interim report, generated 28 July 2026, revised 18 August 2026 (arm-level
+          exposure analyses, corrected arm counts, hand-verified exclusions).
+          Pooled estimates are unadjudicated by a
           human reader and no GRADE certainty ratings have been assigned; given the
           heterogeneity and the dominance of observational designs, most would likely come
           out low or very low. Not medical advice — do not change lithium dosing without

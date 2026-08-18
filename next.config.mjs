@@ -9,6 +9,12 @@ const nextConfig = {
   // The Dropbox sync-race this used to work around is avoided by pausing Dropbox during builds
   // (see the npm prebuild/postbuild scripts in package.json).
   reactStrictMode: true,
+  // `next dev` and `next build` share the default `.next` and clobber each
+  // other when a dev server is running during a production build (symptom:
+  // phantom ENOENT / "Cannot find module for page: /_error" build failures).
+  // Give dev its own directory so the two never touch the same files.
+  // NODE_ENV is "development" only under `next dev`; build/start use `.next`.
+  distDir: process.env.NODE_ENV === "development" ? ".next-dev" : ".next",
   allowedDevOrigins: ["10.0.0.16"],
   experimental: {
     externalDir: true,

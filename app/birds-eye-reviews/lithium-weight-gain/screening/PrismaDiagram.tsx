@@ -24,11 +24,15 @@ export interface PrismaCounts {
   weight_metric_breakdown?: Record<string, number>;
 }
 
-function MainBox({ stage, title, n, sub }: {
-  stage?: string; title: ReactNode; n: number; sub?: string;
+function MainBox({ stage, title, n, sub, accent = false }: {
+  stage?: string; title: ReactNode; n: number; sub?: string; accent?: boolean;
 }) {
   return (
-    <div className="border border-border rounded-lg bg-white px-4 py-3 text-center shadow-sm">
+    <div
+      className={`rounded-lg px-4 py-3 text-center shadow-sm ${
+        accent ? "border-2 border-blue-400 bg-blue-50/60" : "border border-border bg-white"
+      }`}
+    >
       {stage && (
         <div className="text-[10px] uppercase tracking-wide text-foreground/40 mb-1">{stage}</div>
       )}
@@ -78,13 +82,14 @@ function DownArrow() {
   );
 }
 
-function StageRow({ stage, title, n, sub, excluded, align = "center" }: {
+function StageRow({ stage, title, n, sub, excluded, align = "center", accent = false }: {
   stage?: string;
-  title: string;
+  title: ReactNode;
   n: number;
   sub?: string;
   excluded?: { title: string; n: number }[];
   align?: "center" | "start";
+  accent?: boolean;
 }) {
   return (
     <div
@@ -92,7 +97,7 @@ function StageRow({ stage, title, n, sub, excluded, align = "center" }: {
         align === "start" ? "items-start" : "items-center"
       }`}
     >
-      <MainBox stage={stage} title={title} n={n} sub={sub} />
+      <MainBox stage={stage} title={title} n={n} sub={sub} accent={accent} />
       <div className="md:pr-2">{excluded ? <ExcludedBox items={excluded} /> : null}</div>
     </div>
   );
@@ -247,7 +252,8 @@ export function PrismaDiagram({ c }: { c: PrismaCounts }) {
 
         <StageRow
           stage="Extracted"
-          title="Studies on this dashboard"
+          title={<>Studies <strong className="font-bold">displayed on dashboard</strong></>}
+          accent
           n={c.with_weight_outcome}
           sub={`${c.extracted.toLocaleString()} papers underwent full data extraction`}
           excluded={[

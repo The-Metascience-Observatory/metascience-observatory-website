@@ -4,6 +4,7 @@ import Link from "next/link";
 import { BirdsEyeNavbar } from "@/components/BirdsEyeNavbar";
 import { Footer } from "@/components/Footer";
 import { PrismaDiagram, PrismaCounts } from "./PrismaDiagram";
+import { EXCLUDED_DOIS } from "../utils";
 
 export const metadata = {
   title: "Screening | Lithium & Weight Gain | Bird's Eye Reviews | The Metascience Observatory",
@@ -24,7 +25,13 @@ function loadPrisma(): PrismaCounts | null {
 }
 
 export default function ScreeningPage() {
-  const prisma = loadPrisma();
+  const raw = loadPrisma();
+  // The dashboard hand-excludes a few spurious extractions (EXCLUDED_DOIS in
+  // ../utils — e.g. a metformin trial where lithium is only a renal tracer),
+  // so the "displayed on dashboard" box must count what is actually shown.
+  const prisma = raw
+    ? { ...raw, with_weight_outcome: raw.with_weight_outcome - EXCLUDED_DOIS.size }
+    : null;
 
   return (
     <>
