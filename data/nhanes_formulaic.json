@@ -1,0 +1,20 @@
+{
+  "source": {
+    "citation": "Suchak et al., PLOS Biology 2025",
+    "doi": "https://doi.org/10.1371/journal.pbio.3003152",
+    "note": "Yearly paper counts and the PubMed “biobank” series are S1 Table D (Fig 3). 2024 figures run through 9 October. China vs other is coded from the first-listed author affiliation in S1 Table A, excluding one Scopus-dated 2025 record so yearly totals match Table D."
+  },
+  "byYear": [
+    { "year": 2014, "papers": 2, "china": 0, "other": 2, "biobank": 1120, "partial": false },
+    { "year": 2015, "papers": 2, "china": 0, "other": 2, "biobank": 1332, "partial": false },
+    { "year": 2016, "papers": 6, "china": 0, "other": 6, "biobank": 1602, "partial": false },
+    { "year": 2017, "papers": 2, "china": 0, "other": 2, "biobank": 1757, "partial": false },
+    { "year": 2018, "papers": 2, "china": 0, "other": 2, "biobank": 2018, "partial": false },
+    { "year": 2019, "papers": 3, "china": 0, "other": 3, "biobank": 2540, "partial": false },
+    { "year": 2020, "papers": 8, "china": 2, "other": 6, "biobank": 3165, "partial": false },
+    { "year": 2021, "papers": 10, "china": 6, "other": 4, "biobank": 4053, "partial": false },
+    { "year": 2022, "papers": 33, "china": 23, "other": 10, "biobank": 4404, "partial": false },
+    { "year": 2023, "papers": 82, "china": 79, "other": 3, "biobank": 5117, "partial": false },
+    { "year": 2024, "papers": 190, "china": 186, "other": 4, "biobank": 5943, "partial": true }
+  ]
+}

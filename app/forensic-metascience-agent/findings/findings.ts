@@ -69,7 +69,7 @@ export const postedFindings: Finding[] = [
     year: 2005,
     doi: "10.1007/s00702-004-0248-2",
     summary:
-      "Two drop-outs unaccounted for, and two issues with the calculation of adverse-event rates — the worked example on the main agent page.",
+      "Two drop-outs unaccounted for, and three issues with the calculation of adverse event rates.",
     status: "posted",
     pubpeerUrl: "https://pubpeer.com/publications/80B81EA343DC9790525C8C4C99DCB6#1",
     submitted: "August 16, 2026",
@@ -100,7 +100,7 @@ export const postedFindings: Finding[] = [
     year: 2024,
     doi: "10.1002/adbi.202300439",
     summary:
-      "Unjustified use of a one-tailed test in place of the standard two-tailed test.",
+      "Unjustified use of a one-tailed test in place of the standard two-tailed test flips a headline finding from statistically significant to unsignificant (p=0.092).",
     status: "posted",
     pubpeerUrl: "https://pubpeer.com/publications/8C8CCFA71C47A79F8921F3483FF9F7#1",
     submitted: "August 16, 2026",
@@ -160,7 +160,7 @@ export const otherFindings: Finding[] = [
     year: 2011,
     doi: "10.1166/jnn.2011.5114",
     summary:
-      "p-values reported only as thresholds (“<”) or not reported at all — too coarsely to verify the analyses.",
+      "p-values reported only as thresholds (“<”) or not reported at all. Suspciously small p-values under re-calculation. (would require further forensic analysis before a PubPeer comment)",
     status: "not_reported",
   },
   {
@@ -174,7 +174,7 @@ export const otherFindings: Finding[] = [
     year: 2011,
     doi: "10.1111/j.1468-1331.2010.03092.x",
     summary:
-      "Three p-values inconsistent with their 95% confidence intervals. None changes the direction of significance, but all three make non-significant values more non-significant.",
+      "Three p-values inconsistent with their 95% confidence intervals. None changes the direction of significance; all three make non-significant values more non-significant.",
     status: "not_reported",
   },
   {
@@ -214,7 +214,7 @@ export const otherFindings: Finding[] = [
     year: 1997,
     doi: "10.1007/bf01294733",
     summary:
-      "Four very minor p-value recalculation discrepancies, all off by a tiny amount; none changes significance or the direction of any effect.",
+      "Four p-value recalculation discrepancies, all off by a small amount; none changes significance or the direction of any effect.",
     status: "not_reported",
   },
   {
@@ -228,7 +228,7 @@ export const otherFindings: Finding[] = [
     year: 2024,
     doi: "10.1039/d3na00760j",
     summary:
-      "Many p-values come out much smaller when recalculated, apparently because of unusually small reported standard deviations — possibly a unit-conversion issue in the SDs. Disentangling it would take significant further work.",
+      "Many p-values come out much smaller when recalculated, apparently because of unusually small reported standard deviations — possibly a unit-conversion issue in how they report their SDs. (Disentangling if there is actually a serious issue here would take further work.)",
     status: "not_reported",
   },
   {
@@ -256,7 +256,7 @@ export const otherFindings: Finding[] = [
     year: 2023,
     doi: "10.1007/s11064-023-03861-8",
     summary:
-      "Numerous statistical inconsistencies; not written up because the paper had already been retracted.",
+      "Numerous statistical inconsistencies; not written up because the paper had already been retracted for other reasons.",
     status: "retracted",
   },
   {
@@ -269,7 +269,7 @@ export const otherFindings: Finding[] = [
     year: 2015,
     doi: "10.4137/JEN.S25521",
     summary:
-      "A very large number of statistical errors and issues with the statistical procedures, a few of which change subsidiary findings. A full write-up is pending given the volume of material to analyze.",
+      "A very large number of statistical errors and issues with the statistical procedures, a few of which change subsidiary findings. (A PubPeer comment would require additional time on our end we don't currently have.)",
     status: "not_reported",
   },
   {
@@ -297,7 +297,7 @@ export const otherFindings: Finding[] = [
     year: 2018,
     doi: "10.1007/s12035-017-0747-4",
     summary:
-      "Numerous statistical issues and contradictions; not written up because the paper had already been retracted.",
+      "Numerous statistical issues and contradictions; not written up because the paper had already been retracted for other reasons.",
     status: "retracted",
   },
   {
@@ -356,7 +356,7 @@ export const otherFindings: Finding[] = [
     year: 2025,
     doi: "10.1002/eat.24415",
     summary:
-      "The reported EMA compliance rate (70.00%) contradicts the paper's own counts (3,131/4,494 = 69.67%), and the repeated claim that positive affect played no role sits alongside the two largest standardized coefficients in Table 2 — both significant positive-affect effects that are never mentioned in the text.",
+      "The repeated claim that positive affect played no role sits alongside data in Table 2 which appears to contradict that claim. Slight issues with rounding of averages.",
     status: "not_reported",
     analyzed: "July 27, 2026",
   },

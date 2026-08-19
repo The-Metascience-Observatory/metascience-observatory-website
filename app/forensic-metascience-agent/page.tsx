@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card";
 import { DocsBackLink } from "@/components/DocsBackLink";
 import { MarkdownContent } from "@/components/MarkdownContent";
 import { OriFindingsChart, OriYearDatum } from "./OriFindingsChart";
+import { NhanesFormulaicCharts, NhanesFormulaicData } from "./NhanesFormulaicCharts";
 
 export const metadata = {
   title: "The Forensic Metascience Agent | The Metascience Observatory",
@@ -22,7 +23,7 @@ const MARKERS = [
   "<!-- INTRO_END -->",
   "<!-- FRAUD_STATS -->",
   "<!-- ERROR_STATS -->",
-  "<!-- SLOP_STATS -->",
+  "<!-- NHANES_CHARTS -->",
   "<!-- ORI_CHART -->",
   "<!-- TOOL_LOGOS -->",
   "<!-- TOOLKIT -->",
@@ -54,6 +55,11 @@ function getOriFindings(): OriYearDatum[] {
     findings: Number(r.ori_misconduct_findings),
     partial: (r.note ?? "").includes("PARTIAL"),
   }));
+}
+
+function getNhanesFormulaic(): NhanesFormulaicData {
+  const jsonPath = path.join(process.cwd(), "data/nhanes_formulaic.json");
+  return JSON.parse(fs.readFileSync(jsonPath, "utf-8")) as NhanesFormulaicData;
 }
 
 interface Stat {
@@ -90,33 +96,6 @@ const fraudStats: Stat[] = [
   },
 ];
 
-const slopStats: Stat[] = [
-  {
-    value: "190",
-    claim: "formulaic single-association NHANES papers published in 2024 — versus about 4 per year before ChatGPT",
-    source: "Suchak et al., PLOS Biology 2025",
-    href: "https://doi.org/10.1371/journal.pbio.3003152",
-  },
-  {
-    value: "3×",
-    claim: "growth from 2022 to 2025 in papers mined from nine open health datasets, including UK Biobank — 11,600 papers above the pre-LLM trend",
-    source: "Journal of Clinical Epidemiology 2026",
-    href: "https://doi.org/10.1016/j.jclinepi.2026.112203",
-  },
-  {
-    value: "1.5 yrs",
-    claim: "doubling time of suspected paper-mill output; the scientific literature as a whole doubles every 15",
-    source: "Richardson et al., PNAS 2025",
-    href: "https://doi.org/10.1073/pnas.2420092122",
-  },
-  {
-    value: "10,000+",
-    claim: "papers retracted in 2023 — an all-time record, driven mostly by paper-mill cleanup",
-    source: "Nature news analysis, December 2023",
-    href: "https://www.nature.com/articles/d41586-023-03974-8",
-  },
-];
-
 const errorStats: Stat[] = [
   {
     value: "50%",
@@ -144,11 +123,10 @@ const errorStats: Stat[] = [
   },
 ];
 
-// Muted-blue accent (the chart's bar color) for fraud; purple for rigor; green for slop.
+// Muted-blue accent (the chart's bar color) for fraud; purple for rigor.
 const STAT_TONES = {
   fraud: { card: "bg-sky-50", value: "text-[#1a5276]" },
   error: { card: "bg-purple-50", value: "text-purple-950" },
-  slop: { card: "bg-emerald-50", value: "text-emerald-950" },
 } as const;
 
 function StatGrid({ stats, tone }: { stats: Stat[]; tone: keyof typeof STAT_TONES }) {
@@ -191,7 +169,7 @@ function StatGrid({ stats, tone }: { stats: Stat[]; tone: keyof typeof STAT_TONE
 // Capability columns of the fit matrix. Add a new column here and tick it in
 // each company's `capabilities` list.
 const CAPABILITIES = [
-  { key: "image_within", label: "Within-paper image duplication" },
+  { key: "image_within", label: "Within-paper image duplication and manipulation" },
   { key: "image_between", label: "Between-paper image duplication" },
   { key: "dataset_si", label: "SI/SM/Dataverse copy-paste errors" },
   { key: "dataset_repo", label: "Open Source Repo dataset copy-paste errors" },
@@ -270,15 +248,19 @@ const companies: ToolCompany[] = [
     showName: true,
     highlight: true,
     capabilities: ["stats", "dataset_si", "ai_review"],
-    partial: ["phrases"],
+    partial: ["phrases", "image_within"],
   },
 ];
 
 type BoxFill = "full" | "half" | "none";
 
 function CapabilityBox({ fill }: { fill: BoxFill }) {
+  const label = fill === "full" ? "Covered" : fill === "half" ? "Partial" : "Not covered";
   return (
     <span
+      role="img"
+      aria-label={label}
+      title={label}
       className={`inline-flex h-5 w-5 overflow-hidden rounded border ${
         fill === "none" ? "border-foreground/25 bg-white" : "border-primary bg-white"
       }`}
@@ -301,7 +283,7 @@ function FitMatrix() {
           <tr>
             <th className="w-56" aria-label="Tool" />
             {CAPABILITIES.map((cap) => (
-              <th key={cap.key} className="relative h-48 w-12 p-0 align-bottom">
+              <th key={cap.key} className="relative h-64 w-12 p-0 align-bottom" title={cap.label}>
                 <div className="absolute bottom-1 left-1/2 origin-bottom-left -rotate-45 whitespace-nowrap text-xs font-medium text-foreground">
                   {cap.label}
                 </div>
@@ -662,12 +644,13 @@ export default function ForensicAgentToolkitPage() {
     beforeFraudStats,
     afterFraudStats,
     afterErrorStats,
-    afterSlopStats,
+    afterNhanesCharts,
     afterOriChart,
     afterToolLogos,
     afterToolkit,
   ] = getMarkdownSegments();
   const oriData = getOriFindings();
+  const nhanesData = getNhanesFormulaic();
 
   return (
     <div className="min-h-screen">
@@ -707,8 +690,8 @@ export default function ForensicAgentToolkitPage() {
           <MarkdownContent content={afterFraudStats} />
           <StatGrid stats={errorStats} tone="error" />
           <MarkdownContent content={afterErrorStats} />
-          <StatGrid stats={slopStats} tone="slop" />
-          <MarkdownContent content={afterSlopStats} />
+          <NhanesFormulaicCharts data={nhanesData} />
+          <MarkdownContent content={afterNhanesCharts} />
           <OriFindingsChart data={oriData} />
           <MarkdownContent content={afterOriChart} />
           <FitMatrix />
