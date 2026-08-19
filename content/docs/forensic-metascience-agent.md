@@ -18,9 +18,6 @@ Reported statistics are internally redundant: a mean of integer-scaled responses
 <!-- ERROR_STATS -->
 
 
-**Checking works.** When two psychology journals began running statcheck during peer review, the share of articles with statistical reporting inconsistencies roughly halved — from about 40% to about 20% — while matched control journals barely moved ([Nuijten & Wicherts 2024](https://doi.org/10.1177/25152459241258945)). Automated checking demonstrably works, and almost nobody does it.
-
-
 ## The slop problem
 
 None of this needs to be fraud in the classic sense. Open datasets like NHANES and UK Biobank are legitimate, valuable resources; the problem is the industrialized workflow: pick one exposure and one outcome, run a regression, skip the multiple-testing correction, and let a language model write the manuscript. Each paper looks plausible on its own — one journal editor described receiving ["one a day, sometimes even two a day"](https://www.nature.com/articles/d41586-025-02241-2) — and some publishers have begun [cracking down on open-dataset submissions entirely](https://www.science.org/content/article/journals-and-publishers-crack-down-research-open-health-data-sets). Suchak and colleagues systematically searched for that formulaic NHANES pattern: 341 single-association papers over a decade, almost all of them after ChatGPT.
@@ -46,17 +43,26 @@ Nor can peer review be counted on to catch problems: in four independent studies
 
 <!-- TOOLKIT -->
 
-## The agent in action: a worked example
+## Theory of impact
 
-A small arithmetical anomaly can have big consequences. Here is a finding from a live run on a real, non-retracted paper: [Ladurner et al.](https://doi.org/10.1007/s00702-004-0248-2), *Journal of Neural Transmission* 112: 415–428 — a multicentre randomised placebo-controlled trial of Cerebrolysin in acute stroke.
+Systems like the forensic metascience agent can be used for both pre-publication review and post-publication review. Currently (as of August, 2026), the system costs $0.61 per paper when using Sonnet on average and $1.45 when using Opus 4.6 (range ~$0.70 - ~$3.00), when using the Claude Code CLI and a Claude Code 20x subscription. These costs roughly 10x when using the API. Soon we will be testing other models and different changes to our pipeline that may reduce cost while maintaining accuracy and coverage. In contrast to other approaches, our system is meant to be very systematic, checking every number in a publication and supplementary information. 
 
-The paper reports that **16.4% of the 78 patients** in the treatment group had an adverse event. But no whole number of patients out of 78 comes to 16.4%: 12 gives 15.4%, and 13 gives 16.7%. The two other safety rates in the same paragraph *do* work out at 78, so the three cannot all be shares of the same group. (Every placebo figure, meanwhile, pins exactly to 68.)
 
-The likely innocent explanation — which we name ourselves — is that the rate was computed on the 67 completers rather than all 78 randomised patients: 11 of 67 is 16.42%. But the innocent explanation is still a problem. If so, the drug and placebo safety rates being compared are not on the same footing. More alarmingly, the 11 patients missing from the denominator are exactly the ones most likely to have been harmed — so the adverse event rate is likely under-reported.
+### For pre-publication review
+
+Our forensic metascience agent may also be used by researchers to audit their work before submitting to a journal. Journals could also use it to augment the traditional peer review process. When two psychology journals began running <i>statcheck</i> during peer review, the share of articles with statistical reporting inconsistencies roughly halved — from about 40% to about 20% ([Nuijten & Wicherts, 2024](https://doi.org/10.1177/25152459241258945)). 
+
+### For post-publication review
+
+Given limited budget and human reviewer time, we have to be selective regarding which papers we run on. We focus mainly on clinical trials since 1. they are especially important for human wellbeing and 2. they contain a lot of data and statistics. We are collaborating with [Intellicat](https://intellicat.ai) to see if their systems can assist in screening. We are in the process of implementing a cheaper AI model that screens for specific types of known issues in clinical trials which are often the 
+
+A small arithmetical anomaly can have big consequences. For instance, in [Ladurner et al.](https://doi.org/10.1007/s00702-004-0248-2), *Journal of Neural Transmission* 112: 415–428 — a multicentre randomised placebo-controlled trial of Cerebrolysin in acute stroke. The paper reports that "16.4% of the 78 patients" in the treatment group had an adverse event. But no whole number of patients out of 78 comes to 16.4%: 12/78 = 15.4%, and 13/78 = 16.7%. However 11/67 = 16.42%. It appears the rate was computed on the 67 completers rather than all 78 randomised patients, despite the paper's claim that side effect rates were calculated on everyone, including non-completers. 
 
 
 ## What should be reported, and how? 
 
-At some point we might report every mathematical impossibility and statistical error we find on PubPeer. However, most errors are simple mistakes, and many are utterly inconsequential. The spectre of false positives is also very real when it comes to using AI, which is not 100% accurate at applying these tools (it may, for instance, apply GRIM on data that is actually continuous, not discrete). So, every finding found by the AI undergoes human review and scrutiny. Right now, it takes a lot for something to rise to the level of "we should report this on PubPeer / widely publicize this".
+Ideally there would be a central location where errors could be recorded and surfaced. Imagine if every PDF had a pane that surfaced validated mistakes and issues.  
+
+Currently, we have to make tough judgement calls regarding when to report errors to PubPeer and when to email an editor to push for an erratum or retraction. 
 
 A running list of what the agent has found — including the comments we have posted on PubPeer — is on the **[Findings & PubPeer comments](/forensic-metascience-agent/findings)** page.

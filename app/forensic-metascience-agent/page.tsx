@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
@@ -64,7 +65,7 @@ function getNhanesFormulaic(): NhanesFormulaicData {
 
 interface Stat {
   value: string;
-  claim: string;
+  claim: ReactNode;
   source: string;
   href?: string;
 }
@@ -84,7 +85,11 @@ const fraudStats: Stat[] = [
   },
   {
     value: "14%",
-    claim: "of 521 trials submitted to Anaesthesia contained false data.",
+    claim: (
+      <>
+        of 521 trials submitted to the journal <i>Anaesthesia</i> contained false data.
+      </>
+    ),
     source: "Carlisle 2021",
     href: "https://doi.org/10.1111/anae.15263",
   },
@@ -111,7 +116,7 @@ const errorStats: Stat[] = [
   },
   {
     value: "~50%",
-    claim: "of GRIM-testable psychology papers contain an impossible mean",
+    claim: "of GRIM-testable psychology papers contained an impossible mean",
     source: "Brown & Heathers 2017; 36 of 71 testable papers",
     href: "https://doi.org/10.1177/1948550616673876",
   },
@@ -133,7 +138,7 @@ function StatGrid({ stats, tone }: { stats: Stat[]; tone: keyof typeof STAT_TONE
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
       {stats.map((stat) => (
-        <Card key={stat.value + stat.claim} className={`p-5 border-black ${STAT_TONES[tone].card}`}>
+        <Card key={stat.value + stat.source} className={`p-5 border-black ${STAT_TONES[tone].card}`}>
           <div className="flex items-center gap-4">
             <p
               className={`font-clarendon text-4xl font-bold leading-none shrink-0 ${STAT_TONES[tone].value}`}
