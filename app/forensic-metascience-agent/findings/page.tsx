@@ -52,8 +52,8 @@ function Citation({ finding }: { finding: Finding }) {
 
 function PostedCard({ finding }: { finding: Finding }) {
   return (
-    <Card className="p-5 border-black bg-white">
-      <div className="flex items-center gap-5">
+    <Card className="p-5 bg-white shadow-none border-muted-foreground/30">
+      <div className="flex items-stretch gap-5">
         <div className="min-w-0 flex-1">
           <h3 className="font-clarendon font-semibold text-[1.0625rem] text-foreground mb-1">
             {finding.title}
@@ -70,7 +70,7 @@ function PostedCard({ finding }: { finding: Finding }) {
           href={finding.pubpeerUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="shrink-0 flex flex-col items-center rounded border border-primary bg-white px-3 py-2 text-center text-sm font-medium leading-tight text-cyan-800 hover:bg-primary/10 transition-colors"
+          className="shrink-0 self-stretch flex flex-col items-center justify-center rounded-md border border-primary bg-white px-4 py-3 text-center text-sm font-medium leading-tight text-cyan-800 hover:bg-primary/10 transition-colors"
         >
           <span>View on</span>
           <span>PubPeer</span>
@@ -95,7 +95,7 @@ function PostedCard({ finding }: { finding: Finding }) {
 
 function OtherCard({ finding }: { finding: Finding }) {
   return (
-    <Card className="p-5 border-black bg-white">
+    <Card className="p-5 bg-white shadow-none border-muted-foreground/30">
       <h3 className="font-clarendon font-semibold text-[1.0625rem] text-foreground mb-1">
         {finding.title}
       </h3>
@@ -123,7 +123,7 @@ export default function ForensicAgentFindingsPage() {
           <h1 className="text-4xl font-bold mb-6 mt-0 text-foreground leading-tight">
             FMA Findings and PubPeer comments
           </h1>
-          <p className="mb-4 leading-relaxed text-foreground/90 max-w-3xl">
+          <p className="mb-4 leading-relaxed text-foreground/90">
             A running list of what the{" "}
             <a href="/forensic-metascience-agent" className="text-blue-600 hover:text-blue-700">
               Forensic Metascience Agent
