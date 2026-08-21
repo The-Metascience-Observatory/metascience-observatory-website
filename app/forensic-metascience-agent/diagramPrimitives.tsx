@@ -9,10 +9,11 @@ import type { ReactNode } from "react";
  * drawing.
  */
 
-export type Tone = "neutral" | "accent" | "warn" | "muted" | "dark";
+export type Tone = "neutral" | "ink" | "accent" | "warn" | "muted" | "dark";
 
 const TONE: Record<Tone, string> = {
   neutral: "border-foreground/75 bg-white text-foreground",
+  ink: "border-black bg-white text-foreground",
   accent: "border-primary bg-primary/10 text-foreground",
   warn: "border-amber-600 bg-amber-50 text-foreground",
   muted: "border-foreground/45 bg-muted/50 text-foreground/85",
@@ -134,6 +135,47 @@ export function AgentIcon() {
       <path d="M9 17h6" />
       <path d="M1 12v3" />
       <path d="M23 12v3" />
+    </svg>
+  );
+}
+
+/** Where the run's output lands. Same size and weight as `AgentIcon`. */
+export function DatabaseIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-[18px] w-[18px] text-foreground/70"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      role="img"
+      aria-label="Database"
+    >
+      <ellipse cx="12" cy="5.5" rx="8" ry="3.2" />
+      <path d="M4 5.5v6c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2v-6" />
+      <path d="M4 11.5v6c0 1.8 3.6 3.2 8 3.2s8-1.4 8-3.2v-6" />
+    </svg>
+  );
+}
+
+/** A step a person does, not the machine. */
+export function HumanIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-[18px] w-[18px] text-foreground/70"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      role="img"
+      aria-label="Human"
+    >
+      <circle cx="12" cy="7.5" r="3.8" />
+      <path d="M4.5 20.5a7.5 7.5 0 0 1 15 0" />
     </svg>
   );
 }

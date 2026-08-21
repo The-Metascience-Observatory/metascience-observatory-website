@@ -287,7 +287,7 @@ function CapabilityBox({ fill }: { fill: BoxFill }) {
 function FitMatrix() {
   return (
     <div className="overflow-x-auto my-8">
-      <table className="border-collapse">
+      <table className="border-collapse mx-auto">
         <thead>
           <tr>
             <th className="w-56" aria-label="Tool" />

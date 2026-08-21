@@ -1,5 +1,13 @@
 import type { ReactNode } from "react";
-import { Node, Down, Fan, Stem, AgentIcon } from "./diagramPrimitives";
+import {
+  Node,
+  Down,
+  Fan,
+  Stem,
+  AgentIcon,
+  DatabaseIcon,
+  HumanIcon,
+} from "./diagramPrimitives";
 
 /**
  * How one paper moves through the system.
@@ -68,7 +76,7 @@ export function PipelineDiagram() {
   return (
     <div>
       <div className="flex justify-center">
-        <Node title="A DOI" tone="neutral" center className={DOI_W} />
+        <Node title="A DOI" tone="ink" center className={DOI_W} />
       </div>
 
       <Down />
@@ -165,10 +173,23 @@ export function PipelineDiagram() {
 
       <div className="flex justify-center">
         <Node
-          title="Report, archive, database"
+          title="Save findings to database"
+          icon={<DatabaseIcon />}
           center
-          sub="A structured review, the full run archive, and a queryable findings store behind the review workbench"
           tone="neutral"
+          className={STEP_W}
+        />
+      </div>
+
+      <Down />
+
+      <div className="flex justify-center">
+        <Node
+          title="Human review"
+          icon={<HumanIcon />}
+          sub="Humans review each finding in our rapid review web application. Human feedback on findings, including marking of false positives, is stored in the database to help inform improvements to the system. A human decides whether to submit to PubPeer or email the authors or an editor, and all PubPeer comments and emails are human-written, not AI-written."
+          center
+          tone="ink"
           className={STEP_W}
         />
       </div>
