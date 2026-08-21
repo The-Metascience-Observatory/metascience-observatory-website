@@ -7,12 +7,13 @@
     "predev": "bash scripts/dropbox-ignore.sh",
     "dev": "NODE_OPTIONS='--max-old-space-size=8192' next dev",
     "dev:safe": "bash scripts/with-dropbox-paused.sh npm run dev",
-    "prebuild": "bash scripts/dropbox-ignore.sh",
+    "prebuild": "bash scripts/dropbox-ignore.sh && node scripts/check-tool-catalog.mjs",
     "build": "NODE_OPTIONS='--max-old-space-size=8192' next build",
     "build:safe": "bash scripts/with-dropbox-paused.sh npm run build",
     "build:turbo": "NODE_OPTIONS='--max-old-space-size=8192' next build --turbopack",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "node scripts/check-tool-catalog.mjs && next lint",
+    "check:tools": "node scripts/check-tool-catalog.mjs"
   },
   "dependencies": {
     "@next/third-parties": "^16.2.10",

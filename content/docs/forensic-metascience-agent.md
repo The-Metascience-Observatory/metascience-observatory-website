@@ -2,7 +2,7 @@
 
 <!-- FINDINGS_CTA -->
 
-The Forensic Metascience Agent is an AI agent equipped with 30+ tools for "sanity checking" the statistics and data presented in scientific papers. Much of it is based directly off of James Heathers' book [*An Introduction to Forensic Metascience*](https://doi.org/10.5281/zenodo.14871843).
+The Forensic Metascience Agent is an AI agent equipped with 58 tools for "sanity checking" the statistics and data presented in scientific papers. Much of it is based directly off of James Heathers' book [*An Introduction to Forensic Metascience*](https://doi.org/10.5281/zenodo.14871843).
 
 
 Reported statistics are internally redundant: a mean of integer-scaled responses can only take certain values for a given sample size; a standard deviation is bounded by the range of the measurement; a t-statistic, its degrees of freedom, and its p-value must agree with one another; two "independent" studies should not report identical means and standard deviations down to the second decimal place. When the reported numbers violate these constraints, something is wrong — a typo, a copy-paste slip, a miscalculation, or worse.
@@ -45,7 +45,7 @@ Nor can peer review be counted on to catch problems: in four independent studies
 
 ## Theory of impact
 
-Systems like the forensic metascience agent can be used for both pre-publication review and post-publication review. Currently (as of August, 2026), the system costs $0.61 per paper when using Sonnet on average and $1.45 when using Opus 4.6 (range ~$0.70 - ~$3.00), when using the Claude Code CLI and a Claude Code 20x subscription. These costs roughly 10x when using the API. Soon we will be testing other models and different changes to our pipeline that may reduce cost while maintaining accuracy and coverage. In contrast to other approaches, our system is meant to be very systematic, checking every number in a publication and supplementary information. 
+Systems like the forensic metascience agent can be used for both pre-publication review and post-publication review. Currently (as of August 2026), the system costs on average \$0.61 per paper when using Sonnet and \$1.45 when using Opus 4.6 (range ~\$0.70–\$3.00), running through the Claude Code CLI on a Claude Code 20x subscription. These costs are roughly 10x higher when using the API. Soon we will be testing other models and different changes to our pipeline that may reduce cost while maintaining accuracy and coverage. In contrast to other approaches, our system is meant to be very systematic, checking every number in a publication and supplementary information. 
 
 
 ### For pre-publication review

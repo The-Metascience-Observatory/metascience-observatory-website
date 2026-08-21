@@ -1,0 +1,798 @@
+{
+ "generated_from": "registry.SPECS",
+ "n": 58,
+ "tools": [
+  {
+   "name": "absence_of_evidence",
+   "cli": "absence-of-evidence",
+   "stages": [
+    "stage1"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": []
+  },
+  {
+   "name": "analyze_paper_images",
+   "cli": "image-analysis",
+   "stages": [],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "pdf_path"
+   ]
+  },
+  {
+   "name": "bayesian_table1_dispersion",
+   "cli": "table1-dispersion",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "rows"
+   ]
+  },
+  {
+   "name": "check_count_percent",
+   "cli": "check-count-percent",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "count",
+    "percentage",
+    "n"
+   ]
+  },
+  {
+   "name": "check_effect_plausibility",
+   "cli": "effect-size",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": []
+  },
+  {
+   "name": "check_estimate_ci",
+   "cli": "check-ci",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "estimate",
+    "ci_low",
+    "ci_high"
+   ]
+  },
+  {
+   "name": "check_proportion_from_normal",
+   "cli": "prop-from-normal",
+   "stages": [
+    "stage2"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "reported_proportion",
+    "mean",
+    "sd",
+    "n",
+    "threshold"
+   ]
+  },
+  {
+   "name": "check_ratio",
+   "cli": "check-ratio",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "absolute",
+   "severity_ceiling": "impossible",
+   "required_inputs": [
+    "numerator",
+    "denominator",
+    "reported_ratio"
+   ]
+  },
+  {
+   "name": "check_regression",
+   "cli": null,
+   "stages": [
+    "stage1"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "b",
+    "se"
+   ]
+  },
+  {
+   "name": "check_regression_batch",
+   "cli": "regression-batch",
+   "stages": [
+    "stage1"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "rows"
+   ]
+  },
+  {
+   "name": "check_sd_or_se",
+   "cli": "sd-or-se",
+   "stages": [
+    "stage1"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "reported_value",
+    "n"
+   ]
+  },
+  {
+   "name": "check_sd_range",
+   "cli": "sd-range",
+   "stages": [
+    "stage1"
+   ],
+   "evidence": "absolute",
+   "severity_ceiling": "impossible",
+   "required_inputs": [
+    "sd",
+    "min_val",
+    "max_val"
+   ]
+  },
+  {
+   "name": "check_statistic_bounds",
+   "cli": "check-bounds",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "absolute",
+   "severity_ceiling": "impossible",
+   "required_inputs": [
+    "value",
+    "measure"
+   ]
+  },
+  {
+   "name": "check_summation",
+   "cli": "summation",
+   "stages": [
+    "stage1"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "values",
+    "expected_sum"
+   ]
+  },
+  {
+   "name": "check_summation_batch",
+   "cli": "summation-batch",
+   "stages": [
+    "stage1"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "rows"
+   ]
+  },
+  {
+   "name": "check_table",
+   "cli": "check-table",
+   "stages": [
+    "stage1"
+   ],
+   "evidence": "absolute",
+   "severity_ceiling": "impossible",
+   "required_inputs": [
+    "cells"
+   ]
+  },
+  {
+   "name": "check_variance_dispersion",
+   "cli": "variance-dispersion",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "sds",
+    "ns",
+    "sd_texts"
+   ]
+  },
+  {
+   "name": "csf_test",
+   "cli": "csf",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "p_values"
+   ]
+  },
+  {
+   "name": "debit_check",
+   "cli": "debit",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "absolute",
+   "severity_ceiling": "impossible",
+   "required_inputs": [
+    "mean",
+    "sd",
+    "n",
+    "decimals_mean",
+    "decimals_sd"
+   ]
+  },
+  {
+   "name": "debit_check_batch",
+   "cli": null,
+   "stages": [
+    "stage1"
+   ],
+   "evidence": "absolute",
+   "severity_ceiling": "impossible",
+   "required_inputs": [
+    "rows"
+   ]
+  },
+  {
+   "name": "detect_duplication",
+   "cli": "duplication-detect",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "blocks"
+   ]
+  },
+  {
+   "name": "detect_raw_duplication",
+   "cli": "raw-duplication-detect",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "path"
+   ]
+  },
+  {
+   "name": "detect_tortured_phrases",
+   "cli": "tortured-phrases",
+   "stages": [],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": []
+  },
+  {
+   "name": "extract_figures",
+   "cli": "extract-figures",
+   "stages": [
+    "stage1"
+   ],
+   "evidence": "descriptive",
+   "severity_ceiling": "indeterminate",
+   "required_inputs": [
+    "pdf_path"
+   ]
+  },
+  {
+   "name": "extract_html",
+   "cli": "extract-html",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "descriptive",
+   "severity_ceiling": "indeterminate",
+   "required_inputs": [
+    "html_path"
+   ]
+  },
+  {
+   "name": "extract_pdf",
+   "cli": "extract",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "descriptive",
+   "severity_ceiling": "indeterminate",
+   "required_inputs": [
+    "pdf_path"
+   ]
+  },
+  {
+   "name": "extract_supplement",
+   "cli": "extract-supplement",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "descriptive",
+   "severity_ceiling": "indeterminate",
+   "required_inputs": [
+    "path"
+   ]
+  },
+  {
+   "name": "extract_xml",
+   "cli": "extract-xml",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "descriptive",
+   "severity_ceiling": "indeterminate",
+   "required_inputs": [
+    "xml_path"
+   ]
+  },
+  {
+   "name": "flag_round_n",
+   "cli": "flag-round-n",
+   "stages": [
+    "stage1"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "ns"
+   ]
+  },
+  {
+   "name": "flag_uninformative_stat",
+   "cli": "flag-uninformative",
+   "stages": [
+    "stage1"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "means",
+    "sds",
+    "ns"
+   ]
+  },
+  {
+   "name": "get_supplement_table",
+   "cli": "get-supplement-table",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "descriptive",
+   "severity_ceiling": "indeterminate",
+   "required_inputs": [
+    "path",
+    "table"
+   ]
+  },
+  {
+   "name": "get_table",
+   "cli": "get-table",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "descriptive",
+   "severity_ceiling": "indeterminate",
+   "required_inputs": [
+    "xml_path",
+    "table_num"
+   ]
+  },
+  {
+   "name": "grim_check",
+   "cli": "grim",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "absolute",
+   "severity_ceiling": "impossible",
+   "required_inputs": [
+    "mean",
+    "n",
+    "decimals"
+   ]
+  },
+  {
+   "name": "grim_percentage",
+   "cli": null,
+   "stages": [
+    "stage1"
+   ],
+   "evidence": "absolute",
+   "severity_ceiling": "impossible",
+   "required_inputs": [
+    "percentage",
+    "n"
+   ]
+  },
+  {
+   "name": "grim_sweep",
+   "cli": "grim-sweep",
+   "stages": [
+    "stage1"
+   ],
+   "evidence": "absolute",
+   "severity_ceiling": "impossible",
+   "required_inputs": [
+    "values",
+    "n_max"
+   ]
+  },
+  {
+   "name": "grimmer_check",
+   "cli": "grimmer",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "absolute",
+   "severity_ceiling": "impossible",
+   "required_inputs": [
+    "mean",
+    "sd",
+    "n"
+   ]
+  },
+  {
+   "name": "grimu_check",
+   "cli": "grimu",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "absolute",
+   "severity_ceiling": "impossible",
+   "required_inputs": [
+    "n1",
+    "n2",
+    "reported_p"
+   ]
+  },
+  {
+   "name": "grimu_coexistence",
+   "cli": "grimu-coexist",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "absolute",
+   "severity_ceiling": "impossible",
+   "required_inputs": [
+    "n1",
+    "n2",
+    "p_values"
+   ]
+  },
+  {
+   "name": "multiplicity_report",
+   "cli": "multiplicity",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "descriptive",
+   "severity_ceiling": "indeterminate",
+   "required_inputs": [
+    "tests",
+    "family_label"
+   ]
+  },
+  {
+   "name": "parse_cells_as_declared",
+   "cli": "parse-cells-as",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "descriptive",
+   "severity_ceiling": "indeterminate",
+   "required_inputs": [
+    "cells",
+    "declared"
+   ]
+  },
+  {
+   "name": "parse_cells_typed",
+   "cli": "parse-cells",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "descriptive",
+   "severity_ceiling": "indeterminate",
+   "required_inputs": [
+    "cells"
+   ]
+  },
+  {
+   "name": "parse_table",
+   "cli": "parse-table",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "source"
+   ]
+  },
+  {
+   "name": "r_grim_ground_truth",
+   "cli": null,
+   "stages": [
+    "stage2"
+   ],
+   "evidence": "descriptive",
+   "severity_ceiling": "indeterminate",
+   "required_inputs": [
+    "mean",
+    "n"
+   ]
+  },
+  {
+   "name": "r_sprite_ground_truth",
+   "cli": null,
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "descriptive",
+   "severity_ceiling": "indeterminate",
+   "required_inputs": [
+    "mean",
+    "sd",
+    "n"
+   ]
+  },
+  {
+   "name": "recalc_anova",
+   "cli": "anova",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "means",
+    "sds",
+    "ns"
+   ]
+  },
+  {
+   "name": "recalc_chi_squared",
+   "cli": "chi2",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "observed"
+   ]
+  },
+  {
+   "name": "recalc_f_to_p",
+   "cli": "f-to-p",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "f_value",
+    "df1",
+    "df2"
+   ]
+  },
+  {
+   "name": "recalc_independent_t",
+   "cli": "ttest",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "mean1",
+    "sd1",
+    "n1",
+    "mean2",
+    "sd2",
+    "n2"
+   ]
+  },
+  {
+   "name": "recalc_stat_to_p",
+   "cli": "stat-to-p",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "statistic",
+    "kind"
+   ]
+  },
+  {
+   "name": "recalc_within_subjects_t",
+   "cli": null,
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "mean_pre",
+    "sd_pre",
+    "mean_post",
+    "sd_post",
+    "n",
+    "reported_p"
+   ]
+  },
+  {
+   "name": "reconstruct_2x2",
+   "cli": "reconstruct-2x2",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "absolute",
+   "severity_ceiling": "impossible",
+   "required_inputs": [
+    "pct_col1",
+    "pct_col2",
+    "n_total"
+   ]
+  },
+  {
+   "name": "required_n",
+   "cli": "required-n",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "descriptive",
+   "severity_ceiling": "indeterminate",
+   "required_inputs": [
+    "test_type",
+    "effect_size"
+   ]
+  },
+  {
+   "name": "rivets_anova",
+   "cli": "rivets-anova",
+   "stages": [
+    "stage1"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "means",
+    "sds",
+    "ns"
+   ]
+  },
+  {
+   "name": "rivets_independent_t",
+   "cli": "rivets-t",
+   "stages": [
+    "stage1"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "mean1",
+    "sd1",
+    "n1",
+    "mean2",
+    "sd2",
+    "n2"
+   ]
+  },
+  {
+   "name": "sprite_reconstruct",
+   "cli": "sprite",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "absolute",
+   "severity_ceiling": "impossible",
+   "required_inputs": [
+    "mean",
+    "sd",
+    "n"
+   ]
+  },
+  {
+   "name": "stalt_check",
+   "cli": "stalt",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "calculated_p"
+   ]
+  },
+  {
+   "name": "statcheck",
+   "cli": "statcheck",
+   "stages": [
+    "stage1",
+    "stage2"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "pdf_path",
+    "text"
+   ]
+  },
+  {
+   "name": "verify_power_analysis",
+   "cli": "power-check",
+   "stages": [
+    "stage1"
+   ],
+   "evidence": "probabilistic",
+   "severity_ceiling": "highly_suspicious",
+   "required_inputs": [
+    "test_type"
+   ]
+  }
+ ]
+}

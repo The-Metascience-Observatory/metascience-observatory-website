@@ -41,6 +41,7 @@ export const postedFindings: Finding[] = [
     summary: "Eight duplicated numbers in the supplementary information.",
     status: "posted",
     pubpeerUrl: "https://pubpeer.com/publications/D4AD3603799057B49D9B05C0A6CC42#2",
+    submitted: "August 10, 2026"
   },
   {
     title:
