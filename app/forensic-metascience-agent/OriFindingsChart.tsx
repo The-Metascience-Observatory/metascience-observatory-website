@@ -34,7 +34,7 @@ export function OriFindingsChart({ data }: OriFindingsChartProps) {
     label: LABELED_YEARS.has(d.year) ? d.findings : undefined,
   }));
   return (
-    <figure className="border border-black rounded-lg bg-white p-6 my-8">
+    <figure className="mx-auto w-full md:w-4/5 border border-black rounded-lg bg-white p-6 my-8">
       <figcaption className="mb-3">
         <span className="block text-lg font-semibold text-foreground">
           ORI findings of research misconduct per year

@@ -99,7 +99,8 @@ export function PipelineDiagram() {
           title="Extraction & conversion"
           sub={
             <>
-              We use a combination of tools to convert the PDF into more usable formats &mdash;{" "}
+              We use a combination of tools to convert the PDF into markdown and extract tables and
+              images &mdash;{" "}
               <DiagramLink href="https://github.com/docling-project/docling">docling</DiagramLink>,{" "}
               <DiagramLink href="https://github.com/jsvine/pdfplumber">pdfplumber</DiagramLink>,{" "}
               <DiagramLink href="https://github.com/pymupdf/PyMuPDF">PyMuPDF</DiagramLink>, and{" "}

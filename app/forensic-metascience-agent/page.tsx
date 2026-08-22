@@ -8,6 +8,7 @@ import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { DocsBackLink } from "@/components/DocsBackLink";
 import { MarkdownContent } from "@/components/MarkdownContent";
+import { HeadingAnchor } from "@/components/HeadingAnchor";
 import { OriFindingsChart, OriYearDatum } from "./OriFindingsChart";
 import { NhanesFormulaicCharts, NhanesFormulaicData } from "./NhanesFormulaicCharts";
 import { ToolStacks } from "./ToolStacks";
@@ -142,16 +143,27 @@ function StatGrid({ stats }: { stats: Stat[] }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
       {stats.map((stat) => (
-        <Card key={stat.value + stat.source} className={`p-5 border-black ${STAT_CARD}`}>
-          <div className="flex items-center gap-4">
+        <Card
+          key={stat.value + stat.source}
+          // `h-full` + centring: the grid already gives every card the same
+          // height, but without these the content sits at the top of the taller
+          // ones and the row reads as ragged.
+          className={`flex h-full items-center p-5 border-black ${STAT_CARD}`}
+        >
+          <div className="flex w-full items-center gap-4">
             <p
               className={`font-clarendon text-4xl font-bold leading-none shrink-0 ${STAT_VALUE}`}
             >
               {stat.value}
             </p>
-            <div className="min-w-0">
-              <p className="text-sm text-foreground leading-relaxed">{stat.claim}</p>
-              <p className="mt-2 text-xs text-foreground/60">
+            {/*
+              The citation runs on from the claim rather than starting its own
+              line: on a two-line claim a block-level source pushed the card
+              taller than its neighbours for no reading benefit.
+            */}
+            <p className="min-w-0 text-sm leading-relaxed text-foreground">
+              {stat.claim}{" "}
+              <span className="whitespace-nowrap text-xs text-foreground/60">
                 {"("}
                 {stat.href ? (
                   <a
@@ -166,8 +178,8 @@ function StatGrid({ stats }: { stats: Stat[] }) {
                   stat.source
                 )}
                 {")"}
-              </p>
-            </div>
+              </span>
+            </p>
           </div>
         </Card>
       ))}
@@ -183,7 +195,7 @@ const CAPABILITIES = [
   { key: "dataset_si", label: "SI/SM/Dataverse copy-paste errors" },
   { key: "dataset_repo", label: "Open Source Repo dataset copy-paste errors" },
   { key: "phrases", label: "Tortured phrases" },
-  { key: "ai_text", label: "AI text generation" },
+  { key: "ai_text", label: "AI text detection" },
   { key: "plagiarism", label: "Plagiarism detection" },
   { key: "stats", label: "Check stats and arithmetic" },
   { key: "ai_review", label: "AI peer review" },
@@ -231,6 +243,7 @@ const companies: ToolCompany[] = [
     src: "/assets/forensic/river_valley_tech_logo.png",
     showName: true,
     capabilities: ["phrases"],
+    partial: ["image_within", "stats"],
   },
   {
     name: "ScienceDetective.org",
@@ -250,6 +263,13 @@ const companies: ToolCompany[] = [
     href: "https://www.ithenticate.com/",
     src: "/assets/forensic/ithenticate.png",
     capabilities: ["plagiarism"],
+  },
+  {
+    name: "Reviewer 3",
+    href: "https://reviewer3.com/home",
+    src: "/assets/forensic/reviewer3_logo.png",
+    showName: true,
+    capabilities: ["ai_review"],
   },
   {
     name: "Forensic Metascience Agent",
@@ -390,9 +410,9 @@ export default function ForensicAgentToolkitPage() {
       <main className="pt-20 pb-16">
         <div className="container mx-auto px-4 py-12">
           <DocsBackLink href="/articles" label="return to articles" />
-          <MarkdownContent content={beforeFindingsCta} />
+          <MarkdownContent content={beforeFindingsCta} anchorHeadings />
           <div className="grid grid-cols-1 md:grid-cols-[1fr_16rem] gap-6 items-start my-6">
-            <MarkdownContent content={intro} />
+            <MarkdownContent content={intro} anchorHeadings />
             <Link
               href="/forensic-metascience-agent/findings"
               className="group flex flex-col gap-2 rounded-lg border border-black bg-primary/5 p-5 hover:shadow-md transition-shadow"
@@ -417,28 +437,36 @@ export default function ForensicAgentToolkitPage() {
               </svg>
             </Link>
           </div>
-          <MarkdownContent content={beforeFraudStats} />
+          <MarkdownContent content={beforeFraudStats} anchorHeadings />
           <StatGrid stats={fraudStats} />
-          <MarkdownContent content={afterFraudStats} />
+          <MarkdownContent content={afterFraudStats} anchorHeadings />
           <StatGrid stats={errorStats} />
-          <MarkdownContent content={afterErrorStats} />
+          <MarkdownContent content={afterErrorStats} anchorHeadings />
           <NhanesFormulaicCharts data={nhanesData} />
-          <MarkdownContent content={afterNhanesCharts} />
+          <MarkdownContent content={afterNhanesCharts} anchorHeadings />
           <OriFindingsChart data={oriData} />
-          <MarkdownContent content={afterOriChart} />
+          <MarkdownContent content={afterOriChart} anchorHeadings />
           <FitMatrix />
-          <MarkdownContent content={afterToolLogos} />
+          <MarkdownContent content={afterToolLogos} anchorHeadings />
 
           <section>
-            <h2 className="text-2xl font-semibold mb-4 mt-10 text-foreground border-b border-border pb-2">
+            <h2
+              id="how-it-works"
+              className="group text-2xl font-semibold mb-4 mt-10 text-foreground border-b border-border pb-2 scroll-mt-20"
+            >
               How it works
+              <HeadingAnchor id="how-it-works" />
             </h2>
             <PipelineDiagram />
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-4 mt-10 text-foreground border-b border-border pb-2">
+            <h2
+              id="the-toolkit"
+              className="group text-2xl font-semibold mb-4 mt-10 text-foreground border-b border-border pb-2 scroll-mt-20"
+            >
               The toolkit
+              <HeadingAnchor id="the-toolkit" />
             </h2>
             <p className="mb-6 leading-relaxed text-foreground/90">
               There are {overviewTools} tools that the tools agent has access to via MCP. Each tool is
@@ -459,7 +487,7 @@ export default function ForensicAgentToolkitPage() {
 
           {afterToolkit && (
             <div className="mt-4">
-              <MarkdownContent content={afterToolkit} />
+              <MarkdownContent content={afterToolkit} anchorHeadings />
             </div>
           )}
         </div>

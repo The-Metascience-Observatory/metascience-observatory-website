@@ -114,7 +114,7 @@ function ExplosionChart({ data }: { data: NhanesYearDatum[] }) {
     label: LABELED_YEARS.has(d.year) ? d.papers : undefined,
   }));
   return (
-    <figure className="border border-black rounded-lg bg-white p-6 my-8">
+    <figure className="mx-auto w-full md:w-4/5 border border-black rounded-lg bg-white p-6 my-8">
       <figcaption className="mb-3">
         <span className="block text-lg font-semibold text-foreground">
           Formulaic single-factor NHANES papers per year
@@ -182,7 +182,7 @@ function IndexedChart({ data }: { data: NhanesYearDatum[] }) {
     };
   });
   return (
-    <figure className="border border-black rounded-lg bg-white p-6 my-8">
+    <figure className="mx-auto w-full md:w-4/5 border border-black rounded-lg bg-white p-6 my-8">
       <figcaption className="mb-3">
         <span className="block text-lg font-semibold text-foreground">
           Not just more health-data papers: 95× vs 5×

@@ -162,6 +162,10 @@ const documentation: DocMeta[] = [
     href: "/docs/checking-for-bias",
     title: 'Checking for bias by comparing with "random sampled" replication initiatives',
   },
+  {
+    href: "/forensic-metascience-agent/tools",
+    title: "Forensic Metascience Agent tools",
+  },
 ];
 
 const substackArticles: SubstackMeta[] = [

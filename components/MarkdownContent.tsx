@@ -7,6 +7,7 @@ import rehypeKatex from "rehype-katex";
 import rehypeRaw from "rehype-raw";
 import rehypeSlug from "rehype-slug";
 import "katex/dist/katex.min.css";
+import { HeadingAnchor } from "@/components/HeadingAnchor";
 
 // Email stored as char codes to prevent scraping from source
 const _ec = [100,97,110,64,109,101,116,97,115,99,105,101,110,99,101,111,98,115,101,114,118,97,116,111,114,121,46,111,114,103];
@@ -14,9 +15,11 @@ function _de() { return _ec.map(c => String.fromCharCode(c)).join(""); }
 
 interface MarkdownContentProps {
   content: string;
+  /** Show a "#" beside each heading on hover, linking to that section. */
+  anchorHeadings?: boolean;
 }
 
-export function MarkdownContent({ content }: MarkdownContentProps) {
+export function MarkdownContent({ content, anchorHeadings = false }: MarkdownContentProps) {
   return (
     <article className="markdown-content">
       <ReactMarkdown
@@ -36,13 +39,15 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
                 {children}
               </h2>
             ) : (
-              <h2 id={id} className="text-2xl font-semibold mb-4 mt-10 text-foreground border-b border-border pb-2 scroll-mt-20">
+              <h2 id={id} className="group text-2xl font-semibold mb-4 mt-10 text-foreground border-b border-border pb-2 scroll-mt-20">
                 {children}
+                {anchorHeadings && <HeadingAnchor id={id} />}
               </h2>
             ),
           h3: ({ children, id }) => (
-            <h3 id={id} className="text-xl font-semibold mb-3 mt-6 text-foreground scroll-mt-20">
+            <h3 id={id} className="group text-xl font-semibold mb-3 mt-6 text-foreground scroll-mt-20">
               {children}
+              {anchorHeadings && <HeadingAnchor id={id} />}
             </h3>
           ),
           p: ({ children }) => (
