@@ -35,7 +35,7 @@ The Office of Research Integrity's output has collapsed — 2025 produced the fe
 Peer review is useful, but the peer review system is under increasing strain. Studies indicate that peer reviewers do a very incomplete job when it comes to catching serious errors. Across [four](https://doi.org/10.1001/jama.280.3.237) [independent](https://www.bmj.com/content/bmj/328/7441/673.full.pdf) [studies](https://journals.sagepub.com/doi/full/10.1258/jrsm.2008.080062) [in biomedicine](https://www.sciencedirect.com/science/article/abs/pii/S019606449870006X) where researchers deliberately inserted errors into manuscripts, peer reviewers only caught 25–35% of them.
 
 
-## Where this agent fits in AI for research integrity landscape
+## Where this agent fits in the AI for research integrity landscape
 
 <!-- TOOL_LOGOS -->
 

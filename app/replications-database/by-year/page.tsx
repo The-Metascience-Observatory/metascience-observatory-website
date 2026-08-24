@@ -331,6 +331,30 @@ function YearRateBars({ bins, xLabel, unit, showN = true, showCI = false, showRa
   );
 }
 
+// Options for each dropdown are counted over the rows that pass every
+// *other* row filter, so the numbers always describe what selecting that
+// option would actually give you. The currently selected value is kept in
+// its own list even when the cross-filter drops it to zero, otherwise the
+// <select> would render blank with no way back.
+const buildOptions = (
+  rows: AnyRecord[],
+  field: "discipline" | "replication_type",
+  passesOtherFilters: (row: AnyRecord) => boolean,
+  selected: string,
+) => {
+  const counts = new Map<string, number>();
+  for (const row of rows) {
+    const v = String(row[field] ?? "").trim();
+    if (!v) continue;
+    if (!counts.has(v)) counts.set(v, 0);
+    if (passesOtherFilters(row)) counts.set(v, (counts.get(v) ?? 0) + 1);
+  }
+  return Array.from(counts.entries())
+    .filter(([name, count]) => count > 0 || name === selected)
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([name, count]) => ({ name, count }));
+};
+
 export default function ByYearPage() {
   const [data, setData] = useState<FredResponse | null>(null);
   const [loading, setLoading] = useState(true);
@@ -359,31 +383,32 @@ export default function ByYearPage() {
     fetchData();
   }, []);
 
-  // Distinct disciplines present in the data, most common first.
+  // Distinct disciplines present in the data, most common first. Counts
+  // respect the replication-type filter.
   const disciplineOptions = useMemo(() => {
     if (!data) return [];
-    const counts = new Map<string, number>();
-    for (const row of data.rows) {
-      const d = String(row.discipline ?? "").trim();
-      if (d) counts.set(d, (counts.get(d) ?? 0) + 1);
-    }
-    return Array.from(counts.entries())
-      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
-      .map(([name, count]) => ({ name, count }));
-  }, [data]);
+    return buildOptions(
+      data.rows,
+      "discipline",
+      (row) =>
+        replicationType === "all" ||
+        String(row.replication_type ?? "").trim() === replicationType,
+      discipline,
+    );
+  }, [data, replicationType, discipline]);
 
-  // Distinct replication types present in the data, most common first.
+  // Distinct replication types present in the data, most common first. Counts
+  // respect the discipline filter.
   const replicationTypeOptions = useMemo(() => {
     if (!data) return [];
-    const counts = new Map<string, number>();
-    for (const row of data.rows) {
-      const t = String(row.replication_type ?? "").trim();
-      if (t) counts.set(t, (counts.get(t) ?? 0) + 1);
-    }
-    return Array.from(counts.entries())
-      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
-      .map(([name, count]) => ({ name, count }));
-  }, [data]);
+    return buildOptions(
+      data.rows,
+      "replication_type",
+      (row) =>
+        discipline === "all" || String(row.discipline ?? "").trim() === discipline,
+      replicationType,
+    );
+  }, [data, discipline, replicationType]);
 
   const agg = useMemo(() => {
     if (!data) return null;
