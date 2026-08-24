@@ -94,7 +94,7 @@ const fraudStats: Stat[] = [
         of 521 trials submitted to the journal <i>Anaesthesia</i> contained false data.
       </>
     ),
-    source: "Carlisle 2021",
+    source: "Carlisle, 2021",
     href: "https://doi.org/10.1111/anae.15263",
   },
   {
@@ -110,13 +110,20 @@ const fraudStats: Stat[] = [
     source: "Chen et al. 2024",
     href: "https://link.springer.com/article/10.1186/s12909-024-05277-6",
   },
+  {
+    value: "3%",
+    claim:
+      "of 600 biomedical datasets from well-cited publications have serious copy-paste issues (not yet proven as fraud but very suspicious).",
+    source: "Englund, 2026",
+    href: "https://www.science.org/content/blog-post/dupeless-reeducation",
+  },
 ];
 
 const errorStats: Stat[] = [
   {
     value: "50%",
     claim: "of psychology papers report a p-value that contradicts its own test statistic",
-    source: "statcheck; 250,000 p-values across eight journals (Nuijten et al. 2016)",
+    source: "Nuijten et al. 2016",
     href: "https://doi.org/10.3758/s13428-015-0664-2",
   },
   {

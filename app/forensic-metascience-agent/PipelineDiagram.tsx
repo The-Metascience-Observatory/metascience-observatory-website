@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import {
   Node,
   Down,
+  Right,
   Fan,
   Stem,
   AgentIcon,
@@ -57,6 +58,10 @@ const PRODUCERS = [
 // instead of overflowing.
 const DOI_W = "w-28";
 const STEP_W = "w-full max-w-[21rem]";
+// Three-column layout for rows that hang a box off to one side. The centre
+// track matches STEP_W so the spine stays on the same centre line as every
+// single-column row; minmax(0,…) stops a long side label widening a track.
+const SPINE = "md:grid-cols-[minmax(0,1fr)_minmax(0,21rem)_minmax(0,1fr)]";
 
 /** Inline link inside a diagram node's sub-text. */
 function DiagramLink({ href, children }: { href: string; children: ReactNode }) {
@@ -75,13 +80,28 @@ function DiagramLink({ href, children }: { href: string; children: ReactNode }) 
 export function PipelineDiagram() {
   return (
     <div>
-      <div className="flex justify-center">
-        <Node title="A DOI" tone="ink" center className={DOI_W} />
+      {/*
+        The DOI sits beside fetchpdf, not above it: it is the run's input rather
+        than a pipeline step. Below `md` there is no room next to a 21rem box,
+        so it falls back to the stacked form.
+
+        The three-column grid keeps fetchpdf on the same centre line as every
+        box below it — putting the DOI in a plain flex row would shove the whole
+        spine to the right.
+      */}
+      <div className="md:hidden">
+        <div className="flex justify-center">
+          <Node title="A DOI" tone="ink" center className={DOI_W} />
+        </div>
+        <Down />
       </div>
 
-      <Down />
-
-      <div className="flex justify-center">
+      <div className={`grid grid-cols-1 items-center ${SPINE}`}>
+        <div className="hidden items-center justify-end md:flex">
+          <Node title="A DOI" tone="ink" center className={DOI_W} />
+          <Right />
+        </div>
+        <div className="flex justify-center">
         <Node
           title="fetchpdf"
           href="https://github.com/The-Metascience-Observatory/fetchpdf"
@@ -90,6 +110,8 @@ export function PipelineDiagram() {
           className={STEP_W}
           sub="Attempts to pull the XML, HTML, and PDF as well as supplementary information and data. If it cannot pull from an API it provides a list of missing PDFs for a human to try to obtain."
         />
+        </div>
+        <div className="hidden md:block" />
       </div>
 
       <Down />
@@ -170,29 +192,51 @@ export function PipelineDiagram() {
         />
       </div>
 
-      <Down />
+      {/*
+        Human review hangs off the side of the database step rather than below
+        it: it is what people do with a saved run, not another stage the paper
+        passes through. Same three-column spine as the DOI row above, so the
+        database box keeps the centre line it shares with everything above it.
+        Below `md` it drops back under the database box.
 
-      <div className="flex justify-center">
-        <Node
-          title="Save findings to database"
-          icon={<DatabaseIcon />}
-          center
-          tone="neutral"
-          className={STEP_W}
-        />
-      </div>
-
-      <Down />
-
-      <div className="flex justify-center">
-        <Node
-          title="Human review"
-          icon={<HumanIcon />}
-          sub="Humans review each finding in our rapid review web application. Human feedback on findings, including marking of false positives, is stored in the database to help inform improvements to the system. A human decides whether to submit to PubPeer or email the authors or an editor, and all PubPeer comments and emails are human-written, not AI-written."
-          center
-          tone="ink"
-          className={STEP_W}
-        />
+        The connector into the database box lives INSIDE the centre column and
+        opens with a `Stem`, because the tall Human review box makes this row
+        taller than the box it holds. A fixed-height arrow above the row would
+        stop short and leave the adjudicator visibly unconnected; the stem takes
+        up whatever slack the side box creates, at any width.
+      */}
+      <div className={`grid grid-cols-1 ${SPINE}`}>
+        <div className="hidden md:block" />
+        <div className="flex flex-col items-center">
+          <Stem />
+          <Down h={26} />
+          <Node
+            title="Save findings to database"
+            icon={<DatabaseIcon />}
+            center
+            tone="neutral"
+            className={STEP_W}
+          />
+          {/* Balances the stem above so the box sits on the row's centre line,
+              level with the Human review box beside it. */}
+          <div className="grow" />
+        </div>
+        <div className="min-w-0 md:flex md:items-center">
+          <div className="md:hidden">
+            <Down />
+          </div>
+          <div className="hidden md:block">
+            <Right />
+          </div>
+          <Node
+            title="Human review"
+            icon={<HumanIcon />}
+            sub="Humans review each finding in our rapid review web application. Human feedback on findings, including marking of false positives, is stored in the database to help inform improvements to the system. A human decides whether to submit to PubPeer or email the authors or an editor, and all PubPeer comments and emails are human-written, not AI-written."
+            center
+            tone="ink"
+            className="mx-auto w-full max-w-[21rem] md:mx-0"
+          />
+        </div>
       </div>
     </div>
   );

@@ -24,13 +24,15 @@ Reported statistics are internally redundant: a mean of integer-scaled responses
 
 
 ## The oversight problem
+The number of scientific papers being published each year is growing exponentially with a doubling time of [approximately 10 years](https://www.crossref.org/blog/2026-public-data-file-now-available/#:~:text=12.7%20million%20new%20records%20(a%207.6%25%20increase%20since%20last%20year).). Meanwhile, the number of fake papermill papers being published has been estimated to be doubling [every 1.5 years](https://www.pnas.org/doi/10.1073/pnas.2420092122). AI tools make it easier than ever for fraudsters to commit research fraud. 
 
+Meanwhile, our ability to detect fraud has been constant or decreasing. A handful of largely unpaid image slueths appear to be responsible for most detections of image fraud thus far.  
 
-Detection capacity is shrinking as the problem grows. The Office of Research Integrity's output has collapsed — 2025 produced the fewest misconduct findings in its 32 years of record — and [NSF's Office of Inspector General stopped investigating research misconduct in early 2025](https://www.science.org/content/article/exclusive-nsf-watchdog-unit-no-longer-investigating-research-misconduct), referring all allegations back to the grantee institutions.
+The Office of Research Integrity's output has collapsed — 2025 produced the fewest misconduct findings in its 32 years of record — and [NSF's Office of Inspector General stopped investigating research misconduct in early 2025](https://www.science.org/content/article/exclusive-nsf-watchdog-unit-no-longer-investigating-research-misconduct), referring all allegations back to the grantee institutions.
 
 <!-- ORI_CHART -->
 
-Nor can peer review be counted on to catch problems: in four independent studies in biomedicine that deliberately inserted errors into manuscripts, peer reviewers caught only 25–35% of them (e.g., [Schroter et al. 2008](https://doi.org/10.1258/jrsm.2008.080062)).
+Peer review is useful, but the peer review system is under increasing strain. Studies indicate that peer reviewers do a very incomplete job when it comes to catching serious errors. Across [four](https://doi.org/10.1001/jama.280.3.237) [independent](https://www.bmj.com/content/bmj/328/7441/673.full.pdf) [studies](https://journals.sagepub.com/doi/full/10.1258/jrsm.2008.080062) [in biomedicine](https://www.sciencedirect.com/science/article/abs/pii/S019606449870006X) where researchers deliberately inserted errors into manuscripts, peer reviewers only caught 25–35% of them.
 
 
 ## Where this agent fits in AI for research integrity landscape

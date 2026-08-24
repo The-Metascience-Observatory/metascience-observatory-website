@@ -11,6 +11,22 @@ import type { ReactNode } from "react";
 
 export type Tone = "neutral" | "ink" | "accent" | "warn" | "muted" | "dark";
 
+/**
+ * One arrowhead size and one colour for every connector in every diagram.
+ *
+ * The colour is semi-transparent, so two shapes that overlap paint it twice and
+ * the seam reads darker than the rest of the line. Every connector below is
+ * therefore drawn butt-to-butt: the shaft stops exactly at HEAD_LEN, where the
+ * head's flat base begins, rather than running on underneath it.
+ *
+ * `Stem` repeats the 3px as a Tailwind class (`w-[3px]`) because the class has
+ * to be a literal for the JIT to emit it.
+ */
+const HEAD_LEN = 11;
+const HEAD_W = 14;
+const LINE = "text-foreground/70";
+const LINE_PX = 3;
+
 const TONE: Record<Tone, string> = {
   neutral: "border-foreground/75 bg-white text-foreground",
   ink: "border-black bg-white text-foreground",
@@ -189,18 +205,46 @@ export function Down({ label, h = 38 }: { label?: string; h?: number }) {
           x1="12"
           y1="0"
           x2="12"
-          y2={h - 9}
+          y2={h - HEAD_LEN}
           stroke="currentColor"
-          className="text-foreground/70"
-          strokeWidth="3"
+          className={LINE}
+          strokeWidth={LINE_PX}
         />
-        <path d={`M12 ${h} l-7 -11 h14 z`} fill="currentColor" className="text-foreground/70" />
+        <path
+          d={`M12 ${h} l-${HEAD_W / 2} -${HEAD_LEN} h${HEAD_W} z`}
+          fill="currentColor"
+          className={LINE}
+        />
       </svg>
       {label && (
         <span className="absolute left-1/2 top-1/2 ml-4 -translate-y-1/2 whitespace-nowrap text-[10px] font-semibold uppercase tracking-wide text-foreground/55">
           {label}
         </span>
       )}
+    </div>
+  );
+}
+
+/** A straight horizontal arrow between two side-by-side boxes. Mirrors `Down`. */
+export function Right({ w = 38 }: { w?: number }) {
+  return (
+    <div className="flex shrink-0 items-center" style={{ width: w }} aria-hidden>
+      <svg width={w} height="24" viewBox={`0 0 ${w} 24`} className="overflow-visible">
+        <line
+          x1="0"
+          y1="12"
+          x2={w - HEAD_LEN}
+          y2="12"
+          stroke="currentColor"
+          className={LINE}
+          strokeWidth={LINE_PX}
+        />
+        <path
+          d={`M ${w} 12 l -${HEAD_LEN} -${HEAD_W / 2} v ${HEAD_W} z`}
+          fill="currentColor"
+          className={LINE}
+        />
+      </svg>
     </div>
   );
 }
@@ -225,36 +269,45 @@ export function Stem() {
 export function Fan({ n, dir, h = 46 }: { n: number; dir: "out" | "in"; h?: number }) {
   const W = 1000;
   const cols = Array.from({ length: n }, (_, i) => ((i + 0.5) / n) * W);
+  const heads = dir === "out" ? cols : [W / 2];
   return (
-    <svg
-      viewBox={`0 0 ${W} ${h}`}
-      preserveAspectRatio="none"
-      className="h-[46px] w-full text-foreground/70"
-      aria-hidden
-    >
-      {cols.map((x, i) => (
-        <path
+    /*
+      The curves stretch to the container (preserveAspectRatio="none"), which
+      would stretch a filled arrowhead with them — wider on a wide screen,
+      pinched on a phone, and never matching `Down`. So the heads are siblings
+      positioned by percentage instead, at the size every other connector uses.
+    */
+    <div className="relative w-full" style={{ height: h }} aria-hidden>
+      <svg viewBox={`0 0 ${W} ${h}`} preserveAspectRatio="none" className={`h-full w-full ${LINE}`}>
+        {cols.map((x, i) => (
+          <path
+            key={i}
+            d={
+              dir === "out"
+                ? `M ${W / 2} 0 C ${W / 2} ${h * 0.55}, ${x} ${h * 0.45}, ${x} ${h - HEAD_LEN}`
+                : `M ${x} 0 C ${x} ${h * 0.55}, ${W / 2} ${h * 0.45}, ${W / 2} ${h - HEAD_LEN}`
+            }
+            stroke="currentColor"
+            strokeWidth={LINE_PX}
+            fill="none"
+            vectorEffect="non-scaling-stroke"
+          />
+        ))}
+      </svg>
+      {heads.map((x, i) => (
+        <svg
           key={i}
-          d={
-            dir === "out"
-              ? `M ${W / 2} 0 C ${W / 2} ${h * 0.55}, ${x} ${h * 0.45}, ${x} ${h - 6}`
-              : `M ${x} 0 C ${x} ${h * 0.55}, ${W / 2} ${h * 0.45}, ${W / 2} ${h - 6}`
-          }
-          stroke="currentColor"
-          strokeWidth="3"
-          fill="none"
-          vectorEffect="non-scaling-stroke"
-        />
+          width={HEAD_W}
+          height={HEAD_LEN}
+          viewBox={`0 0 ${HEAD_W} ${HEAD_LEN}`}
+          className={`absolute bottom-0 block -translate-x-1/2 ${LINE}`}
+          style={{ left: `${(x / W) * 100}%` }}
+        >
+          <path d={`M${HEAD_W / 2} ${HEAD_LEN} L0 0 H${HEAD_W} z`} fill="currentColor" />
+        </svg>
       ))}
-      {dir === "out"
-        ? cols.map((x, i) => <ArrowAt key={i} x={x} y={h} />)
-        : <ArrowAt x={W / 2} y={h} />}
-    </svg>
+    </div>
   );
-}
-
-function ArrowAt({ x, y }: { x: number; y: number }) {
-  return <path d={`M ${x} ${y} l -11 -12 h 22 z`} fill="currentColor" />;
 }
 
 /** A labelled band wrapping a group of nodes — used for "these run concurrently". */
