@@ -2,7 +2,7 @@
 
 <!-- FINDINGS_CTA -->
 
-The Forensic Metascience Agent is an AI agent equipped with 58 tools for "sanity checking" the statistics and data presented in scientific papers. Much of it is based directly off of James Heathers' book [*An Introduction to Forensic Metascience*](https://doi.org/10.5281/zenodo.14871843).
+The Forensic Metascience Agent is an AI agent equipped with 40+ tools for "sanity checking" the statistics and data presented in scientific papers. Many of these tools are dervived from techniques described in James Heathers' book [*An Introduction to Forensic Metascience*](https://doi.org/10.5281/zenodo.14871843).
 
 
 Reported statistics are internally redundant: a mean of integer-scaled responses can only take certain values for a given sample size; a standard deviation is bounded by the range of the measurement; a t-statistic, its degrees of freedom, and its p-value must agree with one another; two "independent" studies should not report identical means and standard deviations down to the second decimal place. When the reported numbers violate these constraints, something is wrong — a typo, a copy-paste slip, a miscalculation, or worse.
@@ -20,11 +20,7 @@ Reported statistics are internally redundant: a mean of integer-scaled responses
 
 ## The slop problem
 
-None of this needs to be fraud in the classic sense. Open datasets like NHANES and UK Biobank are legitimate, valuable resources; the problem is the industrialized workflow: pick one exposure and one outcome, run a regression, skip the multiple-testing correction, and let a language model write the manuscript. Each paper looks plausible on its own — one journal editor described receiving ["one a day, sometimes even two a day"](https://www.nature.com/articles/d41586-025-02241-2) — and some publishers have begun [cracking down on open-dataset submissions entirely](https://www.science.org/content/article/journals-and-publishers-crack-down-research-open-health-data-sets). Suchak and colleagues systematically searched for that formulaic NHANES pattern: 341 single-association papers over a decade, almost all of them after ChatGPT.
-
 <!-- NHANES_CHARTS -->
-
-The fingerprints of language models are all over the surge. By late 2024, an estimated [22.5% of computer-science abstracts showed signs of LLM writing](https://doi.org/10.1038/s41562-025-02273-8); published papers have been caught containing leftovers like "regenerate response" and "as an AI language model, I cannot…"; and nonsense phrases such as ["vegetative electron microscopy" — a "digital fossil" born from a scanning error in AI training data](https://theconversation.com/a-weird-phrase-is-plaguing-scientific-papers-and-we-traced-it-back-to-a-glitch-in-ai-training-data-254463) — now propagate through the literature. Meanwhile the number of papers published per year grew [~47% between 2016 and 2022, far outpacing the growth in the number of scientists](https://doi.org/10.1162/qss_a_00327), and a [PNAS analysis](https://doi.org/10.1073/pnas.2420092122) finds that corrective measures — retractions, PubPeer flags — are doubling less than half as fast as paper-mill output. The correction system is being outrun.
 
 
 ## The oversight problem
@@ -34,7 +30,7 @@ Detection capacity is shrinking as the problem grows. The Office of Research Int
 
 <!-- ORI_CHART -->
 
-Nor can peer review be counted on to catch problems: in four independent studies in biomedicine that deliberately inserted errors into manuscripts, peer reviewers caught only 25–35% of them (e.g., [Schroter et al. 2008](https://doi.org/10.1258/jrsm.2008.080062)). The checking has to come from somewhere else.
+Nor can peer review be counted on to catch problems: in four independent studies in biomedicine that deliberately inserted errors into manuscripts, peer reviewers caught only 25–35% of them (e.g., [Schroter et al. 2008](https://doi.org/10.1258/jrsm.2008.080062)).
 
 
 ## Where this agent fits in AI for research integrity landscape

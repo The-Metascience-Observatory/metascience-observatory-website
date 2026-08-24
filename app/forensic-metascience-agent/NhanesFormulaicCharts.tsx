@@ -10,8 +10,6 @@ import {
   CartesianGrid,
   LabelList,
   Legend,
-  LineChart,
-  Line,
 } from "recharts";
 
 const NAVY = "#1a5276";
@@ -32,11 +30,6 @@ export interface NhanesYearDatum {
 export interface NhanesFormulaicData {
   source: { citation: string; doi: string; note: string };
   byYear: NhanesYearDatum[];
-}
-
-function formatFold(n: number): string {
-  if (n >= 10) return `${Math.round(n)}×`;
-  return `${n.toFixed(1).replace(/\.0$/, "")}×`;
 }
 
 function SourceNote({ extra }: { extra?: string }) {
@@ -81,33 +74,6 @@ function ExplosionTooltip({
   );
 }
 
-function IndexedTooltip({
-  active,
-  payload,
-  label,
-}: {
-  active?: boolean;
-  payload?: Array<{ payload: IndexedRow; dataKey: string; value: number }>;
-  label?: string | number;
-}) {
-  if (!active || !payload?.length) return null;
-  const row = payload[0].payload;
-  return (
-    <div className="rounded border border-border bg-white px-3 py-2 text-xs shadow-sm">
-      <p className="font-medium text-foreground">
-        {label}
-        {row.partial ? " (through 9 Oct)" : ""}
-      </p>
-      <p className="mt-1" style={{ color: NAVY }}>
-        Formulaic NHANES papers: {row.papers.toLocaleString()} ({formatFold(row.nhanesFold)} vs 2014)
-      </p>
-      <p style={{ color: GRAY }}>
-        PubMed “biobank”: {row.biobank.toLocaleString()} ({formatFold(row.biobankFold)} vs 2014)
-      </p>
-    </div>
-  );
-}
-
 function ExplosionChart({ data }: { data: NhanesYearDatum[] }) {
   const chartData = data.map((d) => ({
     ...d,
@@ -120,8 +86,7 @@ function ExplosionChart({ data }: { data: NhanesYearDatum[] }) {
           Formulaic single-factor NHANES papers per year
         </span>
         <span className="block text-sm text-foreground/70 mt-1">
-          341 papers, each testing one predictor against one health outcome. An average of 4 per year
-          from 2014–2021; 190 in 2024* through 9 October. ChatGPT launched November 2022.
+          NHANES = National Health and Nutrition Examination Survey
         </span>
       </figcaption>
       <ResponsiveContainer width="100%" height={340}>
@@ -160,105 +125,6 @@ function ExplosionChart({ data }: { data: NhanesYearDatum[] }) {
   );
 }
 
-interface IndexedRow extends NhanesYearDatum {
-  nhanesFold: number;
-  biobankFold: number;
-  nhanesFoldLabel?: string;
-  biobankFoldLabel?: string;
-}
-
-function IndexedChart({ data }: { data: NhanesYearDatum[] }) {
-  const baseNhanes = data.find((d) => d.year === 2014)?.papers ?? 2;
-  const baseBiobank = data.find((d) => d.year === 2014)?.biobank ?? 1120;
-  const chartData: IndexedRow[] = data.map((d) => {
-    const nhanesFold = d.papers / baseNhanes;
-    const biobankFold = d.biobank / baseBiobank;
-    return {
-      ...d,
-      nhanesFold,
-      biobankFold,
-      nhanesFoldLabel: d.year === 2024 ? formatFold(nhanesFold) : undefined,
-      biobankFoldLabel: d.year === 2024 ? formatFold(biobankFold) : undefined,
-    };
-  });
-  return (
-    <figure className="mx-auto w-full md:w-4/5 border border-black rounded-lg bg-white p-6 my-8">
-      <figcaption className="mb-3">
-        <span className="block text-lg font-semibold text-foreground">
-          Not just more health-data papers: 95× vs 5×
-        </span>
-        <span className="block text-sm text-foreground/70 mt-1">
-          Formulaic NHANES papers versus every PubMed hit for “biobank”, both indexed to 2014. The
-          wider literature grew; this workflow exploded.
-        </span>
-      </figcaption>
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={chartData} margin={{ left: 8, right: 16, top: 24, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-          <XAxis
-            dataKey="year"
-            type="category"
-            interval="preserveStartEnd"
-            minTickGap={16}
-            tickMargin={6}
-            fontSize={12}
-            tickLine={false}
-            tickFormatter={(y: number) => (y === 2024 ? "2024*" : String(y))}
-          />
-          <YAxis
-            type="number"
-            domain={[0, 120]}
-            ticks={[0, 20, 40, 60, 80, 100]}
-            tickFormatter={(v: number) => (v === 0 ? "0" : `${v}×`)}
-            fontSize={12}
-            width={44}
-          />
-          <Tooltip content={<IndexedTooltip />} />
-          <Legend
-            iconType="plainline"
-            wrapperStyle={{ fontSize: 12, paddingTop: 8 }}
-            formatter={(value: string) => (
-              <span className="text-foreground/70">
-                {value === "nhanesFold"
-                  ? "Formulaic NHANES papers"
-                  : "PubMed papers on “biobank”"}
-              </span>
-            )}
-          />
-          <Line
-            type="linear"
-            dataKey="biobankFold"
-            name="biobankFold"
-            stroke={GRAY}
-            strokeWidth={2}
-            dot={{ r: 3, fill: GRAY, stroke: GRAY }}
-            activeDot={{ r: 5 }}
-          >
-            <LabelList dataKey="biobankFoldLabel" position="top" fontSize={11} fill={GRAY} />
-          </Line>
-          <Line
-            type="linear"
-            dataKey="nhanesFold"
-            name="nhanesFold"
-            stroke={NAVY}
-            strokeWidth={2.5}
-            dot={{ r: 3.5, fill: NAVY, stroke: NAVY }}
-            activeDot={{ r: 5 }}
-          >
-            <LabelList dataKey="nhanesFoldLabel" position="top" fontSize={11} fill={NAVY} />
-          </Line>
-        </LineChart>
-      </ResponsiveContainer>
-      <SourceNote extra="Both series are through 9 October 2024 (2024*). Indexed to 2014 = 1×." />
-    </figure>
-  );
-}
-
 export function NhanesFormulaicCharts({ data }: { data: NhanesFormulaicData }) {
-  return (
-    <>
-      <ExplosionChart data={data.byYear} />
-      <IndexedChart data={data.byYear} />
-    </>
-  );
+  return <ExplosionChart data={data.byYear} />;
 }

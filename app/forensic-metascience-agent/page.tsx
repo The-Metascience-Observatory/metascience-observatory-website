@@ -103,6 +103,13 @@ const fraudStats: Stat[] = [
     source: "James Heathers' 2024 'non-systematic' review",
     href: "https://metaror.org/kotahi/articles/18/index.html",
   },
+  {
+    value: "53.7%",
+    claim:
+      "of 6,200 medical residents in China admit to having committed at least one form of research misconduct.",
+    source: "Chen et al. 2024",
+    href: "https://link.springer.com/article/10.1186/s12909-024-05277-6",
+  },
 ];
 
 const errorStats: Stat[] = [
@@ -114,14 +121,14 @@ const errorStats: Stat[] = [
   },
   {
     value: "1 in 8",
-    claim: "psychology papers contain an error that flips the significance conclusion",
+    claim: "psychology papers contain an error that flips the significance of a conclusion",
     source: "Nuijten et al. 2016",
     href: "https://doi.org/10.3758/s13428-015-0664-2",
   },
   {
     value: "~50%",
-    claim: "of GRIM-testable psychology papers contain an impossible mean",
-    source: "Brown & Heathers 2017; 36 of 71 testable papers",
+    claim: "of 71 GRIM-testable psychology papers contain an impossible mean",
+    source: "Brown & Heathers 2017",
     href: "https://doi.org/10.1177/1948550616673876",
   },
   {
@@ -133,10 +140,10 @@ const errorStats: Stat[] = [
 ];
 
 // One tone for both grids: the fraud and rigor statistics are the same kind of
-// claim and were reading as two unrelated sections. `text-cyan-900` is the
-// darker teal already used by this page's CTAs, so the numbers now match the
-// rest of the page's accent rather than introducing a third colour.
-const STAT_CARD = "bg-sky-50";
+// claim and were reading as two unrelated sections. They carry the site-primary
+// teal so the numbers match the page's main accent; the findings CTA takes the
+// contrasting blue instead, which keeps it distinct from the statistics.
+const STAT_CARD = "bg-primary/5";
 const STAT_VALUE = "text-cyan-900";
 
 function StatGrid({ stats }: { stats: Stat[] }) {
@@ -415,9 +422,9 @@ export default function ForensicAgentToolkitPage() {
             <MarkdownContent content={intro} anchorHeadings />
             <Link
               href="/forensic-metascience-agent/findings"
-              className="group flex flex-col gap-2 rounded-lg border border-black bg-primary/5 p-5 hover:shadow-md transition-shadow"
+              className="group flex flex-col gap-2 rounded-lg border border-black bg-sky-50 p-5 hover:shadow-md transition-shadow"
             >
-              <span className="font-clarendon font-semibold text-lg text-cyan-900 leading-snug text-center">
+              <span className="font-clarendon font-semibold text-lg text-sky-900 leading-snug text-center">
                 See findings and 
                 <br />
                 PubPeer comments
@@ -425,7 +432,7 @@ export default function ForensicAgentToolkitPage() {
               <svg
                 aria-hidden
                 viewBox="0 0 32 24"
-                className="h-9 w-12 text-cyan-900 self-center transition-transform group-hover:translate-x-1"
+                className="h-9 w-12 text-sky-900 self-center transition-transform group-hover:translate-x-1"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth={3}
