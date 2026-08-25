@@ -2,10 +2,8 @@
 
 <!-- FINDINGS_CTA -->
 
-The Forensic Metascience Agent is an AI agent equipped with 40+ tools for "sanity checking" the statistics and data presented in scientific papers. Many of these tools are dervived from techniques described in James Heathers' book [*An Introduction to Forensic Metascience*](https://doi.org/10.5281/zenodo.14871843).
+The "Forensic Metascience Agent" is actually an orchestration system that ochestrates several AI agents to perform a deep forensic audit of a scientific paper. The full system checks images, text, and data in both the paper and supplementary files. Central to the system is the tools agent, which is equipped with 40+ tools for "sanity checking" the statistics and data presented in scientific papers. Many of the tools are dervived from techniques described in James Heathers' book [*An Introduction to Forensic Metascience*](https://doi.org/10.5281/zenodo.14871843). 
 
-
-Reported statistics are internally redundant: a mean of integer-scaled responses can only take certain values for a given sample size; a standard deviation is bounded by the range of the measurement; a t-statistic, its degrees of freedom, and its p-value must agree with one another; two "independent" studies should not report identical means and standard deviations down to the second decimal place. When the reported numbers violate these constraints, something is wrong — a typo, a copy-paste slip, a miscalculation, or worse.
 
 <!-- INTRO_END -->
 
