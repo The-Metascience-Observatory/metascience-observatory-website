@@ -34,4 +34,6 @@ Here are the general principles behind how we do a Bird’s Eye Review: 
 *   Russian set of approved drugs (State Pharmacopoeia) and investigational drugs different than in “the West”. So including studies published in Russia should pick up novel treatments.
 
 
-== The Bird's Eye Review Studio == 
+## The Bird's Eye Review Studio
+
+At [http://birdseyereviews.com](http://birdseyereviews.com) we will be opening up our platform to beta testers... stay tuned!! 
