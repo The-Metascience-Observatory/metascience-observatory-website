@@ -455,7 +455,14 @@ export function ArmRateCharts({
     // 1700px viewport the content area (minus the page's 2xl side padding)
     // gives each column ~680px, a barely-noticeable scale-down. Below that,
     // one centered column.
-    <div className="grid grid-cols-1 min-[1700px]:grid-cols-2 gap-x-6 items-start">
+    //
+    // The grid is capped at exactly two card widths (2 x 752px + the 24px
+    // gap; a card is the 720px chart plus its sm:p-4 padding) and centered.
+    // Without the cap each 1fr column stretches to half of this page's
+    // full-bleed width and the w-fit cards float to the middle of their own
+    // column, opening a canyon of dead space between the two columns on a
+    // wide monitor.
+    <div className="grid grid-cols-1 min-[1700px]:grid-cols-2 gap-x-6 items-start mx-auto max-w-[1528px]">
       <Scatter
         title="Rate of weight change vs elemental lithium dose"
         subtitle={`${dosePts.length} lithium arms reporting a kg change from baseline, a treatment length, and a daily dose. Rate = reported change ÷ weeks of treatment.`}

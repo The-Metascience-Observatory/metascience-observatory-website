@@ -106,6 +106,21 @@ export const postedFindings: Finding[] = [
     pubpeerUrl: "https://pubpeer.com/publications/8C8CCFA71C47A79F8921F3483FF9F7#1",
     submitted: "August 16, 2026",
   },
+  {
+    title:
+      "Long range early diagnosis of Alzheimer’s disease using longitudinal MR imaging data",
+    authors: "Zhu Y, Kim M, Zhu X, et al.",
+    journal: "Medical Image Analysis",
+    volume: "67",
+    pages: "101825",
+    year: 2021,
+    doi: "10.1016/j.media.2020.101825",
+    summary:
+      "Two very minor issues: a faulty/nonsensical reference and misreporting AUC as accuracy.",
+    status: "posted",
+    pubpeerUrl: "https://pubpeer.com/publications/56338A38FCB871196280FFEB679231#1",
+    submitted: "August 25, 2026",
+  },
 ];
 
 export const otherFindings: Finding[] = [

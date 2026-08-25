@@ -216,83 +216,90 @@ export function ResultsClientWrapper({
 
   return (
     <div>
-      <FacetCard
-        title="Filter by study design"
-        values={allDesigns}
-        counts={designCounts}
-        labelOf={formatLabel}
-        selected={selDesign}
-        onChange={setSelDesign}
-        filteredCount={filtered.length}
-        totalCount={exceptDesign.length}
-      />
+      {/* This page runs full-bleed so its ten-column table has room, but the
+          filter cards are the same chips every other Bird's Eye Review shows
+          and were stretching to the full width of a wide monitor. Cap them at
+          the ~1024px the shared `container` gives those pages, left-aligned
+          with the page heading. The table below stays full width. */}
+      <div className="max-w-[1024px]">
+        <FacetCard
+          title="Filter by study design"
+          values={allDesigns}
+          counts={designCounts}
+          labelOf={formatLabel}
+          selected={selDesign}
+          onChange={setSelDesign}
+          filteredCount={filtered.length}
+          totalCount={exceptDesign.length}
+        />
 
-      <FacetCard
-        title="Filter by risk of bias"
-        values={allRobs}
-        counts={robCounts}
-        labelOf={formatLabel}
-        selected={selRob}
-        onChange={setSelRob}
-        filteredCount={filtered.length}
-        totalCount={exceptRob.length}
-      />
+        <FacetCard
+          title="Filter by risk of bias"
+          values={allRobs}
+          counts={robCounts}
+          labelOf={formatLabel}
+          selected={selRob}
+          onChange={setSelRob}
+          filteredCount={filtered.length}
+          totalCount={exceptRob.length}
+        />
 
-      <FacetCard
-        title="Filter by intervention"
-        values={INTERVENTION_ORDER.filter((k) => trials.some((t) => t.interventions.includes(k)))}
-        counts={interventionCounts}
-        labelOf={(k) => INTERVENTION_LABELS[k] ?? formatLabel(k)}
-        selected={selIntervention}
-        onChange={setSelIntervention}
-        filteredCount={filtered.length}
-        totalCount={exceptIntervention.length}
-        note={
-          <>
-            &ldquo;Lithium carbonate&rdquo; includes studies that never state the salt —
-            in bipolar populations an unstated salt is read as carbonate. A study with
-            both a monotherapy and an adjunctive arm appears under both buckets.
-          </>
-        }
-      />
+        <FacetCard
+          title="Filter by intervention"
+          values={INTERVENTION_ORDER.filter((k) => trials.some((t) => t.interventions.includes(k)))}
+          counts={interventionCounts}
+          labelOf={(k) => INTERVENTION_LABELS[k] ?? formatLabel(k)}
+          selected={selIntervention}
+          onChange={setSelIntervention}
+          filteredCount={filtered.length}
+          totalCount={exceptIntervention.length}
+          note={
+            <>
+              &ldquo;Lithium carbonate&rdquo; includes studies that never state the salt —
+              in bipolar populations an unstated salt is read as carbonate. A study with
+              both a monotherapy and an adjunctive arm appears under both buckets.
+            </>
+          }
+        />
 
-      <FacetCard
-        title="Filter by setting"
-        values={SETTING_ORDER.filter((k) => trials.some((t) => t.setting === k))}
-        counts={settingCounts}
-        labelOf={(k) => SETTING_LABELS[k] ?? formatLabel(k)}
-        selected={selSetting}
-        onChange={setSelSetting}
-        filteredCount={filtered.length}
-        totalCount={exceptSetting.length}
-      />
+        <FacetCard
+          title="Filter by setting"
+          values={SETTING_ORDER.filter((k) => trials.some((t) => t.setting === k))}
+          counts={settingCounts}
+          labelOf={(k) => SETTING_LABELS[k] ?? formatLabel(k)}
+          selected={selSetting}
+          onChange={setSelSetting}
+          filteredCount={filtered.length}
+          totalCount={exceptSetting.length}
+        />
 
-      <FacetCard
-        title="Filter by psychiatric diagnosis"
-        values={DIAGNOSIS_ORDER.filter((k) => trials.some((t) => t.diagnosis === k))}
-        counts={diagnosisCounts}
-        labelOf={(k) => DIAGNOSIS_LABELS[k] ?? formatLabel(k)}
-        selected={selDiagnosis}
-        onChange={setSelDiagnosis}
-        filteredCount={filtered.length}
-        totalCount={exceptDiagnosis.length}
-        note={
-          <>
-            The population the study enrolled — &ldquo;healthy volunteers&rdquo; are
-            mostly small physiology and pharmacokinetic studies.
-          </>
-        }
-      />
+        <FacetCard
+          title="Filter by psychiatric diagnosis"
+          values={DIAGNOSIS_ORDER.filter((k) => trials.some((t) => t.diagnosis === k))}
+          counts={diagnosisCounts}
+          labelOf={(k) => DIAGNOSIS_LABELS[k] ?? formatLabel(k)}
+          selected={selDiagnosis}
+          onChange={setSelDiagnosis}
+          filteredCount={filtered.length}
+          totalCount={exceptDiagnosis.length}
+          note={
+            <>
+              The population the study enrolled — &ldquo;healthy volunteers&rdquo; are
+              mostly small physiology and pharmacokinetic studies.
+            </>
+          }
+        />
 
-      {/* Country — always last, per house convention */}
-      <CountryFilterCard
-        allCountries={countriesOf(exceptCountry)}
-        allCountryNames={[...new Set(trials.flatMap((t) => t.countries))]}
-        selectedCountries={selCountries}
-        onSelectionChange={setSelCountries}
-        filteredCount={filtered.length}
-        totalCount={exceptCountry.length}
-      />
+        {/* Country — always last, per house convention */}
+        <CountryFilterCard
+          allCountries={countriesOf(exceptCountry)}
+          allCountryNames={[...new Set(trials.flatMap((t) => t.countries))]}
+          selectedCountries={selCountries}
+          onSelectionChange={setSelCountries}
+          filteredCount={filtered.length}
+          totalCount={exceptCountry.length}
+        />
+      </div>
 
       {/* Arm-level charts obey the same filters: a point survives only when
           its parent study is in the current table selection. */}
