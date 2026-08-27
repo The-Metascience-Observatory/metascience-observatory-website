@@ -98,7 +98,7 @@ const fraudStats: Stat[] = [
     href: "https://doi.org/10.1111/anae.15263",
   },
   {
-    value: "roughly 14%",
+    value: "~14%",
     claim: "papers contain some form of anomalous / highly questionable data",
     source: "James Heathers' 2024 'highly non-systematic' review",
     href: "https://metaror.org/kotahi/articles/18/index.html",
