@@ -7,7 +7,7 @@ The "Forensic Metascience Agent" is actually an orchestration system that ochest
 
 <!-- INTRO_END -->
 
-## The fraud problem
+## The data integrity problem
 
 <!-- FRAUD_STATS -->
 
