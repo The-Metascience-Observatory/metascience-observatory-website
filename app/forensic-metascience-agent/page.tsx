@@ -99,7 +99,7 @@ const fraudStats: Stat[] = [
   },
   {
     value: "~14%",
-    claim: "papers contain some form of fabricated or improperly altered data.",
+    claim: "papers contain some form of anomalous / highly questionable data",
     source: "James Heathers' 2024 'highly non-systematic' review",
     href: "https://metaror.org/kotahi/articles/18/index.html",
   },
