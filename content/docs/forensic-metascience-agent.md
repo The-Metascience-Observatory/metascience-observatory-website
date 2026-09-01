@@ -57,8 +57,8 @@ A small arithmetical anomaly can have big consequences. For instance, in [Ladurn
 
 ## What should be reported, and how? 
 
-Ideally there would be a central location where errors could be recorded and surfaced. Imagine if every PDF had a pane that surfaced validated mistakes and issues.  
+Ideally there would be a central location where errors could be recorded and surfaced. Imagine if every PDF had a pane that surfaced validated mistakes and issues along with comments from experts in your field. 
 
-Currently, we have to make tough judgement calls regarding when to report errors to PubPeer and when to email an editor to push for an erratum or retraction. 
+Currently, we have to make tough judgement calls regarding when to report errors to PubPeer and when to email an editor to push for an erratum or retraction. Our AI system ranks every finding on a [severity ladder](/forensic-metascience-agent/severity-ladder) which helps with triage. 
 
 A running list of what the agent has found — including the comments we have posted on PubPeer — is on the **[Findings & PubPeer comments](/forensic-metascience-agent/findings)** page.
