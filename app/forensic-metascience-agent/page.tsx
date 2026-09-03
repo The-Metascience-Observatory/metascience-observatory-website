@@ -6,7 +6,6 @@ import { csvParse } from "d3-dsv";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
-import { DocsBackLink } from "@/components/DocsBackLink";
 import { MarkdownContent } from "@/components/MarkdownContent";
 import { HeadingAnchor } from "@/components/HeadingAnchor";
 import { OriFindingsChart, OriYearDatum } from "./OriFindingsChart";
@@ -423,7 +422,6 @@ export default function ForensicAgentToolkitPage() {
       <Navbar />
       <main className="pt-20 pb-16">
         <div className="container mx-auto px-4 py-12">
-          <DocsBackLink href="/articles" label="return to articles" />
           <MarkdownContent content={beforeFindingsCta} anchorHeadings />
           <div className="grid grid-cols-1 md:grid-cols-[1fr_16rem] gap-6 items-start my-6">
             <MarkdownContent content={intro} anchorHeadings />

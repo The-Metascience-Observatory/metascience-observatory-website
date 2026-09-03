@@ -252,7 +252,7 @@ export default function ArticlesPage() {
             ))}
           </div>
 
-          <h2 className="text-2xl font-bold mt-16 mb-6 text-foreground">Articles</h2>
+          <h2 className="text-2xl font-bold mt-16 mb-6 text-foreground">Articles and Pages</h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {articles.map((article) => (
               <Link
