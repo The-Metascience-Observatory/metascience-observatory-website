@@ -97,12 +97,16 @@ export default function SeverityLadderPage() {
           </h1>
 
           <p className="mb-4 leading-relaxed text-foreground">
-            Every finding the agent reports carries a severity from 1 to 9. The number is not a
-            measure of how confident the agent is, and not a measure of how unusual the statistic
-            looks. It answers one question: <em>if this finding were confirmed, and it were the
-            only thing wrong with the paper, what would the journal have to do about it?</em> That
-            is why the rungs are named after outcomes — an erratum, a corrigendum, a retraction —
-            rather than after feelings about the paper.
+            Our "Forensic Metascience Agent" tags every finding with a severity score between 1 to 9. This ranking system was developed from the 1-11 severity ranking system developed at the{" "}
+            <a
+              href="https://the-black-spatula-project.github.io/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary underline hover:no-underline"
+            >
+              Black Spatula Project
+            </a>
+            .
           </p>
 
           <p className="mb-8 leading-relaxed text-foreground">
