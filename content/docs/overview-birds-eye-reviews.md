@@ -1,5 +1,7 @@
 # About Bird's Eye Reviews
 
+<!-- FIGURE -->
+
 [Bird's Eye Reviews](/birds-eye-reviews) are a new form of literature review that present information about scientific articles in an interactive dashboard. Bird’s Eye Reviews give people summary data on _all_ papers published on a given topic. Previously there has been no interface that enables what Bird’s Eye Reviews enable. 
 
 Here are some questions that Bird’s Eye Reviews can help answer: 

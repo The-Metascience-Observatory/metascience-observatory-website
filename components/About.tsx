@@ -6,6 +6,9 @@ interface ProjectMeta {
   href: string;
   title: string;
   description: string;
+  /** Optional second link shown after "Read more" — only Bird's Eye has one,
+   *  pointing at a finished review so visitors can see the output directly. */
+  extra?: { href: string; label: string };
 }
 
 const projects: ProjectMeta[] = [
@@ -26,6 +29,10 @@ const projects: ProjectMeta[] = [
     title: "Bird's Eye Reviews",
     description:
       "A new form of AI-powered high-level literature review where results are displayed in an interactive dashboard.",
+    extra: {
+      href: "/birds-eye-reviews/long-covid",
+      label: "View Long COVID review",
+    },
   },
 ];
 
@@ -82,6 +89,17 @@ export const About = () => {
                     >
                       Read more &rarr;
                     </Link>
+                    {project.extra && (
+                      <>
+                        <span className="px-2 text-foreground/40">&middot;</span>
+                        <Link
+                          href={project.extra.href}
+                          className="font-medium text-blue-600 hover:text-blue-700 underline"
+                        >
+                          {project.extra.label} &rarr;
+                        </Link>
+                      </>
+                    )}
                   </p>
                 </Card>
               ))}
