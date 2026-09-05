@@ -182,15 +182,17 @@ export function LongCovidDashboard(props: DashboardProps) {
   // matching to primary outcomes. Both go through facets.ts so counts and rows agree.
   const [domainPrimaryOnly, setDomainPrimaryOnly] = useState(false);
   const domainKey = domainPrimaryOnly ? "symptomDomain" : "outcomeDomain";
-  // Stable checkbox list: every domain any trial studied (independent of the toggle).
-  const allDomains = useMemo(
-    () => new Set(countDistinctTrials(props.trialMetas, "outcomeDomain").keys()),
+  // Stable checkbox list: every domain any trial studied, in a fixed order (by
+  // overall trial count) so boxes don't jump when the toggle or upstream filters change.
+  const domainOrder = useMemo(
+    () => [...countDistinctTrials(props.trialMetas, "outcomeDomain").entries()].sort((a, b) => b[1] - a[1]).map(([d]) => d),
     [props.trialMetas]
   );
+  const allDomains = useMemo(() => new Set(domainOrder), [domainOrder]);
   const domainCounts = useMemo(() => {
     const counts = countDistinctTrials(filteredMetas, domainKey);
-    return [...allDomains].map((d) => [d, counts.get(d) ?? 0] as [string, number]).sort((a, b) => b[1] - a[1]);
-  }, [filteredMetas, domainKey, allDomains]);
+    return domainOrder.map((d) => [d, counts.get(d) ?? 0] as [string, number]);
+  }, [filteredMetas, domainKey, domainOrder]);
   const [selectedDomains, setSelectedDomains] = useState<Set<string>>(
     () => new Set(countDistinctTrials(props.trialMetas, "outcomeDomain").keys())
   );
@@ -208,8 +210,10 @@ export function LongCovidDashboard(props: DashboardProps) {
     () => [...allDomains].every((d) => selectedDomains.has(d)),
     [allDomains, selectedDomains]
   );
+  // With every domain checked the filter is a no-op (so trials with no domain
+  // tags, or no tagged primary outcome under the toggle, are not silently dropped).
   const domainMatches = (m: { facets: FacetInput }) =>
-    (allDomainsSelected && !domainPrimaryOnly) ||
+    allDomainsSelected ||
     [...selectedDomains].some((d) => trialHasFacet(m.facets, domainKey, d));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const domainFilteredMetas = useMemo(() => filteredMetas.filter(domainMatches), [filteredMetas, selectedDomains, domainKey, allDomainsSelected]);
