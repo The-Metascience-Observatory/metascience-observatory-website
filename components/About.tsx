@@ -25,7 +25,7 @@ const projects: ProjectMeta[] = [
       "An AI agent equipped with 30+ tools for detecting statistical inconsistencies and data-integrity anomalies in scientific papers.",
   },
   {
-    href: "/overview-birds-eye-reviews",
+    href: "/birds-eye-reviews",
     title: "Bird's Eye Reviews",
     description:
       "A new form of AI-powered high-level literature review where results are displayed in an interactive dashboard.",

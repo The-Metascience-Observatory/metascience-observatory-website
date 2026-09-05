@@ -58,12 +58,17 @@ const nextConfig = {
       },
       {
         source: '/docs/about-birds-eye-reviews',
-        destination: '/overview-birds-eye-reviews',
+        destination: '/birds-eye-reviews',
         permanent: true,
       },
       {
         source: '/birds-eye-review-overview',
-        destination: '/overview-birds-eye-reviews',
+        destination: '/birds-eye-reviews',
+        permanent: true,
+      },
+      {
+        source: '/overview-birds-eye-reviews',
+        destination: '/birds-eye-reviews',
         permanent: true,
       },
       {
@@ -118,4 +123,3 @@ const nextConfig = {
 };
 
 export default nextConfig;
-

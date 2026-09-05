@@ -92,14 +92,27 @@ const DASH_BARS = [
   { x: 974, y: 164, h: 38, o: 0.75, d: 1.2 },
 ];
 
-function BirdGlyph({ scale }: { scale?: number }) {
+function BirdGlyph({ variant, scale = 1 }: { variant: "raven" | "swallow"; scale?: number }) {
   return (
-    <g className={styles.bird} transform={scale ? `scale(${scale})` : undefined}>
-      <path className={styles.wingL} d="M3,-2 C-2,-13 -2,-26 9,-38 C18,-29 13,-13 7,-2 Z" />
-      <path className={styles.wingR} d="M3,2 C-2,13 -2,26 9,38 C18,29 13,13 7,2 Z" />
-      <path d="M-16,0 C-8,-3.4 8,-3.6 18,0 C8,3.6 -8,3.4 -16,0 Z" />
-      <circle cx="19.5" cy="0" r="3.2" />
-      <path d="M-14,0 L-25,-5.5 L-21,0 L-25,5.5 Z" />
+    <g className={styles.bird} transform={`scale(${scale})`}>
+      {variant === "raven" ? (
+        <>
+          {/* Broad, feathered wings and a fan tail. */}
+          <path className={styles.wingL} d="M-9,-2 C-15,-12 -18,-23 -12,-36 L-8,-28 L-7,-40 L-2,-30 L2,-41 L5,-29 L11,-37 L10,-23 C12,-14 11,-7 7,-2 Z" />
+          <path className={styles.wingR} d="M-9,2 C-15,12 -18,23 -12,36 L-8,28 L-7,40 L-2,30 L2,41 L5,29 L11,37 L10,23 C12,14 11,7 7,2 Z" />
+          <path d="M-18,0 C-9,-6 7,-6 17,-3 L20,0 L17,3 C7,6 -9,6 -18,0 Z" />
+          <circle cx="18" cy="0" r="4.5" />
+          <path d="M20,-2.5 L29,0 L20,2.5 Z M-12,-3 L-29,-9 Q-34,0 -29,9 L-12,3 Z" />
+        </>
+      ) : (
+        <>
+          {/* Swept, pointed wings and the swallow's long forked tail. */}
+          <path className={styles.wingL} d="M-7,-2 Q-10,-18 -24,-39 Q-2,-29 9,-6 L10,-2 Z" />
+          <path className={styles.wingR} d="M-7,2 Q-10,18 -24,39 Q-2,29 9,6 L10,2 Z" />
+          <path d="M-18,0 Q-5,-5 14,-3 Q21,-3 23,0 Q21,3 14,3 Q-5,5 -18,0 Z" />
+          <path d="M20,-1.5 L28,0 L20,1.5 Z M-12,-2 L-36,-13 L-25,0 L-36,13 L-12,2 Z" />
+        </>
+      )}
     </g>
   );
 }
@@ -147,7 +160,7 @@ export function FunnelFigure() {
             </g>
 
             <text className={styles.svLabel} x="412" y="342" style={{ fill: "var(--exc)" }}>
-              excluded — reason logged
+              excluded
             </text>
 
             {/* flowing papers */}
@@ -184,7 +197,7 @@ export function FunnelFigure() {
 
             {/* evidence table: cells pop in as papers are absorbed */}
             <g>
-              <rect x="678" y="130" width="150" height="104" rx="6" fill="hsl(var(--card))" stroke="var(--card-line)" />
+              <rect x="678" y="130" width="150" height="104" rx="6" fill="hsl(var(--card))" stroke="#000" strokeWidth="1" />
               <line x1="678" y1="152" x2="828" y2="152" className={styles.glyphLine} />
               <rect x="686" y="138" width="52" height="6" rx="3" className={styles.pLine} />
               {TABLE_CELLS.map((c, i) => (
@@ -219,9 +232,23 @@ export function FunnelFigure() {
 
             {/* dashboard */}
             <g>
-              <rect x="900" y="122" width="118" height="120" rx="6" fill="hsl(var(--card))" stroke="var(--card-line)" />
+              <rect x="900" y="122" width="118" height="148" rx="6" fill="hsl(var(--card))" stroke="#000" strokeWidth="1" />
               <rect x="908" y="130" width="40" height="6" rx="3" className={styles.pLine} />
-              <g>
+              {/* Illustrative dashboard filters, toggling at staggered intervals. */}
+              <g aria-hidden="true">
+                {[0, 1, 2].map((i) => (
+                  <g key={i} transform={`translate(${908 + i * 35}, 145)`}>
+                    <rect width="10" height="10" rx="1.5" fill="hsl(var(--card))" stroke="#000" strokeWidth="1" />
+                    <path
+                      d="M2 5 L4 7 L8 2.5"
+                      className={styles.dashboardCheck}
+                      style={{ animationDelay: `${-i * 2}s`, "--checked": i === 1 ? 0 : 1 } as CSSProperties}
+                    />
+                    <rect x="14" y="4" width="13" height="3" rx="1.5" className={styles.pLine} />
+                  </g>
+                ))}
+              </g>
+              <g transform="translate(0, 26)">
                 {DASH_BARS.map((b) => (
                   <rect
                     key={b.x}
@@ -235,25 +262,25 @@ export function FunnelFigure() {
                     style={{ animationDelay: `${b.d}s` }}
                   />
                 ))}
-              </g>
               <line x1="908" y1="203" x2="1010" y2="203" className={styles.glyphLine} />
               <circle cx="922" cy="222" r="4" fill="var(--inc)" />
               <circle cx="946" cy="216" r="3" fill="hsl(var(--primary))" />
               <circle cx="966" cy="226" r="5" fill="hsl(var(--primary))" opacity="0.6" />
               <circle cx="992" cy="218" r="3.5" fill="var(--pend)" />
+              </g>
             </g>
 
             {/* the bird, surveying from above */}
             <g className={styles.birdFly} aria-hidden="true">
               <g className={styles.birdBob}>
-                <BirdGlyph />
+                <BirdGlyph variant="raven" />
               </g>
             </g>
 
             {/* a smaller companion, circling the published dashboard */}
             <g className={styles.fnOrbit} aria-hidden="true">
               <g className={styles.birdBob}>
-                <BirdGlyph scale={0.5} />
+                <BirdGlyph variant="swallow" scale={0.65} />
               </g>
             </g>
           </svg>

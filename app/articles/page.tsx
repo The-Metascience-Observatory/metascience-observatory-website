@@ -41,7 +41,7 @@ const projectOverviews: ArticleMeta[] = [
     alt: "Woodcut of a Crookes radiometer",
   },
   {
-    href: "/overview-birds-eye-reviews",
+    href: "/birds-eye-reviews",
     title: "Bird's Eye\nReviews",
     image: "/assets/woodcut_square_crops/flying_machine_square.png",
     alt: "Woodcut of an aerial flying machine",

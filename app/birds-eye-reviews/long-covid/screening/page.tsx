@@ -114,7 +114,7 @@ export default function ScreeningPage() {
   return (
     <>
       <BirdsEyeNavbar />
-      <main className="container mx-auto px-4 pt-24 pb-16 min-h-screen">
+      <main className="container mx-auto px-4 pt-24 pb-16 min-h-screen [--border:215_15%_76%]">
         <div className="mb-2">
           <Link
             href="/birds-eye-reviews/long-covid"
@@ -127,8 +127,6 @@ export default function ScreeningPage() {
         <h1 className="font-clarendon font-bold text-3xl mb-6">
           Trial Screening
         </h1>
-
-        {prisma && <PrismaDiagram counts={prisma} />}
 
         {prisma && <PrismaDiagram counts={prisma} />}
 

@@ -323,8 +323,22 @@ export function LongCovidDashboard(props: DashboardProps) {
 
       {/* Long Covid definition filter */}
       <div className={`mb-3 border border-border rounded-lg p-4 ${!(lcDefWho && lcDefBelow) ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`}>
-        <div className="flex items-center gap-3 mb-2">
+        <div className="flex flex-wrap items-center gap-3 mb-2">
           <span className="text-sm font-medium text-foreground">Filter by Long Covid definition</span>
+          <button
+            type="button"
+            onClick={() => { setLcDefWho(true); setLcDefBelow(true); }}
+            className="text-xs text-blue-600 hover:text-blue-700 ml-auto"
+          >
+            Select all
+          </button>
+          <button
+            type="button"
+            onClick={() => { setLcDefWho(false); setLcDefBelow(false); }}
+            className="text-xs text-blue-600 hover:text-blue-700"
+          >
+            Clear all
+          </button>
         </div>
         <div className="flex flex-wrap gap-x-4 gap-y-1.5">
           <label className={`inline-flex items-center gap-1.5 cursor-pointer text-sm rounded px-1.5 py-0.5 ${lcDefWho ? "" : "bg-foreground/[0.08]"}`}>
@@ -643,18 +657,36 @@ function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => v
           <ResponsiveContainer width="100%" height={350}>
             <BarChart
               data={props.blindingBySignificance}
+              stackOffset="expand"
               margin={{ left: 20, right: 20, top: 5, bottom: 5 }}
             >
               <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-              <XAxis dataKey="blinding" tickFormatter={formatCategory} />
-              <YAxis />
+              <XAxis
+                dataKey="blinding"
+                interval={0}
+                fontSize={12}
+                tickFormatter={(blinding: string) => {
+                  const group = props.blindingBySignificance.find((row) => row.blinding === blinding);
+                  const total = group ? group.significant + group.not_significant + group.unknown : 0;
+                  return `${formatCategory(blinding)} (N=${total})`;
+                }}
+              />
+              <YAxis
+                domain={[0, 1]}
+                ticks={[0, 0.25, 0.5, 0.75, 1]}
+                tickFormatter={(value: number) => `${Math.round(value * 100)}%`}
+                label={{ value: "% of trials", angle: -90, position: "insideLeft", fontSize: 12 }}
+              />
               <Tooltip
                 labelFormatter={formatCategory}
-                formatter={(val: number, name: string) => {
+                formatter={(val: number, name: string, item) => {
                   const label = name === "significant" ? "Significant (p < 0.05)"
                     : name === "not_significant" ? "Not significant"
                     : "No p-value reported";
-                  return [val, label];
+                  const row = item.payload;
+                  const total = row.significant + row.not_significant + row.unknown;
+                  const percent = total > 0 ? (val / total) * 100 : 0;
+                  return [`${percent.toFixed(1)}% (${val} trials)`, label];
                 }}
               />
               <Legend
@@ -664,8 +696,8 @@ function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => v
                     : "No p-value reported"
                 }
               />
-              {/* Stacked so each blinding bar's height = all its trials = the rows
-                  shown when the bar is clicked (every trial is in exactly one segment). */}
+              {/* Each blinding group sums to 100%, including trials without a
+                  reported p-value. Clicking still selects all trials in that group. */}
               <Bar dataKey="significant" stackId="a" fill="#ef4444" style={{ cursor: "pointer" }} onClick={(data) => { if (data && data.blinding && props.onBlindingClick) props.onBlindingClick(data.blinding); }} />
               <Bar dataKey="not_significant" stackId="a" fill="#94a3b8" style={{ cursor: "pointer" }} onClick={(data) => { if (data && data.blinding && props.onBlindingClick) props.onBlindingClick(data.blinding); }} />
               <Bar dataKey="unknown" stackId="a" fill="#d1d5db" style={{ cursor: "pointer" }} onClick={(data) => { if (data && data.blinding && props.onBlindingClick) props.onBlindingClick(data.blinding); }} />
