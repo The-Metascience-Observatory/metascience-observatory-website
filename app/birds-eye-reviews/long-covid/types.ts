@@ -1,3 +1,4 @@
+import type { PublicationMetadata } from "@/lib/long-covid/publications";
 import type { FacetInput } from "./facets";
 import type { HoverTrial } from "@/components/BreakdownChart";
 export type { HoverTrial };
@@ -60,6 +61,7 @@ export interface DesignTypeBar {
 /** Lightweight per-record metadata for client-side re-aggregation when RCT filter is toggled */
 export interface TrialMeta {
   paper_id: string;
+  publicationMetadata?: PublicationMetadata;
   is_rct: boolean;
   countries: string[];
   interventionArms: { category: string; name: string }[];
@@ -92,6 +94,7 @@ export interface OutcomeSummaryItem {
 
 export interface TrialTableRow {
   paper_id: string;
+  publicationMetadata?: PublicationMetadata;
   is_rct: boolean;
   doi_url: string;
   first_author: string;

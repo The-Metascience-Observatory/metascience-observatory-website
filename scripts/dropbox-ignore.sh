@@ -22,5 +22,6 @@ set_ignored() {
 }
 
 set_ignored .next
+set_ignored .next-dev
 set_ignored node_modules
 exit 0

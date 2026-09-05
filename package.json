@@ -13,7 +13,9 @@
     "build:turbo": "NODE_OPTIONS='--max-old-space-size=8192' next build --turbopack",
     "start": "next start",
     "lint": "node scripts/check-tool-catalog.mjs && next lint",
-    "check:tools": "node scripts/check-tool-catalog.mjs"
+    "check:tools": "node scripts/check-tool-catalog.mjs",
+    "test:publications": "tsx --test tests/publications.test.ts",
+    "test:publication-ui": "playwright test --config tests/publications.playwright.config.ts"
   },
   "dependencies": {
     "@next/third-parties": "^16.2.10",
@@ -83,11 +85,13 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "@types/d3-dsv": "^3.0.5",
     "@types/node": "24.9.2",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
+    "tsx": "^4.23.13",
     "typescript": "^5.8.3"
   }
 }

@@ -52,3 +52,7 @@ tmp*
 
 # Word/Office lock files
 ~$*
+
+# Browser test artifacts
+test-results/
+playwright-report/

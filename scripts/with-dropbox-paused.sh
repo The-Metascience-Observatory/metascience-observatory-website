@@ -21,6 +21,7 @@ ensure_ignored() {
     || attr -s com.dropbox.ignored -V 1 "$1" >/dev/null 2>&1 || true
 }
 ensure_ignored .next
+ensure_ignored .next-dev
 
 is_running() { pgrep -f 'dropbox-lnx' >/dev/null 2>&1; }
 
@@ -45,5 +46,12 @@ restart_dropbox() {
   fi
 }
 trap restart_dropbox EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
+
+if is_running; then
+  echo "[with-dropbox-paused] Dropbox is still running; refusing to start an unsafe server." >&2
+  exit 1
+fi
 
 "$@"

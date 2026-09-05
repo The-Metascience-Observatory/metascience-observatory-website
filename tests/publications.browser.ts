@@ -1,0 +1,83 @@
+import { test, expect } from '@playwright/test';
+test('treatment filters update the whole dashboard, persist, combine and reset',async({page})=>{
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('/birds-eye-reviews/long-covid?who=0&below=1&types=rct,crossover,before_after,case_series,prospective_cohort,retrospective_cohort&medline=yes');
+ await expect(page.getByLabel('Journal indexing',{exact:true})).toHaveValue('yes');
+ const root=page.getByTestId('treatment-dashboard');
+ await expect(root).not.toHaveAttribute('data-selected-reports','0');
+ await expect.poll(()=>page.locator('[data-paper-id][data-medline]:not([data-medline="yes"])').count()).toBe(0);
+ const n=Number(await root.getAttribute('data-selected-reports'));
+ await expect(page.getByText(`${n} trials match`,{exact:true})).toBeVisible();
+ await page.getByLabel('Publication status',{exact:true}).selectOption('preprint_only');
+ await expect(root).toHaveAttribute('data-selected-reports','0');
+ await expect(page.getByText('0 trials match',{exact:true})).toBeVisible();
+ await expect(page).toHaveURL(/publication=preprint_only/);
+ await page.reload();await expect(page.getByLabel('Publication status',{exact:true})).toHaveValue('preprint_only');
+ await page.getByRole('button',{name:'Reset publication filters'}).click();
+ await expect(page.getByLabel('Journal indexing',{exact:true})).toHaveValue('all');
+ await expect(root).not.toHaveAttribute('data-selected-reports','0');
+ expect(errors).toEqual([]);
+});
+test('prevention supports both filters and shareable URLs',async({page})=>{
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('/birds-eye-reviews/long-covid/prevention?medline=yes&publication=preprint_only');
+ await expect(page.getByLabel('Journal indexing',{exact:true})).toHaveValue('yes');
+ await expect(page.getByText(/No prevention reports match/)).toBeVisible();
+ await page.getByRole('button',{name:'Reset publication filters'}).click();
+ await expect(page.getByRole('heading',{name:/Matching prevention reports/})).toBeVisible();
+ expect(errors).toEqual([]);
+});
+test('screening API filters the full result set before pagination',async({request})=>{
+ const all=await (await request.get('/api/screening?limit=1')).json();
+ const indexed=await (await request.get('/api/screening?medline=yes&limit=5')).json();
+ expect(indexed.total).toBeLessThan(all.total);expect(indexed.total).toBeGreaterThan(5);
+ expect(indexed.rows.every((r:any)=>r.publicationMetadata?.medline==='yes')).toBeTruthy();
+ const pre=await (await request.get('/api/screening?publication=preprint_only&limit=5')).json();
+ expect(pre.total).toBeGreaterThan(0);expect(pre.rows.every((r:any)=>r.publicationMetadata?.publication==='preprint_only')).toBeTruthy();
+ const reviewed=await (await request.get('/api/screening?publication=journal_published&limit=5')).json();
+ expect(reviewed.total).toBeGreaterThan(1000);expect(reviewed.rows.every((r:any)=>['journal_published','journal_unverified','peer_reviewed'].includes(r.publicationMetadata?.publication))).toBeTruthy();
+ const legacy=await (await request.get('/api/screening?publication=peer_reviewed&limit=1')).json();expect(legacy.total).toBe(reviewed.total);
+ const both=await (await request.get('/api/screening?medline=yes&publication=preprint_only')).json();expect(both.total).toBe(0);
+ const again=await (await request.get('/api/screening?limit=1')).json();expect(again.total).toBe(all.total);
+});
+test('screening UI hydrates filters and renders metadata without runtime errors',async({page})=>{
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.setViewportSize({width:390,height:844});
+ await page.goto('/birds-eye-reviews/long-covid/screening?publication=preprint_only');
+ await expect(page.getByLabel('Publication status',{exact:true})).toHaveValue('preprint_only');
+ await expect(page.getByText('Preprint; no published version known',{exact:false}).first()).toBeVisible();
+ await page.getByRole('button',{name:'Reset publication filters'}).click();await expect(page.getByLabel('Publication status',{exact:true})).toHaveValue('all');
+ expect(errors).toEqual([]);
+});
+test('intervention category filters the dashboard and narrows intervention choices',async({page})=>{
+ await page.setViewportSize({width:1440,height:1000});
+ await page.goto('/birds-eye-reviews/long-covid');
+ const category=page.getByLabel('Filter by intervention category',{exact:true});
+ const intervention=page.getByLabel('Filter by intervention',{exact:true});
+ const root=page.getByTestId('treatment-dashboard');
+ await expect(category).toHaveValue('all');
+ const original=Number(await root.getAttribute('data-selected-reports'));
+ const originalChoices=await intervention.locator('option').count();
+ const value=await category.locator('option').nth(1).getAttribute('value');
+ expect(value).toBeTruthy();
+ const cb=await category.boundingBox(),ib=await intervention.boundingBox();
+ expect(cb!.x).toBeLessThan(ib!.x);
+ await category.selectOption(value!);
+ await expect(page).toHaveURL(/intCat=/);
+ const selected=Number(await root.getAttribute('data-selected-reports'));
+ expect(selected).toBeGreaterThan(0);expect(selected).toBeLessThan(original);
+ await expect(page.getByText(`${selected} trials match`,{exact:true})).toBeVisible();
+ expect(await intervention.locator('option').count()).toBeLessThan(originalChoices);
+ await page.reload();await expect(category).toHaveValue(value!);
+ await expect(root).toHaveAttribute('data-selected-reports',String(selected));
+ await page.getByRole('button',{name:'Clear intervention filters'}).click();
+ await expect(category).toHaveValue('all');await expect(root).toHaveAttribute('data-selected-reports',String(original));
+});
+
+test('dashboard indexing is resolved and publication explanation is a tooltip',async({page})=>{
+ await page.goto('/birds-eye-reviews/long-covid');
+ await expect(page.getByLabel('Journal indexing',{exact:true}).locator('option[value="unknown"]')).toHaveText('Indexing unknown (0)');
+ const tooltip='Preprint-only means no published version was found at the last check. For this filter, confirmed journal publication is treated as peer-reviewed.';
+ await expect(page.getByLabel(tooltip,{exact:true})).toHaveAttribute('title',tooltip);
+ await expect(page.getByText('MEDLINE describes current journal indexing',{exact:false})).toHaveCount(0);
+});

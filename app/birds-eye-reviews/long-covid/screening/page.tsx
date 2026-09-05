@@ -1,3 +1,5 @@
+import { publicationFor } from "@/lib/long-covid/publications-server";
+import type { PublicationMetadata } from "@/lib/long-covid/publications";
 import fs from "fs";
 import path from "path";
 import { BirdsEyeNavbar } from "@/components/BirdsEyeNavbar";
@@ -15,6 +17,7 @@ export const metadata = {
 };
 
 interface ScreeningRow {
+  publicationMetadata?: PublicationMetadata;
   doi: string;
   source_folder: string;
   is_long_covid: string;
@@ -47,6 +50,7 @@ function loadData(): ScreeningRow[] {
     header.forEach((h, i) => (row[h] = (vals[i] ?? "").trim()));
     return {
       doi: row.doi ?? "",
+      publicationMetadata: publicationFor(row.doi ?? ""),
       source_folder: row.source_folder ?? "",
       is_long_covid: row.is_long_covid ?? "",
       studies_treatment: row.studies_treatment ?? "",

@@ -1,9 +1,12 @@
 "use client";
 
 import { useState, useMemo, useCallback, useEffect, useRef } from "react";
+import type { PublicationMetadata } from '@/lib/long-covid/publications';
+import { PublicationFilters, PublicationDetails, usePublicationFilters } from '../PublicationFilters';
 import { ChevronDown, ChevronRight, ExternalLink } from "lucide-react";
 
 interface ScreeningRow {
+  publicationMetadata?: PublicationMetadata;
   doi: string;
   source_folder: string;
   is_long_covid: string;
@@ -93,6 +96,11 @@ export function ScreeningTable({
   externalSourceFilter?: string;
   sourceFolders?: string[];
 }) {
+  const publicationFilters=usePublicationFilters();
+  const {medline,publication,ready}=publicationFilters;
+  const [counts,setCounts]=useState<{medline:Record<string,number>;publication:Record<string,number>}>();
+  const [error,setError]=useState('');
+  const requestId=useRef(0);
   const tableRef = useRef<HTMLDivElement>(null);
   const [rows, setRows] = useState<ScreeningRow[]>(initialRows);
   const [filteredTotal, setFilteredTotal] = useState(totalCount);
@@ -111,29 +119,38 @@ export function ScreeningTable({
 
   const buildParams = useCallback(() => {
     const p = new URLSearchParams();
+    p.set("medline",medline);
+    p.set("publication",publication);
     if (search) p.set("search", search);
     if (sourceFilter !== "all") p.set("source", sourceFilter);
     if (treatmentFilter !== "all") p.set("treatment", treatmentFilter);
     if (trialTypeFilter !== "all") p.set("trialType", trialTypeFilter);
     return p;
-  }, [search, sourceFilter, treatmentFilter, trialTypeFilter]);
+  }, [search, sourceFilter, treatmentFilter, trialTypeFilter, medline, publication]);
 
   const fetchRows = useCallback(async (offset: number, append: boolean) => {
+    const id=++requestId.current;
     setLoading(true);
+    setError("");
     try {
       const p = buildParams();
       p.set("offset", String(offset));
       p.set("limit", "100");
       const res = await fetch(`/api/screening?${p.toString()}`);
+      if (!res.ok) throw new Error("Unable to load screening records");
       const data = await res.json();
+      if (id !== requestId.current) return;
+      setCounts(data.counts);
       setFilteredTotal(data.total);
       if (append) {
         setRows((prev) => [...prev, ...data.rows]);
       } else {
         setRows(data.rows);
       }
+    } catch {
+      if(id===requestId.current)setError("Could not load these records. Retry using Search.");
     } finally {
-      setLoading(false);
+      if(id===requestId.current)setLoading(false);
     }
   }, [buildParams]);
 
@@ -142,21 +159,9 @@ export function ScreeningTable({
     fetchRows(0, false);
   }, [fetchRows]);
 
-  const isInitialMount = useRef(true);
   useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      // If mounted with an external filter, fetch immediately and scroll
-      if (externalSourceFilter) {
-        fetchRows(0, false);
-        setTimeout(() => {
-          tableRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 100);
-      }
-      return;
-    }
-    fetchRows(0, false);
-  }, [sourceFilter, treatmentFilter, trialTypeFilter]); // eslint-disable-line react-hooks/exhaustive-deps
+    if(ready) void fetchRows(0,false);
+  },[sourceFilter,treatmentFilter,trialTypeFilter,medline,publication,ready]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const toggleExpand = (doi: string) => {
     setExpanded((prev) => {
@@ -169,6 +174,9 @@ export function ScreeningTable({
 
   return (
     <div ref={tableRef} className="space-y-4">
+      <PublicationFilters {...publicationFilters} counts={counts} checkedAt={rows.find(r=>r.publicationMetadata?.medlineCheckedAt)?.publicationMetadata?.medlineCheckedAt}/>
+      <p className="text-xs text-foreground/60">These filters apply to screening report rows. Original screening and PRISMA totals above are unchanged; linked versions remain separate audit records.</p>
+      {error && <p role="alert">{error}</p>}
       {/* Filters */}
       <div className="flex flex-wrap gap-3">
         <div>
@@ -298,6 +306,7 @@ function ScreeningRowItem({
             <ReferenceLabel row={row} />
             {" "}<ExternalLink size={10} className="inline align-baseline ml-0.5" />
           </a>
+          <PublicationDetails meta={row.publicationMetadata}/>
         </td>
         <td className="p-2 text-xs">{formatLabel(row.source_folder)}</td>
         <td className="p-2 text-xs">{formatLabel(row.trial_type)}</td>
