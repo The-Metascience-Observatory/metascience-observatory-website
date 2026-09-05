@@ -107,11 +107,9 @@ function BirdGlyph({ scale }: { scale?: number }) {
 export function FunnelFigure() {
   return (
     <figure className={`${styles.funnel} my-10 mx-auto max-w-[80%]`}>
-      {/* The viewBox is 1080 wide with 11px labels; scaled into a phone
-       * viewport that type is unreadable, so below ~880px the figure scrolls
-       * horizontally rather than shrinking. */}
-      <div className="overflow-x-auto">
-        <div className={`${styles.funnelFrame} min-w-[820px]`}>
+      {/* Let the SVG scale with its frame so the whole pipeline stays visible. */}
+      <div>
+        <div className={styles.funnelFrame}>
           <svg
             viewBox="0 -22 1080 396"
             role="img"
