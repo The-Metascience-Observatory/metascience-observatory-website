@@ -16,6 +16,7 @@ export type FacetKey =
   | "intervention"
   | "interventionCategory"
   | "symptomDomain"
+  | "outcomeDomain"
   | "country"
   | "designType"
   | "blinding";
@@ -27,6 +28,7 @@ export interface FacetInput {
   interventionNames: string[];
   interventionCategories: string[];
   symptomDomains: string[]; // ALL distinct primary symptom domains (not just first)
+  outcomeDomains: string[]; // ALL distinct symptom domains across every outcome (primary or secondary)
   countries: string[];
   designType: string;
   blinding: string;
@@ -38,6 +40,7 @@ const uniq = (xs: (string | null | undefined)[]): string[] =>
 export function buildFacetInput(src: {
   interventions: { name: string; category: string }[];
   symptomDomains: string[];
+  outcomeDomains: string[];
   countries: string[];
   designType: string;
   blinding: string;
@@ -46,6 +49,7 @@ export function buildFacetInput(src: {
     interventionNames: uniq(src.interventions.map((i) => i.name)),
     interventionCategories: uniq(src.interventions.map((i) => i.category)),
     symptomDomains: uniq(src.symptomDomains),
+    outcomeDomains: uniq(src.outcomeDomains),
     countries: uniq(src.countries),
     designType: src.designType || "unknown",
     blinding: src.blinding || "unknown",
@@ -57,6 +61,7 @@ export const FACET_VALUES: Record<FacetKey, (f: FacetInput) => string[]> = {
   intervention: (f) => f.interventionNames,
   interventionCategory: (f) => f.interventionCategories,
   symptomDomain: (f) => f.symptomDomains,
+  outcomeDomain: (f) => f.outcomeDomains,
   country: (f) => f.countries,
   designType: (f) => [f.designType],
   blinding: (f) => [f.blinding],

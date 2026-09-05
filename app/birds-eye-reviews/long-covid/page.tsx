@@ -1,3 +1,4 @@
+import { publicationFor } from "@/lib/long-covid/publications-server";
 import fs from "fs";
 import path from "path";
 import { BirdsEyeNavbar } from "@/components/BirdsEyeNavbar";
@@ -129,6 +130,17 @@ function primaryDomainsOf(rec: any): string[] {
   const out = new Set<string>();
   for (const o of rec.outcomes ?? []) {
     if (o.is_primary && o.symptom_domain) out.add(o.symptom_domain);
+  }
+  return [...out];
+}
+
+/** A trial's distinct symptom domains across ALL outcomes (primary or secondary).
+ *  Drives the top-level "Filter by symptom domain" checkboxes. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function allDomainsOf(rec: any): string[] {
+  const out = new Set<string>();
+  for (const o of rec.outcomes ?? []) {
+    if (o.symptom_domain) out.add(o.symptom_domain);
   }
   return [...out];
 }
@@ -288,6 +300,7 @@ function processData() {
     const facets = buildFacetInput({
       interventions: ivs,
       symptomDomains: primaryDomains,
+      outcomeDomains: allDomainsOf(r),
       countries: r.study_design.countries ?? [],
       designType: normDesignType(r.study_design.design_type),
       blinding: r.study_design.blinding ?? "unknown",
@@ -360,12 +373,13 @@ function processData() {
 
     return {
       paper_id: r.paper_id,
+      publicationMetadata: publicationFor(r.paper_id),
       verdict,
       verdict_rationale: v?.rationale ?? "",
       is_rct: r.is_rct ?? false,
       doi_url: `https://doi.org/${r.paper_id}`,
       first_author: doiMetadata[r.paper_id]?.first_author ?? "",
-      journal: doiMetadata[r.paper_id]?.journal ?? "",
+      journal: publicationFor(r.paper_id)?.journalTitle || doiMetadata[r.paper_id]?.journal || "",
       design_type: normDesignType(r.study_design.design_type),
       intervention_name: r.interventions ?? interventionName,
       interventions: ivs,
@@ -461,6 +475,7 @@ function processData() {
     }
     return {
       paper_id: r.paper_id,
+      publicationMetadata: publicationFor(r.paper_id),
       is_rct: r.is_rct ?? false,
       countries: r.study_design.countries ?? [],
       interventionArms,
@@ -476,6 +491,7 @@ function processData() {
       facets: buildFacetInput({
         interventions: interventionArms,
         symptomDomains: primarySymptomDomains,
+        outcomeDomains: allDomainsOf(r),
         countries: r.study_design.countries ?? [],
         designType: normDesignType(r.study_design.design_type),
         blinding: r.study_design.blinding ?? "unknown",
@@ -492,7 +508,7 @@ function processData() {
   // meta/row facet builders ever drift. Stripped from production builds.
   if (process.env.NODE_ENV !== "production") {
     const FACET_KEYS: FacetKey[] = [
-      "intervention", "interventionCategory", "symptomDomain", "country", "designType", "blinding",
+      "intervention", "interventionCategory", "symptomDomain", "outcomeDomain", "country", "designType", "blinding",
     ];
     for (const key of FACET_KEYS) {
       const chart = countDistinctTrials(trialMetas, key);

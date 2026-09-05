@@ -2,6 +2,8 @@
 
 import { useState, useMemo, useRef, useEffect } from "react";
 import Link from "next/link";
+import { matchesPublication, preferPublished, metadataCounts } from "@/lib/long-covid/publications";
+import { PublicationFilters, PublicationDetails, usePublicationFilters } from "./PublicationFilters";
 import { toast } from "sonner";
 import {
   BarChart,
@@ -19,7 +21,7 @@ import type { DashboardProps, InterventionBar, TrialTableRow, HoverTrial } from 
 import { aggregateFromMetas, interventionVerdictsFromRows, getPromiseScoreColors, LC_WEEKS_BINS, LC_BIN_LABELS, LC_WHO_BIN_LABELS, VERDICT_SEGMENTS, INTERVENTION_WIDE_MIN_TRIALS } from "./constants";
 import { TrialRectList } from "@/components/TrialRectList";
 import { CountryMap } from "@/components/CountryMap";
-import { trialHasFacet } from "./facets";
+import { trialHasFacet, countDistinctTrials, type FacetInput } from "./facets";
 
 // ── Color constants ──────────────────────────────────────────────────
 const ROB_COLORS = {
@@ -62,6 +64,10 @@ const formatDesignType = (s: string) => DESIGN_TYPE_LABELS[s] ?? formatCategory(
 
 // ── Main Dashboard ───────────────────────────────────────────────────
 export function LongCovidDashboard(props: DashboardProps) {
+  const publicationFilters = usePublicationFilters(false);
+  const {medline, publication} = publicationFilters;
+  const representativeMetas = useMemo(()=>preferPublished(props.trialMetas),[props.trialMetas]);
+  const publicationMetas = useMemo(()=>representativeMetas.filter(m=>matchesPublication(m.publicationMetadata,medline,publication)),[representativeMetas,medline,publication]);
   const [yearFilter, setYearFilter] = useState<number | null>(null);
   const [landscapeCategory, setLandscapeCategory] = useState<string | null>(null);
   const [landscapeSymptom, setLandscapeSymptom] = useState<string | null>(null);
@@ -93,6 +99,7 @@ export function LongCovidDashboard(props: DashboardProps) {
 
   const makeFilterHandler = <T,>(setter: (v: T) => void) => (value: T) => {
     clearAllFilters();
+    setInterventionCategoryFilter(interventionCategoryFilter);
     setter(value);
     scrollToTable();
   };
@@ -117,19 +124,19 @@ export function LongCovidDashboard(props: DashboardProps) {
   const [lcDefBelow, setLcDefBelow] = useState(false);
 
   const lcDefFilteredMetas = useMemo(() => {
-    if (lcDefWho && lcDefBelow) return props.trialMetas;
-    if (lcDefWho) return props.trialMetas.filter((m) => m.min_weeks != null && m.min_weeks >= 12);
-    if (lcDefBelow) return props.trialMetas.filter((m) => m.min_weeks != null && m.min_weeks < 12);
+    if (lcDefWho && lcDefBelow) return publicationMetas;
+    if (lcDefWho) return publicationMetas.filter((m) => m.min_weeks != null && m.min_weeks >= 12);
+    if (lcDefBelow) return publicationMetas.filter((m) => m.min_weeks != null && m.min_weeks < 12);
     return [];
-  }, [lcDefWho, lcDefBelow, props.trialMetas]);
+  }, [lcDefWho, lcDefBelow, publicationMetas]);
 
   const whoCount = useMemo(
-    () => props.trialMetas.filter((m) => m.min_weeks != null && m.min_weeks >= 12).length,
-    [props.trialMetas]
+    () => publicationMetas.filter((m) => m.min_weeks != null && m.min_weeks >= 12).length,
+    [publicationMetas]
   );
   const belowCount = useMemo(
-    () => props.trialMetas.filter((m) => m.min_weeks != null && m.min_weeks < 12).length,
-    [props.trialMetas]
+    () => publicationMetas.filter((m) => m.min_weeks != null && m.min_weeks < 12).length,
+    [publicationMetas]
   );
 
   // Design type checkboxes — compute counts and default to all selected
@@ -164,34 +171,69 @@ export function LongCovidDashboard(props: DashboardProps) {
   const selectAll = () => setSelectedDesignTypes(new Set(allDesignTypes));
   const selectNone = () => setSelectedDesignTypes(new Set());
 
-  const isFiltered = selectedDesignTypes.size < allDesignTypes.size || !(lcDefWho && lcDefBelow) || interventionNameFilter !== null;
-
   // Recompute aggregated data when filters change
   const filteredMetas = useMemo(
     () => lcDefFilteredMetas.filter((m) => selectedDesignTypes.has(m.design_type || "unknown")),
     [selectedDesignTypes, lcDefFilteredMetas]
   );
+
+  // Symptom domain checkboxes (top-level filter). A trial matches a checked domain
+  // if ANY of its outcomes is tagged with it; the "primary only" toggle restricts
+  // matching to primary outcomes. Both go through facets.ts so counts and rows agree.
+  const [domainPrimaryOnly, setDomainPrimaryOnly] = useState(false);
+  const domainKey = domainPrimaryOnly ? "symptomDomain" : "outcomeDomain";
+  // Stable checkbox list: every domain any trial studied (independent of the toggle).
+  const allDomains = useMemo(
+    () => new Set(countDistinctTrials(props.trialMetas, "outcomeDomain").keys()),
+    [props.trialMetas]
+  );
+  const domainCounts = useMemo(() => {
+    const counts = countDistinctTrials(filteredMetas, domainKey);
+    return [...allDomains].map((d) => [d, counts.get(d) ?? 0] as [string, number]).sort((a, b) => b[1] - a[1]);
+  }, [filteredMetas, domainKey, allDomains]);
+  const [selectedDomains, setSelectedDomains] = useState<Set<string>>(
+    () => new Set(countDistinctTrials(props.trialMetas, "outcomeDomain").keys())
+  );
+  const toggleDomain = (d: string) => {
+    setSelectedDomains((prev) => {
+      const next = new Set(prev);
+      if (next.has(d)) next.delete(d);
+      else next.add(d);
+      return next;
+    });
+  };
+  const selectAllDomains = () => setSelectedDomains(new Set(allDomains));
+  const selectNoDomains = () => setSelectedDomains(new Set());
+  const allDomainsSelected = useMemo(
+    () => [...allDomains].every((d) => selectedDomains.has(d)),
+    [allDomains, selectedDomains]
+  );
+  const domainMatches = (m: { facets: FacetInput }) =>
+    (allDomainsSelected && !domainPrimaryOnly) ||
+    [...selectedDomains].some((d) => trialHasFacet(m.facets, domainKey, d));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const domainFilteredMetas = useMemo(() => filteredMetas.filter(domainMatches), [filteredMetas, selectedDomains, domainKey, allDomainsSelected]);
+
+  const categoryFilteredMetas = useMemo(
+    () => interventionCategoryFilter ? domainFilteredMetas.filter(m=>trialHasFacet(m.facets,'interventionCategory',interventionCategoryFilter)) : domainFilteredMetas,
+    [domainFilteredMetas,interventionCategoryFilter]
+  );
+  const interventionCategories = useMemo(()=>[...countDistinctTrials(domainFilteredMetas,'interventionCategory')].sort((a,b)=>a[0].localeCompare(b[0])),[domainFilteredMetas]);
+  const interventionChoices = useMemo(()=>aggregateFromMetas(categoryFilteredMetas).byIntervention.filter(iv=>!interventionCategoryFilter || iv.category===interventionCategoryFilter),[categoryFilteredMetas,interventionCategoryFilter]);
   // Intervention name filter is the outermost filter — it narrows both the charts
   // and the table. Filter metas directly so aggregateFromMetas produces correct counts.
   const interventionFilteredMetas = useMemo(
     () =>
       interventionNameFilter
-        ? filteredMetas.filter((m) => trialHasFacet(m.facets, "intervention", interventionNameFilter))
-        : filteredMetas,
-    [filteredMetas, interventionNameFilter]
+        ? categoryFilteredMetas.filter((m) => trialHasFacet(m.facets, "intervention", interventionNameFilter))
+        : categoryFilteredMetas,
+    [categoryFilteredMetas, interventionNameFilter]
   );
   const recomputed = useMemo(() => aggregateFromMetas(interventionFilteredMetas), [interventionFilteredMetas]);
 
   const effectiveProps: DashboardProps = useMemo(() => {
-    if (!isFiltered) return props;
-    const filteredRows = props.tableRows.filter((r) => {
-      if (!selectedDesignTypes.has(r.design_type || "unknown")) return false;
-      if (lcDefWho && !lcDefBelow) return r.min_weeks != null && r.min_weeks >= 12;
-      if (!lcDefWho && lcDefBelow) return r.min_weeks != null && r.min_weeks < 12;
-      if (!lcDefWho && !lcDefBelow) return false;
-      if (interventionNameFilter && !trialHasFacet(r.facets, "intervention", interventionNameFilter)) return false;
-      return true;
-    });
+    const selectedIds = new Set(interventionFilteredMetas.map(m=>m.paper_id));
+    const filteredRows = props.tableRows.filter(r=>selectedIds.has(r.paper_id));
     // The "Trials by Intervention" chart/tail reads byNameVerdicts/trialsByName/
     // interventionCategoryOf — recompute them from the filtered rows so the chart
     // reacts to the top-level filters (it otherwise showed the full dataset).
@@ -213,7 +255,7 @@ export function LongCovidDashboard(props: DashboardProps) {
       interventionCategoryOf: iv.interventionCategoryOf,
       tableRows: filteredRows,
     };
-  }, [isFiltered, props, recomputed, selectedDesignTypes, lcDefWho, lcDefBelow, interventionNameFilter]);
+  }, [props, recomputed, interventionFilteredMetas]);
 
   // ── Shareable links: sync filter state ⇄ URL query string ──────────
   // We use window.history rather than next/navigation so updating the URL
@@ -246,7 +288,18 @@ export function LongCovidDashboard(props: DashboardProps) {
     if (sp.get("who") === "0") setLcDefWho(false);
     if (sp.get("below") === "1") setLcDefBelow(true);
     const types = sp.get("types");
-    if (types) setSelectedDesignTypes(new Set(types.split(",").filter(Boolean)));
+    if (types !== null) {
+      const known = new Set(props.trialMetas.map(m=>m.design_type || 'unknown'));
+      const selected=types.split(',').filter(v=>known.has(v));
+      if(types==='' || selected.length) setSelectedDesignTypes(new Set(selected));
+    }
+    const domains = sp.get("domains");
+    if (domains !== null) {
+      const known = new Set(countDistinctTrials(props.trialMetas, "outcomeDomain").keys());
+      const selected = domains.split(',').filter(v => known.has(v));
+      if (domains === '' || selected.length) setSelectedDomains(new Set(selected));
+    }
+    if (sp.get("domPrimary") === "1") setDomainPrimaryOnly(true);
 
     didInitFromUrl.current = true;
 
@@ -259,7 +312,10 @@ export function LongCovidDashboard(props: DashboardProps) {
   // Reflect the current filter state back into the URL (no navigation/refetch).
   useEffect(() => {
     if (!didInitFromUrl.current) return;
+    if (!publicationFilters.ready) return;
     const params = new URLSearchParams();
+    if (medline !== "all") params.set("medline",medline);
+    if (publication !== "all") params.set("publication",publication);
     if (yearFilter !== null) params.set("year", String(yearFilter));
     if (interventionCategoryFilter) params.set("intCat", interventionCategoryFilter);
     if (interventionNameFilter) params.set("intName", interventionNameFilter);
@@ -272,13 +328,16 @@ export function LongCovidDashboard(props: DashboardProps) {
     if (!lcDefWho) params.set("who", "0");
     if (lcDefBelow) params.set("below", "1");
     const typesArr = [...selectedDesignTypes].sort();
-    if (selectedDesignTypes.size < allDesignTypes.size) {
+    if (!(typesArr.length===2 && typesArr.includes('rct') && typesArr.includes('crossover'))) {
       params.set("types", typesArr.join(","));
     }
+    if (!allDomainsSelected) params.set("domains", [...selectedDomains].sort().join(","));
+    if (domainPrimaryOnly) params.set("domPrimary", "1");
     const qs = params.toString();
     const newUrl = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
     window.history.replaceState(window.history.state, "", newUrl);
   }, [
+    medline, publication, publicationFilters.ready,
     yearFilter,
     interventionCategoryFilter,
     interventionNameFilter,
@@ -291,11 +350,14 @@ export function LongCovidDashboard(props: DashboardProps) {
     lcDefWho,
     lcDefBelow,
     selectedDesignTypes,
+    selectedDomains,
+    allDomainsSelected,
+    domainPrimaryOnly,
   ]);
 
 
   return (
-    <div>
+    <div data-testid="treatment-dashboard" data-selected-reports={interventionFilteredMetas.length}>
       {/* Hero */}
       <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1">
         <Link href="/birds-eye-reviews" className="text-sm text-blue-600 hover:text-blue-700">
@@ -399,25 +461,77 @@ export function LongCovidDashboard(props: DashboardProps) {
         </div>
       </div>
 
-      {/* Intervention filter */}
-      <div className={`mb-6 border border-border rounded-lg p-4 ${interventionNameFilter ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`}>
-        <div className="flex items-center gap-3 flex-wrap">
-          <span className="text-sm font-medium text-foreground">Filter by intervention</span>
-          <select
-            value={interventionNameFilter ?? "all"}
-            onChange={(e) => setInterventionNameFilter(e.target.value === "all" ? null : e.target.value)}
-            className={`border border-border rounded px-3 py-1.5 text-sm max-w-[22rem] ${interventionNameFilter ? "bg-foreground/[0.08]" : "bg-background"}`}
-          >
-            <option value="all">All interventions</option>
-            {effectiveProps.byIntervention.map((iv) => (
-              <option key={iv.name} value={iv.name}>{formatCategory(iv.name)} ({iv.count})</option>
-            ))}
-          </select>
-          {interventionNameFilter && (
-            <button onClick={() => setInterventionNameFilter(null)} className="text-xs text-blue-600 hover:text-blue-700 ml-auto">
-              Clear
-            </button>
-          )}
+      {/* Symptom domain filter checkboxes */}
+      <div className={`mb-4 border border-border rounded-lg p-4 ${!allDomainsSelected || domainPrimaryOnly ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`}>
+        <div className="flex items-center gap-3 mb-2">
+          <span className="text-sm font-medium text-foreground">Filter by symptom domain</span>
+          <span className="text-xs text-foreground/50">
+            ({domainFilteredMetas.length} of {props.summaryStats.totalTrials} trials selected)
+          </span>
+          <button onClick={selectAllDomains} className="text-xs text-blue-600 hover:text-blue-700 ml-auto">Select all</button>
+          <button onClick={selectNoDomains} className="text-xs text-blue-600 hover:text-blue-700">Clear all</button>
+        </div>
+        <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+          {domainCounts.map(([d, count]) => {
+            const checked = selectedDomains.has(d);
+            return (
+              <label key={d} className={`inline-flex items-center gap-1.5 cursor-pointer text-sm rounded px-1.5 py-0.5 ${checked ? "" : "bg-foreground/[0.08]"}`}>
+                <input
+                  type="checkbox"
+                  checked={checked}
+                  onChange={() => toggleDomain(d)}
+                  className="rounded border-foreground/30 text-blue-600 focus:ring-blue-500"
+                />
+                <span className={checked ? "text-foreground" : "text-foreground/50"}>
+                  {formatCategory(d)}
+                </span>
+                <span className="text-xs text-foreground/40">({count})</span>
+              </label>
+            );
+          })}
+        </div>
+        <div className="mt-2 pt-2 border-t border-border/60 flex flex-wrap items-center gap-x-3 gap-y-1">
+          <label className="inline-flex items-center gap-1.5 cursor-pointer text-sm">
+            <input
+              type="checkbox"
+              checked={domainPrimaryOnly}
+              onChange={() => setDomainPrimaryOnly((v) => !v)}
+              className="rounded border-foreground/30 text-blue-600 focus:ring-blue-500"
+            />
+            <span className="text-foreground">Match primary outcomes only</span>
+          </label>
+          <span className="text-xs text-foreground/50">
+            By default a trial matches if any of its outcomes, primary or secondary, is tagged with a checked domain.
+          </span>
+        </div>
+      </div>
+
+      <PublicationFilters {...publicationFilters} checkedAt={props.trialMetas.find(m=>m.publicationMetadata?.medlineCheckedAt)?.publicationMetadata?.medlineCheckedAt}
+        counts={metadataCounts(representativeMetas.filter(m=>selectedDesignTypes.has(m.design_type || 'unknown') && ((lcDefWho && lcDefBelow) || (m.min_weeks!=null && (m.min_weeks>=12 ? lcDefWho : lcDefBelow))) && domainMatches(m) && (!interventionCategoryFilter || trialHasFacet(m.facets,'interventionCategory',interventionCategoryFilter)) && (!interventionNameFilter || trialHasFacet(m.facets,'intervention',interventionNameFilter))),medline,publication)} />
+      {interventionFilteredMetas.length===0 && <p role="status" className="mb-4">No reports match these filters. Adjust the selections or reset publication filters.</p>}
+
+      {/* Intervention filters */}
+      <div className={`mb-6 border border-border rounded-lg p-4 ${interventionNameFilter || interventionCategoryFilter ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`}>
+        <div className="flex items-end gap-4 flex-wrap">
+          <label className="text-sm font-medium text-foreground min-w-0 max-w-full">Filter by intervention category
+            <select aria-label="Filter by intervention category" value={interventionCategoryFilter ?? 'all'}
+              onChange={e=>{setInterventionCategoryFilter(e.target.value==='all'?null:e.target.value);setInterventionNameFilter(null);}}
+              className="block mt-1 border border-border rounded px-3 py-1.5 text-sm max-w-full bg-background">
+              <option value="all">All categories</option>
+              {interventionCategoryFilter && !interventionCategories.some(([c])=>c===interventionCategoryFilter) && <option value={interventionCategoryFilter}>{formatCategory(interventionCategoryFilter)} (0)</option>}
+              {interventionCategories.map(([category,count])=><option key={category} value={category}>{formatCategory(category)} ({count})</option>)}
+            </select>
+          </label>
+          <label className="text-sm font-medium text-foreground min-w-0 max-w-full">Filter by intervention
+            <select aria-label="Filter by intervention" value={interventionNameFilter ?? 'all'}
+              onChange={e=>setInterventionNameFilter(e.target.value==='all'?null:e.target.value)}
+              className="block mt-1 border border-border rounded px-3 py-1.5 text-sm w-full sm:max-w-[22rem] bg-background">
+              <option value="all">All interventions</option>
+              {interventionNameFilter && !interventionChoices.some(iv=>iv.name===interventionNameFilter) && <option value={interventionNameFilter}>{formatCategory(interventionNameFilter)} (0)</option>}
+              {interventionChoices.map(iv=><option key={iv.name} value={iv.name}>{formatCategory(iv.name)} ({iv.count})</option>)}
+            </select>
+          </label>
+          {(interventionNameFilter || interventionCategoryFilter) && <button onClick={()=>{setInterventionNameFilter(null);setInterventionCategoryFilter(null);}} className="text-xs text-blue-600 hover:text-blue-700 ml-auto">Clear intervention filters</button>}
         </div>
       </div>
 
@@ -570,7 +684,7 @@ function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => v
                 onClick={() => props.onLcDefClick?.("<12")}
               >
                 <span className="inline-block w-3 h-3 rounded-sm mr-1" style={{ backgroundColor: "#ef4444" }} />
-                Below WHO threshold ({100 - props.lcDefPct12Plus}%)
+                Below WHO threshold ({props.lcDefinitionHist.some(b=>b.count>0) ? 100 - props.lcDefPct12Plus : 0}%)
               </div>
             </div>
             <ResponsiveContainer width="100%" height={300}>
@@ -1156,6 +1270,7 @@ function TrialRow({
   return (
     <>
       <tr
+        data-paper-id={row.paper_id} data-medline={row.publicationMetadata?.medline ?? "unknown"} data-publication={row.publicationMetadata?.publication ?? "unknown"}
         className="border-b border-border/50 hover:bg-foreground/5 cursor-pointer"
         onClick={onToggle}
       >
@@ -1246,6 +1361,7 @@ function TrialRow({
                   {row.year && <> ({row.year})</>}
                   .
                 </p>
+                <PublicationDetails meta={row.publicationMetadata} />
                 <a
                   href={`https://explore.metascienceobservatory.org/doi/${row.paper_id}`}
                   target="_blank"
