@@ -1,106 +1,262 @@
+import { ReactNode } from "react";
 import { ArrowDown, ArrowRight } from "lucide-react";
-import type { ScreeningCounts } from "./screening-counts";
 
-function Box({ title, n, sub }: { title: string; n: number; sub?: string }) {
-  return (
-    <div className="border border-border rounded-lg bg-white px-4 py-3 text-center shadow-sm">
-      <div className="text-2xl font-bold leading-none">{n.toLocaleString()}</div>
-      <div className="text-sm mt-1">{title}</div>
-      {sub && <div className="text-xs text-foreground/70 mt-2">{sub}</div>}
-    </div>
-  );
+/** Bespoke long-covid screening-flow counts (see regen_long_covid_screening_data.py).
+ *  Unlike the RLS / antiviral reviews, this funnel runs all the way down to the set
+ *  of studies the primary dashboard actually displays (RCT + observational). */
+export interface PrismaCounts {
+  sources: string[];
+  identified: number;
+  excluded_not_relevant: number;
+  relevant: number;
+  not_retrieved: number;
+  retrieved: number;
+  excluded_at_eligibility: number;
+  eligibility_exclusion_reasons: Record<string, number>;
+  eligible: number;
+  extracted_total: number;
+  extracted_rct: number;
+  extracted_observational: number;
+  displayed_total: number;
+  displayed_rct: number;
+  displayed_observational: number;
 }
-function Stage({ title, n, sub, excluded }: {
-  title: string; n: number; sub?: string; excluded?: { title: string; n: number };
+
+function MainBox({
+  stage,
+  title,
+  n,
+  sub,
+}: {
+  stage?: string;
+  title: ReactNode;
+  n: number;
+  sub?: string;
 }) {
   return (
-    <div className="grid md:grid-cols-2 gap-3 md:gap-0 items-center">
-      <Box title={title} n={n} sub={sub} />
-      {excluded && <div className="flex items-center md:pr-2">
-        <ArrowRight aria-hidden="true" className="hidden md:block shrink-0 mx-2 text-foreground/40" size={22} />
-        <div className="border border-dashed border-border rounded-lg bg-foreground/[0.03] px-3 py-3 text-sm flex-1">
-          <strong>{excluded.n.toLocaleString()}</strong> — {excluded.title}
-        </div>
-      </div>}
+    <div className="border border-border rounded-lg bg-white px-4 py-3 text-center shadow-sm">
+      {stage && <div className="text-[10px] uppercase tracking-wide text-foreground/40 mb-1">{stage}</div>}
+      <div className="text-2xl font-bold text-foreground leading-none">{n.toLocaleString()}</div>
+      <div className="text-sm text-foreground/80 mt-1">{title}</div>
+      {sub && <div className="text-xs text-foreground/50 mt-1">{sub}</div>}
     </div>
   );
 }
-function DownArrow() {
-  return <div className="grid md:grid-cols-2"><div className="flex justify-center py-2 text-foreground/40"><ArrowDown aria-hidden="true" size={22} /></div></div>;
+
+/** Dashed exclusion box on the right column, with a horizontal connector arrow.
+ *  Optional `reasons` renders a small breakdown beneath the headline count. */
+function ExcludedBox({
+  title,
+  n,
+  reasons,
+}: {
+  title: string;
+  n: number;
+  reasons?: { label: string; n: number }[];
+}) {
+  return (
+    <div className="flex items-start">
+      <div className="hidden md:flex items-center shrink-0 text-foreground/30 mt-3">
+        <div className="h-px w-8 bg-foreground/25" />
+        <ArrowRight size={16} className="-ml-1" />
+      </div>
+      <div className="border border-dashed border-border rounded-lg bg-foreground/[0.03] px-3 py-2 text-left flex-1 md:ml-1">
+        <div>
+          <span className="font-semibold text-foreground/70">{n.toLocaleString()}</span>
+          <span className="text-xs text-foreground/55"> — {title}</span>
+        </div>
+        {reasons && reasons.length > 0 && (
+          <div className="mt-2 pt-2 border-t border-dashed border-foreground/20 space-y-1">
+            {reasons.map((r) => (
+              <div key={r.label} className="flex items-baseline justify-between gap-2">
+                <span className="text-xs text-foreground/55">{r.label}</span>
+                <span className="text-xs font-semibold text-foreground/55">{r.n.toLocaleString()}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
 
-/** Auditable snapshot accounting; the legacy artifacts do not support a full PRISMA flow. */
-export function PrismaDiagram({ counts: c }: { counts: ScreeningCounts }) {
-  const allReasons = Object.entries(c.reasons).sort((a, b) => b[1] - a[1]);
-  const reasons = allReasons.slice(0, 6);
-  const remaining = allReasons.slice(6).reduce((sum, [, n]) => sum + n, 0);
+function DownArrow() {
   return (
-    <section className="border border-border rounded-lg bg-white p-4 md:p-6 mb-8" aria-labelledby="screening-flow-title">
-      <h2 id="screening-flow-title" className="text-lg font-semibold mb-2">Screening flow</h2>
-      <p className="text-sm text-foreground/70 mb-5">
-        Counts below use the currently exported screening and extraction files. Legacy trial screening used abstracts,
-        with a PDF excerpt fallback; a screening record does not establish full-text retrieval or confirmed eligibility.
-        Search, retrieval and extraction records have not been reconciled into a complete PRISMA flow.
-      </p>
+    <div className="grid md:grid-cols-2">
+      <SpineArrow />
+    </div>
+  );
+}
 
-      <aside className="border border-amber-300 rounded-lg bg-amber-50 p-4 mb-6" aria-labelledby="retrieval-title">
-        <h3 id="retrieval-title" className="font-semibold">Full text not obtained automatically — historical retrieval failures</h3>
-        <div className="text-3xl font-bold mt-2">{c.historicalFailures.toLocaleString()}</div>
-        <p className="text-sm mt-2">
-          Reports listed in the retrieval-failure log dated {c.retrievalDate}.
-          Of these, {c.historicalNowExported.toLocaleString()} now have exported extractions;
-          {" "}{c.historicalWithoutExtraction.toLocaleString()} have no matching exported extraction.
-        </p>
-        <p className="text-sm text-foreground/75 mt-2">
-          This historical list is not a current count of eligible studies excluded solely because full text was unavailable.
-          Later retrieval, eligibility decisions and extraction progress may differ. The current total excluded for unavailable full text is not established.
-        </p>
-        <a className="inline-block text-sm text-blue-700 underline mt-2" href="/api/screening/retrieval-failures">Download dated DOI list and provenance (JSON)</a>
-      </aside>
+function SpineArrow() {
+  return (
+    <div className="flex flex-col items-center text-foreground/30">
+      <div className="w-px h-8 bg-foreground/25" />
+      <ArrowDown size={18} className="-mt-2" />
+    </div>
+  );
+}
+
+/** A stage row: main box on the left, optional excluded box on the right. */
+function StageRow({
+  stage,
+  title,
+  n,
+  sub,
+  excluded,
+  align = "center",
+}: {
+  stage?: string;
+  title: string;
+  n: number;
+  sub?: string;
+  excluded?: { title: string; n: number; reasons?: { label: string; n: number }[] };
+  align?: "center" | "start";
+}) {
+  return (
+    <div className={`grid md:grid-cols-2 gap-3 md:gap-0 ${align === "start" ? "items-start" : "items-center"}`}>
+      <MainBox stage={stage} title={title} n={n} sub={sub} />
+      <div className="md:pr-2">
+        {excluded ? (
+          <ExcludedBox title={excluded.title} n={excluded.n} reasons={excluded.reasons} />
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
+/** Terminal tree: a coloured parent total box with its leaf boxes beneath. */
+function TreeBranch({
+  label,
+  n,
+  accent,
+  tint,
+  items,
+}: {
+  label: string;
+  n: number;
+  accent: string;
+  tint: string;
+  items: { key: string; n: number }[];
+}) {
+  return (
+    <div>
+      <div className="border border-border rounded-lg px-4 py-3 text-center" style={{ backgroundColor: tint }}>
+        <div className="text-2xl font-bold leading-none" style={{ color: accent }}>{n.toLocaleString()}</div>
+        <div className="text-sm text-foreground/80 mt-1">{label}</div>
+      </div>
+      <div className="ml-5 mt-2 border-l border-foreground/20 pl-4 space-y-2">
+        {items.map((it) => (
+          <div key={it.key} className="flex items-center">
+            <div className="hidden md:block h-px w-4 bg-foreground/20 -ml-4 mr-2 shrink-0" />
+            <div className="flex-1 border border-border rounded-md bg-white px-3 py-1.5 flex items-baseline justify-between gap-2">
+              <span className="text-sm text-foreground/75">{it.key}</span>
+              <span className="font-semibold" style={{ color: accent }}>{it.n.toLocaleString()}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** Human-readable labels for the top eligibility-exclusion reasons. */
+const REASON_LABELS: Record<string, string> = {
+  unspecified: "Not a treatment trial / unspecified",
+  secondary_analysis: "Secondary analysis",
+  review: "Review",
+  editorial: "Editorial / commentary",
+  protocol: "Study protocol",
+  case_series: "Case series",
+  case_report: "Case report",
+  "not a treatment study": "Not a treatment study",
+  guideline: "Guideline",
+  observational: "Observational (no intervention)",
+  "study protocol": "Study protocol",
+  other: "Other",
+};
+
+export function PrismaDiagram({ counts }: { counts: PrismaCounts }) {
+  // Top exclusion reasons for the eligibility dashed box (cap to keep it readable).
+  const allReasons = Object.entries(counts.eligibility_exclusion_reasons ?? {})
+    .sort((a, b) => b[1] - a[1]);
+  const reasons = allReasons.slice(0, 6)
+    .map(([key, n]) => ({ label: REASON_LABELS[key] ?? key.replace(/_/g, " "), n }));
+
+  const otherReasons = allReasons.slice(6).reduce((sum, [, n]) => sum + n, 0);
+  if (otherReasons > 0) reasons.push({ label: "Other recorded reasons", n: otherReasons });
+
+  const terminalItems = [
+    { key: "Randomized controlled trials", n: counts.displayed_rct },
+    { key: "Observational studies", n: counts.displayed_observational },
+  ].filter((x) => x.n > 0);
+
+  return (
+    <div className="border border-border rounded-lg bg-white p-6 mb-8">
+      <h2 className="text-lg font-semibold mb-5">Screening flow</h2>
 
       <div className="max-w-3xl mx-auto">
-        <h3 className="font-semibold mb-3">Screening records</h3>
-        <Stage title="Reports with a screening record" n={c.screened} excluded={{ title: "flagged excluded in screening", n: c.excluded }} />
+        <StageRow
+          title="Records identified from database searches"
+          n={counts.identified}
+          sub={counts.sources.join(" · ")}
+          excluded={{ title: "excluded on title/abstract — not relevant", n: counts.excluded_not_relevant }}
+        />
         <DownArrow />
-        <Stage title="Reports not flagged excluded" n={c.retained}
-          sub={`${c.explicitNo.toLocaleString()} explicitly marked not excluded; ${c.unresolved.toLocaleString()} have an unresolved exclusion flag. Neither establishes eligibility.`}
-          excluded={{ title: "without a matching exported extraction; the reason is not established", n: c.retainedWithoutExtraction }} />
+        <StageRow
+          title="Relevant to Long Covid after title/abstract screening"
+          n={counts.relevant}
+          excluded={counts.not_retrieved > 0 ? { title: "not retrieved", n: counts.not_retrieved } : undefined}
+        />
         <DownArrow />
-        <Stage title="Reports not flagged excluded with an exported extraction" n={c.retainedWithExtraction} />
-        <details className="text-sm mt-4 mb-6">
-          <summary className="cursor-pointer">Recorded screening exclusion reasons ({c.excluded.toLocaleString()})</summary>
-          <ul className="mt-2 space-y-1">
-            {reasons.map(([reason, n]) => <li key={reason}>{reason.replace(/_/g, " ")}: {n.toLocaleString()}</li>)}
-            {remaining > 0 && <li>Remaining recorded reasons: {remaining.toLocaleString()}</li>}
-          </ul>
-          <p className="mt-2 text-foreground/70">Reasons are automated screening labels. “Unspecified” means no reason was recorded.</p>
-        </details>
-
-        <h3 className="font-semibold mb-2">Exported extraction records and dashboard availability</h3>
-        <p className="text-sm text-foreground/70 mb-3">
-          This separate accounting includes all exported extraction rows, including any previously excluded reports.
-          A report can have multiple extraction rows; reports are not necessarily independent studies.
-        </p>
-        <Stage title="Exported extraction records" n={c.exported}
-          excluded={{ title: "removed by dashboard filters", n: c.exportedExcluded + c.exportedInvalid }} />
-        <p className="text-xs text-foreground/70 mt-2 mb-2">
-          Removed: {c.exportedExcluded.toLocaleString()} flagged excluded in screening;
-          {" "}{c.exportedInvalid.toLocaleString()} additional records with missing study design or a non-clinical-trial label.
-          {" "}{c.exportedUnscreened.toLocaleString()} exported records lack a matching screening record.
-        </p>
-        <DownArrow />
-        <Stage title="Extraction records available to the dashboard" n={c.dashboardRecords}
-          sub={`${c.dashboardReports.toLocaleString()} distinct report DOIs; before publication-version preference and interactive filters.`} />
-        <div className="grid sm:grid-cols-2 gap-3 mt-3">
-          <Box title="Flagged randomized" n={c.randomized} />
-          <Box title="Other / not flagged randomized" n={c.other} />
+        {/* "Retrieved" + "Eligible" share one grid so the connector spine in the
+            left column stretches to fill the height of the tall eligibility-exclusion
+            box on the right, keeping both main boxes vertically connected. */}
+        <div className="grid md:grid-cols-2 gap-3 md:gap-0 items-start">
+          <div className="flex flex-col self-stretch">
+            <MainBox title="Full-text articles retrieved and screened" n={counts.retrieved} />
+            <div className="flex flex-col items-center flex-1 text-foreground/30">
+              <div className="w-px flex-1 bg-foreground/25 min-h-8" />
+              <ArrowDown size={18} className="-mt-2" />
+            </div>
+            <MainBox title="Eligible — treatment studies assessed for extraction" n={counts.eligible} />
+          </div>
+          <div className="md:pr-2 flex flex-col justify-between gap-4 self-stretch">
+            <ExcludedBox
+              title="excluded at eligibility screening"
+              n={counts.excluded_at_eligibility}
+              reasons={reasons}
+            />
+            {counts.eligible > counts.extracted_total && (
+              <ExcludedBox
+                title="not represented in the extraction total (difference between saved counts; reason not recorded)"
+                n={counts.eligible - counts.extracted_total}
+              />
+            )}
+          </div>
         </div>
-        <p className="text-xs text-foreground/70 mt-3">
-          Design flags are inherited from extraction and require validation; “not flagged randomized” does not establish an observational design.
-          Dashboard filters can reduce the number shown. Counts follow the distinction between records, reports and studies in the
-          {" "}<a href="https://www.prisma-statement.org/prisma-2020-flow-diagram" className="text-blue-700 underline">PRISMA 2020 guidance</a>.
-        </p>
+        <DownArrow />
+        <StageRow
+          title="Full-text data extracted"
+          n={counts.extracted_total}
+          sub={`${counts.extracted_rct.toLocaleString()} RCT · ${counts.extracted_observational.toLocaleString()} observational`}
+          excluded={
+            counts.extracted_total - counts.displayed_total > 0
+              ? { title: "merged duplicates, non-clinical-trial records, and papers excluded at eligibility (e.g. reviews, protocols, secondary analyses, preclinical/modelling studies) removed", n: counts.extracted_total - counts.displayed_total }
+              : undefined
+          }
+        />
+        <DownArrow />
+        <div className="grid md:grid-cols-2">
+          <TreeBranch
+            label="Studies shown on the dashboard"
+            n={counts.displayed_total}
+            accent="#2563eb"
+            tint="rgba(96,165,250,0.15)"
+            items={terminalItems}
+          />
+        </div>
       </div>
-    </section>
+    </div>
   );
 }
