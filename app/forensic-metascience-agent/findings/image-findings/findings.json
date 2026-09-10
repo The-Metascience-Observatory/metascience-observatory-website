@@ -1,0 +1,138 @@
+[
+  {
+    "id": "fu-2012",
+    "doi": "10.3390/ijms13078514",
+    "citation": {
+      "authors": "Xiaoyu Fu; Deming Tan; Zhouhua Hou; Zhiliang Hu; Guozhen Liu",
+      "title": "miR-338-3p Is Down-Regulated by Hepatitis B Virus X and Inhibits Cell Proliferation by Targeting the 3′-UTR Region of CyclinD1",
+      "journal": "International Journal of Molecular Sciences",
+      "volume": "13",
+      "issue": "7",
+      "pages": "8514-8539",
+      "year": 2012,
+      "url": "https://doi.org/10.3390/ijms13078514"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/C07AB0F4B9113AA631B63146C01519",
+    "submitted": "2026-09-06",
+    "summary": "Figure 5a contains a duplicated region across rows labeled as different treatments. The center column shows matching cells, with almost identical fluorescence patterns, although some spots in the second row do not appear in the first.",
+    "image": {
+      "src": "/assets/forensic-metascience-agent/image-findings/fu-2012.png",
+      "width": 1214,
+      "height": 1076,
+      "alt": "Annotated Figure 5a with matching cell regions outlined in the Mimics-NC and Inhibitor-NC treatment rows."
+    }
+  },
+  {
+    "id": "shukla-2010",
+    "doi": "10.1186/1476-4598-9-282",
+    "citation": {
+      "authors": "Shirish Shukla; Gauri Shishodia; Sutapa Mahata; Suresh Hedau; Arvind Pandey; Suresh Bhambhani; Swaraj Batra; Seemi F. Basir; Bhudev C. Das; Alok C. Bharti",
+      "title": "Aberrant expression and constitutive activation of STAT3 in cervical carcinogenesis: implications in high-risk human papillomavirus infection",
+      "journal": "Molecular Cancer",
+      "volume": "9",
+      "issue": "1",
+      "pages": "282",
+      "year": 2010,
+      "url": "https://doi.org/10.1186/1476-4598-9-282"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/81E457D694B8D01468D760821D6FEF",
+    "submitted": "2026-09-06",
+    "summary": "A duplicated region appears across two different staining conditions.",
+    "image": {
+      "src": "/assets/forensic-metascience-agent/image-findings/shukla-2010.png",
+      "width": 1548,
+      "height": 1076,
+      "alt": "Annotated Figure 4 with matching tissue regions outlined in the STAT3 and pSTAT3(Y705) panels."
+    }
+  },
+  {
+    "id": "liberatore-2017",
+    "doi": "10.1016/j.neuroscience.2017.09.005",
+    "citation": {
+      "authors": "Francesca Liberatore; Domenico Bucci; Giada Mascio; Michele Madonna; Paola Di Pietro; Martina Beneventano; Alda Maria Puliti; Giuseppe Battaglia; Valeria Bruno; Ferdinando Nicoletti; Maria Rosaria Romano",
+      "title": "Permissive role for mGlu1 metabotropic glutamate receptors in excitotoxic retinal degeneration",
+      "journal": "Neuroscience",
+      "volume": "363",
+      "issue": null,
+      "pages": "142-149",
+      "year": 2017,
+      "url": "https://doi.org/10.1016/j.neuroscience.2017.09.005",
+      "doi": "10.1016/j.neuroscience.2017.09.005"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/981725213896E386C605D933C95E2A",
+    "submitted": "2026-09-06",
+    "summary": "A duplicated region appears across figures corresponding to two different mouse strains, C57BL/6J and BALB/c.",
+    "image": {
+      "src": "/assets/forensic-metascience-agent/image-findings/liberatore-2017.png",
+      "width": 2048,
+      "height": 889,
+      "alt": "Comparison of Figures 1 and 4, with matching retinal tissue regions outlined in cyan."
+    }
+  },
+  {
+    "id": "tenbaum-2012",
+    "doi": "10.1038/nm.2772",
+    "citation": {
+      "authors": "Stephan P. Tenbaum; Paloma Ordóñez-Morán; Isabel Puig; Irene Chicote; Oriol Arqués; Stefania Landolfi; Yolanda Fernández; José Raúl Herance; Juan D. Gispert; Leire Mendizabal; Susana Aguilar; Santiago Ramón y. Cajal; Simó Schwartz; Ana Vivancos; Eloy Espín; Santiago Rojas; José Baselga; Josep Tabernero; Alberto Muñoz; Héctor G. Palmer",
+      "title": "β-catenin confers resistance to PI3K and AKT inhibitors and subverts FOXO3a to promote metastasis in colon cancer",
+      "journal": "Nature Medicine",
+      "volume": "18",
+      "issue": "6",
+      "pages": "892-901",
+      "year": 2012,
+      "url": "https://doi.org/10.1038/nm.2772"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/3180FF8AA50E5FE94B602D1F1BE92F",
+    "submitted": "2026-09-09",
+    "summary": "The cells in Figure 1 are described as coming from a human patient, while the matching cells in Figure 6 are described as coming from a tumor grown subcutaneously in a mouse from human cells.",
+    "videoUrl": "https://www.youtube.com/watch?v=DkbadA497Eo",
+    "videoEmbedUrl": "https://www.youtube.com/embed/DkbadA497Eo?playsinline=1&rel=0"
+  },
+  {
+    "id": "kaushik-2014",
+    "doi": "10.1007/s11033-014-3464-3",
+    "citation": {
+      "authors": "Ramakant Kaushik; Karn Pratap Singh; Archana Kumari; K. Rameshbabu; Manoj Kumar Singh; Radhey Shyam Manik; Prabhat Palta; Suresh Kumar Singla; Manmohan Singh Chauhan",
+      "title": "Construction of a recombinant human insulin expression vector for mammary gland-specific expression in buffalo (Bubalus bubalis) mammary epithelial cell line",
+      "journal": "Molecular Biology Reports",
+      "volume": "41",
+      "issue": "9",
+      "pages": "5891-5902",
+      "year": 2014,
+      "url": "https://doi.org/10.1007/s11033-014-3464-3",
+      "doi": "10.1007/s11033-014-3464-3"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/5138796D7066F34C30A42FA5BD7DC1",
+    "submitted": "2026-09-09",
+    "summary": "Images appear to be reused across papers. The 2014 caption describes “EGFP expression in pAcISUBC transfected BuMECs.” The pAcISUBC human insulin expression vector was constructed in the 2014 paper and does not appear in the 2013 paper.",
+    "image": {
+      "src": "/assets/forensic-metascience-agent/image-findings/kaushik-2014.png",
+      "width": 1776,
+      "height": 560,
+      "alt": "Comparison of Figure 3 from Kaushik et al. (2013) and Figure 2 from Kaushik et al. (2014), showing matching fluorescence and cell images."
+    }
+  },
+  {
+    "id": "yu-2014",
+    "doi": "10.3892/or.2013.2897",
+    "citation": {
+      "authors": "JUNJIE YU; YOUYI LU; DI CUI; ENHUI LI; YIPIN ZHU; YUYANG ZHAO; FUJUN ZHAO; SHUJIE XIA",
+      "title": "miR-200b suppresses cell proliferation, migration and enhances chemosensitivity in prostate cancer by regulating Bmi-1",
+      "journal": "Oncology Reports",
+      "volume": "31",
+      "issue": "2",
+      "pages": "910-918",
+      "year": 2014,
+      "url": "https://doi.org/10.3892/or.2013.2897"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/CF1B32A49FF2CB6E68AD064EB73920",
+    "submitted": "2026-09-10",
+    "summary": "An image is reused with a 180-degree rotation.",
+    "image": {
+      "src": "/assets/forensic-metascience-agent/image-findings/yu-2014.png",
+      "width": 1806,
+      "height": 1116,
+      "alt": "Comparison of Figure 2D and Figure 4C, with matching regions outlined under the miR-200b and siRNA-Bmi-1 labels."
+    }
+  }
+]

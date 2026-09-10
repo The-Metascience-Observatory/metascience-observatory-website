@@ -133,6 +133,12 @@ export default function ForensicAgentFindingsPage() {
             most errors are simple mistakes.
           </p>
 
+          <p className="mb-4 leading-relaxed">
+            <a href="/forensic-metascience-agent/findings/image-findings" className="text-primary underline underline-offset-4 hover:text-foreground">
+              View image findings and annotated comparisons →
+            </a>
+          </p>
+
           <h2 className="text-2xl font-semibold mb-4 mt-10 text-foreground border-b border-border pb-2">
             Findings submitted to PubPeer
           </h2>
