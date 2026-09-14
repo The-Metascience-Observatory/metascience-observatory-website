@@ -47,6 +47,7 @@ export default function ImageFindingsPage() {
           <div className="space-y-8">
             {findings.map((finding) => {
               const citation = finding.citation;
+              const isWide = Boolean(finding.image && finding.image.width / finding.image.height >= 2.5);
               return (
                 <article key={finding.doi} id={finding.id} className="scroll-mt-24 rounded-xl border border-muted-foreground/30 bg-card p-5 md:p-6">
                   <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
@@ -79,8 +80,8 @@ export default function ImageFindingsPage() {
                   </p>
                   {finding.image && (
                     <figure className="mt-5">
-                      <a href={finding.image.src} target="_blank" rel="noopener noreferrer" className={`block mx-auto rounded-md border border-border overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring ${finding.id === "kaushik-2014" ? "w-full max-w-4xl" : "w-1/2 max-w-md"}`} aria-label={`Open full-size comparison for ${citation.title}`}>
-                        <Image src={finding.image.src} alt={finding.image.alt} width={finding.image.width} height={finding.image.height} sizes={finding.id === "kaushik-2014" ? "(max-width: 960px) 100vw, 896px" : "(max-width: 960px) 50vw, 448px"} unoptimized className="h-auto w-full" />
+                      <a href={finding.image.src} target="_blank" rel="noopener noreferrer" className={`block mx-auto rounded-md border border-border overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring ${isWide ? "w-full max-w-4xl" : "w-1/2 max-w-md"}`} aria-label={`Open full-size comparison for ${citation.title}`}>
+                        <Image src={finding.image.src} alt={finding.image.alt} width={finding.image.width} height={finding.image.height} sizes={isWide ? "(max-width: 960px) 100vw, 896px" : "(max-width: 960px) 50vw, 448px"} unoptimized className="h-auto w-full" />
                       </a>
                       <figcaption className="mt-2 text-center text-xs text-muted-foreground">Select the image to view the full-size comparison.</figcaption>
                     </figure>

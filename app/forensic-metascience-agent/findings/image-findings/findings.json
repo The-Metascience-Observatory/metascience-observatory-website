@@ -134,5 +134,28 @@
       "height": 1116,
       "alt": "Comparison of Figure 2D and Figure 4C, with matching regions outlined under the miR-200b and siRNA-Bmi-1 labels."
     }
+  },
+  {
+    "id": "kirby-2025",
+    "doi": "10.1021/acsinfecdis.5c00088",
+    "citation": {
+      "authors": "Cara D. Kirby; Gai Liu; Farheen Fatma; Maris R. Pedlow; Narendran G-Dayanandan; Nitin Sharma; Zachary D. Frey; Rachael E. Rush; Steven C. Cardinale; Andrzej M. Krezel; Amy L. Hartman; Terry L. Bowlin; Daisy W. Leung; Gaya K. Amarasinghe",
+      "title": "Identification and Characterization of a Metal Binding-Independent Rift Valley Fever Virus Endonuclease Inhibitor",
+      "journal": "ACS Infectious Diseases",
+      "volume": "11",
+      "issue": "9",
+      "pages": "2373-2382",
+      "year": 2025,
+      "url": "https://doi.org/10.1021/acsinfecdis.5c00088"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/FE51F8BA5F85B511A1E08F46CB5A35",
+    "submitted": "2026-09-11",
+    "summary": "Figure 3A contains a duplicated image across conditions. The GFP panels labeled DMSO and 4523 show matching fluorescence patterns.",
+    "image": {
+      "src": "/assets/forensic-metascience-agent/image-findings/kirby-2025.png",
+      "width": 2359,
+      "height": 790,
+      "alt": "Annotated Figure 3A with matching GFP regions outlined in the DMSO and 4523 treatment columns."
+    }
   }
 ]
