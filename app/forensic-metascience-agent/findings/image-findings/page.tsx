@@ -23,6 +23,37 @@ function displayAuthors(authors: string) {
   }).join("; ");
 }
 
+type FindingImage = {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+  wide?: boolean;
+  caption?: string;
+};
+
+function findingImages(finding: (typeof findings)[number]): FindingImage[] {
+  if ("images" in finding && finding.images) {
+    return finding.images.map((image) => ({
+      src: image.src,
+      width: image.width,
+      height: image.height,
+      alt: image.alt,
+      wide: "wide" in image ? Boolean(image.wide) : undefined,
+      caption: "caption" in image && typeof image.caption === "string" ? image.caption : undefined,
+    }));
+  }
+  if (finding.image) {
+    return [{
+      src: finding.image.src,
+      width: finding.image.width,
+      height: finding.image.height,
+      alt: finding.image.alt,
+    }];
+  }
+  return [];
+}
+
 export default function ImageFindingsPage() {
   return (
     <div className="min-h-screen">
@@ -50,11 +81,7 @@ export default function ImageFindingsPage() {
           <div className="space-y-8">
             {findings.map((finding) => {
               const citation = finding.citation;
-              const images = "images" in finding && finding.images
-                ? finding.images
-                : finding.image
-                  ? [finding.image]
-                  : [];
+              const images = findingImages(finding);
               return (
                 <article key={finding.doi} id={finding.id} className="scroll-mt-24 rounded-xl border border-foreground bg-card p-5 md:p-6">
                   <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
@@ -88,15 +115,13 @@ export default function ImageFindingsPage() {
                   {images.length > 0 && (
                     <div className="mt-5 space-y-6">
                       {images.map((image) => {
-                        const isWide = Boolean(
-                          ("wide" in image && image.wide) || image.width / image.height >= 2.5
-                        );
+                        const isWide = Boolean(image.wide) || image.width / image.height >= 2.5;
                         return (
                           <figure key={image.src}>
                             <a href={image.src} target="_blank" rel="noopener noreferrer" className={`block mx-auto rounded-md border border-border overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring ${isWide ? "w-full max-w-4xl" : "w-1/2 max-w-md"}`} aria-label={`Open full-size comparison for ${citation.title}`}>
                               <Image src={image.src} alt={image.alt} width={image.width} height={image.height} sizes={isWide ? "(max-width: 960px) 100vw, 896px" : "(max-width: 960px) 50vw, 448px"} unoptimized className="h-auto w-full" />
                             </a>
-                            {"caption" in image && image.caption ? (
+                            {image.caption ? (
                               <figcaption className="mt-2 text-center text-xs text-muted-foreground">
                                 {image.caption}
                               </figcaption>
@@ -112,7 +137,7 @@ export default function ImageFindingsPage() {
                       videoUrl={finding.videoUrl}
                       title={citation.title}
                       thumbnailUrl={finding.videoThumbnail}
-                      thumbnailAlt={"videoThumbnailAlt" in finding && finding.videoThumbnailAlt ? finding.videoThumbnailAlt : `Preview of the video comparison for ${citation.title}`}
+                      thumbnailAlt={"videoThumbnailAlt" in finding && typeof finding.videoThumbnailAlt === "string" ? finding.videoThumbnailAlt : `Preview of the video comparison for ${citation.title}`}
                       caption={finding.videoCaption}
                     />
                   )}
