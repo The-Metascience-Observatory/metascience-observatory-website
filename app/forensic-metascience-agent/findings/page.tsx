@@ -3,6 +3,7 @@ import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { DocsBackLink } from "@/components/DocsBackLink";
 import { Finding, postedFindings, otherFindings } from "./findings";
+import { FindingsDisclaimer } from "./FindingsDisclaimer";
 
 export const metadata = {
   title: "Findings and PubPeer Comments | The Metascience Observatory",
@@ -52,7 +53,7 @@ function Citation({ finding }: { finding: Finding }) {
 
 function PostedCard({ finding }: { finding: Finding }) {
   return (
-    <Card className="p-5 bg-white shadow-none border-muted-foreground/30">
+    <Card className="p-5 bg-white shadow-none border-foreground">
       <div className="flex items-stretch gap-5">
         <div className="min-w-0 flex-1">
           <h3 className="font-clarendon font-semibold text-[1.0625rem] text-foreground mb-1">
@@ -95,7 +96,7 @@ function PostedCard({ finding }: { finding: Finding }) {
 
 function OtherCard({ finding }: { finding: Finding }) {
   return (
-    <Card className="p-5 bg-white shadow-none border-muted-foreground/30">
+    <Card className="p-5 bg-white shadow-none border-foreground">
       <h3 className="font-clarendon font-semibold text-[1.0625rem] text-foreground mb-1">
         {finding.title}
       </h3>
@@ -132,15 +133,16 @@ export default function ForensicAgentFindingsPage() {
             made public, and it takes a lot for something to rise to the level of a PubPeer report:
             most errors are simple mistakes.
           </p>
+          <FindingsDisclaimer />
 
           <p className="mb-4 leading-relaxed">
-            <a href="/forensic-metascience-agent/findings/image-findings" className="text-primary underline underline-offset-4 hover:text-foreground">
-              View image findings and annotated comparisons →
+            <a href="/forensic-metascience-agent/findings/image-findings" className="text-lg font-semibold text-primary underline underline-offset-4 hover:text-foreground">
+              View image-related findings →
             </a>
           </p>
 
           <h2 className="text-2xl font-semibold mb-4 mt-10 text-foreground border-b border-border pb-2">
-            Findings submitted to PubPeer
+            Non-image findings submitted to PubPeer
           </h2>
           <div className="space-y-4">
             {postedFindings.map((finding) => (

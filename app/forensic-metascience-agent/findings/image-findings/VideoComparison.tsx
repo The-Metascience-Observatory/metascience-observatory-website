@@ -4,10 +4,13 @@ import { useState } from "react";
 import Image from "next/image";
 import { Play } from "lucide-react";
 
-export function VideoComparison({ embedUrl, videoUrl, title }: {
+export function VideoComparison({ embedUrl, videoUrl, title, thumbnailUrl, thumbnailAlt, caption }: {
   embedUrl: string;
   videoUrl: string;
   title: string;
+  thumbnailUrl: string;
+  thumbnailAlt: string;
+  caption: string;
 }) {
   const [playing, setPlaying] = useState(false);
 
@@ -33,8 +36,8 @@ export function VideoComparison({ embedUrl, videoUrl, title }: {
             className="group absolute inset-0 flex h-full w-full items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-ring"
           >
             <Image
-              src="https://i.ytimg.com/vi/DkbadA497Eo/hqdefault.jpg"
-              alt="Preview of the comparison between Figure 1 and Figure 6"
+              src={thumbnailUrl}
+              alt={thumbnailAlt}
               fill
               sizes="(max-width: 720px) 100vw, 672px"
               unoptimized
@@ -48,7 +51,7 @@ export function VideoComparison({ embedUrl, videoUrl, title }: {
         )}
       </div>
       <figcaption className="mt-2 text-center text-xs text-muted-foreground">
-        Figures 1 and 6 ·{" "}
+        {caption} ·{" "}
         <a href={videoUrl} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-foreground">Watch on YouTube</a>
       </figcaption>
     </figure>

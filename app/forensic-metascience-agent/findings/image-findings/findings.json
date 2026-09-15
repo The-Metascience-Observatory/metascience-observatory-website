@@ -86,7 +86,10 @@
     "submitted": "2026-09-09",
     "summary": "The cells in Figure 1 are described as coming from a human patient, while the matching cells in Figure 6 are described as coming from a tumor grown subcutaneously in a mouse from human cells.",
     "videoUrl": "https://www.youtube.com/watch?v=DkbadA497Eo",
-    "videoEmbedUrl": "https://www.youtube.com/embed/DkbadA497Eo?playsinline=1&rel=0"
+    "videoEmbedUrl": "https://www.youtube.com/embed/DkbadA497Eo?playsinline=1&rel=0",
+    "videoThumbnail": "https://i.ytimg.com/vi/DkbadA497Eo/hqdefault.jpg",
+    "videoThumbnailAlt": "Preview of the comparison between Figure 1 and Figure 6",
+    "videoCaption": "Figures 1 and 6"
   },
   {
     "id": "kaushik-2014",
@@ -157,5 +160,71 @@
       "height": 790,
       "alt": "Annotated Figure 3A with matching GFP regions outlined in the DMSO and 4523 treatment columns."
     }
+  },
+  {
+    "id": "stiles-2013",
+    "doi": "10.1242/jcs.113191",
+    "citation": {
+      "authors": "Travis L. Stiles; Travis L. Dickendesher; Alban Gaultier; Anthony Fernandez-Castaneda; Elisabetta Mantuano; Roman J. Giger; Steven L. Gonias",
+      "title": "LDL receptor-related protein-1 is a sialic-acid-independent receptor for myelin-associated glycoprotein that functions in neurite outgrowth inhibition by MAG and CNS myelin",
+      "journal": "Journal of Cell Science",
+      "volume": "126",
+      "issue": "1",
+      "pages": "209-220",
+      "year": 2013,
+      "url": "https://doi.org/10.1242/jcs.113191"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/E2CC87826C8F7D3B30E4F060E1CF23",
+    "submitted": "2026-09-14",
+    "summary": "A duplicated region appears across two separate experiments: the MAG/NTC panel in Figure 5B matches the MAG/vehicle panel in Figure 8A. A panel in Figure 3b also appears in Travis L. Dickendesher’s PhD thesis with a different label and different coloration.",
+    "videoUrl": "https://www.youtube.com/watch?v=WCmFUwP_esY",
+    "videoEmbedUrl": "https://www.youtube.com/embed/WCmFUwP_esY?playsinline=1&rel=0",
+    "videoThumbnail": "https://i.ytimg.com/vi/WCmFUwP_esY/hqdefault.jpg",
+    "videoThumbnailAlt": "Preview of the comparison between Figure 3b and Travis L. Dickendesher’s PhD thesis",
+    "videoCaption": "Figure 3b and Dickendesher thesis",
+    "images": [
+      {
+        "src": "/assets/forensic-metascience-agent/image-findings/stiles-2013-fig5-fig8.png",
+        "width": 2023,
+        "height": 926,
+        "wide": true,
+        "alt": "Comparison of Figure 5B and Figure 8A, with matching MAG neurite-outgrowth panels outlined in green.",
+        "caption": "Figures 5B and 8A"
+      },
+      {
+        "src": "/assets/forensic-metascience-agent/image-findings/stiles-2013-fig3b-thesis.png",
+        "width": 2048,
+        "height": 1708,
+        "wide": true,
+        "alt": "Figure 3b compared with Fig. 2.5 from Travis L. Dickendesher’s PhD thesis, with matching brain-section panels outlined in cyan.",
+        "caption": "Figure 3b and Dickendesher thesis Fig. 2.5"
+      }
+    ]
+  },
+  {
+    "id": "dickendesher-2012",
+    "doi": "10.1038/nn.3070",
+    "citation": {
+      "authors": "Travis L. Dickendesher; Katherine T. Baldwin; Yevgeniya A. Mironova; Yoshiki Koriyama; Stephen J. Raiker; Kim L. Askew; Andrew Wood; Cédric G. Geoffroy; Binhai Zheng; Claire D. Liepmann; Yasuhiro Katagiri; Larry I. Benowitz; Herbert M. Geller; Roman J. Giger",
+      "title": "NgR1 and NgR3 are receptors for chondroitin sulfate proteoglycans",
+      "journal": "Nature Neuroscience",
+      "volume": "15",
+      "issue": "5",
+      "pages": "703-712",
+      "year": 2012,
+      "url": "https://doi.org/10.1038/nn.3070"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/96432C6662C7E5CD44293C3A01362A",
+    "submitted": "2026-09-15",
+    "summary": "A duplicated region appears between Supplementary Figure 4 (left) and Figure 4 (right), in addition to issues already noted on PubPeer.",
+    "images": [
+      {
+        "src": "/assets/forensic-metascience-agent/image-findings/dickendesher-2012-fig4.png",
+        "width": 1284,
+        "height": 939,
+        "wide": true,
+        "alt": "Comparison of Supplementary Figure 4 and Figure 4, with matching binding panels outlined in cyan."
+      }
+    ]
   }
 ]

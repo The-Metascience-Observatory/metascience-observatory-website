@@ -6,11 +6,12 @@ import { Footer } from "@/components/Footer";
 import { DocsBackLink } from "@/components/DocsBackLink";
 import findings from "./findings.json";
 import { VideoComparison } from "./VideoComparison";
+import { FindingsDisclaimer } from "../FindingsDisclaimer";
 
 export const metadata: Metadata = {
   title: "Image Findings and PubPeer Comments | The Metascience Observatory",
   description:
-    "Image findings from the Forensic Metascience Agent, with annotated comparisons, paper references, and links to the PubPeer discussions.",
+    "This page contains a continually-updated list of findings from the Forensic Metascience Agent image analysis system which we have submitted to PubPeer. Every finding undergoes thorough human review by Dan Elton and Greg Fitzgerald before submission.",
 };
 
 function displayAuthors(authors: string) {
@@ -36,10 +37,12 @@ export default function ImageFindingsPage() {
             FMA Image Findings and PubPeer comments
           </h1>
           <p className="mb-4 leading-relaxed text-foreground/90 max-w-4xl">
-            Image findings from the Forensic Metascience Agent, with annotated
-            comparisons and links to the PubPeer discussions. Every finding
-            undergoes human review before it is made public.
+            This page contains a continually-updated list of findings from the
+            Forensic Metascience Agent image analysis system which we have
+            submitted to PubPeer. Every finding undergoes thorough human review
+            by Dan Elton and Greg Fitzgerald before submission.
           </p>
+          <FindingsDisclaimer />
           <h2 className="text-2xl font-semibold mb-6 mt-10 text-foreground border-b border-border pb-2">
             Image findings submitted to PubPeer
             <span className="ml-3 text-base font-normal text-muted-foreground">({findings.length} papers)</span>
@@ -47,9 +50,13 @@ export default function ImageFindingsPage() {
           <div className="space-y-8">
             {findings.map((finding) => {
               const citation = finding.citation;
-              const isWide = Boolean(finding.image && finding.image.width / finding.image.height >= 2.5);
+              const images = "images" in finding && finding.images
+                ? finding.images
+                : finding.image
+                  ? [finding.image]
+                  : [];
               return (
-                <article key={finding.doi} id={finding.id} className="scroll-mt-24 rounded-xl border border-muted-foreground/30 bg-card p-5 md:p-6">
+                <article key={finding.doi} id={finding.id} className="scroll-mt-24 rounded-xl border border-foreground bg-card p-5 md:p-6">
                   <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                     <div className="min-w-0">
                       <h3 className="font-clarendon font-semibold text-lg text-foreground mb-2 leading-snug">
@@ -78,16 +85,35 @@ export default function ImageFindingsPage() {
                   <p className="mt-2 text-xs text-muted-foreground">
                     Submitted <time dateTime={finding.submitted}>{new Date(`${finding.submitted}T12:00:00Z`).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" })}</time>.
                   </p>
-                  {finding.image && (
-                    <figure className="mt-5">
-                      <a href={finding.image.src} target="_blank" rel="noopener noreferrer" className={`block mx-auto rounded-md border border-border overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring ${isWide ? "w-full max-w-4xl" : "w-1/2 max-w-md"}`} aria-label={`Open full-size comparison for ${citation.title}`}>
-                        <Image src={finding.image.src} alt={finding.image.alt} width={finding.image.width} height={finding.image.height} sizes={isWide ? "(max-width: 960px) 100vw, 896px" : "(max-width: 960px) 50vw, 448px"} unoptimized className="h-auto w-full" />
-                      </a>
-                      <figcaption className="mt-2 text-center text-xs text-muted-foreground">Select the image to view the full-size comparison.</figcaption>
-                    </figure>
+                  {images.length > 0 && (
+                    <div className="mt-5 space-y-6">
+                      {images.map((image) => {
+                        const isWide = Boolean(
+                          ("wide" in image && image.wide) || image.width / image.height >= 2.5
+                        );
+                        return (
+                          <figure key={image.src}>
+                            <a href={image.src} target="_blank" rel="noopener noreferrer" className={`block mx-auto rounded-md border border-border overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring ${isWide ? "w-full max-w-4xl" : "w-1/2 max-w-md"}`} aria-label={`Open full-size comparison for ${citation.title}`}>
+                              <Image src={image.src} alt={image.alt} width={image.width} height={image.height} sizes={isWide ? "(max-width: 960px) 100vw, 896px" : "(max-width: 960px) 50vw, 448px"} unoptimized className="h-auto w-full" />
+                            </a>
+                            <figcaption className="mt-2 text-center text-xs text-muted-foreground">
+                              {"caption" in image && image.caption ? `${image.caption}. ` : null}
+                              Select the image to view the full-size comparison.
+                            </figcaption>
+                          </figure>
+                        );
+                      })}
+                    </div>
                   )}
-                  {finding.videoEmbedUrl && finding.videoUrl && (
-                    <VideoComparison embedUrl={finding.videoEmbedUrl} videoUrl={finding.videoUrl} title={citation.title} />
+                  {finding.videoEmbedUrl && finding.videoUrl && finding.videoThumbnail && finding.videoCaption && (
+                    <VideoComparison
+                      embedUrl={finding.videoEmbedUrl}
+                      videoUrl={finding.videoUrl}
+                      title={citation.title}
+                      thumbnailUrl={finding.videoThumbnail}
+                      thumbnailAlt={"videoThumbnailAlt" in finding && finding.videoThumbnailAlt ? finding.videoThumbnailAlt : `Preview of the video comparison for ${citation.title}`}
+                      caption={finding.videoCaption}
+                    />
                   )}
                 </article>
               );
