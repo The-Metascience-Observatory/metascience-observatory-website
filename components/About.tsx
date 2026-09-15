@@ -6,8 +6,7 @@ interface ProjectMeta {
   href: string;
   title: string;
   description: string;
-  /** Optional second link shown after "Read more" — only Bird's Eye has one,
-   *  pointing at a finished review so visitors can see the output directly. */
+  /** Optional second link shown after "Read more". */
   extra?: { href: string; label: string };
 }
 
@@ -23,6 +22,10 @@ const projects: ProjectMeta[] = [
     title: "Forensic Metascience Agent",
     description:
       "An AI agent equipped with 30+ tools for detecting statistical inconsistencies and data-integrity anomalies in scientific papers.",
+    extra: {
+      href: "/forensic-metascience-agent/findings",
+      label: "View findings",
+    },
   },
   {
     href: "/birds-eye-reviews",

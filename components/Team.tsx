@@ -26,7 +26,7 @@ export const Team = () => {
                       <span className="ml-2 font-normal text-foreground/80">- Founder and Director</span>
                     </h3>
                     <p className="text-foreground/90 leading-relaxed">
-                    Dan spent 15 years in academic research before founding The Metascience Observatory. He has co-authored about 50 peer-reviewed papers in physics, materials science, and AI for healthcare. On <a href="https://moreisdifferent.blog/">his Substack</a> he writes about AI, progress, metascience, and other topics. 
+                    Dan spent 15 years in academic research before founding The Metascience Observatory. He has co-authored over 40 peer-reviewed papers in physics, materials science, and AI for healthcare. On <a href="https://moreisdifferent.blog/">his Substack</a> he writes about AI, progress, metascience, and other topics. 
                     </p>
                   </div>
               </div>
