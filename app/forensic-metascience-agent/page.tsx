@@ -98,7 +98,7 @@ const fraudStats: Stat[] = [
   },
   {
     value: "~14%",
-    claim: "papers contain some form of anomalous / highly questionable data",
+    claim: "of papers contain some form of anomalous / highly questionable data",
     source: "James Heathers' 2024 'highly non-systematic' review",
     href: "https://metaror.org/kotahi/articles/18/index.html",
   },
@@ -139,7 +139,7 @@ const errorStats: Stat[] = [
   },
   {
     value: "63%",
-    claim: "of meta-analyses had a data-extraction error; 37% enough to change the result",
+    claim: "of meta-analyses had a data-extraction error; 37% had an error large enough to change the result",
     source: "Gøtzsche et al., JAMA 2007",
     href: "https://doi.org/10.1001/jama.298.4.430",
   },

@@ -108,7 +108,7 @@ export function PipelineDiagram() {
           tone="neutral"
           center
           className={STEP_W}
-          sub="Attempts to pull the XML, HTML, and PDF as well as supplementary information and data. If it cannot pull from an API it provides a list of missing PDFs for a human to try to obtain."
+          sub="Attempts to pull the XML, HTML, and PDF as well as supplementary information and data. If it cannot pull from an API, it provides a list of missing PDFs for a human to try to obtain."
         />
         </div>
         <div className="hidden md:block" />
