@@ -13,14 +13,8 @@ import {
 /**
  * How one paper moves through the system.
  *
- * There is deliberately no "merge" box: the fan-in arrow IS the merge, and a
- * node for it only restated the geometry.
- *
- * The two validation boxes are deliberately NOT collapsed into one. The passes
- * split around the adjudicator, and the severity clamps run in both halves —
- * applied to the provisional severity, then re-applied to the final ranking —
- * so a clamp can never come out weaker than it went in. One box would hide the
- * reason the split exists.
+ * Below the four-column breakpoint, group the independent analysis branches
+ * explicitly. Fan connectors only describe the desktop row, not stacked cards.
  */
 
 const PRODUCERS = [
@@ -137,43 +131,71 @@ export function PipelineDiagram() {
 
       <Down />
 
-      <Fan n={4} dir="out" />
-
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
-        {PRODUCERS.map((p, i) => (
-          <div key={p.t} className="flex flex-col">
-            <Node
-              title={p.t}
-              sub={p.s}
-              tone={p.tone}
-              center
-              icon={p.agent ? <AgentIcon /> : undefined}
-            />
-            {/*
-              The image track alone carries a second stage. Its detector measures
-              shared pixels correctly but cannot say WHY two panels share them, so
-              a model pass answers that question before the finding leaves the
-              track — and its verdict travels with the finding, which is what stops
-              the main adjudicator re-litigating pixels later.
-            */}
-            {i === 0 && (
-              <>
-                <Down h={22} />
-                <Node
-                  title="Image finding adjudication agent"
-                  sub="An agent to screen out false positives and innocuous duplications."
-                  tone="accent"
-                  center
-                  icon={<AgentIcon />}
-                />
-              </>
-            )}
-            <Stem />
-          </div>
-        ))}
+      <div className="hidden lg:block">
+        <Fan n={4} dir="out" />
       </div>
 
-      <Fan n={4} dir="in" />
+      <section aria-label="Parallel analysis branches" className="mx-auto max-w-md lg:max-w-none">
+        <div className="pb-4 text-center lg:sr-only">
+          <p className="text-sm font-semibold text-foreground">Parallel analysis</p>
+          <p className="mt-1 text-xs text-muted-foreground">Four independent branches feed into one review.</p>
+        </div>
+        {/* On narrow screens, side rails distribute the input to each branch
+            and collect its output. No arrow connects independent branches. */}
+        <div aria-hidden className="h-5 w-1/2 rounded-tl-lg border-l-2 border-t-2 border-foreground/50 lg:hidden" />
+        <div className="grid grid-cols-1 lg:grid-cols-4 lg:gap-2">
+          {PRODUCERS.map((p, i) => (
+            <div key={p.t} className="relative flex min-w-0 flex-col px-5 py-3 lg:p-0">
+              <div aria-hidden className={`absolute left-0 top-0 border-l-2 border-foreground/50 lg:hidden ${i === PRODUCERS.length - 1 ? "h-9" : "bottom-0"}`} />
+              <div aria-hidden className={`absolute right-0 bottom-0 border-r-2 border-foreground/50 lg:hidden ${i === 0 ? "top-[calc(100%-36px)]" : "top-0"}`} />
+              <svg aria-hidden viewBox="0 0 20 12" className="absolute left-0 top-[30px] h-3 w-5 text-foreground/50 lg:hidden">
+                <path d="M0 6H14" fill="none" stroke="currentColor" strokeWidth="2" />
+                <path d="M20 6L13 1V11Z" fill="currentColor" />
+              </svg>
+              <div aria-hidden className="absolute bottom-9 right-0 w-5 border-t-2 border-foreground/50 lg:hidden" />
+              <Node
+                title={p.t}
+                sub={p.s}
+                tone={p.tone}
+                center
+                icon={p.agent ? <AgentIcon /> : undefined}
+                className="[&>p]:text-xs lg:[&>p]:text-[11px]"
+              />
+              {/*
+                The image track alone carries a second stage. Its detector measures
+                shared pixels correctly but cannot say WHY two panels share them, so
+                a model pass answers that question before the finding leaves the
+                track — and its verdict travels with the finding, which is what stops
+                the main adjudicator re-litigating pixels later.
+              */}
+              {i === 0 && (
+                <>
+                  <Down h={22} />
+                  <Node
+                    title="Image finding adjudication agent"
+                    sub="An agent to screen out false positives and innocuous duplications."
+                    tone="accent"
+                    center
+                    icon={<AgentIcon />}
+                    className="[&>p]:text-xs lg:[&>p]:text-[11px]"
+                  />
+                </>
+              )}
+              <div className="hidden grow lg:flex lg:flex-col">
+                <Stem />
+              </div>
+            </div>
+          ))}
+        </div>
+        <div aria-hidden className="ml-auto h-5 w-1/2 rounded-br-lg border-b-2 border-r-2 border-foreground/50 lg:hidden" />
+      </section>
+
+      <div className="hidden lg:block">
+        <Fan n={4} dir="in" />
+      </div>
+      <div className="lg:hidden">
+        <Down />
+      </div>
 
       <div className="flex justify-center">
         <Node title="Join findings" tone="neutral" center className={STEP_W} />
