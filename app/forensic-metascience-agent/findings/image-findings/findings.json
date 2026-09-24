@@ -226,5 +226,84 @@
         "alt": "Comparison of Supplementary Figure 4 and Figure 4, with matching binding panels outlined in cyan."
       }
     ]
+  },
+  {
+    "id": "he-2017",
+    "doi": "10.18632/oncotarget.22784",
+    "citation": {
+      "authors": "Li He; Ying Fan; Wenzhen Xiao; Teng Chen; Jiejun Wen; Yang Dong; Yiyun Wang; Shiqi Li; Rui Xue; Liyang Zheng; John Cijiang He; Niansong Wang",
+      "title": "Febuxostat attenuates ER stress mediated kidney injury in a rat model of hyperuricemic nephropathy",
+      "journal": "Oncotarget",
+      "volume": "8",
+      "issue": "67",
+      "pages": "111295-111308",
+      "year": 2017,
+      "url": "https://doi.org/10.18632/oncotarget.22784"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/9E1FB6C9772C3D55D915B6EF1E69F2",
+    "submitted": "2026-09-22",
+    "summary": "Duplication across control and control + Febuxostat.",
+    "image": {
+      "src": "/assets/forensic-metascience-agent/image-findings/he-2017.png",
+      "width": 516,
+      "height": 232,
+      "alt": "Annotated kidney tissue images with matching regions outlined in cyan in the Masson-stained control and control+Fx panels."
+    }
+  },
+  {
+    "id": "duncan-2021",
+    "doi": "10.1007/s12035-021-02373-2",
+    "citation": {
+      "authors": "Bryce W. Duncan; Vishwa Mohan; Sarah D. Wade; Young Truong; Alexander Kampov-Polevoi; Brenda R. Temple; Patricia F. Maness",
+      "title": "Semaphorin3F Drives Dendritic Spine Pruning Through Rho-GTPase Signaling",
+      "journal": "Molecular Neurobiology",
+      "volume": "58",
+      "issue": "8",
+      "pages": "3817-3834",
+      "year": 2021,
+      "url": "https://doi.org/10.1007/s12035-021-02373-2"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/838B6AEB93D9D0624C777B45B31B12",
+    "submitted": "2026-09-22",
+    "summary": "In figure 3G the panel on the right has the same neurons as the panel next to it, but rotated 180 degrees and then flipped horizontally. The red overlay is similar but a bit different.",
+    "image": {
+      "src": "/assets/forensic-metascience-agent/image-findings/duncan-2021.png",
+      "width": 564,
+      "height": 594,
+      "alt": "Annotated panel G with matching dendritic regions outlined in cyan in the Cofilin Fc and Sema3F-Fc images."
+    },
+    "videoUrl": "https://www.youtube.com/watch?v=EjtS7qkbTV0",
+    "videoEmbedUrl": "https://www.youtube.com/embed/EjtS7qkbTV0?playsinline=1&rel=0",
+    "videoThumbnail": "https://i.ytimg.com/vi/EjtS7qkbTV0/hqdefault.jpg",
+    "videoThumbnailAlt": "Preview of the image duplication comparison for Duncan et al. (2021)",
+    "videoCaption": "Cofilin panels in panel G"
+  },
+  {
+    "id": "lee-2016",
+    "doi": "10.1016/j.neuron.2016.05.021",
+    "citation": {
+      "authors": "Sebum Lee; Yulei Shang; Stephanie A. Redmond; Anatoly Urisman; Amy A. Tang; Kathy H. Li; Alma L. Burlingame; Ryan A. Pak; Ana Jovičić; Aaron D. Gitler; Jinhua Wang; Nathanael S. Gray; William W. Seeley; Teepu Siddique; Eileen H. Bigio; Virginia M.-Y. Lee; John Q. Trojanowski; Jonah R. Chan; Eric J. Huang",
+      "title": "Activation of HIPK2 Promotes ER Stress-Mediated Neurodegeneration in Amyotrophic Lateral Sclerosis",
+      "journal": "Neuron",
+      "volume": "91",
+      "issue": "1",
+      "pages": "41-55",
+      "year": 2016,
+      "url": "https://doi.org/10.1016/j.neuron.2016.05.021"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/E9B85FF620D270D652D2861336C50B",
+    "submitted": "2026-09-23",
+    "summary": "Figure 1 contains a duplication across conditions, with the image flipped horizontally. Matching regions appear in the wild-type DMSO and Hipk2 knockout tunicamycin panels.",
+    "image": {
+      "src": "/assets/forensic-metascience-agent/image-findings/lee-2016.png",
+      "width": 1410,
+      "height": 1284,
+      "alt": "Annotated Figure 1 with matching regions outlined in yellow in panels B and K and their merged images, C and L."
+    },
+    "videoUrl": "https://www.youtube.com/watch?v=E52HWRcN7vg",
+    "videoEmbedUrl": "https://www.youtube.com/embed/E52HWRcN7vg?playsinline=1&rel=0",
+    "videoThumbnail": "https://i.ytimg.com/vi/E52HWRcN7vg/hqdefault.jpg",
+    "videoThumbnailAlt": "Preview of the image duplication comparison for Lee et al. (2016)",
+    "videoCaption": "Figure 1 across conditions"
   }
 ]

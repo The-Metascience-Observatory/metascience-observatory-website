@@ -116,10 +116,11 @@ export default function ImageFindingsPage() {
                     <div className="mt-5 space-y-6">
                       {images.map((image) => {
                         const isWide = Boolean(image.wide) || image.width / image.height >= 2.5;
+                        const isReduced = finding.id === "dickendesher-2012";
                         return (
                           <figure key={image.src}>
-                            <a href={image.src} target="_blank" rel="noopener noreferrer" className={`block mx-auto rounded-md border border-border overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring ${isWide ? "w-full max-w-4xl" : "w-1/2 max-w-md"}`} aria-label={`Open full-size comparison for ${citation.title}`}>
-                              <Image src={image.src} alt={image.alt} width={image.width} height={image.height} sizes={isWide ? "(max-width: 960px) 100vw, 896px" : "(max-width: 960px) 50vw, 448px"} unoptimized className="h-auto w-full" />
+                            <a href={image.src} target="_blank" rel="noopener noreferrer" className={`block mx-auto rounded-md border border-border overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring ${isReduced ? "w-[70%] max-w-[39.2rem]" : isWide ? "w-full max-w-4xl" : "w-1/2 max-w-md"}`} aria-label={`Open full-size comparison for ${citation.title}`}>
+                              <Image src={image.src} alt={image.alt} width={image.width} height={image.height} sizes={isReduced ? "(max-width: 960px) 70vw, 627px" : isWide ? "(max-width: 960px) 100vw, 896px" : "(max-width: 960px) 50vw, 448px"} unoptimized className="h-auto w-full" />
                             </a>
                             {image.caption ? (
                               <figcaption className="mt-2 text-center text-xs text-muted-foreground">

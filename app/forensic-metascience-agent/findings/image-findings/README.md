@@ -14,3 +14,11 @@ The complete returned metadata is retained in each entry's `citation` field.
 The page displays every author, normalizes all-capital author names for readability,
 and omits the issue when the metadata provider does not supply one.
 Metadata is stored locally so rendering does not depend on external API calls.
+
+He (2017), Duncan (2021), and Lee (2016) were added on September 24, 2026
+from `new.docx`. The three annotated PNGs were extracted without modification;
+the submission dates and PubPeer links come from the document. Summaries
+describe its marked panels and accompanying text, with the He and Duncan
+descriptions supplied directly by the user. Citation metadata was fetched
+with the DOI script. The Duncan video link was supplied in the request; the Lee
+video link comes from the document. Both use the existing click-to-play player.
