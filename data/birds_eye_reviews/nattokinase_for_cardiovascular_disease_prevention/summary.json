@@ -1,0 +1,2088 @@
+{
+  "schema_version": 4,
+  "scientific_rules_version": "2026-09-23.1",
+  "slug": "nattokinase_for_cardiovascular_disease_prevention",
+  "generated_at_utc": "2026-09-23T23:54:22Z",
+  "generator": "13_export_dashboard.py",
+  "sizing": {
+    "n_rows": 12,
+    "rows_bytes": 249147,
+    "feed_bytes": 751233,
+    "inline_threshold_bytes": 3145728,
+    "mode": "inline"
+  },
+  "inclusion": {
+    "n_input": 12,
+    "n_included": 12,
+    "excluded": {},
+    "excluded_ids": [],
+    "n_excluded_ids_truncated": 0
+  },
+  "vocab": {
+    "verdicts": [
+      "favors_treatment",
+      "favors_control",
+      "no_difference",
+      "mixed",
+      "inconclusive",
+      "insufficient_data",
+      "unknown"
+    ],
+    "verdict_colors": {
+      "favors_treatment": "#16a34a",
+      "favors_control": "#dc2626",
+      "mixed": "#fdba74",
+      "no_difference": "#94a3b8",
+      "insufficient_data": "#cbd5e1",
+      "inconclusive": "#cbd5e1",
+      "unknown": "#e2e8f0"
+    },
+    "blinding_order": [
+      "double_blind",
+      "single_blind",
+      "open_label",
+      "unknown"
+    ],
+    "rob_order": [
+      "low",
+      "some_concerns",
+      "moderate",
+      "serious",
+      "high",
+      "critical",
+      "no_information",
+      "unknown"
+    ],
+    "outcome_types": [
+      {
+        "key": "lipid_profile",
+        "label": "Lipid profile",
+        "domains": [
+          "lipid_profile"
+        ]
+      },
+      {
+        "key": "blood_pressure",
+        "label": "Blood pressure",
+        "domains": [
+          "blood_pressure"
+        ]
+      },
+      {
+        "key": "coagulation_platelet_function",
+        "label": "Coagulation platelet function",
+        "domains": [
+          "coagulation_platelet_function"
+        ]
+      },
+      {
+        "key": "other",
+        "label": "Other",
+        "domains": [
+          "other",
+          "fibrinolytic_biomarkers",
+          "arterial_stiffness_atherosclerosis_imaging",
+          "inflammatory_biomarkers",
+          "major_cardiovascular_events"
+        ]
+      }
+    ],
+    "facet_keys": [
+      "interventionNames",
+      "interventionCategories",
+      "symptomDomains",
+      "countries",
+      "designType",
+      "blinding",
+      "rob",
+      "verdict",
+      "outcomeType"
+    ],
+    "present": {
+      "verdicts": [
+        "favors_treatment",
+        "no_difference",
+        "insufficient_data"
+      ],
+      "blinding": [
+        "double_blind",
+        "single_blind"
+      ],
+      "rob": [
+        "low",
+        "some_concerns",
+        "high"
+      ],
+      "design_types": [
+        "crossover",
+        "rct"
+      ],
+      "countries": [
+        "Canada",
+        "China",
+        "Japan",
+        "South Korea",
+        "United States",
+        "Vietnam"
+      ],
+      "intervention_categories": [
+        "nattokinase_combination_supplement",
+        "nattokinase_monotherapy"
+      ],
+      "intervention_names": [
+        "nattokinase",
+        "nattokinase + red yeast rice",
+        "nattokinase fibrinol (nkf)",
+        "nattokinase-monascus supplement (natto + red yeast rice)"
+      ],
+      "symptom_domains": [
+        "arterial_stiffness_atherosclerosis_imaging",
+        "blood_pressure",
+        "coagulation_platelet_function",
+        "fibrinolytic_biomarkers",
+        "lipid_profile",
+        "other"
+      ],
+      "outcome_type_keys": [
+        "blood_pressure",
+        "coagulation_platelet_function",
+        "lipid_profile",
+        "other"
+      ]
+    }
+  },
+  "totals": {
+    "n_trials": 12,
+    "n_reports": 12,
+    "n_rct": 9,
+    "n_observational": 3,
+    "total_participants": 1037,
+    "n_countries": 6,
+    "n_intervention_categories": 2,
+    "n_interventions": 4,
+    "n_instruments": 44,
+    "n_with_year": 12
+  },
+  "charts": {
+    "by_year": [
+      {
+        "year": 2008,
+        "count": 1
+      },
+      {
+        "year": 2009,
+        "count": 1
+      },
+      {
+        "year": 2010,
+        "count": 0
+      },
+      {
+        "year": 2011,
+        "count": 1
+      },
+      {
+        "year": 2012,
+        "count": 0
+      },
+      {
+        "year": 2013,
+        "count": 0
+      },
+      {
+        "year": 2014,
+        "count": 0
+      },
+      {
+        "year": 2015,
+        "count": 2
+      },
+      {
+        "year": 2016,
+        "count": 1
+      },
+      {
+        "year": 2017,
+        "count": 0
+      },
+      {
+        "year": 2018,
+        "count": 0
+      },
+      {
+        "year": 2019,
+        "count": 1
+      },
+      {
+        "year": 2020,
+        "count": 1
+      },
+      {
+        "year": 2021,
+        "count": 1
+      },
+      {
+        "year": 2022,
+        "count": 0
+      },
+      {
+        "year": 2023,
+        "count": 2
+      },
+      {
+        "year": 2024,
+        "count": 1
+      }
+    ],
+    "by_country": [
+      {
+        "country": "South Korea",
+        "count": 4
+      },
+      {
+        "country": "China",
+        "count": 2
+      },
+      {
+        "country": "Japan",
+        "count": 2
+      },
+      {
+        "country": "United States",
+        "count": 2
+      },
+      {
+        "country": "Vietnam",
+        "count": 2
+      },
+      {
+        "country": "Canada",
+        "count": 1
+      }
+    ],
+    "by_design": [
+      {
+        "design_type": "rct",
+        "count": 9
+      },
+      {
+        "design_type": "crossover",
+        "count": 3
+      }
+    ],
+    "by_rob": [
+      {
+        "rob": "some_concerns",
+        "count": 8
+      },
+      {
+        "rob": "high",
+        "count": 3
+      },
+      {
+        "rob": "low",
+        "count": 1
+      }
+    ],
+    "by_verdict": [
+      {
+        "verdict": "insufficient_data",
+        "count": 9
+      },
+      {
+        "verdict": "no_difference",
+        "count": 2
+      },
+      {
+        "verdict": "favors_treatment",
+        "count": 1
+      }
+    ],
+    "by_symptom_domain": [
+      {
+        "domain": "blood_pressure",
+        "count": 4
+      },
+      {
+        "domain": "fibrinolytic_biomarkers",
+        "count": 3
+      },
+      {
+        "domain": "coagulation_platelet_function",
+        "count": 2
+      },
+      {
+        "domain": "lipid_profile",
+        "count": 2
+      },
+      {
+        "domain": "other",
+        "count": 2
+      },
+      {
+        "domain": "arterial_stiffness_atherosclerosis_imaging",
+        "count": 1
+      }
+    ],
+    "by_outcome_type": [
+      {
+        "key": "other",
+        "count": 6
+      },
+      {
+        "key": "blood_pressure",
+        "count": 3
+      },
+      {
+        "key": "lipid_profile",
+        "count": 2
+      },
+      {
+        "key": "coagulation_platelet_function",
+        "count": 1
+      }
+    ],
+    "by_intervention_category": [
+      {
+        "category": "nattokinase_monotherapy",
+        "count": 9
+      },
+      {
+        "category": "nattokinase_combination_supplement",
+        "count": 4
+      }
+    ],
+    "by_intervention": [
+      {
+        "name": "nattokinase",
+        "count": 10,
+        "verdicts": {
+          "favors_treatment": 1,
+          "favors_control": 0,
+          "no_difference": 2,
+          "mixed": 1,
+          "inconclusive": 0,
+          "insufficient_data": 6,
+          "unknown": 0
+        },
+        "category": "nattokinase_monotherapy"
+      },
+      {
+        "name": "nattokinase + red yeast rice",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "insufficient_data": 1,
+          "unknown": 0
+        },
+        "category": "nattokinase_monotherapy"
+      },
+      {
+        "name": "nattokinase fibrinol (nkf)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "insufficient_data": 1,
+          "unknown": 0
+        },
+        "category": "nattokinase_combination_supplement"
+      },
+      {
+        "name": "nattokinase-monascus supplement (natto + red yeast rice)",
+        "count": 1,
+        "verdicts": {
+          "favors_treatment": 0,
+          "favors_control": 0,
+          "no_difference": 0,
+          "mixed": 0,
+          "inconclusive": 0,
+          "insufficient_data": 1,
+          "unknown": 0
+        },
+        "category": "nattokinase_combination_supplement"
+      }
+    ],
+    "blinding_significance": [
+      {
+        "blinding": "double_blind",
+        "significant": 3,
+        "not_significant": 2,
+        "unknown": 5
+      },
+      {
+        "blinding": "single_blind",
+        "significant": 1,
+        "not_significant": 0,
+        "unknown": 0
+      }
+    ]
+  },
+  "feasibility": {
+    "overall": "not_possible",
+    "n_papers": 12,
+    "n_outcomes": 124,
+    "n_with_contrast": 5,
+    "n_with_comparison": 12,
+    "n_comparisons": 165,
+    "n_pooled": 0,
+    "domains": [
+      {
+        "domain": "blood_pressure",
+        "outcome": "Systolic blood pressure",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Systolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Diastolic blood pressure",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Diastolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "total cholesterol | serum lipid panel",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "total cholesterol | serum lipid panel",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "ldl cholesterol | serum lipid panel",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "ldl cholesterol | serum lipid panel",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "hdl cholesterol | serum lipid panel",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "hdl cholesterol | serum lipid panel",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "triglycerides (log-transformed, back-transformed) | serum lipid panel",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "triglycerides (log-transformed, back-transformed) | serum lipid panel",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "coagulation_platelet_function",
+        "outcome": "fibrinogen (log-transformed, back-transformed) | plasma fibrinogen assay",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "fibrinogen (log-transformed, back-transformed) | plasma fibrinogen assay",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "fibrinolytic_biomarkers",
+        "outcome": "pai-1 (log-transformed, back-transformed) | plasma pai-1 assay",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "pai-1 (log-transformed, back-transformed) | plasma pai-1 assay",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "fibrinolytic_biomarkers",
+        "outcome": "d-dimers (log-transformed) | plasma d-dimer assay",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "d-dimers (log-transformed) | plasma d-dimer assay",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Systolic blood pressure",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Systolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Diastolic blood pressure",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Diastolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Systolic blood pressure",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Systolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Diastolic blood pressure",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Diastolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Systolic blood pressure",
+        "intervention": "Nattokinase fibrinol (NKF)",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Systolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Diastolic blood pressure",
+        "intervention": "Nattokinase fibrinol (NKF)",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Diastolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "triglyceride (tg) | serum tg assay kit (youngdong pharmaceutical), mg/dl",
+        "intervention": "Nattokinase fibrinol (NKF)",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "triglyceride (tg) | serum tg assay kit (youngdong pharmaceutical), mg/dl",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "total cholesterol | serum total cholesterol assay kit (youngdong pharmaceutical), mg/dl",
+        "intervention": "Nattokinase fibrinol (NKF)",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "total cholesterol | serum total cholesterol assay kit (youngdong pharmaceutical), mg/dl",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "total glyceride/hdl-cholesterol ratio | calculated ratio (tg/hdl-cholesterol)",
+        "intervention": "Nattokinase fibrinol (NKF)",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "total glyceride/hdl-cholesterol ratio | calculated ratio (tg/hdl-cholesterol)",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "triglycerides (tg) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "triglycerides (tg) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "triglycerides (tg) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "Red Yeast Rice",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "triglycerides (tg) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "triglycerides (tg) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "triglycerides (tg) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "triglycerides (tg) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase",
+        "comparator": "Red Yeast Rice",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "triglycerides (tg) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "total cholesterol (tc) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "total cholesterol (tc) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "total cholesterol (tc) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "Red Yeast Rice",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "total cholesterol (tc) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "total cholesterol (tc) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "total cholesterol (tc) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "total cholesterol (tc) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase",
+        "comparator": "Red Yeast Rice",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "total cholesterol (tc) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "ldl-cholesterol (ldl-c) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "ldl-cholesterol (ldl-c) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "ldl-cholesterol (ldl-c) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "Red Yeast Rice",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "ldl-cholesterol (ldl-c) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "ldl-cholesterol (ldl-c) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "ldl-cholesterol (ldl-c) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "ldl-cholesterol (ldl-c) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase",
+        "comparator": "Red Yeast Rice",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "ldl-cholesterol (ldl-c) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "hdl-cholesterol (hdl-c) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "hdl-cholesterol (hdl-c) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "hdl-cholesterol (hdl-c) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "hdl-cholesterol (hdl-c) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "hdl-cholesterol (hdl-c) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase",
+        "comparator": "Red Yeast Rice",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "hdl-cholesterol (hdl-c) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "hdl-cholesterol (hdl-c) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "Nattokinase",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "hdl-cholesterol (hdl-c) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Systolic blood pressure",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Systolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Systolic blood pressure",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "Red Yeast Rice",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Systolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Systolic blood pressure",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Systolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Systolic blood pressure",
+        "intervention": "Nattokinase",
+        "comparator": "Red Yeast Rice",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Systolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Diastolic blood pressure",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Diastolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Diastolic blood pressure",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "Red Yeast Rice",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Diastolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Diastolic blood pressure",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Diastolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Diastolic blood pressure",
+        "intervention": "Nattokinase",
+        "comparator": "Red Yeast Rice",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Diastolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Diastolic blood pressure",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "Nattokinase",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Diastolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      }
+    ],
+    "blockers": [
+      {
+        "code": "no_usable_estimate",
+        "n": 90,
+        "explanation": "no usable estimate"
+      },
+      {
+        "code": "unresolved_uncertainty",
+        "n": 91,
+        "explanation": "unresolved uncertainty"
+      },
+      {
+        "code": "unresolved_basis",
+        "n": 87,
+        "explanation": "unresolved basis"
+      },
+      {
+        "code": "unresolved_analysis_population",
+        "n": 90,
+        "explanation": "unresolved analysis population"
+      },
+      {
+        "code": "unverified_design_variance",
+        "n": 2,
+        "explanation": "unverified design variance"
+      },
+      {
+        "code": "unresolved_unit",
+        "n": 25,
+        "explanation": "unresolved unit"
+      },
+      {
+        "code": "reported_raw_conflict",
+        "n": 2,
+        "explanation": "reported raw conflict"
+      },
+      {
+        "code": "mismatched_test_scale",
+        "n": 5,
+        "explanation": "mismatched test scale"
+      },
+      {
+        "code": "source_interval_uncertain",
+        "n": 14,
+        "explanation": "source interval uncertain"
+      },
+      {
+        "code": "invalid_interval",
+        "n": 11,
+        "explanation": "invalid interval"
+      },
+      {
+        "code": "estimate_outside_interval",
+        "n": 10,
+        "explanation": "estimate outside interval"
+      },
+      {
+        "code": "p_ci_conflict",
+        "n": 1,
+        "explanation": "p ci conflict"
+      },
+      {
+        "code": "unresolved_time_window",
+        "n": 3,
+        "explanation": "unresolved time window"
+      },
+      {
+        "code": "ambiguous_table_test",
+        "n": 6,
+        "explanation": "ambiguous table test"
+      },
+      {
+        "code": "mismatched_analysis_column",
+        "n": 5,
+        "explanation": "mismatched analysis column"
+      },
+      {
+        "code": "not_comparison_p",
+        "n": 1,
+        "explanation": "not comparison p"
+      },
+      {
+        "code": "nonhuman_outcome",
+        "n": 1,
+        "explanation": "nonhuman outcome"
+      }
+    ],
+    "recommendation": "No meta-analysis is possible from the validated selections yet; retain an evidence map until compatible estimates and uncertainty (standard deviation, SE or CI) are available.",
+    "rules_version": "2026-09-23.1",
+    "withheld_count": 122,
+    "withheld": [
+      {
+        "paper_id": "10.1016/j.heliyon.2023.e17951",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "outcome_name": "Skin temperature of middle finger (right hand)",
+        "timepoint": {
+          "timepoint_id": 8,
+          "label": "30 min after immersion",
+          "weeks_from_randomization": 0,
+          "role": "on_treatment"
+        },
+        "source_path": null,
+        "extraction_version": "source-audit-2026-09-23.1",
+        "poolable": false,
+        "rules_version": "2026-09-23.1",
+        "issues": [
+          {
+            "code": "no_usable_estimate",
+            "reason": "No verified contrast or compatible raw arm summaries at the selected timepoint",
+            "path": "outcomes.0",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_uncertainty",
+            "reason": "Usable uncertainty is missing; adjusted SEs cannot be converted into raw SDs",
+            "path": "outcomes.0",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_basis",
+            "reason": "Endpoint, change, or model-based analysis basis is unspecified",
+            "path": "outcomes.0",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_analysis_population",
+            "reason": "The analysis population (for example ITT or complete cases) is unspecified",
+            "path": "outcomes.0",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          }
+        ]
+      },
+      {
+        "paper_id": "10.1016/j.heliyon.2023.e17951",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "outcome_name": "Skin temperature of palm (right hand)",
+        "timepoint": {
+          "timepoint_id": 8,
+          "label": "30 min after immersion",
+          "weeks_from_randomization": 0,
+          "role": "on_treatment"
+        },
+        "source_path": null,
+        "extraction_version": "source-audit-2026-09-23.1",
+        "poolable": false,
+        "rules_version": "2026-09-23.1",
+        "issues": [
+          {
+            "code": "no_usable_estimate",
+            "reason": "No verified contrast or compatible raw arm summaries at the selected timepoint",
+            "path": "outcomes.1",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_uncertainty",
+            "reason": "Usable uncertainty is missing; adjusted SEs cannot be converted into raw SDs",
+            "path": "outcomes.1",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_basis",
+            "reason": "Endpoint, change, or model-based analysis basis is unspecified",
+            "path": "outcomes.1",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_analysis_population",
+            "reason": "The analysis population (for example ITT or complete cases) is unspecified",
+            "path": "outcomes.1",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          }
+        ]
+      },
+      {
+        "paper_id": "10.1016/j.heliyon.2023.e17951",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "outcome_name": "Skin temperature of back of right hand",
+        "timepoint": {
+          "timepoint_id": 8,
+          "label": "30 min after immersion",
+          "weeks_from_randomization": 0,
+          "role": "on_treatment"
+        },
+        "source_path": null,
+        "extraction_version": "source-audit-2026-09-23.1",
+        "poolable": false,
+        "rules_version": "2026-09-23.1",
+        "issues": [
+          {
+            "code": "no_usable_estimate",
+            "reason": "No verified contrast or compatible raw arm summaries at the selected timepoint",
+            "path": "outcomes.2",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_uncertainty",
+            "reason": "Usable uncertainty is missing; adjusted SEs cannot be converted into raw SDs",
+            "path": "outcomes.2",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_basis",
+            "reason": "Endpoint, change, or model-based analysis basis is unspecified",
+            "path": "outcomes.2",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_analysis_population",
+            "reason": "The analysis population (for example ITT or complete cases) is unspecified",
+            "path": "outcomes.2",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          }
+        ]
+      },
+      {
+        "paper_id": "10.1016/j.heliyon.2023.e17951",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "outcome_name": "Skin temperature of wrist (right hand)",
+        "timepoint": {
+          "timepoint_id": 8,
+          "label": "30 min after immersion",
+          "weeks_from_randomization": 0,
+          "role": "on_treatment"
+        },
+        "source_path": null,
+        "extraction_version": "source-audit-2026-09-23.1",
+        "poolable": false,
+        "rules_version": "2026-09-23.1",
+        "issues": [
+          {
+            "code": "no_usable_estimate",
+            "reason": "No verified contrast or compatible raw arm summaries at the selected timepoint",
+            "path": "outcomes.3",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_uncertainty",
+            "reason": "Usable uncertainty is missing; adjusted SEs cannot be converted into raw SDs",
+            "path": "outcomes.3",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_basis",
+            "reason": "Endpoint, change, or model-based analysis basis is unspecified",
+            "path": "outcomes.3",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_analysis_population",
+            "reason": "The analysis population (for example ITT or complete cases) is unspecified",
+            "path": "outcomes.3",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          }
+        ]
+      },
+      {
+        "paper_id": "10.1016/j.heliyon.2023.e17951",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "outcome_name": "Mean skin temperature of whole body",
+        "timepoint": {
+          "timepoint_id": 8,
+          "label": "30 min after immersion",
+          "weeks_from_randomization": 0,
+          "role": "on_treatment"
+        },
+        "source_path": null,
+        "extraction_version": "source-audit-2026-09-23.1",
+        "poolable": false,
+        "rules_version": "2026-09-23.1",
+        "issues": [
+          {
+            "code": "no_usable_estimate",
+            "reason": "No verified contrast or compatible raw arm summaries at the selected timepoint",
+            "path": "outcomes.4",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_uncertainty",
+            "reason": "Usable uncertainty is missing; adjusted SEs cannot be converted into raw SDs",
+            "path": "outcomes.4",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_basis",
+            "reason": "Endpoint, change, or model-based analysis basis is unspecified",
+            "path": "outcomes.4",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_analysis_population",
+            "reason": "The analysis population (for example ITT or complete cases) is unspecified",
+            "path": "outcomes.4",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          }
+        ]
+      },
+      {
+        "paper_id": "10.1016/j.heliyon.2023.e17951",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "outcome_name": "Forehead skin temperature",
+        "timepoint": {
+          "timepoint_id": 8,
+          "label": "30 min after immersion",
+          "weeks_from_randomization": 0,
+          "role": "on_treatment"
+        },
+        "source_path": null,
+        "extraction_version": "source-audit-2026-09-23.1",
+        "poolable": false,
+        "rules_version": "2026-09-23.1",
+        "issues": [
+          {
+            "code": "no_usable_estimate",
+            "reason": "No verified contrast or compatible raw arm summaries at the selected timepoint",
+            "path": "outcomes.5",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_uncertainty",
+            "reason": "Usable uncertainty is missing; adjusted SEs cannot be converted into raw SDs",
+            "path": "outcomes.5",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_basis",
+            "reason": "Endpoint, change, or model-based analysis basis is unspecified",
+            "path": "outcomes.5",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_analysis_population",
+            "reason": "The analysis population (for example ITT or complete cases) is unspecified",
+            "path": "outcomes.5",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          }
+        ]
+      },
+      {
+        "paper_id": "10.1016/j.heliyon.2023.e17951",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "outcome_name": "Perceived coldness (Visual Analogue Scale)",
+        "timepoint": {
+          "timepoint_id": 8,
+          "label": "30 min after immersion",
+          "weeks_from_randomization": 0,
+          "role": "on_treatment"
+        },
+        "source_path": null,
+        "extraction_version": "source-audit-2026-09-23.1",
+        "poolable": false,
+        "rules_version": "2026-09-23.1",
+        "issues": [
+          {
+            "code": "no_usable_estimate",
+            "reason": "No verified contrast or compatible raw arm summaries at the selected timepoint",
+            "path": "outcomes.6",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_uncertainty",
+            "reason": "Usable uncertainty is missing; adjusted SEs cannot be converted into raw SDs",
+            "path": "outcomes.6",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_basis",
+            "reason": "Endpoint, change, or model-based analysis basis is unspecified",
+            "path": "outcomes.6",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_analysis_population",
+            "reason": "The analysis population (for example ITT or complete cases) is unspecified",
+            "path": "outcomes.6",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          }
+        ]
+      },
+      {
+        "paper_id": "10.1016/j.heliyon.2023.e17951",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "outcome_name": "Heart rate",
+        "timepoint": {
+          "timepoint_id": 8,
+          "label": "30 min after immersion",
+          "weeks_from_randomization": 0,
+          "role": "on_treatment"
+        },
+        "source_path": null,
+        "extraction_version": "source-audit-2026-09-23.1",
+        "poolable": false,
+        "rules_version": "2026-09-23.1",
+        "issues": [
+          {
+            "code": "no_usable_estimate",
+            "reason": "No verified contrast or compatible raw arm summaries at the selected timepoint",
+            "path": "outcomes.7",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_uncertainty",
+            "reason": "Usable uncertainty is missing; adjusted SEs cannot be converted into raw SDs",
+            "path": "outcomes.7",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_basis",
+            "reason": "Endpoint, change, or model-based analysis basis is unspecified",
+            "path": "outcomes.7",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_analysis_population",
+            "reason": "The analysis population (for example ITT or complete cases) is unspecified",
+            "path": "outcomes.7",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          }
+        ]
+      },
+      {
+        "paper_id": "10.1016/j.heliyon.2023.e17951",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "outcome_name": "Stroke volume",
+        "timepoint": {
+          "timepoint_id": 8,
+          "label": "30 min after immersion",
+          "weeks_from_randomization": 0,
+          "role": "on_treatment"
+        },
+        "source_path": null,
+        "extraction_version": "source-audit-2026-09-23.1",
+        "poolable": false,
+        "rules_version": "2026-09-23.1",
+        "issues": [
+          {
+            "code": "no_usable_estimate",
+            "reason": "No verified contrast or compatible raw arm summaries at the selected timepoint",
+            "path": "outcomes.8",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_uncertainty",
+            "reason": "Usable uncertainty is missing; adjusted SEs cannot be converted into raw SDs",
+            "path": "outcomes.8",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_basis",
+            "reason": "Endpoint, change, or model-based analysis basis is unspecified",
+            "path": "outcomes.8",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_analysis_population",
+            "reason": "The analysis population (for example ITT or complete cases) is unspecified",
+            "path": "outcomes.8",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          }
+        ]
+      },
+      {
+        "paper_id": "10.1016/j.heliyon.2023.e17951",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "outcome_name": "Cardiac output",
+        "timepoint": {
+          "timepoint_id": 8,
+          "label": "30 min after immersion",
+          "weeks_from_randomization": 0,
+          "role": "on_treatment"
+        },
+        "source_path": null,
+        "extraction_version": "source-audit-2026-09-23.1",
+        "poolable": false,
+        "rules_version": "2026-09-23.1",
+        "issues": [
+          {
+            "code": "no_usable_estimate",
+            "reason": "No verified contrast or compatible raw arm summaries at the selected timepoint",
+            "path": "outcomes.9",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_uncertainty",
+            "reason": "Usable uncertainty is missing; adjusted SEs cannot be converted into raw SDs",
+            "path": "outcomes.9",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_basis",
+            "reason": "Endpoint, change, or model-based analysis basis is unspecified",
+            "path": "outcomes.9",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_analysis_population",
+            "reason": "The analysis population (for example ITT or complete cases) is unspecified",
+            "path": "outcomes.9",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          }
+        ]
+      },
+      {
+        "paper_id": "10.1016/j.heliyon.2023.e17951",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "outcome_name": "Left ventricular end-diastolic volume",
+        "timepoint": {
+          "timepoint_id": 8,
+          "label": "30 min after immersion",
+          "weeks_from_randomization": 0,
+          "role": "on_treatment"
+        },
+        "source_path": null,
+        "extraction_version": "source-audit-2026-09-23.1",
+        "poolable": false,
+        "rules_version": "2026-09-23.1",
+        "issues": [
+          {
+            "code": "no_usable_estimate",
+            "reason": "No verified contrast or compatible raw arm summaries at the selected timepoint",
+            "path": "outcomes.10",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_uncertainty",
+            "reason": "Usable uncertainty is missing; adjusted SEs cannot be converted into raw SDs",
+            "path": "outcomes.10",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_basis",
+            "reason": "Endpoint, change, or model-based analysis basis is unspecified",
+            "path": "outcomes.10",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_analysis_population",
+            "reason": "The analysis population (for example ITT or complete cases) is unspecified",
+            "path": "outcomes.10",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          }
+        ]
+      },
+      {
+        "paper_id": "10.1016/j.heliyon.2023.e17951",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "outcome_name": "Ejection fraction",
+        "timepoint": {
+          "timepoint_id": 8,
+          "label": "30 min after immersion",
+          "weeks_from_randomization": 0,
+          "role": "on_treatment"
+        },
+        "source_path": null,
+        "extraction_version": "source-audit-2026-09-23.1",
+        "poolable": false,
+        "rules_version": "2026-09-23.1",
+        "issues": [
+          {
+            "code": "no_usable_estimate",
+            "reason": "No verified contrast or compatible raw arm summaries at the selected timepoint",
+            "path": "outcomes.11",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_uncertainty",
+            "reason": "Usable uncertainty is missing; adjusted SEs cannot be converted into raw SDs",
+            "path": "outcomes.11",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_basis",
+            "reason": "Endpoint, change, or model-based analysis basis is unspecified",
+            "path": "outcomes.11",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_analysis_population",
+            "reason": "The analysis population (for example ITT or complete cases) is unspecified",
+            "path": "outcomes.11",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          }
+        ]
+      },
+      {
+        "paper_id": "10.1016/j.heliyon.2023.e17951",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "outcome_name": "LF/HF ratio (sympathetic nervous activity)",
+        "timepoint": {
+          "timepoint_id": 8,
+          "label": "30 min after immersion",
+          "weeks_from_randomization": 0,
+          "role": "on_treatment"
+        },
+        "source_path": null,
+        "extraction_version": "source-audit-2026-09-23.1",
+        "poolable": false,
+        "rules_version": "2026-09-23.1",
+        "issues": [
+          {
+            "code": "no_usable_estimate",
+            "reason": "No verified contrast or compatible raw arm summaries at the selected timepoint",
+            "path": "outcomes.12",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_uncertainty",
+            "reason": "Usable uncertainty is missing; adjusted SEs cannot be converted into raw SDs",
+            "path": "outcomes.12",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_basis",
+            "reason": "Endpoint, change, or model-based analysis basis is unspecified",
+            "path": "outcomes.12",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_analysis_population",
+            "reason": "The analysis population (for example ITT or complete cases) is unspecified",
+            "path": "outcomes.12",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          }
+        ]
+      },
+      {
+        "paper_id": "10.1016/j.heliyon.2023.e17951",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "outcome_name": "Systolic blood pressure",
+        "timepoint": {
+          "timepoint_id": 3,
+          "label": "after water immersion (160 min after supplementation)",
+          "weeks_from_randomization": 0,
+          "role": "on_treatment"
+        },
+        "source_path": null,
+        "extraction_version": "source-audit-2026-09-23.1",
+        "poolable": false,
+        "rules_version": "2026-09-23.1",
+        "issues": [
+          {
+            "code": "unverified_design_variance",
+            "reason": "Paired or cluster-adjusted comparison variance must be verified",
+            "path": "outcomes.13.between_group_effects.0",
+            "source_location": "Methods 2.2, statistical analysis; Figures 4–6",
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "no_usable_estimate",
+            "reason": "No verified contrast or compatible raw arm summaries at the selected timepoint",
+            "path": "outcomes.13",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_uncertainty",
+            "reason": "Usable uncertainty is missing; adjusted SEs cannot be converted into raw SDs",
+            "path": "outcomes.13",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_basis",
+            "reason": "Endpoint, change, or model-based analysis basis is unspecified",
+            "path": "outcomes.13",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_analysis_population",
+            "reason": "The analysis population (for example ITT or complete cases) is unspecified",
+            "path": "outcomes.13",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          }
+        ]
+      },
+      {
+        "paper_id": "10.1016/j.heliyon.2023.e17951",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "outcome_name": "Diastolic blood pressure",
+        "timepoint": {
+          "timepoint_id": 3,
+          "label": "after water immersion (160 min after supplementation)",
+          "weeks_from_randomization": 0,
+          "role": "on_treatment"
+        },
+        "source_path": null,
+        "extraction_version": "source-audit-2026-09-23.1",
+        "poolable": false,
+        "rules_version": "2026-09-23.1",
+        "issues": [
+          {
+            "code": "unverified_design_variance",
+            "reason": "Paired or cluster-adjusted comparison variance must be verified",
+            "path": "outcomes.14.between_group_effects.0",
+            "source_location": "Methods 2.2, statistical analysis; Figures 4–6",
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "no_usable_estimate",
+            "reason": "No verified contrast or compatible raw arm summaries at the selected timepoint",
+            "path": "outcomes.14",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_uncertainty",
+            "reason": "Usable uncertainty is missing; adjusted SEs cannot be converted into raw SDs",
+            "path": "outcomes.14",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_basis",
+            "reason": "Endpoint, change, or model-based analysis basis is unspecified",
+            "path": "outcomes.14",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_analysis_population",
+            "reason": "The analysis population (for example ITT or complete cases) is unspecified",
+            "path": "outcomes.14",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          }
+        ]
+      },
+      {
+        "paper_id": "10.1038/srep11601",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "outcome_name": "D-dimer percent change from baseline",
+        "timepoint": {
+          "timepoint_id": 3,
+          "label": "8 hours",
+          "weeks_from_randomization": 0,
+          "role": "on_treatment"
+        },
+        "source_path": "outcomes.0.between_group_effects.1",
+        "extraction_version": "source-audit-2026-09-23.1",
+        "poolable": false,
+        "rules_version": "2026-09-23.1",
+        "issues": [
+          {
+            "code": "no_usable_estimate",
+            "reason": "No verified contrast or compatible raw arm summaries at the selected timepoint",
+            "path": "outcomes.0",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_uncertainty",
+            "reason": "Usable uncertainty is missing; adjusted SEs cannot be converted into raw SDs",
+            "path": "outcomes.0",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_basis",
+            "reason": "Endpoint, change, or model-based analysis basis is unspecified",
+            "path": "outcomes.0",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_analysis_population",
+            "reason": "The analysis population (for example ITT or complete cases) is unspecified",
+            "path": "outcomes.0",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          }
+        ]
+      },
+      {
+        "paper_id": "10.1038/srep11601",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "outcome_name": "FDP percent change from baseline",
+        "timepoint": {
+          "timepoint_id": 2,
+          "label": "4 hours",
+          "weeks_from_randomization": 0,
+          "role": "on_treatment"
+        },
+        "source_path": "outcomes.1.between_group_effects.0",
+        "extraction_version": "source-audit-2026-09-23.1",
+        "poolable": false,
+        "rules_version": "2026-09-23.1",
+        "issues": [
+          {
+            "code": "no_usable_estimate",
+            "reason": "No verified contrast or compatible raw arm summaries at the selected timepoint",
+            "path": "outcomes.1",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_uncertainty",
+            "reason": "Usable uncertainty is missing; adjusted SEs cannot be converted into raw SDs",
+            "path": "outcomes.1",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_basis",
+            "reason": "Endpoint, change, or model-based analysis basis is unspecified",
+            "path": "outcomes.1",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_analysis_population",
+            "reason": "The analysis population (for example ITT or complete cases) is unspecified",
+            "path": "outcomes.1",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          }
+        ]
+      },
+      {
+        "paper_id": "10.1038/srep11601",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "outcome_name": "Activated partial thromboplastin time (aPTT)",
+        "timepoint": {
+          "timepoint_id": 3,
+          "label": "4 hours",
+          "weeks_from_randomization": 0,
+          "role": "on_treatment"
+        },
+        "source_path": "outcomes.2.between_group_effects.1",
+        "extraction_version": "source-audit-2026-09-23.1",
+        "poolable": false,
+        "rules_version": "2026-09-23.1",
+        "issues": [
+          {
+            "code": "no_usable_estimate",
+            "reason": "No verified contrast or compatible raw arm summaries at the selected timepoint",
+            "path": "outcomes.2",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_uncertainty",
+            "reason": "Usable uncertainty is missing; adjusted SEs cannot be converted into raw SDs",
+            "path": "outcomes.2",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_basis",
+            "reason": "Endpoint, change, or model-based analysis basis is unspecified",
+            "path": "outcomes.2",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_analysis_population",
+            "reason": "The analysis population (for example ITT or complete cases) is unspecified",
+            "path": "outcomes.2",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          }
+        ]
+      },
+      {
+        "paper_id": "10.1038/srep11601",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "outcome_name": "Factor VIII activity percent change from baseline",
+        "timepoint": {
+          "timepoint_id": 3,
+          "label": "6 hours",
+          "weeks_from_randomization": 0,
+          "role": "on_treatment"
+        },
+        "source_path": "outcomes.3.between_group_effects.1",
+        "extraction_version": "source-audit-2026-09-23.1",
+        "poolable": false,
+        "rules_version": "2026-09-23.1",
+        "issues": [
+          {
+            "code": "no_usable_estimate",
+            "reason": "No verified contrast or compatible raw arm summaries at the selected timepoint",
+            "path": "outcomes.3",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_uncertainty",
+            "reason": "Usable uncertainty is missing; adjusted SEs cannot be converted into raw SDs",
+            "path": "outcomes.3",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_basis",
+            "reason": "Endpoint, change, or model-based analysis basis is unspecified",
+            "path": "outcomes.3",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_analysis_population",
+            "reason": "The analysis population (for example ITT or complete cases) is unspecified",
+            "path": "outcomes.3",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          }
+        ]
+      },
+      {
+        "paper_id": "10.1038/srep11601",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "outcome_name": "Antithrombin concentration",
+        "timepoint": {
+          "timepoint_id": 3,
+          "label": "4 hours",
+          "weeks_from_randomization": 0,
+          "role": "on_treatment"
+        },
+        "source_path": "outcomes.4.between_group_effects.1",
+        "extraction_version": "source-audit-2026-09-23.1",
+        "poolable": false,
+        "rules_version": "2026-09-23.1",
+        "issues": [
+          {
+            "code": "no_usable_estimate",
+            "reason": "No verified contrast or compatible raw arm summaries at the selected timepoint",
+            "path": "outcomes.4",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_uncertainty",
+            "reason": "Usable uncertainty is missing; adjusted SEs cannot be converted into raw SDs",
+            "path": "outcomes.4",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_basis",
+            "reason": "Endpoint, change, or model-based analysis basis is unspecified",
+            "path": "outcomes.4",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          },
+          {
+            "code": "unresolved_analysis_population",
+            "reason": "The analysis population (for example ITT or complete cases) is unspecified",
+            "path": "outcomes.4",
+            "source_location": null,
+            "extraction_version": "source-audit-2026-09-23.1"
+          }
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "status": "unavailable"
+  },
+  "contract": {
+    "missing_keys": {},
+    "unknown_rob": {},
+    "unknown_arm_type": {},
+    "clean": true
+  },
+  "definitions": {
+    "n_instruments": "global_distinct_normalized",
+    "study_counts": "Verified study links; descriptive charts prefer an explicitly primary report then stable report ID. All reports remain in the table.",
+    "primary_domain": "meta_lib.outcome_domain on first primary outcome",
+    "verdict_source": "structured_proxy",
+    "verdict_source_counts": {
+      "proxy": 12
+    },
+    "year_source_counts": {
+      "metadata": 12
+    }
+  }
+}

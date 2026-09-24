@@ -1,182 +1,86 @@
 {
-  "10.1002/fsn3.1157": {
-    "first_author": "Xia",
-    "author_count": 7,
-    "journal": "Food Science &amp; Nutrition",
-    "year": "2019"
-  },
-  "10.1002/fsn3.2378": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1002/jbm.a.36232": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1006/bbrc.1993.2624": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1007/bf01956052": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1007/978-981-13-7709-9_15": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1007/s00105-025-05504-1": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1007/s00203-023-03713-7": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1007/s00253-005-0159-7": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1007/s00449-025-03151-3": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1007/s10529-020-02941-x": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1007/s10068-019-00580-1": {
-    "first_author": "Haiyu",
-    "author_count": 9,
-    "journal": "Food Science and Biotechnology",
-    "year": "2019"
-  },
-  "10.1007/s10482-025-02198-2": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1007/s10719-015-9620-8": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1007/s10719-019-09860-8": {
-    "first_author": "Hao",
-    "author_count": 9,
-    "journal": "Glycoconjugate Journal",
-    "year": "2019"
-  },
-  "10.1007/s11130-023-01130-1": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1007/s11239-025-03220-0": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1007/s11274-010-0432-5": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1007/s11239-009-0333-3": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1007/s12010-012-9894-2": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1007/s13197-020-04478-3": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1007/s11356-022-21126-9": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1007/s13213-018-1372-9": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1016/j.ajps.2015.04.005": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1016/j.bbapap.2009.07.007": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1016/j.cca.2003.11.008": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1016/j.ajps.2017.11.001": {
-    "first_author": "Rui",
+  "10.1016/j.heliyon.2023.e17951": {
+    "authors": "Nara N.; Kurosawa Y.; Fuse-Hamaoka S.; Kuroiwa M.; Endo T.; Tanaka R.; Kime R.; Hamaoka T.",
+    "first_author": "Nara",
     "author_count": 8,
-    "journal": "Asian Journal of Pharmaceutical Sciences",
-    "year": "2018"
+    "journal": "Heliyon",
+    "year": "2023"
   },
-  "10.1016/j.clinthera.2013.07.129": {
-    "first_author": "Trupti",
+  "10.1038/srep11601": {
+    "authors": "Yuko Kurosawa; Shinsuke Nirengi; Toshiyuki Homma; Kazuki Esaki; Mitsuhiro Ohta; Joseph F. Clark; Takafumi Hamaoka",
+    "first_author": "Yuko",
+    "author_count": 7,
+    "journal": "Scientific reports",
+    "year": "2015"
+  },
+  "10.3233/ch-211147": {
+    "authors": "Howard N. Hodis; Wendy J. Mack; Herbert J. Meiselman; Vijay Kalra; Howard Liebman; Juliana Hwang-Levine; Laurie Dustin; Naoko Kono; Melissa Mert; Rosalinda B. Wenby; Emiliano Huesca; Leanne Rochanda; Yanjie Li; Mingzhu Yan; Jan A. St. John; Lora Whitfield",
+    "first_author": "Howard",
+    "author_count": 16,
+    "journal": "Clinical Hemorheology and Microcirculation",
+    "year": "2021"
+  },
+  "10.1291/hypres.31.1583": {
+    "authors": "Ji Young KIM; Si Nae GUM; Jean Kyung PAIK; Hyo Hee LIM; Kyong-Chol KIM; Kazuya OGASAWARA; Kenichi INOUE; Sungha PARK; Yangsoo JANG; Jong Ho LEE",
+    "first_author": "KIM",
+    "author_count": 10,
+    "journal": "Hypertension Research",
+    "year": "2008"
+  },
+  "10.2147/ibpc.s99553": {
+    "authors": "Gitte Jensen; Miki Lenninger; Michael P. Ero; Kathleen Benson",
+    "first_author": "Gitte",
+    "author_count": 4,
+    "journal": "Integrated Blood Pressure Control",
+    "year": "2016"
+  },
+  "10.1089/jmf.2019.0183": {
+    "authors": "Phuong T. Pham; Bo Han; Ba X. Hoang",
+    "first_author": "Phuong",
     "author_count": 3,
-    "journal": "Clinical Therapeutics",
-    "year": "2013"
+    "journal": "Journal of Medicinal Food",
+    "year": "2020"
   },
-  "10.1016/j.carbpol.2013.04.013": {
-    "first_author": "",
-    "author_count": null,
-    "journal": "",
-    "year": null
-  },
-  "10.1016/j.colsurfb.2017.08.009": {
-    "first_author": "Shao-Fei",
+  "10.1039/c8fo02324g": {
+    "authors": "Hye Jin Yoo; Minkyung Kim; Minjoo Kim; Ayoung Lee; Chunmei Jin; Sung Pyo Lee; Tae Su Kim; Sang-Hyun Lee; Jong Ho Lee",
+    "first_author": "Hye",
     "author_count": 9,
-    "journal": "Colloids and Surfaces B: Biointerfaces",
-    "year": "2017"
+    "journal": "Food &amp; Function",
+    "year": "2019"
+  },
+  "10.3390/nu15194239": {
+    "authors": "Xiaoming Liu; Xuejiao Zeng; Jinli Mahe; Kai Guo; Panpan He; Qianwen Yang; Zhiwei Zhang; Zhongxia Li; Di Wang; Zheqing Zhang; Lei Wang; Lipeng Jing",
+    "first_author": "Xiaoming",
+    "author_count": 12,
+    "journal": "Nutrients",
+    "year": "2023"
+  },
+  "10.34071/jmp.2015.1.10": {
+    "authors": "Van Minh Huynh; Huu Dung Tran; Duy Khiem Pham; Vu Phong Nguyen; Nhat Quang Nguyen; Anh Tuan Ho; Anh Tien Hoang",
+    "first_author": "Van",
+    "author_count": 7,
+    "journal": "Journal of Medicine and Pharmacy",
+    "year": "2015"
+  },
+  "10.5352/jls.2009.19.2.289": {
+    "authors": "Kyunghee Noh",
+    "first_author": "Kyunghee",
+    "author_count": 1,
+    "journal": "Journal of Life Science",
+    "year": "2009"
+  },
+  "10.3389/fnut.2024.1380727": {
+    "authors": "Man Liu; Ziyi Xu; Zongling Wang; Di Wang; Mingzhe Yang; Hui Li; Wei Zhang; Ruikun He; Huimin Cheng; Peiyu Guo; Zhongxia Li; Hui Liang",
+    "first_author": "Man",
+    "author_count": 12,
+    "journal": "Frontiers in Nutrition",
+    "year": "2024"
+  },
+  "10.7841/ksbbj.2011.26.5.393": {
+    "authors": "Jae-Bum Kim; Chul-Bae Yoo; Hyun-Man Shin; Joon-Ki Jung; Hyung-Wook Jang",
+    "first_author": "Jae-Bum",
+    "author_count": 5,
+    "journal": "KSBB Journal",
+    "year": "2011"
   }
 }

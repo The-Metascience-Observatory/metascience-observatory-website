@@ -20,6 +20,10 @@ interface ReviewMeta {
 
 const reviews: ReviewMeta[] = [
   {
+    href: "/birds-eye-reviews/nattokinase-for-cardiovascular-disease-prevention",
+    title: "Nattokinase and cardiovascular outcomes",
+  },
+  {
     href: "/birds-eye-reviews/long-covid",
     title: "Long Covid",
   },

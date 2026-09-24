@@ -1,0 +1,33 @@
+{
+  "config": "767f35712f590777aff566f4fcff5a46a6fcc4e278c79b81395b162a444a4d96",
+  "files": {
+    "agent_canonical_map.json": null,
+    "classifications.csv": "9aff16c963806a174ab13ccc51d64f9bc42e8e430db1616d0322e67686b2c67d",
+    "classifications_enriched.csv": "340da418487821261eaa0716fff9aabbb4af0468b4f021b30154658e2e035a28",
+    "clinical_staging_manifest.json": null,
+    "delivery_exclusions.json": null,
+    "doi_metadata.json": null,
+    "duplicate_dois.json": null,
+    "intervention_canonical_map.json": null,
+    "intervention_category_map.json": null,
+    "intervention_indication_map.json": null,
+    "mechanism_of_action.json": null,
+    "observational_extractions.jsonl": null,
+    "publication_audit.json": null,
+    "publication_metadata.json": null,
+    "related_publications.json": null,
+    "relevance.csv": "1a57d2af777925e7eae1561431f33cc1148873f016af1ff20bd24c85bdbf759a",
+    "search_dois.csv": "cefe4847f3130556ae37a096673d8a9badc46b2bd5cc9947983fd70b2a72470a",
+    "search_raw.csv": "4e63140692ce2ab706fb33cde5edc37ae3e32ae078903192aae3d7e4282d486e",
+    "spray_types.csv": null,
+    "trial_arm_splits.json": null,
+    "trial_extractions.jsonl": "037ce3970c951d09b8c7e7bcab9360f56d2a6a72d00cbf3fcfa3bef80e6d5d13",
+    "trial_extractions_pass2.jsonl": "a1247ef765db9e64395c64639de770a35e06ed9fe7e7e785663372f5a33849cd",
+    "trial_screening.csv": "38c9bc242617f0ecb015f787ffc5bc59ee2e5d01eecc574e72dfa2a83dba490e",
+    "trial_verdicts.csv": null,
+    "user_exclusions.json": "fbd83b9943c167e63dfae148cc56add01f6e8b679e90674c2d2cc8575bd05cd0",
+    "user_inclusions.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+  },
+  "scientific_rules_version": "2026-09-23.1",
+  "version": 2
+}

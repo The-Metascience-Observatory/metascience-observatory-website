@@ -1,0 +1,29 @@
+{
+  "source": "birds_eye_review_code/packages/dashboard-ui/src",
+  "scientific_rules_version": "2026-09-23.1",
+  "files": {
+    "labels.ts": "e962ae9d12a554d17b500e13bc68f203c07e5865b95757c38c54c50ce791e1d5",
+    "LandscapeHeatmap.tsx": "7bce8498d7a379be7ba1472fd335ef02f760599ec09b1cd03b9ebb0b6b4ee606",
+    "ForestPlot.tsx": "268f0f337871d41ac250c02b8326b45f7848bed4335bbb24fe8a51f65573b2fb",
+    "utils.ts": "0dc31552b6abdf37f14c53de5db188c47255180aa74ca8928ff76846071d1258",
+    "FilterCard.tsx": "2722c9958a336c23503bc56007a50bd49b5dc5e717240fea98cc580b30a7f72b",
+    "BreakdownChart.tsx": "0146f01d7d8d931fdec24aeaf9a54792889850c7dd0dd7d1a32c1e001402a150",
+    "ResultsTable.tsx": "b4ac30a8b13ac57e0fc497d060f14dc49fcf08a253c00651b0c726ac0c6cde10",
+    "PrismaFlow.tsx": "5525a4165ab71f9a3d36ee6d61abad420bc35c048aa3f3f0a76064b2c8d38402",
+    "styles.css": "1766fe7497b58c3e4afca68895f07652e9c56be4ba8a7e125f082bd953294bdc",
+    "TrialRectList.tsx": "bfb8252d9c8dfb4f79d3cc3c6b41d1e064021a51a8bfcd82ca93753672f61c53",
+    "links.ts": "fdbb62b23a93f042b3e00d9a57a4f07026b8e0e6dfc939e7754c8095c42c9aff",
+    "useIsMobile.ts": "4be0880a973e887dadc1f6ef3c9bfd574e2d73d289a132caaa0e27f389413220",
+    "summary.ts": "fad21ed7d5e367146cdf97df5b68e794a032ef2334c611e16236044503dd9ba0",
+    "layout.ts": "ec61a1a0930b3583dfdbfefbe013b152343f501437a22b07d1cc9ccd551df1b2",
+    "index.ts": "654537edf480bb04f9a6328ac5c2b42a1beb370742d354ec0a64ffb92360641e",
+    "BlindingSignificanceChart.tsx": "68b8003c9dcbac357e735bb216bfbfbd81de95ca0506640f9f1cb07190ef2bc3",
+    "ChartWatermark.tsx": "09c553ababd946c7741067e060f97f74edf18eea629d6339bb571580022349fe",
+    "panels.tsx": "cb05a03a93fca8f977549c10e44db0e1ecaf70b16937ae94e0b29ed33d444792",
+    "DashboardShell.tsx": "89058984ff61aed4d34c5e7df7949ae5d40a53943a15152c0347f01a49b380ee",
+    "YearChart.tsx": "7472933809a939c6ec345b0bb397d9fb2bc77d32fad04767713bf0a78c53d706",
+    "adapters.ts": "0c6ddc70eb6102b8ee8dcb0e717fb8c0e550621214af4eb90ffb1d1a366db367",
+    "forestAdapter.ts": "b180b46c7a9e5bd7656f965096da19ed5ea681a2ce61f66ba657ad36902143c3",
+    "hover/trialHoverPanel.tsx": "f9ab00543fc07b07bca623cb3266d99ab43bf02aaf5d686335c1231009f5da0a"
+  }
+}

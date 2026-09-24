@@ -1,0 +1,844 @@
+{
+  "slug": "nattokinase_for_cardiovascular_disease_prevention",
+  "route": "nattokinase-for-cardiovascular-disease-prevention",
+  "title": "Nattokinase for cardiovascular disease prevention — Human Clinical Trials",
+  "intervention_noun": "Intervention",
+  "wide_min_trials": 10,
+  "outcome_types": [
+    {
+      "key": "lipid_profile",
+      "label": "Lipid profile",
+      "domains": [
+        "lipid_profile"
+      ]
+    },
+    {
+      "key": "blood_pressure",
+      "label": "Blood pressure",
+      "domains": [
+        "blood_pressure"
+      ]
+    },
+    {
+      "key": "coagulation_platelet_function",
+      "label": "Coagulation platelet function",
+      "domains": [
+        "coagulation_platelet_function"
+      ]
+    },
+    {
+      "key": "other",
+      "label": "Other",
+      "domains": [
+        "other",
+        "fibrinolytic_biomarkers",
+        "arterial_stiffness_atherosclerosis_imaging",
+        "inflammatory_biomarkers",
+        "major_cardiovascular_events"
+      ]
+    }
+  ],
+  "layout_version": 2,
+  "layout_digest": "73d8b1628854ff9b22f08ba3d77e2bda",
+  "panels_requested": [
+    "filter_design",
+    "filter_rob",
+    "filter_country",
+    "filter_outcome_type",
+    "intervention_grid",
+    "year_chart",
+    "design_breakdown",
+    "rob_breakdown",
+    "country_map",
+    "outcome_domains",
+    "results_table",
+    "prisma",
+    "feasibility",
+    "blinding_significance",
+    "heatmap",
+    "forest_plots"
+  ],
+  "results_columns": [
+    "year",
+    "study",
+    "design",
+    "organism",
+    "intervention",
+    "comparator",
+    "primary_outcome",
+    "n",
+    "follow_up",
+    "rob",
+    "p",
+    "result"
+  ],
+  "panels_rendered": [
+    {
+      "key": "filter_design",
+      "label": "Study design filter"
+    },
+    {
+      "key": "filter_rob",
+      "label": "Risk of bias filter"
+    },
+    {
+      "key": "filter_country",
+      "label": "Country filter"
+    },
+    {
+      "key": "filter_outcome_type",
+      "label": "Outcome type filter"
+    },
+    {
+      "key": "intervention_grid",
+      "label": "Trials by intervention"
+    },
+    {
+      "key": "year_chart",
+      "label": "Trials by year"
+    },
+    {
+      "key": "design_breakdown",
+      "label": "Study types"
+    },
+    {
+      "key": "rob_breakdown",
+      "label": "Risk of bias breakdown"
+    },
+    {
+      "key": "country_map",
+      "label": "Trials by country"
+    },
+    {
+      "key": "outcome_domains",
+      "label": "Outcome domains"
+    },
+    {
+      "key": "results_table",
+      "label": "Trials table"
+    },
+    {
+      "key": "prisma",
+      "label": "Screening flow"
+    },
+    {
+      "key": "feasibility",
+      "label": "Meta-analysis feasibility"
+    },
+    {
+      "key": "blinding_significance",
+      "label": "Blinding vs significance"
+    },
+    {
+      "key": "heatmap",
+      "label": "Intervention x outcome landscape"
+    }
+  ],
+  "panels_skipped": [
+    {
+      "key": "forest_plots",
+      "label": "Meta-analysis",
+      "reason": "pooling is not_possible for this topic — No meta-analysis is possible from the validated selections yet; retain an evidence map until compatible estimates and uncertainty (standard deviation, SE or CI) are available."
+    }
+  ],
+  "available_panels": [],
+  "feasibility": {
+    "overall": "not_possible",
+    "n_papers": 12,
+    "n_with_contrast": 5,
+    "n_outcomes": 124,
+    "n_pooled": 0,
+    "recommendation": "No meta-analysis is possible from the validated selections yet; retain an evidence map until compatible estimates and uncertainty (standard deviation, SE or CI) are available.",
+    "domains": [
+      {
+        "domain": "blood_pressure",
+        "outcome": "Systolic blood pressure",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Systolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Diastolic blood pressure",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Diastolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "total cholesterol | serum lipid panel",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "total cholesterol | serum lipid panel",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "ldl cholesterol | serum lipid panel",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "ldl cholesterol | serum lipid panel",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "hdl cholesterol | serum lipid panel",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "hdl cholesterol | serum lipid panel",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "triglycerides (log-transformed, back-transformed) | serum lipid panel",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "triglycerides (log-transformed, back-transformed) | serum lipid panel",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "coagulation_platelet_function",
+        "outcome": "fibrinogen (log-transformed, back-transformed) | plasma fibrinogen assay",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "fibrinogen (log-transformed, back-transformed) | plasma fibrinogen assay",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "fibrinolytic_biomarkers",
+        "outcome": "pai-1 (log-transformed, back-transformed) | plasma pai-1 assay",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "pai-1 (log-transformed, back-transformed) | plasma pai-1 assay",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "fibrinolytic_biomarkers",
+        "outcome": "d-dimers (log-transformed) | plasma d-dimer assay",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "d-dimers (log-transformed) | plasma d-dimer assay",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Systolic blood pressure",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Systolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Diastolic blood pressure",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Diastolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Systolic blood pressure",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Systolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Diastolic blood pressure",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Diastolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Systolic blood pressure",
+        "intervention": "Nattokinase fibrinol (NKF)",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Systolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Diastolic blood pressure",
+        "intervention": "Nattokinase fibrinol (NKF)",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Diastolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "triglyceride (tg) | serum tg assay kit (youngdong pharmaceutical), mg/dl",
+        "intervention": "Nattokinase fibrinol (NKF)",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "triglyceride (tg) | serum tg assay kit (youngdong pharmaceutical), mg/dl",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "total cholesterol | serum total cholesterol assay kit (youngdong pharmaceutical), mg/dl",
+        "intervention": "Nattokinase fibrinol (NKF)",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "total cholesterol | serum total cholesterol assay kit (youngdong pharmaceutical), mg/dl",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "total glyceride/hdl-cholesterol ratio | calculated ratio (tg/hdl-cholesterol)",
+        "intervention": "Nattokinase fibrinol (NKF)",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "total glyceride/hdl-cholesterol ratio | calculated ratio (tg/hdl-cholesterol)",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "triglycerides (tg) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "triglycerides (tg) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "triglycerides (tg) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "Red Yeast Rice",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "triglycerides (tg) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "triglycerides (tg) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "triglycerides (tg) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "triglycerides (tg) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase",
+        "comparator": "Red Yeast Rice",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "triglycerides (tg) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "total cholesterol (tc) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "total cholesterol (tc) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "total cholesterol (tc) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "Red Yeast Rice",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "total cholesterol (tc) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "total cholesterol (tc) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "total cholesterol (tc) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "total cholesterol (tc) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase",
+        "comparator": "Red Yeast Rice",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "total cholesterol (tc) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "ldl-cholesterol (ldl-c) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "ldl-cholesterol (ldl-c) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "ldl-cholesterol (ldl-c) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "Red Yeast Rice",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "ldl-cholesterol (ldl-c) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "ldl-cholesterol (ldl-c) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "ldl-cholesterol (ldl-c) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "ldl-cholesterol (ldl-c) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase",
+        "comparator": "Red Yeast Rice",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "ldl-cholesterol (ldl-c) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "hdl-cholesterol (hdl-c) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "hdl-cholesterol (hdl-c) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "hdl-cholesterol (hdl-c) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "hdl-cholesterol (hdl-c) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "hdl-cholesterol (hdl-c) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase",
+        "comparator": "Red Yeast Rice",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "hdl-cholesterol (hdl-c) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "lipid_profile",
+        "outcome": "hdl-cholesterol (hdl-c) | enzymatic method, automatic biochemical analyzer",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "Nattokinase",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "hdl-cholesterol (hdl-c) | enzymatic method, automatic biochemical analyzer",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Systolic blood pressure",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Systolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Systolic blood pressure",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "Red Yeast Rice",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Systolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Systolic blood pressure",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Systolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Systolic blood pressure",
+        "intervention": "Nattokinase",
+        "comparator": "Red Yeast Rice",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Systolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Diastolic blood pressure",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Diastolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Diastolic blood pressure",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "Red Yeast Rice",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Diastolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Diastolic blood pressure",
+        "intervention": "Nattokinase",
+        "comparator": "placebo",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Diastolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Diastolic blood pressure",
+        "intervention": "Nattokinase",
+        "comparator": "Red Yeast Rice",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Diastolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      },
+      {
+        "domain": "blood_pressure",
+        "outcome": "Diastolic blood pressure",
+        "intervention": "Nattokinase + red yeast rice (2024 formulation)",
+        "comparator": "Nattokinase",
+        "n_trials": 1,
+        "n_outcomes": 1,
+        "n_pooled": 0,
+        "n_instruments": 1,
+        "top_instrument": "Diastolic blood pressure",
+        "top_instrument_share": 1,
+        "verdict": "too_few",
+        "reason": "1 independent studies with the same outcome, comparison, population and assessment window"
+      }
+    ],
+    "blockers": [
+      {
+        "code": "no_usable_estimate",
+        "n": 90,
+        "explanation": "no usable estimate"
+      },
+      {
+        "code": "unresolved_uncertainty",
+        "n": 91,
+        "explanation": "unresolved uncertainty"
+      },
+      {
+        "code": "unresolved_basis",
+        "n": 87,
+        "explanation": "unresolved basis"
+      },
+      {
+        "code": "unresolved_analysis_population",
+        "n": 90,
+        "explanation": "unresolved analysis population"
+      },
+      {
+        "code": "unverified_design_variance",
+        "n": 2,
+        "explanation": "unverified design variance"
+      },
+      {
+        "code": "unresolved_unit",
+        "n": 25,
+        "explanation": "unresolved unit"
+      },
+      {
+        "code": "reported_raw_conflict",
+        "n": 2,
+        "explanation": "reported raw conflict"
+      },
+      {
+        "code": "mismatched_test_scale",
+        "n": 5,
+        "explanation": "mismatched test scale"
+      },
+      {
+        "code": "source_interval_uncertain",
+        "n": 14,
+        "explanation": "source interval uncertain"
+      },
+      {
+        "code": "invalid_interval",
+        "n": 11,
+        "explanation": "invalid interval"
+      },
+      {
+        "code": "estimate_outside_interval",
+        "n": 10,
+        "explanation": "estimate outside interval"
+      },
+      {
+        "code": "p_ci_conflict",
+        "n": 1,
+        "explanation": "p ci conflict"
+      },
+      {
+        "code": "unresolved_time_window",
+        "n": 3,
+        "explanation": "unresolved time window"
+      },
+      {
+        "code": "ambiguous_table_test",
+        "n": 6,
+        "explanation": "ambiguous table test"
+      },
+      {
+        "code": "mismatched_analysis_column",
+        "n": 5,
+        "explanation": "mismatched analysis column"
+      },
+      {
+        "code": "not_comparison_p",
+        "n": 1,
+        "explanation": "not comparison p"
+      },
+      {
+        "code": "nonhuman_outcome",
+        "n": 1,
+        "explanation": "nonhuman outcome"
+      }
+    ]
+  }
+}
