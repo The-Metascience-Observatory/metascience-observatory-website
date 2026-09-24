@@ -374,6 +374,27 @@ export default function Nature2016SurveyPage() {
             , which is licensed under CC BY 4.0.
           </p>
           <SurveyDashboard {...data} />
+          <section
+            aria-labelledby="further-reading"
+            className="mt-10 border-t border-border pt-6"
+          >
+            <h2 id="further-reading" className="text-xl font-semibold text-foreground mb-3">
+              Further reading
+            </h2>
+            <p className="text-sm text-foreground/70 leading-relaxed">
+              Lubega N, Anderson A, Nelson NC (2023). Experience of irreproducibility as a
+              risk factor for poor mental health in biomedical science doctoral students:
+              A survey and interview-based study. <em>PLoS ONE</em> 18(11): e0293584.{" "}
+              <a
+                href="https://doi.org/10.1371/journal.pone.0293584"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-foreground break-words"
+              >
+                https://doi.org/10.1371/journal.pone.0293584
+              </a>
+            </p>
+          </section>
         </div>
       </main>
       <Footer />
