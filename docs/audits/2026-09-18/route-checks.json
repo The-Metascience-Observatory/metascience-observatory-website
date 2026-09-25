@@ -1,0 +1,262 @@
+{
+  "/": {
+    "status": 200,
+    "decoded_html_bytes": 38036,
+    "error": null
+  },
+  "/articles": {
+    "status": 200,
+    "decoded_html_bytes": 76445,
+    "error": null
+  },
+  "/articles/nature-2016-reproducibility-survey": {
+    "status": 200,
+    "decoded_html_bytes": 50915,
+    "error": null
+  },
+  "/birds-eye-reviews": {
+    "status": 200,
+    "decoded_html_bytes": 114363,
+    "error": null
+  },
+  "/birds-eye-reviews/antiviral-nasal-sprays": {
+    "status": 200,
+    "decoded_html_bytes": 496608,
+    "error": null
+  },
+  "/birds-eye-reviews/antiviral-nasal-sprays/meta-analysis": {
+    "status": 200,
+    "decoded_html_bytes": 289332,
+    "error": null
+  },
+  "/birds-eye-reviews/antiviral-nasal-sprays/screening": {
+    "status": 200,
+    "decoded_html_bytes": 737359,
+    "error": null
+  },
+  "/birds-eye-reviews/lithium-weight-gain": {
+    "status": 200,
+    "decoded_html_bytes": 918760,
+    "error": null
+  },
+  "/birds-eye-reviews/lithium-weight-gain/report": {
+    "status": 200,
+    "decoded_html_bytes": 65883,
+    "error": null
+  },
+  "/birds-eye-reviews/lithium-weight-gain/screening": {
+    "status": 200,
+    "decoded_html_bytes": 88636,
+    "error": null
+  },
+  "/birds-eye-reviews/long-covid": {
+    "status": 200,
+    "decoded_html_bytes": 6070209,
+    "error": null
+  },
+  "/birds-eye-reviews/long-covid/prevention": {
+    "status": 200,
+    "decoded_html_bytes": 539757,
+    "error": null
+  },
+  "/birds-eye-reviews/long-covid/screening": {
+    "status": 200,
+    "decoded_html_bytes": 395572,
+    "error": null
+  },
+  "/birds-eye-reviews/me-cfs": {
+    "status": 200,
+    "decoded_html_bytes": 41561,
+    "error": null
+  },
+  "/birds-eye-reviews/me-cfs/graded-exercise-therapy": {
+    "status": 200,
+    "decoded_html_bytes": 158576,
+    "error": null
+  },
+  "/birds-eye-reviews/me-cfs/screening": {
+    "status": 200,
+    "decoded_html_bytes": 1013557,
+    "error": null
+  },
+  "/birds-eye-reviews/restless-legs-syndrome": {
+    "status": 200,
+    "decoded_html_bytes": 1913708,
+    "error": null
+  },
+  "/birds-eye-reviews/restless-legs-syndrome/meta-analysis": {
+    "status": 200,
+    "decoded_html_bytes": 158783,
+    "error": null
+  },
+  "/birds-eye-reviews/restless-legs-syndrome/network-meta-analysis": {
+    "status": 200,
+    "decoded_html_bytes": 163096,
+    "error": null
+  },
+  "/birds-eye-reviews/restless-legs-syndrome/screening": {
+    "status": 200,
+    "decoded_html_bytes": 1257530,
+    "error": null
+  },
+  "/docs/checking-for-bias": {
+    "status": 200,
+    "decoded_html_bytes": 81069,
+    "error": null
+  },
+  "/docs/data-dictionary": {
+    "status": 200,
+    "decoded_html_bytes": 63864,
+    "error": null
+  },
+  "/docs/defining-replication": {
+    "status": 200,
+    "decoded_html_bytes": 50889,
+    "error": null
+  },
+  "/docs/effect-size-normalization": {
+    "status": 200,
+    "decoded_html_bytes": 382564,
+    "error": null
+  },
+  "/docs/ontology": {
+    "status": 200,
+    "decoded_html_bytes": 33093,
+    "error": null
+  },
+  "/docs/other-initiatives": {
+    "status": 200,
+    "decoded_html_bytes": 45229,
+    "error": null
+  },
+  "/docs/pipeline-evaluation": {
+    "status": 200,
+    "decoded_html_bytes": 43598,
+    "error": null
+  },
+  "/docs/replication-outcome-classification": {
+    "status": 200,
+    "decoded_html_bytes": 210054,
+    "error": null
+  },
+  "/forensic-metascience-agent": {
+    "status": 200,
+    "decoded_html_bytes": 326611,
+    "error": null
+  },
+  "/forensic-metascience-agent/diagram-demo": {
+    "status": 200,
+    "decoded_html_bytes": 154879,
+    "error": null
+  },
+  "/forensic-metascience-agent/findings": {
+    "status": 200,
+    "decoded_html_bytes": 110825,
+    "error": null
+  },
+  "/forensic-metascience-agent/findings/image-findings": {
+    "status": 200,
+    "decoded_html_bytes": 105154,
+    "error": null
+  },
+  "/forensic-metascience-agent/severity-ladder": {
+    "status": 200,
+    "decoded_html_bytes": 56515,
+    "error": null
+  },
+  "/forensic-metascience-agent/tools": {
+    "status": 200,
+    "decoded_html_bytes": 446003,
+    "error": null
+  },
+  "/forensic-metascience-agent/tools/image-analysis": {
+    "status": 200,
+    "decoded_html_bytes": 124906,
+    "error": null
+  },
+  "/overview-explorer": {
+    "status": 200,
+    "decoded_html_bytes": 52270,
+    "error": null
+  },
+  "/overview-replication-database": {
+    "status": 200,
+    "decoded_html_bytes": 37090,
+    "error": null
+  },
+  "/reanalysis-initiatives": {
+    "status": 200,
+    "decoded_html_bytes": 42413,
+    "error": null
+  },
+  "/replication-initiatives": {
+    "status": 200,
+    "decoded_html_bytes": 122685,
+    "error": null
+  },
+  "/replications-database": {
+    "status": 200,
+    "decoded_html_bytes": 18159,
+    "error": null
+  },
+  "/replications-database/by-author": {
+    "status": 200,
+    "decoded_html_bytes": 18557,
+    "error": null
+  },
+  "/replications-database/by-author-overlap": {
+    "status": 200,
+    "decoded_html_bytes": 992552,
+    "error": null
+  },
+  "/replications-database/by-citation-count": {
+    "status": 200,
+    "decoded_html_bytes": 795255,
+    "error": null
+  },
+  "/replications-database/by-discipline": {
+    "status": 200,
+    "decoded_html_bytes": 18577,
+    "error": null
+  },
+  "/replications-database/by-h-index": {
+    "status": 200,
+    "decoded_html_bytes": 791701,
+    "error": null
+  },
+  "/replications-database/by-impact-factor": {
+    "status": 200,
+    "decoded_html_bytes": 3035015,
+    "error": null
+  },
+  "/replications-database/by-journal": {
+    "status": 200,
+    "decoded_html_bytes": 18562,
+    "error": null
+  },
+  "/replications-database/by-journal-rank": {
+    "status": 200,
+    "decoded_html_bytes": 1703500,
+    "error": null
+  },
+  "/replications-database/by-p-value": {
+    "status": 200,
+    "decoded_html_bytes": 18562,
+    "error": null
+  },
+  "/replications-database/by-year": {
+    "status": 200,
+    "decoded_html_bytes": 18546,
+    "error": null
+  },
+  "/replications-database/correlates-of-reproducibility": {
+    "status": 200,
+    "decoded_html_bytes": 121143,
+    "error": null
+  },
+  "/upload-bibliography": {
+    "status": 200,
+    "decoded_html_bytes": 27286,
+    "error": null
+  }
+}

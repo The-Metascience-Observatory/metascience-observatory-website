@@ -22,3 +22,13 @@ describe its marked panels and accompanying text, with the He and Duncan
 descriptions supplied directly by the user. Citation metadata was fetched
 with the DOI script. The Duncan video link was supplied in the request; the Lee
 video link comes from the document. Both use the existing click-to-play player.
+
+Lakka (2000), Nalabothula (2007), Subramanian (2006), and Chetty (2012) were
+added from `new-pubpeer.docx` on September 25, 2026. All four submission dates
+and PubPeer links come from that document, and its four annotated PNGs were
+extracted without modification. Summaries follow its descriptions and marked
+panels. The Lakka DOI was resolved from PubMed record 11315098; all four
+citations were fetched using the DOI script, with HTML entities decoded.
+The Chetty summary describes reuse across papers without inferring chronology
+from the inconsistent years printed in the supplied comparison image. That
+comparison uses the existing wide-image layout so its panel labels are legible.

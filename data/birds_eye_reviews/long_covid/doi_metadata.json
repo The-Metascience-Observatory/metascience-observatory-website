@@ -7546,5 +7546,945 @@
     "author_count": 16,
     "journal": "Frontiers in Microbiology",
     "year": "2026"
+  },
+  "10.1001/jamanetworkopen.2026.20687": {
+    "first_author": "Martina Vanova",
+    "journal": "JAMA Network Open",
+    "year": 2026
+  },
+  "10.1007/s00405-020-06520-8": {
+    "first_author": "",
+    "journal": "",
+    "year": null
+  },
+  "10.1016/j.acvdsp.2021.10.007": {
+    "first_author": "S. Charfeddine",
+    "journal": "Archives of Cardiovascular Diseases Supplements",
+    "year": 2021
+  },
+  "10.1001/jamaoto.2025.1304": {
+    "first_author": "Nyssa Fox Farrell",
+    "journal": "JAMA Otolaryngology–Head & Neck Surgery",
+    "year": 2025
+  },
+  "10.1016/j.bbi.2026.106892": {
+    "first_author": "Mayssam Nehme",
+    "journal": "Brain, Behavior, and Immunity",
+    "year": 2026
+  },
+  "10.1016/j.arrct.2025.100526": {
+    "first_author": "Kriti Agarwal",
+    "journal": "Archives of Rehabilitation Research and Clinical Translation",
+    "year": 2025
+  },
+  "10.1016/j.brs.2025.04.023": {
+    "first_author": "",
+    "journal": "",
+    "year": 2025
+  },
+  "10.1007/s11357-024-01324-8": {
+    "first_author": "Boglárka Nagy",
+    "journal": "GeroScience",
+    "year": 2024
+  },
+  "10.1016/j.bbih.2024.100736": {
+    "first_author": "Mohammad Nazmus Sakib",
+    "journal": "Brain, Behavior, &amp; Immunity - Health",
+    "year": 2024
+  },
+  "10.1016/j.clinsp.2025.100614": {
+    "first_author": "",
+    "journal": "",
+    "year": 2025
+  },
+  "10.1016/j.nicl.2022.103218": {
+    "first_author": "Merav Catalogna",
+    "journal": "NeuroImage: Clinical",
+    "year": 2022
+  },
+  "10.1016/j.lanepe.2026.101744": {
+    "first_author": "Marco Stortz",
+    "journal": "The Lancet Regional Health - Europe",
+    "year": 2026
+  },
+  "10.1016/j.jpsychores.2026.112605": {
+    "first_author": "Katharina Koller",
+    "journal": "Journal of Psychosomatic Research",
+    "year": 2026
+  },
+  "10.1016/j.nrleng.2022.06.007": {
+    "first_author": "García-Molina A.",
+    "journal": "Neurología (English Edition)",
+    "year": 2022
+  },
+  "10.1016/j.nrl.2022.06.008": {
+    "first_author": "García-Molina A.",
+    "journal": "Neurología",
+    "year": 2022
+  },
+  "10.1016/j.rehab.2023.101815": {
+    "first_author": "",
+    "journal": "",
+    "year": 2023
+  },
+  "10.1016/j.rehab.2024.101920": {
+    "first_author": "",
+    "journal": "",
+    "year": 2024
+  },
+  "10.1016/j.visres.2025.108550": {
+    "first_author": "Kajsa Gode",
+    "journal": "Vision Research",
+    "year": 2025
+  },
+  "10.1016/s1473-3099(26)00242-2": {
+    "first_author": "Emma C. Wall",
+    "journal": "The Lancet Infectious Diseases",
+    "year": 2026
+  },
+  "10.1017/s1355617723007592": {
+    "first_author": "Gitendra Uswatte",
+    "journal": "Journal of the International Neuropsychological Society",
+    "year": 2023
+  },
+  "10.1016/j.medcle.2022.12.019": {
+    "first_author": "Buğra Kerget",
+    "journal": "Medicina Clínica (English Edition)",
+    "year": 2022
+  },
+  "10.1016/s1473-3099(26)00406-8": {
+    "first_author": "Lindsey R. Baden",
+    "journal": "The Lancet Infectious Diseases",
+    "year": 2026
+  },
+  "10.1093/ajrccm/aamag162.1100": {
+    "first_author": "B. Harris",
+    "journal": "American Journal of Respiratory and Critical Care Medicine",
+    "year": 2026
+  },
+  "10.1038/s41467-026-75991-w": {
+    "first_author": "Valentina O. Puntmann",
+    "journal": "Nature Communications",
+    "year": 2026
+  },
+  "10.1051/bioconf/20236505039": {
+    "first_author": "Adambaev Z.I.",
+    "journal": "BIO Web of Conferences",
+    "year": 2024
+  },
+  "10.1038/s41598-024-61827-4": {
+    "first_author": "Christel McMullan",
+    "journal": "Scientific Reports",
+    "year": 2024
+  },
+  "10.1038/s41598-024-68100-8": {
+    "first_author": "Lee M.",
+    "journal": "Scientific Reports",
+    "year": 2024
+  },
+  "10.1038/s41598-024-53091-3": {
+    "first_author": "Amir Hadanny",
+    "journal": "Scientific Reports",
+    "year": 2024
+  },
+  "10.1093/eurjcn/zvag155.004": {
+    "first_author": "A. Svensson",
+    "journal": "European Journal of Cardiovascular Nursing",
+    "year": 2026
+  },
+  "10.1093/ofid/ofaf634": {
+    "first_author": "Jagannathan P.",
+    "journal": "Open Forum Infectious Diseases",
+    "year": 2025
+  },
+  "10.1111/hex.70299": {
+    "first_author": "Debbie Gach",
+    "journal": "Health Expectations",
+    "year": 2025
+  },
+  "10.1136/bmj.o1212": {
+    "first_author": "Zosia Kmietowicz",
+    "journal": "BMJ",
+    "year": 2022
+  },
+  "10.1152/japplphysiol.00078.2023": {
+    "first_author": "Iben Elmerdahl Rasmussen",
+    "journal": "Journal of applied physiology (Bethesda, Md. : 1985)",
+    "year": 2023
+  },
+  "10.1177/21501319261473073": {
+    "first_author": "Ravindra Ganesh",
+    "journal": "Journal of Primary Care &amp; Community Health",
+    "year": 2026
+  },
+  "10.1183/13993003.congress-2022.2629": {
+    "first_author": "Nikolaos Chynkiamis",
+    "journal": "European Respiratory Journal",
+    "year": 2022
+  },
+  "10.1177/27536351241308176": {
+    "first_author": "Giada Milani",
+    "journal": "Advances in Rehabilitation Science and Practice",
+    "year": 2024
+  },
+  "10.1183/13993003.02930-2021": {
+    "first_author": "",
+    "journal": "",
+    "year": null
+  },
+  "10.1183/23120541.01552-2025": {
+    "first_author": "",
+    "journal": "",
+    "year": null
+  },
+  "10.1186/s13063-026-09769-2": {
+    "first_author": "Feroz Kabir",
+    "journal": "Trials",
+    "year": 2026
+  },
+  "10.1186/s40359-026-05149-2": {
+    "first_author": "Caroline Rometsch",
+    "journal": "BMC Psychology",
+    "year": 2026
+  },
+  "10.12688/f1000research.186744.1": {
+    "first_author": "Rosita Bihariesingh-Sanchit",
+    "journal": "F1000Research",
+    "year": 2026
+  },
+  "10.14739/2310-1210.2021.6.233891": {
+    "first_author": "Iryna V. Baranova",
+    "journal": "Zaporozhye medical journal",
+    "year": 2021
+  },
+  "10.12775/jehs.2022.12.03.009": {
+    "first_author": "Nikolay Chukhraiev",
+    "journal": "Journal of Education, Health and Sport",
+    "year": 2022
+  },
+  "10.14739/2310-1210.2021.3.229981": {
+    "first_author": "Kryvenko, V. I.",
+    "journal": "Zaporozhye medical journal",
+    "year": 2021
+  },
+  "10.1371/journal.pone.0351407": {
+    "first_author": "Nina Biačková",
+    "journal": "PLOS ONE",
+    "year": 2024
+  },
+  "10.1371/journal.pone.0351553": {
+    "first_author": "Yao-Hsiang Chen",
+    "journal": "PLOS One",
+    "year": 2026
+  },
+  "10.17650/1726-9784-2021-22-4-68-76": {
+    "first_author": "Shatylko, Taras",
+    "journal": "Andrology and Genital Surgery",
+    "year": 2021
+  },
+  "10.1177/20552076261428205": {
+    "first_author": "Mar Ariza",
+    "journal": "DIGITAL HEALTH",
+    "year": 2026
+  },
+  "10.17816/rmmar109250": {
+    "first_author": "Denis V. Kovlen",
+    "journal": "Russian Military Medical Academy Reports",
+    "year": 2022
+  },
+  "10.23736/s1973-9087.22.07702-4": {
+    "first_author": "",
+    "journal": "",
+    "year": null
+  },
+  "10.26442/00403660.2023.08.202349": {
+    "first_author": "Gleb S. Ivchenko",
+    "journal": "Терапевтический архив",
+    "year": 2023
+  },
+  "10.29296/25877305-2024-05-12": {
+    "first_author": "M. Pogodina",
+    "journal": "Vrach",
+    "year": 2024
+  },
+  "10.31089/978-5-6042929-2-1-2021-1-54-58": {
+    "first_author": "L.A. Baybuz",
+    "journal": "Proceedings of The 16th Russian National Congress with International Participation «OCCUPATION and HEALTH», 21-24 September 2021, Vladivostok",
+    "year": 2021
+  },
+  "10.29001/2073-8552-2023-655": {
+    "first_author": "Hodashinsky, Ilya",
+    "journal": "The Siberian Journal of Clinical and Experimental Medicine",
+    "year": 2023
+  },
+  "10.21802/artm.2023.2.26.14": {
+    "first_author": "Igor Vypasniak",
+    "journal": "Art of Medicine",
+    "year": 2023
+  },
+  "10.29081/gsjesh.2024.25.2.7": {
+    "first_author": "Simona Rabinca",
+    "journal": "GYMNASIUM Scientific Journal of Education, Sports, and Health",
+    "year": 2024
+  },
+  "10.31655/2307-3373-2022-1-2-27-34": {
+    "first_author": "Т. V. Т. V. Bezditko",
+    "journal": "Астма та алергія",
+    "year": 2022
+  },
+  "10.30841/2786-720x.1.2024.300442": {
+    "first_author": "Oleksandr Kuryata",
+    "journal": "Family medicine. European practices",
+    "year": 2024
+  },
+  "10.26442/00403660.2023.12.202523": {
+    "first_author": "Mikhail B. Patsenko",
+    "journal": "Terapevticheskii Arkhiv",
+    "year": 2023
+  },
+  "10.32000/2072-1757-2022-7-140-145": {
+    "first_author": "EVGENII A. PRASKURNICHY",
+    "journal": "Practical Medicine",
+    "year": 2022
+  },
+  "10.32592/ircmj.2023.25.4.2080": {
+    "first_author": "Bemanian, Mohammad Hassan",
+    "journal": "Iranian Red Crescent Medical Journal",
+    "year": 2023
+  },
+  "10.32782/2226-2008-2024-3-6": {
+    "first_author": "",
+    "journal": "",
+    "year": 2024
+  },
+  "10.32902/2663-0338-2023-1-20-24": {
+    "first_author": "Chernii, Tatiana V.",
+    "journal": "Infusion &amp; Chemotherapy",
+    "year": 2023
+  },
+  "10.32782/2522-1795.2023.14.9": {
+    "first_author": "Зіновій Остап’як",
+    "journal": "Rehabilitation and Recreation",
+    "year": 2023
+  },
+  "10.33590/respiramj/93u1v2yd": {
+    "first_author": "Inga Jarosch",
+    "journal": "Respir AMJ",
+    "year": 2026
+  },
+  "10.32782/2522-1795.2024.18.13": {
+    "first_author": "A. E. Rakaieva",
+    "journal": "Rehabilitation and Recreation",
+    "year": 2024
+  },
+  "10.3389/fimmu.2025.1698271": {
+    "first_author": "William L. Pridgen",
+    "journal": "Frontiers in Immunology",
+    "year": 2025
+  },
+  "10.32782/2522-1795.2024.18.3.4": {
+    "first_author": "",
+    "journal": "",
+    "year": 2024
+  },
+  "10.3389/fspor.2026.1797346": {
+    "first_author": "Mohammad Mobarak H. Chowdhury",
+    "journal": "Frontiers in Sports and Active Living",
+    "year": 2026
+  },
+  "10.3389/fmed.2026.1809451": {
+    "first_author": "Jihui Du",
+    "journal": "Frontiers in Medicine",
+    "year": 2026
+  },
+  "10.3389/fpubh.2025.1688592": {
+    "first_author": "Christine Uecker",
+    "journal": "Frontiers in Public Health",
+    "year": 2025
+  },
+  "10.3390/biomedicines13092267": {
+    "first_author": "Ana Lilia Dotor-Llerena",
+    "journal": "Biomedicines",
+    "year": 2025
+  },
+  "10.3389/fneur.2024.1419134": {
+    "first_author": "Julian Frederic Hotz",
+    "journal": "Frontiers in Neurology",
+    "year": 2024
+  },
+  "10.3390/ijerph20156513": {
+    "first_author": "Claire Colas",
+    "journal": "International Journal of Environmental Research and Public Health",
+    "year": 2023
+  },
+  "10.3390/healthcare14121630": {
+    "first_author": "Yao-Hsiang Chen",
+    "journal": "Healthcare",
+    "year": 2026
+  },
+  "10.3389/fphys.2023.1219252": {
+    "first_author": "Ana Flávia Sordi",
+    "journal": "Frontiers in Physiology",
+    "year": 2023
+  },
+  "10.35278/2664-0767.2(54).2024.321582": {
+    "first_author": "I. S. GOLOVCHAK",
+    "journal": "Scientific digest of association of obstetricians and gynecologists of Ukraine",
+    "year": 2024
+  },
+  "10.36425/rehab90576": {
+    "first_author": "Tatyana A. Novikova",
+    "journal": "Physical and Rehabilitation Medicine, Medical Rehabilitation",
+    "year": 2022
+  },
+  "10.3390/metabo16080594": {
+    "first_author": "Sylwia Drzymała",
+    "journal": "Metabolites",
+    "year": 2026
+  },
+  "10.36106/paripex/8204857": {
+    "first_author": "Pooja Kesharwani",
+    "journal": "PARIPEX INDIAN JOURNAL OF RESEARCH",
+    "year": 2022
+  },
+  "10.3390/jcm14228193": {
+    "first_author": "Mustafa Al-Zamil",
+    "journal": "Journal of Clinical Medicine",
+    "year": 2025
+  },
+  "10.36740/wlek202105110": {
+    "first_author": "Igor V. Kireyev",
+    "journal": "Wiadomości Lekarskie",
+    "year": 2021
+  },
+  "10.37506/brrffb35": {
+    "first_author": "Firdous Farhana",
+    "journal": "Indian Journal of Physiotherapy and Occupational Therapy",
+    "year": 2024
+  },
+  "10.4103/ipj.ipj_234_23": {
+    "first_author": "Deoshree Akhouri",
+    "journal": "Industrial Psychiatry Journal",
+    "year": 2023
+  },
+  "10.4081/ejtm.2022.10698": {
+    "first_author": "Andrey A. Lobanov",
+    "journal": "European Journal of Translational Myology",
+    "year": 2022
+  },
+  "10.5114/areh.2022.119900": {
+    "first_author": "",
+    "journal": "",
+    "year": 2022
+  },
+  "10.38025/2078-1962-2024-23-2-7-16": {
+    "first_author": "Guzal N. Sobirova",
+    "journal": "Bulletin of Rehabilitation Medicine",
+    "year": 2024
+  },
+  "10.56936/18290825-2.v19.2025-82": {
+    "first_author": "Leila Dudchenko",
+    "journal": "The New Armenian Medical Journal",
+    "year": 2025
+  },
+  "10.5960/dzsm.2023.570": {
+    "first_author": "Johannes Kirsten",
+    "journal": "Dtsch Z Sportmed",
+    "year": 2023
+  },
+  "10.61919/mjxane13": {
+    "first_author": "",
+    "journal": "",
+    "year": 2026
+  },
+  "10.3897/pharmacia.69.e82596": {
+    "first_author": "Igor Belenichev",
+    "journal": "Pharmacia",
+    "year": 2022
+  },
+  "10.64898/2026.08.25.26361319": {
+    "first_author": "Nathan R. Brady",
+    "journal": "medRxiv",
+    "year": 2026
+  },
+  "10.70135/seejph.vi.2132": {
+    "first_author": "Sivasankari bon. S.",
+    "journal": "SEEJPH",
+    "year": 2024
+  },
+  "10.7759/cureus.52935": {
+    "first_author": "Thomas Boehmeke",
+    "journal": "Cureus",
+    "year": 2024
+  },
+  "10.7326/annals-25-03959": {
+    "first_author": "Gilmar Reis",
+    "journal": "Annals of Internal Medicine",
+    "year": 2026
+  },
+  "10.7326/annals-25-04883": {
+    "first_author": "So Yun Lim",
+    "journal": "Annals of Internal Medicine",
+    "year": 2026
+  },
+  "10.5114/reum/172575": {
+    "first_author": "Larysa Voloshyna",
+    "journal": "Rheumatology",
+    "year": 2023
+  },
+  "10.1016/j.gore.2025.101682": {
+    "first_author": "Stefania Bellone",
+    "journal": "Gynecologic Oncology Reports",
+    "year": 2025
+  },
+  "10.1016/j.ijporl.2024.112076": {
+    "first_author": "Kimberley S. Noij",
+    "journal": "International Journal of Pediatric Otorhinolaryngology",
+    "year": 2024
+  },
+  "10.1016/j.intimp.2026.116630": {
+    "first_author": "Huijing Shi",
+    "journal": "International Immunopharmacology",
+    "year": 2026
+  },
+  "10.1016/j.jadohealth.2025.01.026": {
+    "first_author": "Anne-Lise Goddings",
+    "journal": "Journal of Adolescent Health",
+    "year": 2025
+  },
+  "10.1016/j.lanepe.2022.100485": {
+    "first_author": "",
+    "journal": "The Lancet Regional Health - Europe",
+    "year": 2022
+  },
+  "10.1093/ajrccm/aamag162.384": {
+    "first_author": "S. Gautam",
+    "journal": "American Journal of Respiratory and Critical Care Medicine",
+    "year": 2026
+  },
+  "10.1093/ajrccm/aamag162.4236": {
+    "first_author": "H. D. Trinh",
+    "journal": "American Journal of Respiratory and Critical Care Medicine",
+    "year": 2026
+  },
+  "10.1093/eurpub/ckae144.1317": {
+    "first_author": "Maike Stolz",
+    "journal": "European Journal of Public Health",
+    "year": 2024
+  },
+  "10.1097/hcr.0000000000000862": {
+    "first_author": "Maria L. Buckley",
+    "journal": "Journal of Cardiopulmonary Rehabilitation and Prevention",
+    "year": 2024
+  },
+  "10.1097/md.0000000000036818": {
+    "first_author": "Juwei Dong",
+    "journal": "Medicine",
+    "year": 2024
+  },
+  "10.1101/2025.03.04.25323101": {
+    "first_author": "Maguire C.",
+    "journal": "medRxiv : the preprint server for health sciences",
+    "year": 2025
+  },
+  "10.1186/s43168-026-00587-3": {
+    "first_author": "Aibo Zheng",
+    "journal": "The Egyptian Journal of Bronchology",
+    "year": 2026
+  },
+  "10.1371/journal.pone.0296707": {
+    "first_author": "Renan Pereira Campos",
+    "journal": "PLOS ONE",
+    "year": 2024
+  },
+  "10.14218/fim.2026.00001": {
+    "first_author": "Manning Jian",
+    "journal": "Future Integrative Medicine",
+    "year": 2026
+  },
+  "10.15829/1560-4071-2022-4827": {
+    "first_author": "О. В. Благова",
+    "journal": "Russian Journal of Cardiology",
+    "year": 2022
+  },
+  "10.21203/rs.3.rs-440909/v1": {
+    "first_author": "David Putrino",
+    "journal": "",
+    "year": 2021
+  },
+  "10.21926/obm.transplant.2303193": {
+    "first_author": "Domingo J. Franco-Palacios",
+    "journal": "OBM Transplantation",
+    "year": 2024
+  },
+  "10.2196/91829": {
+    "first_author": "Nana Yaw Aboagye",
+    "journal": "JMIR Formative Research",
+    "year": 2024
+  },
+  "10.29011/2688-996x.001043": {
+    "first_author": "G Ratti",
+    "journal": "Advances in Preventive Medicine and Health Care",
+    "year": 2023
+  },
+  "10.31363/2313-7053-2025-4-2-1202": {
+    "first_author": "Katynkin, I. R.",
+    "journal": "V.M. Bekhterev Review of Psychiatry and Medical Psychology",
+    "year": 2025
+  },
+  "10.33273/2663-9726-2021-55-2-17-29": {
+    "first_author": "O.I. Voloshyn",
+    "journal": "One Health and Nutrition Problems of Ukraine",
+    "year": 2021
+  },
+  "10.3389/fmolb.2025.1582967": {
+    "first_author": "Etianne Martini Sasso",
+    "journal": "Frontiers in Molecular Biosciences",
+    "year": 2025
+  },
+  "10.3389/fresc.2025.1633466": {
+    "first_author": "Maryam Balke",
+    "journal": "Frontiers in Rehabilitation Sciences",
+    "year": 2025
+  },
+  "10.3390/app12084084": {
+    "first_author": "Dalila Scaturro",
+    "journal": "Applied Sciences",
+    "year": 2022
+  },
+  "10.3390/biomedicines14081872": {
+    "first_author": "Yoshihiro Noda",
+    "journal": "Biomedicines",
+    "year": 2026
+  },
+  "10.3390/covid4090098": {
+    "first_author": "Jessie Fox",
+    "journal": "COVID",
+    "year": 2024
+  },
+  "10.3390/diagnostics13101755": {
+    "first_author": "Vojtech Myska",
+    "journal": "Diagnostics",
+    "year": 2023
+  },
+  "10.3390/jpm13020182": {
+    "first_author": "Paraschiva A. Postolache",
+    "journal": "Journal of Personalized Medicine",
+    "year": 2023
+  },
+  "10.3390/medicina61122214": {
+    "first_author": "Michal Macej",
+    "journal": "Medicina",
+    "year": 2025
+  },
+  "10.3390/v13101904": {
+    "first_author": "Domenico Acanfora",
+    "journal": "Viruses",
+    "year": 2021
+  },
+  "10.33925/1683-3759-2021-26-4-301-307": {
+    "first_author": "E. A. Satygo",
+    "journal": "Parodontologiya",
+    "year": 2021
+  },
+  "10.4103/0970-2113.341091": {
+    "first_author": "",
+    "journal": "",
+    "year": null
+  },
+  "10.4103/tjem.tjem_363_22": {
+    "first_author": "Pawan Kumar Singh",
+    "journal": "Turkish Journal of Emergency Medicine",
+    "year": 2023
+  },
+  "10.48550/arxiv.2310.09446": {
+    "first_author": "Carmo, Diedre S.",
+    "journal": "arXiv.org",
+    "year": 2023
+  },
+  "10.54905/disssi/v26i123/ms157e2161": {
+    "first_author": "Waleed A. AlHazmi",
+    "journal": "Medical Science",
+    "year": 2022
+  },
+  "10.64898/2026.01.06.26343459": {
+    "first_author": "Malika Seydou Beidari",
+    "journal": "medRxiv",
+    "year": 2026
+  },
+  "10.64898/2026.02.20.26346719": {
+    "first_author": "Cindy Villatoro",
+    "journal": "medRxiv",
+    "year": 2026
+  },
+  "10.7189/jogh.16.04164": {
+    "first_author": "P. Camps-Massa",
+    "journal": "Journal of Global Health",
+    "year": 2026
+  },
+  "10.7759/cureus.48591": {
+    "first_author": "Syed Arshad Husain",
+    "journal": "Cureus",
+    "year": 2023
+  },
+  "10.1002/jcsm.13753": {
+    "first_author": "Shaahin Shahbazi",
+    "journal": "Journal of Cachexia, Sarcopenia and Muscle",
+    "year": 2025
+  },
+  "10.1016/j.jgr.2025.04.007": {
+    "first_author": "In-Ho Seo",
+    "journal": "Journal of Ginseng Research",
+    "year": 2025
+  },
+  "10.1016/s1473-3099(26)00244-6": {
+    "first_author": "Oddvar Oppegaard",
+    "journal": "The Lancet Infectious Diseases",
+    "year": 2026
+  },
+  "10.1017/cts.2023.154": {
+    "first_author": "Carolyn Bramante",
+    "journal": "Journal of Clinical and Translational Science",
+    "year": 2024
+  },
+  "10.1038/s41467-022-33825-5": {
+    "first_author": "Olli P. O. Nevalainen",
+    "journal": "Nature Communications",
+    "year": 2022
+  },
+  "10.1038/s43856-024-00650-4": {
+    "first_author": "Thale D. J. Hovdun Patrick-Brown",
+    "journal": "Communications Medicine",
+    "year": 2024
+  },
+  "10.1093/cid/ciag335": {
+    "first_author": "Carolyn T. Bramante",
+    "journal": "Clinical Infectious Diseases",
+    "year": 2026
+  },
+  "10.1093/ofid/ofac492.965": {
+    "first_author": "Olli P. O. Nevalainen",
+    "journal": "Open Forum Infectious Diseases",
+    "year": 2022
+  },
+  "10.1101/2025.08.08.25333305": {
+    "first_author": "Bramante CT",
+    "journal": "medRxiv : the preprint server for health sciences",
+    "year": 2025
+  },
+  "10.1186/s12879-023-08172-5": {
+    "first_author": "Ramin Hamidi Farahani",
+    "journal": "BMC Infectious Diseases",
+    "year": 2023
+  },
+  "10.1186/s13287-022-02972-3": {
+    "first_author": "Lei Shi",
+    "journal": "Stem Cell Research &amp; Therapy",
+    "year": 2022
+  },
+  "10.32782/2522-1795.2023.17.9": {
+    "first_author": "Yu. V. Korota",
+    "journal": "Rehabilitation and Recreation",
+    "year": 2023
+  },
+  "10.3389/fmed.2021.758405": {
+    "first_author": "Barros, Camila Miriam Suemi Sato",
+    "journal": "Frontiers in Medicine",
+    "year": 2021
+  },
+  "10.3389/fimmu.2026.1813716": {
+    "first_author": "Rongrong Dai",
+    "journal": "Frontiers in Immunology",
+    "year": 2026
+  },
+  "10.3390/microorganisms12071443": {
+    "first_author": "Maria Letizia Giancola",
+    "journal": "Microorganisms",
+    "year": 2024
+  },
+  "10.1007/s00403-024-03004-1": {
+    "first_author": "Nermeen Ibrahim Bedair",
+    "journal": "Archives of Dermatological Research",
+    "year": 2024
+  },
+  "10.1007/s00406-023-01557-2": {
+    "first_author": "Alaa Elmazny",
+    "journal": "European Archives of Psychiatry and Clinical Neuroscience",
+    "year": 2023
+  },
+  "10.1007/s10072-021-05744-8": {
+    "first_author": "",
+    "journal": "",
+    "year": null
+  },
+  "10.1007/s40121-026-01362-z": {
+    "first_author": "Ngiam JN",
+    "journal": "Infectious Diseases and Therapy",
+    "year": 2026
+  },
+  "10.1016/j.bbi.2022.04.013": {
+    "first_author": "Maxime Taquet",
+    "journal": "Brain, Behavior, and Immunity",
+    "year": 2022
+  },
+  "10.1016/j.cmi.2024.01.028": {
+    "first_author": "Kyungmin Huh",
+    "journal": "Clinical Microbiology and Infection",
+    "year": 2024
+  },
+  "10.1016/j.heliyon.2024.e24096": {
+    "first_author": "Yifan Hu",
+    "journal": "Heliyon",
+    "year": 2024
+  },
+  "10.1016/j.puhe.2024.02.031": {
+    "first_author": "Fatemeh Saheb Sharif-Askari",
+    "journal": "Public Health",
+    "year": 2024
+  },
+  "10.1016/j.rmed.2026.108914": {
+    "first_author": "Naoki Fukunaga",
+    "journal": "Respiratory Medicine",
+    "year": 2026
+  },
+  "10.1016/j.xkme.2024.100835": {
+    "first_author": "",
+    "journal": "",
+    "year": 2024
+  },
+  "10.1016/s1470-2045(23)00056-6": {
+    "first_author": "",
+    "journal": "The Lancet Oncology",
+    "year": 2023
+  },
+  "10.1038/s43856-026-01535-4": {
+    "first_author": "Alaleh Azhir",
+    "journal": "Communications Medicine",
+    "year": 2026
+  },
+  "10.1038/s43856-026-01761-w": {
+    "first_author": "Michael A. Horberg",
+    "journal": "Communications Medicine",
+    "year": 2026
+  },
+  "10.1038/s44220-026-00675-9": {
+    "first_author": "Zhou T.",
+    "journal": "Nature Mental Health",
+    "year": 2026
+  },
+  "10.1053/j.jvca.2021.08.036": {
+    "first_author": "",
+    "journal": "",
+    "year": 2021
+  },
+  "10.1093/ajrccm/aamag162.1089": {
+    "first_author": "M. Gonzalez",
+    "journal": "American Journal of Respiratory and Critical Care Medicine",
+    "year": 2026
+  },
+  "10.1093/qjmed/hcab297": {
+    "first_author": "Boglione L.",
+    "journal": "QJM: An International Journal of Medicine",
+    "year": 2021
+  },
+  "10.1136/ard-2022-223439": {
+    "first_author": "Naomi J. Patel",
+    "journal": "Annals of the Rheumatic Diseases",
+    "year": 2023
+  },
+  "10.1186/s12967-026-07902-y": {
+    "first_author": "Yuefei Pan",
+    "journal": "Journal of Translational Medicine",
+    "year": 2026
+  },
+  "10.1186/s12982-025-01051-1": {
+    "first_author": "Taciana de Oliveira",
+    "journal": "Discover Public Health",
+    "year": 2025
+  },
+  "10.12688/wellcomeopenres.18277.1": {
+    "first_author": "",
+    "journal": "",
+    "year": null
+  },
+  "10.1371/journal.pgph.0001917": {
+    "first_author": "Manlio De Domenico",
+    "journal": "PLOS Global Public Health",
+    "year": 2023
+  },
+  "10.1371/journal.pone.0312530": {
+    "first_author": "Ye-Seul Lee",
+    "journal": "PLOS ONE",
+    "year": 2024
+  },
+  "10.17615/2505-jz08": {
+    "first_author": "Zhang, Ning",
+    "journal": "",
+    "year": 2026
+  },
+  "10.20996/1819-6446-2026-3273": {
+    "first_author": "V. I. Podzolkov",
+    "journal": "Rational Pharmacotherapy in Cardiology",
+    "year": 2026
+  },
+  "10.2807/1560-7917.es.2026.31.15.2500672": {
+    "first_author": "Andrea Schmetz",
+    "journal": "Eurosurveillance",
+    "year": 2026
+  },
+  "10.3350/cmh.2026.0283": {
+    "first_author": "Kyungyeon Jung",
+    "journal": "Clinical and Molecular Hepatology",
+    "year": 2026
+  },
+  "10.3389/fmed.2025.1556623": {
+    "first_author": "Akzhan M. Madenbayeva",
+    "journal": "Frontiers in Medicine",
+    "year": 2025
+  },
+  "10.3390/jcm12020706": {
+    "first_author": "Ivan J. Núñez-Gil",
+    "journal": "Journal of Clinical Medicine",
+    "year": 2023
+  },
+  "10.3390/life16020319": {
+    "first_author": "Haydee Ninette Morales-Vazquez",
+    "journal": "Life",
+    "year": 2026
+  },
+  "10.3390/v16060947": {
+    "first_author": "César Fernández-de-las-Peñas",
+    "journal": "Viruses",
+    "year": 2024
+  },
+  "10.5005/jaypee-journals-11011-0081": {
+    "first_author": "Diptasree Ray",
+    "journal": "Indian Journal of ECMO",
+    "year": 2025
+  },
+  "10.51910/ijhdr.v25icf.1580": {
+    "first_author": "Harleen Kaur",
+    "journal": "International Journal of High Dilution Research - ISSN 1982-6206",
+    "year": 2025
+  },
+  "10.64898/2026.02.27.26347274": {
+    "first_author": "Butzin-Dozier Z.",
+    "journal": "medRxiv",
+    "year": 2026
+  },
+  "10.64898/2026.07.06.26357398": {
+    "first_author": "Butzin-Dozier Z.",
+    "journal": "medRxiv",
+    "year": 2026
+  },
+  "10.64898/2026.07.03.26357246": {
+    "first_author": "Butzin-Dozier Z.",
+    "journal": "medRxiv",
+    "year": 2026
+  },
+  "10.64898/2026.07.06.26357401": {
+    "first_author": "Butzin-Dozier Z.",
+    "journal": "medRxiv",
+    "year": 2026
   }
 }

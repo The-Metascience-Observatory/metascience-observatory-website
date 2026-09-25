@@ -1,0 +1,642 @@
+[
+  {
+    "ingredient": "cabergoline",
+    "domain": "symptom_severity",
+    "doi": "10.1212/01.wnl.0000147297.51023.c8",
+    "effect": -0.2219,
+    "recomputed": -0.22188603735589146,
+    "arms": [
+      4,
+      1
+    ],
+    "baseline": [
+      26.0,
+      27.2
+    ],
+    "weight": 0.2495
+  },
+  {
+    "ingredient": "ferric carboxymaltose",
+    "domain": "sleep_quality",
+    "doi": "10.1002/mds.27040",
+    "effect": -0.0,
+    "recomputed": 0.0,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      7.2,
+      7.2
+    ],
+    "weight": 0.3933
+  },
+  {
+    "ingredient": "ferric carboxymaltose",
+    "domain": "symptom_severity",
+    "doi": "10.1002/mds.27040",
+    "effect": 0.0174,
+    "recomputed": -0.017389549250204427,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      25.9,
+      26.0
+    ],
+    "weight": 0.3388
+  },
+  {
+    "ingredient": "gabapentin",
+    "domain": "symptom_severity",
+    "doi": "10.15171/npj.2018.22",
+    "effect": -0.0,
+    "recomputed": 0.0,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      24.19,
+      24.19
+    ],
+    "weight": 0.4014
+  },
+  {
+    "ingredient": "gabapentin",
+    "domain": "symptom_severity",
+    "doi": "10.1053/ajkd.2001.25202",
+    "effect": -0.0,
+    "recomputed": 0.0,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      6.9,
+      6.9
+    ],
+    "weight": 0.3058
+  },
+  {
+    "ingredient": "gabapentin enacarbil",
+    "domain": "sleep_quality",
+    "doi": "10.2147/jprls.s40804",
+    "effect": 0.0,
+    "recomputed": 0.0,
+    "arms": [
+      2,
+      1
+    ],
+    "baseline": [
+      6.4,
+      6.4
+    ],
+    "weight": 0.185
+  },
+  {
+    "ingredient": "gabapentin enacarbil",
+    "domain": "sleep_quality",
+    "doi": "10.2147/jprls.s40804",
+    "effect": 0.0,
+    "recomputed": 0.0,
+    "arms": [
+      2,
+      1
+    ],
+    "baseline": [
+      5.5,
+      5.5
+    ],
+    "weight": 0.185
+  },
+  {
+    "ingredient": "gabapentin enacarbil",
+    "domain": "sleep_quality",
+    "doi": "10.3109/07853890.2015.1025825",
+    "effect": -0.1772,
+    "recomputed": -0.1771985883809873,
+    "arms": [
+      3,
+      1
+    ],
+    "baseline": [
+      1.6,
+      1.7
+    ],
+    "weight": 0.1815
+  },
+  {
+    "ingredient": "gabapentin enacarbil",
+    "domain": "symptom_severity",
+    "doi": "10.1016/j.sleep.2021.07.004",
+    "effect": 0.019,
+    "recomputed": -0.01902503841824686,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      23.3,
+      23.4
+    ],
+    "weight": 0.1262
+  },
+  {
+    "ingredient": "gabapentin enacarbil",
+    "domain": "symptom_severity",
+    "doi": "10.1186/s40734-015-0018-3",
+    "effect": -0.144,
+    "recomputed": 0.1440020751400764,
+    "arms": [
+      1,
+      3
+    ],
+    "baseline": [
+      23.2,
+      22.5
+    ],
+    "weight": 0.122
+  },
+  {
+    "ingredient": "gabapentin enacarbil",
+    "domain": "symptom_severity",
+    "doi": "10.2147/jprls.s40804",
+    "effect": 0.1518,
+    "recomputed": 0.1517747161161338,
+    "arms": [
+      2,
+      1
+    ],
+    "baseline": [
+      20.5,
+      20.0
+    ],
+    "weight": 0.1195
+  },
+  {
+    "ingredient": "gabapentin enacarbil",
+    "domain": "symptom_severity",
+    "doi": "10.1097/wnf.0b013e318259eac8",
+    "effect": -0.2606,
+    "recomputed": 0.26056389126722684,
+    "arms": [
+      1,
+      5
+    ],
+    "baseline": [
+      23.9,
+      22.5
+    ],
+    "weight": 0.1037
+  },
+  {
+    "ingredient": "levodopa/benserazide",
+    "domain": "periodic_limb_movements",
+    "doi": "10.1007/s00702-003-0814-z",
+    "effect": 1.388,
+    "recomputed": -1.3879636425605164,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      4.5,
+      20.0
+    ],
+    "weight": 0.2475
+  },
+  {
+    "ingredient": "levodopa/benserazide",
+    "domain": "periodic_limb_movements",
+    "doi": "10.1002/mds.20969",
+    "effect": -0.2187,
+    "recomputed": 0.21873768049920606,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      48.6,
+      39.3
+    ],
+    "weight": 0.2386
+  },
+  {
+    "ingredient": "levodopa/benserazide",
+    "domain": "sleep_quality",
+    "doi": "10.1007/s00702-003-0814-z",
+    "effect": -0.008,
+    "recomputed": 0.00802027229957911,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      22.4,
+      22.3
+    ],
+    "weight": 0.2549
+  },
+  {
+    "ingredient": "pergolide",
+    "domain": "periodic_limb_movements",
+    "doi": "10.1053/j.ajkd.2009.04.034",
+    "effect": -1.0983,
+    "recomputed": 1.0983217297554129,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      23.9,
+      1.9
+    ],
+    "weight": 0.1776
+  },
+  {
+    "ingredient": "pergolide",
+    "domain": "sleep_quality",
+    "doi": "10.1016/j.clinph.2007.04.001",
+    "effect": 0.0721,
+    "recomputed": 0.0720731387792289,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      71.3,
+      70.3
+    ],
+    "weight": 0.311
+  },
+  {
+    "ingredient": "pramipexole",
+    "domain": "periodic_limb_movements",
+    "doi": "10.1016/j.sleep.2008.05.014",
+    "effect": 0.0441,
+    "recomputed": -0.04409040615933131,
+    "arms": [
+      1,
+      5
+    ],
+    "baseline": [
+      54.28,
+      55.85
+    ],
+    "weight": 0.0779
+  },
+  {
+    "ingredient": "pramipexole",
+    "domain": "periodic_limb_movements",
+    "doi": "10.5665/sleep/31.9.1229",
+    "effect": -0.453,
+    "recomputed": 0.4530063255535274,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      61.9,
+      40.1
+    ],
+    "weight": 0.0778
+  },
+  {
+    "ingredient": "pramipexole",
+    "domain": "periodic_limb_movements",
+    "doi": "10.1016/j.sleep.2006.10.008",
+    "effect": -0.0215,
+    "recomputed": 0.021454018434552503,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      58.1,
+      57.4
+    ],
+    "weight": 0.0764
+  },
+  {
+    "ingredient": "pramipexole",
+    "domain": "periodic_limb_movements",
+    "doi": "10.3988/jcn.2017.13.4.340",
+    "effect": -1.1701,
+    "recomputed": -1.1701246860322319,
+    "arms": [
+      2,
+      1
+    ],
+    "baseline": [
+      3.08,
+      23.8
+    ],
+    "weight": 0.0743
+  },
+  {
+    "ingredient": "pramipexole",
+    "domain": "sleep_quality",
+    "doi": "10.5665/sleep/31.9.1229",
+    "effect": -0.5122,
+    "recomputed": -0.5121919475801857,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      38.0,
+      43.6
+    ],
+    "weight": 0.067
+  },
+  {
+    "ingredient": "pramipexole",
+    "domain": "sleep_quality",
+    "doi": "10.1016/j.sleep.2006.10.008",
+    "effect": -0.1396,
+    "recomputed": 0.13958102692694074,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      27.1,
+      22.7
+    ],
+    "weight": 0.0607
+  },
+  {
+    "ingredient": "pramipexole",
+    "domain": "sleep_quality",
+    "doi": "10.3988/jcn.2017.13.4.340",
+    "effect": -0.4765,
+    "recomputed": -0.4765247637403244,
+    "arms": [
+      2,
+      1
+    ],
+    "baseline": [
+      96.97,
+      117.25
+    ],
+    "weight": 0.0565
+  },
+  {
+    "ingredient": "pramipexole",
+    "domain": "symptom_severity",
+    "doi": "10.1097/wnf.0b013e3181fd82a1",
+    "effect": -0.0,
+    "recomputed": 0.0,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      22.8,
+      22.8
+    ],
+    "weight": 0.052
+  },
+  {
+    "ingredient": "pramipexole",
+    "domain": "symptom_severity",
+    "doi": "10.1016/j.sleep.2008.05.014",
+    "effect": 0.1101,
+    "recomputed": -0.11006600252643652,
+    "arms": [
+      1,
+      5
+    ],
+    "baseline": [
+      22.4,
+      22.9
+    ],
+    "weight": 0.0411
+  },
+  {
+    "ingredient": "pramipexole",
+    "domain": "symptom_severity",
+    "doi": "10.1016/j.sleep.2006.10.008",
+    "effect": -0.1386,
+    "recomputed": 0.1386081256549921,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      27.3,
+      26.6
+    ],
+    "weight": 0.0354
+  },
+  {
+    "ingredient": "pramipexole",
+    "domain": "symptom_severity",
+    "doi": "10.1212/wnl.0b013e3182242d91",
+    "effect": -0.7138,
+    "recomputed": 0.7138368477864736,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      25.2,
+      22.1
+    ],
+    "weight": 0.0333
+  },
+  {
+    "ingredient": "pramipexole",
+    "domain": "symptom_severity",
+    "doi": "10.1002/ana.23565",
+    "effect": -1.0626,
+    "recomputed": 1.0626483628906105,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      25.9,
+      21.3
+    ],
+    "weight": 0.0331
+  },
+  {
+    "ingredient": "pregabalin",
+    "domain": "symptom_severity",
+    "doi": "10.1056/nejmoa1303646",
+    "effect": 0.018,
+    "recomputed": -0.01796086594785514,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      22.3,
+      22.4
+    ],
+    "weight": 0.1973
+  },
+  {
+    "ingredient": "pregabalin",
+    "domain": "symptom_severity",
+    "doi": "10.1016/j.sleep.2010.03.003",
+    "effect": -0.1129,
+    "recomputed": -0.11292108172633793,
+    "arms": [
+      6,
+      1
+    ],
+    "baseline": [
+      23.8,
+      24.6
+    ],
+    "weight": 0.1437
+  },
+  {
+    "ingredient": "ropinirole",
+    "domain": "periodic_limb_movements",
+    "doi": "10.1093/sleep/27.5.907",
+    "effect": -0.4531,
+    "recomputed": 0.45312998121796055,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      48.5,
+      35.7
+    ],
+    "weight": 0.2439
+  },
+  {
+    "ingredient": "ropinirole",
+    "domain": "symptom_severity",
+    "doi": "10.1016/j.sleep.2007.08.017",
+    "effect": 0.054,
+    "recomputed": -0.054012495653080465,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      23.3,
+      23.6
+    ],
+    "weight": 0.1053
+  },
+  {
+    "ingredient": "ropinirole",
+    "domain": "symptom_severity",
+    "doi": "10.1002/mds.24889",
+    "effect": -0.0529,
+    "recomputed": 0.05286140872900732,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      27.7,
+      27.5
+    ],
+    "weight": 0.0997
+  },
+  {
+    "ingredient": "rotigotine",
+    "domain": "sleep_quality",
+    "doi": "10.1016/s1474-4422(08)70112-1",
+    "effect": 0.0,
+    "recomputed": 0.0,
+    "arms": [
+      1,
+      4
+    ],
+    "baseline": [
+      5.2,
+      5.2
+    ],
+    "weight": 0.2093
+  },
+  {
+    "ingredient": "rotigotine",
+    "domain": "sleep_quality",
+    "doi": "10.1016/j.sleep.2015.03.006",
+    "effect": -0.0315,
+    "recomputed": 0.03149213676967482,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      7.7,
+      7.6
+    ],
+    "weight": 0.2051
+  },
+  {
+    "ingredient": "rotigotine",
+    "domain": "sleep_quality",
+    "doi": "10.1016/j.sleep.2007.04.010",
+    "effect": -0.0,
+    "recomputed": 0.0,
+    "arms": [
+      4,
+      5
+    ],
+    "baseline": [
+      7.1,
+      7.1
+    ],
+    "weight": 0.0953
+  },
+  {
+    "ingredient": "rotigotine",
+    "domain": "sleep_quality",
+    "doi": "10.1212/wnl.0000000000002649",
+    "effect": -0.0895,
+    "recomputed": 0.08948129098025585,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      25.8,
+      22.8
+    ],
+    "weight": 0.0602
+  },
+  {
+    "ingredient": "rotigotine",
+    "domain": "symptom_severity",
+    "doi": "10.1016/j.sleep.2015.03.006",
+    "effect": -0.5782,
+    "recomputed": 0.578173732422926,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      25.0,
+      22.1
+    ],
+    "weight": 0.107
+  },
+  {
+    "ingredient": "rotigotine",
+    "domain": "symptom_severity",
+    "doi": "10.1212/wnl.0000000000002649",
+    "effect": -0.1011,
+    "recomputed": 0.10109724789131481,
+    "arms": [
+      1,
+      2
+    ],
+    "baseline": [
+      27.1,
+      26.6
+    ],
+    "weight": 0.087
+  }
+]

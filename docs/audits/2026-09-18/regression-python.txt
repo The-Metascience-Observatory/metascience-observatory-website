@@ -1,0 +1,45 @@
+csv: replications_database_2026_09_04_184008.csv  usable rows: 8754
+
+== correlation table ==
+exactP        n=  662 papers=  476 pearson=-0.170233 [-0.2601, -0.0809] spearman=-0.121763 [-0.2135, -0.0315]
+year          n= 8712 papers= 6088 pearson=+0.007747 [-0.0288, +0.0479] spearman=+0.043863 [+0.0112, +0.0792]
+impactFactor  n= 7854 papers= 5396 pearson=-0.073707 [-0.1078, -0.0409] spearman=-0.071713 [-0.1063, -0.0371]
+sjrPct        n= 7969 papers= 5477 pearson=-0.080820 [-0.1102, -0.0508] spearman=-0.108346 [-0.1386, -0.0783]
+citations     n= 7255 papers= 4861 pearson=-0.079792 [-0.1116, -0.0470] spearman=-0.085876 [-0.1195, -0.0529]
+hFirst        n= 7198 papers= 4826 pearson=-0.052876 [-0.0899, -0.0132] spearman=-0.049190 [-0.0877, -0.0107]
+hLast         n= 7151 papers= 4789 pearson=-0.045094 [-0.0896, +0.0008] spearman=-0.052014 [-0.0922, -0.0098]
+hMean         n= 7198 papers= 4826 pearson=-0.080794 [-0.1126, -0.0472] spearman=-0.078354 [-0.1099, -0.0439]
+hMax          n= 7198 papers= 4826 pearson=-0.070502 [-0.1003, -0.0374] spearman=-0.069369 [-0.1003, -0.0349]
+overlap       n= 7773 papers= 5454 pearson=+0.179593 [+0.1517, +0.2108] spearman=+0.279862 [+0.2557, +0.3039]
+
+== model A (no p-value) ==
+n=6306 clusters=4293 iterations=6 intercept=0.124146 (BFGS gap 1.5e-07)
+year                       beta=+0.063888 se=0.039094 z=+1.6342 p=1.0221e-01 ame=+0.015225 ameSe=0.009297
+impactFactor               beta=+0.004361 se=0.044910 z=+0.0971 p=9.2263e-01 ame=+0.001039 ameSe=0.010702
+sjrPct                     beta=-0.105566 se=0.043379 z=-2.4336 p=1.4950e-02 ame=-0.025157 ameSe=0.010310
+citations                  beta=-0.071995 se=0.044127 z=-1.6316 p=1.0277e-01 ame=-0.017157 ameSe=0.010522
+hMean                      beta=-0.074074 se=0.035238 z=-2.1021 p=3.5544e-02 ame=-0.017652 ameSe=0.008370
+overlap                    beta=+0.465833 se=0.060999 z=+7.6368 p=2.2204e-14 ame=+0.111009 ameSe=0.013889
+scale year          mean=2008.488582 sd=10.281463
+scale impactFactor  mean=0.574346 sd=0.383232
+scale sjrPct        mean=91.221315 sd=10.514498
+scale citations     mean=0.947666 sd=0.542669
+scale hMean         mean=1.596383 sd=0.280717
+scale overlap       mean=0.807168 sd=1.845762
+
+== model B (with log10 p) ==
+n=453 clusters=359 iterations=5 intercept=-0.408429 (BFGS gap 4.1e-08)
+year                       beta=+0.087225 se=0.126929 z=+0.6872 p=4.9196e-01 ame=+0.019723 ameSe=0.028652
+impactFactor               beta=+0.044564 se=0.142784 z=+0.3121 p=7.5496e-01 ame=+0.010077 ameSe=0.032215
+sjrPct                     beta=+0.127366 se=0.122943 z=+1.0360 p=3.0021e-01 ame=+0.028799 ameSe=0.027580
+citations                  beta=-0.041999 se=0.138026 z=-0.3043 p=7.6091e-01 ame=-0.009497 ameSe=0.031193
+hMean                      beta=-0.169481 se=0.131031 z=-1.2934 p=1.9586e-01 ame=-0.038322 ameSe=0.029222
+overlap                    beta=+0.190440 se=0.113329 z=+1.6804 p=9.2877e-02 ame=+0.043062 ameSe=0.025103
+exactP                     beta=-0.447128 se=0.113644 z=-3.9344 p=8.3390e-05 ame=-0.101102 ameSe=0.023737
+scale year          mean=2010.940397 sd=5.609711
+scale impactFactor  mean=0.552918 sd=0.380791
+scale sjrPct        mean=92.827506 sd=9.496109
+scale citations     mean=0.977937 sd=0.528230
+scale hMean         mean=1.634618 sd=0.273823
+scale overlap       mean=1.110375 sd=2.835630
+scale exactP        mean=-3.316404 sd=2.640933

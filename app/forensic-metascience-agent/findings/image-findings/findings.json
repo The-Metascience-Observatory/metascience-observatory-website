@@ -305,5 +305,101 @@
     "videoThumbnail": "https://i.ytimg.com/vi/E52HWRcN7vg/hqdefault.jpg",
     "videoThumbnailAlt": "Preview of the image duplication comparison for Lee et al. (2016)",
     "videoCaption": "Figure 1 across conditions"
+  },
+  {
+    "id": "lakka-2000",
+    "doi": "10.1023/a:1006724826083",
+    "citation": {
+      "authors": "Sajani S. Lakka; Sushma L. Jasti; Anthanassios P. Kyritsis; W.K. Alfred Yung; Francis Ali-Osman; Garth L. Nicolson; Jasti S. Rao",
+      "title": "Regulation of MMP-9 (type IV collagenase) production and invasiveness in gliomas by the extracellular signal-regulated kinase and jun amino-terminal kinase signaling cascades",
+      "journal": "Clinical & Experimental Metastasis",
+      "volume": "18",
+      "issue": "3",
+      "pages": "245-252",
+      "year": 2000,
+      "url": "https://doi.org/10.1023/a:1006724826083",
+      "doi": "10.1023/a:1006724826083"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/C8C841A65F89356914781D16F55F81",
+    "submitted": "2026-09-25",
+    "summary": "Figure 7 contains an image duplication with a 180-degree rotation.",
+    "image": {
+      "src": "/assets/forensic-metascience-agent/image-findings/lakka-2000.png",
+      "width": 894,
+      "height": 703,
+      "alt": "Annotated Figure 7 with matching regions outlined in cyan in the ERK1 mt and 5 µM PD98059 panels."
+    }
+  },
+  {
+    "id": "nalabothula-2007",
+    "doi": "10.3892/ijo.30.3.669",
+    "citation": {
+      "authors": "Narasimharao Nalabothula; Sajani Lakka; Dzung Dinh; Meena Gujrati; William Olivero; Jasti Rao",
+      "title": "Sense p16 and antisense uPAR bicistronic construct inhibits angiogenesis and induces glioma cell death",
+      "journal": "International Journal of Oncology",
+      "volume": "30",
+      "issue": "3",
+      "pages": "669-678",
+      "year": 2007,
+      "url": "https://doi.org/10.3892/ijo.30.3.669"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/50479C4D80964A28221A52E47F828C",
+    "submitted": "2026-09-25",
+    "summary": "A duplicated region appears in the control panels for U251 cells and glioblastoma xenograft cells in Figure 4.",
+    "image": {
+      "src": "/assets/forensic-metascience-agent/image-findings/nalabothula-2007.png",
+      "width": 1598,
+      "height": 376,
+      "alt": "Annotated Figure 4 with matching regions outlined in cyan in the control panels for U251 cells and glioblastoma xenograft cells."
+    }
+  },
+  {
+    "id": "subramanian-2006",
+    "doi": "10.3892/ijo.28.4.831",
+    "citation": {
+      "authors": "Ramesh Subramanian; Christopher Gondi; Sajani Lakka; Aman Jutla; Jasti Rao",
+      "title": "siRNA-mediated simultaneous downregulation of uPA and its receptor inhibits angiogenesis and invasiveness triggering apoptosis in breast cancer cells",
+      "journal": "International Journal of Oncology",
+      "volume": "28",
+      "issue": "4",
+      "pages": "831-839",
+      "year": 2006,
+      "url": "https://doi.org/10.3892/ijo.28.4.831"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/6BDDB676E7A84A889FBF34EB3370C1",
+    "submitted": "2026-09-25",
+    "summary": "A duplicated region appears in the Control and pSV panels in Figure 3.",
+    "image": {
+      "src": "/assets/forensic-metascience-agent/image-findings/subramanian-2006.png",
+      "width": 883,
+      "height": 502,
+      "alt": "Annotated Figure 3 with matching regions outlined in cyan in the Control and pSV panels."
+    }
+  },
+  {
+    "id": "chetty-2012",
+    "doi": "10.1016/j.bbrc.2011.12.065",
+    "citation": {
+      "authors": "Chandramu Chetty; Ranadheer Dontula; Purnachandra Nagaraju Ganji; Meena Gujrati; Sajani S. Lakka",
+      "title": "SPARC expression induces cell cycle arrest via STAT3 signaling pathway in medulloblastoma cells",
+      "journal": "Biochemical and Biophysical Research Communications",
+      "volume": "417",
+      "issue": "2",
+      "pages": "874-879",
+      "year": 2012,
+      "url": "https://doi.org/10.1016/j.bbrc.2011.12.065"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/D3CA75F4B73141B2EFC69A0371351C",
+    "submitted": "2026-09-25",
+    "summary": "Two images are reused across papers under different condition labels; one is horizontally reflected.",
+    "images": [
+      {
+        "src": "/assets/forensic-metascience-agent/image-findings/chetty-2012.png",
+        "width": 1590,
+        "height": 1492,
+        "alt": "Annotated comparison of Figure 4 from the SPARC/STAT3 paper and Figure 6 from the SPARC/SOX4 paper, with matching regions outlined in color.",
+        "wide": true
+      }
+    ]
   }
 ]

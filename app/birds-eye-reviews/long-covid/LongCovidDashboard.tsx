@@ -1,7 +1,11 @@
 "use client";
 
+import { ArticleDetailPanel } from "./ArticleDetailPanel";
+
 import { useState, useMemo, useRef, useEffect } from "react";
 import Link from "next/link";
+import { InspectFilters, InspectDetails } from "./InspectFilters";
+import { matchesInspect, inspectCounts, parseInspectFilter, type InspectFilter } from "@/lib/long-covid/inspect";
 import { matchesPublication, preferPublished, metadataCounts } from "@/lib/long-covid/publications";
 import { PublicationFilters, PublicationDetails, usePublicationFilters } from "./PublicationFilters";
 import { toast } from "sonner";
@@ -68,6 +72,8 @@ export function LongCovidDashboard(props: DashboardProps) {
   const {medline, publication} = publicationFilters;
   const representativeMetas = useMemo(()=>preferPublished(props.trialMetas),[props.trialMetas]);
   const publicationMetas = useMemo(()=>representativeMetas.filter(m=>matchesPublication(m.publicationMetadata,medline,publication)),[representativeMetas,medline,publication]);
+  const [inspectFilter, setInspectFilter] = useState<InspectFilter>("all");
+  const inspectMetas = useMemo(() => publicationMetas.filter(m => matchesInspect(m.inspectAssessment, inspectFilter)), [publicationMetas, inspectFilter]);
   const [yearFilter, setYearFilter] = useState<number | null>(null);
   const [landscapeCategory, setLandscapeCategory] = useState<string | null>(null);
   const [landscapeSymptom, setLandscapeSymptom] = useState<string | null>(null);
@@ -124,19 +130,19 @@ export function LongCovidDashboard(props: DashboardProps) {
   const [lcDefBelow, setLcDefBelow] = useState(false);
 
   const lcDefFilteredMetas = useMemo(() => {
-    if (lcDefWho && lcDefBelow) return publicationMetas;
-    if (lcDefWho) return publicationMetas.filter((m) => m.min_weeks != null && m.min_weeks >= 12);
-    if (lcDefBelow) return publicationMetas.filter((m) => m.min_weeks != null && m.min_weeks < 12);
+    if (lcDefWho && lcDefBelow) return inspectMetas;
+    if (lcDefWho) return inspectMetas.filter((m) => m.min_weeks != null && m.min_weeks >= 12);
+    if (lcDefBelow) return inspectMetas.filter((m) => m.min_weeks != null && m.min_weeks < 12);
     return [];
-  }, [lcDefWho, lcDefBelow, publicationMetas]);
+  }, [lcDefWho, lcDefBelow, inspectMetas]);
 
   const whoCount = useMemo(
-    () => publicationMetas.filter((m) => m.min_weeks != null && m.min_weeks >= 12).length,
-    [publicationMetas]
+    () => inspectMetas.filter((m) => m.min_weeks != null && m.min_weeks >= 12).length,
+    [inspectMetas]
   );
   const belowCount = useMemo(
-    () => publicationMetas.filter((m) => m.min_weeks != null && m.min_weeks < 12).length,
-    [publicationMetas]
+    () => inspectMetas.filter((m) => m.min_weeks != null && m.min_weeks < 12).length,
+    [inspectMetas]
   );
 
   // Design type checkboxes — compute counts and default to all selected
@@ -289,6 +295,7 @@ export function LongCovidDashboard(props: DashboardProps) {
     const symptom = sp.get("symptom");
     if (symptom) setSymptomDomainFilter(symptom);
     // Top-level filters
+    setInspectFilter(parseInspectFilter(sp.get("inspect")));
     if (sp.get("who") === "0") setLcDefWho(false);
     if (sp.get("below") === "1") setLcDefBelow(true);
     const types = sp.get("types");
@@ -318,6 +325,7 @@ export function LongCovidDashboard(props: DashboardProps) {
     if (!didInitFromUrl.current) return;
     if (!publicationFilters.ready) return;
     const params = new URLSearchParams();
+    if (inspectFilter !== "all") params.set("inspect", inspectFilter);
     if (medline !== "all") params.set("medline",medline);
     if (publication !== "all") params.set("publication",publication);
     if (yearFilter !== null) params.set("year", String(yearFilter));
@@ -341,7 +349,7 @@ export function LongCovidDashboard(props: DashboardProps) {
     const newUrl = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
     window.history.replaceState(window.history.state, "", newUrl);
   }, [
-    medline, publication, publicationFilters.ready,
+    medline, publication, publicationFilters.ready, inspectFilter,
     yearFilter,
     interventionCategoryFilter,
     interventionNameFilter,
@@ -361,7 +369,7 @@ export function LongCovidDashboard(props: DashboardProps) {
 
 
   return (
-    <div data-testid="treatment-dashboard" data-selected-reports={interventionFilteredMetas.length}>
+    <div data-testid="treatment-dashboard" data-filters-ready={publicationFilters.ready} data-selected-reports={interventionFilteredMetas.length}>
       {/* Hero */}
       <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1">
         <Link href="/birds-eye-reviews" className="text-sm text-blue-600 hover:text-blue-700">
@@ -386,6 +394,16 @@ export function LongCovidDashboard(props: DashboardProps) {
           View prevention trials &rarr;
         </Link>
       </div>
+
+      <InspectFilters value={inspectFilter} onChange={setInspectFilter}
+        assessedAt={props.inspectAssessedAt}
+        assessedCount={representativeMetas.filter(m => m.inspectAssessment).length}
+        totalCount={representativeMetas.length}
+        counts={inspectCounts(publicationMetas.filter(m => selectedDesignTypes.has(m.design_type || "unknown")
+          && ((lcDefWho && lcDefBelow) || (m.min_weeks != null && (m.min_weeks >= 12 ? lcDefWho : lcDefBelow)))
+          && domainMatches(m)
+          && (!interventionCategoryFilter || trialHasFacet(m.facets, "interventionCategory", interventionCategoryFilter))
+          && (!interventionNameFilter || trialHasFacet(m.facets, "intervention", interventionNameFilter))))} />
 
       {/* Long Covid definition filter */}
       <div className={`mb-3 border border-border rounded-lg p-4 ${!(lcDefWho && lcDefBelow) ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`}>
@@ -511,8 +529,8 @@ export function LongCovidDashboard(props: DashboardProps) {
       </div>
 
       <PublicationFilters {...publicationFilters} checkedAt={props.trialMetas.find(m=>m.publicationMetadata?.medlineCheckedAt)?.publicationMetadata?.medlineCheckedAt}
-        counts={metadataCounts(representativeMetas.filter(m=>selectedDesignTypes.has(m.design_type || 'unknown') && ((lcDefWho && lcDefBelow) || (m.min_weeks!=null && (m.min_weeks>=12 ? lcDefWho : lcDefBelow))) && domainMatches(m) && (!interventionCategoryFilter || trialHasFacet(m.facets,'interventionCategory',interventionCategoryFilter)) && (!interventionNameFilter || trialHasFacet(m.facets,'intervention',interventionNameFilter))),medline,publication)} />
-      {interventionFilteredMetas.length===0 && <p role="status" className="mb-4">No reports match these filters. Adjust the selections or reset publication filters.</p>}
+        counts={metadataCounts(representativeMetas.filter(m=>matchesInspect(m.inspectAssessment, inspectFilter) && selectedDesignTypes.has(m.design_type || 'unknown') && ((lcDefWho && lcDefBelow) || (m.min_weeks!=null && (m.min_weeks>=12 ? lcDefWho : lcDefBelow))) && domainMatches(m) && (!interventionCategoryFilter || trialHasFacet(m.facets,'interventionCategory',interventionCategoryFilter)) && (!interventionNameFilter || trialHasFacet(m.facets,'intervention',interventionNameFilter))),medline,publication)} />
+      {interventionFilteredMetas.length===0 && <p role="status" className="mb-4">No reports match these filters. Adjust the review, publication or other selections.</p>}
 
       {/* Intervention filters */}
       <div className={`mb-6 border border-border rounded-lg p-4 ${interventionNameFilter || interventionCategoryFilter ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`}>
@@ -994,7 +1012,7 @@ function TrialTableTab({
     "promise_score"
   );
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
-  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  const [selectedArticle, setSelectedArticle] = useState<string | null>(null);
   const [showCount, setShowCount] = useState(50);
   const sentinelRef = useRef<HTMLDivElement>(null);
 
@@ -1097,14 +1115,7 @@ function TrialTableTab({
     return rows;
   }, [tableRows, search, categoryFilter, symptomFilter, robFilter, blindingDropdown, yearFilter, interventionCategoryFilter, interventionNameFilter, lcDefFilter, countryFilter, blindingFilter, landscapeCategory, landscapeSymptom, symptomDomainFilter, sortField, sortDir]);
 
-  const toggleExpand = (id: string) => {
-    setExpanded((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
+
 
   const handleSort = (field: typeof sortField) => {
     if (sortField === field) setSortDir((d) => (d === "asc" ? "desc" : "asc"));
@@ -1171,26 +1182,13 @@ function TrialTableTab({
       </div>
 
       <div className="flex items-center gap-4 text-sm text-foreground/50">
-        <p>{filtered.length} trials match</p>
+        <p>{filtered.length} publications match</p>
         <CopyLinkButton />
-        <label className="flex items-center gap-1.5 cursor-pointer select-none">
-          <input
-            type="checkbox"
-            checked={expanded.size > 0 && expanded.size === filtered.length}
-            onChange={(e) => {
-              if (e.target.checked) {
-                setExpanded(new Set(filtered.map((r) => r.paper_id)));
-              } else {
-                setExpanded(new Set());
-              }
-            }}
-            className="accent-blue-600"
-          />
-          Expand all
-        </label>
+
       </div>
 
       {/* Table */}
+      <p className="mb-2 text-xs text-muted-foreground">Counts describe publications, which may include related reports of the same study. Click a reference for PICO and results; missing statistics are not evidence of no effect.</p>
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-foreground border-collapse">
           <thead>
@@ -1237,13 +1235,13 @@ function TrialTableTab({
           </thead>
           <tbody>
             {visible.map((row) => {
-              const isExpanded = expanded.has(row.paper_id);
+              const isExpanded = selectedArticle === row.paper_id;
               return (
                 <TrialRow
                   key={row.paper_id}
                   row={row}
                   isExpanded={isExpanded}
-                  onToggle={() => toggleExpand(row.paper_id)}
+                  onToggle={() => setSelectedArticle(row.paper_id)}
                 />
               );
             })}
@@ -1251,6 +1249,7 @@ function TrialTableTab({
         </table>
       </div>
 
+      {selectedArticle && <ArticleDetailPanel paperId={selectedArticle} version={tableRows[0]?.releaseVersion || ""} onClose={() => setSelectedArticle(null)} />}
       <div ref={sentinelRef} aria-hidden>
         {showCount < filtered.length && (
           <div className="py-4 text-center text-sm text-foreground/40">
@@ -1271,23 +1270,25 @@ function TrialRow({
   isExpanded: boolean;
   onToggle: () => void;
 }) {
+  const [interactive, setInteractive] = useState(false);
+  useEffect(() => setInteractive(true), []);
   return (
     <>
       <tr
         data-paper-id={row.paper_id} data-medline={row.publicationMetadata?.medline ?? "unknown"} data-publication={row.publicationMetadata?.publication ?? "unknown"}
+        data-inspect-disposition={row.inspectAssessment?.disposition ?? "not_assessed"}
         className="border-b border-border/50 hover:bg-foreground/5 cursor-pointer"
-        onClick={onToggle}
+        onClick={() => { if (interactive) onToggle(); }}
       >
         <td className="p-2">
           {isExpanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
         </td>
         <td className="p-2">
-          <a
-            href={row.doi_url}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            disabled={!interactive}
             className="text-blue-600 hover:text-blue-700 text-xs"
-            onClick={(e) => e.stopPropagation()}
+            aria-label={`View article: ${row.title || row.paper_id}`}
+            onClick={(e) => { e.stopPropagation(); onToggle(); }}
           >
             {row.first_author ? (
               <span>
@@ -1301,7 +1302,8 @@ function TrialRow({
               <span>{row.paper_id}</span>
             )}
             {" "}<ExternalLink size={10} className="inline align-baseline ml-0.5" />
-          </a>
+          </button>
+          <InspectDetails meta={row.inspectAssessment} />
         </td>
         <td className="p-2 max-w-[180px]" title={row.intervention_name}>
           <span className="text-xs leading-tight line-clamp-3">{row.intervention_name}</span>
@@ -1309,7 +1311,7 @@ function TrialRow({
         <td className="p-2 text-right tabular-nums">{row.n_randomized ?? "—"}</td>
         <td className="p-2">
           <div className="flex flex-col gap-0.5 items-start">
-            <span className="text-xs text-foreground leading-tight">{row.primary_outcome_name || "—"}</span>
+            <span className="text-xs text-foreground leading-tight">{row.primary_outcome_name || (row.n_outcomes ? "Primary outcome not identified" : "Outcomes not reported")}</span>
             <OutcomeBadge row={row} />
           </div>
         </td>
@@ -1335,144 +1337,7 @@ function TrialRow({
           <RobBadge rob={row.rob_overall} />
         </td>
       </tr>
-      {isExpanded && (
-        <tr className="border-b border-border/50">
-          <td colSpan={12} className="p-4 bg-foreground/[0.02]">
-            <div className="grid md:grid-cols-2 gap-4 text-xs">
-              {/* Reference */}
-              <div className="md:col-span-2">
-                <p className="text-foreground leading-snug">
-                  {row.first_author && (
-                    <span className="font-medium">
-                      {row.first_author}
-                      {row.authors && row.authors.includes(";") ? " et al." : ""}
-                      {". "}
-                    </span>
-                  )}
-                  {row.title ? (
-                    <a href={row.doi_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 hover:underline">
-                      {row.title}
-                    </a>
-                  ) : (
-                    <a href={row.doi_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 hover:underline">
-                      {row.paper_id}
-                    </a>
-                  )}
-                  {row.journal && <>{". "}<em>{row.journal.replace(/&amp;/g, "&")}</em></>}
-                  {row.volume && <>{" "}{row.volume}</>}
-                  {row.issue && <>({row.issue})</>}
-                  {row.pages && <>, {row.pages}</>}
-                  {row.year && <> ({row.year})</>}
-                  .
-                </p>
-                <PublicationDetails meta={row.publicationMetadata} />
-                <a
-                  href={`https://explore.metascienceobservatory.org/doi/${row.paper_id}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-violet-600 hover:text-violet-700 hover:underline text-[11px] mt-1 inline-block"
-                >
-                  View in Metascience Observatory Explorer →
-                </a>
-              </div>
-              <div className="md:col-span-2">
-                <DetailLabel>Long Covid definition</DetailLabel>
-                <p className="text-foreground/70">{row.long_covid_definition || "Not specified"}</p>
-              </div>
-              {row.summary && (
-                <div className="md:col-span-2">
-                  <DetailLabel>AI Summary (Sonnet 4.6)</DetailLabel>
-                  <p className="text-foreground leading-relaxed">{row.summary}</p>
-                </div>
-              )}
-              <div>
-                <DetailLabel>Primary outcome</DetailLabel>
-                <p>{row.primary_outcome_name || "Not specified"}</p>
-                {row.primary_effect_value != null && (
-                  <p className="mt-1">
-                    {row.primary_effect_measure
-                      ? row.primary_effect_measure === "smd" ? "SMD"
-                      : formatCategory(row.primary_effect_measure)
-                      : "Effect"}: <strong>{row.primary_effect_value.toFixed(2)}</strong>
-                    {row.primary_ci_low != null && row.primary_ci_high != null && (
-                      <> [95% CI: {row.primary_ci_low.toFixed(2)}, {row.primary_ci_high.toFixed(2)}]</>
-                    )}
-                    {row.primary_p_value != null && (
-                      <>, p = {formatPValue(row.primary_p_value)}</>
-                    )}
-                  </p>
-                )}
-              </div>
-              <div className="flex gap-6 flex-wrap">
-                <div>
-                  <DetailLabel>Blinding</DetailLabel>
-                  <p>{formatCategory(row.blinding)}</p>
-                </div>
-                <div>
-                  <DetailLabel>Follow-up</DetailLabel>
-                  <p>{row.follow_up_weeks != null ? `${row.follow_up_weeks} weeks` : "Not reported"}</p>
-                </div>
-                {(() => {
-                  const treatment = row.arm_samples.filter((a) => !a.is_control);
-                  const control = row.arm_samples.filter((a) => a.is_control);
-                  return (
-                    <>
-                      {treatment.length > 0 && (
-                        <div className="flex gap-4">
-                          {treatment.map((a, i) => (
-                            <div key={i}>
-                              <DetailLabel>N {treatment.length > 1 ? a.label : "Treatment"}</DetailLabel>
-                              <p>{a.n_randomized ?? "—"}</p>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                      {control.length > 0 && (
-                        <div>
-                          <DetailLabel>N Control</DetailLabel>
-                          <p>{control.map((a) => a.n_randomized ?? "—").join(" + ")}</p>
-                        </div>
-                      )}
-                    </>
-                  );
-                })()}
-              </div>
-              {row.outcomes_summary.length > 1 && (
-                <div className="md:col-span-2">
-                  <DetailLabel>All outcomes ({row.outcomes_summary.length})</DetailLabel>
-                  <div className="space-y-1 mt-1">
-                    {row.outcomes_summary.map((o, i) => {
-                      const pStr = o.p_value != null ? (o.p_value < 0.001 ? "p<0.001" : `p=${formatPValue(o.p_value)}`) : null;
-                      let direction = "";
-                      if (o.effect_value != null && o.higher_is_better != null) {
-                        const favors = o.higher_is_better ? o.effect_value > 0 : o.effect_value < 0;
-                        direction = favors ? "↑" : "↓";
-                      }
-                      const sig = o.p_value != null ? o.p_value < 0.05 : null;
-                      const color = sig === true && direction === "↑" ? "#16a34a" : sig === true && direction === "↓" ? "#dc2626" : sig === true ? "#d97706" : "#64748b";
-                      return (
-                        <div key={i} className="flex items-baseline gap-2">
-                          <span className="text-foreground">{o.name}</span>
-                          {o.symptom_domain && <span className="text-foreground/40">({formatCategory(o.symptom_domain)})</span>}
-                          {(pStr || o.effect_value != null) && (
-                            <span style={{ color }} className="whitespace-nowrap font-medium">
-                              {direction}
-                              {o.effect_value != null && (
-                                <>{" "}{o.effect_measure ? (o.effect_measure === "smd" ? "SMD" : formatCategory(o.effect_measure)) + " " : ""}{o.effect_value.toFixed(2)}</>
-                              )}
-                              {pStr ? ` ${pStr}` : ""}
-                            </span>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-            </div>
-          </td>
-        </tr>
-      )}
+
     </>
   );
 }

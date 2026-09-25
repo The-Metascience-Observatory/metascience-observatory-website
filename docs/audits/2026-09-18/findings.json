@@ -1,0 +1,598 @@
+[
+  {
+    "id": "A01",
+    "priority": "P1",
+    "category": "Science",
+    "title": "RLS forest plots contain baseline differences as treatment effects",
+    "status": "Confirmed",
+    "evidence": "For cabergoline, DOI 10.1212/01.wnl.0000147297.51023.c8 is plotted at g = −0.2219 and receives weight 0.2495. This exactly reproduces the PRETREATMENT difference: placebo mean 26.0 (SD 5.5, n=22) versus cabergoline mean 27.2 (SD 5.1, n=21), with Hedges correction. The extracted week-5 change scores are 3.3 versus 13.1 and are different data. An automated cross-check found 39 distinct plotted estimates with baseline-only SMD magnitude matches (32 nonzero), spanning 18 pooled groups. The cabergoline example is confirmed; the wider matches are an audit queue, not 39 independently checked primary-paper errors.",
+    "impact": "The published pooled estimates and drug ordering cannot currently be relied on as estimates of treatment benefit. A successful Next.js build cannot detect this error.",
+    "fix": "Withdraw or prominently suspend the affected pairwise summaries until the upstream selection code requires post-randomization timepoints, preserves change-score direction, records arm/timepoint provenance, and regenerates the pools. Check all 39 matches against source papers. Do not assume the separate network analysis has the same error without checking its inputs.",
+    "refs": [
+      [
+        "data/birds_eye_reviews/restless_legs_syndrome/meta_analysis.json",
+        49
+      ],
+      [
+        "app/birds-eye-reviews/restless-legs-syndrome/meta-analysis/MetaAnalysisClientWrapper.tsx",
+        60
+      ]
+    ],
+    "sources": [
+      [
+        "Primary trial",
+        "https://pubmed.ncbi.nlm.nih.gov/15623686/"
+      ]
+    ]
+  },
+  {
+    "id": "A02",
+    "priority": "P1",
+    "category": "Science + code",
+    "title": "Long COVID benefit/harm labels use zero as the null for ratio measures",
+    "status": "Confirmed",
+    "evidence": "Both server outcome counts and client badges use effect > 0 or effect < 0 regardless of measure. OR, RR and HR have null 1. Across the 775 eligible extraction records, 39 first-contrast outcomes in 18 reports have p<.05, a positive ratio below 1, and a known polarity: the zero-based rule reverses their interpretation relative to the stored polarity. For example, the Paxlovid report 10.1001/jamainternmed.2024.2007 contains OR=.55, p=.02 for weeks with mild/no fatigue (higher_is_better=true); the dashboard counts this as favorable. Its antiviral filter visibly shows +Sig=2, −Ctrl=1.",
+    "impact": "The All Trials table can display benefit as harm or harm as benefit. The preferred LLM trial verdict is a separate path, so this finding does not mean every top-chart verdict is wrong.",
+    "fix": "Centralize direction inference by measure: zero for differences/log ratios and one for raw ratios. Preserve comparison-arm order and the outcome event definition, and validate time-to-event semantics. Use the same helper for counts, sorting, expanded rows, and badges.",
+    "refs": [
+      [
+        "app/birds-eye-reviews/long-covid/page.tsx",
+        366
+      ],
+      [
+        "app/birds-eye-reviews/long-covid/LongCovidDashboard.tsx",
+        1663
+      ]
+    ],
+    "sources": [
+      [
+        "Cochrane effect measures",
+        "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-06"
+      ]
+    ]
+  },
+  {
+    "id": "A03",
+    "priority": "P1",
+    "category": "Science + code",
+    "title": "Replication significance fallback misclassifies ratio reversals as successes",
+    "status": "Confirmed",
+    "evidence": "The raw-effect fallback compares Math.sign(original_es) to Math.sign(replication_es). Positive ratios on opposite sides of 1 therefore agree. Calling the shipped classifier with significant OR=.5 and OR=2 returns success. Two current database rows also enter this failure: original DOI 10.1097/01.hjh.0000254372.88488.a9 (.834 versus 1.15) and 10.1038/ncomms3739 (1.41 versus .7).",
+    "impact": "The significance definition reports replication successes for opposite-direction ratio effects, changing counts wherever the shared utility is used.",
+    "fix": "Infer direction relative to the metric-specific null and reject uninterpretable metrics. Add regression cases for below/above-one ratios, log ratios, differences, and missing normalized r.",
+    "refs": [
+      [
+        "lib/replicationOutcome.ts",
+        560
+      ]
+    ],
+    "sources": []
+  },
+  {
+    "id": "A04",
+    "priority": "P1",
+    "category": "Science",
+    "title": "RLS pairwise drug summaries pool different comparators",
+    "status": "Confirmed",
+    "evidence": "The cabergoline symptom-severity group combines 10.1002/mds.21401 (cabergoline versus active levodopa/benserazide; weight .3176) with placebo-controlled trials. The displayed grouping is drug × outcome, with no comparator dimension, and readers are invited to compare drugs on one SMD scale. The active comparator is confirmed in the source trial.",
+    "impact": "A contrast against another effective drug is not the same estimand as a contrast against placebo. Standardization alone does not make these pooled drug estimates suitable for comparative efficacy ranking.",
+    "fix": "Pool within treatment/comparator/outcome/timepoint strata, disclose the comparator on every diamond, and reserve indirect treatment comparisons for a validated network analysis.",
+    "refs": [
+      [
+        "data/birds_eye_reviews/restless_legs_syndrome/meta_analysis.json",
+        36
+      ],
+      [
+        "app/birds-eye-reviews/restless-legs-syndrome/meta-analysis/MetaAnalysisClientWrapper.tsx",
+        236
+      ]
+    ],
+    "sources": [
+      [
+        "Active-controlled trial",
+        "https://pubmed.ncbi.nlm.nih.gov/17274039/"
+      ]
+    ]
+  },
+  {
+    "id": "A05",
+    "priority": "P1",
+    "category": "Science",
+    "title": "Different reports of the same Long COVID trial are counted as separate trials",
+    "status": "Confirmed",
+    "evidence": "The default dashboard includes both 10.1001/jamanetworkopen.2024.50744 and its economic follow-up 10.1186/s12962-026-00748-7, each with n=314. Both publications identify trial NCT05196451. Both appear in the browser trial table and contribute to intervention counts. DOI/preprint deduplication cannot collapse separate publications from the same trial.",
+    "impact": "Trial and participant totals overstate independent evidence; result rectangles may count the same experiment twice. This is a confirmed example, not an estimate of total duplicate-trial prevalence.",
+    "fix": "Introduce a trial identifier distinct from report DOI, link companion papers, select outcomes across reports, and count distinct trials/participants. If retaining report-level charts, label them reports and avoid adding repeated participant totals.",
+    "refs": [
+      [
+        "app/birds-eye-reviews/long-covid/page.tsx",
+        281
+      ],
+      [
+        "app/birds-eye-reviews/long-covid/facets.ts",
+        1
+      ]
+    ],
+    "sources": [
+      [
+        "Primary report",
+        "https://pubmed.ncbi.nlm.nih.gov/39699896/"
+      ],
+      [
+        "Economic follow-up",
+        "https://link.springer.com/article/10.1186/s12962-026-00748-7"
+      ]
+    ]
+  },
+  {
+    "id": "A06",
+    "priority": "P1",
+    "category": "Code",
+    "title": "Bibliography uploads with DOIs fail with HTTP 500",
+    "status": "Confirmed",
+    "evidence": "POSTing a minimal valid .bib to the local production server returns ENOENT. getLatestFilename retains the inline comment in the final version-history line and tries to open a filename ending in \"csv # added collated_results_base_v88_sonnet_400.csv\". /api/fred correctly strips the comment.",
+    "impact": "The bibliography feature fails whenever parsing finds a DOI and proceeds to load the database. It also returns the absolute server path in its error body.",
+    "fix": "Share a single latest-master resolver that ignores full-line/inline comments, checks a nonempty result, and returns a generic public error while logging internal details.",
+    "refs": [
+      [
+        "app/api/upload-bibliography/route.ts",
+        80
+      ]
+    ],
+    "sources": []
+  },
+  {
+    "id": "A07",
+    "priority": "P1",
+    "category": "Dependencies",
+    "title": "Installed Next.js has published security advisories",
+    "status": "Confirmed dependency exposure; deployment exploitability untested",
+    "evidence": "The build and lockfile resolve Next.js 15.5.15. npm audit --omit=dev reports 8 affected package entries: 1 critical, 6 high, 1 low. These are package-level rollups, not eight proven exploitable site vulnerabilities. The verified AVIF image-optimization advisory affects Next.js before 15.5.24. Other entries concern sharp, postcss, d3-color, js-yaml, nanoid, brace-expansion, and postcss-selector-parser.",
+    "impact": "The committed dependency tree is behind security fixes. Actual exploitability depends on deployed versions, Vercel mitigations, enabled features and accepted inputs; no exploit was attempted. The Windows-specific advisory is not evidence of a Windows issue on this Vercel site.",
+    "fix": "Update to a supported patched Next.js release (at least the applicable 15.5.24 patch for the cited issue), refresh the lockfile/transitives, review every remaining advisory for reachability, and rebuild/test before deployment.",
+    "refs": [
+      [
+        "package-lock.json",
+        1
+      ],
+      [
+        "next.config.mjs",
+        34
+      ]
+    ],
+    "sources": [
+      [
+        "Next.js AVIF advisory",
+        "https://github.com/advisories/GHSA-2xp9-vwfh-vxw4"
+      ]
+    ]
+  },
+  {
+    "id": "A08",
+    "priority": "P2",
+    "category": "Science + code",
+    "title": "Long COVID p-value bounds are erased",
+    "status": "Confirmed",
+    "evidence": "numericOrNull strips < and > before parsing. The eligible report 10.17816/rjpbr628759 has two outcome p-values \"<0.05\"; they become .05 and are counted as nonsignificant. Other records encode numeric thresholds plus p_value_exact=false, which is also discarded in the lean props. Formatting rounds values near .05 to .05, potentially contradicting the classification.",
+    "impact": "Outcome counts, primary badges and the blinding/significance chart can disagree with what the source reported.",
+    "fix": "Preserve p-value operator/exactness as typed data. Decide significance from bounds only when logically possible, and format the original operator. Keep uncertain bounds unclassified.",
+    "refs": [
+      [
+        "app/birds-eye-reviews/long-covid/page.tsx",
+        88
+      ],
+      [
+        "app/birds-eye-reviews/long-covid/page.tsx",
+        337
+      ],
+      [
+        "app/birds-eye-reviews/long-covid/LongCovidDashboard.tsx",
+        43
+      ]
+    ],
+    "sources": []
+  },
+  {
+    "id": "A09",
+    "priority": "P2",
+    "category": "Science",
+    "title": "Several explanations equate nonsignificance with absence of an effect",
+    "status": "Confirmed",
+    "evidence": "The replication-methods page says two nonsignificant studies agree there is no effect. The definitions page describes unsuccessful replications as evidence that an effect does not exist, although the statistical criterion labels p>=.05 a failure. The lithium report describes p=.16 as \"nothing\" and uses the statistically-null result to support a strong extrapolation to very low doses, despite explicitly lacking bridging data.",
+    "impact": "Readers can mistake low precision for equivalence or safety. The lithium CI shown on the page (−1.4 to +4.5 kg) is compatible with a range of effects; failure to reject zero alone does not establish a negligible effect.",
+    "fix": "Describe the operational classification separately from evidence of absence. Use effect estimates and intervals; require prespecified equivalence bounds or another justified absence test for equivalence claims. Frame the low-dose lithium conclusion as unresolved by this corpus.",
+    "refs": [
+      [
+        "content/docs/replication-outcome-classification.md",
+        92
+      ],
+      [
+        "content/docs/defining-replication.md",
+        27
+      ],
+      [
+        "app/birds-eye-reviews/lithium-weight-gain/report/page.tsx",
+        167
+      ],
+      [
+        "app/birds-eye-reviews/lithium-weight-gain/report/page.tsx",
+        278
+      ]
+    ],
+    "sources": [
+      [
+        "Cochrane interpretation guidance",
+        "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-15"
+      ],
+      [
+        "Research on replication of null results",
+        "https://arxiv.org/abs/2305.04587"
+      ]
+    ]
+  },
+  {
+    "id": "A10",
+    "priority": "P1",
+    "category": "Science / public wording",
+    "title": "Forensic finding overstates what multiplicity and asymmetric intervals establish",
+    "status": "Confirmed",
+    "evidence": "The CAPTAIN I entry calls fourteen uncorrected outcomes evidence for p-hacking, without presenting evidence of selective analysis or reporting in that summary. The same entry treats SMD or OR estimates not centered in confidence intervals as unusual. Ratio CIs are normally asymmetric on the raw scale, and SMD intervals need not be symmetric either.",
+    "impact": "The public summary draws stronger conclusions about a named study than the stated observations justify. The sitewide disclaimer does not correct an unsupported statistical inference.",
+    "fix": "Replace the p-hacking wording with a precise multiplicity/false-positive-risk observation unless selective analysis is independently established. Recheck interval compatibility using the reported estimation method and appropriate scale. Do not revise or post external PubPeer comments as part of a website-only audit.",
+    "refs": [
+      [
+        "app/forensic-metascience-agent/findings/findings.ts",
+        219
+      ]
+    ],
+    "sources": [
+      [
+        "Cochrane effect measures and intervals",
+        "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-06"
+      ]
+    ]
+  },
+  {
+    "id": "A11",
+    "priority": "P2",
+    "category": "Science",
+    "title": "Effect-size documentation contains incorrect equivalences",
+    "status": "Confirmed",
+    "evidence": "The partial-eta-squared section says numerator df=1 implies partial eta squared equals eta squared. A one-df effect in a multifactor model can still have different denominators. The Cramer V section writes V=phi=|r|, although signed phi can be negative; the correct identity is V=|phi|=|r| for 2×2 tables. Repeated 0–1 descriptions also obscure that signed replication r can be negative.",
+    "impact": "These are mathematical errors in the methodological reference, and may encourage treating partial/multiple association measures as ordinary bivariate Pearson correlations.",
+    "fix": "State the correct design conditions for eta equality, preserve the signed/unsigned distinction, and separate exact conversions from approximations. Remove the guarantee that same-design inflation necessarily cancels across studies.",
+    "refs": [
+      [
+        "content/docs/effect-size-normalization.md",
+        186
+      ],
+      [
+        "content/docs/effect-size-normalization.md",
+        280
+      ],
+      [
+        "content/docs/effect-size-normalization.md",
+        33
+      ]
+    ],
+    "sources": [
+      [
+        "Lakens effect-size primer",
+        "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2013.00863/full"
+      ]
+    ]
+  },
+  {
+    "id": "A12",
+    "priority": "P2",
+    "category": "Science",
+    "title": "The WHO-definition filter checks only time since infection",
+    "status": "Confirmed",
+    "evidence": "The dashboard labels min_weeks>=12 as \"Meets WHO definition\". It does not check symptom duration or exclusion of alternative explanations. Those are also part of the WHO clinical definition.",
+    "impact": "The UI overstates how specifically study eligibility was validated.",
+    "fix": "Relabel as \"Minimum time since infection ≥12 weeks\" or implement and separately expose the full definition criteria, including unknowns.",
+    "refs": [
+      [
+        "app/birds-eye-reviews/long-covid/LongCovidDashboard.tsx",
+        128
+      ],
+      [
+        "app/birds-eye-reviews/long-covid/LongCovidDashboard.tsx",
+        418
+      ]
+    ],
+    "sources": [
+      [
+        "WHO clinical case definition",
+        "https://www.who.int/publications/i/item/WHO-2019-nCoV-Post_COVID-19_condition-Clinical_case_definition-2021.1"
+      ]
+    ]
+  },
+  {
+    "id": "A13",
+    "priority": "P2",
+    "category": "Science",
+    "title": "No significant network inconsistency tests are labeled \"consistent\"",
+    "status": "Confirmed",
+    "evidence": "The network page appends \"(consistent)\" whenever n_significant===0. The current output is 0/8 tests. Nonsignificant, often low-powered inconsistency tests do not establish network coherence or transitivity.",
+    "impact": "The label conveys stronger validation than the test supports, particularly with sparse nodes and mixed populations already noted in the caveats.",
+    "fix": "Use \"No statistically detectable inconsistency in 8 tested comparisons\" and retain the power/transitivity limitations.",
+    "refs": [
+      [
+        "app/birds-eye-reviews/restless-legs-syndrome/network-meta-analysis/page.tsx",
+        223
+      ]
+    ],
+    "sources": [
+      [
+        "Cochrane network meta-analysis",
+        "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-11"
+      ]
+    ]
+  },
+  {
+    "id": "A14",
+    "priority": "P2",
+    "category": "Science / reporting",
+    "title": "Pipeline evaluation reports coverage above 100%",
+    "status": "Confirmed",
+    "evidence": "The original-p-value row reports coverage 102.3% (45/44). If coverage means the proportion of eligible ground-truth values extracted, the numerator cannot exceed the denominator. The percentage faithfully calculates 45/44; the underlying counts/definition are the problem.",
+    "impact": "The evaluation is internally inconsistent or uses an undocumented denominator. Readers cannot interpret the advertised extraction coverage.",
+    "fix": "Reconcile matching/counting against the evaluation records. If 45 includes extra predictions, report those separately from ground-truth coverage. Do not simply clamp the percentage.",
+    "refs": [
+      [
+        "content/docs/v6_pipeline_evaluation.md",
+        35
+      ]
+    ],
+    "sources": []
+  },
+  {
+    "id": "A15",
+    "priority": "P2",
+    "category": "Science / interpretation",
+    "title": "Model A/B changes confound added p-values with a different sample",
+    "status": "Confirmed",
+    "evidence": "The discussion says p-value absorbs what prestige variables appeared to carry. Model A uses 6,306 rows, while Model B uses 453 complete cases with exact p-values. The code correctly computes each fit and the text acknowledges selection; however, the coefficient change does not isolate the effect of adding p.",
+    "impact": "Readers may infer statistical explanation/attenuation from a comparison whose sample also changes.",
+    "fix": "Fit a no-p model on the same 453 rows as Model B before discussing absorption. Until then, state that the models are not a controlled nested comparison.",
+    "refs": [
+      [
+        "app/replications-database/correlates-of-reproducibility/page.tsx",
+        351
+      ],
+      [
+        "app/replications-database/correlates-of-reproducibility/stats.ts",
+        208
+      ]
+    ],
+    "sources": []
+  },
+  {
+    "id": "A16",
+    "priority": "P2",
+    "category": "Code + science",
+    "title": "Bibliography output silently retains only the first effect per DOI",
+    "status": "Confirmed",
+    "evidence": "After matching database rows, uniqueMatches keeps the first row for each original DOI and discards the others. Current DOI 10.1016/j.cognition.2014.09.006 has five rows: one success, three failures, one inconclusive. The output would retain only the first result once the filename bug is fixed.",
+    "impact": "A paper with mixed evidence can be presented as a single success. Multiple effect rows are legitimate and must not be deduplicated by original-paper DOI.",
+    "fix": "Group matches by original DOI and show all effects/replication papers, or present an explicit aggregate with its rule and counts. Keep matchedDois as a separate count.",
+    "refs": [
+      [
+        "app/api/upload-bibliography/route.ts",
+        179
+      ]
+    ],
+    "sources": []
+  },
+  {
+    "id": "A17",
+    "priority": "P2",
+    "category": "Code + science",
+    "title": "Bibliography output turns missing numbers into zero and mislabels r",
+    "status": "Confirmed",
+    "evidence": "Number(\"\") returns zero. d3-dsv represents missing fields as empty strings, so the API emits zero effect sizes and zero N. The API also reads *_es_r but sends the raw *_es_type; the client formats the resulting value with that raw type. Thus a converted correlation may be displayed as Cohen d or OR. 7,009 current rows lack at least one normalized r field.",
+    "impact": "Missing evidence becomes an apparently measured null effect, and valid normalized values can be reported on the wrong scale. These bugs are masked by the current upload 500.",
+    "fix": "Use the existing blank-safe number parser. Return r with an explicit r label, or return raw effect values with raw types; never mix them.",
+    "refs": [
+      [
+        "app/api/upload-bibliography/route.ts",
+        161
+      ],
+      [
+        "app/upload-bibliography/page.tsx",
+        30
+      ]
+    ],
+    "sources": []
+  },
+  {
+    "id": "A18",
+    "priority": "P2",
+    "category": "Code / security",
+    "title": "Citation HTML interpolates metadata without escaping",
+    "status": "Confirmed unsafe sink; exploitation not demonstrated",
+    "evidence": "generateCitationHtml inserts author, journal and URL strings directly into HTML, and the database page passes that HTML to dangerouslySetInnerHTML. It neither escapes HTML/attribute characters nor restricts URL schemes. Data ingestion is a plausible trust boundary, but this review did not establish a malicious record or a public endpoint for writing these fields.",
+    "impact": "A compromised or malformed imported record could inject markup or script-capable content; legitimate markup characters can also break citation rendering.",
+    "fix": "Render citation fields as React text and validated links. If HTML remains necessary, use context-appropriate escaping, an http/https allowlist, and sanitization at the rendering boundary.",
+    "refs": [
+      [
+        "lib/citations.ts",
+        36
+      ],
+      [
+        "app/replications-database/page.tsx",
+        1121
+      ]
+    ],
+    "sources": []
+  },
+  {
+    "id": "A19",
+    "priority": "P2",
+    "category": "Tooling",
+    "title": "The lint command does not run a configured linter",
+    "status": "Confirmed",
+    "evidence": "npm run lint passes the tool-catalog check, then next lint asks interactively which ESLint configuration to create and exits unsuccessfully in this noninteractive run. package.json has no ESLint dev dependency/configuration in the checked setup. The build still compiles and type-checks.",
+    "impact": "The documented lint check is not a usable local/CI quality gate; a successful build should not be reported as an ESLint pass.",
+    "fix": "Add a compatible explicit ESLint setup and noninteractive script; put required checks in CI. Add statistical edge-case tests, since the current tests missed the scientific defects.",
+    "refs": [
+      [
+        "package.json",
+        14
+      ]
+    ],
+    "sources": []
+  },
+  {
+    "id": "A20",
+    "priority": "P2",
+    "category": "Citations",
+    "title": "Long COVID references use given names in place of surnames",
+    "status": "Confirmed",
+    "evidence": "The shipped doi_metadata.json stores first_author values such as Linda and Tom, and the dashboard displays \"Linda et al.\" and \"Tom et al.\". The latter paper is authored by Tom Farmen Nerli and should be cited using Nerli. Some nasal-spray forest labels also appear as \"al. 2023\", consistent with parsing an already abbreviated author string.",
+    "impact": "References are difficult to recognize and the presentation looks like faulty extraction even when the DOI is correct.",
+    "fix": "Preserve structured family/given names from bibliographic metadata; avoid guessing surname by splitting free text. Add representative tests for initials, compound surnames, suffixes, non-Western names, and et al. strings.",
+    "refs": [
+      [
+        "data/birds_eye_reviews/long_covid/doi_metadata.json",
+        9
+      ],
+      [
+        "app/birds-eye-reviews/long-covid/page.tsx",
+        397
+      ],
+      [
+        "app/birds-eye-reviews/antiviral-nasal-sprays/meta-analysis/page.tsx",
+        31
+      ]
+    ],
+    "sources": [
+      [
+        "Nerli primary report",
+        "https://pubmed.ncbi.nlm.nih.gov/39699896/"
+      ]
+    ]
+  },
+  {
+    "id": "A21",
+    "priority": "P2",
+    "category": "Scientific presentation",
+    "title": "Promise score tooltip says 0–1 while values reach 3.5",
+    "status": "Confirmed",
+    "evidence": "The Promise Score heading tooltip describes a 0–1 score. Eligible source records range up to 3.46 and the default browser table renders 3.5. The table sorts by this score by default.",
+    "impact": "The range and meaning of the ranking are misstated; users cannot calibrate or interpret scores as described.",
+    "fix": "Display the actual documented upstream scale and formula/version, or deliberately normalize with a defined mapping. Do not merely clamp values to 1.",
+    "refs": [
+      [
+        "app/birds-eye-reviews/long-covid/LongCovidDashboard.tsx",
+        1231
+      ],
+      [
+        "app/birds-eye-reviews/long-covid/page.tsx",
+        445
+      ]
+    ],
+    "sources": []
+  },
+  {
+    "id": "A22",
+    "priority": "P2",
+    "category": "Usability",
+    "title": "RLS forest-plot labels become unreadable on mobile",
+    "status": "Confirmed",
+    "evidence": "At a 390px viewport, the 760-unit SVG shrinks into a roughly 300px plot container. Drug/CI labels use 10–11 SVG-unit fonts, yielding roughly 4px screen text. This was visible in the mobile browser screenshot. Expanding trials works through the visible label and produces no console error.",
+    "impact": "The scientific results cannot reasonably be read on a phone, even though the route loads and no horizontal overflow is reported.",
+    "fix": "Use a responsive data table/compact layout, or a minimum-width chart inside a horizontally scrollable container. Maintain readable axis/CI labels and accessible equivalents.",
+    "refs": [
+      [
+        "app/birds-eye-reviews/restless-legs-syndrome/meta-analysis/MetaAnalysisClientWrapper.tsx",
+        74
+      ],
+      [
+        "app/birds-eye-reviews/restless-legs-syndrome/meta-analysis/MetaAnalysisClientWrapper.tsx",
+        129
+      ]
+    ],
+    "sources": []
+  },
+  {
+    "id": "A23",
+    "priority": "P3",
+    "category": "Copy + links",
+    "title": "Public copy has spelling/grammar errors and two broken anchors",
+    "status": "Confirmed",
+    "evidence": "Confirmed examples: \"ancedtoal\", \"recieved\", \"Beal's list\", \"a documented phenomena\", and the fragment beginning \"Russian set of approved drugs ... different\" in the Bird's Eye overview; \"citaiton\", \"scienceometrics\", and \"an known issue\" in the Explorer overview; \"failures where were\", \"a small changes\", and \"those sort\" in pipeline evaluation; \"two group's means\" in effect normalization; \"Suspciously\" and \"unsignificant\" in forensic findings. The rendered anchors #cohens-f2-f2 and #cramers-v do not exist; actual generated IDs are #cohens-f-f2 and #cramérs-v.",
+    "impact": "These visible errors reduce readability and credibility. The two links fail to navigate to the intended sections.",
+    "fix": "Use anecdotal, received, Beall's List, a documented phenomenon, citation, scientometrics, a known issue, failures were cases where, small changes, those sorts, two groups' means, suspiciously, and nonsignificant. Rewrite the Russian-drug sentence as a full sentence. Define stable explicit heading IDs or generate the table of contents from headings.",
+    "refs": [
+      [
+        "content/docs/birds-eye-reviews.md",
+        17
+      ],
+      [
+        "content/docs/overview-explorer.md",
+        5
+      ],
+      [
+        "content/docs/v6_pipeline_evaluation.md",
+        11
+      ],
+      [
+        "content/docs/effect-size-normalization.md",
+        41
+      ],
+      [
+        "app/forensic-metascience-agent/findings/findings.ts",
+        104
+      ]
+    ],
+    "sources": []
+  },
+  {
+    "id": "A24",
+    "priority": "P3",
+    "category": "Performance",
+    "title": "Some server-rendered page responses are very large",
+    "status": "Measured payload; user-visible latency not quantified",
+    "evidence": "The local production HTTP crawl measured uncompressed HTML of 6,070,209 bytes for Long COVID, 3,035,015 for impact factor, and 1,913,708 for RLS. These are decoded response sizes, not compressed wire sizes or Core Web Vitals measurements.",
+    "impact": "Large embedded React/data payloads add parsing and memory costs, especially on mobile. This is a measured optimization opportunity, not a proven latency regression.",
+    "fix": "Profile compressed transfer, hydration and interaction on a representative device. Load trial details on demand, paginate server-side where appropriate, and avoid duplicating large data structures in the initial payload.",
+    "refs": [
+      [
+        "app/birds-eye-reviews/long-covid/page.tsx",
+        299
+      ],
+      [
+        "app/replications-database/by-impact-factor/page.tsx",
+        1
+      ]
+    ],
+    "sources": []
+  },
+  {
+    "id": "A25",
+    "priority": "P2",
+    "category": "Science / scope claims",
+    "title": "Review coverage and novelty claims exceed demonstrated evidence",
+    "status": "Unsupported/generalized claims; exhaustive literature review not performed",
+    "evidence": "The Bird's Eye overview says users receive data on all papers, that no interface previously enabled this, and that reviews/meta-analyses up until now focused on English alone. The same document later describes attempting to include as many non-English studies as possible. The lithium report says dose dependence has never actually been measured, although the demonstrated result is limited to this automated corpus and its extractable variables.",
+    "impact": "An incomplete retrieval/extraction pipeline cannot establish exhaustive literature coverage or a universal negative about prior research. These claims are not substantiated by the audit trail presented on the site.",
+    "fix": "Use \"identified papers in our current search\", specify databases/languages/search dates/coverage limits, and narrow novelty claims to demonstrated features. Say \"we did not identify a usable dose-response comparison in this corpus\" unless a dedicated review supports the universal claim.",
+    "refs": [
+      [
+        "content/docs/birds-eye-reviews.md",
+        5
+      ],
+      [
+        "content/docs/birds-eye-reviews.md",
+        31
+      ],
+      [
+        "app/birds-eye-reviews/lithium-weight-gain/report/page.tsx",
+        149
+      ]
+    ],
+    "sources": []
+  }
+]

@@ -1,3 +1,5 @@
+import { longCovidDataPath } from "@/lib/long-covid/data-path";
+import { releaseVersion, publishedArticles } from "@/lib/long-covid/articles-server";
 import { publicationFor } from "@/lib/long-covid/publications-server";
 import type { PublicationMetadata } from "@/lib/long-covid/publications";
 import { PreventionResults } from "./PreventionResults";
@@ -14,7 +16,7 @@ export const metadata = {
 };
 
 const DIR = "data/birds_eye_reviews/long_covid";
-const dataPath = (f: string) => path.join(process.cwd(), DIR, f);
+const dataPath = (f: string) => longCovidDataPath(f);
 
 const VERDICT_KEYS = new Set([
   "favors_treatment", "favors_control", "no_difference", "mixed", "inconclusive",
@@ -43,6 +45,7 @@ function loadVerdicts(): Map<string, { verdict: string; rationale: string }> {
 }
 
 export interface PrevRow {
+  releaseVersion: string;
   publicationMetadata?: PublicationMetadata;
   paper_id: string;
   url: string;
@@ -76,6 +79,7 @@ function loadData() {
   const chartRows: Partial<TrialTableRow>[] = [];
 
   for (const r of recs) {
+    if (!publishedArticles().records.has(String(r.paper_id).toLowerCase())) continue;
     const pid = String(r.paper_id ?? "");
     const sd = r.study_design ?? {};
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -99,6 +103,7 @@ function loadData() {
     const verdict = VERDICT_KEYS.has(rawVerdict) ? rawVerdict : "unknown";
 
     rows.push({
+      releaseVersion: releaseVersion(),
       publicationMetadata: publicationFor(pid),
       paper_id: pid,
       url: String(r.url || `https://doi.org/${pid}`),

@@ -7,10 +7,10 @@ test('treatment filters update the whole dashboard, persist, combine and reset',
  await expect(root).not.toHaveAttribute('data-selected-reports','0');
  await expect.poll(()=>page.locator('[data-paper-id][data-medline]:not([data-medline="yes"])').count()).toBe(0);
  const n=Number(await root.getAttribute('data-selected-reports'));
- await expect(page.getByText(`${n} trials match`,{exact:true})).toBeVisible();
+ await expect(page.getByText(`${n} publications match`,{exact:true})).toBeVisible();
  await page.getByLabel('Publication status',{exact:true}).selectOption('preprint_only');
  await expect(root).toHaveAttribute('data-selected-reports','0');
- await expect(page.getByText('0 trials match',{exact:true})).toBeVisible();
+ await expect(page.getByText('0 publications match',{exact:true})).toBeVisible();
  await expect(page).toHaveURL(/publication=preprint_only/);
  await page.reload();await expect(page.getByLabel('Publication status',{exact:true})).toHaveValue('preprint_only');
  await page.getByRole('button',{name:'Reset publication filters'}).click();
@@ -66,7 +66,7 @@ test('intervention category filters the dashboard and narrows intervention choic
  await expect(page).toHaveURL(/intCat=/);
  const selected=Number(await root.getAttribute('data-selected-reports'));
  expect(selected).toBeGreaterThan(0);expect(selected).toBeLessThan(original);
- await expect(page.getByText(`${selected} trials match`,{exact:true})).toBeVisible();
+ await expect(page.getByText(`${selected} publications match`,{exact:true})).toBeVisible();
  expect(await intervention.locator('option').count()).toBeLessThan(originalChoices);
  await page.reload();await expect(category).toHaveValue(value!);
  await expect(root).toHaveAttribute('data-selected-reports',String(selected));

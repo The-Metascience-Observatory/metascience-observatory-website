@@ -1,4 +1,5 @@
 import type { PublicationMetadata } from "@/lib/long-covid/publications";
+import type { InspectAssessment } from "@/lib/long-covid/inspect";
 import type { FacetInput } from "./facets";
 import type { HoverTrial } from "@/components/BreakdownChart";
 export type { HoverTrial };
@@ -61,6 +62,7 @@ export interface DesignTypeBar {
 /** Lightweight per-record metadata for client-side re-aggregation when RCT filter is toggled */
 export interface TrialMeta {
   paper_id: string;
+  inspectAssessment?: InspectAssessment;
   publicationMetadata?: PublicationMetadata;
   is_rct: boolean;
   countries: string[];
@@ -93,7 +95,9 @@ export interface OutcomeSummaryItem {
 }
 
 export interface TrialTableRow {
+  releaseVersion?: string;
   paper_id: string;
+  inspectAssessment?: InspectAssessment;
   publicationMetadata?: PublicationMetadata;
   is_rct: boolean;
   doi_url: string;
@@ -141,6 +145,7 @@ export interface TrialTableRow {
 
 export interface DashboardProps {
   summaryStats: SummaryStats;
+  inspectAssessedAt?: string;
   lastUpdated?: string;
   byIntervention: InterventionBar[];
   bySymptom: SymptomBar[];
@@ -160,4 +165,3 @@ export interface DashboardProps {
   /** Dominant intervention category for each canonical intervention name (for grouping the tail). */
   interventionCategoryOf: Record<string, string>;
 }
-

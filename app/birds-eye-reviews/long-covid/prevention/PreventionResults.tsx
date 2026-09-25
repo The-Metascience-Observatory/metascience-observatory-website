@@ -1,6 +1,7 @@
 "use client";
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import Link from 'next/link';
+import { ArticleDetailPanel } from '../ArticleDetailPanel';
 import { BirdsEyeNavbar } from '@/components/BirdsEyeNavbar';
 import { Footer } from '@/components/Footer';
 import { BreakdownChart } from '@/components/BreakdownChart';
@@ -20,6 +21,7 @@ function citationTail(r: PrevRow): string {
   return s ? s + "." : "";
 }
 export function PreventionResults({initialData}:{initialData: {rows:PrevRow[];chartRows:TrialTableRow[]} | null}) {
+  const [selectedArticle,setSelectedArticle]=useState<string|null>(null);
   const filters=usePublicationFilters();
   const baseRows=useMemo(()=>preferPublished(initialData?.rows ?? []),[initialData]);
   const rows=useMemo(()=>baseRows.filter(r=>matchesPublication(r.publicationMetadata,filters.medline,filters.publication)),[baseRows,filters.medline,filters.publication]);
@@ -76,12 +78,12 @@ export function PreventionResults({initialData}:{initialData: {rows:PrevRow[];ch
                   </thead>
                   <tbody>
                     {data.rows.map((r) => (
-                      <tr key={r.paper_id} className="border-b border-border/50 align-top">
+                      <tr key={r.paper_id} onClick={()=>setSelectedArticle(r.paper_id)} className="border-b border-border/50 align-top cursor-pointer hover:bg-muted/30">
                         <td className="p-2 align-top">
                           <div className="max-w-[30rem] min-w-[18rem] leading-snug">
-                            <a href={r.url} target="_blank" rel="noreferrer" className="text-blue-600 hover:text-blue-700 hover:underline font-medium">
+                            <button onClick={(e)=>{e.stopPropagation();setSelectedArticle(r.paper_id);}} className="text-blue-600 hover:text-blue-700 hover:underline font-medium">
                               {r.title || r.paper_id}
-                            </a>
+                            </button>
                             <PublicationDetails meta={r.publicationMetadata}/>
                             {r.authors && (
                               <div className="text-xs text-foreground/60 mt-0.5">{r.authors}</div>
@@ -94,7 +96,7 @@ export function PreventionResults({initialData}:{initialData: {rows:PrevRow[];ch
                         <td className="p-2">{r.interventionNames.join(", ") || "—"}</td>
                         <td className="p-2 whitespace-nowrap">{r.design}</td>
                         <td className="p-2 text-right tabular-nums">{r.n != null ? r.n.toLocaleString() : "—"}</td>
-                        <td className="p-2 max-w-[20rem]">{r.primaryOutcome || "—"}</td>
+                        <td className="p-2 max-w-[20rem]">{r.primaryOutcome || "Outcomes not reported"}</td>
                         <td className="p-2 whitespace-nowrap">
                           <span className="inline-flex items-center gap-1.5">
                             <span className="inline-block w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: VERDICT_COLOR[r.verdict] ?? "#e2e8f0" }} />
@@ -111,6 +113,7 @@ export function PreventionResults({initialData}:{initialData: {rows:PrevRow[];ch
           )}
         </div>
       </main>
+      {selectedArticle && <ArticleDetailPanel paperId={selectedArticle} version={baseRows[0]?.releaseVersion || ""} onClose={()=>setSelectedArticle(null)} />}
       <Footer />
     </div>
   );

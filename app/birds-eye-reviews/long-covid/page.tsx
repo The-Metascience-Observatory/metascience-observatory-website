@@ -1,4 +1,8 @@
+import { longCovidDataPath } from "@/lib/long-covid/data-path";
+import { releaseVersion, publishedArticles } from "@/lib/long-covid/articles-server";
 import { publicationFor } from "@/lib/long-covid/publications-server";
+import { baseDoi } from "@/lib/long-covid/publications";
+import { loadInspectSnapshot } from "@/lib/long-covid/inspect-server";
 import fs from "fs";
 import path from "path";
 import { BirdsEyeNavbar } from "@/components/BirdsEyeNavbar";
@@ -30,7 +34,7 @@ interface Verdict { verdict: string; rationale: string; confidence: string }
  *  if the file is absent, so the dashboard still builds on the structured proxy. */
 function loadVerdicts(): Map<string, Verdict> {
   const map = new Map<string, Verdict>();
-  const fp = path.join(process.cwd(), "data/birds_eye_reviews/long_covid/trial_verdicts.csv");
+  const fp = longCovidDataPath("trial_verdicts.csv");
   if (!fs.existsSync(fp)) return map;
   const records = parseCSV(fs.readFileSync(fp, "utf-8"));
   if (records.length === 0) return map;
@@ -75,15 +79,19 @@ function emptyVerdicts(): Record<string, number> {
   return { favors_treatment: 0, favors_control: 0, no_difference: 0, mixed: 0, inconclusive: 0, unknown: 0 };
 }
 
-/** Coerce p_value to a number or null (some records store it as a string like "<0.05") */
+/** Inequalities are retained in article details, never coerced into exact chart values. */
 function numericOrNull(v: unknown): number | null {
   if (v == null) return null;
   if (typeof v === "number") return v;
   if (typeof v === "string") {
-    const n = parseFloat(v.replace(/[<>]/g, ""));
+    const n = (/^[+-]?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?$/i.test(v.trim()) ? Number(v) : NaN);
     return Number.isFinite(n) ? n : null;
   }
   return null;
+}
+
+function numericP(effect: { p_value?: unknown; p_value_exact?: unknown } | undefined): number | null {
+  return effect?.p_value_exact === false ? null : numericOrNull(effect?.p_value);
 }
 
 /** True for "intervention" arms that are not actually a treatment — observational
@@ -204,7 +212,7 @@ function isClinicalTrialRecord(r: any): boolean {
  *  a record excluded at eligibility must not reappear as a displayed trial. */
 function loadScreeningExcludedDois(): Set<string> {
   const excluded = new Set<string>();
-  const fp = path.join(process.cwd(), "data/birds_eye_reviews/long_covid/trial_screening.csv");
+  const fp = longCovidDataPath("trial_screening.csv");
   if (!fs.existsSync(fp)) return excluded;
   const records = parseCSV(fs.readFileSync(fp, "utf-8"));
   if (records.length === 0) return excluded;
@@ -227,11 +235,9 @@ function baseDoiOf(r: any): string {
 }
 
 function processData() {
-  const filePath = path.join(
-    process.cwd(),
-    "data/birds_eye_reviews/long_covid/trial_extractions.jsonl"
-  );
+  const filePath = longCovidDataPath("trial_extractions.jsonl");
   const raw = fs.readFileSync(filePath, "utf-8");
+  const inspect = loadInspectSnapshot();
   const screeningExcluded = loadScreeningExcludedDois();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const records: any[] = raw
@@ -242,13 +248,10 @@ function processData() {
     // records self-described as non-clinical-trial (extraction noise), and any
     // paper excluded at the screening/eligibility stage (is_excluded='yes') so the
     // dashboard's displayed set matches the PRISMA funnel.
-    .filter((r) => r && r.study_design && isClinicalTrialRecord(r) && !screeningExcluded.has(baseDoiOf(r)));
+    .filter((r) => r && publishedArticles().records.has(String(r.paper_id).toLowerCase()));
 
   // ── Load DOI metadata for author/journal citations ────────────────
-  const doiMetaPath = path.join(
-    process.cwd(),
-    "data/birds_eye_reviews/long_covid/doi_metadata.json"
-  );
+  const doiMetaPath = longCovidDataPath("doi_metadata.json");
   let doiMetadata: Record<string, { first_author: string; author_count: number; journal: string; year: number | null }> = {};
   try {
     doiMetadata = JSON.parse(fs.readFileSync(doiMetaPath, "utf-8"));
@@ -274,7 +277,7 @@ function processData() {
     for (const o of r.outcomes ?? []) {
       if (o.measurement_instrument) allInstruments.add(o.measurement_instrument);
     }
-    if (r.sample_sizes?.n_randomized_total) totalParticipants += r.sample_sizes.n_randomized_total;
+    totalParticipants += r.sample_sizes?.n_randomized_total ?? r.sample_sizes?.n_enrolled_total ?? 0;
   }
 
   const summaryStats = {
@@ -326,7 +329,7 @@ function processData() {
         name: o.name ?? "Unnamed",
         symptom_domain: o.symptom_domain ?? "",
         effect_value: numericOrNull(oBge?.effect_value),
-        p_value: numericOrNull(oBge?.p_value),
+        p_value: numericP(oBge),
         higher_is_better: o.higher_is_better ?? null,
         effect_measure: oBge?.effect_measure ?? "",
       });
@@ -340,7 +343,7 @@ function processData() {
           primaryEffectValue = numericOrNull(bge.effect_value);
           primaryCiLow = numericOrNull(bge.ci_95_low);
           primaryCiHigh = numericOrNull(bge.ci_95_high);
-          primaryPValue = numericOrNull(bge.p_value);
+          primaryPValue = numericP(bge);
         }
       }
       // Classify outcome significance + direction. A significant effect in the
@@ -348,17 +351,21 @@ function processData() {
       // a significant effect with unknown polarity can't be assigned a direction,
       // so it falls to "unknown" rather than being assumed positive.
       const bge = o.between_group_effects?.[0];
-      const bgePVal = numericOrNull(bge?.p_value);
+      const bgePVal = numericP(bge);
       const bgeEVal = numericOrNull(bge?.effect_value);
       if (!bge || bgePVal == null || bgeEVal == null) {
         nUnknown++;
       } else if (bgePVal < 0.05) {
         const hib = o.higher_is_better;
-        if (hib === true) (bgeEVal > 0 ? nPositive++ : nFavorsControl++);
-        else if (hib === false) (bgeEVal < 0 ? nPositive++ : nFavorsControl++);
-        else nUnknown++; // significant but direction unknown — not assessable
+        const measure = String(bge.effect_measure || '').toLowerCase();
+        const ratio = ['risk_ratio','odds_ratio','hazard_ratio','rr','or','hr'].includes(measure);
+        const difference = ['mean_difference','smd','standardized_mean_difference'].includes(measure);
+        const arms = r.study_design?.arms || [];
+        const oriented = bge.comparison === 'arm1_vs_arm2' && arms[0]?.type === 'intervention' && arms[1] && arms[1].type !== 'intervention';
+        if (typeof hib !== 'boolean' || (!ratio && !difference) || !oriented) nUnknown++;
+        else ((bgeEVal > (ratio ? 1 : 0)) === hib ? nPositive++ : nFavorsControl++);
       } else {
-        nNull++; // p >= 0.05 — true null result
+        nNull++; // Reported non-significance; this does not establish equivalence.
       }
     }
 
@@ -373,7 +380,9 @@ function processData() {
 
     return {
       paper_id: r.paper_id,
+      releaseVersion: releaseVersion(),
       publicationMetadata: publicationFor(r.paper_id),
+      inspectAssessment: inspect?.papers[baseDoi(r.paper_id)],
       verdict,
       verdict_rationale: v?.rationale ?? "",
       is_rct: r.is_rct ?? false,
@@ -387,7 +396,7 @@ function processData() {
       primary_symptom_domains: primaryDomains,
       facets,
       blinding: r.study_design.blinding ?? "unknown",
-      n_randomized: r.sample_sizes?.n_randomized_total ?? null,
+      n_randomized: r.sample_sizes?.n_randomized_total ?? r.sample_sizes?.n_enrolled_total ?? null,
       primary_symptom_domain: primarySymptomDomain,
       primary_outcome_name: primaryOutcomeName,
       primary_effect_measure: primaryEffectMeasure,
@@ -466,7 +475,7 @@ function processData() {
     let primaryPValue: number | null = null;
     for (const o of r.outcomes ?? []) {
       if (o.is_primary && !primaryPValue) {
-        primaryPValue = numericOrNull(o.between_group_effects?.[0]?.p_value);
+        primaryPValue = numericP(o.between_group_effects?.[0]);
       }
     }
     const instruments = new Set<string>();
@@ -475,7 +484,9 @@ function processData() {
     }
     return {
       paper_id: r.paper_id,
+      releaseVersion: releaseVersion(),
       publicationMetadata: publicationFor(r.paper_id),
+      inspectAssessment: inspect?.papers[baseDoi(r.paper_id)],
       is_rct: r.is_rct ?? false,
       countries: r.study_design.countries ?? [],
       interventionArms,
@@ -483,7 +494,7 @@ function processData() {
       rob_overall: r.risk_of_bias?.overall_judgment ?? "unknown",
       blinding: r.study_design.blinding ?? "unknown",
       design_type: normDesignType(r.study_design.design_type),
-      n_randomized: r.sample_sizes?.n_randomized_total ?? null,
+      n_randomized: r.sample_sizes?.n_randomized_total ?? r.sample_sizes?.n_enrolled_total ?? null,
       min_weeks: r.participants?.min_time_since_infection_weeks ?? null,
       year: r.year ?? extractYearFromDOI(r.paper_id),
       n_instruments: instruments.size,
@@ -527,7 +538,7 @@ function processData() {
   try {
     const meta = JSON.parse(
       fs.readFileSync(
-        path.join(process.cwd(), "data/birds_eye_reviews/long_covid/last_updated.json"),
+        longCovidDataPath("last_updated.json"),
         "utf-8"
       )
     );
@@ -539,6 +550,7 @@ function processData() {
   return {
     // Use server-accurate summary stats (instrument count uses Set dedup)
     summaryStats,
+    inspectAssessedAt: inspect?.assessedAt,
     lastUpdated,
     byIntervention: aggregated.byIntervention,
     bySymptom: aggregated.bySymptom,

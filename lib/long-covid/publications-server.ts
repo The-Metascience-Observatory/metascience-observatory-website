@@ -1,3 +1,4 @@
+import { longCovidDataPath } from "@/lib/long-covid/data-path";
 import fs from 'fs';
 import path from 'path';
 import { baseDoi, type PublicationMetadata } from './publications';
@@ -8,7 +9,7 @@ export function publicationFor(doi: string): PublicationMetadata | undefined {
   // Enrichment can replace the snapshot while local preview is running.
   // Check once per second, not once for every row; parse only changed snapshots.
   if (!cache || Date.now() - lastChecked > 1000) {
-    const filename=path.join(process.cwd(),'data/birds_eye_reviews/long_covid/publication_metadata.json');
+    const filename=longCovidDataPath("publication_metadata.json");
     lastChecked=Date.now();
     if (!fs.existsSync(filename)) return cache?.[baseDoi(doi)];
     const mtime=fs.statSync(filename).mtimeMs;

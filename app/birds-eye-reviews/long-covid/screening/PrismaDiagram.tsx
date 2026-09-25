@@ -6,6 +6,8 @@ import { ArrowDown, ArrowRight } from "lucide-react";
  *  of studies the primary dashboard actually displays (RCT + observational). */
 export interface PrismaCounts {
   sources: string[];
+  awaiting_screening?: number;
+  awaiting_fulltext_decision?: number;
   identified: number;
   excluded_not_relevant: number;
   relevant: number;
@@ -195,6 +197,7 @@ export function PrismaDiagram({ counts }: { counts: PrismaCounts }) {
     <div className="border border-border rounded-lg bg-white p-6 mb-8">
       <h2 className="text-lg font-semibold mb-5">Screening flow</h2>
 
+      <p className="mb-4 text-xs text-foreground/60">Counts are publications, not independent studies. {counts.awaiting_screening ?? 0} records await initial screening; {counts.awaiting_fulltext_decision ?? 0} retrieved records await a full-text decision. Historical screening is followed by an intervention-evidence check for this release.</p>
       <div className="max-w-3xl mx-auto">
         <StageRow
           title="Records identified from database searches"
@@ -214,12 +217,12 @@ export function PrismaDiagram({ counts }: { counts: PrismaCounts }) {
             box on the right, keeping both main boxes vertically connected. */}
         <div className="grid md:grid-cols-2 gap-3 md:gap-0 items-start">
           <div className="flex flex-col self-stretch">
-            <MainBox title="Full-text articles retrieved and screened" n={counts.retrieved} />
+            <MainBox title="Full-text artifacts available" n={counts.retrieved} />
             <div className="flex flex-col items-center flex-1 text-foreground/30">
               <div className="w-px flex-1 bg-foreground/25 min-h-8" />
               <ArrowDown size={18} className="-mt-2" />
             </div>
-            <MainBox title="Eligible — treatment studies assessed for extraction" n={counts.eligible} />
+            <MainBox title="Passed historical or current screening for extraction" n={counts.eligible} />
           </div>
           <div className="md:pr-2 flex flex-col justify-between gap-4 self-stretch">
             <ExcludedBox
@@ -242,14 +245,14 @@ export function PrismaDiagram({ counts }: { counts: PrismaCounts }) {
           sub={`${counts.extracted_rct.toLocaleString()} RCT · ${counts.extracted_observational.toLocaleString()} observational`}
           excluded={
             counts.extracted_total - counts.displayed_total > 0
-              ? { title: "merged duplicates, non-clinical-trial records, and papers excluded at eligibility (e.g. reviews, protocols, secondary analyses, preclinical/modelling studies) removed", n: counts.extracted_total - counts.displayed_total }
+              ? { title: "Not in treatment release: prevention, excluded records, related reports, or unresolved evidence", n: counts.extracted_total - counts.displayed_total }
               : undefined
           }
         />
         <DownArrow />
         <div className="grid md:grid-cols-2">
           <TreeBranch
-            label="Studies shown on the dashboard"
+            label="Treatment publications in this release"
             n={counts.displayed_total}
             accent="#2563eb"
             tint="rgba(96,165,250,0.15)"
