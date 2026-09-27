@@ -527,5 +527,74 @@
       "height": 449,
       "alt": "Annotated Figure 6 with the matching regions outlined."
     }
+  },
+  {
+    "id": "kunnumakkara-2009",
+    "doi": "10.1002/ijc.24593",
+    "citation": {
+      "authors": "Ajaikumar B. Kunnumakkara; Parmeswaran Diagaradjane; Preetha Anand; Harikumar B. Kuzhuvelil; Amit Deorukhkar; Juri Gelovani; Sushovan Guha; Sunil Krishnan; Bharat B. Aggarwal",
+      "title": "Curcumin sensitizes human colorectal cancer to capecitabine by modulation of cyclin D1, COX‐2, MMP‐9, VEGF and CXCR4 expression in an orthotopic mouse model",
+      "journal": "International Journal of Cancer",
+      "volume": "125",
+      "issue": "9",
+      "pages": "2187-2197",
+      "year": 2009,
+      "url": "https://doi.org/10.1002/ijc.24593"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/7132F38C7E535F1792E77B9B515EDF",
+    "submitted": "2026-09-27",
+    "summary": "duplication with vertical flip. (not the subject of the Erratum on this paper)",
+    "image": {
+      "src": "/assets/forensic-metascience-agent/image-findings/kunnumakkara-2009.png",
+      "width": 1582,
+      "height": 535,
+      "alt": "Annotated Figure 6 with the matching regions outlined."
+    }
+  },
+  {
+    "id": "chintala-1999",
+    "doi": "10.1002/(sici)1098-2744(199912)26:4<274::aid-mc6>3.0.co;2-1",
+    "citation": {
+      "authors": "Shravan K. Chintala; Athanassios P. Kyritsis; Pamarthi M. Mohan; Sanjeeva Mohanam; Raymond Sawaya; Ziya Gokslan; W. K. Alfred Yung; Peter Steck; Joon H. Uhm; Bharat B. Aggarwal; Jasti S. Rao",
+      "title": "Altered actin cytoskeleton and inhibition of matrix metalloproteinase expression by vanadate and phenylarsine oxide, inhibitors of phosphotyrosine phosphatases: Modulation of migration and invasion of human malignant glioma cells",
+      "journal": "Molecular Carcinogenesis",
+      "volume": "26",
+      "issue": "4",
+      "pages": "274-285",
+      "year": 1999,
+      "url": "https://doi.org/10.1002/(sici)1098-2744(199912)26:4<274::aid-mc6>3.0.co;2-1"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/597D7E627E15AE8A6E610C421A2EBC",
+    "submitted": "2026-09-27",
+    "summary": "duplication",
+    "image": {
+      "src": "/assets/forensic-metascience-agent/image-findings/chintala-1999.png",
+      "width": 1059,
+      "height": 909,
+      "alt": "Annotated Figure 9 with the matching regions outlined."
+    }
+  },
+  {
+    "id": "chintala-1998",
+    "doi": "10.1074/jbc.273.22.13545",
+    "citation": {
+      "authors": "Shravan K. Chintala; Raymond Sawaya; Bharat B. Aggarwal; Sadhan Majumder; Dipak K. Giri; Athanassios P. Kyritsis; Ziya L. Gokaslan; Jasti S. Rao",
+      "title": "Induction of Matrix Metalloproteinase-9 Requires a Polymerized Actin Cytoskeleton in Human Malignant Glioma Cells",
+      "journal": "Journal of Biological Chemistry",
+      "volume": "273",
+      "issue": "22",
+      "pages": "13545-13551",
+      "year": 1998,
+      "url": "https://doi.org/10.1074/jbc.273.22.13545"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/1A9AD3A9AE31EE0F1C1CF5A3743B9C",
+    "submitted": "2026-09-27",
+    "summary": "duplication",
+    "image": {
+      "src": "/assets/forensic-metascience-agent/image-findings/chintala-1998.png",
+      "width": 1525,
+      "height": 1298,
+      "alt": "Annotated Figure 10 with the matching regions outlined."
+    }
   }
 ]
