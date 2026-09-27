@@ -401,5 +401,131 @@
         "wide": true
       }
     ]
+  },
+  {
+    "id": "pandey-2010",
+    "doi": "10.1002/ijc.25059",
+    "citation": {
+      "authors": "Manoj K. Pandey; Bokyung Sung; Bharat B. Aggarwal",
+      "title": "Betulinic acid suppresses STAT3 activation pathway through induction of protein tyrosine phosphatase SHP‐1 in human multiple myeloma cells",
+      "journal": "International Journal of Cancer",
+      "volume": "127",
+      "issue": "2",
+      "pages": "282-292",
+      "year": 2010,
+      "url": "https://doi.org/10.1002/ijc.25059"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/88225816074F0A5DF7161E3498AEE1",
+    "submitted": "2026-09-27",
+    "summary": "An image is re-used from another publication with a 90 degree rotation. The image purports to show xenographed tumor tissue across four different mice, but the same tissue appears in all four images but with changes in color.",
+    "images": [
+      {
+        "src": "/assets/forensic-metascience-agent/image-findings/pandey-2010.png",
+        "width": 1562,
+        "height": 1447,
+        "alt": "Annotated Figure 6 with the matching regions outlined.",
+        "caption": "Earlier comparison: image reuse across publications with a 90-degree rotation. Submitted September 26, 2026."
+      },
+      {
+        "src": "/assets/forensic-metascience-agent/image-findings/pandey-2010-xenograft.png",
+        "width": 1660,
+        "height": 895,
+        "wide": true,
+        "alt": "Annotated comparison of four mouse and tumor tissue panels labeled P-Luc, VC-Luc, PX1-Luc, and PX2-Luc, with matching tissue regions outlined in color.",
+        "caption": "Tumor tissue comparison across four mice. Submitted September 27, 2026."
+      }
+    ]
+  },
+  {
+    "id": "park-2011",
+    "doi": "10.1002/ijc.25966",
+    "citation": {
+      "authors": "Byoungduck Park; Bokyung Sung; Vivek R. Yadav; Sung‐Gook Cho; Mingyao Liu; Bharat B. Aggarwal",
+      "title": "Acetyl‐11‐keto‐β‐boswellic acid suppresses invasion of pancreatic cancer cells through the downregulation of CXCR4 chemokine receptor expression",
+      "journal": "International Journal of Cancer",
+      "volume": "129",
+      "issue": "1",
+      "pages": "23-33",
+      "year": 2011,
+      "url": "https://doi.org/10.1002/ijc.25966"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/9DC004E2D211B188AB05250749AF00",
+    "submitted": "2026-09-26",
+    "summary": "image duplication across conditions",
+    "image": {
+      "src": "/assets/forensic-metascience-agent/image-findings/park-2011.png",
+      "width": 818,
+      "height": 1694,
+      "alt": "Annotated Figure 4 and Figure 5 with the matching regions outlined."
+    }
+  },
+  {
+    "id": "prasad-2012",
+    "doi": "10.1158/1078-0432.ccr-11-2805",
+    "citation": {
+      "authors": "Sahdeo Prasad; Vivek R. Yadav; Bokyung Sung; Simone Reuter; Ramaswamy Kannappan; Amit Deorukhkar; Parmeswaran Diagaradjane; Caimiao Wei; Veerabhadran Baladandayuthapani; Sunil Krishnan; Sushovan Guha; Bharat B. Aggarwal",
+      "title": "Ursolic Acid Inhibits Growth and Metastasis of Human Colorectal Cancer in an Orthotopic Nude Mouse Model by Targeting Multiple Cell Signaling Pathways: Chemosensitization with Capecitabine",
+      "journal": "Clinical Cancer Research",
+      "volume": "18",
+      "issue": "18",
+      "pages": "4942-4953",
+      "year": 2012,
+      "url": "https://doi.org/10.1158/1078-0432.ccr-11-2805"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/C6EBED9CE4D73614B6A275F0EFF476",
+    "submitted": "2026-09-26",
+    "summary": "duplication",
+    "image": {
+      "src": "/assets/forensic-metascience-agent/image-findings/prasad-2012.png",
+      "width": 756,
+      "height": 473,
+      "alt": "Annotated Figure 6 with the matching regions outlined."
+    }
+  },
+  {
+    "id": "tummalapalli-2007",
+    "doi": "10.3892/ijo.31.1.5",
+    "citation": {
+      "authors": "Padmaja Tummalapalli; Christopher Gondi; Dzung Dinh; Meena Gujrati; Jasti Rao",
+      "title": "RNA interference-mediated targeting of urokinase plasminogen activator receptor and matrix metalloproteinase-9 gene expression in the IOMM-lee malignant meningioma cell line inhibits tumor growth, tumor cell invasion and angiogenesis",
+      "journal": "International Journal of Oncology",
+      "volume": "31",
+      "issue": "1",
+      "pages": "5-17",
+      "year": 2007,
+      "url": "https://doi.org/10.3892/ijo.31.1.5"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/7AA6B440D7224465B256FF55DD6549",
+    "submitted": "2026-09-26",
+    "summary": "cross-paper image re-use with different label. (and another 3 images re-used with same labels)",
+    "image": {
+      "src": "/assets/forensic-metascience-agent/image-findings/tummalapalli-2007.png",
+      "width": 1620,
+      "height": 1311,
+      "alt": "Annotated Figure 4 and Figure 3 with the matching regions outlined."
+    }
+  },
+  {
+    "id": "rao-2013",
+    "doi": "10.1038/oncsis.2013.19",
+    "citation": {
+      "authors": "Jia‐Sheng Rao; Meena Gujrati; Chandramu Chetty",
+      "title": "Tumor-associated soluble uPAR-directed endothelial cell motility and tumor angiogenesis",
+      "journal": "Oncogenesis",
+      "volume": "2",
+      "issue": "6",
+      "pages": "e53-e53",
+      "year": 2013,
+      "url": "https://doi.org/10.1038/oncsis.2013.19"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/F3DF2895CBE9536154C460C7743ACF",
+    "submitted": "2026-09-26",
+    "summary": "re-use with 180 degree rotation",
+    "image": {
+      "src": "/assets/forensic-metascience-agent/image-findings/rao-2013.png",
+      "width": 1045,
+      "height": 449,
+      "alt": "Annotated Figure 6 with the matching regions outlined."
+    }
   }
 ]
