@@ -5,7 +5,10 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SurveyDashboard } from "./SurveyDashboard";
 import type {
+  DisciplineCrisisBar,
   DisciplineFailureBar,
+  DisciplinePublishingStats,
+  DisciplineProceduresBar,
   DisciplineReproducibleDist,
   LikertBar,
   OpinionSlice,
@@ -35,6 +38,7 @@ const COL = {
   failedToPublishSuccessful: 82,
   failedToPublishUnsuccessful: 83,
   discipline: 90,
+  otherAreaOfInterest: 91,
 } as const;
 
 // Short chart labels for the 14 "contributes to irreproducibility" grid columns,
@@ -72,9 +76,19 @@ const IMPROVEMENT_FACTOR_LABELS = [
   "More time checking notebooks, raw data",
 ];
 
-// The article groups the raw disciplines into six; this mapping reproduces its
-// published Ns exactly (e.g. Physics and engineering = 236).
+// Show engineering and materials science separately, and combine the six
+// astronomy/planetary-science respondents with physics. The original "Other"
+// group is split below using respondents' free-text areas of interest.
 const DISCIPLINE_GROUPS: Record<string, string> = {
+  Physics: "Physics & astronomy",
+  "Materials Science": "Materials science",
+  "Astronomy and planetary science": "Physics & astronomy",
+  "Earth and Environmental Science": "Earth and environment",
+};
+
+// Publishing, crisis opinions, and procedures use Nature's original chart
+// groups, with only Other split using respondents' write-ins.
+const NATURE_DISCIPLINE_GROUPS: Record<string, string> = {
   Physics: "Physics and engineering",
   Engineering: "Physics and engineering",
   "Materials Science": "Physics and engineering",
@@ -82,20 +96,87 @@ const DISCIPLINE_GROUPS: Record<string, string> = {
   "Earth and Environmental Science": "Earth and environment",
 };
 
-// Panel order for the reproducibility-estimate small multiples: most to least
-// confident in the literature, matching the article's figure.
+const CRISIS_OPTIONS = [
+  { key: "significant", label: "Yes, a significant crisis", raw: "There is a significant crisis of reproducibility" },
+  { key: "slight", label: "Yes, a slight crisis", raw: "There is a slight crisis of reproducibility" },
+  { key: "no_crisis", label: "No, there is no crisis", raw: "There is no crisis of reproducibility" },
+  { key: "dont_know", label: "Don't know", raw: "I don't know" },
+] as const;
+
+// Reviewed write-ins from the raw survey, normalized to lowercase. An explicit
+// list keeps the recoding auditable, including mixed fields and original typos.
+// Neuroscience-only responses (including cognitive neuroscience) stay in Other;
+// mixed responses explicitly naming psychology, education or social science join
+// this group. Existing named discipline selections are never recoded.
+const PSYCHOLOGY_SOCIAL_SCIENCE_WRITE_INS = new Set([
+  "anthropology",
+  "anthropology (cultural)",
+  "archaeologyg",
+  "biological psychology",
+  "biopsychology",
+  "business and communications",
+  "cognition",
+  "cognitive neuro education",
+  "cognitive psychology",
+  "cognitive science",
+  "communication",
+  "communication studies",
+  "computational social science",
+  "decision science",
+  "economics",
+  "experimental linguistics",
+  "interdisciplinary: biology, medicine, computer science; education and social/behaviorial sciences, neurosciences",
+  "linguistics",
+  "management ?n educat?on",
+  "neuro/psych",
+  "organization science",
+  "organizational psychology",
+  "political science",
+  "psycholinguistics",
+  "psychology",
+  "psychology and neuroscience",
+  "psychology/neuroscience",
+  "social & administrative pharmaceutical sciences",
+  "social and behavioural sciences; statistics and data science",
+  "social psychology",
+  "social science",
+  "social sciences",
+  "social scientist",
+  "sociology",
+]);
+
+// Keep the three groups from the article's combined physics/engineering category
+// together, then show the remaining disciplines and the split Other category.
 const REPRODUCIBLE_PANEL_ORDER = [
   "Chemistry",
-  "Physics and engineering",
+  "Physics & astronomy",
+  "Engineering",
+  "Materials science",
   "Earth and environment",
   "Biology",
   "Medicine",
+  "Psychology & social sciences",
   "Other",
 ];
 
 /** Strip surrounding quotes and non-breaking-space mojibake from a raw cell. */
 function clean(cell: string): string {
   return cell.trim().replace(/^"|"$/g, "").replace(/\u00a0/g, " ").trim();
+}
+
+/** Original survey field, with the agreed write-in split of Other. */
+function surveyDiscipline(row: string[]): string {
+  const discipline = clean(row[COL.discipline] ?? "");
+  const otherArea = clean(row[COL.otherAreaOfInterest] ?? "").toLowerCase();
+  if (discipline === "Other" && PSYCHOLOGY_SOCIAL_SCIENCE_WRITE_INS.has(otherArea)) {
+    return "Psychology & social sciences";
+  }
+  return discipline;
+}
+
+function disciplineGroup(row: string[]): string {
+  const discipline = surveyDiscipline(row);
+  return DISCIPLINE_GROUPS[discipline] ?? discipline;
 }
 
 function pct(count: number, total: number): number {
@@ -124,12 +205,7 @@ function processData(): SurveyDashboardProps {
     const v = cell(r, COL.crisisOpinion);
     if (v) crisisCounts[v] = (crisisCounts[v] ?? 0) + 1;
   }
-  const crisis: OpinionSlice[] = [
-    { key: "significant", label: "Yes, a significant crisis", raw: "There is a significant crisis of reproducibility" },
-    { key: "slight", label: "Yes, a slight crisis", raw: "There is a slight crisis of reproducibility" },
-    { key: "no_crisis", label: "No, there is no crisis", raw: "There is no crisis of reproducibility" },
-    { key: "dont_know", label: "Don't know", raw: "I don't know" },
-  ].map(({ key, label, raw: rawLabel }) => ({
+  const crisis: OpinionSlice[] = CRISIS_OPTIONS.map(({ key, label, raw: rawLabel }) => ({
     key,
     label,
     count: crisisCounts[rawLabel] ?? 0,
@@ -184,12 +260,113 @@ function processData(): SurveyDashboardProps {
     (r) => cell(r, COL.publishedSuccessful) === "Yes" && cell(r, COL.publishedFailed) === "Yes"
   ).length;
 
+  // ── Nature's original discipline groups, shared by three breakdowns ──
+  const natureDisciplineGroups = new Map<string, string[][]>();
+  for (const row of rows) {
+    const discipline = surveyDiscipline(row);
+    if (!discipline) continue;
+    const group = NATURE_DISCIPLINE_GROUPS[discipline] ?? discipline;
+    const members = natureDisciplineGroups.get(group) ?? [];
+    members.push(row);
+    natureDisciplineGroups.set(group, members);
+  }
+  const publishingByDiscipline: DisciplinePublishingStats[] = [...natureDisciplineGroups.entries()]
+    .map(([discipline, members]) => {
+      const total = members.length;
+      const yes = (col: number) => members.filter((row) => cell(row, col) === "Yes").length;
+      const successfulCount = yes(COL.publishedSuccessful);
+      const unsuccessfulCount = yes(COL.publishedFailed);
+      const failedSuccessfulCount = yes(COL.failedToPublishSuccessful);
+      const failedUnsuccessfulCount = yes(COL.failedToPublishUnsuccessful);
+      return {
+        discipline,
+        n: total,
+        successful: {
+          key: "successful" as const,
+          label: "Successful reproduction",
+          publishedCount: successfulCount,
+          publishedPct: pct(successfulCount, total),
+          failedToPublishCount: failedSuccessfulCount,
+          failedToPublishPct: pct(failedSuccessfulCount, total),
+        },
+        unsuccessful: {
+          key: "unsuccessful" as const,
+          label: "Unsuccessful reproduction",
+          publishedCount: unsuccessfulCount,
+          publishedPct: pct(unsuccessfulCount, total),
+          failedToPublishCount: failedUnsuccessfulCount,
+          failedToPublishPct: pct(failedUnsuccessfulCount, total),
+        },
+      };
+    })
+    // Base order for the crisis chart; publishing panels sort by their own outcome.
+    .sort((a, b) => b.successful.publishedPct - a.successful.publishedPct || a.discipline.localeCompare(b.discipline));
+
+  // Overall first, followed by fields in successful-publication order.
+  const crisisBar = (discipline: string, members: string[][]): DisciplineCrisisBar => {
+    const bar: DisciplineCrisisBar = {
+      discipline,
+      n: members.length,
+      significant: 0,
+      slight: 0,
+      no_crisis: 0,
+      dont_know: 0,
+    };
+    for (const member of members) {
+      const option = CRISIS_OPTIONS.find((option) => option.raw === cell(member, COL.crisisOpinion));
+      if (option) bar[option.key] += 1;
+    }
+    return bar;
+  };
+  const crisisByDiscipline = [
+    crisisBar("Overall", rows),
+    ...publishingByDiscipline.map(({ discipline }) =>
+      crisisBar(discipline, natureDisciplineGroups.get(discipline)!)
+    ),
+  ];
+
+  const proceduresBar = (discipline: string, members: string[][]): DisciplineProceduresBar => {
+    const bar: DisciplineProceduresBar = {
+      discipline,
+      n: members.length,
+      no: 0,
+      within_5: 0,
+      over_5: 0,
+      since_start: 0,
+    };
+    for (const member of members) {
+      if (cell(member, COL.proceduresEstablished) === "No") {
+        bar.no += 1;
+      } else if (cell(member, COL.proceduresEstablished) === "Yes") {
+        switch (cell(member, COL.proceduresWhen)) {
+          case "Within the last year":
+          case "Within the last 2 years":
+          case "Within the last 5 years":
+            bar.within_5 += 1;
+            break;
+          case "Within the last 10 years or longer":
+            bar.over_5 += 1;
+            break;
+          case "The procedures have been in place since I started working in my lab":
+            bar.since_start += 1;
+            break;
+        }
+      }
+    }
+    return bar;
+  };
+  const proceduresByDiscipline = [
+    proceduresBar("Overall", rows),
+    ...publishingByDiscipline.map(({ discipline }) =>
+      proceduresBar(discipline, natureDisciplineGroups.get(discipline)!)
+    ),
+  ];
+
   // ── Failed to reproduce, by discipline ─────────────────────────────
   const byDiscipline = new Map<string, { n: number; someoneElse: number; own: number }>();
   for (const r of rows) {
-    const rawDiscipline = cell(r, COL.discipline);
-    if (!rawDiscipline) continue;
-    const group = DISCIPLINE_GROUPS[rawDiscipline] ?? rawDiscipline;
+    const group = disciplineGroup(r);
+    if (!group) continue;
     const entry = byDiscipline.get(group) ?? { n: 0, someoneElse: 0, own: 0 };
     entry.n += 1;
     if (cell(r, COL.failedSomeoneElse) === "Yes") entry.someoneElse += 1;
@@ -210,10 +387,9 @@ function processData(): SurveyDashboardProps {
   // discipline's own answered count as the denominator so panels are comparable.
   const estimatesByDiscipline = new Map<string, number[]>();
   for (const r of rows) {
-    const rawDiscipline = cell(r, COL.discipline);
+    const group = disciplineGroup(r);
     const v = cell(r, COL.proportionReproducible);
-    if (!rawDiscipline || !v) continue;
-    const group = DISCIPLINE_GROUPS[rawDiscipline] ?? rawDiscipline;
+    if (!group || !v) continue;
     const estimate = parseInt(v.replace("%", ""), 10);
     if (Number.isNaN(estimate)) continue;
     const list = estimatesByDiscipline.get(group) ?? [];
@@ -278,7 +454,9 @@ function processData(): SurveyDashboardProps {
       publishedAnyCount,
     },
     crisis,
+    crisisByDiscipline,
     procedures,
+    proceduresByDiscipline,
     publishing: [
       {
         key: "successful",
@@ -307,6 +485,7 @@ function processData(): SurveyDashboardProps {
       bothCount: publishedBothCount,
       bothPct: pct(publishedBothCount, n),
     },
+    publishingByDiscipline,
     failedByDiscipline,
     reproducibleByDiscipline,
     contributingFactors,
@@ -371,7 +550,7 @@ export default function Nature2016SurveyPage() {
             >
               raw survey data
             </a>
-            , which is licensed under CC BY 4.0.
+            , which is licensed under CC BY 4.0. Here we broke down the data further by discipline that was originally reported in the original article (we split "Physics and Engineering" into physics, engineering, and materials science, and we split out "psychology and social sciences" from "Other")
           </p>
           <SurveyDashboard {...data} />
           <section

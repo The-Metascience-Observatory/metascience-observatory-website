@@ -20,6 +20,34 @@ export interface PublishingBar {
   failedToPublishPct: number;
 }
 
+/** Publication experiences within one field, separated by replication outcome. */
+export interface DisciplinePublishingStats {
+  discipline: string;
+  n: number;
+  successful: PublishingBar;
+  unsuccessful: PublishingBar;
+}
+
+/** Counts stacked to 100% for one field's reproducibility-crisis opinions. */
+export interface DisciplineCrisisBar {
+  discipline: string;
+  n: number;
+  significant: number;
+  slight: number;
+  no_crisis: number;
+  dont_know: number;
+}
+
+/** Counts stacked to 100% for reproducibility procedures within one field. */
+export interface DisciplineProceduresBar {
+  discipline: string;
+  n: number;
+  no: number;
+  within_5: number;
+  over_5: number;
+  since_start: number;
+}
+
 /**
  * Union stats across the two "published a replication" checkboxes — the
  * headline calculation this page adds on top of the article's own figures.
@@ -77,8 +105,11 @@ export interface SummaryStats {
 export interface SurveyDashboardProps {
   summary: SummaryStats;
   crisis: OpinionSlice[];
+  crisisByDiscipline: DisciplineCrisisBar[];
   procedures: OpinionSlice[];
+  proceduresByDiscipline: DisciplineProceduresBar[];
   publishing: PublishingBar[];
+  publishingByDiscipline: DisciplinePublishingStats[];
   publishedAny: PublishedAnyStats;
   failedByDiscipline: DisciplineFailureBar[];
   reproducibleByDiscipline: DisciplineReproducibleDist[];

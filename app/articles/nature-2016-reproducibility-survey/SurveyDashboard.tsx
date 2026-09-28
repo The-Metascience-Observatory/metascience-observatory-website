@@ -4,18 +4,15 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
-  Cell,
   LabelList,
   Legend,
-  Pie,
-  PieChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
 import { Card } from "@/components/ui/card";
-import type { SurveyDashboardProps } from "./types";
+import type { DisciplineCrisisBar, DisciplineProceduresBar, DisciplinePublishingStats, OpinionSlice, PublishingBar, SurveyDashboardProps } from "./types";
 
 // ── Color constants ──────────────────────────────────────────────────
 // Categorical pairs and the one-hue ordinal ramp were validated with the
@@ -28,6 +25,13 @@ const BLUE_DARK = "#1c5cab"; // ordinal ramp, strongest step
 const BLUE_MID = "#5598e7";
 const BLUE_LIGHT = "#86b6ef"; // ordinal ramp, lightest step (2.06:1 on light surface)
 const GRAY = "#94a3b8"; // "don't know" / "no"
+const AXIS_COLOR = "#000000";
+const AXIS_STYLE = {
+  stroke: AXIS_COLOR,
+  tick: { fill: AXIS_COLOR },
+  axisLine: { stroke: AXIS_COLOR },
+  tickLine: { stroke: AXIS_COLOR },
+};
 
 const CRISIS_COLORS: Record<string, string> = {
   significant: BLUE_DARK,
@@ -44,6 +48,11 @@ const PROCEDURE_COLORS: Record<string, string> = {
 };
 
 const pctLabel = (v: number) => `${v.toFixed(1)}%`;
+
+const PUBLISHING_SERIES_LABELS: Record<string, string> = {
+  publishedPct: "Published",
+  failedToPublishPct: "Tried and failed to publish",
+};
 
 // ── Shared building blocks ───────────────────────────────────────────
 function ChartSection({
@@ -85,76 +94,66 @@ function StatTile({ value, label }: { value: string; label: string }) {
   );
 }
 
-/** Slice label in a text token rather than the slice color. */
-const renderPieLabel = ({
-  cx,
-  cy,
-  midAngle,
-  outerRadius,
-  percent,
-}: {
-  cx: number;
-  cy: number;
-  midAngle: number;
-  outerRadius: number;
-  percent: number;
-}) => {
-  const RADIAN = Math.PI / 180;
-  const r = outerRadius + 18;
-  const x = cx + r * Math.cos(-midAngle * RADIAN);
-  const y = cy + r * Math.sin(-midAngle * RADIAN);
-  return (
-    <text
-      x={x}
-      y={y}
-      textAnchor={x > cx ? "start" : "end"}
-      dominantBaseline="central"
-      fontSize={12}
-      className="fill-foreground/70"
-    >
-      {`${Math.round((percent ?? 0) * 100)}%`}
-    </text>
-  );
-};
-
-/** Donut for the two part-to-whole opinion questions. */
-function OpinionDonut({
+/** Horizontal response distributions, with counts normalized to 100% per field. */
+function StackedFieldChart({
   data,
+  options,
   colors,
 }: {
-  data: SurveyDashboardProps["crisis"];
+  data: (DisciplineCrisisBar | DisciplineProceduresBar)[];
+  options: OpinionSlice[];
   colors: Record<string, string>;
 }) {
   return (
-    <ResponsiveContainer width="100%" height={320}>
-      <PieChart>
-        <Pie
-          data={data}
-          dataKey="pct"
-          nameKey="label"
-          innerRadius="52%"
-          outerRadius="78%"
-          paddingAngle={2}
-          label={renderPieLabel}
-        >
-          {data.map((slice) => (
-            <Cell key={slice.key} fill={colors[slice.key]} />
-          ))}
-        </Pie>
+    <ResponsiveContainer width="100%" height={data.length * 50 + 90}>
+      <BarChart
+        data={data}
+        layout="vertical"
+        stackOffset="expand"
+        margin={{ left: 0, right: 20, top: 5, bottom: 5 }}
+        barCategoryGap="22%"
+      >
+        <CartesianGrid strokeDasharray="3 3" opacity={0.3} horizontal={false} />
+        <XAxis
+          {...AXIS_STYLE}
+          type="number"
+          domain={[0, 1]}
+          ticks={[0, 0.25, 0.5, 0.75, 1]}
+          tickFormatter={(value) => `${Math.round(value * 100)}%`}
+          fontSize={12}
+        />
+        <YAxis
+          {...AXIS_STYLE}
+          type="category"
+          dataKey="discipline"
+          width={160}
+          fontSize={12}
+          interval={0}
+          tickFormatter={(label: string) => `${label} (n = ${data.find((row) => row.discipline === label)?.n})`}
+        />
         <Tooltip
-          formatter={(value: number, _name, entry) => [
-            `${value}% (${entry.payload.count} of 1,576)`,
-            entry.payload.label,
-          ]}
+          cursor={{ fill: "transparent" }}
+          formatter={(value: number, name: string, entry) => {
+            const row = entry.payload as (typeof data)[number];
+            return [`${pctLabel((value / row.n) * 100)} (${value} of ${row.n})`, name];
+          }}
         />
         <Legend
           iconType="circle"
           iconSize={9}
-          formatter={(value: string) => (
-            <span className="text-xs text-foreground/70">{value}</span>
-          )}
+          formatter={(value: string) => <span className="text-xs text-foreground/70">{value}</span>}
         />
-      </PieChart>
+        {options.map((option, index) => (
+          <Bar
+            key={option.key}
+            dataKey={option.key}
+            name={option.label}
+            stackId="responses"
+            fill={colors[option.key]}
+            radius={index === options.length - 1 ? [0, 4, 4, 0] : 0}
+          />
+        ))}
+      </BarChart>
     </ResponsiveContainer>
   );
 }
@@ -187,12 +186,14 @@ function LikertChart({
       >
         <CartesianGrid strokeDasharray="3 3" opacity={0.3} horizontal={false} />
         <XAxis
+          {...AXIS_STYLE}
           type="number"
           domain={[0, 100]}
           tickFormatter={(v) => `${v}%`}
           fontSize={12}
         />
         <YAxis
+          {...AXIS_STYLE}
           type="category"
           dataKey="label"
           width={230}
@@ -222,14 +223,76 @@ function LikertChart({
   );
 }
 
+function PublishingByDisciplineChart({
+  data,
+  outcome,
+  xMax,
+}: {
+  data: DisciplinePublishingStats[];
+  outcome: PublishingBar["key"];
+  xMax: number;
+}) {
+  const rows = data
+    .map((row) => ({ discipline: row.discipline, n: row.n, ...row[outcome] }))
+    .sort((a, b) => b.publishedPct - a.publishedPct || a.discipline.localeCompare(b.discipline));
+  return (
+    <div>
+      <h4 className="text-sm font-medium text-foreground mb-2">
+        {outcome === "successful" ? "Successful reproduction" : "Unsuccessful reproduction"}
+      </h4>
+      <ResponsiveContainer width="100%" height={rows.length * 56 + 65}>
+        <BarChart
+          data={rows}
+          layout="vertical"
+          margin={{ left: 0, right: 15, top: 5, bottom: 5 }}
+          barCategoryGap="25%"
+          barGap={0}
+        >
+          <CartesianGrid strokeDasharray="3 3" opacity={0.3} horizontal={false} />
+          <XAxis
+            {...AXIS_STYLE}
+            type="number"
+            domain={[0, xMax]}
+            tickFormatter={(value) => `${value}%`}
+            fontSize={12}
+          />
+          <YAxis
+            {...AXIS_STYLE}
+            type="category"
+            dataKey="discipline"
+            width={160}
+            fontSize={12}
+            interval={0}
+            tickFormatter={(label: string) => `${label} (n = ${rows.find((row) => row.discipline === label)?.n})`}
+          />
+          <Tooltip
+            cursor={{ fill: "transparent" }}
+            formatter={(value: number, name: string, entry) => {
+              const row = entry.payload as (typeof rows)[number];
+              const count = name === "publishedPct" ? row.publishedCount : row.failedToPublishCount;
+              return [`${pctLabel(value)} (${count} of ${row.n})`, PUBLISHING_SERIES_LABELS[name] ?? name];
+            }}
+          />
+          <Legend
+            iconType="circle"
+            iconSize={9}
+            formatter={(value: string) => (
+              <span className="text-xs text-foreground/70">
+                {PUBLISHING_SERIES_LABELS[value] ?? value}
+              </span>
+            )}
+          />
+          <Bar dataKey="publishedPct" fill={BLUE} radius={[0, 4, 4, 0]} />
+          <Bar dataKey="failedToPublishPct" fill={RED} radius={[0, 4, 4, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
 // ── Main dashboard ───────────────────────────────────────────────────
 export function SurveyDashboard(props: SurveyDashboardProps) {
   const { summary, publishedAny } = props;
-
-  const publishingSeriesLabels: Record<string, string> = {
-    publishedPct: "Published",
-    failedToPublishPct: "Tried and failed to publish",
-  };
 
   const disciplineSeriesLabels: Record<string, string> = {
     someoneElsePct: "Someone else's experiment",
@@ -241,6 +304,15 @@ export function SurveyDashboard(props: SurveyDashboardProps) {
     Math.ceil(
       Math.max(...props.reproducibleByDiscipline.flatMap((p) => p.buckets.map((b) => b.pct))) / 5
     ) * 5;
+
+  const PUBLISHING_X_MAX = Math.max(10, Math.ceil(Math.max(
+    ...props.publishingByDiscipline.flatMap((row) => [
+      row.successful.publishedPct,
+      row.successful.failedToPublishPct,
+      row.unsuccessful.publishedPct,
+      row.unsuccessful.failedToPublishPct,
+    ])
+  ) / 10) * 10);
 
   return (
     <div className="space-y-12 mt-8">
@@ -264,21 +336,96 @@ export function SurveyDashboard(props: SurveyDashboardProps) {
         />
       </div>
 
-      {/* Opinion donuts */}
-      <div className="grid md:grid-cols-2 gap-8">
+      {/* Crisis opinions, replication experience, and reproducibility procedures */}
+      <div className="space-y-8">
         <ChartSection
           id="reproducibility-crisis"
           title="Is there a reproducibility crisis?"
-          subtitle="Which statement about a 'crisis of reproducibility' do you agree with?"
+          subtitle="Which statement about a 'crisis of reproducibility' do you agree with? Each bar shows the response distribution and adds to 100%."
         >
-          <OpinionDonut data={props.crisis} colors={CRISIS_COLORS} />
+          <StackedFieldChart
+            data={props.crisisByDiscipline}
+            options={props.crisis}
+            colors={CRISIS_COLORS}
+          />
+          <p className="text-xs text-foreground/60 mt-3 max-w-3xl">
+            Fields use the same groups as the publishing breakdown below, including Physics
+            and engineering combined and Other split into Psychology &amp; social sciences and Other.
+            Overall includes all {summary.totalRespondents.toLocaleString()} respondents.
+          </p>
         </ChartSection>
+        {/* Failed to reproduce by discipline */}
+        <ChartSection
+          id="failed-to-reproduce"
+          title="Have you failed to reproduce an experiment?"
+          subtitle="Share answering yes, by discipline &mdash; most scientists have experienced failure to reproduce results"
+        >
+          <ResponsiveContainer width="100%" height={props.failedByDiscipline.length * 56 + 60}>
+            <BarChart
+              data={props.failedByDiscipline}
+              layout="vertical"
+              margin={{ left: 10, right: 30, top: 5, bottom: 5 }}
+              barCategoryGap="25%"
+              barGap={0}
+            >
+              <CartesianGrid strokeDasharray="3 3" opacity={0.3} horizontal={false} />
+              <XAxis
+                {...AXIS_STYLE}
+                type="number"
+                domain={[0, 100]}
+                tickFormatter={(v) => `${v}%`}
+                fontSize={12}
+              />
+              <YAxis {...AXIS_STYLE} type="category" dataKey="discipline" width={150} fontSize={12} interval={0} />
+              <Tooltip
+                cursor={{ fill: "transparent" }}
+                formatter={(value: number, name: string) => [
+                  pctLabel(value),
+                  disciplineSeriesLabels[name] ?? name,
+                ]}
+                labelFormatter={(label: string) => {
+                  const row = props.failedByDiscipline.find((d) => d.discipline === label);
+                  return row ? `${label} (n = ${row.n})` : label;
+                }}
+              />
+              <Legend
+                iconType="circle"
+                iconSize={9}
+                formatter={(value: string) => (
+                  <span className="text-xs text-foreground/70">
+                    {disciplineSeriesLabels[value] ?? value}
+                  </span>
+                )}
+              />
+              <Bar dataKey="someoneElsePct" fill={BLUE} radius={[0, 4, 4, 0]} />
+              <Bar dataKey="ownPct" fill={ORANGE} radius={[0, 4, 4, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+          <p id="discipline-grouping" className="text-xs text-foreground/60 mt-3 max-w-3xl">
+            In the experiment-failure and reproducibility-estimate charts, Physics &amp; astronomy combines physics with astronomy
+            and planetary science; Engineering and Materials science are shown separately.
+            Psychology &amp; social sciences groups write-in responses
+            for psychology, cognitive science, economics, sociology, anthropology, political science, linguistics,
+            communication, education and related fields from the survey&rsquo;s original
+            &ldquo;Other&rdquo; category. Mixed responses naming these fields are included;
+            neuroscience-only responses remain in Other.
+          </p>
+        </ChartSection>
+
         <ChartSection
           id="established-procedures"
           title="Have you established procedures for reproducibility?"
-          subtitle="Share of all respondents, by when the procedures were established"
+          subtitle="Share of respondents in each field, by when procedures were established. Each bar adds to 100%."
         >
-          <OpinionDonut data={props.procedures} colors={PROCEDURE_COLORS} />
+          <StackedFieldChart
+            data={props.proceduresByDiscipline}
+            options={props.procedures}
+            colors={PROCEDURE_COLORS}
+          />
+          <p className="text-xs text-foreground/60 mt-3 max-w-3xl">
+            Overall includes all {summary.totalRespondents.toLocaleString()} respondents.
+            Fields use the same groups as the crisis and publishing breakdowns.
+          </p>
         </ChartSection>
       </div>
 
@@ -300,17 +447,18 @@ export function SurveyDashboard(props: SurveyDashboardProps) {
               >
                 <CartesianGrid strokeDasharray="3 3" opacity={0.3} horizontal={false} />
                 <XAxis
+                  {...AXIS_STYLE}
                   type="number"
                   domain={[0, 30]}
                   tickFormatter={(v) => `${v}%`}
                   fontSize={12}
                 />
-                <YAxis type="category" dataKey="label" width={110} fontSize={12} interval={0} />
+                <YAxis {...AXIS_STYLE} type="category" dataKey="label" width={110} fontSize={12} interval={0} />
                 <Tooltip
                   cursor={{ fill: "transparent" }}
                   formatter={(value: number, name: string) => [
                     pctLabel(value),
-                    publishingSeriesLabels[name] ?? name,
+                    PUBLISHING_SERIES_LABELS[name] ?? name,
                   ]}
                 />
                 <Legend
@@ -318,7 +466,7 @@ export function SurveyDashboard(props: SurveyDashboardProps) {
                   iconSize={9}
                   formatter={(value: string) => (
                     <span className="text-xs text-foreground/70">
-                      {publishingSeriesLabels[value] ?? value}
+                      {PUBLISHING_SERIES_LABELS[value] ?? value}
                     </span>
                   )}
                 />
@@ -355,59 +503,39 @@ export function SurveyDashboard(props: SurveyDashboardProps) {
         </div>
       </ChartSection>
 
-      {/* Failed to reproduce by discipline */}
       <ChartSection
-        id="failed-to-reproduce"
-        title="Have you failed to reproduce an experiment?"
-        subtitle="Share answering yes, by discipline &mdash; most scientists have experienced failure to reproduce results"
+        id="publishing-replication-attempts-by-field"
+        title="Publishing replication attempts by field"
+        subtitle="Share of respondents in each field, ordered from highest to lowest published percentage in each panel. Successful and unsuccessful refer to the replication outcome."
       >
-        <ResponsiveContainer width="100%" height={props.failedByDiscipline.length * 56 + 60}>
-          <BarChart
-            data={props.failedByDiscipline}
-            layout="vertical"
-            margin={{ left: 10, right: 30, top: 5, bottom: 5 }}
-            barCategoryGap="25%"
-            barGap={0}
-          >
-            <CartesianGrid strokeDasharray="3 3" opacity={0.3} horizontal={false} />
-            <XAxis
-              type="number"
-              domain={[0, 100]}
-              tickFormatter={(v) => `${v}%`}
-              fontSize={12}
-            />
-            <YAxis type="category" dataKey="discipline" width={150} fontSize={12} interval={0} />
-            <Tooltip
-              cursor={{ fill: "transparent" }}
-              formatter={(value: number, name: string) => [
-                pctLabel(value),
-                disciplineSeriesLabels[name] ?? name,
-              ]}
-              labelFormatter={(label: string) => {
-                const row = props.failedByDiscipline.find((d) => d.discipline === label);
-                return row ? `${label} (n = ${row.n})` : label;
-              }}
-            />
-            <Legend
-              iconType="circle"
-              iconSize={9}
-              formatter={(value: string) => (
-                <span className="text-xs text-foreground/70">
-                  {disciplineSeriesLabels[value] ?? value}
-                </span>
-              )}
-            />
-            <Bar dataKey="someoneElsePct" fill={BLUE} radius={[0, 4, 4, 0]} />
-            <Bar dataKey="ownPct" fill={ORANGE} radius={[0, 4, 4, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
+        <div className="grid lg:grid-cols-2 gap-8">
+          <PublishingByDisciplineChart
+            data={props.publishingByDiscipline}
+            outcome="successful"
+            xMax={PUBLISHING_X_MAX}
+          />
+          <PublishingByDisciplineChart
+            data={props.publishingByDiscipline}
+            outcome="unsuccessful"
+            xMax={PUBLISHING_X_MAX}
+          />
+        </div>
+        <p className="text-xs text-foreground/60 mt-3 max-w-3xl">
+          Fields follow Nature&rsquo;s original chart groups, including a combined Physics
+          and engineering group. Other is split using the{" "}
+          <a href="#discipline-grouping" className="underline hover:text-foreground">
+            write-in areas of interest
+          </a>
+          . Each percentage uses all respondents in that field; a respondent can report
+          more than one publication experience.
+        </p>
       </ChartSection>
 
       {/* Estimated reproducibility of the field, by discipline */}
       <ChartSection
         id="how-much-is-reproducible"
         title="How much published work in your field is reproducible?"
-        subtitle="Distribution of answers within each discipline, ordered from most to least confident in the literature. Each panel shows the share of that discipline's respondents giving each estimate."
+        subtitle="Distribution of answers within each discipline. Each panel shows the share of that discipline's respondents giving each estimate."
       >
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
           {props.reproducibleByDiscipline.map((panel) => (
@@ -424,12 +552,14 @@ export function SurveyDashboard(props: SurveyDashboardProps) {
                 >
                   <CartesianGrid strokeDasharray="3 3" opacity={0.3} vertical={false} />
                   <XAxis
+                    {...AXIS_STYLE}
                     dataKey="bucket"
                     fontSize={10}
                     ticks={["0%", "20%", "40%", "60%", "80%", "100%"]}
                     interval={0}
                   />
                   <YAxis
+                    {...AXIS_STYLE}
                     fontSize={10}
                     domain={[0, REPRODUCIBLE_Y_MAX]}
                     ticks={Array.from(
@@ -504,8 +634,7 @@ export function SurveyDashboard(props: SurveyDashboardProps) {
           <span className="font-semibold text-foreground/80">Caveat:</span> the survey was e-mailed
           to <em>Nature</em> readers and advertised on affiliated websites and social media as
           being about reproducibility, so the sample is self-selected and likely over-represents
-          researchers already concerned with the issue. Percentages use all 1,576 respondents as
-          the denominator; &ldquo;I can&rsquo;t remember&rdquo; and blank answers count as no.
+          researchers already concerned with the issue.  For yes/no questions, &ldquo;I can&rsquo;t remember&rdquo; and blank answers count as no.
         </p>
       </div>
     </div>
