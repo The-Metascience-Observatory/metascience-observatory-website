@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import path from "node:path";
 import fs from "node:fs/promises";
-import { csvParse } from "d3-dsv";
+import { csvFormat, csvParse } from "d3-dsv";
 
 export const runtime = "nodejs";
 
 type AnyRecord = Record<string, unknown>;
 
-let cachedData: { rows: AnyRecord[]; columns: string[]; lastUpdated?: string } | null = null;
+let cachedData: (Awaited<ReturnType<typeof loadCsv>> & { filename: string; lastUpdated?: string }) | null = null;
 
 function toNumber(value: unknown): number | null {
   if (value == null) return null;
@@ -33,12 +33,12 @@ function normalizeEffectSigns(row: AnyRecord): void {
   }
 }
 
-async function loadCsv(filePath: string): Promise<{ rows: AnyRecord[]; columns: string[] }> {
+async function loadCsv(filePath: string) {
   const csvText = await fs.readFile(filePath, "utf8");
   const rows = csvParse(csvText);
   const columns = rows.columns ?? [];
-  const normalized = rows.map((row: AnyRecord) => {
-    const obj: AnyRecord = {};
+  const normalized = rows.map((row: AnyRecord, index: number) => {
+    const obj: AnyRecord = { _csvRowIndex: index };
     for (const key of columns) {
       obj[key] = row[key as keyof typeof row] ?? null;
     }
@@ -58,7 +58,7 @@ async function loadCsv(filePath: string): Promise<{ rows: AnyRecord[]; columns: 
     return Number.isFinite(eO) && Number.isFinite(eR);
   });
   for (const r of filtered) normalizeEffectSigns(r);
-  return { rows: filtered, columns };
+  return { rows: filtered, columns, sourceRows: rows, csvText };
 }
 
 async function getLatestFilename(): Promise<string> {
@@ -82,20 +82,25 @@ function extractDateFromFilename(filename: string): string | null {
   return null;
 }
 
+async function getData() {
+  if (!cachedData) {
+    const filename = await getLatestFilename();
+    const dataPath = path.join(process.cwd(), "data", filename);
+    const csvData = await loadCsv(dataPath);
+    const lastUpdated = extractDateFromFilename(filename);
+    cachedData = { ...csvData, filename, lastUpdated: lastUpdated || undefined };
+  }
+  return cachedData;
+}
+
 export async function GET() {
   try {
-    if (!cachedData) {
-      const filename = await getLatestFilename();
-      const dataPath = path.join(process.cwd(), "data", filename);
-      const csvData = await loadCsv(dataPath);
-      const lastUpdated = extractDateFromFilename(filename);
-      cachedData = { ...csvData, lastUpdated: lastUpdated || undefined };
-    }
-
+    const cachedData = await getData();
     return NextResponse.json({
       columns: cachedData.columns,
       rows: cachedData.rows,
       lastUpdated: cachedData.lastUpdated,
+      filename: cachedData.filename,
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
@@ -103,4 +108,35 @@ export async function GET() {
   }
 }
 
+export async function POST(request: Request) {
+  try {
+    const data = await getData();
+    const body: unknown = await request.json();
+    if (!body || typeof body !== "object" || !("rows" in body) || !("filename" in body)) {
+      return NextResponse.json({ error: "Invalid download request" }, { status: 400 });
+    }
+    if (body.filename !== data.filename) {
+      return NextResponse.json({ error: "The database has changed. Refresh the page before downloading." }, { status: 409 });
+    }
+    const indices = body.rows;
+    if (indices !== null && (!Array.isArray(indices) || indices.length > data.sourceRows.length ||
+      !indices.every((index: unknown) => typeof index === "number" && Number.isInteger(index) && index >= 0 && index < data.sourceRows.length))) {
+      return NextResponse.json({ error: "Invalid row selection" }, { status: 400 });
+    }
+    const csv = indices === null
+      ? data.csvText
+      : csvFormat([...new Set<number>(indices)].map(index => data.sourceRows[index]), data.columns);
+    const filename = indices === null ? data.filename : data.filename.replace(/\.csv$/, "_filtered.csv");
+    return new Response(new Blob([csv]).stream(), {
+      headers: {
+        "Content-Type": "text/csv; charset=utf-8",
+        "Content-Disposition": `attachment; filename="${filename}"`,
+        "Cache-Control": "no-store",
+      },
+    });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
+}
 

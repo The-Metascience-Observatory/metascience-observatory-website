@@ -3,6 +3,8 @@
 import React, { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import { Download } from "lucide-react";
+import { toast } from "sonner";
 import { ReplicationsNavbar } from "@/components/ReplicationsNavbar";
 import { Footer } from "@/components/Footer";
 import { FredAcknowledgment, FloraAcknowledgment, PerryAcknowledgment } from "@/components/ReplicationAcknowledgments";
@@ -36,6 +38,7 @@ const NAMED_ES_TYPES = new Set(Object.keys(ES_TYPE_COLORS).filter(k => k !== "Ot
 const EXCLUDED_ES_TYPES = new Set(["IRD"]);
 
 type FredResponse = {
+  filename: string;
   columns: string[];
   rows: AnyRecord[];
   lastUpdated?: string;
@@ -231,6 +234,7 @@ function ReplicationsDatabaseContent() {
     new Set(DEFAULT_COLUMNS)
   );
   const [showColumnSelector, setShowColumnSelector] = useState(false);
+  const [downloading, setDownloading] = useState(false);
   const [outcomeMethod, setOutcomeMethod] = useState<"significance" | "orig_in_rep_ci" | "rep_in_orig_ci">("significance");
 
   useEffect(() => {
@@ -433,6 +437,40 @@ function ReplicationsDatabaseContent() {
       return true;
     });
   }, [data, field, discipline, subdiscipline, result, initiative, replicationType, search, originalAuthorSearch, originalJournalSearch]);
+
+  async function downloadCsv() {
+    if (!data || downloading) return;
+    setDownloading(true);
+    try {
+      const hasFilters = !!(field || discipline || subdiscipline || result || initiative ||
+        replicationType.size || search || originalAuthorSearch || originalJournalSearch);
+      const response = await fetch("/api/fred", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          filename: data.filename,
+          rows: hasFilters ? filteredRows.map(row => row._csvRowIndex) : null,
+        }),
+      });
+      if (!response.ok) {
+        const details = await response.json();
+        throw new Error(details.error || "Could not download CSV");
+      }
+      const url = URL.createObjectURL(await response.blob());
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = hasFilters ? data.filename.replace(/\.csv$/, "_filtered.csv") : data.filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      // Allow the browser to start reading the blob before releasing it.
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Could not download CSV");
+    } finally {
+      setDownloading(false);
+    }
+  }
 
   // Compute outcomes once and share between stats and scatterplot
   // Includes rows with es_r (plottable on scatterplot) AND rows with only raw ES (stats only)
@@ -993,59 +1031,71 @@ function ReplicationsDatabaseContent() {
       </section>
 
       <section className="mx-auto max-w-[90%] border rounded mt-6">
-        <div className="p-2 border-b flex items-center justify-between">
+        <div className="p-2 border-b flex flex-wrap gap-2 items-center justify-between">
           <h3 className="font-medium">Data Table</h3>
-          <div className="relative">
-            <button
-              onClick={() => setShowColumnSelector(!showColumnSelector)}
-              className="px-3 py-1 text-sm border rounded hover:bg-black/5 dark:hover:bg-white/5"
-            >
-              Columns ({visibleColumns.size})
-            </button>
-            {showColumnSelector && (
-              <>
-                <div 
-                  className="fixed inset-0 z-10" 
-                  onClick={() => setShowColumnSelector(false)}
-                />
-                <div className="absolute right-0 mt-2 w-64 bg-background border rounded shadow-lg z-20 p-3 max-h-96 overflow-y-auto">
-                  <div className="mb-2 text-xs font-semibold opacity-70">Select columns to display</div>
-                  {ALL_COLUMNS.map((col) => (
-                    <label key={col.key} className="flex items-center gap-2 p-1 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={visibleColumns.has(col.key)}
-                        onChange={(e) => {
-                          const newSet = new Set(visibleColumns);
-                          if (e.target.checked) {
-                            newSet.add(col.key);
-                          } else {
-                            newSet.delete(col.key);
-                          }
-                          setVisibleColumns(newSet);
-                        }}
-                        className="cursor-pointer"
-                      />
-                      <span className="text-sm">{col.label}</span>
-                    </label>
-                  ))}
-                  <div className="mt-2 pt-2 border-t flex gap-2">
-                    <button
-                      onClick={() => setVisibleColumns(new Set(DEFAULT_COLUMNS))}
-                      className="text-xs px-2 py-1 border rounded hover:bg-black/5 dark:hover:bg-white/5"
-                    >
-                      Reset
-                    </button>
-                    <button
-                      onClick={() => setVisibleColumns(new Set(ALL_COLUMNS.map(c => c.key)))}
-                      className="text-xs px-2 py-1 border rounded hover:bg-black/5 dark:hover:bg-white/5"
-                    >
-                      Select All
-                    </button>
+          <div className="flex items-center gap-2">
+            <div className="relative">
+              <button
+                onClick={() => setShowColumnSelector(!showColumnSelector)}
+                className="px-3 py-1 text-sm border rounded hover:bg-black/5 dark:hover:bg-white/5"
+              >
+                Columns ({visibleColumns.size})
+              </button>
+              {showColumnSelector && (
+                <>
+                  <div
+                    className="fixed inset-0 z-10"
+                    onClick={() => setShowColumnSelector(false)}
+                  />
+                  <div className="absolute right-0 mt-2 w-64 bg-background border rounded shadow-lg z-20 p-3 max-h-96 overflow-y-auto">
+                    <div className="mb-2 text-xs font-semibold opacity-70">Select columns to display</div>
+                    {ALL_COLUMNS.map((col) => (
+                      <label key={col.key} className="flex items-center gap-2 p-1 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={visibleColumns.has(col.key)}
+                          onChange={(e) => {
+                            const newSet = new Set(visibleColumns);
+                            if (e.target.checked) {
+                              newSet.add(col.key);
+                            } else {
+                              newSet.delete(col.key);
+                            }
+                            setVisibleColumns(newSet);
+                          }}
+                          className="cursor-pointer"
+                        />
+                        <span className="text-sm">{col.label}</span>
+                      </label>
+                    ))}
+                    <div className="mt-2 pt-2 border-t flex gap-2">
+                      <button
+                        onClick={() => setVisibleColumns(new Set(DEFAULT_COLUMNS))}
+                        className="text-xs px-2 py-1 border rounded hover:bg-black/5 dark:hover:bg-white/5"
+                      >
+                        Reset
+                      </button>
+                      <button
+                        onClick={() => setVisibleColumns(new Set(ALL_COLUMNS.map(c => c.key)))}
+                        className="text-xs px-2 py-1 border rounded hover:bg-black/5 dark:hover:bg-white/5"
+                      >
+                        Select All
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </>
-            )}
+                </>
+              )}
+            </div>
+            <button
+              type="button"
+              onClick={downloadCsv}
+              disabled={downloading}
+              className="inline-flex items-center gap-2 px-3 py-1 text-sm border rounded hover:bg-muted disabled:opacity-50 disabled:cursor-wait"
+              title="Download all columns and all rows matching the current filters"
+            >
+              <Download className="h-4 w-4" aria-hidden="true" />
+              {downloading ? "Downloading…" : "Download CSV"}
+            </button>
           </div>
         </div>
         <div className="overflow-x-auto overflow-y-auto h-[calc(100vh-400px)] max-h-[600px]">
@@ -1683,4 +1733,3 @@ function RawESScatter({ points }: { points: RawScatterPoint[] }) {
     </div>
   );
 }
-
