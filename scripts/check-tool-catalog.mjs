@@ -21,7 +21,7 @@ const snapshot = JSON.parse(
 // tools.ts is TypeScript; read the registryName / ceiling / quarantined literals
 // out of the source rather than pulling in a TS loader for one check.
 const src = fs.readFileSync(
-  path.join(root, "app/forensic-metascience-agent/tools.ts"),
+  path.join(root, "app/forensic-metascience-ai-toolkit/tools.ts"),
   "utf-8",
 );
 // Every registryName present in tools.ts -- including families the page does

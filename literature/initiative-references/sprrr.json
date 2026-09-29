@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "command": "resolve",
+  "created_at": "2026-09-28T20:22:23.648482+00:00",
+  "status": "ok",
+  "records": [
+    {
+      "id": "doi:10.1027/1864-9335/a000192",
+      "title": "Registered Reports",
+      "authors": [
+        "Brian A. Nosek",
+        "Daniël Lakens"
+      ],
+      "year": 2014,
+      "publication_date": "2014-05-01",
+      "publication_types": [
+        "journal-article"
+      ],
+      "venue": "Social Psychology",
+      "identifiers": {
+        "doi": "10.1027/1864-9335/a000192"
+      },
+      "abstract": null,
+      "links": [
+        "https://doi.org/10.1027/1864-9335/a000192",
+        "https://econtent.hogrefe.com/doi/pdf/10.1027/1864-9335/a000192"
+      ],
+      "citation_counts": {
+        "crossref": 551
+      },
+      "provenance": [
+        {
+          "provider": "crossref",
+          "endpoint": "https://api.crossref.org/works/10.1027/1864-9335/a000192",
+          "params": {},
+          "retrieved_at": "2026-09-28T20:22:23.648669+00:00",
+          "cached": false,
+          "status": 200,
+          "attempts": 1
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "pagination": [],
+  "requests": [
+    {
+      "provider": "crossref",
+      "endpoint": "https://api.crossref.org/works/10.1027/1864-9335/a000192",
+      "params": {},
+      "retrieved_at": "2026-09-28T20:22:23.648669+00:00",
+      "cached": false,
+      "status": 200,
+      "attempts": 1
+    }
+  ],
+  "query": "10.1027/1864-9335/a000192",
+  "resolution": "identifier_lookup"
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "command": "resolve",
+  "created_at": "2026-09-28T20:22:23.712618+00:00",
+  "status": "ok",
+  "records": [
+    {
+      "id": "doi:10.1098/rsos.231240",
+      "title": "Eleven years of student replication projects provide evidence on the correlates of replicability in psychology",
+      "authors": [
+        "Veronica Boyce",
+        "Maya Mathur",
+        "Michael C. Frank"
+      ],
+      "year": 2023,
+      "publication_date": "2023-11",
+      "publication_types": [
+        "journal-article"
+      ],
+      "venue": "Royal Society Open Science",
+      "identifiers": {
+        "doi": "10.1098/rsos.231240"
+      },
+      "abstract": "Cumulative scientific progress requires empirical results that are robust enough to support theory construction and extension. Yet in psychology, some prominent findings have failed to replicate, and large-scale studies suggest replicability issues are widespread. The identification of predictors of replication success is limited by the difficulty of conducting large samples of independent replication experiments, however: most investigations reanalyse the same set of\n                     \n                       \n                         170 \n                           \n                         \n                           replications \n                         \n                       \n                     \n                    . We introduce a new dataset of 176 replications from students in a graduate-level methods course. Replication results were judged to be successful in 49% of replications; of the 136 where effect sizes could be numerically compared, 46% had point estimates within the prediction interval of the original outcome (versus the expected 95%). Larger original effect sizes and within-participants designs were especially related to replication success. Our results indicate that, consistent with prior reports, the robustness of the psychology literature is low enough to limit cumulative progress by student investigators.",
+      "links": [
+        "https://doi.org/10.1098/rsos.231240",
+        "https://royalsocietypublishing.org/doi/pdf/10.1098/rsos.231240",
+        "https://royalsocietypublishing.org/doi/full-xml/10.1098/rsos.231240"
+      ],
+      "citation_counts": {
+        "crossref": 6
+      },
+      "provenance": [
+        {
+          "provider": "crossref",
+          "endpoint": "https://api.crossref.org/works/10.1098/rsos.231240",
+          "params": {},
+          "retrieved_at": "2026-09-28T20:22:23.712803+00:00",
+          "cached": false,
+          "status": 200,
+          "attempts": 1
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "pagination": [],
+  "requests": [
+    {
+      "provider": "crossref",
+      "endpoint": "https://api.crossref.org/works/10.1098/rsos.231240",
+      "params": {},
+      "retrieved_at": "2026-09-28T20:22:23.712803+00:00",
+      "cached": false,
+      "status": 200,
+      "attempts": 1
+    }
+  ],
+  "query": "10.1098/rsos.231240",
+  "resolution": "identifier_lookup"
+}

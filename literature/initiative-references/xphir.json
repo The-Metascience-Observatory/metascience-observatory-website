@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "command": "resolve",
+  "created_at": "2026-09-28T20:22:23.911076+00:00",
+  "status": "ok",
+  "records": [
+    {
+      "id": "doi:10.1007/s13164-018-0400-9",
+      "title": "Estimating the Reproducibility of Experimental Philosophy",
+      "authors": [
+        "Florian Cova",
+        "Brent Strickland",
+        "Angela Abatista",
+        "Aurélien Allard",
+        "James Andow",
+        "Mario Attie",
+        "James Beebe",
+        "Renatas Berniūnas",
+        "Jordane Boudesseul",
+        "Matteo Colombo",
+        "Fiery Cushman",
+        "Rodrigo Diaz",
+        "Noah N’Djaye Nikolai van Dongen",
+        "Vilius Dranseika",
+        "Brian D. Earp",
+        "Antonio Gaitán Torres",
+        "Ivar Hannikainen",
+        "José V. Hernández-Conde",
+        "Wenjia Hu",
+        "François Jaquet",
+        "Kareem Khalifa",
+        "Hanna Kim",
+        "Markus Kneer",
+        "Joshua Knobe",
+        "Miklos Kurthy",
+        "Anthony Lantian",
+        "Shen-yi Liao",
+        "Edouard Machery",
+        "Tania Moerenhout",
+        "Christian Mott",
+        "Mark Phelan",
+        "Jonathan Phillips",
+        "Navin Rambharose",
+        "Kevin Reuter",
+        "Felipe Romero",
+        "Paulo Sousa",
+        "Jan Sprenger",
+        "Emile Thalabard",
+        "Kevin Tobia",
+        "Hugo Viciana",
+        "Daniel Wilkenfeld",
+        "Xiang Zhou"
+      ],
+      "year": 2018,
+      "publication_date": "2018-06-14",
+      "publication_types": [
+        "journal-article"
+      ],
+      "venue": "Review of Philosophy and Psychology",
+      "identifiers": {
+        "doi": "10.1007/s13164-018-0400-9"
+      },
+      "abstract": null,
+      "links": [
+        "https://doi.org/10.1007/s13164-018-0400-9",
+        "https://link.springer.com/article/10.1007/s13164-018-0400-9/fulltext.html",
+        "https://link.springer.com/content/pdf/10.1007/s13164-018-0400-9.pdf"
+      ],
+      "citation_counts": {
+        "crossref": 107
+      },
+      "provenance": [
+        {
+          "provider": "crossref",
+          "endpoint": "https://api.crossref.org/works/10.1007/s13164-018-0400-9",
+          "params": {},
+          "retrieved_at": "2026-09-28T20:22:23.911265+00:00",
+          "cached": false,
+          "status": 200,
+          "attempts": 1
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "pagination": [],
+  "requests": [
+    {
+      "provider": "crossref",
+      "endpoint": "https://api.crossref.org/works/10.1007/s13164-018-0400-9",
+      "params": {},
+      "retrieved_at": "2026-09-28T20:22:23.911265+00:00",
+      "cached": false,
+      "status": 200,
+      "attempts": 1
+    }
+  ],
+  "query": "10.1007/s13164-018-0400-9",
+  "resolution": "identifier_lookup"
+}

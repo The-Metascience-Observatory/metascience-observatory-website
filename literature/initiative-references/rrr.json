@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "command": "resolve",
+  "created_at": "2026-09-28T20:22:23.230445+00:00",
+  "status": "ok",
+  "records": [
+    {
+      "id": "doi:10.1177/1745691614543974",
+      "title": "An Introduction to Registered Replication Reports at\n                    <i>Perspectives on Psychological Science</i>",
+      "authors": [
+        "Daniel J. Simons",
+        "Alex O. Holcombe",
+        "Barbara A. Spellman"
+      ],
+      "year": 2014,
+      "publication_date": "2014-09",
+      "publication_types": [
+        "journal-article"
+      ],
+      "venue": "Perspectives on Psychological Science",
+      "identifiers": {
+        "doi": "10.1177/1745691614543974"
+      },
+      "abstract": null,
+      "links": [
+        "https://doi.org/10.1177/1745691614543974",
+        "https://journals.sagepub.com/doi/pdf/10.1177/1745691614543974",
+        "https://journals.sagepub.com/doi/full-xml/10.1177/1745691614543974"
+      ],
+      "citation_counts": {
+        "crossref": 123
+      },
+      "provenance": [
+        {
+          "provider": "crossref",
+          "endpoint": "https://api.crossref.org/works/10.1177/1745691614543974",
+          "params": {},
+          "retrieved_at": "2026-09-28T20:22:23.230629+00:00",
+          "cached": false,
+          "status": 200,
+          "attempts": 1
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "pagination": [],
+  "requests": [
+    {
+      "provider": "crossref",
+      "endpoint": "https://api.crossref.org/works/10.1177/1745691614543974",
+      "params": {},
+      "retrieved_at": "2026-09-28T20:22:23.230629+00:00",
+      "cached": false,
+      "status": 200,
+      "attempts": 1
+    }
+  ],
+  "query": "10.1177/1745691614543974",
+  "resolution": "identifier_lookup"
+}

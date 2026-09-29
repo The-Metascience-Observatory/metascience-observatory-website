@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "command": "resolve",
+  "created_at": "2026-09-28T20:22:22.879428+00:00",
+  "status": "ok",
+  "records": [
+    {
+      "id": "doi:10.1016/j.jesp.2015.10.012",
+      "title": "Many Labs 3: Evaluating participant pool quality across the academic semester via replication",
+      "authors": [
+        "Charles R. Ebersole",
+        "Olivia E. Atherton",
+        "Aimee L. Belanger",
+        "Hayley M. Skulborstad",
+        "Jill M. Allen",
+        "Jonathan B. Banks",
+        "Erica Baranski",
+        "Michael J. Bernstein",
+        "Diane B.V. Bonfiglio",
+        "Leanne Boucher",
+        "Elizabeth R. Brown",
+        "Nancy I. Budiman",
+        "Athena H. Cairo",
+        "Colin A. Capaldi",
+        "Christopher R. Chartier",
+        "Joanne M. Chung",
+        "David C. Cicero",
+        "Jennifer A. Coleman",
+        "John G. Conway",
+        "William E. Davis",
+        "Thierry Devos",
+        "Melody M. Fletcher",
+        "Komi German",
+        "Jon E. Grahe",
+        "Anthony D. Hermann",
+        "Joshua A. Hicks",
+        "Nathan Honeycutt",
+        "Brandon Humphrey",
+        "Matthew Janus",
+        "David J. Johnson",
+        "Jennifer A. Joy-Gaba",
+        "Hannah Juzeler",
+        "Ashley Keres",
+        "Diana Kinney",
+        "Jacqeline Kirshenbaum",
+        "Richard A. Klein",
+        "Richard E. Lucas",
+        "Christopher J.N. Lustgraaf",
+        "Daniel Martin",
+        "Madhavi Menon",
+        "Mitchell Metzger",
+        "Jaclyn M. Moloney",
+        "Patrick J. Morse",
+        "Radmila Prislin",
+        "Timothy Razza",
+        "Daniel E. Re",
+        "Nicholas O. Rule",
+        "Donald F. Sacco",
+        "Kyle Sauerberger",
+        "Emily Shrider",
+        "Megan Shultz",
+        "Courtney Siemsen",
+        "Karin Sobocko",
+        "R. Weylin Sternglanz",
+        "Amy Summerville",
+        "Konstantin O. Tskhay",
+        "Zack van Allen",
+        "Leigh Ann Vaughn",
+        "Ryan J. Walker",
+        "Ashley Weinberg",
+        "John Paul Wilson",
+        "James H. Wirth",
+        "Jessica Wortman",
+        "Brian A. Nosek"
+      ],
+      "year": 2016,
+      "publication_date": "2016-11",
+      "publication_types": [
+        "journal-article"
+      ],
+      "venue": "Journal of Experimental Social Psychology",
+      "identifiers": {
+        "doi": "10.1016/j.jesp.2015.10.012"
+      },
+      "abstract": null,
+      "links": [
+        "https://doi.org/10.1016/j.jesp.2015.10.012",
+        "https://api.elsevier.com/content/article/PII:S0022103115300123?httpAccept=text/xml",
+        "https://api.elsevier.com/content/article/PII:S0022103115300123?httpAccept=text/plain"
+      ],
+      "citation_counts": {
+        "crossref": 307
+      },
+      "provenance": [
+        {
+          "provider": "crossref",
+          "endpoint": "https://api.crossref.org/works/10.1016/j.jesp.2015.10.012",
+          "params": {},
+          "retrieved_at": "2026-09-28T20:22:22.879615+00:00",
+          "cached": false,
+          "status": 200,
+          "attempts": 1
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "pagination": [],
+  "requests": [
+    {
+      "provider": "crossref",
+      "endpoint": "https://api.crossref.org/works/10.1016/j.jesp.2015.10.012",
+      "params": {},
+      "retrieved_at": "2026-09-28T20:22:22.879615+00:00",
+      "cached": false,
+      "status": 200,
+      "attempts": 1
+    }
+  ],
+  "query": "10.1016/j.jesp.2015.10.012",
+  "resolution": "identifier_lookup"
+}

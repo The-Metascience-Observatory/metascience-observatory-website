@@ -46,6 +46,12 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // Preserve the former project URL and every nested page.
+      {
+        source: '/forensic-metascience-agent/:path*',
+        destination: '/forensic-metascience-ai-toolkit/:path*',
+        permanent: true,
+      },
       {
         source: '/replication-projectsnew',
         destination: '/replication-initiatives',
@@ -105,17 +111,17 @@ const nextConfig = {
         permanent: true,
       },
       // forensicmetascience.org is an alias domain on this Vercel project;
-      // every path on it forwards to the forensic metascience agent page.
+      // every path on it forwards to the Forensic Metascience AI toolkit page.
       {
         source: '/:path*',
         has: [{ type: 'host', value: 'forensicmetascience.org' }],
-        destination: 'https://metascienceobservatory.org/forensic-metascience-agent',
+        destination: 'https://metascienceobservatory.org/forensic-metascience-ai-toolkit',
         permanent: true,
       },
       {
         source: '/:path*',
         has: [{ type: 'host', value: 'www.forensicmetascience.org' }],
-        destination: 'https://metascienceobservatory.org/forensic-metascience-agent',
+        destination: 'https://metascienceobservatory.org/forensic-metascience-ai-toolkit',
         permanent: true,
       },
     ];

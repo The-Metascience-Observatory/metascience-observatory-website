@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ReplicationsNavbar } from "@/components/ReplicationsNavbar";
 import { Footer } from "@/components/Footer";
+import { FredAcknowledgment, FloraAcknowledgment, PerryAcknowledgment } from "@/components/ReplicationAcknowledgments";
 import { MultiSelectDropdown } from "@/components/MultiSelectDropdown";
 import { Input } from "@/components/ui/input";
 import { generateCitationHtml, transformCitationHtmlToExplorer, citationSearchText } from "@/lib/citations";
@@ -982,6 +983,15 @@ function ReplicationsDatabaseContent() {
         */}
       </section>
 
+      <section className="mx-auto max-w-[90%] mt-6 space-y-3">
+        <p className="opacity-80 text-xs">
+          <FredAcknowledgment />{" "}
+          <FloraAcknowledgment />{" "}
+          <PerryAcknowledgment />{" "}
+          We also imported data from several replication initiatives. <Link className="underline" href="/sources">A full list of sources can be found here.</Link>
+        </p>
+      </section>
+
       <section className="mx-auto max-w-[90%] border rounded mt-6">
         <div className="p-2 border-b flex items-center justify-between">
           <h3 className="font-medium">Data Table</h3>
@@ -1301,11 +1311,6 @@ function ReplicationsDatabaseContent() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[90%] mt-6 space-y-3">
-        <p className="opacity-80 text-xs">
-          Some data shown here is derived from the <a className="underline" href="https://forrt.org/apps/fred_explorer.html" target="_blank" rel="noreferrer">FReD replication dataset</a>. If you use that data, please cite <a className="underline" href="https://openpsychologydata.metajnl.com/articles/10.5334/jopd.101" target="_blank" rel="noreferrer">Röseler et al., <em>Journal of Open Psychology Data</em>, 12: 8, pp. 1–23 (2024)</a> and their <a className="underline" href="https://osf.io/preprints/metaarxiv/me2ub_v1" target="_blank" rel="noreferrer">more recent preprint</a>. For more info on the original FReD dataset, see this OSF repository: <a className="underline" href="https://osf.io/9r62x" target="_blank" rel="noreferrer">https://osf.io/9r62x</a>. That data is © 2024 The Author(s) and licensed under <a className="underline" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International (CC‑BY 4.0)</a>. You must credit the original authors and source if you use that data. Data that comes from FReD is tagged in the "Validated Person" column as "FoRRT FReD team", "forrt.org team: LK", "FReD_API_team", or similarly. 
-        </p>
-      </section>
       </main>
       <Footer />
     </div>

@@ -6,26 +6,27 @@ interface ProjectMeta {
   href: string;
   title: string;
   description: string;
-  /** Optional second link shown after "Read more". */
+  linkLabel?: string;
+  /** Optional second link shown after the primary link. */
   extra?: { href: string; label: string };
 }
 
 const projects: ProjectMeta[] = [
   {
+    href: "/forensic-metascience-ai-toolkit",
+    title: "Forensic Metascience AI toolkit",
+    description:
+      "An AI toolkit with 30+ tools for detecting statistical inconsistencies and data-integrity anomalies in scientific papers.",
+    extra: {
+      href: "/forensic-metascience-ai-toolkit/findings",
+      label: "View findings",
+    },
+  },
+  {
     href: "/overview-replication-database",
     title: "Replications Database",
     description:
-      "The world's largest collection of information on replication experiments, spanning all of science, enabling research on how reproducibility varies across fields.",
-  },
-  {
-    href: "/forensic-metascience-agent",
-    title: "Forensic Metascience Agent",
-    description:
-      "An AI agent equipped with 30+ tools for detecting statistical inconsistencies and data-integrity anomalies in scientific papers.",
-    extra: {
-      href: "/forensic-metascience-agent/findings",
-      label: "View findings",
-    },
+      "The world's largest collection of information on replication experiments.",
   },
   {
     href: "/birds-eye-reviews",
@@ -37,6 +38,13 @@ const projects: ProjectMeta[] = [
       label: "View Long COVID review",
     },
   },
+  {
+    href: "https://explore.metascienceobservatory.org/",
+    title: "The Metascience Observatory Explorer",
+    description:
+      "Integrating open source scientometrics data into one unified interface.",
+    linkLabel: "Visit",
+  },
 ];
 
 export const About = () => {
@@ -46,10 +54,7 @@ export const About = () => {
         <div className="max-w-6xl mx-auto md:space-y-6">
           {/* Desktop heading. On mobile this text is overlaid on the banner below instead. */}
           <div className="hidden md:block text-center space-y-4">
-            <h2 className="font-clarendon text-3xl font-bold">About</h2>
-            <p className="text-foreground/90 leading-relaxed">
-              The Metascience Observatory has three major projects:
-            </p>
+            <h2 className="font-clarendon text-3xl font-bold">Projects</h2>
           </div>
 
           <div className="space-y-8 md:space-y-0 md:grid md:grid-cols-5 md:gap-10 md:items-center">
@@ -66,11 +71,8 @@ export const About = () => {
               <div className="absolute inset-0 bg-black/55 md:hidden" />
               <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center md:hidden">
                 <h2 className="font-clarendon text-3xl font-bold text-white drop-shadow-lg">
-                  About
+                  Projects
                 </h2>
-                <p className="mt-2 max-w-xl text-base text-white/90 drop-shadow">
-                  The Metascience Observatory has three major projects:
-                </p>
               </div>
             </div>
 
@@ -90,7 +92,7 @@ export const About = () => {
                       href={project.href}
                       className="font-medium text-blue-600 hover:text-blue-700 underline"
                     >
-                      Read more &rarr;
+                      {project.linkLabel ?? "Read more"} &rarr;
                     </Link>
                     {project.extra && (
                       <>

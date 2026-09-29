@@ -35,8 +35,8 @@ const projectOverviews: ArticleMeta[] = [
     alt: "Engraving of two scholars reading chained books in the 1610 Leiden university library",
   },
   {
-    href: "/forensic-metascience-agent",
-    title: "Forensic Metascience Agent",
+    href: "/forensic-metascience-ai-toolkit",
+    title: "Forensic Metascience AI toolkit",
     image: "/assets/woodcut_square_crops/radiometer_square.png",
     alt: "Woodcut of a Crookes radiometer",
   },
@@ -163,8 +163,8 @@ const documentation: DocMeta[] = [
     title: 'Checking for bias by comparing with "random sampled" replication initiatives',
   },
   {
-    href: "/forensic-metascience-agent/tools",
-    title: "Forensic Metascience Agent tools",
+    href: "/forensic-metascience-ai-toolkit/tools",
+    title: "Forensic Metascience AI toolkit: tool catalogue",
   },
 ];
 

@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "command": "resolve",
+  "created_at": "2026-09-28T20:22:23.818588+00:00",
+  "status": "ok",
+  "records": [
+    {
+      "id": "doi:10.1038/s41562-018-0399-z",
+      "title": "Evaluating the replicability of social science experiments in Nature and Science between 2010 and 2015",
+      "authors": [
+        "Colin F. Camerer",
+        "Anna Dreber",
+        "Felix Holzmeister",
+        "Teck-Hua Ho",
+        "Jürgen Huber",
+        "Magnus Johannesson",
+        "Michael Kirchler",
+        "Gideon Nave",
+        "Brian A. Nosek",
+        "Thomas Pfeiffer",
+        "Adam Altmejd",
+        "Nick Buttrick",
+        "Taizan Chan",
+        "Yiling Chen",
+        "Eskil Forsell",
+        "Anup Gampa",
+        "Emma Heikensten",
+        "Lily Hummer",
+        "Taisuke Imai",
+        "Siri Isaksson",
+        "Dylan Manfredi",
+        "Julia Rose",
+        "Eric-Jan Wagenmakers",
+        "Hang Wu"
+      ],
+      "year": 2018,
+      "publication_date": "2018-08-27",
+      "publication_types": [
+        "journal-article"
+      ],
+      "venue": "Nature Human Behaviour",
+      "identifiers": {
+        "doi": "10.1038/s41562-018-0399-z"
+      },
+      "abstract": null,
+      "links": [
+        "https://doi.org/10.1038/s41562-018-0399-z",
+        "https://www.nature.com/articles/s41562-018-0399-z",
+        "https://www.nature.com/articles/s41562-018-0399-z.pdf"
+      ],
+      "citation_counts": {
+        "crossref": 1171
+      },
+      "provenance": [
+        {
+          "provider": "crossref",
+          "endpoint": "https://api.crossref.org/works/10.1038/s41562-018-0399-z",
+          "params": {},
+          "retrieved_at": "2026-09-28T20:22:23.818770+00:00",
+          "cached": false,
+          "status": 200,
+          "attempts": 1
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "pagination": [],
+  "requests": [
+    {
+      "provider": "crossref",
+      "endpoint": "https://api.crossref.org/works/10.1038/s41562-018-0399-z",
+      "params": {},
+      "retrieved_at": "2026-09-28T20:22:23.818770+00:00",
+      "cached": false,
+      "status": 200,
+      "attempts": 1
+    }
+  ],
+  "query": "10.1038/s41562-018-0399-z",
+  "resolution": "identifier_lookup"
+}

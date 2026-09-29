@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "command": "resolve",
+  "created_at": "2026-09-28T20:22:22.560156+00:00",
+  "status": "ok",
+  "records": [
+    {
+      "id": "doi:10.1038/s41562-024-02062-9",
+      "title": "Examining the replicability of online experiments selected by a decision market",
+      "authors": [
+        "Felix Holzmeister",
+        "Magnus Johannesson",
+        "Colin F. Camerer",
+        "Yiling Chen",
+        "Teck-Hua Ho",
+        "Suzanne Hoogeveen",
+        "Juergen Huber",
+        "Noriko Imai",
+        "Taisuke Imai",
+        "Lawrence Jin",
+        "Michael Kirchler",
+        "Alexander Ly",
+        "Benjamin Mandl",
+        "Dylan Manfredi",
+        "Gideon Nave",
+        "Brian A. Nosek",
+        "Thomas Pfeiffer",
+        "Alexandra Sarafoglou",
+        "Rene Schwaiger",
+        "Eric-Jan Wagenmakers",
+        "Viking Waldén",
+        "Anna Dreber"
+      ],
+      "year": 2024,
+      "publication_date": "2024-11-19",
+      "publication_types": [
+        "journal-article"
+      ],
+      "venue": "Nature Human Behaviour",
+      "identifiers": {
+        "doi": "10.1038/s41562-024-02062-9"
+      },
+      "abstract": "Abstract \n           Here we test the feasibility of using decision markets to select studies for replication and provide evidence about the replicability of online experiments. Social scientists ( n  = 162) traded on the outcome of close replications of 41 systematically selected MTurk social science experiments published in PNAS 2015–2018, knowing that the 12 studies with the lowest and the 12 with the highest final market prices would be selected for replication, along with 2 randomly selected studies. The replication rate, based on the statistical significance indicator, was 83% for the top-12 and 33% for the bottom-12 group. Overall, 54% of the studies were successfully replicated, with replication effect size estimates averaging 45% of the original effect size estimates. The replication rate varied between 54% and 62% for alternative replication indicators. The observed replicability of MTurk experiments is comparable to that of previous systematic replication projects involving laboratory experiments.",
+      "links": [
+        "https://doi.org/10.1038/s41562-024-02062-9",
+        "https://www.nature.com/articles/s41562-024-02062-9.pdf",
+        "https://www.nature.com/articles/s41562-024-02062-9"
+      ],
+      "citation_counts": {
+        "crossref": 15
+      },
+      "provenance": [
+        {
+          "provider": "crossref",
+          "endpoint": "https://api.crossref.org/works/10.1038/s41562-024-02062-9",
+          "params": {},
+          "retrieved_at": "2026-09-28T20:22:22.560338+00:00",
+          "cached": false,
+          "status": 200,
+          "attempts": 1
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "pagination": [],
+  "requests": [
+    {
+      "provider": "crossref",
+      "endpoint": "https://api.crossref.org/works/10.1038/s41562-024-02062-9",
+      "params": {},
+      "retrieved_at": "2026-09-28T20:22:22.560338+00:00",
+      "cached": false,
+      "status": 200,
+      "attempts": 1
+    }
+  ],
+  "query": "10.1038/s41562-024-02062-9",
+  "resolution": "identifier_lookup"
+}

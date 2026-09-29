@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "command": "resolve",
+  "created_at": "2026-09-28T20:22:22.842114+00:00",
+  "status": "ok",
+  "records": [
+    {
+      "id": "doi:10.1027/1864-9335/a000178",
+      "title": "Investigating Variation in Replicability",
+      "authors": [
+        "Richard A. Klein",
+        "Kate A. Ratliff",
+        "Michelangelo Vianello",
+        "Reginald B. Adams",
+        "Štěpán Bahník",
+        "Michael J. Bernstein",
+        "Konrad Bocian",
+        "Mark J. Brandt",
+        "Beach Brooks",
+        "Claudia Chloe Brumbaugh",
+        "Zeynep Cemalcilar",
+        "Jesse Chandler",
+        "Winnee Cheong",
+        "William E. Davis",
+        "Thierry Devos",
+        "Matthew Eisner",
+        "Natalia Frankowska",
+        "David Furrow",
+        "Elisa Maria Galliani",
+        "Fred Hasselman",
+        "Joshua A. Hicks",
+        "James F. Hovermale",
+        "S. Jane Hunt",
+        "Jeffrey R. Huntsinger",
+        "Hans IJzerman",
+        "Melissa-Sue John",
+        "Jennifer A. Joy-Gaba",
+        "Heather Barry Kappes",
+        "Lacy E. Krueger",
+        "Jaime Kurtz",
+        "Carmel A. Levitan",
+        "Robyn K. Mallett",
+        "Wendy L. Morris",
+        "Anthony J. Nelson",
+        "Jason A. Nier",
+        "Grant Packard",
+        "Ronaldo Pilati",
+        "Abraham M. Rutchick",
+        "Kathleen Schmidt",
+        "Jeanine L. Skorinko",
+        "Robert Smith",
+        "Troy G. Steiner",
+        "Justin Storbeck",
+        "Lyn M. Van Swol",
+        "Donna Thompson",
+        "A. E. van ‘t Veer",
+        "Leigh Ann Vaughn",
+        "Marek Vranka",
+        "Aaron L. Wichman",
+        "Julie A. Woodzicka",
+        "Brian A. Nosek"
+      ],
+      "year": 2014,
+      "publication_date": "2014-05-01",
+      "publication_types": [
+        "journal-article"
+      ],
+      "venue": "Social Psychology",
+      "identifiers": {
+        "doi": "10.1027/1864-9335/a000178"
+      },
+      "abstract": "Although replication is a central tenet of science, direct replications are rare in psychology. This research tested variation in the replicability of 13 classic and contemporary effects across 36 independent samples totaling 6,344 participants. In the aggregate, 10 effects replicated consistently. One effect – imagined contact reducing prejudice – showed weak support for replicability. And two effects – flag priming influencing conservatism and currency priming influencing system justification – did not replicate. We compared whether the conditions such as lab versus online or US versus international sample predicted effect magnitudes. By and large they did not. The results of this small sample of effects suggest that replicability is more dependent on the effect itself than on the sample and setting used to investigate the effect.",
+      "links": [
+        "https://doi.org/10.1027/1864-9335/a000178",
+        "https://econtent.hogrefe.com/doi/pdf/10.1027/1864-9335/a000178"
+      ],
+      "citation_counts": {
+        "crossref": 834
+      },
+      "provenance": [
+        {
+          "provider": "crossref",
+          "endpoint": "https://api.crossref.org/works/10.1027/1864-9335/a000178",
+          "params": {},
+          "retrieved_at": "2026-09-28T20:22:22.842303+00:00",
+          "cached": false,
+          "status": 200,
+          "attempts": 1
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "pagination": [],
+  "requests": [
+    {
+      "provider": "crossref",
+      "endpoint": "https://api.crossref.org/works/10.1027/1864-9335/a000178",
+      "params": {},
+      "retrieved_at": "2026-09-28T20:22:22.842303+00:00",
+      "cached": false,
+      "status": 200,
+      "attempts": 1
+    }
+  ],
+  "query": "10.1027/1864-9335/a000178",
+  "resolution": "identifier_lookup"
+}

@@ -27,7 +27,7 @@ export const Navbar = () => {
           <div className="hidden md:flex items-center gap-3 text-xs">
             <Button variant="outline-gradient" size="sm" asChild className="border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
               <Link href="/#about">
-                About
+                Projects
               </Link>
             </Button>
             <Button variant="outline-gradient" size="sm" asChild className="border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
@@ -87,7 +87,7 @@ export const Navbar = () => {
             <div className="flex flex-col gap-3">
               <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
                 <Link href="/#about" onClick={() => setIsMobileMenuOpen(false)}>
-                  About
+                  Projects
                 </Link>
               </Button>
               <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">

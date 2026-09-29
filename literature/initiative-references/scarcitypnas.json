@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "command": "resolve",
+  "created_at": "2026-09-28T20:22:23.384324+00:00",
+  "status": "ok",
+  "records": [
+    {
+      "id": "doi:10.1073/pnas.2103313118",
+      "title": "Empirical audit and review and an assessment of evidentiary value in research on the psychological consequences of scarcity",
+      "authors": [
+        "Michael O’Donnell",
+        "Amelia S. Dev",
+        "Stephen Antonoplis",
+        "Stephen M. Baum",
+        "Arianna H. Benedetti",
+        "N. Derek Brown",
+        "Belinda Carrillo",
+        "Andrew L. Choi",
+        "Paul Connor",
+        "Kristin Donnelly",
+        "Monica E. Ellwood-Lowe",
+        "Ruthe Foushee",
+        "Rachel Jansen",
+        "Shoshana N. Jarvis",
+        "Ryan Lundell-Creagh",
+        "Joseph M. Ocampo",
+        "Gold N. Okafor",
+        "Zahra Rahmani Azad",
+        "Michael Rosenblum",
+        "Derek Schatz",
+        "Daniel H. Stein",
+        "Yilu Wang",
+        "Don A. Moore",
+        "Leif D. Nelson"
+      ],
+      "year": 2021,
+      "publication_date": "2021-10-28",
+      "publication_types": [
+        "journal-article"
+      ],
+      "venue": "Proceedings of the National Academy of Sciences",
+      "identifiers": {
+        "doi": "10.1073/pnas.2103313118"
+      },
+      "abstract": "Empirical audit and review is an approach to assessing the evidentiary value of a research area. It involves identifying a topic and selecting a cross-section of studies for replication. We apply the method to research on the psychological consequences of scarcity. Starting with the papers citing a seminal publication in the field, we conducted replications of 20 studies that evaluate the role of scarcity priming in pain sensitivity, resource allocation, materialism, and many other domains. There was considerable variability in the replicability, with some strong successes and other undeniable failures. Empirical audit and review does not attempt to assign an overall replication rate for a heterogeneous field, but rather facilitates researchers seeking to incorporate strength of evidence as they refine theories and plan new investigations in the research area. This method allows for an integration of qualitative and quantitative approaches to review and enables the growth of a cumulative science.",
+      "links": [
+        "https://doi.org/10.1073/pnas.2103313118",
+        "http://www.pnas.org/syndication/doi/10.1073/pnas.2103313118",
+        "https://pnas.org/doi/pdf/10.1073/pnas.2103313118"
+      ],
+      "citation_counts": {
+        "crossref": 41
+      },
+      "provenance": [
+        {
+          "provider": "crossref",
+          "endpoint": "https://api.crossref.org/works/10.1073/pnas.2103313118",
+          "params": {},
+          "retrieved_at": "2026-09-28T20:22:23.384517+00:00",
+          "cached": false,
+          "status": 200,
+          "attempts": 1
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "pagination": [],
+  "requests": [
+    {
+      "provider": "crossref",
+      "endpoint": "https://api.crossref.org/works/10.1073/pnas.2103313118",
+      "params": {},
+      "retrieved_at": "2026-09-28T20:22:23.384517+00:00",
+      "cached": false,
+      "status": 200,
+      "attempts": 1
+    }
+  ],
+  "query": "10.1073/pnas.2103313118",
+  "resolution": "identifier_lookup"
+}

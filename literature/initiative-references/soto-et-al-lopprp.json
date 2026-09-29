@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "command": "resolve",
+  "created_at": "2026-09-28T20:22:23.593619+00:00",
+  "status": "ok",
+  "records": [
+    {
+      "id": "doi:10.1177/0956797619831612",
+      "title": "How Replicable Are Links Between Personality Traits and Consequential Life Outcomes? The Life Outcomes of Personality Replication Project",
+      "authors": [
+        "Christopher J. Soto"
+      ],
+      "year": 2019,
+      "publication_date": "2019-04-05",
+      "publication_types": [
+        "journal-article"
+      ],
+      "venue": "Psychological Science",
+      "identifiers": {
+        "doi": "10.1177/0956797619831612"
+      },
+      "abstract": "The Big Five personality traits have been linked to dozens of life outcomes. However, metascientific research has raised questions about the replicability of behavioral science. The Life Outcomes of Personality Replication (LOOPR) Project was therefore conducted to estimate the replicability of the personality-outcome literature. Specifically, I conducted preregistered, high-powered (median N = 1,504) replications of 78 previously published trait–outcome associations. Overall, 87% of the replication attempts were statistically significant in the expected direction. The replication effects were typically 77% as strong as the corresponding original effects, which represents a significant decline in effect size. The replicability of individual effects was predicted by the effect size and design of the original study, as well as the sample size and statistical power of the replication. These results indicate that the personality-outcome literature provides a reasonably accurate map of trait–outcome associations but also that it stands to benefit from efforts to improve replicability.",
+      "links": [
+        "https://doi.org/10.1177/0956797619831612",
+        "https://journals.sagepub.com/doi/pdf/10.1177/0956797619831612",
+        "https://journals.sagepub.com/doi/full-xml/10.1177/0956797619831612"
+      ],
+      "citation_counts": {
+        "crossref": 369
+      },
+      "provenance": [
+        {
+          "provider": "crossref",
+          "endpoint": "https://api.crossref.org/works/10.1177/0956797619831612",
+          "params": {},
+          "retrieved_at": "2026-09-28T20:22:23.593805+00:00",
+          "cached": false,
+          "status": 200,
+          "attempts": 1
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "pagination": [],
+  "requests": [
+    {
+      "provider": "crossref",
+      "endpoint": "https://api.crossref.org/works/10.1177/0956797619831612",
+      "params": {},
+      "retrieved_at": "2026-09-28T20:22:23.593805+00:00",
+      "cached": false,
+      "status": 200,
+      "attempts": 1
+    }
+  ],
+  "query": "10.1177/0956797619831612",
+  "resolution": "identifier_lookup"
+}

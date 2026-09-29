@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "command": "resolve",
+  "created_at": "2026-09-28T20:22:23.414705+00:00",
+  "status": "ok",
+  "records": [
+    {
+      "id": "doi:10.3389/fcomm.2022.1048896",
+      "title": "Evaluating replicability of ten influential research on sensory marketing",
+      "authors": [
+        "Kosuke Motoki",
+        "Sayo Iseki"
+      ],
+      "year": 2022,
+      "publication_date": "2022-10-28",
+      "publication_types": [
+        "journal-article"
+      ],
+      "venue": "Frontiers in Communication",
+      "identifiers": {
+        "doi": "10.3389/fcomm.2022.1048896"
+      },
+      "abstract": "We attempted to evaluate the replicability and generalizability of ten influential research on sensory marketing by conducting a high-powered and pre-registered replication in online settings in non-WEIRD consumers. The results revealed that only 20% of findings could be successfully replicated, and their effect sizes are as half as the original ones. Two successful studies had relatively larger sample sizes, used sound symbolism, and employed within-participants manipulation of senses. No studies involving visual factors, between-participant manipulation of senses, or interactions between factors could be replicated. Our findings reveal an initial estimate of the replicability and generalizability of sensory marketing.",
+      "links": [
+        "https://doi.org/10.3389/fcomm.2022.1048896",
+        "https://www.frontiersin.org/articles/10.3389/fcomm.2022.1048896/full"
+      ],
+      "citation_counts": {
+        "crossref": 9
+      },
+      "provenance": [
+        {
+          "provider": "crossref",
+          "endpoint": "https://api.crossref.org/works/10.3389/fcomm.2022.1048896",
+          "params": {},
+          "retrieved_at": "2026-09-28T20:22:23.414880+00:00",
+          "cached": false,
+          "status": 200,
+          "attempts": 1
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "pagination": [],
+  "requests": [
+    {
+      "provider": "crossref",
+      "endpoint": "https://api.crossref.org/works/10.3389/fcomm.2022.1048896",
+      "params": {},
+      "retrieved_at": "2026-09-28T20:22:23.414880+00:00",
+      "cached": false,
+      "status": 200,
+      "attempts": 1
+    }
+  ],
+  "query": "10.3389/fcomm.2022.1048896",
+  "resolution": "identifier_lookup"
+}

@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "command": "resolve",
+  "created_at": "2026-09-28T20:22:23.110308+00:00",
+  "status": "ok",
+  "records": [
+    {
+      "id": "doi:10.7554/elife.71601",
+      "title": "Investigating the replicability of preclinical cancer biology",
+      "authors": [
+        "Timothy M Errington",
+        "Maya Mathur",
+        "Courtney K Soderberg",
+        "Alexandria Denis",
+        "Nicole Perfito",
+        "Elizabeth Iorns",
+        "Brian A Nosek"
+      ],
+      "year": 2021,
+      "publication_date": "2021-12-10",
+      "publication_types": [
+        "journal-article"
+      ],
+      "venue": "eLife",
+      "identifiers": {
+        "doi": "10.7554/elife.71601"
+      },
+      "abstract": "Replicability is an important feature of scientific research, but aspects of contemporary research culture, such as an emphasis on novelty, can make replicability seem less important than it should be. The\n                     Reproducibility Project: Cancer Biology \n                    was set up to provide evidence about the replicability of preclinical research in cancer biology by repeating selected experiments from high-impact papers. A total of 50 experiments from 23 papers were repeated, generating data about the replicability of a total of 158 effects. Most of the original effects were positive effects (136), with the rest being null effects (22). A majority of the original effect sizes were reported as numerical values (117), with the rest being reported as representative images (41). We employed seven methods to assess replicability, and some of these methods were not suitable for all the effects in our sample. One method compared effect sizes: for positive effects, the median effect size in the replications was 85% smaller than the median effect size in the original experiments, and 92% of replication effect sizes were smaller than the original. The other methods were binary – the replication was either a success or a failure – and five of these methods could be used to assess both positive and null effects when effect sizes were reported as numerical values. For positive effects, 40% of replications (39/97) succeeded according to three or more of these five methods, and for null effects 80% of replications (12/15) were successful on this basis; combining positive and null effects, the success rate was 46% (51/112). A successful replication does not definitively confirm an original finding or its theoretical interpretation. Equally, a failure to replicate does not disconfirm a finding, but it does suggest that additional investigation is needed to establish its reliability.",
+      "links": [
+        "https://doi.org/10.7554/elife.71601",
+        "https://cdn.elifesciences.org/articles/71601/elife-71601-v3.pdf",
+        "https://cdn.elifesciences.org/articles/71601/elife-71601-v3.xml",
+        "https://elifesciences.org/articles/71601"
+      ],
+      "citation_counts": {
+        "crossref": 271
+      },
+      "provenance": [
+        {
+          "provider": "crossref",
+          "endpoint": "https://api.crossref.org/works/10.7554/elife.71601",
+          "params": {},
+          "retrieved_at": "2026-09-28T20:22:23.110528+00:00",
+          "cached": false,
+          "status": 200,
+          "attempts": 1
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "pagination": [],
+  "requests": [
+    {
+      "provider": "crossref",
+      "endpoint": "https://api.crossref.org/works/10.7554/elife.71601",
+      "params": {},
+      "retrieved_at": "2026-09-28T20:22:23.110528+00:00",
+      "cached": false,
+      "status": 200,
+      "attempts": 1
+    }
+  ],
+  "query": "10.7554/eLife.71601",
+  "resolution": "identifier_lookup"
+}

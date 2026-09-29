@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "command": "resolve",
+  "created_at": "2026-09-28T20:22:22.920038+00:00",
+  "status": "ok",
+  "records": [
+    {
+      "id": "doi:10.1525/collabra.35271",
+      "title": "Many Labs 4: Failure to Replicate Mortality Salience Effect With and Without Original Author Involvement",
+      "authors": [
+        "Richard A Klein",
+        "Corey L. Cook",
+        "Charles R. Ebersole",
+        "Christine Vitiello",
+        "Brian A. Nosek",
+        "Joseph Hilgard",
+        "Paul Hangsan Ahn",
+        "Abbie J. Brady",
+        "Christopher R. Chartier",
+        "Cody D. Christopherson",
+        "Samuel Clay",
+        "Brian Collisson",
+        "Jarret T. Crawford",
+        "Ryan Cromar",
+        "Gwendolyn Gardiner",
+        "Courtney L. Gosnell",
+        "Jon Grahe",
+        "Calvin Hall",
+        "Irene Howard",
+        "Jennifer A. Joy-Gaba",
+        "Miranda Kolb",
+        "Angela M. Legg",
+        "Carmel A. Levitan",
+        "Anthony D. Mancini",
+        "Dylan Manfredi",
+        "Jason Miller",
+        "Gideon Nave",
+        "Liz Redford",
+        "Ilaria Schlitz",
+        "Kathleen Schmidt",
+        "Jeanine L. M. Skorinko",
+        "Daniel Storage",
+        "Trevor Swanson",
+        "Lyn M. Van Swol",
+        "Leigh Ann Vaughn",
+        "Devere Vidamuerte",
+        "Brady Wiggins",
+        "Kate A. Ratliff"
+      ],
+      "year": 2022,
+      "publication_date": "2022",
+      "publication_types": [
+        "journal-article"
+      ],
+      "venue": "Collabra: Psychology",
+      "identifiers": {
+        "doi": "10.1525/collabra.35271"
+      },
+      "abstract": "Interpreting a failure to replicate is complicated by the fact that the failure could be due to the original finding being a false positive, unrecognized moderating influences between the original and replication procedures, or faulty implementation of the procedures in the replication. One strategy to maximize replication quality is involving the original authors in study design. We (N = 17 Labs and N = 1,550 participants, after exclusions) experimentally tested whether original author involvement improved replicability of a classic finding from Terror Management Theory (Greenberg et al., 1994). Our results were non-diagnostic of whether original author involvement improves replicability because we were unable to replicate the finding under any conditions. This suggests that the original finding was either a false positive or the conditions necessary to obtain it are not fully understood or no longer exist. Data, materials, analysis code, preregistration, and supplementary documents can be found on the OSF page: https://osf.io/8ccnw/",
+      "links": [
+        "https://doi.org/10.1525/collabra.35271",
+        "https://online.ucpress.edu/collabra/article-pdf/doi/10.1525/collabra.35271/832320/collabra_2022_8_1_35271.pdf"
+      ],
+      "citation_counts": {
+        "crossref": 65
+      },
+      "provenance": [
+        {
+          "provider": "crossref",
+          "endpoint": "https://api.crossref.org/works/10.1525/collabra.35271",
+          "params": {},
+          "retrieved_at": "2026-09-28T20:22:22.920220+00:00",
+          "cached": false,
+          "status": 200,
+          "attempts": 1
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "pagination": [],
+  "requests": [
+    {
+      "provider": "crossref",
+      "endpoint": "https://api.crossref.org/works/10.1525/collabra.35271",
+      "params": {},
+      "retrieved_at": "2026-09-28T20:22:22.920220+00:00",
+      "cached": false,
+      "status": 200,
+      "attempts": 1
+    }
+  ],
+  "query": "10.1525/collabra.35271",
+  "resolution": "identifier_lookup"
+}

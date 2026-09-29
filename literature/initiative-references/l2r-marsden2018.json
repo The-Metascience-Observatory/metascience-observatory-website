@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "command": "resolve",
+  "created_at": "2026-09-28T20:22:22.558668+00:00",
+  "status": "ok",
+  "records": [
+    {
+      "id": "doi:10.1111/lang.12286",
+      "title": "Replication in Second Language Research: Narrative and Systematic Reviews and Recommendations for the Field",
+      "authors": [
+        "Emma Marsden",
+        "Kara Morgan‐Short",
+        "Sophie Thompson",
+        "David Abugaber"
+      ],
+      "year": 2018,
+      "publication_date": "2018-03-05",
+      "publication_types": [
+        "journal-article"
+      ],
+      "venue": "Language Learning",
+      "identifiers": {
+        "doi": "10.1111/lang.12286"
+      },
+      "abstract": "Abstract \n                   \n                     \n                     Despite its critical role for the development of the field, little is known about replication in second language (L2) research. To better understand replication practice, we first provide a narrative review of challenges related to replication, drawing on recent developments in psychology. This discussion frames and motivates a systematic review, building on syntheses of replication in psychology, education, and L2 research. We coded 67 self‐labeled L2 replication studies found across 26 journals for 136 characteristics. We estimated a mean rate of 1 published replication study for every 400 articles, with a mean of 6.64 years between initial and replication studies and a mean of 117 citations of the initial study before a replication was published. Replication studies had an annual mean of 7.3 citations, much higher than averages in linguistics and education. Overlap in authorship between initial and replication studies and the availability of the initial materials both increased the likelihood of a replication supporting the initial findings. Our sample contained no direct (exact) replication attempts, and changes made to initial studies were numerous and wide ranging, which likely obscured, if not undermined, the interpretability of replication studies. To improve the amount and quality of L2 replication research, we propose 16 recommendations relating to rationale, nomenclature, design, infrastructure, and incentivization for collaboration and publication. \n                   \n                   \n                     Open Practices \n                     \n                       \n                     \n                     \n                      This article has been awarded Open Materials and Open Data badges. All materials and data are publicly accessible via the IRIS Repository at\n                       https://www.iris-database.org/iris/app/home/detail?id=york:934328 \n                      . Learn more about the Open Practices badges from the Center for Open Science:\n                       https://osf.io/tvyxz/wiki \n                      .",
+      "links": [
+        "https://doi.org/10.1111/lang.12286",
+        "https://api.wiley.com/onlinelibrary/tdm/v1/articles/10.1111%2Flang.12286",
+        "https://onlinelibrary.wiley.com/doi/pdf/10.1111/lang.12286"
+      ],
+      "citation_counts": {
+        "crossref": 201
+      },
+      "provenance": [
+        {
+          "provider": "crossref",
+          "endpoint": "https://api.crossref.org/works/10.1111/lang.12286",
+          "params": {},
+          "retrieved_at": "2026-09-28T20:22:22.558851+00:00",
+          "cached": false,
+          "status": 200,
+          "attempts": 1
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "pagination": [],
+  "requests": [
+    {
+      "provider": "crossref",
+      "endpoint": "https://api.crossref.org/works/10.1111/lang.12286",
+      "params": {},
+      "retrieved_at": "2026-09-28T20:22:22.558851+00:00",
+      "cached": false,
+      "status": 200,
+      "attempts": 1
+    }
+  ],
+  "query": "10.1111/lang.12286",
+  "resolution": "identifier_lookup"
+}

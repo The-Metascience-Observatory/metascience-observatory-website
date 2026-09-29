@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "command": "resolve",
+  "created_at": "2026-09-28T20:22:22.557353+00:00",
+  "status": "ok",
+  "records": [
+    {
+      "id": "doi:10.1126/science.aaf0918",
+      "title": "Evaluating replicability of laboratory experiments in economics",
+      "authors": [
+        "Colin F. Camerer",
+        "Anna Dreber",
+        "Eskil Forsell",
+        "Teck-Hua Ho",
+        "Jürgen Huber",
+        "Magnus Johannesson",
+        "Michael Kirchler",
+        "Johan Almenberg",
+        "Adam Altmejd",
+        "Taizan Chan",
+        "Emma Heikensten",
+        "Felix Holzmeister",
+        "Taisuke Imai",
+        "Siri Isaksson",
+        "Gideon Nave",
+        "Thomas Pfeiffer",
+        "Michael Razen",
+        "Hang Wu"
+      ],
+      "year": 2016,
+      "publication_date": "2016-03-25",
+      "publication_types": [
+        "journal-article"
+      ],
+      "venue": "Science",
+      "identifiers": {
+        "doi": "10.1126/science.aaf0918"
+      },
+      "abstract": "Another social science looks at itself \n                   \n                    Experimental economists have joined the reproducibility discussion by replicating selected published experiments from two top-tier journals in economics. Camerer\n                     et al. \n                    found that two-thirds of the 18 studies examined yielded replicable estimates of effect size and direction. This proportion is somewhat lower than unaffiliated experts were willing to bet in an associated prediction market, but roughly in line with expectations from sample sizes and P values.\n                   \n                   \n                     Science \n                    , this issue p.\n                     1433",
+      "links": [
+        "https://doi.org/10.1126/science.aaf0918",
+        "https://www.science.org/doi/pdf/10.1126/science.aaf0918"
+      ],
+      "citation_counts": {
+        "crossref": 955
+      },
+      "provenance": [
+        {
+          "provider": "crossref",
+          "endpoint": "https://api.crossref.org/works/10.1126/science.aaf0918",
+          "params": {},
+          "retrieved_at": "2026-09-28T20:22:22.557539+00:00",
+          "cached": false,
+          "status": 200,
+          "attempts": 1
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "pagination": [],
+  "requests": [
+    {
+      "provider": "crossref",
+      "endpoint": "https://api.crossref.org/works/10.1126/science.aaf0918",
+      "params": {},
+      "retrieved_at": "2026-09-28T20:22:22.557539+00:00",
+      "cached": false,
+      "status": 200,
+      "attempts": 1
+    }
+  ],
+  "query": "10.1126/science.aaf0918",
+  "resolution": "identifier_lookup"
+}
