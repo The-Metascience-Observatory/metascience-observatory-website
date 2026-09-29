@@ -283,7 +283,7 @@ function processData(): SurveyDashboardProps {
         n: total,
         successful: {
           key: "successful" as const,
-          label: "Successful reproduction",
+          label: "Successful replication",
           publishedCount: successfulCount,
           publishedPct: pct(successfulCount, total),
           failedToPublishCount: failedSuccessfulCount,
@@ -291,7 +291,7 @@ function processData(): SurveyDashboardProps {
         },
         unsuccessful: {
           key: "unsuccessful" as const,
-          label: "Unsuccessful reproduction",
+          label: "Unsuccessful replication",
           publishedCount: unsuccessfulCount,
           publishedPct: pct(unsuccessfulCount, total),
           failedToPublishCount: failedUnsuccessfulCount,
@@ -460,7 +460,7 @@ function processData(): SurveyDashboardProps {
     publishing: [
       {
         key: "successful",
-        label: "Successful reproduction",
+        label: "Successful replication",
         publishedCount: publishedSuccessful,
         publishedPct: pct(publishedSuccessful, n),
         failedToPublishCount: failedToPublishSuccessful,
@@ -468,7 +468,7 @@ function processData(): SurveyDashboardProps {
       },
       {
         key: "unsuccessful",
-        label: "Unsuccessful reproduction",
+        label: "Unsuccessful replication",
         publishedCount: publishedFailed,
         publishedPct: pct(publishedFailed, n),
         failedToPublishCount: failedToPublishUnsuccessful,

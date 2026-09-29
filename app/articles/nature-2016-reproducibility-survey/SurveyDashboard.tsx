@@ -238,7 +238,7 @@ function PublishingByDisciplineChart({
   return (
     <div>
       <h4 className="text-sm font-medium text-foreground mb-2">
-        {outcome === "successful" ? "Successful reproduction" : "Unsuccessful reproduction"}
+        {outcome === "successful" ? "Successful replication" : "Unsuccessful replication"}
       </h4>
       <ResponsiveContainer width="100%" height={rows.length * 56 + 65}>
         <BarChart
