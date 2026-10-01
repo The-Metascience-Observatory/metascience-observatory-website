@@ -3,7 +3,7 @@
 // Refresh this count when the master dataset changes.
 export function FredAcknowledgment({ expanded = false }: { expanded?: boolean }) {
   const Section = expanded ? "p" : "span";
-  const referenceCardClass = "rounded border border-primary bg-card px-4 py-1.5";
+  const referenceCardClass = "w-fit max-w-full rounded border border-primary bg-card px-2 py-1.5";
 
   return (
     <>
@@ -42,7 +42,7 @@ export function PerryAcknowledgment({ expanded = false }: { expanded?: boolean }
   return (
     <>
       <Section>We thank Tom Perry for providing the replication data from this paper:</Section>{" "}
-      <Section className={expanded ? "rounded border border-primary bg-card px-4 py-1.5" : undefined}>T. Perry, R. Morris, and R. Lea, <a className="underline" href="https://www.tandfonline.com/doi/full/10.1080/13803611.2021.2022315" target="_blank" rel="noreferrer">“A decade of replication study in education? A mapping review (2011–2020)”</a>, <em>Educational Research and Evaluation</em>, <strong>27</strong>(1–2), pp. 12–34, 2022.</Section>
+      <Section className={expanded ? "w-fit max-w-full rounded border border-primary bg-card px-2 py-1.5" : undefined}>T. Perry, R. Morris, and R. Lea, <a className="underline" href="https://www.tandfonline.com/doi/full/10.1080/13803611.2021.2022315" target="_blank" rel="noreferrer">“A decade of replication study in education? A mapping review (2011–2020)”</a>, <em>Educational Research and Evaluation</em>, <strong>27</strong>(1–2), pp. 12–34, 2022.</Section>
     </>
   );
 }
