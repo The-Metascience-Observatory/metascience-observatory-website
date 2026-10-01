@@ -1,11 +1,18 @@
 export const runtime = 'nodejs';
 
 import { createHash } from "crypto";
+import { clientKey, createRateLimiter, readLimitedBody, RequestError } from "@/lib/request-guards";
+
+const rateLimit = createRateLimiter();
 
 export async function POST(request: Request) {
   try {
-    const { email } = await request.json();
-    const isValidEmail = typeof email === "string" && /^\S+@\S+\.\S+$/.test(email);
+    const limited = rateLimit(clientKey(request));
+    if (limited) return limited;
+    const bounded = await readLimitedBody(request, 4096);
+    const body: unknown = await bounded.json().catch(() => null);
+    const email = body && typeof body === "object" && "email" in body ? body.email : undefined;
+    const isValidEmail = typeof email === "string" && email.length <= 254 && /^\S+@\S+\.\S+$/.test(email);
     if (!isValidEmail) {
       return Response.json({ error: "Invalid email" }, { status: 400 });
     }
@@ -15,10 +22,10 @@ export async function POST(request: Request) {
     let serverPrefix = process.env.MAILCHIMP_SERVER_PREFIX;
 
     if (!apiKey) {
-      return Response.json({ error: "Missing MAILCHIMP_API_KEY" }, { status: 500 });
+      return Response.json({ error: "Newsletter subscription is temporarily unavailable" }, { status: 500 });
     }
     if (!listId) {
-      return Response.json({ error: "Missing MAILCHIMP_LIST_ID" }, { status: 500 });
+      return Response.json({ error: "Newsletter subscription is temporarily unavailable" }, { status: 500 });
     }
 
     if (!serverPrefix) {
@@ -26,7 +33,7 @@ export async function POST(request: Request) {
       if (suffix && /^[a-z]{2,}\d+$/i.test(suffix)) {
         serverPrefix = suffix;
       } else {
-        return Response.json({ error: "Missing MAILCHIMP_SERVER_PREFIX (and could not derive from MAILCHIMP_API_KEY)" }, { status: 500 });
+        return Response.json({ error: "Newsletter subscription is temporarily unavailable" }, { status: 500 });
       }
     }
 
@@ -36,6 +43,7 @@ export async function POST(request: Request) {
 
     const upstream = await fetch(url, {
       method: "PUT",
+      signal: AbortSignal.timeout(10_000),
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -48,31 +56,25 @@ export async function POST(request: Request) {
     });
 
     if (!upstream.ok) {
-      let detail: unknown = undefined;
-      let title: string | undefined = undefined;
-      try {
-        const json = await upstream.json();
-        detail = (json && (json.detail || json.message)) ?? undefined;
-        title = json?.title;
-      } catch {
-        const text = await upstream.text();
-        detail = text?.slice(0, 500);
-      }
+      // Provider details can reveal subscription or compliance status.
+      const json = await upstream.json().catch(() => null);
+      const title: unknown = json?.title;
 
       const benignTitles = new Set([
         "Member Exists",
         "Forgotten Email Not Subscribed",
         "Member In Compliance State",
       ]);
-      if (title && benignTitles.has(title)) {
-        return Response.json({ ok: true, note: title, detail });
+      if (typeof title === "string" && benignTitles.has(title)) {
+        return Response.json({ ok: true });
       }
 
-      return Response.json({ error: "Subscribe failed", detail }, { status: 400 });
+      return Response.json({ error: "Unable to subscribe. Please try again later." }, { status: 400 });
     }
 
     return Response.json({ ok: true });
-  } catch {
+  } catch (error) {
+    if (error instanceof RequestError) return Response.json({ error: error.message }, { status: error.status });
     return Response.json({ error: "Unexpected error" }, { status: 500 });
   }
 }

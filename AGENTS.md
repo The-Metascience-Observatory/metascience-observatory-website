@@ -60,9 +60,12 @@ lib/
   citations.ts              # Citation HTML generation + normalization
 
 data/
-  replications_database_*.csv   # Versioned main database (currently replications_database_2026_07_28_211702.csv)
+  replications_database_*.csv   # Active version named by version_history.txt
   birds_eye_reviews/
-    long_covid_trial_extractions.jsonl  # 9.6 MB, 339 clinical trials
+    long_covid/                       # Versioned review release bundle
+      trial_extractions.jsonl
+      trial_screening.csv
+      last_updated.json
   initiative_tag_names.json             # Tag → full project name mapping
   journal_name_mappings.json            # Journal name standardization
   metascience_observatory_topic_ontology.json
@@ -84,7 +87,7 @@ types/                      # Shared TypeScript type definitions
 ### Server vs. Client Components
 - Pages default to **server components** for data loading
 - Add `"use client"` only when interactivity or hooks are needed
-- The pattern for large data pages (e.g. Long Covid): server `page.tsx` reads the file, processes into lean typed props, passes to a `"use client"` dashboard component — **raw data files never reach the browser**
+- The pattern for large data pages (e.g. Long Covid): server `page.tsx` reads the file, processes into lean typed props, passes to a `"use client"` dashboard component — pass only the fields needed by the UI. Public download routes deliberately expose selected datasets; server-side loading does not make committed data private.
 
 ### Data Files
 - The main replications database is a **CSV** loaded via the `/api/fred` API route (cached in module scope between requests)
@@ -121,7 +124,7 @@ types/                      # Shared TypeScript type definitions
 - **File:** `data/replications_database_YYYY_MM_DD_HHMMSS.csv` (update the filename when a new version is added)
 - **`data/` holds exactly ONE of these.** Every superseded version is moved to `data/backup/`. `data_ingestor.py` does this automatically via `archive_superseded_masters()`; if you write a new master by hand, archive the old one yourself.
 - Nothing globs for the master — `app/api/fred/route.ts` and the `scripts/build_*.py` helpers all read the **last non-comment line of `data/version_history.txt`**, so that line must always name a file that exists in `data/`.
-- ~8600 rows; **one row per replicated effect**, not per study or per paper
+- **One row per replicated effect**, not per study or per paper; row counts change with each release
 - Key columns: `original_title`, `original_url` (full DOI resolver URL), `replication_url`, `replication_initiative_tag`, `original_es_r`, `replication_es_r`, `replication_es_95_CI` (string `[low, high]`), `original_es_type`, `replication_es_type`, `discipline`, `result`
 - DOIs stored as full resolver URLs: `https://doi.org/10.xxxx/...`
 - Effect size CIs stored as strings: `[lower, upper]` — parse with JSON.parse after stripping
@@ -142,7 +145,9 @@ A duplicate needs matching **effect sizes and sample sizes on both sides**, afte
 
 ## Data: Long Covid JSONL
 
-- **File:** `data/birds_eye_reviews/long_covid_trial_extractions.jsonl` (9.6 MB, 339 records)
+- **Bundle:** `data/birds_eye_reviews/long_covid/`; primary extraction file: `trial_extractions.jsonl`. See `last_updated.json` for release metadata.
+- `lib/long-covid/data-path.ts` resolves the bundle path; `LONG_COVID_DATA_DIR` is an optional server-only override for local release validation.
+- Publication filtering and public article serialization live in `lib/long-covid/`. Follow the existing release checks in `docs/audits/long-covid-release-20260923.md`.
 - One JSON object per line
 - Each record: `paper_id` (DOI), `study_design` (arms, countries, blinding, design_type), `sample_sizes`, `outcomes` (is_primary, symptom_domain, between_group_effects with effect_value/ci/p_value, higher_is_better), `risk_of_bias` (overall_judgment + RoB2 domains), `participants` (long_covid_definition, min_time_since_infection_weeks), `follow_up`
 - Server-side processing in `page.tsx` converts this into ~10 typed data structures for the dashboard
@@ -150,6 +155,9 @@ A duplicate needs matching **effect sizes and sample sizes on both sides**, afte
 ---
 
 ## Environment Variables (`.env.local`)
+
+The website runs without API credentials except for newsletter subscriptions.
+See `.env.example` for website configuration. Scholarly API keys below are used by optional Python ingestion tools; verify each script's variable names before running it. Never commit credentials or put secrets in `NEXT_PUBLIC_*` variables.
 
 ```
 OPENALEX_API_KEY
@@ -160,7 +168,9 @@ ENTREZ_API_KEY
 SCOPUS_API_KEY
 MAILCHIMP_API_KEY
 MAILCHIMP_LIST_ID
-MAILCHIMP_SERVER
+MAILCHIMP_SERVER_PREFIX
+NEXT_PUBLIC_GA_ID
+LONG_COVID_DATA_DIR
 ```
 
 ---
@@ -172,7 +182,10 @@ MAILCHIMP_SERVER
 | `/api/fred` | Loads main replications CSV, caches in memory, serves as JSON |
 | `/api/retraction-watch` | Loads retraction watch data; provides aggregations |
 | `/api/subscribe` | Mailchimp newsletter subscription |
-| `/api/upload-bibliography` | File upload handling |
+| `/api/upload-bibliography` | Match uploaded bibliography DOIs against the database |
+| `/api/screening` | Filtered Long Covid screening records |
+| `/api/screening/download` | Public screening CSV download |
+| `/api/long-covid/article` | Published article details |
 
 ---
 
@@ -181,7 +194,9 @@ MAILCHIMP_SERVER
 ```bash
 npm run dev     # Start dev server (localhost:3000)
 npm run build   # Production build (validates types + checks for errors)
-npm run lint    # Run ESLint
+npm run check:tools # Validate the tool catalog
+npm run test:publications # Publication-filter regression tests
+# npm run lint currently requires ESLint setup; see README.md.
 ```
 
 Always run `npm run build` before pushing to verify there are no TypeScript or compilation errors. Vercel builds on push to `main`.
@@ -192,7 +207,7 @@ Always run `npm run build` before pushing to verify there are no TypeScript or c
 
 - Deployed on **Vercel Hobby plan** — commits must have a GitHub-linked email as the author
 - Use `git config user.email` matching your GitHub account email to avoid blocked deployments
-- The `outputFileTracingRoot` in `next.config.mjs` is set to `path.join(__dirname, "../")` to correctly trace data files outside the app directory
+- The `outputFileTracingRoot` in `next.config.mjs` is set to the project root (`process.cwd()`); `data/backup/` is excluded from tracing
 
 ---
 

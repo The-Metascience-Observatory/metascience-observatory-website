@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import path from "node:path";
 import fs from "node:fs/promises";
 import { csvParse } from "d3-dsv";
+import { clientKey, createRateLimiter, readLimitedBody, RequestError } from "@/lib/request-guards";
+
+const rateLimit = createRateLimiter();
+const MAX_FILE_BYTES = 2 * 1024 * 1024;
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -79,7 +83,7 @@ function extractDoiFromUrl(url: string): string | null {
 async function getLatestFilename(): Promise<string> {
   const versionHistoryPath = path.join(process.cwd(), "data", "version_history.txt");
   const versionHistoryText = await fs.readFile(versionHistoryPath, "utf8");
-  const lines = versionHistoryText.trim().split("\n").filter(line => line.trim());
+  const lines = versionHistoryText.split("\n").map(line => line.split("#")[0].trim()).filter(Boolean);
   const lastLine = lines[lines.length - 1];
   return lastLine.trim();
 }
@@ -94,11 +98,21 @@ async function loadDatabase(): Promise<AnyRecord[]> {
 
 export async function POST(request: NextRequest) {
   try {
-    const formData = await request.formData();
-    const file = formData.get("file") as File | null;
+    const limited = rateLimit(clientKey(request));
+    if (limited) return limited;
+    // Allow a small multipart envelope, but cap the entire body before parsing.
+    const bounded = await readLimitedBody(request, MAX_FILE_BYTES + 64 * 1024);
+    const formData = await bounded.formData().catch(() => {
+      throw new RequestError("Invalid file upload.", 400);
+    });
+    const file = formData.get("file");
 
-    if (!file) {
+    if (!file || typeof file === "string") {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
+    }
+
+    if (file.size > MAX_FILE_BYTES) {
+      throw new RequestError("File is too large. Maximum size is 2 MB.", 413);
     }
 
     const fileExtension = path.extname(file.name).toLowerCase();
@@ -134,7 +148,7 @@ export async function POST(request: NextRequest) {
 
     // Normalize DOIs for comparison
     const normalizedDois = dois.map(normalizeDoi);
-    const uniqueDois = Array.from(new Set(normalizedDois));
+    const uniqueDois = new Set(normalizedDois);
 
     // Load database
     const database = await loadDatabase();
@@ -157,7 +171,7 @@ export async function POST(request: NextRequest) {
       const originalUrl = String(row.original_url || "");
       const dbDoi = extractDoiFromUrl(originalUrl);
       
-      if (dbDoi && uniqueDois.includes(dbDoi)) {
+      if (dbDoi && uniqueDois.has(dbDoi)) {
         const originalEs = row.original_es_r != null ? Number(row.original_es_r) : null;
         const replicationEs = row.replication_es_r != null ? Number(row.replication_es_r) : null;
         
@@ -184,13 +198,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       message: `Found ${uniqueMatches.length} matching DOI${uniqueMatches.length !== 1 ? "s" : ""} in the database.`,
       matches: uniqueMatches,
-      totalDois: uniqueDois.length,
+      totalDois: uniqueDois.size,
       matchedDois: uniqueMatches.length,
     });
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Unknown error";
+    if (err instanceof RequestError) return NextResponse.json({ error: err.message }, { status: err.status });
     console.error("Error processing bibliography:", err);
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json({ error: "Unable to process bibliography." }, { status: 500 });
   }
 }
 

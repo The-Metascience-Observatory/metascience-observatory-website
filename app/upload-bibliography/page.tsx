@@ -48,6 +48,11 @@ export default function UploadBibliographyPage() {
         setFile(null);
         return;
       }
+      if (selectedFile.size > 2 * 1024 * 1024) {
+        setError("File is too large. Maximum size is 2 MB.");
+        setFile(null);
+        return;
+      }
       setFile(selectedFile);
       setError(null);
       setResult(null);
@@ -119,7 +124,7 @@ export default function UploadBibliographyPage() {
                   disabled={uploading}
                 />
                 <p className="text-xs text-foreground/60 mt-1">
-                  Supported formats: .bib (BibTeX), .xml (BibTeX XML), .ris (RIS)
+                  Supported formats: .bib (BibTeX), .xml (BibTeX XML), .ris (RIS). Maximum size: 2 MB.
                 </p>
               </div>
 

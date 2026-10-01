@@ -23,7 +23,8 @@ export function generateCitationHtml(
   const authorList = authorStr
     .split(/;|,|\band\b/)
     .map((a) => a.trim())
-    .filter(Boolean);
+    .filter(Boolean)
+    .map(escapeHtml);
   let shortAuthor = "";
   if (authorList.length === 1) {
     shortAuthor = authorList[0];
@@ -33,25 +34,35 @@ export function generateCitationHtml(
     shortAuthor = `${authorList[0]} <i>et al.</i>`;
   }
 
-  const journalPart = journalStr ? ` <i>${journalStr}</i>` : "";
-  const yearPart = yearStr ? ` ${yearStr}` : "";
+  const journalPart = journalStr ? ` <i>${escapeHtml(journalStr)}</i>` : "";
+  const yearPart = yearStr ? ` ${escapeHtml(yearStr)}` : "";
   const inner = `${shortAuthor}${journalPart}${yearPart}`.trim();
 
   if (!inner) return "";
 
   const normalizedUrl = normalizeDoiUrl(String(url ?? "").trim());
   if (normalizedUrl) {
-    return `<a href="${normalizedUrl}" target="_blank" style="text-decoration:none; color:inherit;">${inner}</a>`;
+    return `<a href="${escapeHtml(normalizedUrl)}" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit;">${inner}</a>`;
   }
   return inner;
 }
 
-/**
- * Normalize a URL: ensure doi.org URLs use https.
- */
+function escapeHtml(value: string): string {
+  return value.replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+/** Allow HTTP(S) links only and upgrade DOI resolver links to HTTPS. */
 function normalizeDoiUrl(url: string): string {
   if (!url) return "";
-  return url.replace(/^http:\/\/doi\.org\//, "https://doi.org/");
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return "";
+    if (parsed.hostname === "doi.org") parsed.protocol = "https:";
+    return parsed.href;
+  } catch {
+    return "";
+  }
 }
 
 /**
