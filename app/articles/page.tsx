@@ -139,6 +139,10 @@ const replicationsDatabasePages: DocMeta[] = [
 
 const documentation: DocMeta[] = [
   {
+    href: "/sources",
+    title: "Sources used to assemble the replications database",
+  },
+  {
     href: "/docs/data-dictionary",
     title: "Replications database data dictionary",
   },

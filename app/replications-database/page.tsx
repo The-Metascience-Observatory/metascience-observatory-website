@@ -7,7 +7,7 @@ import { Download } from "lucide-react";
 import { toast } from "sonner";
 import { ReplicationsNavbar } from "@/components/ReplicationsNavbar";
 import { Footer } from "@/components/Footer";
-import { FredAcknowledgment, FloraAcknowledgment, PerryAcknowledgment } from "@/components/ReplicationAcknowledgments";
+import { FredAcknowledgment, PerryAcknowledgment } from "@/components/ReplicationAcknowledgments";
 import { MultiSelectDropdown } from "@/components/MultiSelectDropdown";
 import { Input } from "@/components/ui/input";
 import { generateCitationHtml, transformCitationHtmlToExplorer, citationSearchText } from "@/lib/citations";
@@ -1022,12 +1022,14 @@ function ReplicationsDatabaseContent() {
       </section>
 
       <section className="mx-auto max-w-[90%] mt-6 space-y-3">
-        <p className="opacity-80 text-xs">
-          <FredAcknowledgment />{" "}
-          <FloraAcknowledgment />{" "}
-          <PerryAcknowledgment />{" "}
-          We also imported data from several replication initiatives. <Link className="underline" href="/sources">A full list of sources can be found here.</Link>
-        </p>
+        <div className="text-foreground-strong text-xs leading-relaxed space-y-3">
+          <p><strong>Acknowledgments:</strong></p>
+          <FredAcknowledgment expanded />
+          <PerryAcknowledgment expanded />
+          <p>
+            We also imported data from several replication initiatives. <Link className="underline" href="/sources">A full list of sources can be found here.</Link>
+          </p>
+        </div>
       </section>
 
       <section className="mx-auto max-w-[90%] border rounded mt-6">

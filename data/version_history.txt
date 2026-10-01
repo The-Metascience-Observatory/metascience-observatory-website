@@ -117,3 +117,5 @@ replications_database_2026_08_12_184233.csv # cosmetic repair of 2 cells on the 
 replications_database_2026_09_04_174646.csv # added collated_results_base_v88_sonnet_200.csv
 replications_database_2026_09_04_184008.csv # added collated_results_base_v88_sonnet_400.csv
 replications_database_2026_09_28_155521.csv # standardized FLoRa to FLoRA in validated_person (539 rows) and source (542 rows); preserved all other values and all 8892 effect rows. Previous master archived in data/backup/.
+
+replications_database_2026_10_01_120611.csv # filled 398 blank FORRT source fields with FORRT FReD explorer; prefixed FReD with FORRT in 1057 existing source fields. Preserved all other cells, all 8892 rows, and existing source notes. Previous master archived in data/backup/.

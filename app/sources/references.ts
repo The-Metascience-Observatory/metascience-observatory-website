@@ -29,7 +29,7 @@ export const initiativeReferences: InitiativeReference[] = [
   {
     "tag": "socsci_2026",
     "initiative": "DARPA SCORE Social and Behavioural Sciences Replication Project",
-    "authors": "Andrew H. Tyner, et al.",
+    "authors": "A. H. Tyner, et al.",
     "year": "2026",
     "title": "Investigating the replicability of the social and behavioural sciences",
     "venue": "Nature",
@@ -41,18 +41,17 @@ export const initiativeReferences: InitiativeReference[] = [
   {
     "tag": "DataReplicada",
     "initiative": "Data Replicada — Data Colada Replication Series",
-    "authors": "Joseph P. Simmons, et al.",
+    "authors": "J. P. Simmons, et al.",
     "year": "2019, December 9",
     "title": "Data Replicada",
     "venue": "Data Colada",
     "articleNumber": "Post 81",
-    "url": "https://datacolada.org/81",
-    "note": "Introduction to the Data Replicada series."
+    "url": "https://datacolada.org/81"
   },
   {
     "tag": "ScarcityPNAS",
     "initiative": "Empirical Audit of Scarcity Research",
-    "authors": "Michael O’Donnell, et al.",
+    "authors": "M. O’Donnell, et al.",
     "year": "2021",
     "title": "Empirical audit and review and an assessment of evidentiary value in research on the psychological consequences of scarcity",
     "venue": "Proceedings of the National Academy of Sciences",
@@ -64,7 +63,7 @@ export const initiativeReferences: InitiativeReference[] = [
   {
     "tag": "EROE",
     "initiative": "Examining Replicability of Online Experiments",
-    "authors": "Felix Holzmeister, et al.",
+    "authors": "F. Holzmeister, et al.",
     "year": "2025",
     "title": "Examining the replicability of online experiments selected by a decision market",
     "venue": "Nature Human Behaviour",
@@ -76,7 +75,7 @@ export const initiativeReferences: InitiativeReference[] = [
   {
     "tag": "ExECON",
     "initiative": "Experimental Economics Replications",
-    "authors": "Colin F. Camerer, et al.",
+    "authors": "C. F. Camerer, et al.",
     "year": "2016",
     "title": "Evaluating replicability of laboratory experiments in economics",
     "venue": "Science",
@@ -88,7 +87,7 @@ export const initiativeReferences: InitiativeReference[] = [
   {
     "tag": "XPHIR",
     "initiative": "Experimental Philosophy Reproducibility Project",
-    "authors": "Florian Cova, et al.",
+    "authors": "F. Cova, et al.",
     "year": "2021",
     "title": "Estimating the Reproducibility of Experimental Philosophy",
     "venue": "Review of Philosophy and Psychology",
@@ -105,12 +104,12 @@ export const initiativeReferences: InitiativeReference[] = [
     "title": "Replication papers",
     "venue": "3ie",
     "url": "https://www.3ieimpact.org/evidence-hub/publications/replication-papers",
-    "note": "Official index of the replication paper series. Accessed September 28, 2026."
+    "note": "(Official index of the replication paper series. Accessed Spring 2026.)"
   },
   {
     "tag": "Soto et al LOPPRP",
     "initiative": "Life Outcomes of Personality Replication Project",
-    "authors": "Christopher J. Soto",
+    "authors": "C. J. Soto",
     "year": "2019",
     "title": "How Replicable Are Links Between Personality Traits and Consequential Life Outcomes? The Life Outcomes of Personality Replication Project",
     "venue": "Psychological Science",
@@ -122,7 +121,7 @@ export const initiativeReferences: InitiativeReference[] = [
   {
     "tag": "ML1",
     "initiative": "Many Labs 1",
-    "authors": "Richard A. Klein, et al.",
+    "authors": "R. A. Klein, et al.",
     "year": "2014",
     "title": "Investigating Variation in Replicability: A “Many Labs” Replication Project",
     "venue": "Social Psychology",
@@ -134,7 +133,7 @@ export const initiativeReferences: InitiativeReference[] = [
   {
     "tag": "ML2",
     "initiative": "Many Labs 2",
-    "authors": "Richard A. Klein, et al.",
+    "authors": "R. A. Klein, et al.",
     "year": "2018",
     "title": "Many Labs 2: Investigating Variation in Replicability Across Samples and Settings",
     "venue": "Advances in Methods and Practices in Psychological Science",
@@ -146,7 +145,7 @@ export const initiativeReferences: InitiativeReference[] = [
   {
     "tag": "ML3",
     "initiative": "Many Labs 3",
-    "authors": "Charles R. Ebersole, et al.",
+    "authors": "C. R. Ebersole, et al.",
     "year": "2016",
     "title": "Many Labs 3: Evaluating participant pool quality across the academic semester via replication",
     "venue": "Journal of Experimental Social Psychology",
@@ -157,7 +156,7 @@ export const initiativeReferences: InitiativeReference[] = [
   {
     "tag": "ML4",
     "initiative": "Many Labs 4",
-    "authors": "Richard A. Klein, et al.",
+    "authors": "R. A. Klein, et al.",
     "year": "2022",
     "title": "Many Labs 4: Failure to Replicate Mortality Salience Effect With and Without Original Author Involvement",
     "venue": "Collabra: Psychology",
@@ -169,7 +168,7 @@ export const initiativeReferences: InitiativeReference[] = [
   {
     "tag": "ML5",
     "initiative": "Many Labs 5",
-    "authors": "Charles R. Ebersole, et al.",
+    "authors": "C. R. Ebersole, et al.",
     "year": "2020",
     "title": "Many Labs 5: Testing Pre-Data-Collection Peer Review as an Intervention to Increase Replicability",
     "venue": "Advances in Methods and Practices in Psychological Science",
@@ -181,7 +180,7 @@ export const initiativeReferences: InitiativeReference[] = [
   {
     "tag": "RRR",
     "initiative": "Registered Replication Reports",
-    "authors": "Daniel J. Simons, et al.",
+    "authors": "D. J. Simons, et al.",
     "year": "2014",
     "title": "An Introduction to Registered Replication Reports at Perspectives on Psychological Science",
     "venue": "Perspectives on Psychological Science",
@@ -194,7 +193,7 @@ export const initiativeReferences: InitiativeReference[] = [
   {
     "tag": "RSESR",
     "initiative": "Replicability of Sports and Exercise Science Research",
-    "authors": "Jennifer Murphy, et al.",
+    "authors": "J. Murphy, et al.",
     "year": "2025",
     "title": "Estimating the Replicability of Sports and Exercise Science Research",
     "venue": "Sports Medicine",
@@ -206,7 +205,7 @@ export const initiativeReferences: InitiativeReference[] = [
   {
     "tag": "L2R:Marsden2018",
     "initiative": "Replication in Second Language Research",
-    "authors": "Emma Marsden, et al.",
+    "authors": "E. Marsden, et al.",
     "year": "2018",
     "title": "Replication in Second Language Research: Narrative and Systematic Reviews and Recommendations for the Field",
     "venue": "Language Learning",
@@ -218,7 +217,7 @@ export const initiativeReferences: InitiativeReference[] = [
   {
     "tag": "RP:CB",
     "initiative": "Reproducibility Project: Cancer Biology",
-    "authors": "Timothy M. Errington, et al.",
+    "authors": "T. M. Errington, et al.",
     "year": "2021",
     "title": "Investigating the replicability of preclinical cancer biology",
     "venue": "eLife",
@@ -241,7 +240,7 @@ export const initiativeReferences: InitiativeReference[] = [
   {
     "tag": "SMR",
     "initiative": "Sensory Marketing Replications",
-    "authors": "Kosuke Motoki, et al.",
+    "authors": "K. Motoki, et al.",
     "year": "2022",
     "title": "Evaluating replicability of ten influential research on sensory marketing",
     "venue": "Frontiers in Communication",
@@ -252,20 +251,19 @@ export const initiativeReferences: InitiativeReference[] = [
   {
     "tag": "SPRRR",
     "initiative": "Social Psychology Special Issue on Registered Replication Reports",
-    "authors": "Brian A. Nosek, et al.",
+    "authors": "B. A. Nosek, et al.",
     "year": "2014",
     "title": "Registered Reports: A Method to Increase the Credibility of Published Results",
     "venue": "Social Psychology",
     "url": "https://doi.org/10.1027/1864-9335/a000192",
     "volume": "45",
     "issue": "3",
-    "pages": "137–141",
-    "note": "Editorial introducing the special issue."
+    "pages": "137–141"
   },
   {
     "tag": "SSRP",
     "initiative": "Social Science Replication Project",
-    "authors": "Colin F. Camerer, et al.",
+    "authors": "C. F. Camerer, et al.",
     "year": "2018",
     "title": "Evaluating the replicability of social science experiments in Nature and Science between 2010 and 2015",
     "venue": "Nature Human Behaviour",
@@ -277,7 +275,7 @@ export const initiativeReferences: InitiativeReference[] = [
   {
     "tag": "SRP",
     "initiative": "Student Replication Projects",
-    "authors": "Veronica Boyce, et al.",
+    "authors": "V. Boyce, et al.",
     "year": "2023",
     "title": "Eleven years of student replication projects provide evidence on the correlates of replicability in psychology",
     "venue": "Royal Society Open Science",
