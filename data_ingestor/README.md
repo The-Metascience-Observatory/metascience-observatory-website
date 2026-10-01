@@ -2,6 +2,14 @@
 
 An ETL (Extract, Transform, Load) pipeline for ingesting, enriching, and standardizing replication experiment data into the master replications database.
 
+## License
+
+Python source files (`*.py`) in this directory and its subdirectories are
+licensed under the [MIT License](LICENSE). The same license also covers
+`../scripts/ingest_eroe_effect_sizes.py`. Datasets, metadata caches,
+documentation, images, and generated outputs are outside this exception and
+remain subject to the [root terms](../LICENSE) or their own third-party licenses.
+
 > **This directory is the canonical home of the ingestion code.** It was
 > briefly consolidated into `mo_pipeline` (2026-07-13, see the old
 > `DEPRECATED.md`), but development continued here and the consolidation was

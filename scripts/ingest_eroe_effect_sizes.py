@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2026 The Metascience Observatory and its contributors
+# See ../data_ingestor/LICENSE for the full license text.
 """Ingest effect sizes for the 26 EROE rows (Holzmeister et al. 2024,
 "Examining the replicability of online experiments selected by a decision
 market", Nat Hum Behav, 10.1038/s41562-024-02062-9).

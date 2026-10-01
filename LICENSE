@@ -1,0 +1,42 @@
+Copyright (c) 2026 The Metascience Observatory and its contributors.
+All rights reserved, except as expressly stated below.
+
+Default terms
+
+These terms apply to the original material in this repository and on the
+Metascience Observatory website, including website source code, design, text,
+documentation, images, and copyrightable database selection and arrangement.
+Except for the MIT exception below, separately licensed material, or uses
+permitted by law, no permission is granted to reproduce, modify, distribute,
+sublicense, or commercially exploit this material without prior written
+permission from the relevant copyright holder.
+
+Public access to this repository does not grant a general license to reuse its
+contents. Rights granted under the repository host's terms of service, including
+viewing and forking through that service, are unaffected. Ordinary browsing and
+use of the website's publicly available features are permitted.
+
+MIT exception for data ingestion code
+
+The Python source files (*.py) under data_ingestor/ (including subdirectories)
+and scripts/ingest_eroe_effect_sizes.py are licensed under the MIT License in
+data_ingestor/LICENSE. This exception covers only that source code. It does not
+license datasets, metadata caches, documents, images, or generated outputs,
+whether stored alongside the code or produced by running it. All other original
+repository material remains subject to the default terms above unless a
+separate license is expressly identified.
+
+Third-party material and existing rights
+
+Third-party code, dependencies, datasets, publications, figures, and other
+assets remain subject to their respective copyright notices and licenses.
+These terms do not replace or restrict those licenses or revoke permissions
+already granted under them. In particular, the existing CC BY 4.0 notices for
+FORRT FReD and FLoRA data continue to apply. See the website's dataset
+acknowledgments and individual source notices for applicable terms.
+
+No ownership is claimed over third-party material, public-domain material, or
+facts that are not protected by copyright. Nothing here limits fair use or
+other rights and exceptions provided by applicable law.
+
+Permission requests: info@metascienceobservatory.org

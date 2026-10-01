@@ -8,6 +8,25 @@ Built with Next.js 15 (App Router), React 18, TypeScript, Tailwind CSS,
 Radix UI, React Query, and Recharts. See `package.json` and `package-lock.json`
 for the installed versions.
 
+## Copyright and licensing
+
+Copyright © 2026 The Metascience Observatory and its contributors.
+**All rights reserved**, except for the data ingestion code and separately
+licensed material described in [LICENSE](LICENSE).
+
+- Python source files (`*.py`) under `data_ingestor/`, including subdirectories,
+  and `scripts/ingest_eroe_effect_sizes.py` are licensed under the
+  [MIT License](data_ingestor/LICENSE).
+- The MIT exception does not cover datasets, metadata caches, documentation,
+  images, or generated outputs. Other original website and repository material
+  remains all rights reserved.
+- Third-party material retains its own licenses, including the existing
+  CC BY 4.0 licenses for FORRT FReD and FLoRA data. Public-domain material and
+  unprotected facts are not subject to this copyright claim.
+
+Public availability does not grant a general reuse license. For permissions,
+contact [info@metascienceobservatory.org](mailto:info@metascienceobservatory.org).
+
 ## Run locally
 
 Use Node.js 22 LTS and npm. From the repository root:
@@ -90,8 +109,8 @@ project's author-access requirements.
   protection in the destination repository where available.
 - Run `npm audit --omit=dev` and evaluate advisories against the deployed app.
 - Confirm redistribution permissions for bundled research data and third-party
-  assets, and choose code/data licenses before inviting reuse. This repository
-  currently contains no root license file.
+  assets, and preserve their source notices and licenses. See [LICENSE](LICENSE)
+  for the repository's default terms and ingestion-code exception.
 
 ## Public endpoint limits
 

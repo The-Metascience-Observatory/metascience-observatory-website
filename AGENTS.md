@@ -147,7 +147,7 @@ A duplicate needs matching **effect sizes and sample sizes on both sides**, afte
 
 - **Bundle:** `data/birds_eye_reviews/long_covid/`; primary extraction file: `trial_extractions.jsonl`. See `last_updated.json` for release metadata.
 - `lib/long-covid/data-path.ts` resolves the bundle path; `LONG_COVID_DATA_DIR` is an optional server-only override for local release validation.
-- Publication filtering and public article serialization live in `lib/long-covid/`. Follow the existing release checks in `docs/audits/long-covid-release-20260923.md`.
+- Publication filtering and public article serialization live in `lib/long-covid/`.
 - One JSON object per line
 - Each record: `paper_id` (DOI), `study_design` (arms, countries, blinding, design_type), `sample_sizes`, `outcomes` (is_primary, symptom_domain, between_group_effects with effect_value/ci/p_value, higher_is_better), `risk_of_bias` (overall_judgment + RoB2 domains), `participants` (long_covid_definition, min_time_since_infection_weeks), `follow_up`
 - Server-side processing in `page.tsx` converts this into ~10 typed data structures for the dashboard
