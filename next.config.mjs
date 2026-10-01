@@ -52,6 +52,13 @@ const nextConfig = {
         destination: '/forensic-metascience-ai-toolkit/:path*',
         permanent: true,
       },
+      // The image-findings PNGs moved with the project (2026-10-01); links
+      // already posted (PubPeer, social) keep resolving.
+      {
+        source: '/assets/forensic-metascience-agent/:path*',
+        destination: '/assets/forensic-metascience-ai-toolkit/:path*',
+        permanent: true,
+      },
       {
         source: '/replication-projectsnew',
         destination: '/replication-initiatives',

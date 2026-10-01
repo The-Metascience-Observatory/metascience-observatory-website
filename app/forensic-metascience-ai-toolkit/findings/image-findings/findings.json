@@ -16,7 +16,7 @@
     "submitted": "2026-09-06",
     "summary": "Figure 5a contains a duplicated region across rows labeled as different treatments. The center column shows matching cells, with almost identical fluorescence patterns, although some spots in the second row do not appear in the first.",
     "image": {
-      "src": "/assets/forensic-metascience-agent/image-findings/fu-2012.png",
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/fu-2012.png",
       "width": 1214,
       "height": 1076,
       "alt": "Annotated Figure 5a with matching cell regions outlined in the Mimics-NC and Inhibitor-NC treatment rows."
@@ -39,7 +39,7 @@
     "submitted": "2026-09-06",
     "summary": "A duplicated region appears across two different staining conditions.",
     "image": {
-      "src": "/assets/forensic-metascience-agent/image-findings/shukla-2010.png",
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/shukla-2010.png",
       "width": 1548,
       "height": 1076,
       "alt": "Annotated Figure 4 with matching tissue regions outlined in the STAT3 and pSTAT3(Y705) panels."
@@ -63,7 +63,7 @@
     "submitted": "2026-09-06",
     "summary": "A duplicated region appears across figures corresponding to two different mouse strains, C57BL/6J and BALB/c.",
     "image": {
-      "src": "/assets/forensic-metascience-agent/image-findings/liberatore-2017.png",
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/liberatore-2017.png",
       "width": 2048,
       "height": 889,
       "alt": "Comparison of Figures 1 and 4, with matching retinal tissue regions outlined in cyan."
@@ -109,7 +109,7 @@
     "submitted": "2026-09-09",
     "summary": "Images appear to be reused across papers. The 2014 caption describes “EGFP expression in pAcISUBC transfected BuMECs.” The pAcISUBC human insulin expression vector was constructed in the 2014 paper and does not appear in the 2013 paper.",
     "image": {
-      "src": "/assets/forensic-metascience-agent/image-findings/kaushik-2014.png",
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/kaushik-2014.png",
       "width": 1776,
       "height": 560,
       "alt": "Comparison of Figure 3 from Kaushik et al. (2013) and Figure 2 from Kaushik et al. (2014), showing matching fluorescence and cell images."
@@ -132,7 +132,7 @@
     "submitted": "2026-09-10",
     "summary": "An image is reused with a 180-degree rotation.",
     "image": {
-      "src": "/assets/forensic-metascience-agent/image-findings/yu-2014.png",
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/yu-2014.png",
       "width": 1806,
       "height": 1116,
       "alt": "Comparison of Figure 2D and Figure 4C, with matching regions outlined under the miR-200b and siRNA-Bmi-1 labels."
@@ -155,7 +155,7 @@
     "submitted": "2026-09-11",
     "summary": "Figure 3A contains a duplicated image across conditions. The GFP panels labeled DMSO and 4523 show matching fluorescence patterns.",
     "image": {
-      "src": "/assets/forensic-metascience-agent/image-findings/kirby-2025.png",
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/kirby-2025.png",
       "width": 2359,
       "height": 790,
       "alt": "Annotated Figure 3A with matching GFP regions outlined in the DMSO and 4523 treatment columns."
@@ -184,7 +184,7 @@
     "videoCaption": "Figure 3b and Dickendesher thesis",
     "images": [
       {
-        "src": "/assets/forensic-metascience-agent/image-findings/stiles-2013-fig5-fig8.png",
+        "src": "/assets/forensic-metascience-ai-toolkit/image-findings/stiles-2013-fig5-fig8.png",
         "width": 2023,
         "height": 926,
         "wide": true,
@@ -192,7 +192,7 @@
         "caption": "Figures 5B and 8A"
       },
       {
-        "src": "/assets/forensic-metascience-agent/image-findings/stiles-2013-fig3b-thesis.png",
+        "src": "/assets/forensic-metascience-ai-toolkit/image-findings/stiles-2013-fig3b-thesis.png",
         "width": 2048,
         "height": 1708,
         "wide": true,
@@ -219,7 +219,7 @@
     "summary": "A duplicated region appears between Supplementary Figure 4 (left) and Figure 4 (right), in addition to issues already noted on PubPeer.",
     "images": [
       {
-        "src": "/assets/forensic-metascience-agent/image-findings/dickendesher-2012-fig4.png",
+        "src": "/assets/forensic-metascience-ai-toolkit/image-findings/dickendesher-2012-fig4.png",
         "width": 1284,
         "height": 939,
         "wide": true,
@@ -244,7 +244,7 @@
     "submitted": "2026-09-22",
     "summary": "Duplication across control and control + Febuxostat.",
     "image": {
-      "src": "/assets/forensic-metascience-agent/image-findings/he-2017.png",
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/he-2017.png",
       "width": 516,
       "height": 232,
       "alt": "Annotated kidney tissue images with matching regions outlined in cyan in the Masson-stained control and control+Fx panels."
@@ -267,7 +267,7 @@
     "submitted": "2026-09-22",
     "summary": "In figure 3G the panel on the right has the same neurons as the panel next to it, but rotated 180 degrees and then flipped horizontally. The red overlay is similar but a bit different.",
     "image": {
-      "src": "/assets/forensic-metascience-agent/image-findings/duncan-2021.png",
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/duncan-2021.png",
       "width": 564,
       "height": 594,
       "alt": "Annotated panel G with matching dendritic regions outlined in cyan in the Cofilin Fc and Sema3F-Fc images."
@@ -295,7 +295,7 @@
     "submitted": "2026-09-23",
     "summary": "Figure 1 contains a duplication across conditions, with the image flipped horizontally. Matching regions appear in the wild-type DMSO and Hipk2 knockout tunicamycin panels.",
     "image": {
-      "src": "/assets/forensic-metascience-agent/image-findings/lee-2016.png",
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/lee-2016.png",
       "width": 1410,
       "height": 1284,
       "alt": "Annotated Figure 1 with matching regions outlined in yellow in panels B and K and their merged images, C and L."
@@ -324,7 +324,7 @@
     "submitted": "2026-09-25",
     "summary": "Figure 7 contains an image duplication with a 180-degree rotation.",
     "image": {
-      "src": "/assets/forensic-metascience-agent/image-findings/lakka-2000.png",
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/lakka-2000.png",
       "width": 894,
       "height": 703,
       "alt": "Annotated Figure 7 with matching regions outlined in cyan in the ERK1 mt and 5 µM PD98059 panels."
@@ -347,7 +347,7 @@
     "submitted": "2026-09-25",
     "summary": "A duplicated region appears in the control panels for U251 cells and glioblastoma xenograft cells in Figure 4.",
     "image": {
-      "src": "/assets/forensic-metascience-agent/image-findings/nalabothula-2007.png",
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/nalabothula-2007.png",
       "width": 1598,
       "height": 376,
       "alt": "Annotated Figure 4 with matching regions outlined in cyan in the control panels for U251 cells and glioblastoma xenograft cells."
@@ -370,7 +370,7 @@
     "submitted": "2026-09-25",
     "summary": "A duplicated region appears in the Control and pSV panels in Figure 3.",
     "image": {
-      "src": "/assets/forensic-metascience-agent/image-findings/subramanian-2006.png",
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/subramanian-2006.png",
       "width": 883,
       "height": 502,
       "alt": "Annotated Figure 3 with matching regions outlined in cyan in the Control and pSV panels."
@@ -394,7 +394,7 @@
     "summary": "Two images are reused across papers under different condition labels; one is horizontally reflected.",
     "images": [
       {
-        "src": "/assets/forensic-metascience-agent/image-findings/chetty-2012.png",
+        "src": "/assets/forensic-metascience-ai-toolkit/image-findings/chetty-2012.png",
         "width": 1590,
         "height": 1492,
         "alt": "Annotated comparison of Figure 4 from the SPARC/STAT3 paper and Figure 6 from the SPARC/SOX4 paper, with matching regions outlined in color.",
@@ -420,14 +420,14 @@
     "summary": "An image is re-used from another publication with a 90 degree rotation. The image purports to show xenographed tumor tissue across four different mice, but the same tissue appears in all four images but with changes in color.",
     "images": [
       {
-        "src": "/assets/forensic-metascience-agent/image-findings/pandey-2010.png",
+        "src": "/assets/forensic-metascience-ai-toolkit/image-findings/pandey-2010.png",
         "width": 1562,
         "height": 1447,
         "alt": "Annotated Figure 6 with the matching regions outlined.",
         "caption": "Earlier comparison: image reuse across publications with a 90-degree rotation. Submitted September 26, 2026."
       },
       {
-        "src": "/assets/forensic-metascience-agent/image-findings/pandey-2010-xenograft.png",
+        "src": "/assets/forensic-metascience-ai-toolkit/image-findings/pandey-2010-xenograft.png",
         "width": 1660,
         "height": 895,
         "wide": true,
@@ -453,7 +453,7 @@
     "submitted": "2026-09-26",
     "summary": "image duplication across conditions",
     "image": {
-      "src": "/assets/forensic-metascience-agent/image-findings/park-2011.png",
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/park-2011.png",
       "width": 818,
       "height": 1694,
       "alt": "Annotated Figure 4 and Figure 5 with the matching regions outlined."
@@ -476,7 +476,7 @@
     "submitted": "2026-09-26",
     "summary": "duplication",
     "image": {
-      "src": "/assets/forensic-metascience-agent/image-findings/prasad-2012.png",
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/prasad-2012.png",
       "width": 756,
       "height": 473,
       "alt": "Annotated Figure 6 with the matching regions outlined."
@@ -499,7 +499,7 @@
     "submitted": "2026-09-26",
     "summary": "cross-paper image re-use with different label. (and another 3 images re-used with same labels)",
     "image": {
-      "src": "/assets/forensic-metascience-agent/image-findings/tummalapalli-2007.png",
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/tummalapalli-2007.png",
       "width": 1620,
       "height": 1311,
       "alt": "Annotated Figure 4 and Figure 3 with the matching regions outlined."
@@ -522,7 +522,7 @@
     "submitted": "2026-09-26",
     "summary": "re-use with 180 degree rotation",
     "image": {
-      "src": "/assets/forensic-metascience-agent/image-findings/rao-2013.png",
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/rao-2013.png",
       "width": 1045,
       "height": 449,
       "alt": "Annotated Figure 6 with the matching regions outlined."
@@ -545,7 +545,7 @@
     "submitted": "2026-09-27",
     "summary": "duplication with vertical flip. (not the subject of the Erratum on this paper)",
     "image": {
-      "src": "/assets/forensic-metascience-agent/image-findings/kunnumakkara-2009.png",
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/kunnumakkara-2009.png",
       "width": 1582,
       "height": 535,
       "alt": "Annotated Figure 6 with the matching regions outlined."
@@ -568,7 +568,7 @@
     "submitted": "2026-09-27",
     "summary": "duplication",
     "image": {
-      "src": "/assets/forensic-metascience-agent/image-findings/chintala-1999.png",
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/chintala-1999.png",
       "width": 1059,
       "height": 909,
       "alt": "Annotated Figure 9 with the matching regions outlined."
@@ -591,7 +591,7 @@
     "submitted": "2026-09-27",
     "summary": "duplication",
     "image": {
-      "src": "/assets/forensic-metascience-agent/image-findings/chintala-1998.png",
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/chintala-1998.png",
       "width": 1525,
       "height": 1298,
       "alt": "Annotated Figure 10 with the matching regions outlined."

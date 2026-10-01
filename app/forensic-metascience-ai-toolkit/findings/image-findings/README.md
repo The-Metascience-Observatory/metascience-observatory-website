@@ -1,7 +1,7 @@
 # Image findings
 
 `findings.json` contains the PubPeer image-finding submissions. The original
-PNGs live in `public/assets/forensic-metascience-agent/image-findings/`. The
+PNGs live in `public/assets/forensic-metascience-ai-toolkit/image-findings/`. The
 Tenbaum entry uses the source document's YouTube comparison because that entry
 has no embedded image. PubPeer URLs include Word field-code hyperlinks;
 meaningless `#null` fragments were removed. Submission dates are stored as ISO
