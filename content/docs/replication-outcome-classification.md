@@ -1,6 +1,6 @@
 # Mathematical Methods for Classifying Replication Outcomes
 
-The Replications Database provides four definitions of replication success: the outcome **as recorded in the database** (the `result` column), plus three statistical methods computed from the effect sizes. All three statistical methods operate on effect sizes that have been converted to Pearson's $r$ (see [Effect Size Normalization](/docs/effect-size-normalization)).
+The Replications Database provides four definitions of replication success: the outcome **as recorded in the database** (the `result` column), plus three statistical methods computed from the effect sizes. The significance method normally uses normalized Pearson's $r$ values and reported or computed $p$-values. The confidence-interval methods first try raw effect sizes with reported intervals, then fall back to normalized $r$ values (see [Effect Size Normalization](/docs/effect-size-normalization)). These are operational classification rules, not definitive tests of whether a scientific claim is true.
 
 | Method | Question Asked |
 |--------|----------------|
@@ -13,7 +13,7 @@ The Replications Database provides four definitions of replication success: the 
 
 ## How the Replication Rate Is Computed
 
-Every method above sorts a replication into one of four outcomes: **success**, **failure**, **reversal**, or **inconclusive**. Turning those four buckets into a single percentage requires two further choices — what goes in the denominator, and what counts as one observation. Those choices move the headline number by more than any of the statistical methods do, so both are fixed site-wide and stated on every page that shows a rate.
+The shared classifier uses four labels: **success**, **failure**, **reversal**, and **inconclusive**. The CI methods return only success, failure, or inconclusive; they do not separately label reversals. The reported-result method recognizes the recorded success, failure, and reversal labels after trimming whitespace and ignoring case; blank or unrecognized values are treated as inconclusive. Rates also depend on the denominator, unit of analysis, and page filters.
 
 ### The definition
 
@@ -21,42 +21,27 @@ $$\text{replication rate} = \frac{\text{success}}{\text{success} + \text{failure
 
 Two decisions are embedded here:
 
-**A reversal counts as a failure.** A reversal is a statistically significant effect in the *opposite* direction from the original. That is a determinate result, not an absence of one — the replication did not fail to inform us, it contradicted the original. Excluding reversals would let the most decisive contradictions quietly leave the denominator.
+**A reversal counts as a failure.** Under the significance rule, this normally means a significant replication effect with the opposite sign to a significant original effect. For reported results, it is the stored classification. Both failure and reversal enter the denominator as non-successes; neither label alone establishes a statistically significant difference between the two effect estimates.
 
-**Inconclusive results are excluded, not counted as failures.** "We could not tell" is a different finding from "it did not replicate," and a replication that lacks the statistics needed to classify it says nothing about the original's robustness. Counting these as failures would confound missing data with negative evidence. Rows with no recorded outcome at all are excluded on the same grounds.
+**Inconclusive results are excluded, not counted as failures.** Rows without enough usable inputs are not automatically failures. Recorded inconclusive outcomes and rows with no recognized outcome are excluded too. This rate is conditional on the classified subset; missingness can affect how representative that subset is. If there are no classified rows, the rate is undefined, not zero.
 
 ### The unit of analysis
 
 The site-wide headline counts one **replication effect** — one row of the database — as one observation. This is the simplest unit to describe, and it introduces no threshold parameter that would need defending.
 
-Some pages also offer a **paper-level** view, which groups a paper's effect replications by the original study and asks whether at least a given share of them succeeded (75% by default). This answers a different question — "what fraction of *papers* hold up?" rather than "what fraction of *findings* hold up?" — and it weights a paper with one replicated effect equally with a paper with twenty. Where a page shows a paper-level rate, it says so and states the threshold.
+Some pages also offer a **paper-level** view, which groups rows by the original paper URL and asks whether at least a given share of its classified effect replications succeeded (75% by default on the by-year page). This answers a different question — "what fraction of *papers* hold up?" rather than "what fraction of *findings* hold up?" — and it weights a paper with one replicated effect equally with a paper with twenty. Rows without an original paper URL and papers without classified effects are excluded from this aggregation. Check the threshold and filters on the page being used.
 
 Note that the effect-level rate gives more weight to heavily-replicated papers, and the paper-level rate gives more weight to lightly-replicated ones. Neither is "correct"; they answer different questions.
 
 ### Coverage filters
 
-Several pages restrict the denominator further — to originals with a recorded publication year, or a $p$-value below 0.05, or a match in an external citation, h-index, or journal-metric dataset. Those restrictions change the rate, sometimes by several points, purely by changing which studies are in scope. Each page states its filter and its denominator alongside the rate for exactly this reason.
+Several pages restrict the denominator further — to originals with a recorded publication year, or a $p$-value below 0.05, or a match in an external citation, h-index, or journal-metric dataset. Those restrictions change the rate, sometimes by several points, purely by changing which studies are in scope. Compare rates only after checking the selected method, filters, and denominator on each page.
 
 ### Sensitivity of the headline number
 
-The choices above are defensible but not unique, and it is more honest to publish the range than to publish one number. Under the reported-result definition, the effect-level and paper-level rates span roughly **46% to 64%**:
+Including inconclusive rows in the denominator lowers the rate; excluding reversals raises it. Paper-level rates additionally depend on the chosen success threshold and which rows can be grouped by paper. These changes answer different questions and should be reported with the rate.
 
-| Definition | Rate |
-|---|---|
-| Success / all rows, including those with no recorded outcome | 46.2% |
-| Success / all recorded outcomes (inconclusive in the denominator) | 47.0% |
-| **Success / (success + failure + reversal)** — the site-wide definition | **55.5%** |
-| Success / (success + failure), reversals dropped | 56.6% |
-| Paper level, every effect must succeed | 56.8% |
-| Paper level, ≥75% of effects succeed | 57.5% |
-| Paper level, ≥50% of effects succeed | 61.8% |
-| Paper level, any one success counts | 63.8% |
-
-<small>Computed from `replications_database_2026_07_28_211702.csv` (8,598 rows: 3,976 success, 3,053 failure, 134 reversal, 1,435 inconclusive or unrecorded). These figures shift by a fraction of a point with each database release; the ordering and the width of the range do not.</small>
-
-The spread is driven almost entirely by the treatment of the ~1,400 inconclusive and unrecorded rows and by the unit of analysis — not by disagreement about individual studies. A reader who wants a one-sentence summary is better served by "somewhere between 46% and 64% depending on how you count, and 55.5% under our stated definition" than by any single figure quoted without its rule.
-
-These figures use the reported-result definition. The three statistical methods apply to the subset of rows carrying the necessary statistics and give their own rates, shown on the main database page.
+Use the current dashboard for percentages and sample sizes. Different statistical methods also classify different subsets of rows, so their rates can differ because of both the decision rule and data availability.
 
 ---
 
@@ -70,9 +55,13 @@ The simplest criterion for replication success: if the original study found a si
 
 ### Algorithm
 
-This method is inspired by the [FReD R package](https://github.com/forrtproject/FReD) (`criterion = "significance_r"`), with modifications to handle non-significant originals and to prefer reported $p$-values over computed ones.
+This method is inspired by the [FReD success-criteria documentation](https://forrt.org/fred/articles/success_criteria.html) (`criterion = "significance_r"`), with modifications to handle non-significant originals and to prefer reported $p$-values over computed ones.
 
-**Step 1: Determine $p$-Values**
+**Step 1: Check Available Inputs and Determine $p$-Values**
+
+The main code path requires finite normalized correlations in $[-1,1]$ and finite sample sizes greater than 2 for both studies, even when reported $p$-values are available. When both normalized correlations and positive sample sizes are present but either sample size is at most 2, the result is inconclusive.
+
+If that path cannot be entered, a fallback uses both reported numeric $p$-values and both raw effect sizes, comparing their signs. If those inputs are also unavailable, the result is **inconclusive**. This fallback needs caution: the sign of a raw ratio (for example, an odds ratio with null value 1) does not encode direction relative to its null.
 
 For both the original and replication studies, the $p$-value is determined using this priority:
 
@@ -83,13 +72,13 @@ $$t = r \cdot \sqrt{\frac{n - 2}{1 - r^2}}$$
 
 Compute the two-tailed $p$-value with $df = n - 2$ degrees of freedom.
 
-Reported $p$-values are preferred because the conversion from other effect size types (Cohen's $d$, eta-squared, etc.) to Pearson $r$ introduces error, especially with small samples. This can cause computed $p$-values to disagree with reported ones on significance in approximately 10% of cases.
+Reported $p$-values can reflect the original analysis design, covariate adjustment, or test that a calculation from normalized $r$ and total sample size does not reproduce. The current parser accepts finite numeric values; strings such as `"<0.05"` do not count as numeric $p$-values. It does not enforce the valid $[0,1]$ range, so classification depends on upstream data quality.
 
 **Step 2: Check if the Original Study Was Significant**
 
 If $p_O \geq 0.05$, the original was not significant. In this case, we check whether the replication agrees:
 
-- If the replication is also not significant ($p_R \geq 0.05$): both studies agree there is no effect → **Success**
+- If the replication is also not significant ($p_R \geq 0.05$): both are classified as non-significant → **Success under this rule**. This does **not** establish that there is no effect or that the effects are equivalent
 - If the replication is significant ($p_R < 0.05$): the studies disagree → **Failure**
 
 **Step 3: If the Original Was Significant, Test the Replication**
@@ -101,6 +90,8 @@ If the original was significant ($p_O < 0.05$), check the replication's signific
 
 ### Classification
 
+A difference in statistical significance is not itself evidence of a statistically significant difference between effects. Conversely, two non-significant results can both be imprecise.
+
 | Condition | Outcome |
 |-----------|---------|
 | Original not significant ($p_O \geq 0.05$), replication also not significant ($p_R \geq 0.05$) | **Success** |
@@ -108,6 +99,9 @@ If the original was significant ($p_O < 0.05$), check the replication's signific
 | Original significant, replication significant ($p_R < 0.05$) with same direction  | **Success** |
 | Original significant, replication significant ($p_R < 0.05$) with opposite direction | **Reversal** |
 | Original significant, replication not significant ($p_R \geq 0.05$) | **Failure** |
+| Required inputs unavailable or unusable | **Inconclusive** |
+
+The implementation uses `Math.sign` for direction, so zero has its own sign. A zero effect paired with a contradictory significant reported $p$-value can therefore receive a reversal label; such rows require data review.
 
 ---
 
@@ -117,21 +111,21 @@ This method checks whether the original effect size is a plausible value given t
 
 ### Rationale
 
-If the original finding is "true," we would expect the original effect size to be consistent with the replication's estimate. This is operationalized by checking whether the original effect falls within the 95% confidence interval of the replication effect.
+This checks inclusion of the original point estimate in the replication interval. It accounts for uncertainty in the replication estimate, but treats the original estimate as fixed. It is neither a joint test of equal effects nor a 95% prediction interval for a replication estimate.
 
-This method is implemented consistently with the [FReD R package](https://github.com/forrtproject/FReD) (`criterion = "consistency_ci"`).
+The point-in-interval criterion is described in the [FReD success-criteria documentation](https://forrt.org/fred/articles/success_criteria.html) (`criterion = "consistency_ci"`).
 
 ### Confidence Interval Source
 
-The method uses a two-strategy approach to maximize compatibility with original papers:
+The method tries a reported interval first, subject to the metric compatibility check below, and otherwise tries a computed interval:
 
 **Strategy 1 (Primary): Pre-computed CI with Raw Effect Sizes**
 
-If the database contains a pre-computed 95% CI for the replication effect size (in the `replication_es_95_CI` column), this CI is compared against the **raw original effect size** (`original_es`). This matches the methodology used in original replication studies, where effect sizes and CIs are in their native units (Cohen's d, Hazard Ratio, etc.).
+If the database contains a pre-computed 95% CI for the replication effect size (in the `replication_es_95_CI` column), this CI is compared against the **raw original effect size** (`original_es`). This comparison requires a common effect-size scale and consistent coding of the outcome and comparison groups. The code skips this path when both type labels are recognized and belong to different metric families. Missing or unrecognized labels are allowed, and some families include distinct measures (for example, odds ratios and risk ratios), so passing this check does not guarantee comparability.
 
 **Strategy 2 (Fallback): Computed CI with Normalized Effect Sizes**
 
-If no pre-computed CI is available, the CI is computed using the Fisher $z$-transformation method from the normalized Pearson's $r$ values and sample sizes (see [Computing Confidence Intervals](#computing-confidence-intervals-fisher-z-transformation)).
+If the interval cannot be parsed, the raw point estimate is missing, or the metric check rejects the comparison, the CI is computed using the Fisher $z$-transformation method from the normalized Pearson's $r$ values and sample sizes (see [Computing Confidence Intervals](#computing-confidence-intervals-fisher-z-transformation)).
 
 ### Classification
 
@@ -141,13 +135,9 @@ If no pre-computed CI is available, the CI is computed using the Fisher $z$-tran
 | Original ES outside replication 95% CI | **Failure** |
 | Cannot obtain CI (missing data) | **Inconclusive** |
 
-### Advantages
+### Interpretation and limitations
 
-- Accounts for uncertainty in the replication estimate
-- Does not require significance in either study
-- Provides a more nuanced assessment than simple significance testing
-- Effect size magnitude matters, not just statistical significance
-- When pre-computed CIs are available, results match original paper methodology
+The rule uses effect magnitude and interval width without requiring significance. A wide interval can include substantially different effects, so “success” is not proof of equivalence. A narrow interval can exclude a nearby estimate. The supplied interval is assumed to be a 95% CI; the code does not verify its confidence level or reconstruct the paper's analysis. Endpoints are included in the success region. If neither data path works, the result is inconclusive.
 
 ---
 
@@ -159,19 +149,19 @@ This method checks whether the replication effect size is a plausible value give
 
 This is the "mirror" of the previous method. If the replication is measuring the same underlying effect, we would expect the replication effect size to be consistent with the original's estimate. This is operationalized by checking whether the replication effect falls within the 95% confidence interval of the original effect.
 
-This method is particularly useful when the original study had a larger sample size than the replication, giving it a narrower confidence interval.
+A narrower original interval makes this criterion harder to satisfy. A larger sample often improves precision, but interval width also depends on the design and variability. This rule ignores sampling uncertainty in the replication point estimate and is not a test that accounts for uncertainty in both studies.
 
 ### Confidence Interval Source
 
-The method uses a two-strategy approach to maximize compatibility with original papers:
+The method tries a reported interval first, subject to the metric compatibility check below, and otherwise tries a computed interval:
 
 **Strategy 1 (Primary): Pre-computed CI with Raw Effect Sizes**
 
-If the database contains a pre-computed 95% CI for the original effect size (in the `original_es_95_CI` column), this CI is compared against the **raw replication effect size** (`replication_es`). This matches the methodology used in original replication studies, where effect sizes and CIs are in their native units (Cohen's d, Hazard Ratio, etc.).
+If the database contains a pre-computed 95% CI for the original effect size (in the `original_es_95_CI` column), this CI is compared against the **raw replication effect size** (`replication_es`). This comparison requires a common effect-size scale and consistent coding of the outcome and comparison groups. The code skips this path when both type labels are recognized and belong to different metric families. Missing or unrecognized labels are allowed, and some families include distinct measures (for example, odds ratios and risk ratios), so passing this check does not guarantee comparability.
 
 **Strategy 2 (Fallback): Computed CI with Normalized Effect Sizes**
 
-If no pre-computed CI is available, the CI is computed using the Fisher $z$-transformation method from the normalized Pearson's $r$ values and sample sizes (see [Computing Confidence Intervals](#computing-confidence-intervals-fisher-z-transformation)).
+If the interval cannot be parsed, the raw point estimate is missing, or the metric check rejects the comparison, the CI is computed using the Fisher $z$-transformation method from the normalized Pearson's $r$ values and sample sizes (see [Computing Confidence Intervals](#computing-confidence-intervals-fisher-z-transformation)).
 
 ### Classification
 
@@ -188,7 +178,7 @@ These two methods can give different results:
 - **Original in Replication CI** asks: "Is the original effect plausible given the replication data?"
 - **Replication in Original CI** asks: "Is the replication effect plausible given the original data?"
 
-The difference matters when sample sizes differ substantially. A small replication study will have a wide CI, making it easy for the original effect to fall within it (high "success" rate). Conversely, if the original study was large with a narrow CI, the replication effect must be very close to the original to fall within it.
+The difference matters when the studies have different precision. A wide replication CI makes inclusion of the original estimate easier. A narrow original CI requires the replication estimate to be closer to the original. Neither result establishes equivalence, and neither criterion separately classifies reversals.
 
 ---
 
@@ -200,7 +190,7 @@ When pre-computed confidence intervals are not available in the database, they a
 
 **Step 1: Fisher $r$-to-$z$ Transformation**
 
-The sampling distribution of $r$ is not normal, especially for values far from zero. The Fisher transformation converts $r$ to a normally distributed variable $z$:
+The sampling distribution of $r$ is not normal, especially for values far from zero. For independent observations under the usual bivariate-normal correlation model, the Fisher transformation gives an approximately normal sampling distribution:
 
 $$z = \frac{1}{2} \ln\left(\frac{1 + r}{1 - r}\right) = \text{arctanh}(r)$$
 
@@ -210,7 +200,7 @@ The standard error of $z$ depends only on sample size:
 
 $$SE_z = \frac{1}{\sqrt{n - 3}}$$
 
-where $n$ is the sample size. This requires $n > 3$.
+where $n$ is the sample size. This approximation requires $n > 3$ and $|r| < 1$. The implementation returns no computed interval when $|r| \geq 0.9999$. For correlations converted from other statistics, or for clustered, paired, adjusted, or dependent estimates, the formula may not reproduce the appropriate standard error.
 
 **Step 3: Compute 95% Confidence Interval in $z$-space**
 
@@ -237,8 +227,8 @@ Computing the replication CI:
 1. Fisher transform: $z_R = \text{arctanh}(0.28) = 0.288$
 2. Standard error: $SE_z = 1/\sqrt{97} = 0.102$
 3. CI in $z$-space: $[0.288 - 1.96 \times 0.102, 0.288 + 1.96 \times 0.102] = [0.089, 0.487]$
-4. CI in $r$-space: $[\tanh(0.089), \tanh(0.487)] = [0.089, 0.452]$
-5. Is $0.35$ in $[0.089, 0.452]$? **Yes** → **Success**
+4. CI in $r$-space: $[\tanh(0.088674), \tanh(0.486690)] \approx [0.088, 0.452]$
+5. Is $0.35$ in $[0.088, 0.452]$? **Yes** → **Success**
 
 ---
 
@@ -248,7 +238,7 @@ The significance-based outcome method requires $p$-values for both original and 
 
 ### From Correlation to $t$-Statistic
 
-For a Pearson correlation coefficient $r$ computed from $n$ observations, the test statistic follows a $t$-distribution under the null hypothesis ($H_0: \rho = 0$):
+For a Pearson correlation from independent observations under the bivariate-normal model, the following statistic has a $t$-distribution under the null hypothesis ($H_0: \rho = 0$). Applying it to converted effect sizes is an approximation:
 
 $$t = r \cdot \sqrt{\frac{n - 2}{1 - r^2}}$$
 
@@ -272,11 +262,11 @@ where $B(a, b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}$ is the complete beta fu
 
 ### Implementation
 
-The two-tailed $p$-value is computed using the [jStat](https://github.com/jstat/jstat) JavaScript statistical library, which provides a well-tested implementation of the Student's $t$-distribution CDF. Specifically:
+The two-tailed $p$-value is computed using the [jStat](https://github.com/jstat/jstat) JavaScript statistical library and its Student's $t$-distribution CDF. Specifically:
 
 $$p = 2 \cdot P(T < -|t|) = 2 \cdot F_t(-|t|;\, \nu)$$
 
-where $F_t$ is the $t$-distribution CDF with $\nu = n - 2$ degrees of freedom.
+where $F_t$ is the $t$-distribution CDF with $\nu = n - 2$ degrees of freedom. The helper requires $n > 2$ and currently returns zero for $|r| \geq 0.9999$, a numerical shortcut rather than an exact tail probability.
 
 ### Example
 
@@ -289,7 +279,7 @@ Computing the $p$-value:
 1. Compute $t$-statistic: $t = 0.35 \cdot \sqrt{\frac{23}{1 - 0.1225}} = 0.35 \cdot \sqrt{26.21} = 1.792$
 2. Degrees of freedom: $df = 23$
 3. Compute $x = \frac{23}{23 + 3.21} = 0.878$
-4. Compute $I_x(11.5, 0.5)$ using continued fraction
+4. Evaluate $2F_t(-1.791878; 23)$ using jStat (equivalently, $I_x(11.5, 0.5)$)
 5. Two-tailed $p$-value: $p \approx 0.086$
 
 Since $p > 0.05$, this correlation is **not statistically significant** at the conventional threshold.
@@ -300,9 +290,4 @@ Since $p > 0.05$, this correlation is **not statistically significant** at the c
 
 LeBel, E. P., Vanpaemel, W., Cheung, I., & Campbell, L. (2019). [A brief guide to evaluate replications](https://open.lnu.se/index.php/metapsychology/article/view/843). *Meta-Psychology*, 3.
 
-Röseler, L., & Kühberger, A. (2025). [FReD: The Framework for Replication Databases](https://osf.io/preprints/metaarxiv/me2ub_v1). *MetaArXiv Preprints*.
-
-Röseler, L., Weber, L., Helber, J., et al. (2024). [The Replication Database: Documenting the Replicability of Psychological Science](https://openpsychologydata.metajnl.com/articles/10.5334/jopd.101). *Journal of Open Psychology Data*.
-
-
-
+Röseler, L., Kaiser, L., Doetsch, C., et al. (2024). [The Replication Database: Documenting the Replicability of Psychological Science](https://openpsychologydata.metajnl.com/articles/10.5334/jopd.101). *Journal of Open Psychology Data*, 12(1), Article 8.
