@@ -335,7 +335,7 @@ export default function ResultsPage() {
             Lithium &amp; Weight Gain
           </h1>
           <p className="mb-4 max-w-3xl text-sm text-foreground/70">
-            Every study in this review reports body weight, BMI, or a weight-related adverse event in people taking lithium. In summer of 2026 an AI model (Sonnet) was used to extract information from those studies, and the results are displayed in this dashboard. 
+            Every study in this review reports body weight change, BMI change, or weight-related adverse events in people taking lithium. The studies were discovered doing an exhaustive search over many APIs and then using an AI model (Haiku 4.5) to screen the studies to ones reporting relevant data. Another AI (Sonnet 5) was used to extract information from those studies, and the results are displayed in this dashboard. 
           </p>
           <div className="mb-4 flex flex-wrap gap-2">
             <Link
