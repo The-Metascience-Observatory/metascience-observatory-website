@@ -4,6 +4,7 @@ import { ReactNode, useState } from "react";
 import { CountryFilterCard, countriesOf } from "@/components/CountryFilterCard";
 import { ResultsTable, TrialRow } from "./ResultsTable";
 import { ArmRateCharts } from "./ArmRateCharts";
+import { DownloadTrialsButton } from "./DownloadTrialsButton";
 import { ArmRatePoint, IncidencePoint } from "./arm-points";
 import { formatLabel } from "./utils";
 import { DoseResponseSection } from "./dose-response/DoseResponseSection";
@@ -319,6 +320,7 @@ export function ResultsClientWrapper({
       <h2 className="mt-12 mb-3 font-clarendon text-2xl font-bold">
         Trials used in this analysis and data extracted
       </h2>
+      <DownloadTrialsButton rows={trials} />
       <ResultsTable rows={filtered} />
     </div>
   );
