@@ -209,19 +209,34 @@ export function fitFractionalLogit(
 
     // Step-halving: the IRLS target should not lower the quasi-loglik; if it
     // does, back off toward the current β (cheap insurance, rarely triggered).
+    // The slack is relative: a log-likelihood summed over ~1,000 rows carries
+    // ~1e-12 of rounding noise, so an absolute 1e-12 bar can reject the
+    // optimum itself.
+    const slack = 1e-12 * Math.max(1, Math.abs(ll));
     let candidate = next;
     let accepted = false;
     for (let h = 0; h < 10; h++) {
       setMu(candidate);
       const llNew = quasiLogLik(y, mu);
-      if (llNew >= ll - 1e-12) {
+      if (llNew >= ll - slack) {
         ll = llNew;
         accepted = true;
         break;
       }
       candidate = candidate.map((v, j) => (v + beta[j]) / 2);
     }
-    if (!accepted) return null;
+    if (!accepted) {
+      // Every halving "lowered" the loglik: only rounding noise can do that
+      // when the full Newton step is already negligible, so β is the optimum.
+      // Anything larger is a genuine failure.
+      let full = 0;
+      for (let j = 0; j < p; j++) full = Math.max(full, Math.abs(next[j] - beta[j]));
+      if (full >= 1e-7) return null;
+      setMu(beta);
+      Lfinal = L;
+      converged = true;
+      break;
+    }
 
     let step = 0;
     for (let j = 0; j < p; j++) step = Math.max(step, Math.abs(candidate[j] - beta[j]));

@@ -2,23 +2,18 @@ import { longCovidDataPath } from "@/lib/long-covid/data-path";
 import fs from 'fs';
 import path from 'path';
 import { baseDoi, type PublicationMetadata } from './publications';
-let cache: Record<string, PublicationMetadata> | undefined;
-let modifiedAt = -1;
-let lastChecked = 0;
-export function publicationFor(doi: string): PublicationMetadata | undefined {
-  // Enrichment can replace the snapshot while local preview is running.
-  // Check once per second, not once for every row; parse only changed snapshots.
-  if (!cache || Date.now() - lastChecked > 1000) {
-    const filename=longCovidDataPath("publication_metadata.json");
-    lastChecked=Date.now();
-    if (!fs.existsSync(filename)) return cache?.[baseDoi(doi)];
-    const mtime=fs.statSync(filename).mtimeMs;
-    if (mtime !== modifiedAt) {
-      const data=JSON.parse(fs.readFileSync(filename,'utf8'));
-      if (data.version !== 1 || !data.papers) throw new Error('Unsupported publication metadata snapshot');
-      cache=data.papers;
-      modifiedAt=mtime;
-    }
-  }
-  return cache?.[baseDoi(doi)];
+const caches = new Map<string, {papers: Record<string, PublicationMetadata>; modifiedAt: number; checkedAt: number}>();
+export function publicationFor(doi: string, filename = longCovidDataPath('publication_metadata.json')): PublicationMetadata | undefined {
+ let snapshot=caches.get(filename);
+ if (!snapshot || Date.now()-snapshot.checkedAt>1000) {
+  if (!fs.existsSync(filename)) { caches.delete(filename); return undefined; }
+  const mtime=fs.statSync(filename).mtimeMs;
+  if (!snapshot || snapshot.modifiedAt!==mtime) {
+   const data=JSON.parse(fs.readFileSync(filename,'utf8'));
+   if (data.version!==1 || !data.papers) throw new Error('Unsupported publication metadata snapshot');
+   snapshot={papers:data.papers,modifiedAt:mtime,checkedAt:Date.now()};
+  } else snapshot.checkedAt=Date.now();
+  caches.set(filename,snapshot);
+ }
+ return snapshot?.papers[baseDoi(doi)];
 }

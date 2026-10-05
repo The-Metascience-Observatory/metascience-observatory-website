@@ -1,0 +1,149 @@
+{
+  "checkedAt": "2026-10-04",
+  "groups": {
+    "source_screened_in": {
+      "dois": 3045,
+      "medline": {
+        "no": 729,
+        "yes": 1915,
+        "unknown": 344,
+        "not_applicable": 57
+      },
+      "publication": {
+        "journal_published": 2701,
+        "unknown": 290,
+        "preprint_only": 36,
+        "other": 3,
+        "linked_preprint": 15
+      }
+    },
+    "source_treatment": {
+      "dois": 1082,
+      "medline": {
+        "unknown": 204,
+        "yes": 585,
+        "no": 274,
+        "not_applicable": 19
+      },
+      "publication": {
+        "unknown": 164,
+        "journal_published": 899,
+        "preprint_only": 15,
+        "other": 2,
+        "linked_preprint": 2
+      }
+    },
+    "website_screened_in": {
+      "dois": 3045,
+      "medline": {
+        "no": 729,
+        "yes": 1915,
+        "unknown": 344,
+        "not_applicable": 57
+      },
+      "publication": {
+        "journal_published": 2701,
+        "unknown": 290,
+        "preprint_only": 36,
+        "other": 3,
+        "linked_preprint": 15
+      }
+    },
+    "website_treatment": {
+      "dois": 1082,
+      "medline": {
+        "unknown": 204,
+        "yes": 585,
+        "no": 274,
+        "not_applicable": 19
+      },
+      "publication": {
+        "unknown": 164,
+        "journal_published": 899,
+        "preprint_only": 15,
+        "other": 2,
+        "linked_preprint": 2
+      }
+    },
+    "dashboard": {
+      "dois": 284,
+      "medline": {
+        "yes": 213,
+        "no": 64,
+        "not_applicable": 5,
+        "unknown": 2
+      },
+      "publication": {
+        "journal_published": 274,
+        "linked_preprint": 1,
+        "other": 3,
+        "unknown": 5,
+        "preprint_only": 1
+      }
+    }
+  },
+  "unresolvedJournals": [
+    {
+      "name": "(missing)",
+      "reports": 17439,
+      "candidates": []
+    },
+    {
+      "name": "Journal of Culture of Counseling and Psychotherapy",
+      "reports": 1,
+      "candidates": []
+    },
+    {
+      "name": "INTERNATIONAL NEUROLOGICAL JOURNAL",
+      "reports": 1,
+      "candidates": [
+        {
+          "normalizedName": "internationalendodonticjournal",
+          "nlmIds": [
+            "8004996"
+          ]
+        },
+        {
+          "normalizedName": "internationalurogynecologyjournal",
+          "nlmIds": [
+            "101567041"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "国际中医中药杂志",
+      "reports": 1,
+      "candidates": []
+    },
+    {
+      "name": "British Journal of Psychiatry",
+      "reports": 1,
+      "candidates": [
+        {
+          "normalizedName": "britishjournalofpsychology",
+          "nlmIds": [
+            "0373124"
+          ]
+        },
+        {
+          "normalizedName": "nordicjournalofpsychiatry",
+          "nlmIds": [
+            "100927567"
+          ]
+        },
+        {
+          "normalizedName": "indianjournalofpsychiatry",
+          "nlmIds": [
+            "0013255"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Bulletin of the Russian Military Medical Academy",
+      "reports": 1,
+      "candidates": []
+    }
+  ]
+}

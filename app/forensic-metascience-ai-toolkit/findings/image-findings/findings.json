@@ -596,5 +596,28 @@
       "height": 1298,
       "alt": "Annotated Figure 10 with the matching regions outlined."
     }
+  },
+  {
+    "id": "subbiah-2011",
+    "doi": "10.1128/jvi.02696-10",
+    "citation": {
+      "authors": "Madhuri Subbiah; Sunil K. Khattar; Peter L. Collins; Siba K. Samal",
+      "title": "Mutations in the Fusion Protein Cleavage Site of Avian Paramyxovirus Serotype 2 Increase Cleavability and Syncytium Formation but Do Not Increase Viral Virulence in Chickens",
+      "journal": "Journal of Virology",
+      "volume": "85",
+      "issue": "11",
+      "pages": "5394-5405",
+      "year": 2011,
+      "url": "https://doi.org/10.1128/jvi.02696-10"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/5CE1B61303F3C87AD2B61EAA80E46B",
+    "submitted": "2026-10-01",
+    "summary": "Duplication across types.",
+    "image": {
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/subbiah-2011.png",
+      "width": 1023,
+      "height": 464,
+      "alt": "Annotated figure with the matching regions outlined."
+    }
   }
 ]

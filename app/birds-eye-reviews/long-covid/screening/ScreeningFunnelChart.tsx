@@ -46,10 +46,12 @@ export function ScreeningFunnelChart({
   totalArticles,
   totalTreatment,
   onBarClick,
+  reviewLabel = "Long COVID",
 }: {
   data: ArticleTypeBar[];
   totalArticles: number;
   totalTreatment: number;
+  reviewLabel?: string;
   onBarClick?: (sourceFolder: string) => void;
 }) {
   const barHeight = 32;
@@ -59,9 +61,9 @@ export function ScreeningFunnelChart({
     <div className="border border-border rounded-lg bg-white p-6 mb-8">
       <div className="flex flex-wrap items-baseline gap-x-4 mb-1">
         <h2 className="text-lg font-semibold">
-          Long COVID Papers by Article Type (n = {totalArticles.toLocaleString()})
+          {reviewLabel} Papers by {reviewLabel === "ME/CFS" ? "Source Group" : "Article Type"} (n = {totalArticles.toLocaleString()})
         </h2>
-        <div className="flex items-center gap-4 text-sm text-foreground/70">
+        <div className="flex flex-wrap items-center gap-4 text-sm text-foreground/70">
           <span className="flex items-center gap-1.5">
             <span className="inline-block w-3 h-3 rounded-sm" style={{ backgroundColor: "#7cb5ec" }} />
             All papers ({totalArticles.toLocaleString()})
@@ -72,6 +74,8 @@ export function ScreeningFunnelChart({
           </span>
         </div>
       </div>
+      <div className="max-w-full overflow-x-auto">
+        <div className="min-w-[640px]">
       <ResponsiveContainer width="100%" height={chartHeight}>
         <BarChart
           data={data}
@@ -127,6 +131,8 @@ export function ScreeningFunnelChart({
           />
         </BarChart>
       </ResponsiveContainer>
+        </div>
+      </div>
     </div>
   );
 }

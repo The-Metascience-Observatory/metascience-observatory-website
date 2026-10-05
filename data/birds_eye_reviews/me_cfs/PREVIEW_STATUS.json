@@ -1,0 +1,17 @@
+{
+  "status": "INCOMPLETE_PREVIEW",
+  "generated_at_utc": "2026-10-05T12:20:41.295424+00:00",
+  "scope": "Explicitly classified ME/CFS treatment reports only",
+  "n_reports": 319,
+  "n_studies": 308,
+  "screening_table_records": 20151,
+  "source_review_pending": 226,
+  "extraction_review_states": {
+    "complete_with_limitations": 52,
+    "pending": 174,
+    "not_flagged": 93
+  },
+  "eligibility_conflicts": 241,
+  "scope_classification_pending": 754,
+  "reason": "Extraction, scope routing and source review remain incomplete. This local preview is not approved for publication."
+}

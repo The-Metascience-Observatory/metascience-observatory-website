@@ -17,6 +17,8 @@ export interface PrismaCounts {
   eligibility_exclusion_reasons: Record<string, number>;
   eligible: number;
   extracted_total: number;
+  eligible_without_extraction?: number;
+  extracted_requires_review?: number;
   extracted_rct: number;
   extracted_observational: number;
   displayed_total: number;
@@ -188,6 +190,8 @@ export function PrismaDiagram({ counts }: { counts: PrismaCounts }) {
   const otherReasons = allReasons.slice(6).reduce((sum, [, n]) => sum + n, 0);
   if (otherReasons > 0) reasons.push({ label: "Other recorded reasons", n: otherReasons });
 
+  const awaitingExtraction = counts.eligible_without_extraction ?? Math.max(0, counts.eligible - counts.extracted_total);
+
   const terminalItems = [
     { key: "Randomized controlled trials", n: counts.displayed_rct },
     { key: "Observational studies", n: counts.displayed_observational },
@@ -197,13 +201,13 @@ export function PrismaDiagram({ counts }: { counts: PrismaCounts }) {
     <div className="border border-border rounded-lg bg-white p-6 mb-8">
       <h2 className="text-lg font-semibold mb-5">Screening flow</h2>
 
-      <p className="mb-4 text-xs text-foreground/60">Counts are publications, not independent studies. {counts.awaiting_screening ?? 0} records await initial screening; {counts.awaiting_fulltext_decision ?? 0} retrieved records await a full-text decision. Historical screening is followed by an intervention-evidence check for this release.</p>
+      <p className="mb-4 text-xs text-foreground/60">Counts are publications, not independent studies. {counts.awaiting_screening ?? 0} records await initial screening; {counts.awaiting_fulltext_decision ?? 0} retrieved records await a full-text decision. Historical screening is followed by an intervention-evidence check for this release. {counts.extracted_requires_review ? `${counts.extracted_requires_review.toLocaleString()} saved extraction records still require source review.` : ""}</p>
       <div className="max-w-3xl mx-auto">
         <StageRow
           title="Records identified from database searches"
           n={counts.identified}
           sub={counts.sources.join(" · ")}
-          excluded={{ title: "excluded on title/abstract — not relevant", n: counts.excluded_not_relevant }}
+          excluded={{ title: "excluded at title/abstract or article-type screening", n: counts.excluded_not_relevant }}
         />
         <DownArrow />
         <StageRow
@@ -230,17 +234,17 @@ export function PrismaDiagram({ counts }: { counts: PrismaCounts }) {
               n={counts.excluded_at_eligibility}
               reasons={reasons}
             />
-            {counts.eligible > counts.extracted_total && (
+            {awaitingExtraction > 0 && (
               <ExcludedBox
-                title="not represented in the extraction total (difference between saved counts; reason not recorded)"
-                n={counts.eligible - counts.extracted_total}
+                title={counts.eligible_without_extraction == null ? "not represented in the extraction total (difference between saved counts; reason not recorded)" : "eligible publications without a successful saved extraction"}
+                n={awaitingExtraction}
               />
             )}
           </div>
         </div>
         <DownArrow />
         <StageRow
-          title="Full-text data extracted"
+          title="Saved full-text extraction records"
           n={counts.extracted_total}
           sub={`${counts.extracted_rct.toLocaleString()} RCT · ${counts.extracted_observational.toLocaleString()} observational`}
           excluded={

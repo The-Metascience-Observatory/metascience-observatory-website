@@ -81,3 +81,14 @@ test('dashboard indexing is resolved and publication explanation is a tooltip',a
  await expect(page.getByLabel(tooltip,{exact:true})).toHaveAttribute('title',tooltip);
  await expect(page.getByText('MEDLINE describes current journal indexing',{exact:false})).toHaveCount(0);
 });
+
+
+test('mobile screening keeps the chart within a scrollable panel',async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto('/birds-eye-reviews/long-covid/screening');
+ await expect(page.getByRole('heading',{name:'Trial Screening',exact:true})).toBeVisible();
+ const chart=page.locator('.recharts-responsive-container').first();
+ await expect(chart).toBeVisible();
+ const sizes=await page.evaluate(()=>({viewport:window.innerWidth,body:document.body.scrollWidth}));
+ expect(sizes.body).toBeLessThanOrEqual(sizes.viewport);
+});

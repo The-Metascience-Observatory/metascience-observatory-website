@@ -18,6 +18,7 @@ import { countDistinctTrials } from "./facets";
 // ── Verdict segments (shared with antiviral/RLS) ─────────────────────
 /** Outcome-direction segments used in breakdown charts for all dashboards. */
 export const VERDICT_SEGMENTS: Segment[] = [
+  { key: "insufficient_data", label: "Insufficient verified data", color: "#94a3b8" },
   { key: "favors_treatment", label: "Favors treatment", color: "#16a34a" },
   { key: "favors_control", label: "Favors control", color: "#dc2626" },
   { key: "mixed", label: "Mixed", color: "#fdba74" },
