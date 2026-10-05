@@ -263,6 +263,12 @@
   "setting": "other",
   "setting_text": "Single-center hospital (psychiatry department, University Hospital of Monastir, Tunisia)"
  },
+ "10.1016/j.ajp.2018.07.005": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "mixed",
+  "setting_text": "Single-patient inpatient/outpatient psychiatric care (repeated hospital admissions)"
+ },
  "10.1016/j.ando.2007.05.004": {
   "diagnosis": "mdd",
   "diagnosis_text": "Unipolar depression (MDD)",
@@ -387,7 +393,7 @@
   "diagnosis": "other",
   "diagnosis_text": "Other",
   "setting": "outpatient",
-  "setting_text": "Single VA medical center outpatient clinic (with MRI performed at an affiliated academic medical center); later also recruited from a university MS clinic"
+  "setting_text": "Two-site outpatient (Birmingham VA Medical Center and University of Alabama at Birmingham MS clinic), Birmingham, AL, USA"
  },
  "10.1016/j.heliyon.2020.e04553": {
   "diagnosis": "bipolar",
@@ -1418,8 +1424,8 @@
  "10.1111/j.1600-0447.1976.tb00067.x": {
   "diagnosis": "bipolar",
   "diagnosis_text": "Bipolar unspecified",
-  "setting": "outpatient",
-  "setting_text": "Single-center outpatient psychiatric clinic"
+  "setting": "other",
+  "setting_text": "Single-center, University Department of Psychiatry, Rigshospitalet, Copenhagen"
  },
  "10.1111/j.1600-0447.1976.tb00083.x": {
   "diagnosis": "bipolar",
@@ -1985,6 +1991,12 @@
   "setting": "outpatient",
   "setting_text": "Single-center academic outpatient clinic (Lucio Bini Psychiatric Center, Cagliari, Sardinia)"
  },
+ "10.1186/s40345-023-00313-8": {
+  "diagnosis": "other",
+  "diagnosis_text": "Other",
+  "setting": "inpatient",
+  "setting_text": "60 university, municipal and state psychiatric hospitals and departments (multicenter, real-world inpatient psychiatric care)"
+ },
  "10.1186/s40345-023-00317-4": {
   "diagnosis": "bipolar",
   "diagnosis_text": "Bipolar unspecified",
@@ -2116,6 +2128,12 @@
   "diagnosis_text": "Other",
   "setting": "other",
   "setting_text": "Single-center hospital, Japan"
+ },
+ "10.12740/pp/onlinefirst/152050": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar unspecified",
+  "setting": "inpatient",
+  "setting_text": "Single-center: psychiatric admission ward then toxicology department, Poland"
  },
  "10.1289/ehp.1002678": {
   "diagnosis": "healthy",
@@ -2567,11 +2585,23 @@
   "setting": "outpatient",
   "setting_text": "Single-center tertiary care teaching hospital, Psychiatry Outpatient Department"
  },
+ "10.9740/mhc.2022.06.214": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar II",
+  "setting": "inpatient",
+  "setting_text": "Single hospital, psychosomatic/consultation-liaison psychiatry inpatient service"
+ },
  "10.9740/mhc.2026.02.034": {
   "diagnosis": "schizoaffective",
   "diagnosis_text": "Schizoaffective",
   "setting": "mixed",
   "setting_text": "Single-center inpatient psychiatric unit with outpatient follow-up"
+ },
+ "10.9758/cpn.2016.14.1.101": {
+  "diagnosis": "bipolar",
+  "diagnosis_text": "Bipolar I",
+  "setting": "other",
+  "setting_text": "Single-center clinical case report"
  },
  "10.9758/cpn.2016.14.3.318": {
   "diagnosis": "bipolar",

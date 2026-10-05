@@ -68,6 +68,8 @@ const formatDesignType = (s: string) => DESIGN_TYPE_LABELS[s] ?? formatCategory(
 
 // ── Main Dashboard ───────────────────────────────────────────────────
 export function LongCovidDashboard(props: DashboardProps) {
+  const review=props.review ?? {slug:"long-covid",label:"Long Covid",preview:false};
+  const isMeCfs=review.slug==="me-cfs";
   const publicationFilters = usePublicationFilters(false);
   const {medline, publication} = publicationFilters;
   const representativeMetas = useMemo(()=>preferPublished(props.trialMetas),[props.trialMetas]);
@@ -130,11 +132,12 @@ export function LongCovidDashboard(props: DashboardProps) {
   const [lcDefBelow, setLcDefBelow] = useState(false);
 
   const lcDefFilteredMetas = useMemo(() => {
+    if (isMeCfs) return lcDefFilter ? inspectMetas.filter(m=>m.case_definition===lcDefFilter) : inspectMetas;
     if (lcDefWho && lcDefBelow) return inspectMetas;
     if (lcDefWho) return inspectMetas.filter((m) => m.min_weeks != null && m.min_weeks >= 12);
     if (lcDefBelow) return inspectMetas.filter((m) => m.min_weeks != null && m.min_weeks < 12);
     return [];
-  }, [lcDefWho, lcDefBelow, inspectMetas]);
+  }, [lcDefWho, lcDefBelow, inspectMetas, isMeCfs, lcDefFilter]);
 
   const whoCount = useMemo(
     () => inspectMetas.filter((m) => m.min_weeks != null && m.min_weeks >= 12).length,
@@ -162,7 +165,7 @@ export function LongCovidDashboard(props: DashboardProps) {
 
   // Default to the two randomized designs only (values match normDesignType output).
   const [selectedDesignTypes, setSelectedDesignTypes] = useState<Set<string>>(
-    () => new Set(["rct", "crossover"])
+    () => new Set(isMeCfs ? props.trialMetas.map(m=>m.design_type||"unknown") : ["rct", "crossover"])
   );
 
   const toggleDesignType = (dt: string) => {
@@ -264,6 +267,7 @@ export function LongCovidDashboard(props: DashboardProps) {
       trialsByName: iv.trialsByName,
       interventionCategoryOf: iv.interventionCategoryOf,
       tableRows: filteredRows,
+      trialMetas: interventionFilteredMetas,
     };
   }, [props, recomputed, interventionFilteredMetas]);
 
@@ -286,7 +290,7 @@ export function LongCovidDashboard(props: DashboardProps) {
     if (lcat) setLandscapeCategory(lcat);
     const lsym = sp.get("lsym");
     if (lsym) setLandscapeSymptom(lsym);
-    const lcDef = sp.get("lcDef");
+    const lcDef = sp.get(isMeCfs ? "criteria" : "lcDef");
     if (lcDef) setLcDefFilter(lcDef);
     const country = sp.get("country");
     if (country) setCountryFilter(country);
@@ -295,7 +299,7 @@ export function LongCovidDashboard(props: DashboardProps) {
     const symptom = sp.get("symptom");
     if (symptom) setSymptomDomainFilter(symptom);
     // Top-level filters
-    setInspectFilter(parseInspectFilter(sp.get("inspect")));
+    if (!isMeCfs) setInspectFilter(parseInspectFilter(sp.get("inspect")));
     if (sp.get("who") === "0") setLcDefWho(false);
     if (sp.get("below") === "1") setLcDefBelow(true);
     const types = sp.get("types");
@@ -325,7 +329,7 @@ export function LongCovidDashboard(props: DashboardProps) {
     if (!didInitFromUrl.current) return;
     if (!publicationFilters.ready) return;
     const params = new URLSearchParams();
-    if (inspectFilter !== "all") params.set("inspect", inspectFilter);
+    if (!isMeCfs && inspectFilter !== "all") params.set("inspect", inspectFilter);
     if (medline !== "all") params.set("medline",medline);
     if (publication !== "all") params.set("publication",publication);
     if (yearFilter !== null) params.set("year", String(yearFilter));
@@ -333,14 +337,14 @@ export function LongCovidDashboard(props: DashboardProps) {
     if (interventionNameFilter) params.set("intName", interventionNameFilter);
     if (landscapeCategory) params.set("lcat", landscapeCategory);
     if (landscapeSymptom) params.set("lsym", landscapeSymptom);
-    if (lcDefFilter) params.set("lcDef", lcDefFilter);
+    if (lcDefFilter) params.set(isMeCfs ? "criteria" : "lcDef", lcDefFilter);
     if (countryFilter) params.set("country", countryFilter);
     if (blindingFilter) params.set("blinding", blindingFilter);
     if (symptomDomainFilter) params.set("symptom", symptomDomainFilter);
-    if (!lcDefWho) params.set("who", "0");
-    if (lcDefBelow) params.set("below", "1");
+    if (!isMeCfs && !lcDefWho) params.set("who", "0");
+    if (!isMeCfs && lcDefBelow) params.set("below", "1");
     const typesArr = [...selectedDesignTypes].sort();
-    if (!(typesArr.length===2 && typesArr.includes('rct') && typesArr.includes('crossover'))) {
+    if (isMeCfs || !(typesArr.length===2 && typesArr.includes('rct') && typesArr.includes('crossover'))) {
       params.set("types", typesArr.join(","));
     }
     if (!allDomainsSelected) params.set("domains", [...selectedDomains].sort().join(","));
@@ -376,37 +380,44 @@ export function LongCovidDashboard(props: DashboardProps) {
           &larr; Bird&apos;s Eye Reviews
         </Link>
       </div>
-      <h1 className="font-clarendon font-bold text-3xl mb-2">Long Covid Clinical Trials</h1>
+      <h1 className="font-clarendon font-bold text-3xl mb-2">{isMeCfs ? "ME/CFS Treatment Evidence" : "Long Covid Clinical Trials"}</h1>
+      {review.preview && <p role="status" className="mb-4 rounded border border-border bg-muted p-4 text-sm">Work in progress. This snapshot contains explicitly classified treatment reports. Extraction and source review are continuing; flagged numerical conclusions are withheld.</p>}
       {props.lastUpdated && (
         <p className="text-sm text-foreground/50 mb-3">Last updated: {props.lastUpdated}</p>
       )}
       <div className="flex flex-wrap gap-2 mb-4">
         <Link
-          href="/birds-eye-reviews/long-covid/screening"
+          href={`/birds-eye-reviews/${review.slug}/screening`}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
         >
-          View breakdown of all Long COVID articles &rarr;
+          View breakdown of all {review.label} articles &rarr;
         </Link>
         <Link
-          href="/birds-eye-reviews/long-covid/prevention"
+          href={isMeCfs ? "/birds-eye-reviews/me-cfs/graded-exercise-therapy" : "/birds-eye-reviews/long-covid/prevention"}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
         >
-          View prevention trials &rarr;
+          {isMeCfs ? "View graded-exercise sub-analysis" : "View prevention trials"} &rarr;
         </Link>
       </div>
 
-      <InspectFilters value={inspectFilter} onChange={setInspectFilter}
+      {!isMeCfs && <InspectFilters value={inspectFilter} onChange={setInspectFilter}
         assessedAt={props.inspectAssessedAt}
         assessedCount={representativeMetas.filter(m => m.inspectAssessment).length}
         totalCount={representativeMetas.length}
         counts={inspectCounts(publicationMetas.filter(m => selectedDesignTypes.has(m.design_type || "unknown")
-          && ((lcDefWho && lcDefBelow) || (m.min_weeks != null && (m.min_weeks >= 12 ? lcDefWho : lcDefBelow)))
+          && (isMeCfs ? (!lcDefFilter || m.case_definition===lcDefFilter) : ((lcDefWho && lcDefBelow) || (m.min_weeks != null && (m.min_weeks >= 12 ? lcDefWho : lcDefBelow))))
           && domainMatches(m)
           && (!interventionCategoryFilter || trialHasFacet(m.facets, "interventionCategory", interventionCategoryFilter))
-          && (!interventionNameFilter || trialHasFacet(m.facets, "intervention", interventionNameFilter))))} />
+          && (!interventionNameFilter || trialHasFacet(m.facets, "intervention", interventionNameFilter))))} />}
 
+      {isMeCfs && <label className="block mb-4 rounded border border-border p-4 text-sm">ME/CFS diagnostic criteria
+        <select aria-label="ME/CFS diagnostic criteria" value={lcDefFilter||''} onChange={e=>setLcDefFilter(e.target.value||null)} className="block mt-2 border border-border rounded p-2 bg-background">
+          <option value="">All reported criteria</option>
+          {[...new Set(props.trialMetas.map(m=>m.case_definition||'Other / not specified'))].sort().map(value=><option key={value} value={value}>{value}</option>)}
+        </select>
+      </label>}
       {/* Long Covid definition filter */}
-      <div className={`mb-3 border border-border rounded-lg p-4 ${!(lcDefWho && lcDefBelow) ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`}>
+      {!isMeCfs && <div className={`mb-3 border border-border rounded-lg p-4 ${!(lcDefWho && lcDefBelow) ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`}>
         <div className="flex flex-wrap items-center gap-3 mb-2">
           <span className="text-sm font-medium text-foreground">Filter by Long Covid definition</span>
           <button
@@ -450,14 +461,14 @@ export function LongCovidDashboard(props: DashboardProps) {
             <span className="text-xs text-foreground/40">({belowCount})</span>
           </label>
         </div>
-      </div>
+      </div>}
 
       {/* Design type filter checkboxes */}
       <div className={`mb-4 border border-border rounded-lg p-4 ${selectedDesignTypes.size < allDesignTypes.size ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`}>
         <div className="flex items-center gap-3 mb-2">
           <span className="text-sm font-medium text-foreground">Filter by trial type</span>
           <span className="text-xs text-foreground/50">
-            ({filteredMetas.length} of {props.summaryStats.totalTrials} trials selected)
+            ({filteredMetas.length} of {props.summaryStats.totalTrials} {isMeCfs ? "reports" : "trials"} selected)
           </span>
           <button onClick={selectAll} className="text-xs text-blue-600 hover:text-blue-700 ml-auto">Select all</button>
           <button onClick={selectNone} className="text-xs text-blue-600 hover:text-blue-700">Clear all</button>
@@ -488,7 +499,7 @@ export function LongCovidDashboard(props: DashboardProps) {
         <div className="flex items-center gap-3 mb-2">
           <span className="text-sm font-medium text-foreground">Filter by symptom domain</span>
           <span className="text-xs text-foreground/50">
-            ({domainFilteredMetas.length} of {props.summaryStats.totalTrials} trials selected)
+            ({domainFilteredMetas.length} of {props.summaryStats.totalTrials} {isMeCfs ? "reports" : "trials"} selected)
           </span>
           <button onClick={selectAllDomains} className="text-xs text-blue-600 hover:text-blue-700 ml-auto">Select all</button>
           <button onClick={selectNoDomains} className="text-xs text-blue-600 hover:text-blue-700">Clear all</button>
@@ -529,7 +540,7 @@ export function LongCovidDashboard(props: DashboardProps) {
       </div>
 
       <PublicationFilters {...publicationFilters} checkedAt={props.trialMetas.find(m=>m.publicationMetadata?.medlineCheckedAt)?.publicationMetadata?.medlineCheckedAt}
-        counts={metadataCounts(representativeMetas.filter(m=>matchesInspect(m.inspectAssessment, inspectFilter) && selectedDesignTypes.has(m.design_type || 'unknown') && ((lcDefWho && lcDefBelow) || (m.min_weeks!=null && (m.min_weeks>=12 ? lcDefWho : lcDefBelow))) && domainMatches(m) && (!interventionCategoryFilter || trialHasFacet(m.facets,'interventionCategory',interventionCategoryFilter)) && (!interventionNameFilter || trialHasFacet(m.facets,'intervention',interventionNameFilter))),medline,publication)} />
+        counts={metadataCounts(representativeMetas.filter(m=>matchesInspect(m.inspectAssessment, inspectFilter) && selectedDesignTypes.has(m.design_type || 'unknown') && (isMeCfs ? (!lcDefFilter || m.case_definition===lcDefFilter) : ((lcDefWho && lcDefBelow) || (m.min_weeks!=null && (m.min_weeks>=12 ? lcDefWho : lcDefBelow)))) && domainMatches(m) && (!interventionCategoryFilter || trialHasFacet(m.facets,'interventionCategory',interventionCategoryFilter)) && (!interventionNameFilter || trialHasFacet(m.facets,'intervention',interventionNameFilter))),medline,publication)} />
       {interventionFilteredMetas.length===0 && <p role="status" className="mb-4">No reports match these filters. Adjust the review, publication or other selections.</p>}
 
       {/* Intervention filters */}
@@ -560,7 +571,7 @@ export function LongCovidDashboard(props: DashboardProps) {
       <OverviewTab {...effectiveProps} onYearClick={handleYearClick} onCellClick={handleCellClick} onInterventionClick={handleInterventionClick} onLcDefClick={handleLcDefClick} onCountryClick={handleCountryClick} onBlindingClick={handleBlindingClick} onSymptomDomainClick={handleSymptomDomainClick} />
       {/* Trial table — always visible at the bottom */}
       <div className="mt-12 border-t border-border pt-8" ref={tableRef}>
-        <h2 className="font-clarendon font-bold text-2xl mb-4">All Trials</h2>
+        <h2 className="font-clarendon font-bold text-2xl mb-4">{isMeCfs ? "All Treatment Reports" : "All Trials"}</h2>
         <TrialTableTab
           tableRows={effectiveProps.tableRows}
           yearFilter={yearFilter}
@@ -691,7 +702,9 @@ function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => v
           </ResponsiveContainer>
         </ChartSection>
 
-        <ChartSection title="Trials by Long Covid definition">
+        {props.review?.slug === 'me-cfs' ? <ChartSection title="ME/CFS diagnostic criteria">
+          <div className="space-y-2">{Object.entries(props.trialMetas.reduce<Record<string,number>>((counts,m)=>{const key=m.case_definition||'Other / not specified';counts[key]=(counts[key]||0)+1;return counts;},{})).sort((a,b)=>b[1]-a[1]).map(([name,count])=><button key={name} onClick={()=>props.onLcDefClick?.(name)} className="flex w-full justify-between rounded border border-border p-2 text-left text-sm hover:bg-muted"><span>{name}</span><strong>{count}</strong></button>)}</div>
+        </ChartSection> :         <ChartSection title="Trials by Long Covid definition">
           <div className="relative">
             <div className="absolute top-2 right-2 z-10 text-xs text-foreground/50 flex flex-col gap-1">
               <div
@@ -746,7 +759,7 @@ function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => v
               </BarChart>
             </ResponsiveContainer>
           </div>
-        </ChartSection>
+        </ChartSection>}
       </div>
 
       {/* Trial type + Country map side by side */}
@@ -788,7 +801,7 @@ function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => v
 
         <ChartSection
           title="Blinding type vs. statistical significance"
-          subtitle="Open-label trials tend to report more positive results"
+          subtitle={props.review?.slug === "me-cfs" ? "Verified primary p-values; missing or held results are shown as unknown" : "Open-label trials tend to report more positive results"}
         >
           <ResponsiveContainer width="100%" height={350}>
             <BarChart
@@ -1065,7 +1078,9 @@ function TrialTableTab({
     if (interventionCategoryFilter !== null) rows = rows.filter((r) => trialHasFacet(r.facets, "interventionCategory", interventionCategoryFilter));
     if (interventionNameFilter !== null) rows = rows.filter((r) => trialHasFacet(r.facets, "intervention", interventionNameFilter));
     if (lcDefFilter !== null) {
-      if (lcDefFilter === "≥12") {
+      if (tableRows[0]?.reviewSlug === "me-cfs") {
+        rows=rows.filter(r=>r.case_definition===lcDefFilter);
+      } else if (lcDefFilter === "≥12") {
         rows = rows.filter((r) => r.min_weeks != null && r.min_weeks >= 12);
       } else if (lcDefFilter === "<12") {
         rows = rows.filter((r) => r.min_weeks != null && r.min_weeks < 12);
@@ -1084,6 +1099,7 @@ function TrialTableTab({
     if (landscapeSymptom !== null) rows = rows.filter((r) => trialHasFacet(r.facets, "symptomDomain", landscapeSymptom));
     if (symptomDomainFilter !== null) rows = rows.filter((r) => trialHasFacet(r.facets, "symptomDomain", symptomDomainFilter));
     const outcomeRank = (r: typeof rows[0]): number => {
+      if (r.reviewSlug === "me-cfs") return ({favors_treatment:3,mixed:2,no_difference:1,favors_control:0} as Record<string,number>)[r.verdict] ?? -1;
       const { primary_effect_value: ev, primary_p_value: p, primary_higher_is_better: hib } = r;
       if (ev == null && p == null) return -1;
       const sig = p != null ? p < 0.05 : null;
@@ -1171,7 +1187,7 @@ function TrialTableTab({
           options={[{ value: "all", label: "All" }, ...blindingValues.map((b) => ({ value: b, label: formatCategory(b) }))]}
         />
         <FilterBadge label="Year" value={yearFilter} onClear={onYearClear} />
-        <FilterBadge label="LC definition (weeks)" value={lcDefFilter} onClear={onLcDefClear} />
+        <FilterBadge label={tableRows[0]?.reviewSlug === "me-cfs" ? "Diagnostic criteria" : "LC definition (weeks)"} value={lcDefFilter} onClear={onLcDefClear} />
         <FilterBadge label="Country" value={countryFilter} onClear={onCountryClear} />
         <FilterBadge label="Blinding" value={blindingFilter} onClear={onBlindingClear} format={formatCategory} />
         <FilterBadge label="Intervention category" value={interventionCategoryFilter} onClear={onInterventionCategoryClear} format={formatCategory} />
@@ -1249,7 +1265,7 @@ function TrialTableTab({
         </table>
       </div>
 
-      {selectedArticle && <ArticleDetailPanel paperId={selectedArticle} version={tableRows[0]?.releaseVersion || ""} onClose={() => setSelectedArticle(null)} />}
+      {selectedArticle && <ArticleDetailPanel reviewSlug={tableRows[0]?.reviewSlug} paperId={selectedArticle} version={tableRows[0]?.releaseVersion || ""} onClose={() => setSelectedArticle(null)} />}
       <div ref={sentinelRef} aria-hidden>
         {showCount < filtered.length && (
           <div className="py-4 text-center text-sm text-foreground/40">
@@ -1304,6 +1320,7 @@ function TrialRow({
             {" "}<ExternalLink size={10} className="inline align-baseline ml-0.5" />
           </button>
           <InspectDetails meta={row.inspectAssessment} />
+          {row.quality_notice && <p className="mt-1 text-xs text-amber-700 dark:text-amber-400">{row.quality_notice}</p>}
         </td>
         <td className="p-2 max-w-[180px]" title={row.intervention_name}>
           <span className="text-xs leading-tight line-clamp-3">{row.intervention_name}</span>
@@ -1517,6 +1534,7 @@ function FilterBadge({
 }
 
 function OutcomeBadge({ row }: { row: TrialTableRow }) {
+  if (row.reviewSlug === "me-cfs") return <span className="text-xs">{({favors_treatment:"Favors treatment",favors_control:"Favors control",no_difference:"No detected difference",mixed:"Mixed results",insufficient_data:"Insufficient verified data"} as Record<string,string>)[row.verdict] || "Insufficient verified data"}</span>;
   const { primary_effect_value: ev, primary_p_value: p, primary_higher_is_better: hib } = row;
 
   // Can't determine anything

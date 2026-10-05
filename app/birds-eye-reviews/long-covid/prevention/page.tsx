@@ -96,7 +96,7 @@ function loadData() {
     const firstAuthor = (meta.first_author || String(r.authors ?? "").split(/[;]| and /)[0] || "").trim();
     const year = r.year ?? meta.year ?? null;
     const journal = (publicationFor(pid)?.journalTitle || r.journal || meta.journal || "").trim();
-    const n = r.sample_sizes?.n_randomized_total ?? r.sample_sizes?.n_enrolled_total ?? null;
+    const n = r.sample_sizes?.n_randomized_total ?? r.sample_sizes?.n_enrolled_total ?? r.sample_sizes?.n_analyzed_total ?? null;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const primary = (r.outcomes ?? []).find((o: any) => o.is_primary) ?? (r.outcomes ?? [])[0];
     const rawVerdict = verdicts.get(pid)?.verdict ?? "";

@@ -2,7 +2,7 @@ import { matchesPublication, metadataCounts, parseMedline, parsePublication } fr
 import { publicationFor } from "@/lib/long-covid/publications-server";
 import type { PublicationMetadata } from "@/lib/long-covid/publications";
 import fs from "fs";
-import path from "path";
+import { longCovidDataPath } from "@/lib/long-covid/data-path";
 import { NextRequest, NextResponse } from "next/server";
 import { parseCSV, stripTags } from "@/app/birds-eye-reviews/long-covid/screening/csv-utils";
 
@@ -27,13 +27,13 @@ interface ScreeningRow {
 }
 
 let cachedRows: ScreeningRow[] | null = null;
+let cachedStamp = "";
 
 function loadRows(): ScreeningRow[] {
-  if (cachedRows) return cachedRows;
-  const filePath = path.join(
-    process.cwd(),
-    "data/birds_eye_reviews/long_covid/trial_screening.csv"
-  );
+  const filePath = longCovidDataPath("trial_screening.csv");
+  const stat = fs.statSync(filePath);
+  const stamp = `${filePath}:${stat.mtimeMs}:${stat.size}`;
+  if (cachedRows && cachedStamp === stamp) return cachedRows;
   const raw = fs.readFileSync(filePath, "utf-8");
   const records = parseCSV(raw);
   const header = records[0].map((h) => h.trim());
@@ -61,6 +61,7 @@ function loadRows(): ScreeningRow[] {
       year: row.paper_year ?? "",
     };
   });
+  cachedStamp = stamp;
   return cachedRows;
 }
 

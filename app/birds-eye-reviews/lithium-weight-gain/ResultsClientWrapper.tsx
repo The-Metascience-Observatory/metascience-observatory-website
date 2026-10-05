@@ -6,6 +6,8 @@ import { ResultsTable, TrialRow } from "./ResultsTable";
 import { ArmRateCharts } from "./ArmRateCharts";
 import { ArmRatePoint, IncidencePoint } from "./arm-points";
 import { formatLabel } from "./utils";
+import { DoseResponseSection } from "./dose-response/DoseResponseSection";
+import type { DoseResponseData } from "./dose-response/load";
 
 /** Selection-set semantics, shared by every card (and CountryFilterCard):
  *  - empty set        = no filter; every box renders checked
@@ -160,10 +162,12 @@ export function ResultsClientWrapper({
   trials,
   armPoints = [],
   incidencePoints = [],
+  doseResponse,
 }: {
   trials: TrialRow[];
   armPoints?: ArmRatePoint[];
   incidencePoints?: IncidencePoint[];
+  doseResponse?: DoseResponseData;
 }) {
   // NB the data's design values are not normalized: "RCT" is uppercase and
   // "quasi-experimental" is hyphenated. Defaults must match t.design verbatim.
@@ -219,9 +223,10 @@ export function ResultsClientWrapper({
       {/* This page runs full-bleed so its ten-column table has room, but the
           filter cards are the same chips every other Bird's Eye Review shows
           and were stretching to the full width of a wide monitor. Cap them at
-          the ~1024px the shared `container` gives those pages, left-aligned
-          with the page heading. The table below stays full width. */}
-      <div className="max-w-[1024px]">
+          the ~1024px the shared `container` gives those pages, centered in
+          the same column as the page heading. The table below stays full
+          width. */}
+      <div className="max-w-[1024px] mx-auto">
         <FacetCard
           title="Filter by study design"
           values={allDesigns}
@@ -308,6 +313,12 @@ export function ResultsClientWrapper({
         incidence={incidencePoints.filter((p) => filteredDois.has(p.doi.split("#")[0]))}
       />
 
+      {/* Experimental, self-contained module — see dose-response/. */}
+      {doseResponse && <DoseResponseSection data={doseResponse} filteredDois={filteredDois} />}
+
+      <h2 className="mt-12 mb-3 font-clarendon text-2xl font-bold">
+        Trials used in this analysis and data extracted
+      </h2>
       <ResultsTable rows={filtered} />
     </div>
   );

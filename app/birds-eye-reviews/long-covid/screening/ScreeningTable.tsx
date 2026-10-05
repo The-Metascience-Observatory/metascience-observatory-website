@@ -90,11 +90,13 @@ export function ScreeningTable({
   totalCount,
   externalSourceFilter,
   sourceFolders,
+  apiBase = "/api/screening",
 }: {
   initialRows: ScreeningRow[];
   totalCount: number;
   externalSourceFilter?: string;
   sourceFolders?: string[];
+  apiBase?: string;
 }) {
   const publicationFilters=usePublicationFilters();
   const {medline,publication,ready}=publicationFilters;
@@ -136,7 +138,7 @@ export function ScreeningTable({
       const p = buildParams();
       p.set("offset", String(offset));
       p.set("limit", "100");
-      const res = await fetch(`/api/screening?${p.toString()}`);
+      const res = await fetch(`${apiBase}?${p.toString()}`);
       if (!res.ok) throw new Error("Unable to load screening records");
       const data = await res.json();
       if (id !== requestId.current) return;
@@ -152,7 +154,7 @@ export function ScreeningTable({
     } finally {
       if(id===requestId.current)setLoading(false);
     }
-  }, [buildParams]);
+  }, [buildParams, apiBase]);
 
   // Refetch when filters change
   const applyFilters = useCallback(() => {

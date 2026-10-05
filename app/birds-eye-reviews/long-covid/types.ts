@@ -73,6 +73,7 @@ export interface TrialMeta {
   design_type: string;
   n_randomized: number | null;
   min_weeks: number | null;
+  case_definition?: string;
   year: number | null;
   n_instruments: number;
   primary_p_value: number | null;
@@ -96,6 +97,8 @@ export interface OutcomeSummaryItem {
 
 export interface TrialTableRow {
   releaseVersion?: string;
+  reviewSlug?: "long-covid" | "me-cfs";
+  quality_notice?: string;
   paper_id: string;
   inspectAssessment?: InspectAssessment;
   publicationMetadata?: PublicationMetadata;
@@ -134,6 +137,7 @@ export interface TrialTableRow {
   verdict_rationale: string; // one-line LLM rationale for the verdict (may be empty)
   year: number | null;
   min_weeks: number | null;
+  case_definition?: string;
   summary: string;
   promise_score: number | null;
   title: string;
@@ -144,6 +148,7 @@ export interface TrialTableRow {
 }
 
 export interface DashboardProps {
+  review?: {slug: "long-covid" | "me-cfs"; label: string; preview?: boolean};
   summaryStats: SummaryStats;
   inspectAssessedAt?: string;
   lastUpdated?: string;

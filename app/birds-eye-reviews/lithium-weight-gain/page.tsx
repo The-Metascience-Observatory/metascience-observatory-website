@@ -7,6 +7,7 @@ import { parseCSV, stripTags, normalizeTitle } from "./csv-utils";
 import { ResultsClientWrapper } from "./ResultsClientWrapper";
 import { TrialRow } from "./ResultsTable";
 import { loadArmRatePoints, loadIncidencePoints } from "./arm-points";
+import { loadDoseResponse } from "./dose-response/load";
 import { DESIGN_OVERRIDES, INTERVENTION_OVERRIDES, EXCLUDED_DOIS } from "./utils";
 
 export const metadata = {
@@ -172,7 +173,13 @@ function loadFacets(): Record<string, PaperFacet> {
   }
 }
 
-function loadTrials(cites: Map<string, Citation>): TrialRow[] {
+/** A finite number, or null. The extraction is model-generated, so a field
+ *  typed numeric can arrive as text (one p-value is stored as "<0.001");
+ *  casting it through would crash the table's number formatting. */
+const numOrNull = (v: unknown): number | null =>
+  typeof v === "number" && Number.isFinite(v) ? v : null;
+
+function loadTrials(cites: Map<string, Citation>, extraDois: Set<string> = new Set()): TrialRow[] {
   const facets = loadFacets();
   const fp = dataPath("trial_extractions.jsonl");
   if (!fs.existsSync(fp)) return [];
@@ -186,12 +193,13 @@ function loadTrials(cites: Map<string, Citation>): TrialRow[] {
 
     const outcomes = Array.isArray(r.outcomes) ? (r.outcomes as Record<string, unknown>[]) : [];
     const weightOutcomes = outcomes.filter(isWeightOutcome);
-    // This dashboard answers one question, so a study with no weight/BMI
-    // outcome has nothing to say here and is dropped entirely.
-    if (weightOutcomes.length === 0) continue;
-
     const doi = String(r.paper_id ?? "");
     const baseDoi = doi.split("#")[0];
+    // A study with no weight/BMI outcome is dropped — unless the dose-response
+    // section draws on its side-effect counts, in which case it is listed so
+    // the table covers every trial the page uses.
+    const sideEffectsOnly = weightOutcomes.length === 0;
+    if (sideEffectsOnly && !extraDois.has(baseDoi)) continue;
     if (EXCLUDED_DOIS.has(baseDoi)) continue;
     const sd = (r.study_design ?? {}) as Record<string, unknown>;
     const ss = (r.sample_sizes ?? {}) as Record<string, unknown>;
@@ -217,14 +225,13 @@ function loadTrials(cites: Map<string, Citation>): TrialRow[] {
     }
 
     const c = cites.get(baseDoi);
-    const n = (ss.n_randomized_total as number) ?? (ss.n_enrolled_total as number) ?? null;
+    const n = numOrNull(ss.n_randomized_total) ?? numOrNull(ss.n_enrolled_total);
 
     // Duration: treatment length is the exposure that matters for weight; fall
     // back to total study length when the split isn't reported.
     const durationWeeks =
-      (followUp.treatment_duration_weeks as number) ??
-      (followUp.total_duration_weeks as number) ??
-      null;
+      numOrNull(followUp.treatment_duration_weeks) ??
+      numOrNull(followUp.total_duration_weeks);
 
     const countries = Array.isArray(sd.countries)
       ? [...new Set((sd.countries as unknown[]).filter(
@@ -249,8 +256,8 @@ function loadTrials(cites: Map<string, Citation>): TrialRow[] {
       rob: String(rob.overall_judgment ?? ""),
 
       // --- dose ---------------------------------------------------------
-      elementalMgPerDay: (derived.mean_elemental_mg_per_day as number) ?? null,
-      serumMmolL: (derived.mean_serum_li_mmol_L as number) ?? null,
+      elementalMgPerDay: numOrNull(derived.mean_elemental_mg_per_day),
+      serumMmolL: numOrNull(derived.mean_serum_li_mmol_L),
       serumBand: String(derived.serum_li_band ?? ""),
       // True when the elemental dose rests on the bipolar-population carbonate
       // assumption rather than a stated salt — surfaced so an imputed dose is
@@ -265,12 +272,16 @@ function loadTrials(cites: Map<string, Citation>): TrialRow[] {
       // --- weight result ------------------------------------------------
       weightMetric: String(chosen?.weight_metric ?? ""),
       weightMetricLabel: METRIC_LABEL[String(chosen?.weight_metric ?? "")] ?? "",
-      outcomeName: String(chosen?.name ?? ""),
+      outcomeName: sideEffectsOnly
+        ? "Side-effect counts only (used in dose-response by side effect)"
+        : String(chosen?.name ?? ""),
       effMeasure: String(eff?.effect_measure ?? ""),
-      effVal: (eff?.effect_value as number) ?? null,
-      ciLo: (eff?.ci_95_low as number) ?? null,
-      ciHi: (eff?.ci_95_high as number) ?? null,
-      pVal: (eff?.p_value as number) ?? null,
+      effVal: numOrNull(eff?.effect_value),
+      ciLo: numOrNull(eff?.ci_95_low),
+      ciHi: numOrNull(eff?.ci_95_high),
+      pVal: numOrNull(eff?.p_value),
+      // A p-value reported only as text ("<0.001") is shown verbatim.
+      pText: typeof eff?.p_value === "string" ? eff.p_value.trim() : "",
       // An SE recovered from a reported p-value rather than read off the paper.
       seFromP: String(eff?.se_source ?? "") === "from_p_value",
 
@@ -290,7 +301,6 @@ function loadTrials(cites: Map<string, Citation>): TrialRow[] {
 
 export default function ResultsPage() {
   const cites = loadCitations();
-  const trials = loadTrials(cites);
   // Arm-level kg-change points for the dose-normalized charts; hover labels
   // come from the same citation join the table uses.
   const decorate = <T extends { doi: string; label: string }>(p: T): T => {
@@ -300,6 +310,8 @@ export default function ResultsPage() {
   };
   const armPoints = loadArmRatePoints(DATA_DIR).map(decorate);
   const incidencePoints = loadIncidencePoints(DATA_DIR).map(decorate);
+  const doseResponse = loadDoseResponse(DATA_DIR, decorate);
+  const trials = loadTrials(cites, new Set(doseResponse.paperDois));
 
   return (
     <>
@@ -311,35 +323,43 @@ export default function ResultsPage() {
           padding grows to ≈1–2 in on desktop so the content never touches the
           screen edges. */}
       <main className="w-full px-4 sm:px-8 lg:px-24 2xl:px-40 pt-24 pb-16 min-h-screen">
-        <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1">
-          <Link href="/birds-eye-reviews" className="text-sm text-blue-600 hover:text-blue-700">
-            &larr; Back to Bird&apos;s Eye Reviews
-          </Link>
-        </div>
+        {/* Header shares the centered 1024px column the filter cards use. */}
+        <div className="max-w-[1024px] mx-auto">
+          <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1">
+            <Link href="/birds-eye-reviews" className="text-sm text-blue-600 hover:text-blue-700">
+              &larr; Back to Bird&apos;s Eye Reviews
+            </Link>
+          </div>
 
-        <h1 className="font-clarendon font-bold text-3xl mb-2">
-          Lithium &amp; Weight Gain
-        </h1>
-        <p className="mb-4 max-w-3xl text-sm text-foreground/70">
-          Every study in this review that reports body weight, BMI, or a
-          weight-related adverse event in people taking lithium — related where
-          possible to elemental dose and achieved serum level.
-        </p>
-        <div className="mb-4 flex flex-wrap gap-2">
-          <Link
-            href="/birds-eye-reviews/lithium-weight-gain/screening"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
-          >
-            View screening process &rarr;
-          </Link>
-          {/* The findings-report page still exists at /report but is
-              deliberately not linked from here. */}
+          <h1 className="font-clarendon font-bold text-3xl mb-2">
+            Lithium &amp; Weight Gain
+          </h1>
+          <p className="mb-4 max-w-3xl text-sm text-foreground/70">
+            Every study in this review reports body weight, BMI, or a weight-related adverse event in people taking lithium. In summer of 2026 an AI model (Sonnet) was used to extract information from those studies, and the results are displayed in this dashboard. 
+          </p>
+          <div className="mb-4 flex flex-wrap gap-2">
+            <Link
+              href="/birds-eye-reviews/lithium-weight-gain/screening"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
+            >
+              View screening process &rarr;
+            </Link>
+            <Link
+              href="/birds-eye-reviews/lithium-drinking-water"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-orange-200 bg-orange-50 text-orange-800 hover:bg-orange-100 transition-colors text-sm font-medium"
+            >
+              Bonus page: Drinking water &amp; obesity: county analysis &rarr;
+            </Link>
+            {/* The findings-report page still exists at /report but is
+                deliberately not linked from here. */}
+          </div>
         </div>
 
         <ResultsClientWrapper
           trials={trials}
           armPoints={armPoints}
           incidencePoints={incidencePoints}
+          doseResponse={doseResponse}
         />
       </main>
       <Footer />

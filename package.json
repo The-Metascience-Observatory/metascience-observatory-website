@@ -15,7 +15,7 @@
     "start": "next start",
     "lint": "node scripts/check-tool-catalog.mjs && next lint",
     "check:tools": "node scripts/check-tool-catalog.mjs",
-    "test:publications": "tsx --test tests/publications.test.ts",
+    "test:publications": "tsx --test tests/publications.test.ts tests/inspect-server.test.ts tests/screening-data.test.ts",
     "test:publication-ui": "playwright test --config tests/publications.playwright.config.ts"
   },
   "dependencies": {

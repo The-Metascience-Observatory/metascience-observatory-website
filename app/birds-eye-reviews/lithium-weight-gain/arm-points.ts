@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { DESIGN_OVERRIDES, EXCLUDED_DOIS, CHART_EXCLUDED_DOIS, SIGN_FLIPPED_CHANGE_DOIS } from "./utils";
+import { DESIGN_OVERRIDES, EXCLUDED_DOIS, CHART_EXCLUDED_DOIS } from "./utils";
 
 /** One lithium arm's observed weight change, normalized to a rate.
  *
@@ -37,7 +37,7 @@ export interface ArmRatePoint {
 const WEIGHT_RE = /weight|bmi|body mass|adipos|waist|body composition/i;
 
 /** Fraction of a lithium salt's mass that is elemental lithium (PubChem). */
-const SALT_FRACTION: Record<string, number> = {
+export const SALT_FRACTION: Record<string, number> = {
   carbonate: 0.1879,
   citrate: 0.0992,
   orotate: 0.0428,
@@ -64,7 +64,7 @@ function isWeightOutcome(o: Rec): boolean {
   return WEIGHT_RE.test(`${o.name ?? ""} ${o.symptom_domain ?? ""} ${o.category ?? ""} ${o.weight_metric ?? ""}`);
 }
 
-function armElementalDose(arm: Rec, derived: Rec): number | null {
+export function armElementalDose(arm: Rec, derived: Rec): number | null {
   const direct = num(arm.dose_elemental_mg_per_day_mean);
   if (direct != null) return direct;
   const saltMg = num(arm.dose_salt_mg_per_day_mean);
@@ -244,8 +244,6 @@ export function loadArmRatePoints(dataDir: string): ArmRatePoint[] {
 
       const add = (armId: unknown, changeKg: number | null, tpId: unknown) => {
         if (changeKg == null || !lithiumArmIds.has(armId)) return;
-        // Hand-verified sign correction (see SIGN_FLIPPED_CHANGE_DOIS).
-        if (SIGN_FLIPPED_CHANGE_DOIS.has(doi.split("#")[0])) changeKg = -changeKg;
         const weeks = weeksOfTp.get(tpId) ?? fallbackWeeks;
         if (weeks == null || weeks <= 0) return;
         const key = `${armId}|${metric}`;

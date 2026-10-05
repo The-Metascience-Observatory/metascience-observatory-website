@@ -83,26 +83,12 @@ export const INTERVENTION_OVERRIDES: Record<string, string[]> = {
  *  weight. Independently confirmed spurious by the XML re-extraction pass. */
 export const EXCLUDED_DOIS = new Set(["10.1210/jcem.81.4.8636369"]);
 
-/** Studies whose extracted weight "change_from_baseline" values carry the
- *  WRONG SIGN and must be negated before plotting.
- *
- *  Abou-Saleh & Coppen 1989 (verified against the original PDF, Table 3):
- *  the paper defines every Δ as "subtracting values during the trial from
- *  those before" — i.e. Δ = before − during, so a POSITIVE table value means
- *  the measure went DOWN. The extraction copied the table verbatim as
- *  during − before. True result: the minimal-dose-reduction arm GAINED
- *  0.9 kg and the largest-reduction arm LOST 0.9 kg (consistent with the
- *  paper's own abstract: lower dose → less weight gain). The tremor table
- *  confirms the convention (pre 0.76 → during 0.46 is printed as Δ +0.28).
- *
- *  ⚠ REMOVE THIS OVERRIDE WHEN THE DATA BUNDLE IS NEXT REPUBLISHED. The
- *  canonical workspace record (trial_extractions_pass2.jsonl, marked with
- *  extraction_metadata.sign_correction) was fixed at source on 2026-08-18;
- *  this override only compensates for the CURRENTLY PUBLISHED Jul-28 bundle.
- *  Left in place against corrected data it would re-flip the record and
- *  silently reintroduce the bug in the opposite direction. A corpus-wide
- *  sweep found no other paper using the before−during delta convention. */
-export const SIGN_FLIPPED_CHANGE_DOIS = new Set(["10.1016/0022-3956(89)90006-x"]);
+/* Abou-Saleh & Coppen 1989 (10.1016/0022-3956(89)90006-x) prints weight deltas
+ * as before − during, so the original extraction had every arm's sign
+ * reversed. A temporary SIGN_FLIPPED_CHANGE_DOIS override compensated until
+ * the fix landed at source (extraction_metadata.sign_correction, 2026-08-18);
+ * the override was removed when the Aug-18 bundle was published on
+ * 2026-10-05 — keeping it would have re-flipped the corrected record. */
 
 /** Excluded from the CHARTS only (the table row stays). Xie et al. 2025 is a
  *  single-patient case report of severe lithium INTOXICATION — serum
@@ -110,4 +96,17 @@ export const SIGN_FLIPPED_CHANGE_DOIS = new Set(["10.1016/0022-3956(89)90006-x"]
  *  itself excludes — whose −21 kg over 17 weeks reflects acute illness, not
  *  therapeutic exposure. As an N=1 extreme it dominated every axis it
  *  touched. */
-export const CHART_EXCLUDED_DOIS = new Set(["10.3389/fsurg.2025.1744520"]);
+export const CHART_EXCLUDED_DOIS = new Set([
+  "10.3389/fsurg.2025.1744520",
+  // Four more single-patient case reports, arriving with the Aug-18 bundle,
+  // whose weight change was not caused by lithium:
+  // −32 kg after sleeve gastrectomy, then lithium toxicity.
+  "10.1177/2050313x20953000",
+  // −27 kg after Roux-en-Y gastric bypass, then lithium toxicity.
+  "10.9740/mhc.2022.06.214",
+  // −25 kg before fatal lithium toxicity (serum 3.79) from renal failure.
+  "10.12740/pp/onlinefirst/152050",
+  // +18 kg over 8 months, but the extraction timed it at 4 days (a bogus
+  // +30 kg/week), followed by a topiramate interaction.
+  "10.15406/jsrt.2018.04.00104",
+]);

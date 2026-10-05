@@ -151,8 +151,8 @@ function Scatter({
   return (
     // w-fit + mx-auto: the card hugs the chart's own width and sits centered;
     // the subtitle/footnote paragraphs inherit that width and wrap inside it.
-    <div className="mb-6 w-fit max-w-full mx-auto rounded-lg border border-border bg-white p-3 sm:p-4">
-      <h2 className="mb-1 text-sm font-medium text-foreground">{title}</h2>
+    <div className="mb-6 w-fit max-w-full mx-auto rounded-lg border border-foreground-strong/85 bg-white p-3 sm:p-4">
+      <h2 className="mb-1 text-[1.3125rem] leading-snug font-medium text-foreground">{title}</h2>
       <p className="mb-3 max-w-[720px] text-xs text-foreground/50">{subtitle}</p>
       <div ref={wrapRef} className="relative overflow-x-auto">
         {/* viewBox lets the whole chart scale down proportionally when a
@@ -164,9 +164,9 @@ function Scatter({
                   stroke="currentColor" className="text-foreground/25" strokeDasharray="4 3" />
           )}
           <line x1={M.left} x2={M.left} y1={M.top} y2={H - M.bottom}
-                stroke="currentColor" className="text-foreground/30" />
+                stroke="currentColor" className="text-foreground-strong" />
           <line x1={M.left} x2={W - M.right} y1={H - M.bottom} y2={H - M.bottom}
-                stroke="currentColor" className="text-foreground/30" />
+                stroke="currentColor" className="text-foreground-strong" />
 
           {xTicks.map((t) => (
             <g key={t}>
@@ -190,10 +190,10 @@ function Scatter({
           ))}
 
           <text x={(M.left + W - M.right) / 2} y={H - 6} textAnchor="middle"
-                className="fill-current text-foreground" fontSize={13}>
+                className="fill-current text-foreground" fontSize={13} fontWeight={700}>
             {xLabel}
           </text>
-          <text x={14} y={(M.top + H - M.bottom) / 2} textAnchor="middle" fontSize={13}
+          <text x={14} y={(M.top + H - M.bottom) / 2} textAnchor="middle" fontSize={13} fontWeight={700}
                 className="fill-current text-foreground"
                 transform={`rotate(-90 14 ${(M.top + H - M.bottom) / 2})`}>
             {yLabel}
@@ -302,8 +302,8 @@ function IncidenceHistogram({ points }: { points: IncidencePoint[] }) {
   const barW = plotW / 10;
 
   return (
-    <div className="mb-6 w-fit max-w-full mx-auto rounded-lg border border-border bg-white p-3 sm:p-4">
-      <h2 className="mb-1 text-sm font-medium text-foreground">
+    <div className="mb-6 w-fit max-w-full mx-auto rounded-lg border border-foreground-strong/85 bg-white p-3 sm:p-4">
+      <h2 className="mb-1 text-[1.3125rem] leading-snug font-medium text-foreground">
         How often patients on lithium gained weight
       </h2>
       <p className="mb-3 max-w-[720px] text-xs text-foreground/50">
@@ -313,9 +313,9 @@ function IncidenceHistogram({ points }: { points: IncidencePoint[] }) {
       <div className="relative overflow-x-auto">
         <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} className="max-w-full h-auto">
           <line x1={M.left} x2={M.left} y1={M.top} y2={H - M.bottom}
-                stroke="currentColor" className="text-foreground/30" />
+                stroke="currentColor" className="text-foreground-strong" />
           <line x1={M.left} x2={W - M.right} y1={H - M.bottom} y2={H - M.bottom}
-                stroke="currentColor" className="text-foreground/30" />
+                stroke="currentColor" className="text-foreground-strong" />
           {Array.from({ length: yTop / yStep + 1 }, (_, i) => i * yStep).map((v) => (
             <g key={v}>
               <line x1={M.left - 4} x2={M.left} y1={sy(v)} y2={sy(v)}
@@ -351,10 +351,10 @@ function IncidenceHistogram({ points }: { points: IncidencePoint[] }) {
             </text>
           ))}
           <text x={(M.left + W - M.right) / 2} y={H - 6} textAnchor="middle"
-                className="fill-current text-foreground" fontSize={13}>
+                className="fill-current text-foreground" fontSize={13} fontWeight={700}>
             Patients with weight gain (%)
           </text>
-          <text x={14} y={(M.top + H - M.bottom) / 2} textAnchor="middle" fontSize={13}
+          <text x={14} y={(M.top + H - M.bottom) / 2} textAnchor="middle" fontSize={13} fontWeight={700}
                 className="fill-current text-foreground"
                 transform={`rotate(-90 14 ${(M.top + H - M.bottom) / 2})`}>
             Number of lithium arms

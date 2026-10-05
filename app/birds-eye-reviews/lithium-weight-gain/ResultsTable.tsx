@@ -41,6 +41,8 @@ export interface TrialRow {
   ciLo: number | null;
   ciHi: number | null;
   pVal: number | null;
+  /** Verbatim p-value when the paper gave only text such as "<0.001". */
+  pText?: string;
   seFromP: boolean;
 
   summary: string;
@@ -167,8 +169,8 @@ function rowHref(row: TrialRow): string | null {
 /** Render a p-value the way journals do. "<0.001" rather than "0.000" (which
  *  reads as exactly zero), and an em dash — never 1.0 — when none was reported:
  *  an unreported p-value is missing data, not a null result. */
-function formatP(p: number | null): string {
-  if (p == null) return "—";
+function formatP(p: number | null, text?: string): string {
+  if (p == null) return text || "—";
   if (p < 0.001) return "<0.001";
   return p.toFixed(3);
 }
@@ -288,7 +290,7 @@ function WeightCell({ row }: { row: TrialRow }) {
       </div>
       {ci && <div className="text-xs text-foreground/50 tabular-nums">{ci}</div>}
       <div className="text-[10px] text-foreground/40">
-        p {formatP(row.pVal)}
+        p {formatP(row.pVal, row.pText)}
         {row.seFromP && (
           <span title="Standard error derived from the reported p-value (no CI given)."> †</span>
         )}

@@ -1,10 +1,9 @@
 import fs from "fs";
-import path from "path";
+import { longCovidDataPath } from "./data-path";
 import type { InspectSnapshot } from "./inspect";
 
 /** Load once per page render. Missing coverage remains explicitly unassessed. */
-export function loadInspectSnapshot(): InspectSnapshot | undefined {
-  const filename = path.join(process.cwd(), "data/birds_eye_reviews/long_covid/inspect_sr.json");
+export function loadInspectSnapshot(filename = longCovidDataPath("inspect_sr.json")): InspectSnapshot | undefined {
   if (!fs.existsSync(filename)) return undefined;
   const data = JSON.parse(fs.readFileSync(filename, "utf8")) as InspectSnapshot;
   if (data.version !== 1 || !data.papers || !data.assessedAt) throw new Error("Unsupported INSPECT-SR snapshot");

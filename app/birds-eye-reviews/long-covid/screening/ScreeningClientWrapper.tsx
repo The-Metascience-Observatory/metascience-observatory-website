@@ -29,12 +29,16 @@ export function ScreeningClientWrapper({
   totalTreatment,
   initialRows,
   sourceFolders,
+  apiBase = "/api/screening",
+  reviewLabel = "Long COVID",
 }: {
   bars: ArticleTypeBar[];
   totalArticles: number;
   totalTreatment: number;
   initialRows: ScreeningRow[];
   sourceFolders: string[];
+  apiBase?: string;
+  reviewLabel?: string;
 }) {
   // Use a counter to force re-trigger even if same bar is clicked twice
   const [sourceFilter, setSourceFilter] = useState<string | undefined>(undefined);
@@ -49,13 +53,14 @@ export function ScreeningClientWrapper({
     <>
       <ScreeningFunnelChart
         data={bars}
+        reviewLabel={reviewLabel}
         totalArticles={totalArticles}
         totalTreatment={totalTreatment}
         onBarClick={handleBarClick}
       />
       <div className="flex justify-end mb-2">
         <a
-          href="/api/screening/download"
+          href={`${apiBase}/download`}
           download="trial_screening.csv"
           className="text-blue-600 hover:text-blue-700 text-sm"
         >
@@ -65,6 +70,7 @@ export function ScreeningClientWrapper({
       <ScreeningTable
         key={filterKey}
         initialRows={initialRows}
+        apiBase={apiBase}
         totalCount={totalArticles}
         externalSourceFilter={sourceFilter}
         sourceFolders={sourceFolders}

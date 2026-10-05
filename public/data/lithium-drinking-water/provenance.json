@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "exportedAt": "2026-10-02T22:40:42.180888+00:00",
+  "fingerprint": "5f405004a8bac38377bd9365ba65b73ce7331a4e54349bf553e89f1a64e6acf9",
+  "inputs": [
+    {
+      "path": "data/merged_county.csv",
+      "sha256": "452a5d5ca9c6254cea2b677d075843595812a5233a80a2a60399dca5a44325b1"
+    },
+    {
+      "path": "data/raw/tl_2023_us_county.zip",
+      "sha256": "692e12c30c83adcaabdbac0d3954fafa55e1c89a24b36d95e72e02dff938652e"
+    },
+    {
+      "path": "scripts/export_dashboard.py",
+      "sha256": "c13c6db205e8bba9d5c42c9cb18f1e0a9f3e58d1d13d35ac50de46e80982cad2"
+    },
+    {
+      "path": "results/artefact_checks.csv",
+      "sha256": "48275514df84b3867e3136c11ac9a959b63adbfc1c106e0da566ae956d367148"
+    },
+    {
+      "path": "results/concordance.csv",
+      "sha256": "23f2e4a8ed6cfba282683be09df89e64300fbf019620ff714783f78a35a4055a"
+    },
+    {
+      "path": "results/correlations_diabetes.csv",
+      "sha256": "8facf237711a5516fd82dda22f5d5d06e63776e4291b36bd5a34d55201985eb0"
+    },
+    {
+      "path": "results/correlations_main.csv",
+      "sha256": "02081d7bd1b653e0867e0369760a19d47e83bef69889f5fff937a901d5734459"
+    },
+    {
+      "path": "results/negative_control_corr.csv",
+      "sha256": "6f4e25d2746168d0de449c222221297fe39bfa1a4cc12585d9bb758b1bac8ccf"
+    },
+    {
+      "path": "results/negative_control_ols.csv",
+      "sha256": "a7caaa7126268de78c06af17422b3c59b26031b4fe848c6e08bf43a3b6d17060"
+    },
+    {
+      "path": "results/ols_ladders.csv",
+      "sha256": "48b5e43c6670e6259157157e6ae27da0d00462014b790b5fe4b9a7c413c921a2"
+    },
+    {
+      "path": "results/sensitivity.csv",
+      "sha256": "a3dba87f2d1247b497713134ea76fe6e5ccb7b74f55ad465f923fe07eaa951b0"
+    },
+    {
+      "path": "results/state_level.csv",
+      "sha256": "e6fe5afd8791e6d63a23d6899e2a33ee90bfde976a3a74333bc71c05d427fdc4"
+    },
+    {
+      "path": "results/texas_diabetes.csv",
+      "sha256": "503d159a25d740f5034364e179550f4656ae01729186071f94debca465ea4884"
+    },
+    {
+      "path": "results/texas_obesity.csv",
+      "sha256": "a7b44b51373945d119ee87298d1d1611f881fdc469ff257d546cc82e259e9f99"
+    },
+    {
+      "path": "results/usgs_nd_sensitivity.csv",
+      "sha256": "d8f7cf7d6134a9b8bd7084d18383fc3f8cd80cc0e24a81e5cb38efd992cf4be8"
+    }
+  ],
+  "sources": [
+    {
+      "name": "EPA UCMR5",
+      "description": "Finished water sampled at entry points to distribution systems; systems linked to counties through ZIP/ZCTA geography.",
+      "url": "https://www.epa.gov/dwucmr/fifth-unregulated-contaminant-monitoring-rule",
+      "period": "2023\u20132025 sampling in the saved release"
+    },
+    {
+      "name": "Water Quality Portal",
+      "description": "Groundwater well results; repeated samples summarized within sites before county aggregation.",
+      "url": "https://www.waterqualitydata.us/",
+      "period": "Historical records; dates were not retained in the county export"
+    },
+    {
+      "name": "USGS Lindsey",
+      "description": "Groundwater lithium release. 1,758 of 4,700 wells are geocodable; no public-supply wells are geocodable.",
+      "url": "https://doi.org/10.5066/P9GCGY5K",
+      "period": "1991\u20132018"
+    },
+    {
+      "name": "CDC PLACES",
+      "description": "Model-based county health estimates. The 2025 release is a publication vintage, not a common sampling year.",
+      "url": "https://data.cdc.gov/resource/i46a-9kgh.csv",
+      "period": "2025 release"
+    },
+    {
+      "name": "NOAA nClimDiv",
+      "description": "Mean annual precipitation from county monthly records; the analysis uses a 30-year climate normal.",
+      "url": "https://www.ncei.noaa.gov/access/monitoring/dyk/us-climate-divisions",
+      "period": "1991\u20132020 normal"
+    },
+    {
+      "name": "County Health Rankings",
+      "description": "Median household income, some college, and rural population share.",
+      "url": "https://www.countyhealthrankings.org/",
+      "period": "2025 release; component measurement years may differ"
+    },
+    {
+      "name": "Census TIGER",
+      "description": "County and county-equivalent boundaries, including Connecticut planning regions. Geometry simplified for display.",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2023/COUNTY/",
+      "period": "2023 boundaries"
+    }
+  ],
+  "snapshotSha256": "2ce908eabc4fa2a2b1a2ad528f115a25b8f1fa61304dabfae26f554652ef55fb"
+}
