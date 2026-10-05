@@ -30,11 +30,11 @@ function MainBox({ stage, title, n, sub, accent = false }: {
   return (
     <div
       className={`rounded-lg px-4 py-3 text-center shadow-sm ${
-        accent ? "border-2 border-blue-400 bg-blue-50/60" : "border border-border bg-white"
+        accent ? "border-2 border-black bg-blue-50/60" : "border border-black bg-white"
       }`}
     >
       {stage && (
-        <div className="text-[10px] uppercase tracking-wide text-foreground/40 mb-1">{stage}</div>
+        <div className="text-[10px] uppercase tracking-wide text-black mb-1">{stage}</div>
       )}
       <div className="text-2xl font-bold text-foreground leading-none">{n.toLocaleString()}</div>
       <div className="text-sm text-foreground/80 mt-1">{title}</div>
@@ -46,15 +46,15 @@ function MainBox({ stage, title, n, sub, accent = false }: {
 function ExcludedBox({ items }: { items: { title: string; n: number }[] }) {
   return (
     <div className="flex items-center">
-      <div className="hidden md:flex items-center shrink-0 text-foreground/30">
-        <div className="h-px w-8 bg-foreground/25" />
+      <div className="hidden md:flex items-center shrink-0 text-black">
+        <div className="h-px w-8 bg-black" />
         <ArrowRight size={16} className="-ml-1" />
       </div>
       <div className="flex-1 space-y-1 md:ml-1">
         {items.map((it) => (
           <div
             key={it.title}
-            className="border border-dashed border-border rounded-lg bg-foreground/[0.03] px-3 py-2 text-left"
+            className="border border-dashed border-black rounded-lg bg-foreground/[0.03] px-3 py-2 text-left"
           >
             <span className="font-semibold text-foreground/70">{it.n.toLocaleString()}</span>
             <span className="text-xs text-foreground/55"> — {it.title}</span>
@@ -67,8 +67,8 @@ function ExcludedBox({ items }: { items: { title: string; n: number }[] }) {
 
 function SpineArrow() {
   return (
-    <div className="flex flex-col items-center text-foreground/30">
-      <div className="w-px h-8 bg-foreground/25" />
+    <div className="flex flex-col items-center text-black">
+      <div className="w-px h-8 bg-black" />
       <ArrowDown size={18} className="-mt-2" />
     </div>
   );
@@ -252,7 +252,7 @@ export function PrismaDiagram({ c }: { c: PrismaCounts }) {
 
         <StageRow
           stage="Extracted"
-          title={<>Studies <strong className="font-bold">displayed on dashboard</strong></>}
+          title={<strong className="font-bold">Studies displayed on dashboard</strong>}
           accent
           n={c.with_weight_outcome}
           sub={`${c.extracted.toLocaleString()} papers underwent full data extraction`}
@@ -275,13 +275,6 @@ export function PrismaDiagram({ c }: { c: PrismaCounts }) {
         />
       </div>
 
-      <p className="mt-6 max-w-3xl text-xs text-foreground/50">
-        The full-text screen <em>is</em> this review&apos;s eligibility pass. An
-        abstract-level relevance gate was deliberately skipped: weight is usually
-        reported only in a safety table, so an abstract screen would reject
-        exactly the papers the review exists to find — a false negative that no
-        later stage can recover.
-      </p>
 
       <Breakdown
         title="Study designs among eligible papers"

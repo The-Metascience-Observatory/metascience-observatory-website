@@ -47,11 +47,10 @@ export default function ScreeningPage() {
         </div>
 
         <h1 className="font-clarendon font-bold text-3xl mb-2">Screening process</h1>
-        <p className="mb-8 max-w-3xl text-sm text-foreground/70">
-          Every number below is measured from the pipeline&apos;s own artifacts
-          rather than entered by hand. Papers we could not obtain are counted
-          openly — an unread paper is a limitation of the review, not an
-          exclusion from it.
+        <p className="mb-8 max-w-3xl text-sm text-foreground">
+          Unlike other Bird&apos;s Eye Reviews we had to screen using the full text, not
+          just looking at abstracts, since weight gain information is typically not
+          mentioned in abstracts.
         </p>
 
         {prisma ? (
