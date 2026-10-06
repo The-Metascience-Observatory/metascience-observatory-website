@@ -59,7 +59,7 @@ export default function ReplicationProjectsPage() {
             <p className="text-foreground/60">
               No data found. Make sure{" "}
               <code className="font-mono">
-                data/previous_replication_initiatives.csv
+                data/initiative-data/previous_replication_initiatives.csv
               </code>{" "}
               exists and has at least one row.
             </p>

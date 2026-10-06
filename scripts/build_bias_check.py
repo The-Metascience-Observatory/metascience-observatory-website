@@ -21,7 +21,7 @@ changes, this script and the page must change with it.
 
 The representative/targeted split is a judgment call about each project's
 selection strategy and is defined in REPRESENTATIVE/TARGETED below. It is
-deliberately NOT read from data/previous_replication_initiatives.csv's
+deliberately NOT read from data/initiative-data/previous_replication_initiatives.csv's
 `selection_design` column, which disagrees for three large members (SRP,
 RP:CB, LOOPR); --strict recomputes the headline using only that column's
 genuine sampling frames as a sensitivity check.
@@ -58,7 +58,7 @@ TARGETED = {"ML1", "ML2", "ML3", "ML4", "ML5", "RRR", "SPRRR"}
 # collecting new data: reproducibility, not replication.
 EXCLUDED = {"3ie"}
 # Sensitivity check only: the `selection_design` values in
-# data/previous_replication_initiatives.csv that are genuine sampling frames.
+# data/initiative-data/previous_replication_initiatives.csv that are genuine sampling frames.
 STRICT_FRAMES = {"random_frame", "exhaustive_frame",
                  "quasi_random_frame_feasibility", "method_stratified"}
 
@@ -183,7 +183,7 @@ def valid_r(value: str) -> float | None:
 
 
 def strict_frame_tags(repo_root: Path) -> set[str]:
-    path = repo_root / "data" / "previous_replication_initiatives.csv"
+    path = repo_root / "data" / "initiative-data" / "previous_replication_initiatives.csv"
     tags = set()
     with path.open(encoding="utf-8") as fh:
         for row in csv.DictReader(fh):

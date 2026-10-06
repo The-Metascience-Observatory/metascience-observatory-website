@@ -1,7 +1,7 @@
 {
   "verified_on": "2026-09-28",
   "sources": [
-    "data/previous_replication_initiatives.csv",
+    "data/initiative-data/previous_replication_initiatives.csv",
     "data/replications_database_2026_09_28_155521.csv"
   ],
   "selection_notes": {

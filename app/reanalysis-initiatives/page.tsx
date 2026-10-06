@@ -48,7 +48,7 @@ export default function ReanalysisInitiativesPage() {
           {fieldGroups.length === 0 ? (
             <p className="text-foreground/60">
               No data found. Make sure{" "}
-              <code className="font-mono">data/reanalysis_initiatives.csv</code>{" "}
+              <code className="font-mono">data/initiative-data/reanalysis_initiatives.csv</code>{" "}
               exists and has at least one row.
             </p>
           ) : (

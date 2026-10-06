@@ -6,10 +6,10 @@ Default terms
 These terms apply to the original material in this repository and on the
 Metascience Observatory website, including website source code, design, text,
 documentation, images, and copyrightable database selection and arrangement.
-Except for the MIT exception below, separately licensed material, or uses
-permitted by law, no permission is granted to reproduce, modify, distribute,
-sublicense, or commercially exploit this material without prior written
-permission from the relevant copyright holder.
+Except for the MIT and CC BY 4.0 exceptions below, separately licensed
+material, or uses permitted by law, no permission is granted to reproduce,
+modify, distribute, sublicense, or commercially exploit this material without
+prior written permission from the relevant copyright holder.
 
 Public access to this repository does not grant a general license to reuse its
 contents. Rights granted under the repository host's terms of service, including
@@ -25,6 +25,21 @@ license datasets, metadata caches, documents, images, or generated outputs,
 whether stored alongside the code or produced by running it. All other original
 repository material remains subject to the default terms above unless a
 separate license is expressly identified.
+
+CC BY 4.0 exception for the replications database
+
+The Metascience Observatory replications database, distributed as
+data/replications_database_<timestamp>.csv (the current version is the file
+named on the last line of data/version_history.txt), is licensed under the
+Creative Commons Attribution 4.0 International License (CC BY 4.0):
+https://creativecommons.org/licenses/by/4.0/
+
+Please attribute it as: "Metascience Observatory replications database
+(<version filename>), https://metascienceobservatory.org, licensed under
+CC BY 4.0." This exception covers the database file only, not other
+datasets, caches, code, or website material. Records drawn from third-party
+sources remain subject to those sources' licenses and attribution
+requirements as described below.
 
 Third-party material and existing rights
 

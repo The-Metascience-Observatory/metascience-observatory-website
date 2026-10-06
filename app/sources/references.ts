@@ -14,7 +14,7 @@ export interface InitiativeReference {
 }
 
 // Verified against Crossref and publisher/project pages on 2026-09-28.
-// See literature/initiative-references/verification.json for selection notes.
+// See data/initiative-data/initiative-references/verification.json for selection notes.
 export const initiativeReferences: InitiativeReference[] = [
   {
     "tag": "BRI",
