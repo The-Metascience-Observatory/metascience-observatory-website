@@ -1027,7 +1027,9 @@ function ReplicationsDatabaseContent() {
           <FredAcknowledgment expanded />
           <PerryAcknowledgment expanded />
           <p>
-            We also imported data from several replication initiatives. <Link className="underline" href="/sources">A full list of sources can be found here.</Link>
+            We also imported data from several replication initiatives. <Link className="underline" href="/sources">A full list of sources can be found here.</Link>{" "}
+            New data from the Metascience Observatory is licensed with a{" "}
+            <a className="underline" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC-BY-4.0</a> license.
           </p>
         </div>
       </section>

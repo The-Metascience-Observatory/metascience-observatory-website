@@ -11,15 +11,19 @@ for the installed versions.
 ## Copyright and licensing
 
 Copyright © 2026 The Metascience Observatory and its contributors.
-**All rights reserved**, except for the data ingestion code and separately
-licensed material described in [LICENSE](LICENSE).
+**All rights reserved**, except for the replications database, the data
+ingestion code, and separately licensed material described in [LICENSE](LICENSE).
 
+- The replications database (`data/replications_database_<timestamp>.csv`; the
+  current version is named on the last line of `data/version_history.txt`) is
+  licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+  Please credit the Metascience Observatory and cite the version filename.
 - Python source files (`*.py`) under `data_ingestor/`, including subdirectories,
   and `scripts/ingest_eroe_effect_sizes.py` are licensed under the
   [MIT License](data_ingestor/LICENSE).
-- The MIT exception does not cover datasets, metadata caches, documentation,
-  images, or generated outputs. Other original website and repository material
-  remains all rights reserved.
+- These exceptions do not cover other datasets, metadata caches,
+  documentation, images, or generated outputs. Other original website and
+  repository material remains all rights reserved.
 - Third-party material retains its own licenses, including the existing
   CC BY 4.0 licenses for FORRT FReD and FLoRA data. Public-domain material and
   unprotected facts are not subject to this copyright claim.

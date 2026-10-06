@@ -25,7 +25,7 @@ function inferColumn(headers: string[], patterns: RegExp[]): string | undefined 
 }
 
 /**
- * Load an initiatives CSV from data/ and group its rows by field, ready for
+ * Load an initiatives CSV from data/initiative-data/ and group its rows by field, ready for
  * <InitiativesList>. `projectToTag` maps initiative names to their
  * replications-database tags (omit entries for initiatives with no rows in
  * the database).
@@ -34,7 +34,7 @@ export function loadInitiatives(
   csvFilename: string,
   projectToTag: Record<string, string> = {}
 ): FieldGroup[] {
-  const csvPath = path.join(process.cwd(), "data", csvFilename);
+  const csvPath = path.join(process.cwd(), "data", "initiative-data", csvFilename);
 
   if (!fs.existsSync(csvPath)) {
     return [];

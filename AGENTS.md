@@ -70,7 +70,11 @@ data/
   journal_name_mappings.json            # Journal name standardization
   metascience_observatory_topic_ontology.json
   data_dictionary.csv
-  previous_replication_initiatives.csv
+  initiative-data/                      # Replication/reanalysis initiative metadata
+    previous_replication_initiatives.csv
+    reanalysis_initiatives.csv
+    candidate_education_initiatives.csv
+    initiative-references/              # Per-initiative reference JSONs (see verification.json)
   version_history.txt
 
 content/docs/               # Markdown source for /docs/* pages
