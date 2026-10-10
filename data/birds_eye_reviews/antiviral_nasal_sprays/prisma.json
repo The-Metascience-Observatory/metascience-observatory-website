@@ -5,35 +5,36 @@
     "OpenAlex",
     "Europe PMC",
     "CyberLeninka",
-    "Semantic Scholar"
+    "Semantic Scholar",
+    "targeted manual searches"
   ],
-  "identified": 27745,
-  "excluded_not_relevant": 26981,
-  "relevant": 764,
+  "identified": 27760,
+  "excluded_not_relevant": 26959,
+  "relevant": 801,
   "not_retrieved": 6,
-  "retrieved": 758,
+  "retrieved": 795,
   "excluded_not_treatment": 210,
-  "treatment_studies": 548,
-  "clinical": 166,
+  "treatment_studies": 585,
+  "clinical": 203,
   "preclinical": 252,
   "excluded_non_nasal_delivery": 7,
   "analyzed_design_breakdown": {
+    "rct": 94,
     "human_challenge": 43,
-    "rct": 68,
-    "non_randomized_trial": 35,
-    "observational": 6
+    "observational": 9,
+    "non_randomized_trial": 43
   },
   "study_design_breakdown": {
     "animal_in_vivo": 208,
     "unclear": 130,
-    "rct": 71,
+    "rct": 97,
+    "non_randomized_trial": 45,
     "human_challenge": 44,
-    "non_randomized_trial": 37,
     "formulation_pk": 21,
     "in_vitro": 12,
     "ex_vivo": 10,
+    "observational": 10,
     "case_series": 7,
-    "observational": 7,
     "in_silico": 1
   },
   "study_design_groups": {
@@ -53,21 +54,25 @@
     ]
   },
   "organism_breakdown": {
-    "unclassified": 161,
-    "human": 148,
+    "human": 187,
+    "unclassified": 159,
     "animal": 143,
     "mixed": 69,
     "in_vitro": 17,
     "ex_vivo": 10
   },
   "indication_breakdown": {
-    "prevention": 168,
-    "unclassified": 161,
-    "treatment": 117,
-    "both": 70,
+    "prevention": 175,
+    "unclassified": 159,
+    "treatment": 148,
+    "both": 71,
     "not_applicable": 32
   },
   "agent_breakdown": [
+    {
+      "agent": "isotonic saline",
+      "count": 26
+    },
     {
       "agent": "interferon alpha (unspecified subtype)",
       "count": 21
@@ -79,6 +84,10 @@
     {
       "agent": "zanamivir",
       "count": 15
+    },
+    {
+      "agent": "hypertonic saline",
+      "count": 14
     },
     {
       "agent": "iota-carrageenan",
@@ -237,6 +246,10 @@
       "count": 2
     },
     {
+      "agent": "iota-carrageenan + ivermectin",
+      "count": 2
+    },
+    {
       "agent": "rig-i agonist (rig-101)",
       "count": 2
     },
@@ -343,8 +356,6 @@
     "humanized anti-h7n9 neutralizing antibody (chi4b7)",
     "hydroxypropyl methylcellulose (hpmc)",
     "hydroxypropyl methylcellulose and usnic acid (hexedra+)",
-    "hypertonic alkaline nasal irrigation",
-    "hypertonic saline",
     "hypertonic seawater solution with xylitol, panthenol, and lactic acid (tonimer lab panthexyl 800)",
     "immunoglobulin y (igy) antibodies against sars-cov-2 rbd",
     "interferon alfacon-1 (consensus)",
@@ -354,7 +365,6 @@
     "interferon-alpha and interferon-gamma",
     "intranasal antihistamine",
     "intranasal sirna",
-    "iota-carrageenan + ivermectin",
     "iron phthalocyanine derivative",
     "iron-phenolic nano-networks (na-fe)",
     "isoscutellarein-8-methylether (f36)",
@@ -406,7 +416,6 @@
     "phosphatidylinositol (pi)",
     "phosphorodiamidate morpholino oligomers (ppmo)",
     "phthalocyanine",
-    "physiological seawater nasal irrigation",
     "piperlongumine",
     "poludane",
     "poly iclc",
@@ -432,8 +441,7 @@
     "rig-101 (rigimmune inc.)",
     "rimantadine",
     "rna aptamer (modified with 2'-fluoro pyrimidines, 2'-o-methyl purines, cholesterol, and peg40k)",
-    "saline nasal irrigation",
-    "saline nasal spray",
+    "saline + povidone-iodine nasal douche",
     "saliravira (herbal compound)",
     "serum amyloid p component",
     "sirna nanoparticles targeting ns1 gene",
@@ -467,6 +475,6 @@
     "zinc gluconate",
     "zinc sulfate"
   ],
-  "agent_named_total": 416,
-  "agent_distinct": 261
+  "agent_named_total": 453,
+  "agent_distinct": 259
 }
