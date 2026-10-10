@@ -67,6 +67,12 @@ const DESIGN_TYPE_LABELS: Record<string, string> = {
 const formatDesignType = (s: string) => DESIGN_TYPE_LABELS[s] ?? formatCategory(s);
 
 // ── Main Dashboard ───────────────────────────────────────────────────
+// ME/CFS reports carry a " + "-joined label of every diagnostic criterion they
+// cite (lib/birds-eye-reviews/mecfs.ts); the filter card works per criterion.
+const ME_CFS_UNSPECIFIED = "Other / not specified";
+const meCfsCriteria = (m: { case_definition?: string }) =>
+  (m.case_definition || ME_CFS_UNSPECIFIED).split(" + ");
+
 export function LongCovidDashboard(props: DashboardProps) {
   const review=props.review ?? {slug:"long-covid",label:"Long Covid",preview:false};
   const isMeCfs=review.slug==="me-cfs";
@@ -131,13 +137,38 @@ export function LongCovidDashboard(props: DashboardProps) {
   const [lcDefWho, setLcDefWho] = useState(true);
   const [lcDefBelow, setLcDefBelow] = useState(false);
 
+  // ME/CFS diagnostic criteria filter (top-level). Stable order by overall report
+  // count; a report matches if it cites ANY checked criterion. Default: all checked.
+  const criteriaOrder = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const m of props.trialMetas) for (const c of meCfsCriteria(m)) counts.set(c, (counts.get(c) ?? 0) + 1);
+    return [...counts.entries()].sort((a, b) => (a[0] === ME_CFS_UNSPECIFIED ? 1 : 0) - (b[0] === ME_CFS_UNSPECIFIED ? 1 : 0) || b[1] - a[1]).map(([c]) => c);
+  }, [props.trialMetas]);
+  const [selectedCriteria, setSelectedCriteria] = useState<Set<string>>(() => new Set(criteriaOrder));
+  const allCriteriaSelected = criteriaOrder.every((c) => selectedCriteria.has(c));
+  const criteriaMatch = (m: { case_definition?: string }) =>
+    !isMeCfs || allCriteriaSelected || meCfsCriteria(m).some((c) => selectedCriteria.has(c));
+  const toggleCriterion = (c: string) => {
+    setSelectedCriteria((prev) => {
+      const next = new Set(prev);
+      if (next.has(c)) next.delete(c);
+      else next.add(c);
+      return next;
+    });
+  };
+  const criteriaCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const m of inspectMetas) for (const c of meCfsCriteria(m)) counts.set(c, (counts.get(c) ?? 0) + 1);
+    return counts;
+  }, [inspectMetas]);
+
   const lcDefFilteredMetas = useMemo(() => {
-    if (isMeCfs) return lcDefFilter ? inspectMetas.filter(m=>m.case_definition===lcDefFilter) : inspectMetas;
+    if (isMeCfs) return allCriteriaSelected ? inspectMetas : inspectMetas.filter(m => meCfsCriteria(m).some(c => selectedCriteria.has(c)));
     if (lcDefWho && lcDefBelow) return inspectMetas;
     if (lcDefWho) return inspectMetas.filter((m) => m.min_weeks != null && m.min_weeks >= 12);
     if (lcDefBelow) return inspectMetas.filter((m) => m.min_weeks != null && m.min_weeks < 12);
     return [];
-  }, [lcDefWho, lcDefBelow, inspectMetas, isMeCfs, lcDefFilter]);
+  }, [lcDefWho, lcDefBelow, inspectMetas, isMeCfs, selectedCriteria, allCriteriaSelected]);
 
   const whoCount = useMemo(
     () => inspectMetas.filter((m) => m.min_weeks != null && m.min_weeks >= 12).length,
@@ -290,8 +321,14 @@ export function LongCovidDashboard(props: DashboardProps) {
     if (lcat) setLandscapeCategory(lcat);
     const lsym = sp.get("lsym");
     if (lsym) setLandscapeSymptom(lsym);
-    const lcDef = sp.get(isMeCfs ? "criteria" : "lcDef");
+    const lcDef = isMeCfs ? null : sp.get("lcDef");
     if (lcDef) setLcDefFilter(lcDef);
+    const criteria = isMeCfs ? sp.get("criteria") : null;
+    if (criteria !== null) {
+      const known = new Set(criteriaOrder);
+      const selected = criteria.split(',').flatMap(v => v.split(' + ')).filter(v => known.has(v));
+      if (criteria === '' || selected.length) setSelectedCriteria(new Set(selected));
+    }
     const country = sp.get("country");
     if (country) setCountryFilter(country);
     const blinding = sp.get("blinding");
@@ -337,7 +374,8 @@ export function LongCovidDashboard(props: DashboardProps) {
     if (interventionNameFilter) params.set("intName", interventionNameFilter);
     if (landscapeCategory) params.set("lcat", landscapeCategory);
     if (landscapeSymptom) params.set("lsym", landscapeSymptom);
-    if (lcDefFilter) params.set(isMeCfs ? "criteria" : "lcDef", lcDefFilter);
+    if (lcDefFilter) params.set("lcDef", lcDefFilter);
+    if (isMeCfs && !allCriteriaSelected) params.set("criteria", [...selectedCriteria].sort().join(","));
     if (countryFilter) params.set("country", countryFilter);
     if (blindingFilter) params.set("blinding", blindingFilter);
     if (symptomDomainFilter) params.set("symptom", symptomDomainFilter);
@@ -360,6 +398,8 @@ export function LongCovidDashboard(props: DashboardProps) {
     landscapeCategory,
     landscapeSymptom,
     lcDefFilter,
+    selectedCriteria,
+    allCriteriaSelected,
     countryFilter,
     blindingFilter,
     symptomDomainFilter,
@@ -381,7 +421,7 @@ export function LongCovidDashboard(props: DashboardProps) {
         </Link>
       </div>
       <h1 className="font-clarendon font-bold text-3xl mb-2">{isMeCfs ? "ME/CFS Treatment Evidence" : "Long Covid Clinical Trials"}</h1>
-      {review.preview && <p role="status" className="mb-4 rounded border border-border bg-muted p-4 text-sm">Work in progress. This snapshot contains explicitly classified treatment reports. Extraction and source review are continuing; flagged numerical conclusions are withheld.</p>}
+      {review.preview && <p role="status" className="mb-4 rounded border border-border bg-muted p-4 text-sm">Work in progress. This snapshot contains explicitly classified treatment reports. Extraction and source review are continuing.</p>}
       {props.lastUpdated && (
         <p className="text-sm text-foreground/50 mb-3">Last updated: {props.lastUpdated}</p>
       )}
@@ -405,17 +445,42 @@ export function LongCovidDashboard(props: DashboardProps) {
         assessedCount={representativeMetas.filter(m => m.inspectAssessment).length}
         totalCount={representativeMetas.length}
         counts={inspectCounts(publicationMetas.filter(m => selectedDesignTypes.has(m.design_type || "unknown")
-          && (isMeCfs ? (!lcDefFilter || m.case_definition===lcDefFilter) : ((lcDefWho && lcDefBelow) || (m.min_weeks != null && (m.min_weeks >= 12 ? lcDefWho : lcDefBelow))))
+          && (isMeCfs ? criteriaMatch(m) : ((lcDefWho && lcDefBelow) || (m.min_weeks != null && (m.min_weeks >= 12 ? lcDefWho : lcDefBelow))))
           && domainMatches(m)
           && (!interventionCategoryFilter || trialHasFacet(m.facets, "interventionCategory", interventionCategoryFilter))
           && (!interventionNameFilter || trialHasFacet(m.facets, "intervention", interventionNameFilter))))} />}
 
-      {isMeCfs && <label className="block mb-4 rounded border border-border p-4 text-sm">ME/CFS diagnostic criteria
-        <select aria-label="ME/CFS diagnostic criteria" value={lcDefFilter||''} onChange={e=>setLcDefFilter(e.target.value||null)} className="block mt-2 border border-border rounded p-2 bg-background">
-          <option value="">All reported criteria</option>
-          {[...new Set(props.trialMetas.map(m=>m.case_definition||'Other / not specified'))].sort().map(value=><option key={value} value={value}>{value}</option>)}
-        </select>
-      </label>}
+      {/* ME/CFS diagnostic criteria filter */}
+      {isMeCfs && <div className={`mb-4 border border-border rounded-lg p-4 ${!allCriteriaSelected ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`}>
+        <div className="flex flex-wrap items-center gap-3 mb-2">
+          <span className="text-sm font-medium text-foreground">Filter by ME/CFS diagnostic criteria</span>
+          <span className="text-xs text-foreground/50">
+            ({lcDefFilteredMetas.length} of {props.summaryStats.totalTrials} reports selected)
+          </span>
+          <button type="button" onClick={() => setSelectedCriteria(new Set(criteriaOrder))} className="text-xs text-blue-600 hover:text-blue-700 ml-auto">Select all</button>
+          <button type="button" onClick={() => setSelectedCriteria(new Set())} className="text-xs text-blue-600 hover:text-blue-700">Clear all</button>
+        </div>
+        <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+          {criteriaOrder.map((c) => {
+            const checked = selectedCriteria.has(c);
+            return (
+              <label key={c} className={`inline-flex items-center gap-1.5 cursor-pointer text-sm rounded px-1.5 py-0.5 ${checked ? "" : "bg-foreground/[0.08]"}`}>
+                <input
+                  type="checkbox"
+                  checked={checked}
+                  onChange={() => toggleCriterion(c)}
+                  className="rounded border-foreground/30 text-blue-600 focus:ring-blue-500"
+                />
+                <span className={checked ? "text-foreground" : "text-foreground/50"}>{c}</span>
+                <span className="text-xs text-foreground/40">({criteriaCounts.get(c) ?? 0})</span>
+              </label>
+            );
+          })}
+        </div>
+        <div className="mt-2 text-xs text-foreground/50">
+          A report matches if it cites any checked criterion; reports citing several are counted under each.
+        </div>
+      </div>}
       {/* Long Covid definition filter */}
       {!isMeCfs && <div className={`mb-3 border border-border rounded-lg p-4 ${!(lcDefWho && lcDefBelow) ? "bg-foreground/[0.07]" : "bg-foreground/[0.02]"}`}>
         <div className="flex flex-wrap items-center gap-3 mb-2">
@@ -540,7 +605,7 @@ export function LongCovidDashboard(props: DashboardProps) {
       </div>
 
       <PublicationFilters {...publicationFilters} checkedAt={props.trialMetas.find(m=>m.publicationMetadata?.medlineCheckedAt)?.publicationMetadata?.medlineCheckedAt}
-        counts={metadataCounts(representativeMetas.filter(m=>matchesInspect(m.inspectAssessment, inspectFilter) && selectedDesignTypes.has(m.design_type || 'unknown') && (isMeCfs ? (!lcDefFilter || m.case_definition===lcDefFilter) : ((lcDefWho && lcDefBelow) || (m.min_weeks!=null && (m.min_weeks>=12 ? lcDefWho : lcDefBelow)))) && domainMatches(m) && (!interventionCategoryFilter || trialHasFacet(m.facets,'interventionCategory',interventionCategoryFilter)) && (!interventionNameFilter || trialHasFacet(m.facets,'intervention',interventionNameFilter))),medline,publication)} />
+        counts={metadataCounts(representativeMetas.filter(m=>matchesInspect(m.inspectAssessment, inspectFilter) && selectedDesignTypes.has(m.design_type || 'unknown') && (isMeCfs ? criteriaMatch(m) : ((lcDefWho && lcDefBelow) || (m.min_weeks!=null && (m.min_weeks>=12 ? lcDefWho : lcDefBelow)))) && domainMatches(m) && (!interventionCategoryFilter || trialHasFacet(m.facets,'interventionCategory',interventionCategoryFilter)) && (!interventionNameFilter || trialHasFacet(m.facets,'intervention',interventionNameFilter))),medline,publication)} />
       {interventionFilteredMetas.length===0 && <p role="status" className="mb-4">No reports match these filters. Adjust the review, publication or other selections.</p>}
 
       {/* Intervention filters */}
@@ -678,8 +743,8 @@ function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => v
         onInterventionClick={props.onInterventionClick}
       />
 
-      {/* Timeline + LC definition side by side */}
-      <div className="grid md:grid-cols-2 gap-8">
+      {/* Timeline + LC definition side by side (ME/CFS filters criteria up top instead) */}
+      <div className={props.review?.slug === 'me-cfs' ? "" : "grid md:grid-cols-2 gap-8"}>
         <ChartSection title="Trials by publication year">
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={props.byYear} margin={{ left: 25, right: 20, top: 5, bottom: 25 }} barCategoryGap="30%">
@@ -702,9 +767,7 @@ function OverviewTab(props: DashboardProps & { onYearClick?: (year: number) => v
           </ResponsiveContainer>
         </ChartSection>
 
-        {props.review?.slug === 'me-cfs' ? <ChartSection title="ME/CFS diagnostic criteria">
-          <div className="space-y-2">{Object.entries(props.trialMetas.reduce<Record<string,number>>((counts,m)=>{const key=m.case_definition||'Other / not specified';counts[key]=(counts[key]||0)+1;return counts;},{})).sort((a,b)=>b[1]-a[1]).map(([name,count])=><button key={name} onClick={()=>props.onLcDefClick?.(name)} className="flex w-full justify-between rounded border border-border p-2 text-left text-sm hover:bg-muted"><span>{name}</span><strong>{count}</strong></button>)}</div>
-        </ChartSection> :         <ChartSection title="Trials by Long Covid definition">
+        {props.review?.slug !== 'me-cfs' && <ChartSection title="Trials by Long Covid definition">
           <div className="relative">
             <div className="absolute top-2 right-2 z-10 text-xs text-foreground/50 flex flex-col gap-1">
               <div
@@ -1078,9 +1141,7 @@ function TrialTableTab({
     if (interventionCategoryFilter !== null) rows = rows.filter((r) => trialHasFacet(r.facets, "interventionCategory", interventionCategoryFilter));
     if (interventionNameFilter !== null) rows = rows.filter((r) => trialHasFacet(r.facets, "intervention", interventionNameFilter));
     if (lcDefFilter !== null) {
-      if (tableRows[0]?.reviewSlug === "me-cfs") {
-        rows=rows.filter(r=>r.case_definition===lcDefFilter);
-      } else if (lcDefFilter === "≥12") {
+      if (lcDefFilter === "≥12") {
         rows = rows.filter((r) => r.min_weeks != null && r.min_weeks >= 12);
       } else if (lcDefFilter === "<12") {
         rows = rows.filter((r) => r.min_weeks != null && r.min_weeks < 12);
@@ -1187,7 +1248,7 @@ function TrialTableTab({
           options={[{ value: "all", label: "All" }, ...blindingValues.map((b) => ({ value: b, label: formatCategory(b) }))]}
         />
         <FilterBadge label="Year" value={yearFilter} onClear={onYearClear} />
-        <FilterBadge label={tableRows[0]?.reviewSlug === "me-cfs" ? "Diagnostic criteria" : "LC definition (weeks)"} value={lcDefFilter} onClear={onLcDefClear} />
+        <FilterBadge label="LC definition (weeks)" value={lcDefFilter} onClear={onLcDefClear} />
         <FilterBadge label="Country" value={countryFilter} onClear={onCountryClear} />
         <FilterBadge label="Blinding" value={blindingFilter} onClear={onBlindingClear} format={formatCategory} />
         <FilterBadge label="Intervention category" value={interventionCategoryFilter} onClear={onInterventionCategoryClear} format={formatCategory} />
