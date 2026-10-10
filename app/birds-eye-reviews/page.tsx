@@ -31,11 +31,10 @@ const reviews: ReviewMeta[] = [
     href: "/birds-eye-reviews/restless-legs-syndrome",
     title: "Restless Legs Syndrome",
   },
-  // Hidden for now — the ME/CFS review isn't ready to be listed publicly.
-  // {
-  //   href: "/birds-eye-reviews/me-cfs",
-  //   title: "ME/CFS",
-  // },
+  {
+    href: "/birds-eye-reviews/me-cfs",
+    title: "Chronic Fatigue Syndrome",
+  },
   {
     href: "/birds-eye-reviews/lithium-weight-gain",
     title: "Lithium and weight gain",
