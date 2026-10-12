@@ -26,6 +26,10 @@ interface ToolCompany {
   capabilities: CapabilityKey[];
   /** Capabilities partially covered — rendered as a half-filled (diagonal) box. */
   partial?: CapabilityKey[];
+  /** Cost per paper at list price, as checked on the vendor's pricing page. */
+  cost: string;
+  /** Tooltip explaining where `cost` comes from. */
+  costNote: string;
 }
 
 const companies: ToolCompany[] = [
@@ -34,12 +38,18 @@ const companies: ToolCompany[] = [
     href: "https://www.proofig.com/",
     src: "/assets/forensic/proofig_logo.png",
     capabilities: ["image_within", "image_between"],
+    cost: "$25–33",
+    costNote:
+      "Pay-as-you-go packs: $99 for 3 submissions down to $549 for 22 (proofig.com/pricing-page, Oct 2026). Multi-user and enterprise pricing on request.",
   },
   {
     name: "ImageTwin",
     href: "https://imagetwin.ai/",
     src: "/assets/forensic/imagetwin_logo.png",
     capabilities: ["image_within", "image_between"],
+    cost: "$29",
+    costNote:
+      "€29 (≈$29) for a single scan; bulk plans go down to €3.50/scan (imagetwin.ai/pricing, Oct 2026).",
   },
   {
     name: "ReviewerZero",
@@ -47,6 +57,9 @@ const companies: ToolCompany[] = [
     src: "/assets/forensic/reviewerzero_logo.png",
     capabilities: ["image_within", "image_between", "phrases", "ai_text", "plagiarism", "ai_review"],
     partial: ["stats"],
+    cost: "??",
+    costNote:
+      "No public pricing; plans are scoped per customer after a demo (reviewerzero.ai/pricing, Oct 2026).",
   },
   {
     name: "River Valley Technologies",
@@ -55,18 +68,27 @@ const companies: ToolCompany[] = [
     showName: true,
     capabilities: ["phrases"],
     partial: ["image_within", "stats"],
+    cost: "??",
+    costNote:
+      "Integrity checks are bundled into the ReView 3.0 submission system sold to publishers; no per-paper pricing is published.",
   },
   {
     name: "Refine",
     href: "https://refine.ink/",
     src: "/assets/forensic/refine_logo.png",
     capabilities: ["phrases", "ai_review"],
+    cost: "$30–50",
+    costNote:
+      "$49.99 for one review, $299.99 for ten (refine.ink/pricing, Oct 2026).",
   },
   {
     name: "iThenticate",
     href: "https://www.ithenticate.com/",
     src: "/assets/forensic/ithenticate.png",
     capabilities: ["plagiarism"],
+    cost: "$100–125",
+    costNote:
+      "$125 for one manuscript up to 25,000 words; $300 for three (ithenticate.com/pricing, Oct 2026). Organizational pricing is custom.",
   },
   {
     name: "Reviewer 3",
@@ -74,6 +96,9 @@ const companies: ToolCompany[] = [
     src: "/assets/forensic/reviewer3_logo.png",
     showName: true,
     capabilities: ["ai_review"],
+    cost: "$19",
+    costNote:
+      "$19 for a one-time review, or $29/month for unlimited reviews (reviewer3.com/pricing, Oct 2026).",
   },
   {
     name: "ScienceDetective.org",
@@ -81,14 +106,20 @@ const companies: ToolCompany[] = [
     src: "/assets/forensic/science_detective_logo.png",
     showName: true,
     capabilities: ["dataset_repo"],
+    cost: "n/a",
+    costNote:
+      "Open-source (github.com/markusenglund/copy-paste-detective); grant-funded, no usage fees.",
   },
   {
     name: "Forensic Metascience AI toolkit",
     src: "/assets/globe.svg",
     showName: true,
     highlight: true,
-    capabilities: ["stats", "dataset_si", "ai_review"],
-    partial: ["phrases", "image_within"],
+    capabilities: ["image_within", "stats", "dataset_si", "ai_review"],
+    partial: ["phrases", "image_between"],
+    cost: "$0.50–1.00*",
+    costNote:
+      "AI API cost of a full run, depending on paper length and model provider. The image and copy-paste modules alone cost pennies per paper.",
   },
 ];
 
@@ -135,6 +166,11 @@ export function FitMatrix({
                 </div>
               </th>
             ))}
+            <th className="relative h-64 w-28 p-0 align-bottom">
+              <div className="absolute bottom-1 left-6 origin-bottom-left -rotate-45 whitespace-nowrap text-xs font-semibold text-foreground">
+                Cost per paper
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -199,10 +235,24 @@ export function FitMatrix({
                   />
                 </td>
               ))}
+              <td
+                className={`pl-4 pr-2 ${compact ? "py-0.5" : "py-2"} whitespace-nowrap text-xs tabular-nums ${
+                  company.highlight ? "font-semibold text-primary" : "text-foreground"
+                }`}
+                title={company.costNote}
+              >
+                {company.cost}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <p className="mx-auto mt-3 max-w-3xl text-xs leading-relaxed text-muted-foreground">
+        * Using a subscription service. With the Claude Code $200/month plan, our system costs
+        $0.50–1.50 per paper with Opus 5.5, or less with Sonnet 4.6. It costs $0.50–1.00 with the
+        Grok Build $100/month plan, or $0.25–1.00 with the Luna model on the Claude Code $200/month
+        plan.
+      </p>
     </div>
   );
 }
