@@ -9,27 +9,27 @@
     "targeted manual searches"
   ],
   "identified": 27760,
-  "excluded_not_relevant": 26959,
-  "relevant": 801,
+  "excluded_not_relevant": 26950,
+  "relevant": 810,
   "not_retrieved": 6,
-  "retrieved": 795,
+  "retrieved": 804,
   "excluded_not_treatment": 210,
-  "treatment_studies": 585,
-  "clinical": 203,
+  "treatment_studies": 594,
+  "clinical": 212,
   "preclinical": 252,
   "excluded_non_nasal_delivery": 7,
   "analyzed_design_breakdown": {
-    "rct": 94,
-    "human_challenge": 43,
     "observational": 9,
-    "non_randomized_trial": 43
+    "rct": 102,
+    "non_randomized_trial": 43,
+    "human_challenge": 44
   },
   "study_design_breakdown": {
     "animal_in_vivo": 208,
     "unclear": 130,
-    "rct": 97,
+    "rct": 105,
+    "human_challenge": 45,
     "non_randomized_trial": 45,
-    "human_challenge": 44,
     "formulation_pk": 21,
     "in_vitro": 12,
     "ex_vivo": 10,
@@ -54,7 +54,7 @@
     ]
   },
   "organism_breakdown": {
-    "human": 187,
+    "human": 196,
     "unclassified": 159,
     "animal": 143,
     "mixed": 69,
@@ -62,16 +62,16 @@
     "ex_vivo": 10
   },
   "indication_breakdown": {
-    "prevention": 175,
+    "prevention": 177,
     "unclassified": 159,
-    "treatment": 148,
+    "treatment": 155,
     "both": 71,
     "not_applicable": 32
   },
   "agent_breakdown": [
     {
       "agent": "isotonic saline",
-      "count": 26
+      "count": 27
     },
     {
       "agent": "interferon alpha (unspecified subtype)",
@@ -186,6 +186,10 @@
       "count": 2
     },
     {
+      "agent": "oxymetazoline",
+      "count": 2
+    },
+    {
       "agent": "interferon gamma",
       "count": 2
     },
@@ -258,6 +262,10 @@
       "count": 2
     },
     {
+      "agent": "resveratrol/carboxymethyl-beta-glucan (linfovir)",
+      "count": 2
+    },
+    {
       "agent": "niclosamide",
       "count": 2
     }
@@ -302,8 +310,10 @@
     "bta938",
     "budesonide",
     "c2x (nanobinder)",
+    "calcium-rich hypertonic saline aerosol",
     "camostat with xanthan gum",
     "carbohydrate-binding module biologic",
+    "carbomer 980 gel",
     "cetylpyridinium chloride (+ limonene + monolaurin)",
     "chalcone ro 09-0410",
     "chemically modified second-generation sirna",
@@ -369,6 +379,7 @@
     "iron-phenolic nano-networks (na-fe)",
     "isoscutellarein-8-methylether (f36)",
     "itraconazole",
+    "lactoferrin + glycyrrhizinate + carboxymethyl-beta-glucan (saflovir)",
     "lambda-carrageenan",
     "lat8881",
     "lcb1-barnase (lcb1-bn) fusion protein",
@@ -397,6 +408,7 @@
     "nasoil (asclepias curassavica extract)",
     "nazoferon",
     "neem oil and hypericum (st. john's wort)",
+    "nesospray he-c (glycerol film-forming spray)",
     "niclosamide (uni91104)",
     "nicotinic cholinergic agonist composition",
     "nsp8-derived peptides (n8-pepalpha, n8-pepalpha_cyc)",
@@ -404,7 +416,6 @@
     "om-85 (bacterial lysate)",
     "op7 chimera defective interfering particles (dips)",
     "oxidized dextrans",
-    "oxymetazoline",
     "p315v3",
     "palivizumab",
     "pam2cys (tlr2 agonist)",
@@ -433,7 +444,6 @@
     "protecting rna (244 rna)",
     "pyrimidine biosynthesis inhibitors (ippa17-a04 and gac50)",
     "recombinant human iga anti-rsv antibodies (palivizumab and motavizumab formats)",
-    "resveratrol/carboxymethyl-beta-glucan (linfovir)",
     "rfi-641",
     "rhesus theta-defensin 1 (rtd-1)",
     "rhinovirus receptor murine monoclonal antibody (rrma)",
@@ -444,9 +454,11 @@
     "saline + povidone-iodine nasal douche",
     "saliravira (herbal compound)",
     "serum amyloid p component",
+    "silver nanoparticles (argovit)",
     "sirna nanoparticles targeting ns1 gene",
     "skf 40491, glr9-338, rp l9326, ici 73,602",
     "sligrl (par2-activating peptide)",
+    "sodium bicarbonate solution",
     "sodium deoxyribonucleate (derinat)",
     "sodium hypochlorite",
     "solubilized sturgeon oil",
@@ -475,6 +487,6 @@
     "zinc gluconate",
     "zinc sulfate"
   ],
-  "agent_named_total": 453,
-  "agent_distinct": 259
+  "agent_named_total": 462,
+  "agent_distinct": 265
 }
