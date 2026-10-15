@@ -160,7 +160,7 @@ const documentation: DocMeta[] = [
   },
   {
     href: "/docs/pipeline-evaluation",
-    title: "V6 extraction pipeline evaluation",
+    title: "Core extraction pipeline evaluation (provisional)",
   },
   {
     href: "/docs/checking-for-bias",
