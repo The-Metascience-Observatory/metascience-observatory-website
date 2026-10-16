@@ -1,4 +1,4 @@
-# Core Extraction Pipeline Evaluation
+# Core Extraction Pipeline Evaluation (Oct 2026)
 
 October 2026
 
