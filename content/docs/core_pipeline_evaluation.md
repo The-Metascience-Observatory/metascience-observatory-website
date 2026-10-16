@@ -1,17 +1,15 @@
-# Core Extraction Pipeline Evaluation (Oct 2026)
+# V8-Core Extraction Pipeline Evaluation (Oct 2026)
 
 October 2026
 
-> **Provisional.** These results are preliminary. The 60-paper reference set was coded by an AI adjudicator and is still being audited by a person; the figures will be updated with the audit's error rate. The [February 2026 V6 evaluation](https://github.com/The-Metascience-Observatory/metascience-observatory-website/blob/main/content/docs/v6_pipeline_evaluation.md) remains available for reference.
+<div style="border-left: 3px solid rgba(239, 68, 68, 0.45); background: rgba(239, 68, 68, 0.04); padding: 0.6rem 1rem; margin-bottom: 1rem; border-radius: 0.25rem;">Note - this page is almost entirely AI generated, by Claude Opus 5.5</div>
 
 The Metascience Observatory's newest extraction pipeline, the "core" pipeline, reads a replication paper and records what was replicated: which original study, which finding, what kind of replication it was (direct, close, or conceptual) and whether it succeeded. It does not extract statistics. It makes a single model call per paper (Claude Sonnet 5.5) and costs about $0.13 and 15 seconds per paper.
 
 We evaluated it in two ways:
 
 1. **Against human labels of the original study**, on 458 replication papers whose originals were recorded by people: the FLoRa and FReD replication databases and our own earlier hand-coded rows.
-2. **Against a reference set of 60 papers coded effect by effect**, chosen to span 13 disciplines and to include papers that are *not* replications.
-
-**Read these numbers with one caveat in mind.** The 60-paper reference was coded by an AI adjudicator (Claude Opus 5.5), not by people. A human audit of 15 of those papers is under way, and its error rate will be reported here. Until then, treat the effect-level figures as provisional. The original-study figures in the first section rest on human labels.
+2. **Against a reference set of 60 papers coded effect by effect**, chosen to span 13 disciplines and to include papers that are *not* replications. Replication information from these papers was originally extracted by humans, but Claude Opus 5.5 went verified the human extractions were correct and obtained more detailed information for the purpose of assisting in matching -- things like the study/experiment number in the original paper ("Experiment 2") and quotes from the original paper. The additional information thus extracted helps with matching the outputs from our pipeline with the ground truth.
 
 ## Identifying the original study
 

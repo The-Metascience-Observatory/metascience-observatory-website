@@ -10,7 +10,7 @@ function getMarkdownContent(): string {
   try {
     return fs.readFileSync(filePath, "utf-8");
   } catch {
-    return "# Core Extraction Pipeline Evaluation (Oct 2026)\n\nContent coming soon.";
+    return "# V8-Core Extraction Pipeline Evaluation (Oct 2026)\n\nContent coming soon.";
   }
 }
 

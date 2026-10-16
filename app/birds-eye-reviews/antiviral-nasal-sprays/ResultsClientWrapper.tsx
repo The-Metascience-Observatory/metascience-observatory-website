@@ -236,9 +236,9 @@ export function ResultsClientWrapper({
   const clearAllDeliveries = () => setSelectedDeliveries(new Set());
 
   // Top-level trial-outcome-focus filter: a checkbox per outcome type.
-  // Default: infection prevention only.
+  // Default: infection prevention and treatment.
   const [selectedTypes, setSelectedTypes] = useState<Set<string>>(
-    () => new Set(["infection_prevention"])
+    () => new Set(["infection_prevention", "treatment"])
   );
   const typeFilter = (t: TrialRow) => selectedTypes.has(outcomeType(t));
   const toggleType = (k: string) => {
@@ -252,13 +252,13 @@ export function ResultsClientWrapper({
   const clearAllTypes = () => setSelectedTypes(new Set());
 
   // Trial-type (study design) multi-select filter — mirrors the long-covid dashboard.
-  // Default: RCT and human-challenge only.
+  // Default: every trial type.
   const allDesignList = useMemo(
     () => Object.entries(countBy(trials, designKey)).sort((a, b) => b[1] - a[1]).map(([d]) => d),
     [trials]
   );
   const [selectedDesigns, setSelectedDesigns] = useState<Set<string>>(
-    () => new Set(["RCT", "human-challenge"].filter((k) => trials.some((t) => designKey(t) === k)))
+    () => new Set(allDesignList)
   );
   const designFilter = (t: TrialRow) => selectedDesigns.has(designKey(t));
   const toggleDesign = (d: string) =>
