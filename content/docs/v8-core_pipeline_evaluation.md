@@ -9,29 +9,42 @@ The Metascience Observatory's newest extraction pipeline, the "core" pipeline, r
 We evaluated it in two ways:
 
 1. **Against human labels of the original study**, on 458 replication papers whose originals were recorded by people: the FLoRa and FReD replication databases and our own earlier hand-coded rows.
-2. **Against a reference set of 60 papers coded effect by effect**, chosen to span 13 disciplines and to include papers that are *not* replications. Replication information from these papers was originally extracted by humans, but Claude Opus 5.5 went verified the human extractions were correct and obtained more detailed information for the purpose of assisting in matching -- things like the study/experiment number in the original paper ("Experiment 2") and quotes from the original paper. The additional information thus extracted helps with matching the outputs from our pipeline with the ground truth.
+2. **Against a reference set of 60 papers coded effect by effect**, chosen to span 13 disciplines and to include papers that are *not* replications. Most of these papers (38 of 60) already had human labels, from FLoRa, FReD, the Reproducibility Project: Cancer Biology and similar projects, but those labels describe a paper or its main finding, not every replicated finding in it. So Claude Opus 5.5 re-coded each paper from its full text, without seeing those labels or the pipeline's output. It recorded every replicated finding along with the details needed to match it, such as the study number ("Experiment 2"), the outcome, the comparison and a supporting quote.
 
 ## Identifying the original study
 
-We consider naming the wrong original study the most serious error a replication database can make, so we measured it first and on the largest set. For each paper, we checked whether the pipeline named at least one of the original studies people had recorded for it.
+We consider naming the wrong original study the most serious error a replication database can make, so we measured it first and on the largest set. For each paper, we checked whether the pipeline named at least one of the original studies people had recorded for it, by DOI.
 
 | | Papers | Original study correctly identified |
 |---|---|---|
-| Raw agreement with human labels | 458 | 80.8% (77.1–84.3%) |
-| After resolving disagreements (see below) | 458 | **90.4% (87.6–93.2%)** |
-| Counting the right study with a non-matching DOI | 458 | 96.3% |
+| Same DOI as the human label | 458 | 83.6% (80.1–86.9%) |
+| Same work as the human label (another registered record of it accepted) | 458 | 86.0% (82.8–89.1%) |
+| After resolving disagreements (see below) | 448 | **97.8% (96.2–99.1%)** |
 
 Ranges are 95% confidence intervals.
 
-Raw agreement understates accuracy, because the human labels are not always right. FLoRa, for example, records a single original per paper, and sometimes that is the dataset, the measurement scale or a correction notice rather than the finding that was replicated. For the 47 papers where the pipeline and the human label named different studies, an AI adjudicator read the paper and judged each candidate. It was not told which candidate came from the pipeline and which from the label. It found:
+The middle row counts a match when the pipeline and the label name the same work under different records. Examples are an SSRN or NBER working paper and the journal article it became, a JSTOR copy of a publisher's article, or an APA PsycEXTRA entry. We treat two records as the same work when they share the first author, the title and a year within three years.
+
+Agreement with the labels understates accuracy, because the labels are not always right. FLoRa, for example, records a single original per paper, and sometimes that is the dataset, the measurement scale or a correction notice rather than the finding that was replicated. Where the pipeline and the label disagreed, an AI adjudicator (Claude Opus 5.5) read the paper and judged each candidate, without being told which came from the pipeline and which from the label. In the 47 papers where they named different studies, it found:
 
 - the pipeline right and the label wrong in 36 papers;
 - both right in 9 papers (often the same work under a different identifier);
 - the label right and the pipeline wrong in 2 papers.
 
-Of the remaining misses, 14 are papers where the pipeline found no replication at all. Another 27 name the correct study but attach a DOI that does not match the label's.
+In the 14 papers where the pipeline reported no replication at all, 6 turned out not to be replication papers (a review, a reply by the original authors, a study replicating its own first experiment). In 4, the file we hold is not the article: two supplementary-material files, a disclosure form, and a different paper filed under the wrong DOI. The bottom row leaves these 10 papers out and counts the adjudicated disagreements.
 
-During this evaluation we found and fixed one source of error. The pipeline sometimes wrote down a DOI belonging to a different paper. Its own check noticed the mismatch, but it kept the DOI anyway. It now discards such a DOI and looks the study up by title. On the same model output this fix alone raised raw agreement from 76.6% to 80.8%.
+### Fixing the DOIs
+
+This evaluation found the pipeline naming the right study with the wrong DOI in about one paper in ten. When the paper printed no DOI, the model wrote one from memory. Sometimes that was the DOI of another paper, and sometimes it was a near-miss of the real one that does not exist (`…45529` for `…45520`). The pipeline's own check spotted some of these but kept the DOI anyway.
+
+The pipeline now accepts a DOI only in two cases:
+
+- **printed in the paper.** The DOI must appear in the text the model was given; this was true of 701 DOIs in the 458-paper run;
+- **found by a title lookup.** A DOI the paper does not print is discarded and looked up again from the study's title and authors, then checked against the DOI registry. 273 DOIs were replaced this way, and every one of them was recovered.
+
+A DOI that resolves to a different title, or to nothing at all, is also replaced. The instructions to the model now say to copy a DOI only if the paper prints it, and to copy titles exactly as printed, because a reworded title defeats the lookup. Each output records where its DOI came from. On the same model output, these fixes raised agreement with the human labels from 80.8% to 83.6%.
+
+We also checked the 8,881 rows already published in the database. 45 rows (0.5%) carry an original-study DOI that does not exist or belongs to a different paper. They are flagged for correction in the next database update.
 
 ## The 60-paper reference set
 

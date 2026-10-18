@@ -6,7 +6,7 @@ import { MarkdownContent } from "@/components/MarkdownContent";
 import { DocsBackLink } from "@/components/DocsBackLink";
 
 function getMarkdownContent(): string {
-  const filePath = path.join(process.cwd(), "content/docs/core_pipeline_evaluation.md");
+  const filePath = path.join(process.cwd(), "content/docs/v8-core_pipeline_evaluation.md");
   try {
     return fs.readFileSync(filePath, "utf-8");
   } catch {
