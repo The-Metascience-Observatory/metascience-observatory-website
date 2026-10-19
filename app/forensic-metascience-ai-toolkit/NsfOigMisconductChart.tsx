@@ -4,7 +4,6 @@ import Link from "next/link";
 import {
   ScatterChart,
   Scatter,
-  ErrorBar,
   XAxis,
   YAxis,
   Tooltip,
@@ -35,8 +34,6 @@ interface PointDatum {
   series: "Allegations received" | "Findings of misconduct";
   sourced: SourcedValue;
   yearBasis: string;
-  /** [below, above] offsets for the range where sources disagree. */
-  range?: [number, number];
   label?: number;
 }
 
@@ -44,6 +41,7 @@ interface NsfOigMisconductChartProps {
   data: NsfOigYearDatum[];
 }
 
+/** Only figures taken directly from NSF OIG's own reports are plotted. */
 function toPoints(
   data: NsfOigYearDatum[],
   key: "allegations" | "findings",
@@ -51,7 +49,7 @@ function toPoints(
 ): PointDatum[] {
   return data.flatMap((d) => {
     const v = d[key];
-    if (!v) return [];
+    if (!v || v.sourceType !== "primary") return [];
     return [
       {
         year: d.year,
@@ -59,7 +57,6 @@ function toPoints(
         series,
         sourced: v,
         yearBasis: d.yearBasis,
-        range: v.high > v.low ? [v.value - v.low, v.high - v.value] : undefined,
         label:
           key === "allegations" && LABELED_ALLEGATION_YEARS.has(d.year) ? v.value : undefined,
       },
@@ -67,22 +64,11 @@ function toPoints(
   });
 }
 
-/** Filled = NSF OIG's own report; hollow = a secondary source citing it. */
 function makeDot(color: string) {
-  return function Dot(props: { cx?: number; cy?: number; payload?: PointDatum }) {
-    const { cx, cy, payload } = props;
+  return function Dot(props: { cx?: number; cy?: number }) {
+    const { cx, cy } = props;
     if (cx == null || cy == null) return <g />;
-    const primary = payload?.sourced.sourceType === "primary";
-    return (
-      <circle
-        cx={cx}
-        cy={cy}
-        r={5.5}
-        fill={primary ? color : "#ffffff"}
-        stroke={color}
-        strokeWidth={2}
-      />
-    );
+    return <circle cx={cx} cy={cy} r={5.5} fill={color} stroke="#ffffff" strokeWidth={1.5} />;
   };
 }
 
@@ -99,17 +85,16 @@ function PointTooltip({ active, payload }: TooltipProps<number, string>) {
       </p>
       <p className="m-0 text-foreground">
         {p.series}: {p.count}
-        {sourced.high > sourced.low ? ` (sources range ${sourced.low}–${sourced.high})` : ""}
       </p>
       <p className="m-0 mt-1 text-foreground/60">{sourced.source}</p>
     </div>
   );
 }
 
-function LegendDot({ color, filled }: { color: string; filled: boolean }) {
+function LegendDot({ color }: { color: string }) {
   return (
     <svg width="12" height="12" aria-hidden className="inline-block align-middle mr-1.5">
-      <circle cx="6" cy="6" r="4.5" fill={filled ? color : "#ffffff"} stroke={color} strokeWidth={2} />
+      <circle cx="6" cy="6" r="5" fill={color} />
     </svg>
   );
 }
@@ -125,11 +110,11 @@ export function NsfOigMisconductChart({ data }: NsfOigMisconductChartProps) {
         </span>
         <span className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm text-foreground">
           <span>
-            <LegendDot color={ALLEGATIONS_COLOR} filled />
+            <LegendDot color={ALLEGATIONS_COLOR} />
             Allegations received
           </span>
           <span>
-            <LegendDot color={FINDINGS_COLOR} filled />
+            <LegendDot color={FINDINGS_COLOR} />
             Findings of misconduct
           </span>
         </span>
@@ -141,8 +126,8 @@ export function NsfOigMisconductChart({ data }: NsfOigMisconductChartProps) {
             {...AXIS_STYLE}
             dataKey="year"
             type="number"
-            domain={[2002, 2026]}
-            ticks={[2003, 2007, 2011, 2015, 2019, 2023]}
+            domain={[2009, 2023]}
+            ticks={[2010, 2013, 2016, 2019, 2022]}
             tickMargin={6}
             fontSize={12}
             name="Year"
@@ -174,15 +159,12 @@ export function NsfOigMisconductChart({ data }: NsfOigMisconductChartProps) {
             fill={FINDINGS_COLOR}
             shape={makeDot(FINDINGS_COLOR)}
             isAnimationActive={false}
-          >
-            <ErrorBar dataKey="range" direction="y" width={6} stroke={FINDINGS_COLOR} strokeWidth={2} />
-          </Scatter>
+          />
         </ScatterChart>
       </ResponsiveContainer>
       <p className="text-xs text-foreground/50 mt-3 mb-0">
-        Gaps are years with no figure found. Filled points come from NSF OIG&rsquo;s own reports,
-        hollow points from secondary sources citing them; the bar on 2014 spans sources that
-        disagree. Figures are provisional.{" "}
+        Only figures taken directly from NSF OIG&rsquo;s own reports are shown; gaps are years
+        without one yet. Figures are provisional.{" "}
         <Link
           href={NSF_OIG_DATA_PATH}
           className="underline decoration-foreground/30 underline-offset-2 hover:text-foreground"
