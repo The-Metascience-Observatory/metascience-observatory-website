@@ -2,7 +2,15 @@
 
 <!-- FINDINGS_CTA -->
 
-The Forensic Metascience AI toolkit coordinates several AI agents to perform a deep forensic audit of a scientific paper. The full system checks images, text, and data in both the paper and supplementary files. Central to the system is the tools agent, which is equipped with 40+ tools for "sanity checking" the statistics and data presented in scientific papers. Many of the tools are derived from techniques described in James Heathers' book [*An Introduction to Forensic Metascience*](https://doi.org/10.5281/zenodo.14871843). 
+The [Metascience Observatory's](/) [research](https://moreisdifferent.blog/p/what-weve-learned-so-far-at-the-metascience) has demonstrated that the replication crisis is a science-wide phenomenon, not just limited to psychology and the social sciences. Across many fields, 40% or more of results are not replicating.
+
+Fraud is a large contributor to the replication crisis. James Heathers [estimates](https://metaror.org/kotahi/articles/18/index.html) that 15% of peer-reviewed papers are contaminated with some form of deliberate fabrication. While his methodology leaves much to be desired, we are convinced by his work that perhaps 10% of papers have deliberate fabrication. Whether the true number is 5% or 25%, the problem of fraud in science must be grappled with by policymakers. Science's ongoing fraud problem reduces trust in science and slows scientific progress.
+
+Research in [forensic metascience](https://jamesheathers.curve.space/) using tools like statcheck and the GRIM test shows that simple mistakes in data processing are common, with over half of papers in psychology having errors in the [calculation of p-values](https://pmc.ncbi.nlm.nih.gov/articles/PMC7540394/) or [averages](https://journals.sagepub.com/doi/10.1177/1948550616673876). Most errors are harmless, but some change key results, contaminating meta-analyses and causing many downstream problems.
+
+The Metascience Observatory has developed the Forensic Metascience AI Toolkit to address these problems. The toolkit stress-tests methods, calculations, images, and data. Central to the system is the tools agent, which is equipped with dozens of tools for "sanity checking" the statistics and data presented in scientific papers. Many of the tools are directly cribbed from the techniques described in detail in James Heathers' book [*An Introduction to Forensic Metascience*](https://doi.org/10.5281/zenodo.14871843).
+
+The toolkit can be used to stress-test existing papers or audit new papers before they are published. Using AI to check papers is not a new idea, and many startups are already selling "AI for peer review" services. However, auditing the text and images of a single paper using commercial services currently costs \$50 or more. When used with subscription services like Claude Code on the backend, this toolkit's full pipeline costs only \$0.50 - \$1.00 per paper.
 
 
 <!-- INTRO_END -->
