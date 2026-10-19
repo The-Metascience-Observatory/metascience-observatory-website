@@ -44,7 +44,7 @@ function SourceCell({ v }: { v: SourcedValue | null }) {
         {v.source}
       </a>
       {v.sourceType === "secondary" && (
-        <span className="ml-1 text-foreground/50">(secondary)</span>
+        <span className="ml-1 text-foreground/50">(secondary; not plotted)</span>
       )}
     </>
   );
@@ -78,8 +78,8 @@ export default function NsfOigDataPage() {
 
           <p className="mb-4 leading-relaxed text-foreground">
             The National Science Foundation&rsquo;s Office of Inspector General (NSF OIG) handles
-            allegations of research misconduct in NSF-funded work. This page documents every
-            figure in the allegations and findings chart on the{" "}
+            allegations of research misconduct in NSF-funded work. This page documents the
+            figures behind the allegations and findings chart on the{" "}
             <Link href="/forensic-metascience-ai-toolkit#the-oversight-problem" className={LINK_CLASS}>
               Forensic Metascience AI toolkit
             </Link>{" "}
@@ -129,8 +129,9 @@ export default function NsfOigDataPage() {
           </h2>
           <p className="mb-4 text-sm leading-relaxed text-foreground/70">
             &ldquo;Secondary&rdquo; marks a figure taken from a source that cites NSF OIG rather
-            than from NSF OIG itself; these appear as hollow points on the chart. A range in
-            parentheses means sources disagree.
+            than from NSF OIG itself. These are listed here but not plotted on the chart until
+            they are checked against NSF OIG&rsquo;s own reports. A range in parentheses means
+            sources disagree.
           </p>
           <ul className="space-y-3 md:hidden">
             {rows.map((r) => (
