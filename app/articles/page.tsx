@@ -163,6 +163,10 @@ const documentation: DocMeta[] = [
     title: "V8-Core Extraction Pipeline Evaluation (Oct 2026)",
   },
   {
+    href: "/docs/pipeline-evaluation-v6",
+    title: "V6 AI Extraction Pipeline Evaluation (Feb 2026)",
+  },
+  {
     href: "/docs/checking-for-bias",
     title: 'Checking for bias by comparing with "random sampled" replication initiatives',
   },

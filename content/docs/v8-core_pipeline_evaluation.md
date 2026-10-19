@@ -100,4 +100,4 @@ The pipeline reported replications in 8 of the 17 papers the adjudicator judged 
 
 ## Comparison with the V6 evaluation
 
-The V6 figures (February 2026) are not directly comparable. That ground truth was partly produced with the help of the V6 pipeline itself, its matching leaned on original-study DOI equality, and it measured statistics, which the core pipeline does not extract. We have since rebuilt the evaluation so that the reference never draws on the system being scored.
+The [V6 figures (February 2026)](/docs/pipeline-evaluation-v6) are not directly comparable. That ground truth was partly produced with the help of the V6 pipeline itself, its matching leaned on original-study DOI equality, and it measured statistics, which the core pipeline does not extract. We have since rebuilt the evaluation so that the reference never draws on the system being scored.
