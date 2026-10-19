@@ -33,13 +33,13 @@ const PRODUCERS = [
     tone: "neutral" as const,
   },
   {
-    t: "Tool-expert agent",
+    t: "Tools agent",
     s: "Points the forensic toolkit at the paper's numbers. No web access.",
     tone: "accent" as const,
     agent: true,
   },
   {
-    t: "Peer review agent",
+    t: "Scientific proofreading agent",
     s: "Reads the paper as a scientist would, looking for internal contradictions, scientific mistakes, and severe methodological flaws.",
     tone: "accent" as const,
     agent: true,
@@ -112,14 +112,7 @@ export function PipelineDiagram() {
 
       <div className="flex justify-center">
         <Node
-          title={
-            <>
-              Extraction &amp; conversion using{" "}
-              <DiagramLink href="https://github.com/The-Metascience-Observatory/pdf4llm">
-                pdf4llm
-              </DiagramLink>
-            </>
-          }
+          title="PDF parsing"
           sub={
             <>
               We use a combination of tools to convert the PDF into markdown and extract tables and
@@ -205,7 +198,7 @@ export function PipelineDiagram() {
       </div>
 
       <div className="flex justify-center">
-        <Node title="Join findings" tone="neutral" center className={STEP_W} />
+        <Node title="Join and verify findings" tone="neutral" center className={STEP_W} />
       </div>
 
       <Down />
