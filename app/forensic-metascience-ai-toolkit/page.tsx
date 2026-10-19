@@ -9,6 +9,8 @@ import { Card } from "@/components/ui/card";
 import { MarkdownContent } from "@/components/MarkdownContent";
 import { HeadingAnchor } from "@/components/HeadingAnchor";
 import { OriFindingsChart, OriYearDatum } from "./OriFindingsChart";
+import { NsfOigMisconductChart } from "./NsfOigMisconductChart";
+import { getNsfOigMisconduct } from "./nsfOigData";
 import { NhanesFormulaicCharts, NhanesFormulaicData } from "./NhanesFormulaicCharts";
 import { ToolStacks } from "./ToolStacks";
 import { PipelineDiagram } from "./PipelineDiagram";
@@ -30,6 +32,7 @@ const MARKERS = [
   "<!-- ERROR_STATS -->",
   "<!-- NHANES_CHARTS -->",
   "<!-- ORI_CHART -->",
+  "<!-- NSF_OIG_CHART -->",
   "<!-- TOOL_LOGOS -->",
   "<!-- TOOLKIT -->",
 ] as const;
@@ -210,10 +213,12 @@ export default function ForensicToolkitPage() {
     afterErrorStats,
     afterNhanesCharts,
     afterOriChart,
+    afterNsfOigChart,
     afterToolLogos,
     afterToolkit,
   ] = getMarkdownSegments();
   const oriData = getOriFindings();
+  const nsfOigData = getNsfOigMisconduct();
   const nhanesData = getNhanesFormulaic();
 
   return (
@@ -257,6 +262,8 @@ export default function ForensicToolkitPage() {
           <MarkdownContent content={afterNhanesCharts} anchorHeadings />
           <OriFindingsChart data={oriData} />
           <MarkdownContent content={afterOriChart} anchorHeadings />
+          <NsfOigMisconductChart data={nsfOigData} />
+          <MarkdownContent content={afterNsfOigChart} anchorHeadings />
           <FitMatrix compact boxedLabels={false} />
           <MarkdownContent content={afterToolLogos} anchorHeadings />
 
