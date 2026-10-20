@@ -24,6 +24,7 @@ import json
 import concurrent.futures
 import threading
 import random
+import urllib.parse
 from datetime import datetime
 from difflib import SequenceMatcher
 from fetch_metadata_from_doi import fetch_metadata_from_doi, _new_authors_are_better, _authors_have_abbreviations
@@ -201,7 +202,7 @@ def extract_doi_from_url(url):
     """Extract DOI from URL like 'https://doi.org/10.1234/xyz'"""
     if not isinstance(url, str) or not url.strip():
         return None
-    url = url.strip()
+    url = urllib.parse.unquote(url.strip())   # "10.1177%2F1098..." -> "10.1177/1098..."
     doi = None
     if url.startswith("http://doi.org/"):
         doi = url.replace("http://doi.org/", "")
@@ -220,7 +221,7 @@ def normalize_doi(doi):
     """
     if not isinstance(doi, str) or not doi.strip():
         return None
-    doi = doi.strip()
+    doi = urllib.parse.unquote(doi.strip())
     # Strip common URL prefixes
     if doi.startswith("http://doi.org/"):
         doi = doi.replace("http://doi.org/", "")
@@ -977,7 +978,14 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
         else:
             print(f"  Fetched metadata for original DOI: {original_doi}")
             time.sleep(0.3)  # Rate limiting
-        row = enrich_from_metadata(row, 'original', metadata)
+        # Fill fields from the DOI's record only if that record is the paper the
+        # row names. Without this check a wrong DOI imported its paper's author
+        # list (16 of FLoRA's 2026-09 wrong-record DOIs; 3 more in the 2026-10-20
+        # DOI audit). The ingest gate reports the DOI itself (doi_check.py).
+        if metadata and not sanity_check_metadata(row, 'original', metadata):
+            print(f"  ✗ original DOI {original_doi} resolves to a different record; not enriching from it")
+        else:
+            row = enrich_from_metadata(row, 'original', metadata)
 
     # If no DOI URL but title exists, try to fetch DOI from title
     elif is_empty(original_url) and not is_empty(row.get('original_title')):
@@ -1108,7 +1116,14 @@ def process_row(row, row_idx, total_rows, doi_cache=None, title_cache=None, cach
         else:
             print(f"  Fetched metadata for replication DOI: {replication_doi}")
             time.sleep(0.3)  # Rate limiting
-        row = enrich_from_metadata(row, 'replication', metadata)
+        # Fill fields from the DOI's record only if that record is the paper the
+        # row names. Without this check a wrong DOI imported its paper's author
+        # list (16 of FLoRA's 2026-09 wrong-record DOIs; 3 more in the 2026-10-20
+        # DOI audit). The ingest gate reports the DOI itself (doi_check.py).
+        if metadata and not sanity_check_metadata(row, 'replication', metadata):
+            print(f"  ✗ replication DOI {replication_doi} resolves to a different record; not enriching from it")
+        else:
+            row = enrich_from_metadata(row, 'replication', metadata)
 
     # If no DOI URL but title exists, try to fetch DOI from title
     elif is_empty(replication_url) and not is_empty(row.get('replication_title')):
@@ -1776,11 +1791,16 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
         # Normalize dx.doi.org → doi.org
         if url.startswith("https://dx.doi.org/"):
             url = "https://doi.org/" + url[len("https://dx.doi.org/"):]
+        # A doi.org URL carrying a URL-encoded DOI (10.1177%2F1098...) is stored
+        # decoded: copied without its "%", "%2F" became a literal "2f" and a
+        # dead DOI (2026-10-20 audit). Only doi.org URLs and bare DOIs are touched.
+        if url.startswith("https://doi.org/") and "%" in url:
+            url = "https://doi.org/" + urllib.parse.unquote(url[len("https://doi.org/"):])
         if url.startswith("https://"):
             return url
         # Convert bare DOIs (starting with "10.") to full URL
         if url.startswith("10."):
-            return f"https://doi.org/{url}"
+            return f"https://doi.org/{urllib.parse.unquote(url)}"
         return url
 
     for col in ['original_url', 'replication_url']:
@@ -1976,10 +1996,22 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
     from validation_rules import RowValidator, has_rejects
     validator = RowValidator()
 
+    # Registry check of original DOIs (doi_check.py): an unregistered DOI is a
+    # blocking violation, a DOI registered to another title a warning. It is the
+    # gate's only network check, so --skip-api-calls skips it.
+    doi_violations = {}
+    if skip_api_calls:
+        print("  (original-DOI registry check skipped: --skip-api-calls)")
+    else:
+        from doi_check import check_original_dois
+        for idx, vs in check_original_dois(processed_df):
+            doi_violations.setdefault(idx, []).extend(vs)
+        print(f"  original-DOI registry check: {len(doi_violations)} row(s) with a DOI problem")
+
     gate_flagged = []      # (idx, violations) — warnings only, row still ingests
     gate_quarantined = []  # (idx, violations) — contains a blocking violation
     for idx, row in processed_df.iterrows():
-        violations = validator.validate_row(row)
+        violations = validator.validate_row(row) + doi_violations.get(idx, [])
         if not violations:
             continue
         if has_rejects(violations):
