@@ -49,7 +49,7 @@ export default function NsfOigDataPage() {
           />
 
           <h1 className="mb-4 mt-0 text-4xl font-bold leading-tight text-foreground">
-            NSF OIG research misconduct data: sources
+            Sources for NSF OIG research misconduct findings over time chart
           </h1>
 
           <h2 className="mb-4 mt-10 border-b border-border pb-2 text-2xl font-semibold text-foreground">
