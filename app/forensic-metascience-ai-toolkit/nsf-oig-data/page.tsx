@@ -86,20 +86,6 @@ export default function NsfOigDataPage() {
               and a significant departure from accepted practice.
             </li>
           </ul>
-          <p className="mb-4 leading-relaxed text-foreground">
-            Most allegations never become findings. Cases also take a year or more, so a
-            year&rsquo;s findings mostly stem from allegations received in earlier years. Roughly
-            80% of NSF allegations and findings involve plagiarism. In early 2025{" "}
-            <a
-              href="https://www.science.org/content/article/exclusive-nsf-watchdog-unit-no-longer-investigating-research-misconduct"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={LINK_CLASS}
-            >
-              NSF OIG stopped investigating research misconduct
-            </a>{" "}
-            and began referring allegations to grantee institutions.
-          </p>
 
           <h2 className="mb-4 mt-10 border-b border-border pb-2 text-2xl font-semibold text-foreground">
             Figures by year
@@ -180,10 +166,6 @@ export default function NsfOigDataPage() {
               the teens&rsquo; over the preceding decade.
             </li>
           </ul>
-
-          <p className="mt-6 text-sm text-foreground/60">
-            Data file: <code>data/nsf_oig_misconduct_by_year.csv</code>
-          </p>
         </div>
       </main>
       <Footer />
