@@ -63,13 +63,6 @@ export default function NsfOigDataPage() {
             page.
           </p>
 
-          <div className="mb-8 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm leading-relaxed text-foreground">
-            <strong>Provisional.</strong> These figures were compiled from excerpts of the
-            reports and articles below and have not yet been checked line by line against the
-            full report tables. Several years are missing, and some sources do not say whether
-            a year is a fiscal or calendar year.
-          </div>
-
           <h2 className="mb-4 mt-10 border-b border-border pb-2 text-2xl font-semibold text-foreground">
             Allegations vs. findings
           </h2>
