@@ -9,8 +9,8 @@ import { Card } from "@/components/ui/card";
 import { MarkdownContent } from "@/components/MarkdownContent";
 import { HeadingAnchor } from "@/components/HeadingAnchor";
 import { OriFindingsChart, OriYearDatum } from "./OriFindingsChart";
-import { NsfOigMisconductChart } from "./NsfOigMisconductChart";
-import { getNsfOigMisconduct } from "./nsfOigData";
+import { NsfOigFindingsByTypeChart } from "./NsfOigFindingsByTypeChart";
+import { getNsfOigFindingsByType } from "./nsfOigData";
 import { NhanesFormulaicCharts, NhanesFormulaicData } from "./NhanesFormulaicCharts";
 import { ToolStacks } from "./ToolStacks";
 import { PipelineDiagram } from "./PipelineDiagram";
@@ -218,7 +218,7 @@ export default function ForensicToolkitPage() {
     afterToolkit,
   ] = getMarkdownSegments();
   const oriData = getOriFindings();
-  const nsfOigData = getNsfOigMisconduct();
+  const nsfOigData = getNsfOigFindingsByType();
   const nhanesData = getNhanesFormulaic();
 
   return (
@@ -229,29 +229,54 @@ export default function ForensicToolkitPage() {
           <MarkdownContent content={beforeFindingsCta} anchorHeadings />
           <div className="grid grid-cols-1 md:grid-cols-[1fr_16rem] gap-6 items-start my-6">
             <MarkdownContent content={intro} anchorHeadings />
-            <Link
-              href="/forensic-metascience-ai-toolkit/findings"
-              className="group flex flex-col gap-2 rounded-lg border border-black bg-sky-50 p-5 hover:shadow-md transition-shadow"
-            >
-              <span className="font-clarendon font-semibold text-lg text-sky-900 leading-snug text-center">
-                See findings and 
-                <br />
-                PubPeer comments
-              </span>
-              <svg
-                aria-hidden
-                viewBox="0 0 32 24"
-                className="h-9 w-12 text-sky-900 self-center transition-transform group-hover:translate-x-1"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={3}
-                strokeLinecap="round"
-                strokeLinejoin="round"
+            <div className="flex flex-col gap-4">
+              <Link
+                href="/forensic-metascience-ai-toolkit/findings"
+                className="group flex flex-col gap-2 rounded-lg border border-black bg-sky-50 p-5 hover:shadow-md transition-shadow"
               >
-                <path d="M2 12h20" />
-                <path d="M21 5.5l9 6.5-9 6.5z" fill="currentColor" stroke="none" />
-              </svg>
-            </Link>
+                <span className="font-clarendon font-semibold text-lg text-sky-900 leading-snug text-center">
+                  See findings and 
+                  <br />
+                  PubPeer comments
+                </span>
+                <svg
+                  aria-hidden
+                  viewBox="0 0 32 24"
+                  className="h-9 w-12 text-sky-900 self-center transition-transform group-hover:translate-x-1"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={3}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M2 12h20" />
+                  <path d="M21 5.5l9 6.5-9 6.5z" fill="currentColor" stroke="none" />
+                </svg>
+              </Link>
+              <a
+                href="https://github.com/The-Metascience-Observatory/forensic-metascience-ai-toolkit"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex flex-col gap-2 rounded-lg border border-black bg-sky-50 p-5 hover:shadow-md transition-shadow"
+              >
+                <span className="font-clarendon font-semibold text-lg text-sky-900 leading-snug text-center">
+                  View source code
+                </span>
+                <svg
+                  aria-hidden
+                  viewBox="0 0 32 24"
+                  className="h-9 w-12 text-sky-900 self-center transition-transform group-hover:translate-x-1"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={3}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M2 12h20" />
+                  <path d="M21 5.5l9 6.5-9 6.5z" fill="currentColor" stroke="none" />
+                </svg>
+              </a>
+            </div>
           </div>
           <MarkdownContent content={beforeFraudStats} anchorHeadings />
           <StatGrid stats={fraudStats} />
@@ -262,7 +287,7 @@ export default function ForensicToolkitPage() {
           <MarkdownContent content={afterNhanesCharts} anchorHeadings />
           <OriFindingsChart data={oriData} />
           <MarkdownContent content={afterOriChart} anchorHeadings />
-          <NsfOigMisconductChart data={nsfOigData} />
+          <NsfOigFindingsByTypeChart data={nsfOigData} />
           <MarkdownContent content={afterNsfOigChart} anchorHeadings />
           <FitMatrix compact boxedLabels={false} />
           <MarkdownContent content={afterToolLogos} anchorHeadings />

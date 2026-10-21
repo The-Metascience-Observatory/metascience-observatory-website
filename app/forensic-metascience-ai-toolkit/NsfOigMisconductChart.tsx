@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import {
   ScatterChart,
   Scatter,
@@ -14,7 +13,6 @@ import {
 import type { TooltipProps } from "recharts";
 import type { NsfOigYearDatum, SourcedValue } from "./nsfOigData";
 
-const NSF_OIG_DATA_PATH = "/forensic-metascience-ai-toolkit/nsf-oig-data";
 const ALLEGATIONS_COLOR = "#c0392b";
 const FINDINGS_COLOR = "#1a5276";
 const AXIS_COLOR = "#000000";
@@ -41,7 +39,7 @@ interface NsfOigMisconductChartProps {
   data: NsfOigYearDatum[];
 }
 
-/** Only figures taken directly from NSF OIG's own reports are plotted. */
+/** Figures from NSF OIG's own reports are filled; secondary-source figures are open. */
 function toPoints(
   data: NsfOigYearDatum[],
   key: "allegations" | "findings",
@@ -49,7 +47,7 @@ function toPoints(
 ): PointDatum[] {
   return data.flatMap((d) => {
     const v = d[key];
-    if (!v || v.sourceType !== "primary") return [];
+    if (!v) return [];
     return [
       {
         year: d.year,
@@ -65,9 +63,12 @@ function toPoints(
 }
 
 function makeDot(color: string) {
-  return function Dot(props: { cx?: number; cy?: number }) {
-    const { cx, cy } = props;
+  return function Dot(props: { cx?: number; cy?: number; payload?: PointDatum }) {
+    const { cx, cy, payload } = props;
     if (cx == null || cy == null) return <g />;
+    if (payload?.sourced.sourceType === "secondary") {
+      return <circle cx={cx} cy={cy} r={5} fill="#ffffff" stroke={color} strokeWidth={2} />;
+    }
     return <circle cx={cx} cy={cy} r={5.5} fill={color} stroke="#ffffff" strokeWidth={1.5} />;
   };
 }
@@ -86,15 +87,25 @@ function PointTooltip({ active, payload }: TooltipProps<number, string>) {
       <p className="m-0 text-foreground">
         {p.series}: {p.count}
       </p>
-      <p className="m-0 mt-1 text-foreground/60">{sourced.source}</p>
+      <p className="m-0 mt-1 text-foreground/60">
+        {sourced.source}
+        {sourced.sourceType === "secondary" && " (secondary source)"}
+      </p>
     </div>
   );
 }
 
-function LegendDot({ color }: { color: string }) {
+function LegendDot({ color, open = false }: { color: string; open?: boolean }) {
   return (
     <svg width="12" height="12" aria-hidden className="inline-block align-middle mr-1.5">
-      <circle cx="6" cy="6" r="5" fill={color} />
+      <circle
+        cx="6"
+        cy="6"
+        r={open ? 4.5 : 5}
+        fill={open ? "#ffffff" : color}
+        stroke={color}
+        strokeWidth={open ? 1.5 : 0}
+      />
     </svg>
   );
 }
@@ -118,6 +129,16 @@ export function NsfOigMisconductChart({ data }: NsfOigMisconductChartProps) {
             Findings of misconduct
           </span>
         </span>
+        <span className="mt-1 flex flex-wrap gap-x-5 gap-y-1 text-sm text-foreground/70">
+          <span>
+            <LegendDot color="#555555" />
+            From NSF OIG&rsquo;s own reports
+          </span>
+          <span>
+            <LegendDot color="#555555" open />
+            From a secondary source citing NSF OIG
+          </span>
+        </span>
       </figcaption>
       <ResponsiveContainer width="100%" height={300}>
         <ScatterChart margin={{ left: 0, right: 10, top: 18, bottom: 5 }}>
@@ -126,8 +147,8 @@ export function NsfOigMisconductChart({ data }: NsfOigMisconductChartProps) {
             {...AXIS_STYLE}
             dataKey="year"
             type="number"
-            domain={[2009, 2023]}
-            ticks={[2010, 2013, 2016, 2019, 2022]}
+            domain={[2002, 2024]}
+            ticks={[2003, 2008, 2013, 2018, 2023]}
             tickMargin={6}
             fontSize={12}
             name="Year"
@@ -162,17 +183,6 @@ export function NsfOigMisconductChart({ data }: NsfOigMisconductChartProps) {
           />
         </ScatterChart>
       </ResponsiveContainer>
-      <p className="text-xs text-foreground/50 mt-3 mb-0">
-        Only figures taken directly from NSF OIG&rsquo;s own reports are shown; gaps are years
-        without one yet. Figures are provisional.{" "}
-        <Link
-          href={NSF_OIG_DATA_PATH}
-          className="underline decoration-foreground/30 underline-offset-2 hover:text-foreground"
-        >
-          Sources and notes for every point
-        </Link>
-        .
-      </p>
     </figure>
   );
 }

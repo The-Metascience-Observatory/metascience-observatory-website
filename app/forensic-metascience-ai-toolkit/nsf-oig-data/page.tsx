@@ -1,7 +1,14 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { DocsBackLink } from "@/components/DocsBackLink";
-import { getNsfOigMisconduct, NsfOigYearDatum, SourcedValue } from "../nsfOigData";
+import {
+  getNsfOigFindingsByType,
+  getNsfOigMisconduct,
+  NsfOigYearDatum,
+  SourcedValue,
+} from "../nsfOigData";
+import { NsfOigFindingsByTypeChart } from "../NsfOigFindingsByTypeChart";
+import { NsfOigMisconductChart } from "../NsfOigMisconductChart";
 
 export const metadata = {
   title: "NSF OIG Misconduct Data Sources | The Metascience Observatory",
@@ -20,7 +27,7 @@ function SourceCell({ v }: { v: SourcedValue | null }) {
         {v.source}
       </a>
       {v.sourceType === "secondary" && (
-        <span className="ml-1 text-foreground/50">(secondary source; not plotted)</span>
+        <span className="ml-1 text-foreground/50">(secondary source; open point on chart)</span>
       )}
     </>
   );
@@ -37,6 +44,7 @@ function valueText(v: SourcedValue | null): string {
 
 export default function NsfOigDataPage() {
   const rows = getNsfOigMisconduct();
+  const byType = getNsfOigFindingsByType();
 
   return (
     <div className="min-h-screen">
@@ -49,7 +57,7 @@ export default function NsfOigDataPage() {
           />
 
           <h1 className="mb-4 mt-0 text-4xl font-bold leading-tight text-foreground">
-            Sources for NSF OIG research misconduct findings over time chart
+            How many fraudsters did NSF&rsquo;s OIG catch each year before being shut down in 2025?
           </h1>
 
           <h2 className="mb-4 mt-10 border-b border-border pb-2 text-2xl font-semibold text-foreground">
@@ -68,6 +76,29 @@ export default function NsfOigDataPage() {
               and a significant departure from accepted practice.
             </li>
           </ul>
+
+          <h2 className="mb-4 mt-10 border-b border-border pb-2 text-2xl font-semibold text-foreground">
+            Findings by type, 2005&ndash;2016
+          </h2>
+          <p className="mb-4 leading-relaxed text-foreground">
+            These figures are read off the graphic in{" "}
+            <a
+              href="https://doi.org/10.1126/science.aal0958"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={LINK_CLASS}
+            >
+              Mervis, <em>Science</em> (2017)
+            </a>
+            , which charts NSF OIG data. The article reports 82% of findings from 2005 to 2017 were
+            for plagiarism.
+          </p>
+          <NsfOigFindingsByTypeChart data={byType} showMoreInfoLink={false} />
+
+          <h2 className="mb-4 mt-10 border-b border-border pb-2 text-2xl font-semibold text-foreground">
+            Allegations and findings from NSF and secondary sources
+          </h2>
+          <NsfOigMisconductChart data={rows} />
 
           <h2 className="mb-4 mt-10 border-b border-border pb-2 text-2xl font-semibold text-foreground">
             Figures by year
@@ -143,9 +174,7 @@ export default function NsfOigDataPage() {
               >
                 Data Check: NSF Sends Congress a Garbled Message on Misconduct Numbers
               </a>
-              .&rdquo; <em>Science</em>, Mar. 2017. This article reports there have been 169 NSF
-              findings between 2005 and 2017, 82% for plagiarism, with annual findings &lsquo;in
-              the teens&rsquo; over the preceding decade.
+              .&rdquo; <em>Science</em>, Mar. 2017.
             </li>
           </ul>
         </div>

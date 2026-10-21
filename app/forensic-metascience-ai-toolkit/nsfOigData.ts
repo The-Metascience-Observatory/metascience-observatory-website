@@ -23,6 +23,27 @@ export interface NsfOigYearDatum {
   note: string;
 }
 
+export interface NsfOigFindingsByTypeDatum {
+  year: number;
+  plagiarism: number;
+  fabricationFalsification: number;
+  source: string;
+  url: string;
+}
+
+/** Findings split by type, read off Science's 2017 graphic of NSF OIG data. */
+export function getNsfOigFindingsByType(): NsfOigFindingsByTypeDatum[] {
+  const csvPath = path.join(process.cwd(), "data/nsf_oig_findings_by_type.csv");
+  const rows = csvParse(fs.readFileSync(csvPath, "utf-8"));
+  return rows.map((r) => ({
+    year: Number(r.year),
+    plagiarism: Number(r.plagiarism),
+    fabricationFalsification: Number(r.fabrication_falsification),
+    source: r.source ?? "",
+    url: r.url ?? "",
+  }));
+}
+
 export function getNsfOigMisconduct(): NsfOigYearDatum[] {
   const csvPath = path.join(process.cwd(), "data/nsf_oig_misconduct_by_year.csv");
   const rows = csvParse(fs.readFileSync(csvPath, "utf-8"));
