@@ -27,7 +27,7 @@ function SourceCell({ v }: { v: SourcedValue | null }) {
         {v.source}
       </a>
       {v.sourceType === "secondary" && (
-        <span className="ml-1 text-foreground/50">(secondary source; open point on chart)</span>
+        <span className="ml-1 text-foreground/50">(secondary source)</span>
       )}
     </>
   );
