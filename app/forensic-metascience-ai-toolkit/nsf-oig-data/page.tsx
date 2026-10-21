@@ -143,7 +143,7 @@ export default function NsfOigDataPage() {
               >
                 Data Check: NSF Sends Congress a Garbled Message on Misconduct Numbers
               </a>
-              .&rdquo; <em>Science</em>, Mar. 2017. Article reports there have been 169 NSF
+              .&rdquo; <em>Science</em>, Mar. 2017. This article reports there have been 169 NSF
               findings between 2005 and 2017, 82% for plagiarism, with annual findings &lsquo;in
               the teens&rsquo; over the preceding decade.
             </li>
