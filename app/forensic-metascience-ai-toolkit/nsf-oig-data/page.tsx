@@ -13,29 +13,6 @@ export const metadata = {
 
 const LINK_CLASS = "text-primary underline hover:no-underline";
 
-const REPORTS = [
-  {
-    name: "NSF OIG Semiannual Report 56 (Oct 2016 – Mar 2017)",
-    covers: "research misconduct statistics, FY2005–FY2016",
-    url: "https://www.oversight.gov/sites/default/files/documents/reports/2017-07/OIG_SAR_56.pdf",
-  },
-  {
-    name: "NSF OIG Semiannual Report 60 (Oct 2018 – Mar 2019)",
-    covers: "research misconduct statistics, FY2010–FY2019",
-    url: "https://www.oversight.gov/sites/default/files/documents/reports/2019-06/NSF_OIG_SAR_60.pdf",
-  },
-  {
-    name: "NSF OIG Semiannual Report 63 (Apr – Sep 2020)",
-    covers: "research misconduct statistics, FY2011–FY2020",
-    url: "https://www.oversight.gov/sites/default/files/documents/reports/2020-11/NSF_OIG_SAR_63.pdf",
-  },
-  {
-    name: "NSF OIG Semiannual Report, Fall 2025 (Apr – Sep 2025)",
-    covers: "most recent period",
-    url: "https://www.oversight.gov/sites/default/files/documents/reports/2026-01/Semiannual%20Report%20to%20Congress%20-%20Fall%202025.pdf",
-  },
-];
-
 function SourceCell({ v }: { v: SourcedValue | null }) {
   if (!v) return <span className="text-foreground/40">not found</span>;
   return (
@@ -44,14 +21,14 @@ function SourceCell({ v }: { v: SourcedValue | null }) {
         {v.source}
       </a>
       {v.sourceType === "secondary" && (
-        <span className="ml-1 text-foreground/50">(secondary; not plotted)</span>
+        <span className="ml-1 text-foreground/50">(secondary source; not plotted)</span>
       )}
     </>
   );
 }
 
 function yearText(r: NsfOigYearDatum): string {
-  return r.yearBasis === "fiscal" ? `FY${r.year}` : `${r.year}*`;
+  return r.yearBasis === "fiscal" ? `FY${r.year}` : String(r.year);
 }
 
 function valueText(v: SourcedValue | null): string {
@@ -127,12 +104,6 @@ export default function NsfOigDataPage() {
           <h2 className="mb-4 mt-10 border-b border-border pb-2 text-2xl font-semibold text-foreground">
             Figures by year
           </h2>
-          <p className="mb-4 text-sm leading-relaxed text-foreground/70">
-            &ldquo;Secondary&rdquo; marks a figure taken from a source that cites NSF OIG rather
-            than from NSF OIG itself. These are listed here but not plotted on the chart until
-            they are checked against NSF OIG&rsquo;s own reports. A range in parentheses means
-            sources disagree.
-          </p>
           <ul className="space-y-3 md:hidden">
             {rows.map((r) => (
               <li key={r.year} className="rounded-lg border border-border bg-white p-4 text-sm">
@@ -189,64 +160,27 @@ export default function NsfOigDataPage() {
               </tbody>
             </table>
           </div>
-          <p className="mt-2 text-xs text-foreground/60">
-            * Source does not say whether this is a fiscal or calendar year. NSF&rsquo;s fiscal
-            year runs October to September (FY2022 = Oct 2021 – Sep 2022).
-          </p>
 
           <h2 className="mb-4 mt-10 border-b border-border pb-2 text-2xl font-semibold text-foreground">
-            Known gaps and caveats
+            Additional references
           </h2>
           <ul className="mb-4 list-disc space-y-2 pl-6 leading-relaxed text-foreground">
-            <li>No figures yet for 2006–2009, 2017–2018, 2020–2021, or 2024–2025.</li>
             <li>
-              2014 findings are given as 20, 22, or 26 depending on the source. The 2014
-              allegation count (49) is low next to 2013 and 2015 and may reflect a
-              calendar/fiscal year mismatch.
-            </li>
-            <li>
-              The FY2011 allegation peak coincides with NSF OIG&rsquo;s proactive plagiarism
-              review of its FY2011 awards, so it partly reflects OIG searching for cases rather
-              than more misconduct.
-            </li>
-            <li>
-              A 2017{" "}
+              Mervis, Jeffrey. &ldquo;
               <a
-                href="https://www.science.org/content/article/data-check-nsf-sends-congress-garbled-message-misconduct-numbers"
+                href="https://doi.org/10.1126/science.aal0958"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={LINK_CLASS}
               >
-                Science data check
-              </a>{" "}
-              reported 169 NSF findings since 2005, 82% for plagiarism, with annual findings
-              &ldquo;in the teens&rdquo; over the preceding decade.
-            </li>
-          </ul>
-
-          <h2 className="mb-4 mt-10 border-b border-border pb-2 text-2xl font-semibold text-foreground">
-            Primary reports for filling the gaps
-          </h2>
-          <ul className="mb-4 list-disc space-y-2 pl-6 leading-relaxed text-foreground">
-            {REPORTS.map((r) => (
-              <li key={r.url}>
-                <a href={r.url} target="_blank" rel="noopener noreferrer" className={LINK_CLASS}>
-                  {r.name}
-                </a>{" "}
-                — {r.covers}
-              </li>
-            ))}
-            <li>
-              <a
-                href="https://oig.nsf.gov/investigations/research-misconduct/by-the-numbers"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={LINK_CLASS}
-              >
-                NSF OIG, Research misconduct by the numbers
+                Data Check: NSF Sends Congress a Garbled Message on Misconduct Numbers
               </a>
+              .&rdquo; <em>Science</em>, Mar. 2017. Article reports there have been 169 NSF
+              findings between 2005 and 2017, 82% for plagiarism, with annual findings &lsquo;in
+              the teens&rsquo; over the preceding decade.
             </li>
           </ul>
+
           <p className="mt-6 text-sm text-foreground/60">
             Data file: <code>data/nsf_oig_misconduct_by_year.csv</code>
           </p>
