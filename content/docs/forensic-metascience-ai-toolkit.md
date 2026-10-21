@@ -34,7 +34,7 @@ The number of scientific papers being published each year is growing exponential
 
 Meanwhile, our ability to detect fraud has been constant or decreasing. A handful of largely unpaid image sleuths appear to be responsible for most detections of image fraud thus far.  
 
-The Office of Research Integrity's output has collapsed — 2025 produced the fewest misconduct findings in its 32 years of record — and [NSF's Office of Inspector General stopped investigating research misconduct in early 2025](https://www.science.org/content/article/exclusive-nsf-watchdog-unit-no-longer-investigating-research-misconduct), referring all allegations back to the grantee institutions.
+The Office of Research Integrity's output has collapsed — 2025 produced the fewest misconduct findings in its 32 years of record — and [NSF's Office of Inspector General stopped investigating research misconduct in early 2025](https://www.science.org/content/article/exclusive-nsf-watchdog-unit-no-longer-investigating-research-misconduct), referring all allegations back to the grantee institutions. [Prior to 2025, the OIG only made about 10–20 misconduct findings per year, 80% of which were for plagiarism](https://www.science.org/content/article/data-check-nsf-sends-congress-garbled-message-misconduct-numbers).
 
 <!-- ORI_CHART -->
 
