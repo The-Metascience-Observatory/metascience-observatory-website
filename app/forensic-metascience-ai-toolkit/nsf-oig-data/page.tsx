@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { DocsBackLink } from "@/components/DocsBackLink";
@@ -52,16 +51,6 @@ export default function NsfOigDataPage() {
           <h1 className="mb-4 mt-0 text-4xl font-bold leading-tight text-foreground">
             NSF OIG research misconduct data: sources
           </h1>
-
-          <p className="mb-4 leading-relaxed text-foreground">
-            The National Science Foundation&rsquo;s Office of Inspector General (NSF OIG) handles
-            allegations of research misconduct in NSF-funded work. This page documents the
-            figures behind the allegations and findings chart on the{" "}
-            <Link href="/forensic-metascience-ai-toolkit#the-oversight-problem" className={LINK_CLASS}>
-              Forensic Metascience AI toolkit
-            </Link>{" "}
-            page.
-          </p>
 
           <h2 className="mb-4 mt-10 border-b border-border pb-2 text-2xl font-semibold text-foreground">
             Allegations vs. findings
