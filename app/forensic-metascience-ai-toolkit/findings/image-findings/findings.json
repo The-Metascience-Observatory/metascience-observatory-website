@@ -619,5 +619,189 @@
       "height": 464,
       "alt": "Annotated figure with the matching regions outlined."
     }
+  },
+  {
+    "id": "muthupalani-2019",
+    "doi": "10.1038/s41374-019-0293-y",
+    "citation": {
+      "authors": "Sureshkumar Muthupalani; Zhongming Ge; Joanna Joy; Yan Feng; Carrie Dobey; Hye-Youn Cho; Robert Langenbach; Timothy C. Wang; Susan J. Hagen; James G. Fox",
+      "title": "Muc5ac null mice are predisposed to spontaneous gastric antro-pyloric hyperplasia and adenomas coupled with attenuated H.pylori-induced corpus mucous metaplasia",
+      "journal": "Laboratory Investigation",
+      "volume": "99",
+      "issue": "12",
+      "pages": "1887-1905",
+      "year": 2019,
+      "url": "https://doi.org/10.1038/s41374-019-0293-y"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/C46DDD7F0B5CD8104B562DF54D7EBA",
+    "submitted": "2026-10-22",
+    "summary": "Image completely duplicated across conditions.",
+    "image": {
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/muthupalani-2019.png",
+      "width": 907,
+      "height": 1353,
+      "alt": "Annotated Figure 5 with the matching regions outlined."
+    }
+  },
+  {
+    "id": "huilgol-2023",
+    "doi": "10.1016/j.neuron.2023.05.021",
+    "citation": {
+      "authors": "Dhananjay Huilgol; Jesse M. Levine; William Galbavy; Bor-Shuen Wang; Miao He; Shreyas M. Suryanarayana; Z. Josh Huang",
+      "title": "Direct and indirect neurogenesis generate a mosaic of distinct glutamatergic projection neuron types in cerebral cortex",
+      "journal": "Neuron",
+      "volume": "111",
+      "issue": "16",
+      "pages": "2557-2569.e4",
+      "year": 2023,
+      "url": "https://doi.org/10.1016/j.neuron.2023.05.021"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/D725DA0297D574AFF16AB4F7ABFD18",
+    "submitted": "2026-10-22",
+    "summary": "Figure 1G. Same image used for two different regions, rotated 90 degrees",
+    "image": {
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/huilgol-2023.png",
+      "width": 377,
+      "height": 302,
+      "alt": "Annotated figure with the matching regions outlined."
+    }
+  },
+  {
+    "id": "kaur-2023",
+    "doi": "10.1002/jbm4.10745",
+    "citation": {
+      "authors": "Japneet Kaur; Dominik Saul; Madison L. Doolittle; Joshua N. Farr; Sundeep Khosla; David G. Monroe",
+      "title": "<i>MicroRNA</i>\n                    ‐\n                    <i>19a</i>\n                    ‐\n                    <i>3p</i>\n                    Decreases with Age in Mice and Humans and Inhibits Osteoblast Senescence",
+      "journal": "JBMR Plus",
+      "volume": "7",
+      "issue": "6",
+      "pages": "e10745",
+      "year": 2023,
+      "url": "https://doi.org/10.1002/jbm4.10745"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/8E2D01227708D9EFF52BC836EB9E24",
+    "submitted": "2026-10-22",
+    "summary": "duplication",
+    "image": {
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/kaur-2023.png",
+      "width": 658,
+      "height": 1048,
+      "alt": "Annotated Figure 2 with the matching regions outlined."
+    }
+  },
+  {
+    "id": "xu-2024",
+    "doi": "10.1016/j.jhep.2024.01.026",
+    "citation": {
+      "authors": "Min Xu; Charlotte Warner; Xiaoqiong Duan; Zhimeng Cheng; Andre J. Jeyarajan; Wenting Li; Yongtao Wang; Tuo Shao; Shadi Salloum; Pei-Jer Chen; Xu Yu; Raymond T. Chung; Wenyu Lin",
+      "title": "HIV coinfection exacerbates HBV-induced liver fibrogenesis through a HIF-1α- and TGF-β1-dependent pathway",
+      "journal": "Journal of Hepatology",
+      "volume": "80",
+      "issue": "6",
+      "pages": "868-881",
+      "year": 2024,
+      "url": "https://doi.org/10.1016/j.jhep.2024.01.026"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/6858A5598A88542EF44AE571AD5D92",
+    "submitted": "2026-10-22",
+    "summary": "duplication",
+    "image": {
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/xu-2024.png",
+      "width": 1154,
+      "height": 270,
+      "alt": "Annotated Figure 2 with the matching regions outlined."
+    }
+  },
+  {
+    "id": "li-2012",
+    "doi": "10.1002/ptr.3706",
+    "citation": {
+      "authors": "Lu‐Fan Li; Jie Lu; Xiu‐Min Li; Chang‐Liang Xu; Ji‐Min Deng; Rong Qu; Shi‐Ping Ma",
+      "title": "Antidepressant‐like Effect of Magnolol on BDNF Up‐regulation and Serotonergic System Activity in Unpredictable Chronic Mild Stress Treated Rats",
+      "journal": "Phytotherapy Research",
+      "volume": "26",
+      "issue": "8",
+      "pages": "1189-1194",
+      "year": 2012,
+      "url": "https://doi.org/10.1002/ptr.3706"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/3366DD20B5F81229F4DF6D446353CB",
+    "submitted": "2026-10-22",
+    "summary": "Image re-use across conditions between two different papers",
+    "image": {
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/li-2012.png",
+      "width": 2387,
+      "height": 1141,
+      "alt": "Annotated Figure 4 with the matching regions outlined."
+    }
+  },
+  {
+    "id": "fan-2019",
+    "doi": "10.3389/fncel.2018.00516",
+    "citation": {
+      "authors": "Cuiqin Fan; Qiqi Song; Peng Wang; Ye Li; Mu Yang; Shu Yan Yu",
+      "title": "Neuroprotective Effects of Curcumin on IL-1β-Induced Neuronal Apoptosis and Depression-Like Behaviors Caused by Chronic Stress in Rats",
+      "journal": "Frontiers in Cellular Neuroscience",
+      "volume": "12",
+      "issue": null,
+      "pages": "516",
+      "year": 2019,
+      "url": "https://doi.org/10.3389/fncel.2018.00516"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/3F860B430AB967302B2D00C063EFFA",
+    "submitted": "2026-10-22",
+    "summary": "improper duplication with rotation and flip video here: https://youtu.be/Fc1v3lCnZ50",
+    "image": {
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/fan-2019.png",
+      "width": 1662,
+      "height": 553,
+      "alt": "Annotated Figure 8 with the matching regions outlined."
+    }
+  },
+  {
+    "id": "pei-2020",
+    "doi": "10.1016/j.intimp.2019.106076",
+    "citation": {
+      "authors": "Gaoyou Pei; Liguo Xu; Wenhao Huang; Jianjun Yin",
+      "title": "RETRACTED: The protective role of microRNA-133b in restricting hippocampal neurons apoptosis and inflammatory injury in rats with depression by suppressing CTGF",
+      "journal": "International Immunopharmacology",
+      "volume": "78",
+      "issue": null,
+      "pages": "106076",
+      "year": 2020,
+      "url": "https://doi.org/10.1016/j.intimp.2019.106076"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/773D824533241B2186D16AA3FFCB3F",
+    "submitted": "2026-10-22",
+    "summary": "duplication of an element",
+    "image": {
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/pei-2020.png",
+      "width": 1181,
+      "height": 427,
+      "alt": "Annotated Figure 7 with the matching regions outlined."
+    }
+  },
+  {
+    "id": "li-2020",
+    "doi": "10.1155/2020/2325391",
+    "citation": {
+      "authors": "Ye Li; Liyan Wang; Peng Wang; Cuiqin Fan; Ping Zhang; Jie Shen; Shu Yan Yu",
+      "title": "Ginsenoside-Rg1 Rescues Stress-Induced Depression-Like Behaviors via Suppression of Oxidative Stress and Neural Inflammation in Rats",
+      "journal": "Oxidative Medicine and Cellular Longevity",
+      "volume": "2020",
+      "issue": null,
+      "pages": "1-15",
+      "year": 2020,
+      "url": "https://doi.org/10.1155/2020/2325391"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/BA8E76609AEF58D3777B6D66A98C66",
+    "submitted": "2026-10-22",
+    "summary": "image duplication",
+    "image": {
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/li-2020.png",
+      "width": 1765,
+      "height": 1911,
+      "alt": "Annotated Figure 6 (cont.) with the matching regions outlined."
+    }
   }
 ]
