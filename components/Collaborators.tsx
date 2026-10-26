@@ -71,6 +71,29 @@ export const Collaborators = () => {
                 <ExternalLink href="https://blacklight.science/">Blacklight</ExternalLink>
               </p>
             </div>
+
+            <hr className="my-8 border-border" />
+
+            <div className="flex flex-col md:flex-row md:items-center gap-6">
+              <Link
+                href="https://intellicat.ai/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 self-center"
+              >
+                <Image
+                  src="/assets/collaborators/intellicat_logo.avif"
+                  alt="Intellicat logo"
+                  width={800}
+                  height={800}
+                  className="w-36 h-auto rounded-lg"
+                />
+              </Link>
+              <p className="text-foreground/80 leading-relaxed">
+                <ExternalLink href="https://intellicat.ai/">Dr. Valentin Rodionov</ExternalLink> &ndash;{" "}
+                <ExternalLink href="https://intellicat.ai/">Intellicat</ExternalLink>
+              </p>
+            </div>
           </Card>
         </div>
       </div>
