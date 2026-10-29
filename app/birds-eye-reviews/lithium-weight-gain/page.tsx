@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import Link from "next/link";
 import { BirdsEyeNavbar } from "@/components/BirdsEyeNavbar";
+import { BirdsEyeWarning } from "@/components/BirdsEyeWarning";
 import { Footer } from "@/components/Footer";
 import { parseCSV, stripTags, normalizeTitle } from "./csv-utils";
 import { ResultsClientWrapper } from "./ResultsClientWrapper";
@@ -325,6 +326,7 @@ export default function ResultsPage() {
       <main className="w-full px-4 sm:px-8 lg:px-24 2xl:px-40 pt-24 pb-16 min-h-screen">
         {/* Header shares the centered 1024px column the filter cards use. */}
         <div className="max-w-[1024px] mx-auto">
+          <BirdsEyeWarning />
           <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1">
             <Link href="/birds-eye-reviews" className="text-sm text-blue-600 hover:text-blue-700">
               &larr; Back to Bird&apos;s Eye Reviews

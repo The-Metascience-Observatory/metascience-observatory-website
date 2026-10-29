@@ -32,10 +32,6 @@ const reviews: ReviewMeta[] = [
     title: "Restless Legs Syndrome",
   },
   {
-    href: "/birds-eye-reviews/me-cfs",
-    title: "Chronic Fatigue Syndrome",
-  },
-  {
     href: "/birds-eye-reviews/lithium-weight-gain",
     title: "Lithium and weight gain",
   },

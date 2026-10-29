@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import Link from "next/link";
 import { BirdsEyeNavbar } from "@/components/BirdsEyeNavbar";
+import { BirdsEyeWarning } from "@/components/BirdsEyeWarning";
 import { Footer } from "@/components/Footer";
 import { parseCSV, stripTags, normalizeTitle } from "./screening/csv-utils";
 import { ResultsClientWrapper } from "./ResultsClientWrapper";
@@ -275,6 +276,7 @@ export default function ResultsPage() {
     <>
       <BirdsEyeNavbar />
       <main className="container mx-auto px-2 pt-24 pb-16 min-h-screen">
+        <BirdsEyeWarning />
         <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1">
           <Link href="/birds-eye-reviews" className="text-sm text-blue-600 hover:text-blue-700">
             &larr; Back to Bird&apos;s Eye Reviews

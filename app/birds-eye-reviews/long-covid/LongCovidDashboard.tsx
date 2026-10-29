@@ -4,6 +4,7 @@ import { ArticleDetailPanel } from "./ArticleDetailPanel";
 
 import { useState, useMemo, useRef, useEffect } from "react";
 import Link from "next/link";
+import { BirdsEyeWarning } from "@/components/BirdsEyeWarning";
 import { InspectFilters, InspectDetails } from "./InspectFilters";
 import { matchesInspect, inspectCounts, parseInspectFilter, type InspectFilter } from "@/lib/long-covid/inspect";
 import { matchesPublication, preferPublished, metadataCounts } from "@/lib/long-covid/publications";
@@ -414,6 +415,7 @@ export function LongCovidDashboard(props: DashboardProps) {
 
   return (
     <div data-testid="treatment-dashboard" data-filters-ready={publicationFilters.ready} data-selected-reports={interventionFilteredMetas.length}>
+      <BirdsEyeWarning />
       {/* Hero */}
       <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1">
         <Link href="/birds-eye-reviews" className="text-sm text-blue-600 hover:text-blue-700">
