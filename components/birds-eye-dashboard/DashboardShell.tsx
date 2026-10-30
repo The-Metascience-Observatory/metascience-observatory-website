@@ -82,6 +82,7 @@ export function DashboardShell({
   header,
   notice,
   audit = true,
+  compactInterventions = false,
   mapSlot,
   metaGroups,
   metaMinTrials,
@@ -123,6 +124,8 @@ export function DashboardShell({
    *  live endpoint). Renders only when the `prisma` panel is on AND data
    *  exists — the shell never fetches. */
   prisma?: PrismaData | null;
+  /** Intervention card as a plain compact list (no bars, no explanatory notes). */
+  compactInterventions?: boolean;
 }) {
   const [filters, setFilters] = useState<Filters>({});
 
@@ -188,6 +191,12 @@ export function DashboardShell({
     delete others[facet];
     return applyFilters(rows, others);
   }
+
+  const heatmap = (
+    <Removable k="heatmap" label={`${noun} × outcome landscape`} edit={edit}>
+      <LandscapeHeatmap rows={filtered} noun={noun} />
+    </Removable>
+  );
 
   return (
     <div>
@@ -282,6 +291,8 @@ export function DashboardShell({
             clickHint="Each rectangle is one trial, coloured by result — hover for the study, click a row to filter the dashboard (click again to clear)."
             collapseSingletons
             collapseMaxTrials={1}
+            compactOnly={compactInterventions}
+            hideNotes={compactInterventions}
           />
         </Removable>
       )}
@@ -325,13 +336,11 @@ export function DashboardShell({
             />
           </Removable>
         )}
+        {/* Without the outcome-domains card, the landscape takes its grid slot. */}
+        {has("heatmap") && !has("outcome_domains") && heatmap}
       </div>
 
-      {has("heatmap") && (
-        <Removable k="heatmap" label={`${noun} × outcome landscape`} edit={edit}>
-          <LandscapeHeatmap rows={filtered} noun={noun} />
-        </Removable>
-      )}
+      {has("heatmap") && has("outcome_domains") && heatmap}
 
       {has("blinding_significance") && (
         <Removable k="blinding_significance" label="Blinding vs significance" edit={edit}>

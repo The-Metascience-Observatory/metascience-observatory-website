@@ -186,6 +186,7 @@ function RowBackground(props: RowBackgroundProps) {
 export function BreakdownChart({
   title, breakdown, labels, colors, onBarClick, clickHint,
   segments, selectedKey, collapseSingletons, collapseMaxTrials, hoverTrials, footer, studyCount,
+  compactOnly, hideNotes,
 }: {
   title: string;
   /** Unique studies, when categories overlap (e.g. multi-arm interventions). */
@@ -205,6 +206,11 @@ export function BreakdownChart({
   // Extra content rendered inside the card, below the chart (e.g. a grouped
   // "fewer trials" list) so it shares the same card as the bars.
   footer?: React.ReactNode;
+  /** Draw every entry in the compact one-rectangle-per-trial list (no bars,
+   *  no "N with a single trial" divider). Stacked mode only. */
+  compactOnly?: boolean;
+  /** Hide the category-assignment note and the click hint under the title. */
+  hideNotes?: boolean;
 }) {
   const prettyLabel = (key: string) =>
     labels?.[key] ?? key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
@@ -294,10 +300,10 @@ export function BreakdownChart({
   const AUTO_SINGLETON_THRESHOLD = 8;
   // Entries with `total <= compactMax` are pulled out of the bar chart and shown
   // as a compact alphabetized list below it (each trial drawn as one rectangle).
-  const compactMax = collapseMaxTrials ?? 1;
+  const compactMax = compactOnly ? Infinity : collapseMaxTrials ?? 1;
   const compactCount = segments ? allData.filter((d) => (d.total as number) <= compactMax).length : 0;
   const useCollapse = !!segments && collapseSingletons !== false &&
-    (collapseSingletons === true || compactCount >= AUTO_SINGLETON_THRESHOLD);
+    (compactOnly || collapseSingletons === true || compactCount >= AUTO_SINGLETON_THRESHOLD);
   const data = useCollapse ? allData.filter((d) => (d.total as number) > compactMax) : allData;
   const singletonData = useCollapse
     ? allData
@@ -352,13 +358,13 @@ export function BreakdownChart({
     <div className="border border-border rounded-lg bg-card p-3 sm:p-4 mb-6 text-foreground/75">
       <div className="flex flex-wrap items-baseline gap-x-4 mb-2">
         <h2 className="text-lg font-semibold">{title} (n = {(studyCount ?? total).toLocaleString()})</h2>
-        {studyCount != null && total !== studyCount && (
+        {!hideNotes && studyCount != null && total !== studyCount && (
           <p className="basis-full text-sm text-foreground/60">
             {total.toLocaleString()} category assignments across {studyCount.toLocaleString()} studies.
             A study can appear in multiple categories; missing categories are not counted.
           </p>
         )}
-        {onBarClick && clickHint && (
+        {!hideNotes && onBarClick && clickHint && (
           <p className="basis-full text-sm text-foreground/60">{clickHint}</p>
         )}
       </div>
@@ -374,7 +380,7 @@ export function BreakdownChart({
         </div>
       )}
 
-      <ResponsiveContainer width="100%" height={chartHeight}>
+      {data.length > 0 && <ResponsiveContainer width="100%" height={chartHeight}>
         <BarChart data={data} layout="vertical" margin={{ left: 10, right: 50, top: 5, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" opacity={0.2} horizontal={false} />
           <XAxis type="number" domain={[0, "dataMax"]} tickFormatter={(v: number) => v.toLocaleString()} fontSize={12} allowDecimals={false} />
@@ -463,15 +469,17 @@ export function BreakdownChart({
             </Bar>
           )}
         </BarChart>
-      </ResponsiveContainer>
+      </ResponsiveContainer>}
 
       {/* Low-trial keys: compact alphabetized list, one rectangle per trial */}
       {singletonData.length > 0 && segments && (
-        <div className="mt-3 pt-3 border-t border-border">
-          <p className="text-xs text-foreground/60 mb-2">
-            {singletonData.length.toLocaleString()}{" "}
-            {compactMax === 1 ? "with a single trial" : `with ${compactMax} or fewer trials`}:
-          </p>
+        <div className={data.length > 0 ? "mt-3 pt-3 border-t border-border" : "mt-1"}>
+          {data.length > 0 && (
+            <p className="text-xs text-foreground/60 mb-2">
+              {singletonData.length.toLocaleString()}{" "}
+              {compactMax === 1 ? "with a single trial" : `with ${compactMax} or fewer trials`}:
+            </p>
+          )}
           <TrialRectList
             items={singletonData.map((d) => ({
               key: d.key as string,

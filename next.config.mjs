@@ -32,7 +32,8 @@ const nextConfig = {
     ...(isVercel ? {} : { cpus: 6, staticGenerationMinPagesPerWorker: 6 }),
   },
   images: {
-    dangerouslyAllowSVG: true
+    dangerouslyAllowSVG: true,
+    unoptimized: process.env.NODE_ENV === "development",
   },
   // Explicitly set the workspace root so Next.js
   // doesn't accidentally pick a parent directory
