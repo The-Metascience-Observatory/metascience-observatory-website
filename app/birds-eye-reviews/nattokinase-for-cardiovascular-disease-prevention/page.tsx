@@ -34,12 +34,7 @@ export default function NattokinasePage() {
     <main className="mx-auto max-w-[1440px] px-4 pt-24 pb-12 sm:px-8">
       <Link href="/birds-eye-reviews" className="text-sm text-primary hover:underline">← All Bird’s Eye Reviews</Link>
       <h1 className="mt-4 text-2xl sm:text-3xl font-bold font-clarendon">Nattokinase and cardiovascular outcomes</h1>
-      <p className="mt-2 mb-4 text-sm text-muted-foreground">12 studies · Updated {updated.last_updated_display}</p>
-      <p className="mb-6 max-w-4xl text-sm text-muted-foreground">
-        This review retains individual studies while withholding invalid or unresolved estimates from pooling.
-        The current evidence has no compatible multi-study pool. Historical screening records contain
-        unresolved inconsistencies, detailed in the screening flow below.
-      </p>
+      <p className="mt-2 mb-6 text-sm text-muted-foreground">12 studies · Updated {updated.last_updated_display}</p>
       <NattokinaseDashboard summary={summary} manifest={manifest} rows={rows} prisma={prisma} meta={meta} />
     </main>
     <Footer />

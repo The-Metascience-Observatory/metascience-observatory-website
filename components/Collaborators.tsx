@@ -82,7 +82,7 @@ export const Collaborators = () => {
                 className="shrink-0 self-center"
               >
                 <Image
-                  src="/assets/collaborators/intellicat_logo.avif"
+                  src="/assets/collaborators/intellicat_logo.png"
                   alt="Intellicat logo"
                   width={800}
                   height={800}

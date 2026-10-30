@@ -36,7 +36,6 @@ app/                        # Next.js App Router
   replications-database/    # Main interactive database (complex filtering/vis, "use client")
     by-discipline/
     by-journal/
-    by-author/
   replication-initiatives/
   birds-eye-reviews/
     page.tsx                # Index listing reviews
