@@ -109,6 +109,30 @@ export const AdvisoryBoard = () => {
                   </span>
                 </h3>
               </div>
+
+              <div>
+                <h3 className="text-lg font-semibold mb-1">
+                  <Link
+                    href="https://www.linkedin.com/in/paullitvak/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline"
+                  >
+                    Paul Litvak
+                  </Link>
+                  <span className="ml-2 font-normal text-foreground/80">
+                    -{" "}
+                    <Link
+                      href="https://www.dawes.institute/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline"
+                    >
+                      Robin Dawes Institute
+                    </Link>
+                  </span>
+                </h3>
+              </div>
             </div>
           </Card>
         </div>
