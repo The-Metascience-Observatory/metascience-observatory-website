@@ -803,5 +803,51 @@
       "height": 1911,
       "alt": "Annotated Figure 6 (cont.) with the matching regions outlined."
     }
+  },
+  {
+    "id": "li-2015",
+    "doi": "10.1073/pnas.1417015112",
+    "citation": {
+      "authors": "Jing Li; Alfredo Csibi; Sun Yang; Gregory R. Hoffman; Chenggang Li; Erik Zhang; Jane J. Yu; John Blenis",
+      "title": "RETRACTED: Synthetic lethality of combined glutaminase and Hsp90 inhibition in mTORC1-driven tumor cells",
+      "journal": "Proceedings of the National Academy of Sciences",
+      "volume": "112",
+      "issue": "1",
+      "pages": "E21",
+      "year": 2015,
+      "url": "https://doi.org/10.1073/pnas.1417015112"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/83120D8F11244924EFD9B7219AC31F",
+    "submitted": "2026-11-03",
+    "summary": "Another duplication in the supplementary info, not reported anywhere above. video (showing slight rotation) : https://youtu.be/FOd3ZOlsE1g",
+    "image": {
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/li-2015.png",
+      "width": 1399,
+      "height": 860,
+      "alt": "Annotated figure with the matching regions outlined."
+    }
+  },
+  {
+    "id": "avalos-2024",
+    "doi": "10.3390/v16101509",
+    "citation": {
+      "authors": "Bryant Avalos; Jacqueline R. Kulbe; Mary K. Ford; Anna Elizabeth Laird; Kyle Walter; Michael Mante; Jazmin B. Florio; Ali Boustani; Antoine Chaillon; Johannes C. M. Schlachetzki; Erin E. Sundermann; David J. Volsky; Robert A. Rissman; Ronald J. Ellis; Scott L. Letendre; Jennifer Iudicello; Jerel Adam Fields",
+      "title": "Cannabis Use and Cannabidiol Modulate HIV-Induced Alterations in TREM2 Expression: Implications for Age-Related Neuropathogenesis",
+      "journal": "Viruses",
+      "volume": "16",
+      "issue": "10",
+      "pages": "1509",
+      "year": 2024,
+      "url": "https://doi.org/10.3390/v16101509"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/6A5F3393CD2DD7E3F8966CB526E885",
+    "submitted": "2026-11-03",
+    "summary": "duplication in figure 2e",
+    "image": {
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/avalos-2024.png",
+      "width": 1169,
+      "height": 461,
+      "alt": "Annotated Figure 2 with the matching regions outlined."
+    }
   }
 ]
