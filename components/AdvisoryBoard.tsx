@@ -118,7 +118,7 @@ export const AdvisoryBoard = () => {
                     rel="noopener noreferrer"
                     className="underline"
                   >
-                    Paul Litvak
+                    Paul Litvak, Ph.D.
                   </Link>
                   <span className="ml-2 font-normal text-foreground/80">
                     -{" "}
