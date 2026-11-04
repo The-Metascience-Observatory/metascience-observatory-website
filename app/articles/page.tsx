@@ -212,6 +212,11 @@ const substackArticles: SubstackMeta[] = [
 
 const newsletters: SubstackMeta[] = [
   {
+    date: "2026-11-02",
+    title: "Newsletter #4 — Q3, 2026",
+    href: "https://eomail5.com/web-version?p=746305ee-d6d3-11f1-a13d-895d6bf61e0f&pt=campaign&t=1793640982&s=ffc34a46887a8f94ca1f0677f852a06c4a46ab7274428b9352ad35255a438804",
+  },
+  {
     date: "2026-08-04",
     title: "Newsletter #3 — Q2, 2026",
     href: "https://metascienceobservatory.substack.com/p/newsletter-3-q2-2026",
