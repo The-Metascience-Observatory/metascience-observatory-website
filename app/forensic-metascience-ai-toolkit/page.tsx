@@ -28,7 +28,7 @@ export const metadata = {
 const MARKERS = [
   "<!-- FINDINGS_CTA -->",
   "<!-- INTRO_END -->",
-  "<!-- FRAUD_STATS -->",
+  "<!-- MAJOR_ISSUE_STATS -->",
   "<!-- ERROR_STATS -->",
   "<!-- NHANES_CHARTS -->",
   "<!-- ORI_CHART -->",
@@ -77,7 +77,7 @@ interface Stat {
   href?: string;
 }
 
-const fraudStats: Stat[] = [
+const majorIssueStats: Stat[] = [
   {
     value: "2%",
     claim: "of researchers admit to fabricating or falsifying data.",
@@ -208,8 +208,8 @@ export default function ForensicToolkitPage() {
   const [
     beforeFindingsCta,
     intro,
-    beforeFraudStats,
-    afterFraudStats,
+    beforeMajorIssueStats,
+    afterMajorIssueStats,
     afterErrorStats,
     afterNhanesCharts,
     afterOriChart,
@@ -278,9 +278,9 @@ export default function ForensicToolkitPage() {
               </a>
             </div>
           </div>
-          <MarkdownContent content={beforeFraudStats} anchorHeadings />
-          <StatGrid stats={fraudStats} />
-          <MarkdownContent content={afterFraudStats} anchorHeadings />
+          <MarkdownContent content={beforeMajorIssueStats} anchorHeadings />
+          <StatGrid stats={majorIssueStats} />
+          <MarkdownContent content={afterMajorIssueStats} anchorHeadings />
           <StatGrid stats={errorStats} />
           <MarkdownContent content={afterErrorStats} anchorHeadings />
           <NhanesFormulaicCharts data={nhanesData} />
