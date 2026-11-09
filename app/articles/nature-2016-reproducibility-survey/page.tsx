@@ -558,7 +558,7 @@ export default function Nature2016SurveyPage() {
             className="mt-10 border-t border-border pt-6"
           >
             <h2 id="further-reading" className="text-xl font-semibold text-foreground mb-3">
-              Further reading
+              Further reading (related survey)
             </h2>
             <p className="text-sm text-foreground/70 leading-relaxed">
               Lubega N, Anderson A, Nelson NC (2023). Experience of irreproducibility as a
