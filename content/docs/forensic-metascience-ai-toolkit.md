@@ -2,22 +2,26 @@
 
 <!-- FINDINGS_CTA -->
 
-The [Metascience Observatory's](/) [research](https://moreisdifferent.blog/p/what-weve-learned-so-far-at-the-metascience) has demonstrated that the replication crisis is a science-wide phenomenon, not just limited to psychology and the social sciences. Across many fields, 40% or more of results are not replicating.
+The [Metascience Observatory's](/) [research](https://moreisdifferent.blog/p/what-weve-learned-so-far-at-the-metascience) has demonstrated that the replication crisis is a science-wide phenomenon, not just limited to psychology and the social sciences. Across many fields, 40% or more of results are not replicating. 
 
-Fraud is a large contributor to the replication crisis. James Heathers [estimates](https://metaror.org/kotahi/articles/18/index.html) that about 14% of peer-reviewed papers are contaminated with some form of deliberate fabrication. While his methodology leaves much to be desired, we are convinced by his work that perhaps 10% of papers have deliberate fabrication. Whether the true number is 5% or 25%, the problem of fraud in science must be grappled with by policymakers. Science's ongoing fraud problem reduces trust in science and slows scientific progress.
+Now, the Metascience Observatory is embarking on an ambitious research program to discovery major issues in the scientific literature -- issues that greatly call into question the provenance and reliability of data and results. James Heathers [estimates](https://metaror.org/kotahi/articles/18/index.html) that about 14% of peer-reviewed papers have major issues. Whether the true number is 5% or 25%, it is high enough that some "cleanup" is needed. 
+
+The presence of major issues in the literature ultimately reduce trust in science and can slow scientific progress.
 
 Research in [forensic metascience](https://jamesheathers.curve.space/) using tools like statcheck and the GRIM test shows that simple mistakes in data processing are common, with over half of papers in psychology having errors in the [calculation of p-values](https://pmc.ncbi.nlm.nih.gov/articles/PMC7540394/) or [averages](https://journals.sagepub.com/doi/10.1177/1948550616673876). Most errors are harmless, but some change key results, contaminating meta-analyses and causing many downstream problems.
 
-The Metascience Observatory has developed the Forensic Metascience AI Toolkit to address these problems. The toolkit stress-tests methods, calculations, images, and data. Central to the system is the tools agent, which is equipped with dozens of tools for "sanity checking" the statistics and data presented in scientific papers. Many of the tools are directly cribbed from the techniques described in detail in James Heathers' book [*An Introduction to Forensic Metascience*](https://doi.org/10.5281/zenodo.14871843).
+The Metascience Observatory has developed a number of tools for stress-testing calculations, images, and data. These are collected into our "forensic metascience AI toolkit", some of which we have made public. Some of these tools do not require AI, although AI can be used to review findings. 
 
-The toolkit can be used to stress-test existing papers or audit new papers before they are published. Using AI to check papers is not a new idea, and many startups are already selling "AI for peer review" services. However, auditing the text and images of a single paper using commercial services currently costs \$50 or more. When used with subscription services like Claude Code on the backend, this toolkit's full pipeline costs only \$0.50 - \$1.00 per paper.
+A key innovation is the introduction of forensic metascience tools to AI, something we pioneered starting in 2025. Our "tools agent" code equips an AI system (like Claude Code) with dozens of tools for "sanity checking" the statistics and data presented in scientific papers. Many of those tools are directly cribbed from the techniques described in detail in James Heathers' book [*An Introduction to Forensic Metascience*](https://doi.org/10.5281/zenodo.14871843).
+
+The codebase is modular, and allows for different workflows to be run. These workflows can bebe used to stress-test existing papers or for perforing "AI peer review" on new papers before they are published. Using AI to check papers is not a new idea, and many startups are already selling "AI for peer review" services. However, auditing the text and images of a single paper using commercial services currently costs \$50 or more. When used with subscription services like Claude Code on the backend, this toolkit's full pipeline costs only \$0.50 - \$1.00 per paper. We are also in the process of validating our tools agent to quantify how well it applies tools, something that commercial services have not yet done. 
 
 
 <!-- INTRO_END -->
 
 ## The data integrity problem
 
-<!-- FRAUD_STATS -->
+<!-- MAJOR_ISSUE_STATS -->
 
 ## The rigor problem
 
@@ -30,17 +34,17 @@ The toolkit can be used to stress-test existing papers or audit new papers befor
 
 
 ## The oversight problem
-The number of scientific papers being published each year is growing exponentially with a doubling time of [approximately 10 years](https://www.crossref.org/blog/2026-public-data-file-now-available/#:~:text=12.7%20million%20new%20records%20(a%207.6%25%20increase%20since%20last%20year).). Meanwhile, the number of fake papermill papers being published has been estimated to be doubling [every 1.5 years](https://www.pnas.org/doi/10.1073/pnas.2420092122). AI tools make it easier than ever for fraudsters to commit research fraud. 
+The number of scientific papers being published each year is growing exponentially with a doubling time of [approximately 10 years](https://www.crossref.org/blog/2026-public-data-file-now-available/#:~:text=12.7%20million%20new%20records%20(a%207.6%25%20increase%20since%20last%20year).). Meanwhile, the number of fake papermill papers being published has been estimated to be doubling [every 1.5 years](https://www.pnas.org/doi/10.1073/pnas.2420092122). AI tools make it easier to generate slop papers and fabricate images and data. 
 
-Meanwhile, our ability to detect fraud has been constant or decreasing. A handful of largely unpaid image sleuths appear to be responsible for most detections of image fraud thus far.  
+Meanwhile, our ability to detect serious issues in the scientific literature has been constant or decreasing. So far, a handful of largely unpaid image sleuths appear to be responsible for most detections of image issues. 
 
-The Office of Research Integrity's output has collapsed — 2025 produced the fewest misconduct findings in its 32 years of record — and [NSF's Office of Inspector General stopped investigating research misconduct in early 2025](https://www.science.org/content/article/exclusive-nsf-watchdog-unit-no-longer-investigating-research-misconduct), referring all allegations back to the grantee institutions. [Prior to 2025, the OIG only made about 10–20 misconduct findings per year, 80% of which were for plagiarism](https://www.science.org/content/article/data-check-nsf-sends-congress-garbled-message-misconduct-numbers).
+The US's government's ability to respond to research misconduct has collapsed. In 2025 HHS's Office of Research Integrity's produced the fewest misconduct findings in its 32 years of record. That same year, [NSF's Office of Inspector General stopped investigating research misconduct](https://www.science.org/content/article/exclusive-nsf-watchdog-unit-no-longer-investigating-research-misconduct), referring all allegations back to grantee institutions. (Prior to 2025, the OIG had made about [10–20 misconduct findings per year](https://www.science.org/content/article/data-check-nsf-sends-congress-garbled-message-misconduct-numbers), 80% of which were for plagiarism. 
 
 <!-- ORI_CHART -->
 
 <!-- NSF_OIG_CHART -->
 
-Peer review is useful, but the peer review system is under increasing strain. Studies indicate that peer reviewers do a very incomplete job when it comes to catching serious errors. Across [four](https://doi.org/10.1001/jama.280.3.237) [independent](https://www.bmj.com/content/bmj/328/7441/673.full.pdf) [studies](https://journals.sagepub.com/doi/full/10.1258/jrsm.2008.080062) [in biomedicine](https://www.sciencedirect.com/science/article/abs/pii/S019606449870006X) where researchers deliberately inserted errors into manuscripts, peer reviewers only caught 25–35% of them.
+Peer review is useful for catching major issues, but the peer review system is under increasing strain. Studies indicate that peer reviewers do a very incomplete job. Across [four](https://doi.org/10.1001/jama.280.3.237) [independent](https://www.bmj.com/content/bmj/328/7441/673.full.pdf) [studies](https://journals.sagepub.com/doi/full/10.1258/jrsm.2008.080062) [in biomedicine](https://www.sciencedirect.com/science/article/abs/pii/S019606449870006X) where researchers deliberately inserted errors into manuscripts, peer reviewers only caught 25–35% of them.
 
 
 <span id="where-this-agent-fits-in-the-ai-for-research-integrity-landscape"></span>

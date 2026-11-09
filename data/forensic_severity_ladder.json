@@ -138,7 +138,7 @@
     {
       "boundaries": [
         "Down to 7 if: the result is merely implausible, with no affirmative evidence of intent.",
-        "Up to 9 if: the fraud spans multiple papers, or caused direct harm to patients, policy or the public."
+        "Up to 9 if: major issues span multiple papers, or caused direct harm to patients, policy or the public."
       ],
       "colors": {
         "dark": "#f472b6",
@@ -160,11 +160,11 @@
         "light": "#581c87"
       },
       "correction_outcome": "retraction, sanctions",
-      "finding_rubric": "Willful, systematic fraud broad in scope or with direct consequences for public welfare or policy: fabricated datasets or images across figures or papers, a manipulated clinical trial, deception that misled a field. Confirmed, the journal would retract with condemnation and institutions would pursue sanctions. This rung is never machine-assigned: it is a human's call, recorded through review, not through this pipeline.",
+      "finding_rubric": "Evidence that points towards willful, systematic fraud that is broad in scope or with direct consequences for public welfare or policy: fabricated datasets or images across figures or papers, a manipulated clinical trial, deception that misled a field. Confirmed, the journal would retract with condemnation and institutions would pursue sanctions. This rung is never machine-assigned: it is a human's call, recorded through review, not through this pipeline.",
       "label": "Malicious or extreme misconduct",
       "n": 9,
       "slug": "extreme_misconduct",
-      "web_summary": "Systematic fraud, or fraud that harmed the public."
+      "web_summary": "Evidence that points towards intention to ystematic fraud, or major issues that harmed the public."
     }
   ],
   "outcome_from_five": {
