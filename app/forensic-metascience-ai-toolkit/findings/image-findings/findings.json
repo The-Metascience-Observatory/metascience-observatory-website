@@ -849,5 +849,120 @@
       "height": 461,
       "alt": "Annotated Figure 2 with the matching regions outlined."
     }
+  },
+  {
+    "id": "ano-2019",
+    "doi": "10.18632/aging.101909",
+    "citation": {
+      "authors": "Yasuhisa Ano; Yuka Yoshino; Toshiko Kutsukake; Rena Ohya; Takafumi Fukuda; Kazuyuki Uchida; Akihiko Takashima; Hiroyuki Nakayama",
+      "title": "Tryptophan-related dipeptides in fermented dairy products suppress microglial activation and prevent cognitive decline",
+      "journal": "Aging",
+      "volume": "11",
+      "issue": "10",
+      "pages": "2949-2967",
+      "year": 2019,
+      "url": "https://doi.org/10.18632/aging.101909"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/AA159B27E4180C85C347B3EFA13D6F",
+    "submitted": "2026-11-07",
+    "summary": "Duplicated image (after 180 degree rotation) across two different dosage groups",
+    "image": {
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/ano-2019.png",
+      "width": 759,
+      "height": 611,
+      "alt": "Annotated Figure 2 with the matching regions outlined."
+    }
+  },
+  {
+    "id": "goethem-2021",
+    "doi": "10.1016/j.memsci.2021.119710",
+    "citation": {
+      "authors": "Cédric Van Goethem; Daan Op de Beeck; Ayesha Ilyas; Marloes Thijs; Guy Koeckelberghs; Peter E.M. Aerts; Ivo F.J. Vankelecom",
+      "title": "Ultra-thin and highly porous PVDF-filters prepared via phase inversion for potential medical (COVID-19) and industrial use",
+      "journal": "Journal of Membrane Science",
+      "volume": "639",
+      "issue": null,
+      "pages": "119710",
+      "year": 2021,
+      "url": "https://doi.org/10.1016/j.memsci.2021.119710"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/20CDC2E5D17DE98D122AC9B3E911E7",
+    "submitted": "2026-11-08",
+    "summary": "same image used for 4% and 12%",
+    "image": {
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/goethem-2021.png",
+      "width": 1708,
+      "height": 1465,
+      "alt": "Annotated Figure 2 and Figure 4 with the matching regions outlined."
+    }
+  },
+  {
+    "id": "chiang-2023",
+    "doi": "10.1016/j.biopha.2023.114752",
+    "citation": {
+      "authors": "Chien-Yi Chiang; Yu-Jung Lin; Wen-Tsan Weng; Heng-Dao Lin; Cheng-You Lu; Wan-Jing Chen; Cheng Yen Shih; Pi-Yu Lin; Shinn-Zong Lin; Tsung-Jung Ho; Marthandam Asokan Shibu; Chih-Yang Huang",
+      "title": "Recuperative herbal formula Jing Si maintains vasculature permeability balance, regulates inflammation and assuages concomitants of “Long-Covid”",
+      "journal": "Biomedicine &amp; Pharmacotherapy",
+      "volume": "163",
+      "issue": null,
+      "pages": "114752",
+      "year": 2023,
+      "url": "https://doi.org/10.1016/j.biopha.2023.114752"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/A4265F3E6B29F00D7FAE97EB32BC4C",
+    "submitted": "2026-11-08",
+    "summary": "Two images labeled as samples from different organs have a large exactly overlapping region. (The trachea is the windpipe. The term \"alveolar interstitium\" usually refers to tissue between air sacs in the lung.) Could the authors clarify if these are meant to be from different organs?",
+    "image": {
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/chiang-2023.png",
+      "width": 1036,
+      "height": 551,
+      "alt": "Annotated Figure 4 with the matching regions outlined."
+    }
+  },
+  {
+    "id": "shin-2025",
+    "doi": "10.1016/j.jconrel.2025.113736",
+    "citation": {
+      "authors": "Ha Eun Shin; Stefanos Giannakopoulos; Joo Dong Park; Hye Jung Jang; Chun Gwon Park; Sean V. Murphy; Juwon Park; Saguna Verma; Wooram Park",
+      "title": "Lipid nanoparticles target neutrophils to reduce SARS-CoV-2-induced lung injury and inflammation",
+      "journal": "Journal of Controlled Release",
+      "volume": "382",
+      "issue": null,
+      "pages": "113736",
+      "year": 2025,
+      "url": "https://doi.org/10.1016/j.jconrel.2025.113736"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/AF55A15AD94716D45401E9F4C383CA",
+    "submitted": "2026-11-08",
+    "summary": "Image overlap in what are labeled as separate tissue types.",
+    "image": {
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/shin-2025.png",
+      "width": 370,
+      "height": 426,
+      "alt": "Annotated Figure 4 with the matching regions outlined."
+    }
+  },
+  {
+    "id": "sriramula-2023",
+    "doi": "10.3390/cells12162107",
+    "citation": {
+      "authors": "Srinivas Sriramula; Drew Theobald; Rohan Umesh Parekh; Shaw M. Akula; Dorcas P. O’Rourke; Jeffrey B. Eells",
+      "title": "Emerging Role of Kinin B1 Receptor in Persistent Neuroinflammation and Neuropsychiatric Symptoms in Mice Following Recovery from SARS-CoV-2 Infection",
+      "journal": "Cells",
+      "volume": "12",
+      "issue": "16",
+      "pages": "2107",
+      "year": 2023,
+      "url": "https://doi.org/10.3390/cells12162107"
+    },
+    "pubpeerUrl": "https://pubpeer.com/publications/0C70DD109A7CCB6E058FBD7597F4CB",
+    "submitted": "2026-11-08",
+    "summary": "Same tissues appears under \"Mock\" and \"SARS-CoV-2\"",
+    "image": {
+      "src": "/assets/forensic-metascience-ai-toolkit/image-findings/sriramula-2023.png",
+      "width": 3088,
+      "height": 1535,
+      "alt": "Annotated Figure 2 and Figure 5 with the matching regions outlined."
+    }
   }
 ]
