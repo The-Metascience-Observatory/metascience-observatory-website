@@ -74,7 +74,7 @@ DEFAULT_DB_PATH = (
 # Directory of per-year SCImago SJR CSVs named "scimagojr <year>.csv" (semicolon-
 # delimited, decimal comma). Downloaded manually from scimagojr.com (Cloudflare
 # blocks scripted download). SJR is non-commercial + attribution-required.
-DEFAULT_SJR_DIR = "/home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/sjrdata/csv_all_years"
+DEFAULT_SJR_DIR = "/home/dan/Dropbox/AAA_METASCIENCE_OBSERVATORY/SCImago_journal_rank_data/csv_all_years"
 SJR_MIN_YEAR = 1999  # earliest SJR CSV; papers older than this use the 1999 ranking
 
 # Metric tuple order stored in the JSON, per journal-year and in `recent`:
