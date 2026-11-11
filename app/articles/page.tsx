@@ -49,8 +49,8 @@ const projectOverviews: ArticleMeta[] = [
   {
     href: "/overview-explorer",
     title: "Metascience Observatory Explorer",
-    image: "/assets/woodcut_square_crops/microscope_square.png",
-    alt: "Engraving of a labeled compound microscope",
+    image: "/assets/woodcut_square_crops/1556_agricola_digging.png",
+    alt: "Woodcut of two miners sorting ore into a pan, from Agricola's De re metallica (1556)",
   },
 ];
 
@@ -58,9 +58,9 @@ const articles: ArticleMeta[] = [
   {
     href: "https://moreisdifferent.blog/p/what-weve-learned-so-far-at-the-metascience",
     title: "What we've learned\nso far (Aug 2026)",
-    image: "/assets/woodcut_square_crops/1556_agricola_digging.png",
+    image: "/assets/woodcut_square_crops/microscope_square.png",
     alt:
-      "Woodcut of two miners sorting ore into a pan, from Agricola's De re metallica (1556)",
+      "Engraving of a labeled compound microscope",
   },
   {
     href: "/replication-initiatives",
@@ -73,12 +73,6 @@ const articles: ArticleMeta[] = [
     title: "Re-analysis\ninitiatives",
     image: "/assets/woodcut_square_crops/ancient_table_watch_1525.png",
     alt: "Engraving of an ornate 1525 table watch",
-  },
-  {
-    href: "/docs/other-initiatives",
-    title: "Other replication database initiatives",
-    image: "/assets/woodcut_square_crops/polar_clock_square.png",
-    alt: "Woodcut of a telescope on a stand",
   },
   {
     href: "/docs/defining-replication",
@@ -145,6 +139,10 @@ const documentation: DocMeta[] = [
   {
     href: "/docs/data-dictionary",
     title: "Replications database data dictionary",
+  },
+  {
+    href: "/docs/other-initiatives",
+    title: "Other replication database initiatives",
   },
   {
     href: "/docs/effect-size-normalization",
@@ -265,7 +263,7 @@ export default function ArticlesPage() {
             ))}
           </div>
 
-          <h2 className="text-2xl font-bold mt-16 mb-6 text-foreground">Articles and Pages</h2>
+          <h2 className="text-2xl font-bold mt-16 mb-6 text-foreground">Major Articles/Pages</h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {articles.map((article) => (
               <Link
