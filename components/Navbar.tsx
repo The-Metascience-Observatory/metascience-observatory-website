@@ -97,7 +97,7 @@ export const Navbar = () => {
               </Button>
               <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
                 <Link href="/birds-eye-reviews" onClick={() => setIsMobileMenuOpen(false)}>
-                  Reviews
+                  Bird&rsquo;s Eye Reviews
                 </Link>
               </Button>
               <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
