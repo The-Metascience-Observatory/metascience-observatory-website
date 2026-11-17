@@ -160,7 +160,7 @@ export function DiagramBlueprint() {
 
       <Legend>
         Every pass named, in execution order. The clamps appear twice on purpose: applied to the
-        provisional severity before adjudication, and re-applied to the final 1–9 afterwards, so
+        provisional severity before adjudication, and re-applied to the final 1–7 afterwards, so
         a clamp can never come out weaker than it went in.
       </Legend>
     </div>

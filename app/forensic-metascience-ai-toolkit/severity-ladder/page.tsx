@@ -7,8 +7,8 @@ import { DocsBackLink } from "@/components/DocsBackLink";
 export const metadata = {
   title: "The Severity Ladder | The Metascience Observatory",
   description:
-    "The 1–9 scale the Forensic Metascience AI toolkit assigns to every finding, defined by what a " +
-    "journal would do about it: from a cosmetic slip to extreme misconduct.",
+    "The 1–7 scale the Forensic Metascience AI toolkit assigns to every finding, defined by what a " +
+    "journal would do about it: from a cosmetic slip to a fatal error.",
 };
 
 interface Level {
@@ -96,8 +96,8 @@ export default function SeverityLadderPage() {
             The severity ladder
           </h1>
 
-          <p className="mb-4 leading-relaxed text-foreground">
-            Our "Forensic Metascience AI toolkit" tags every finding with a severity score between 1 to 9. This ranking system was developed from the 1-11 severity ranking system developed at the{" "}
+          <p className="mb-8 leading-relaxed text-foreground">
+            Our "Forensic Metascience AI toolkit" tags every finding with a severity score between 1 and 7. This ranking system was developed from the 1-11 severity ranking system developed at the{" "}
             <a
               href="https://the-black-spatula-project.github.io/"
               target="_blank"
@@ -109,16 +109,8 @@ export default function SeverityLadderPage() {
             .
           </p>
 
-          <p className="mb-8 leading-relaxed text-foreground">
-            Two consequences follow. A finding can be certain and still sit low: a typo is a typo
-            however sure you are of it. And a finding can be alarming and still be capped, because
-            what an individual check is able to <em>establish</em> is bounded by the kind of
-            evidence it produces — ceilings that are enforced in code rather than requested in a
-            prompt.
-          </p>
-
           <h2 className="mb-6 mt-10 border-b border-border pb-2 text-2xl font-semibold text-foreground">
-            The nine rungs
+            The seven rungs
           </h2>
 
           <div className="space-y-4">
