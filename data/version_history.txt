@@ -1,4 +1,6 @@
-
+# The master is always data/replications_database.csv. Each line below is the dated label of one
+# version, oldest first; the LAST line is the current master. Every version is kept under its
+# dated name in data/backup/ (not in git). Written by data_ingestor/master_db.py.
 replications_database_2025_11_04_190602.csv
 replications_database_2025_11_04_191503.csv
 replications_database_2025_11_04_2.csv

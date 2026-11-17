@@ -538,7 +538,7 @@ def main() -> int:
         print("WARNING: --skip-db: resolving every DOI via the OpenAlex API only.")
 
     csv_name = latest_csv_filename(repo_root)
-    csv_path = repo_root / "data" / csv_name
+    csv_path = repo_root / "data" / "replications_database.csv"  # csv_name is its dated version label
     out_path = repo_root / "data" / "author_overlap.json"
     report_path = repo_root / "scripts" / "author_overlap_match_report.txt"
     checkpoint_path = repo_root / "scripts" / ".author_overlap_checkpoint.jsonl"

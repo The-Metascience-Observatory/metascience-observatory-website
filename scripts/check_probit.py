@@ -81,7 +81,7 @@ def build_sample(metric: str):
         papers = json.load(fh)["papers"]
 
     csv_name = latest_csv_name()
-    df = pd.read_csv(os.path.join(DATA, csv_name), dtype=str, keep_default_na=False)
+    df = pd.read_csv(os.path.join(DATA, "replications_database.csv"), dtype=str, keep_default_na=False)
     print(f"CSV: {csv_name}  ({len(df):,} rows)")
 
     xs, ys, groups = [], [], []

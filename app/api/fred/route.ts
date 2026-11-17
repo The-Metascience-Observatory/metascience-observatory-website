@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import path from "node:path";
 import fs from "node:fs/promises";
 import { csvFormat, csvParse } from "d3-dsv";
+import { REPLICATIONS_CSV } from "@/lib/replicationsDatabase";
 
 export const runtime = "nodejs";
 
@@ -61,6 +62,7 @@ async function loadCsv(filePath: string) {
   return { rows: filtered, columns, sourceRows: rows, csvText };
 }
 
+/** The dated version label of the database (not a file in data/). */
 async function getLatestFilename(): Promise<string> {
   const versionHistoryPath = path.join(process.cwd(), "data", "version_history.txt");
   const versionHistoryText = await fs.readFile(versionHistoryPath, "utf8");
@@ -85,7 +87,7 @@ function extractDateFromFilename(filename: string): string | null {
 async function getData() {
   if (!cachedData) {
     const filename = await getLatestFilename();
-    const dataPath = path.join(process.cwd(), "data", filename);
+    const dataPath = path.join(process.cwd(), "data", REPLICATIONS_CSV);
     const csvData = await loadCsv(dataPath);
     const lastUpdated = extractDateFromFilename(filename);
     cachedData = { ...csvData, filename, lastUpdated: lastUpdated || undefined };

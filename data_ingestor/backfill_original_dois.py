@@ -39,6 +39,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from fetch_metadata_from_title import fetch_metadata_from_title  # noqa: E402
 from validation_rules import _norm_doi  # noqa: E402
+import master_db  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(REPO_ROOT, "data")
@@ -61,15 +62,10 @@ JUNK_TITLE = re.compile(
 
 
 def master_csv_path():
-    """Resolve the master CSV from the last non-comment line of version_history.txt."""
-    with open(VERSION_HISTORY, encoding="utf-8") as fh:
-        lines = [ln.strip() for ln in fh if ln.strip() and not ln.lstrip().startswith("#")]
-    if not lines:
-        raise SystemExit("version_history.txt has no usable entry")
-    fname = lines[-1].split("#", 1)[0].strip()
-    path = os.path.join(DATA_DIR, fname)
-    if not os.path.exists(path):
-        raise SystemExit(f"master CSV named by version_history.txt is missing: {fname}")
+    """The master CSV, data/replications_database.csv."""
+    path = master_db.master_path()
+    if not path:
+        raise SystemExit(f"master CSV is missing: data/{master_db.MASTER_NAME}")
     return path
 
 
@@ -382,16 +378,16 @@ def main():
         print("nothing accepted; master untouched")
         return
 
-    stamp = time.strftime("%Y_%m_%d_%H%M%S")
-    out_name = f"replications_database_{stamp}.csv"
-    out_path = os.path.join(DATA_DIR, out_name)
-    with open(out_path, "w", encoding="utf-8", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=fieldnames)
-        w.writeheader()
-        w.writerows(rows)
-    print(f"\nwrote {out_name} ({len(changed)} original_url values updated)")
-    print("NEXT: archive the superseded master to data/backup/ and append a "
-          "version_history.txt line describing these changes.")
+    def write(path):
+        with open(path, "w", encoding="utf-8", newline="") as fh:
+            w = csv.DictWriter(fh, fieldnames=fieldnames)
+            w.writeheader()
+            w.writerows(rows)
+
+    label = master_db.write_master(write, f"backfilled {len(changed)} original_url values")
+    print(f"\nwrote data/{master_db.MASTER_NAME} as version {label} "
+          f"({len(changed)} original_url values updated; also in data/backup/)")
+    print("NEXT: expand the new version_history.txt line to describe these changes.")
 
 
 if __name__ == "__main__":

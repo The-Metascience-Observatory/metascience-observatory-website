@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { outcomeCodesForRow } from "@/lib/replicationOutcome";
 import { RankDashboard } from "./RankDashboard";
 import type { RankMeta, JournalRank, PaperRow } from "./types";
+import { REPLICATIONS_CSV } from "@/lib/replicationsDatabase";
 
 export const metadata = {
   title: "Replication Rate by Journal Rank | The Metascience Observatory",
@@ -77,7 +78,7 @@ export default function ByJournalRankPage() {
 
   // ---- Load and classify the replications CSV --------------------------
   const csvName = latestCsvFilename();
-  const csvPath = path.join(process.cwd(), "data", csvName);
+  const csvPath = path.join(process.cwd(), "data", REPLICATIONS_CSV);
   const rows = csvParse(fs.readFileSync(csvPath, "utf8")) as unknown as AnyRecord[];
 
   const paperIndex = new Map<string, number>();

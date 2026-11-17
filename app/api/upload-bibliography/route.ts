@@ -3,6 +3,7 @@ import path from "node:path";
 import fs from "node:fs/promises";
 import { csvParse } from "d3-dsv";
 import { clientKey, createRateLimiter, readLimitedBody, RequestError } from "@/lib/request-guards";
+import { REPLICATIONS_CSV } from "@/lib/replicationsDatabase";
 
 const rateLimit = createRateLimiter();
 const MAX_FILE_BYTES = 2 * 1024 * 1024;
@@ -80,17 +81,8 @@ function extractDoiFromUrl(url: string): string | null {
   return null;
 }
 
-async function getLatestFilename(): Promise<string> {
-  const versionHistoryPath = path.join(process.cwd(), "data", "version_history.txt");
-  const versionHistoryText = await fs.readFile(versionHistoryPath, "utf8");
-  const lines = versionHistoryText.split("\n").map(line => line.split("#")[0].trim()).filter(Boolean);
-  const lastLine = lines[lines.length - 1];
-  return lastLine.trim();
-}
-
 async function loadDatabase(): Promise<AnyRecord[]> {
-  const filename = await getLatestFilename();
-  const dataPath = path.join(process.cwd(), "data", filename);
+  const dataPath = path.join(process.cwd(), "data", REPLICATIONS_CSV);
   const csvText = await fs.readFile(dataPath, "utf8");
   const rows = csvParse(csvText);
   return rows as AnyRecord[];

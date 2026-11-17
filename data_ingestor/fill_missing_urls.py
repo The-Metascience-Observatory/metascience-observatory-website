@@ -11,6 +11,8 @@ import glob
 from pathlib import Path
 from datetime import datetime
 
+import master_db
+
 from fetch_metadata_from_title import fetch_metadata_from_title
 
 DATA_DIR = Path(__file__).parent.parent / "data"
@@ -18,12 +20,11 @@ VERSION_HISTORY = DATA_DIR / "version_history.txt"
 
 
 def _find_latest_csv():
-    """Find the most recent replications_database_*.csv in the data directory."""
-    pattern = str(DATA_DIR / "replications_database_*.csv")
-    files = sorted(glob.glob(pattern))
-    if not files:
-        raise FileNotFoundError(f"No replications_database_*.csv found in {DATA_DIR}")
-    return files[-1]
+    """The master database, data/replications_database.csv."""
+    path = master_db.master_path()
+    if not path:
+        raise FileNotFoundError(f"No {master_db.MASTER_NAME} found in {DATA_DIR}")
+    return path
 
 
 def _is_empty(val):
@@ -136,19 +137,14 @@ def fill_missing_urls(input_csv, output_csv=None):
         return df
 
     # Save output
-    if output_csv is None:
-        timestamp = datetime.now().strftime("%Y_%m_%d_%H%M%S")
-        output_csv = str(DATA_DIR / f"replications_database_{timestamp}.csv")
-
-    df.to_csv(output_csv, index=False)
-    print(f"\nSaved to: {output_csv}")
-
-    # Update version history
-    output_name = Path(output_csv).name
     comment = f"# filled {total_updated} missing URLs ({updated_original} original_url, {updated_replication} replication_url)"
-    with open(VERSION_HISTORY, "a") as f:
-        f.write(f"{output_name} {comment}\n")
-    print(f"Updated {VERSION_HISTORY}")
+    if output_csv is None:
+        # Publish as the new master: dated copy in data/backup/, version_history line added
+        label = master_db.write_master(lambda path: df.to_csv(path, index=False), comment)
+        print(f"\nSaved to: {master_db.MASTER_PATH} (version {label})")
+    else:
+        df.to_csv(output_csv, index=False)
+        print(f"\nSaved to: {output_csv} (not published as the master)")
 
     return df
 

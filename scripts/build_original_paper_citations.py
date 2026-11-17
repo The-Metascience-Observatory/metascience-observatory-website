@@ -217,7 +217,7 @@ def main() -> int:
 
     repo_root: Path = args.repo_root
     csv_name = latest_csv_filename(repo_root)
-    csv_path = repo_root / "data" / csv_name
+    csv_path = repo_root / "data" / "replications_database.csv"  # csv_name is its dated version label
     out_path = repo_root / "data" / "original_paper_citations.json"
     report_path = repo_root / "scripts" / "citation_match_report.txt"
     checkpoint_path = repo_root / "scripts" / ".citation_checkpoint.jsonl"

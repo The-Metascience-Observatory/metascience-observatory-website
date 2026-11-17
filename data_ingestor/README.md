@@ -32,7 +32,7 @@ Input CSV
   → [3] Citation Generation (APA-style HTML citations with DOI links)
   → [4] Column Filtering (validate against data_dictionary.csv)
   → [5] Duplicate Detection (skip entries already in the database)
-  → [6] Save & Version (timestamped CSV export + version_history.txt update)
+  → [6] Save & Version (replaces data/replications_database.csv, dated copy in data/backup/, version_history.txt line)
 ```
 
 ## Usage
@@ -82,7 +82,7 @@ New rows are checked against the master database using a composite key of `origi
 
 ## Output
 
-Each run produces a timestamped CSV file (`replications_database_YYYY_MM_DD_HHMMSS.csv`) in the `../data/` directory and updates `version_history.txt`.
+Each run replaces `../data/replications_database.csv`, saves a dated copy (`replications_database_YYYY_MM_DD_HHMMSS.csv`) in `../data/backup/` and adds that dated label to `version_history.txt`. `master_db.py` holds this logic.
 
 ## Validation Gate (STEP 4v)
 
@@ -95,7 +95,7 @@ contain their own estimate. Rules and severities live in
 `validation_rules.py`, which can also audit any export standalone:
 
 ```bash
-python validation_rules.py ../data/replications_database_<version>.csv [--out violations.csv]
+python validation_rules.py ../data/replications_database.csv [--out violations.csv]
 ```
 
 Rows failing a **reject**-severity rule are not ingested. With the GUI

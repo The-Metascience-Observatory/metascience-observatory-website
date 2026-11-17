@@ -28,6 +28,8 @@ import time
 from datetime import datetime
 from pathlib import Path
 
+import master_db
+
 import requests
 
 # ── reuse helpers from the main fetch module ──────────────────────────────────
@@ -240,21 +242,7 @@ def save_cache(cache: dict):
 # ── Latest master database ────────────────────────────────────────────────────
 
 def get_latest_csv() -> str | None:
-    if os.path.exists(VERSION_HISTORY_PATH):
-        with open(VERSION_HISTORY_PATH) as f:
-            lines = f.readlines()
-        for line in reversed(lines):
-            line = line.strip()
-            if line and not line.startswith('#'):
-                filename = line.split('#')[0].strip()
-                if filename.startswith('../data/'):
-                    filename = filename.replace('../data/', '')
-                full = os.path.join(DATA_DIR, filename)
-                if os.path.exists(full):
-                    return full
-    import glob as _glob
-    candidates = sorted(_glob.glob(os.path.join(DATA_DIR, 'replications_database_*.csv')))
-    return candidates[-1] if candidates else None
+    return master_db.master_path()
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
@@ -360,27 +348,14 @@ def main():
         print("Nothing to write.")
         return
 
-    # Back up original
-    os.makedirs(BACKUP_DIR, exist_ok=True)
-    import shutil
-    backup_dest = os.path.join(BACKUP_DIR, os.path.basename(csv_path))
-    if not os.path.exists(backup_dest):
-        shutil.copy2(csv_path, backup_dest)
-        print(f"Backed up → data/backup/{os.path.basename(csv_path)}")
+    def write(path):
+        with open(path, 'w', newline='', encoding='utf-8') as f:
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(rows)
 
-    # Write new timestamped file
-    ts = datetime.now().strftime('%Y_%m_%d_%H%M%S')
-    new_filename = f"replications_database_{ts}.csv"
-    new_path = os.path.join(DATA_DIR, new_filename)
-    with open(new_path, 'w', newline='', encoding='utf-8') as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(rows)
-    print(f"Saved    → data/{new_filename}")
-
-    # Append to version_history.txt
-    with open(VERSION_HISTORY_PATH, 'a') as f:
-        f.write(f"\n{new_filename}  # author name remediation ({len(changes)} rows updated)\n")
+    label = master_db.write_master(write, f"author name remediation ({len(changes)} rows updated)")
+    print(f"Saved    → data/{master_db.MASTER_NAME} (version {label}, also in data/backup/)")
     print(f"Updated  → version_history.txt")
 
 

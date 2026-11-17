@@ -382,7 +382,7 @@ def mode_backfill(model, batch_size, limit):
 
     filename = get_latest_master_database()
     if not filename:
-        sys.exit("Could not locate latest master database via version_history.txt")
+        sys.exit("Could not find the master database, data/replications_database.csv")
     path = os.path.join(DATA_DIR, filename)
     df = pd.read_csv(path, dtype=str).fillna("")
     print(f"Backfill: loaded {filename} ({len(df)} rows)")
@@ -407,16 +407,10 @@ def mode_backfill(model, batch_size, limit):
     if tagged == 0:
         print("Nothing tagged; not writing a new database version.")
         return
-    timestamp = datetime.now().strftime("%Y_%m_%d_%H%M%S")
-    output_filename = f"replications_database_{timestamp}.csv"
-    output_path = os.path.join(DATA_DIR, output_filename)
-    df.to_csv(output_path, index=False)
-    with open(VERSION_HISTORY_PATH, "r") as f:
-        content = f.read()
-    with open(VERSION_HISTORY_PATH, "w") as f:
-        f.write(content.rstrip() + "\n" + output_filename
-                + " # subdiscipline backfill (tag_disciplines.py)\n")
-    print(f"✓ Saved {output_path} and updated version_history.txt")
+    import master_db
+    label = master_db.write_master(lambda out: df.to_csv(out, index=False),
+                                   "subdiscipline backfill (tag_disciplines.py)")
+    print(f"✓ Saved {master_db.MASTER_PATH} as version {label} and updated version_history.txt")
 
 
 def main():

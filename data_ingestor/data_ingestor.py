@@ -45,6 +45,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(SCRIPT_DIR, '..', 'data')
 BACKUP_DIR = os.path.join(DATA_DIR, 'backup')
 VERSION_HISTORY_PATH = os.path.join(DATA_DIR, 'version_history.txt')
+import master_db  # noqa: E402  (the master file's name, archive and publish steps)
 API_CACHE_PATH = os.path.join(SCRIPT_DIR, 'api_cache.json')
 ONTOLOGY_PATH = os.path.join(DATA_DIR, 'metascience_observatory_topic_ontology.json')
 CHECKPOINT_PATH = os.path.join(SCRIPT_DIR, 'ingestion_checkpoint.csv')
@@ -128,7 +129,10 @@ def save_api_cache(doi_cache, title_cache):
 
 
 def archive_superseded_masters(current_filename):
-    """Keep exactly one replications_database_*.csv in data/.
+    """Move any dated replications_database_*.csv left in data/ into data/backup/.
+
+    Kept for the dated one-off scripts in data_ingestor/scripts/. New code publishes
+    through master_db.publish_master, which never writes a dated file into data/.
 
     Every older version is moved into data/backup/. The earlier backup step
     only *copies* the previous master, so without this the data/ directory
@@ -170,33 +174,12 @@ def archive_superseded_masters(current_filename):
 
 
 def get_latest_master_database():
-    """Get the latest master database filename from version_history.txt.
-    Walks backwards through the file to find the most recent entry that
-    actually exists on disk."""
-    if not os.path.exists(VERSION_HISTORY_PATH):
-        return None
+    """Filename of the master database in data/, or None when there is none yet.
 
-    with open(VERSION_HISTORY_PATH, 'r') as f:
-        lines = f.readlines()
+    The master is always `replications_database.csv` (master_db.MASTER_NAME). Its dated
+    version label is master_db.current_version()."""
+    return master_db.MASTER_NAME if master_db.master_path() else None
 
-    # Walk backwards to find the last entry that exists on disk
-    for line in reversed(lines):
-        line = line.strip()
-        # Skip empty lines and comments
-        if line and not line.startswith('#'):
-            # Extract just the filename (remove any path prefix and comments)
-            filename = line.split('#')[0].strip()
-            # Handle both relative paths and just filenames
-            if filename.startswith('../data/'):
-                filename = filename.replace('../data/', '')
-            # Verify the file actually exists
-            full_path = os.path.join(DATA_DIR, filename)
-            if os.path.exists(full_path):
-                return filename
-            else:
-                logger.warning(f"Version history references missing file: {filename}, skipping")
-
-    return None
 
 def extract_doi_from_url(url):
     """Extract DOI from URL like 'https://doi.org/10.1234/xyz'"""
@@ -1893,15 +1876,11 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
             print("  Aborted.")
             return
 
-    # Back up the current master database before modifying
+    # The current master must be in data/backup/ under its dated label before it is replaced
     if latest_master:
-        os.makedirs(BACKUP_DIR, exist_ok=True)
-        backup_path = os.path.join(BACKUP_DIR, latest_master)
-        if not os.path.exists(backup_path):
-            shutil.copy2(master_csv, backup_path)
-            print(f"  ✓ Backed up {latest_master} → data/backup/")
-        else:
-            print(f"  Backup already exists: data/backup/{latest_master}")
+        archived = master_db.ensure_current_archived()
+        if archived:
+            print(f"  ✓ Current master is archived as data/backup/{archived}")
 
     # Check for checkpoint from a previous interrupted run
     if is_checkpoint_valid(input_csv, len(input_df)):
@@ -2368,29 +2347,13 @@ def ingest_data(input_csv, skip_api_calls=False, discipline=None, initiative_tag
     print(f"STEP 6: SAVING UPDATED DATABASE")
     print(f"{'='*60}")
 
-    timestamp = datetime.now().strftime("%Y_%m_%d_%H%M%S")
-    output_filename = f"replications_database_{timestamp}.csv"
-    output_path = os.path.join(DATA_DIR, output_filename)
-    updated_master_df.to_csv(output_path, index=False)
+    input_basename = os.path.basename(input_csv)
+    output_filename = master_db.write_master(
+        lambda path: updated_master_df.to_csv(path, index=False), f"added {input_basename}")
+    output_path = master_db.MASTER_PATH
     print(f"\n✓ Saved updated database to: {output_path}")
     print(f"  Total rows in database: {len(updated_master_df)}")
-
-    # Update version history
-    print(f"\nUpdating {VERSION_HISTORY_PATH}...")
-    input_basename = os.path.basename(input_csv)
-    if os.path.exists(VERSION_HISTORY_PATH):
-        with open(VERSION_HISTORY_PATH, 'r') as f:
-            content = f.read()
-        with open(VERSION_HISTORY_PATH, 'w') as f:
-            f.write(content.rstrip() + '\n' + output_filename + f' # added {input_basename}' + '\n')
-    else:
-        with open(VERSION_HISTORY_PATH, 'w') as f:
-            f.write(output_filename + f' # added {input_basename}' + '\n')
-    print(f"✓ Added {output_filename} to version_history.txt")
-
-    # data/ holds exactly one master; every older version lives in data/backup/
-    print(f"\nArchiving superseded master databases...")
-    archive_superseded_masters(output_filename)
+    print(f"✓ Version {output_filename}: archived in data/backup/ and added to version_history.txt")
 
     # Clear checkpoint files after successful completion
     clear_checkpoint()

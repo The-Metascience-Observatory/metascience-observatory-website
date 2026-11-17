@@ -90,10 +90,15 @@ MIN_INITIATIVES = 2
 
 
 def resolve_master(repo_root: Path) -> Path:
-    """The master CSV is whatever version_history.txt names last. Nothing globs."""
+    """The master CSV is always data/replications_database.csv."""
+    return repo_root / "data" / "replications_database.csv"
+
+
+def master_version(repo_root: Path) -> str:
+    """Its dated version label: the last non-comment line of version_history.txt."""
     lines = (repo_root / "data" / "version_history.txt").read_text().strip().split("\n")
     lines = [ln for ln in lines if ln.strip() and not ln.strip().startswith("#")]
-    return repo_root / "data" / lines[-1].split("#")[0].strip()
+    return lines[-1].split("#")[0].strip()
 
 
 def load(path: Path) -> list[dict]:
@@ -281,7 +286,7 @@ def build(rows: list[dict]) -> dict:
 def render(res: dict, master: Path) -> str:
     L = [
         "Bias-check figures for content/docs/checking-for-bias.md",
-        f"master: {master.name}  ({res['total_rows']:,} rows)",
+        f"master: {master_version(master.parents[1])}  ({res['total_rows']:,} rows)",
         "rate = success / (success + failure + reversal); inconclusive excluded",
         "",
         "CRUDE SPLIT",

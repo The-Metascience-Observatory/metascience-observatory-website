@@ -63,7 +63,7 @@ lib/
   citations.ts              # Citation HTML generation + normalization
 
 data/
-  replications_database_*.csv   # Active version named by version_history.txt
+  replications_database.csv     # The master. Its dated version label is the last line of version_history.txt
   birds_eye_reviews/
     long_covid/                       # Versioned review release bundle
       trial_extractions.jsonl
@@ -128,9 +128,10 @@ types/                      # Shared TypeScript type definitions
 
 ## Data: Replications Database
 
-- **File:** `data/replications_database_YYYY_MM_DD_HHMMSS.csv` (update the filename when a new version is added)
-- **`data/` holds exactly ONE of these.** Every superseded version is moved to `data/backup/`. `data_ingestor.py` does this automatically via `archive_superseded_masters()`; if you write a new master by hand, archive the old one yourself.
-- Nothing globs for the master — `app/api/fred/route.ts` and the `scripts/build_*.py` helpers all read the **last non-comment line of `data/version_history.txt`**, so that line must always name a file that exists in `data/`.
+- **File:** `data/replications_database.csv`, always this name. Do not add a date to it.
+- **Versions.** Each version has a dated label, `replications_database_YYYY_MM_DD_HHMMSS.csv`. The **last non-comment line of `data/version_history.txt`** is the label of the current master; the site shows it and uses it to tell when the data changed.
+- **Archive.** `data/backup/` (not in git) holds every version under its dated label, the current one included.
+- **Publishing a new version.** Use `data_ingestor/master_db.py` (`write_master` or `publish_master`): it archives the dated copy, replaces the master and appends the `version_history.txt` line. `data_ingestor.py` and the helper scripts do this. Never edit the master in place without a new version.
 - **One row per replicated effect**, not per study or per paper; row counts change with each release
 - Key columns: `original_title`, `original_url` (full DOI resolver URL), `replication_url`, `replication_initiative_tag`, `original_es_r`, `replication_es_r`, `replication_es_95_CI` (string `[low, high]`), `original_es_type`, `replication_es_type`, `discipline`, `result`
 - DOIs stored as full resolver URLs: `https://doi.org/10.xxxx/...`

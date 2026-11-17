@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { outcomeCodesForRow } from "@/lib/replicationOutcome";
 import { ImpactFactorDashboard } from "./ImpactFactorDashboard";
 import type { IFMeta, JournalIF, PaperRow } from "./types";
+import { REPLICATIONS_CSV } from "@/lib/replicationsDatabase";
 
 export const metadata = {
   title: "Replication Rate by Journal Impact Factor | The Metascience Observatory",
@@ -78,7 +79,7 @@ export default function ByImpactFactorPage() {
 
   // ---- Load and classify the replications CSV --------------------------
   const csvName = latestCsvFilename();
-  const csvPath = path.join(process.cwd(), "data", csvName);
+  const csvPath = path.join(process.cwd(), "data", REPLICATIONS_CSV);
   const rows = csvParse(fs.readFileSync(csvPath, "utf8")) as unknown as AnyRecord[];
 
   const paperIndex = new Map<string, number>();

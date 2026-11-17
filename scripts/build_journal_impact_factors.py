@@ -573,7 +573,7 @@ def main() -> None:
     denylist = set(curation.get("denylist", []))
 
     csv_name = latest_csv_filename(repo_root)
-    csv_path = repo_root / "data" / csv_name
+    csv_path = repo_root / "data" / "replications_database.csv"  # csv_name is its dated version label
     print(f"CSV: {csv_name}")
     years_by_journal, result_rows_by_journal, total_rows, total_result_rows = load_csv_corpus(csv_path)
     print(f"  {total_rows} rows, {total_result_rows} with success/failure result, "

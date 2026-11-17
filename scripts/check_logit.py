@@ -82,7 +82,7 @@ def classify_reported(result: str) -> str:
 
 def build_rows() -> pd.DataFrame:
     csv_name = latest_csv_name()
-    df = pd.read_csv(DATA / csv_name, dtype=str, keep_default_na=False)
+    df = pd.read_csv(DATA / "replications_database.csv", dtype=str, keep_default_na=False)
 
     if_index = index_journals(json.loads((DATA / "journal_impact_factors.json").read_text())["journals"])
     rank_index = index_journals(json.loads((DATA / "journal_rank_metrics.json").read_text())["journals"])

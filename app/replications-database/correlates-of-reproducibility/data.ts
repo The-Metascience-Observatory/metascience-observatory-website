@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { csvParse } from "d3-dsv";
 import { classifyReportedResult } from "@/lib/replicationOutcome";
+import { REPLICATIONS_CSV } from "@/lib/replicationsDatabase";
 
 /**
  * Server-only assembly of the correlates dataset: one row per replicated
@@ -156,7 +157,7 @@ export function buildDataset(): { rows: AssembledRow[]; meta: DatasetMeta } {
 
   const csvName = latestCsvFilename();
   const csvRows = csvParse(
-    fs.readFileSync(path.join(dataDir, csvName), "utf8"),
+    fs.readFileSync(path.join(dataDir, REPLICATIONS_CSV), "utf8"),
   ) as unknown as AnyRecord[];
 
   const rows: AssembledRow[] = [];

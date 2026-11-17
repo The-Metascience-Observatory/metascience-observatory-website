@@ -14,8 +14,8 @@ Copyright © 2026 The Metascience Observatory and its contributors.
 **All rights reserved**, except for the replications database, the data
 ingestion code, and separately licensed material described in [LICENSE](LICENSE).
 
-- The replications database (`data/replications_database_<timestamp>.csv`; the
-  current version is named on the last line of `data/version_history.txt`) is
+- The replications database (`data/replications_database.csv`; the dated label
+  of the current version is the last line of `data/version_history.txt`) is
   licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
   Please credit the Metascience Observatory and cite the version filename.
 - Python source files (`*.py`) under `data_ingestor/`, including subdirectories,
@@ -85,9 +85,9 @@ provide optional wrappers that pause syncing.
 - `tests/` — regression tests.
 - `public/` — assets served directly to visitors.
 
-The active replication CSV is selected by the last non-comment entry in
-`data/version_history.txt`. Superseded masters belong in `data/backup/`, which
-is ignored by Git. Long Covid review releases live in
+The replication CSV is always `data/replications_database.csv`. The last
+non-comment entry in `data/version_history.txt` is its dated version label, and
+every version is kept under that label in `data/backup/`, which is ignored by Git. Long Covid review releases live in
 `data/birds_eye_reviews/long_covid/`. Data preparation tools may need credentials
 and separately installed Python dependencies; they are not needed to run the site.
 

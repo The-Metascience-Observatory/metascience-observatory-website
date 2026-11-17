@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { outcomeCodesForRow } from "@/lib/replicationOutcome";
 import { AuthorOverlapDashboard } from "./AuthorOverlapDashboard";
 import type { CoverageStats, EffectRow, OverlapMeta, PairOverlap } from "./types";
+import { REPLICATIONS_CSV } from "@/lib/replicationsDatabase";
 
 export const metadata = {
   title: "Replication Rate by Author Overlap | The Metascience Observatory",
@@ -74,7 +75,7 @@ export default function ByAuthorOverlapPage() {
 
   // ---- Load and classify the replications CSV ---------------------------
   const csvName = latestCsvFilename();
-  const csvPath = path.join(process.cwd(), "data", csvName);
+  const csvPath = path.join(process.cwd(), "data", REPLICATIONS_CSV);
   const rows = csvParse(fs.readFileSync(csvPath, "utf8")) as unknown as AnyRecord[];
 
   const pairIndex = new Map<string, number>();

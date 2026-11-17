@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { outcomeCodesForRow } from "@/lib/replicationOutcome";
 import { CitationCountDashboard } from "./CitationCountDashboard";
 import type { CitationsMeta, CoverageStats, EffectRow, PaperCitations } from "./types";
+import { REPLICATIONS_CSV } from "@/lib/replicationsDatabase";
 
 export const metadata = {
   title: "Replication Rate by Citation Count | The Metascience Observatory",
@@ -56,7 +57,7 @@ export default function ByCitationCountPage() {
 
   // ---- Load and classify the replications CSV --------------------------
   const csvName = latestCsvFilename();
-  const csvPath = path.join(process.cwd(), "data", csvName);
+  const csvPath = path.join(process.cwd(), "data", REPLICATIONS_CSV);
   const rows = csvParse(fs.readFileSync(csvPath, "utf8")) as unknown as AnyRecord[];
 
   const paperIndex = new Map<string, number>();

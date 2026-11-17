@@ -28,7 +28,8 @@ def parse_timestamp(filename: str) -> datetime | None:
 def collect_snapshots() -> list[tuple[datetime, int]]:
     snapshots: list[tuple[datetime, int]] = []
 
-    for folder in (BACKUP_DIR, DATA_DIR):
+    # data/backup/ holds every version under its dated name, the current one included
+    for folder in (BACKUP_DIR,):
         for f in folder.glob("replications_database_*.csv"):
             ts = parse_timestamp(f.name)
             if ts is None:

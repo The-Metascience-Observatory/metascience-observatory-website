@@ -20,6 +20,7 @@ import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from validation_rules import _norm_doi  # noqa: E402
+import master_db  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(REPO_ROOT, "data")
@@ -70,12 +71,9 @@ ROW_466_FIXES = {
 
 
 def master_csv_path():
-    with open(VERSION_HISTORY, encoding="utf-8") as fh:
-        lines = [ln.strip() for ln in fh if ln.strip() and not ln.lstrip().startswith("#")]
-    fname = lines[-1].split("#", 1)[0].strip()
-    path = os.path.join(DATA_DIR, fname)
-    if not os.path.exists(path):
-        raise SystemExit(f"master named by version_history.txt is missing: {fname}")
+    path = master_db.master_path()
+    if not path:
+        raise SystemExit(f"master is missing: data/{master_db.MASTER_NAME}")
     return path
 
 
@@ -115,19 +113,16 @@ def main():
         print("\nDRY RUN - nothing written.")
         return
 
-    stamp = time.strftime("%Y_%m_%d_%H%M%S")
-    out_name = f"replications_database_{stamp}.csv"
-    out_path = os.path.join(DATA_DIR, out_name)
-    with open(out_path, "w", encoding="utf-8", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=fieldnames)
-        w.writeheader()
-        w.writerows(rows)
+    def write(path):
+        with open(path, "w", encoding="utf-8", newline="") as fh:
+            w = csv.DictWriter(fh, fieldnames=fieldnames)
+            w.writeheader()
+            w.writerows(rows)
 
-    os.makedirs(BACKUP_DIR, exist_ok=True)
-    shutil.move(src, os.path.join(BACKUP_DIR, os.path.basename(src)))
-    print(f"\nwrote data/{out_name}")
-    print(f"archived {os.path.basename(src)} -> data/backup/")
-    print("NEXT: append the version_history.txt line.")
+    label = master_db.write_master(
+        write, f"applied the reviewed original-DOI backfill ({changed} original_url values updated)")
+    print(f"\nwrote data/{master_db.MASTER_NAME} as version {label} (also in data/backup/)")
+    print("NEXT: expand the new version_history.txt line if it needs more detail.")
 
 
 if __name__ == "__main__":

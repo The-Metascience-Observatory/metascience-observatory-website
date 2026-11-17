@@ -122,7 +122,7 @@ def main() -> int:
         return 1
 
     csv_name = latest_csv_filename(repo_root)
-    csv_path = repo_root / "data" / csv_name
+    csv_path = repo_root / "data" / "replications_database.csv"  # csv_name is its dated version label
     out_path = repo_root / "data" / "original_paper_h_index.json"
     report_path = repo_root / "scripts" / "h_index_match_report.txt"
 
