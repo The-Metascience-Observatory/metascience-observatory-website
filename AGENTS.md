@@ -1,5 +1,9 @@
 # AGENTS.md — Metascience Observatory Website
 
+> This repo is one of three Metascience Observatory website repos. If `../AGENTS.md` exists (the
+> `website/` folder guide), read it too: it covers how the three fit together, the shared
+> styling rules and what needs Dan's approval.
+
 ## Project Overview
 
 The **Metascience Observatory** is a Next.js 15 full-stack application for exploring scientific replication data and running interactive "Bird's Eye Reviews" of research literatures. It is deployed on Vercel and lives at https://metascienceobservatory.org.
