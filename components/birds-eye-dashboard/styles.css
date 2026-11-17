@@ -9,7 +9,7 @@
  * only as a fallback when the host app has not defined the tokens itself.
  *
  * These defaults mirror the light theme in
- * metascience_observatory_website/app/globals.css.
+ * metascience-observatory-website/app/globals.css.
  */
 
 :root {
