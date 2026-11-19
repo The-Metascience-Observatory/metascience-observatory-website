@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 
 export const Footer = () => {
   return (
@@ -78,11 +77,13 @@ export const Footer = () => {
             </div>
             <div className="text-center sm:text-right break-words">
 
-              <p className="text-xs text-muted-foreground">
-                © {new Date().getFullYear()} The Metascience Observatory. All rights reserved except as stated in our <Link href="/licensing" className="underline hover:text-primary">licensing terms</Link>.  
+              {/* Copyright and sponsor share one paragraph, capped in width so it wraps to two lines. */}
+              <p className="text-xs text-muted-foreground max-w-md mx-auto sm:mr-0 text-balance">
+                © {new Date().getFullYear()} The Metascience Observatory. The Metascience Observatory is
+                fiscally sponsored by the{" "}
+                <a href="https://mindfirst.foundation/" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">Mind First Foundation</a>,
+                a 501(c)(3) nonprofit based in MA.
               </p>
-             <p className="text-xs text-muted-foreground mt-1">
-             The Metascience Observatory is fiscally sponsored by the <a href="https://mindfirst.foundation/" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">Mind First Foundation</a>, a 501(c)(3) nonprofit based in MA.</p>
              <p className="text-xs text-muted-foreground mt-1">
              Contact us: <a href="mailto:info@metascienceobservatory.org" className="underline hover:text-primary">info@metascienceobservatory.org</a>. </p> 
             </div>

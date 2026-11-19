@@ -6,7 +6,8 @@ export const Boards = () => {
   return (
     <div className="py-8">
       <div className="container px-4">
-        <div className="max-w-4xl mx-auto space-y-12">
+        {/* Side by side from md up; the cards stretch to the taller one so their bottoms line up. */}
+        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8">
           <BoardOfDirectors />
           <AdvisoryBoard />
         </div>

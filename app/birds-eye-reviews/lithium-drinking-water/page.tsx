@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
-import { BirdsEyeNavbar } from "@/components/BirdsEyeNavbar";
+import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { CountyExplorer } from "./CountyExplorer";
 import { TexasComparisonButton, TexasComparisonProvider } from "./TexasComparison";
@@ -29,7 +29,7 @@ export default function LithiumDrinkingWaterPage() {
   const texas = snapshot.results.texas_obesity.find(row => row.column === "ucmr5_all_li_detfrac")!;
 
   return <>
-    <BirdsEyeNavbar />
+    <Navbar />
     <main className="mx-auto min-h-screen w-full max-w-[1600px] px-4 pb-16 pt-24 sm:px-8 lg:px-16">
       <Link href="/birds-eye-reviews/lithium-weight-gain" className={`text-sm text-muted-foreground ${linkStyle}`}>&larr; Lithium &amp; weight gain: clinical studies</Link>
       <h1 className="mt-2 font-clarendon text-3xl font-bold sm:text-4xl">

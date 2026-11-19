@@ -51,7 +51,7 @@ export const Hero = () => {
     <section className="pt-20 pb-2 md:pt-24 md:pb-2">
       <div className="container px-4">
         <div className="grid md:grid-cols-2 gap-3 items-center">
-          <Card className="p-6 md:p-8 shadow-lg">
+          <Card className="p-6 md:p-8 shadow-lg border-black">
             <div className="space-y-6">
               <div className="space-y-4 text-base text-muted-foreground">
                 <p className="font-medium text-foreground">
@@ -97,7 +97,7 @@ export const Hero = () => {
             </div>
           </Card>
 
-          <div className="hidden md:flex md:justify-end">
+          <div className="hidden md:flex md:justify-center">
             <Image
               src="/assets/herschel-observatory-cropped.png"
               alt="Historical observatory with telescope"

@@ -1,5 +1,5 @@
 import { loadReviewDashboardData } from '@/lib/birds-eye-reviews/dashboard-data';
-import { BirdsEyeNavbar } from '@/components/BirdsEyeNavbar';
+import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { LongCovidDashboard } from './LongCovidDashboard';
 export const metadata = {
@@ -17,7 +17,7 @@ export default function LongCovidReviewPage() {
     console.error("Failed to load Long Covid data:", err);
     return (
       <div className="min-h-screen">
-        <BirdsEyeNavbar subtitle="Long Covid" />
+        <Navbar />
         <main className="pt-20 pb-16">
           <div className="container mx-auto px-4 py-12 max-w-7xl text-center">
             <h1 className="text-2xl font-bold mb-4">Data Unavailable</h1>
@@ -33,7 +33,7 @@ export default function LongCovidReviewPage() {
 
   return (
     <div className="min-h-screen">
-      <BirdsEyeNavbar subtitle="Long Covid" />
+      <Navbar />
       <main className="pt-20 pb-16">
         <div className="container mx-auto px-2 py-8 max-w-7xl">
           <LongCovidDashboard {...data} />

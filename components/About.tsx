@@ -16,7 +16,7 @@ interface ProjectMeta {
 
 const projects: ProjectMeta[] = [
   {
-    // Planned address: forensics.metascienceobservatory.org (not deployed yet).
+    href: "/scaling-forensic-metascience",
     image: "/assets/woodcut_square_crops/flammarion_square_crop.png",
     alt: "Detail of the Flammarion engraving: a traveller peering through the edge of the starry sky",
     title: "Scaling forensic metascience",
@@ -45,7 +45,7 @@ const projects: ProjectMeta[] = [
     image: "/assets/woodcut_square_crops/looking-at-stars-close-crop.png",
     alt: "Woodcut of two figures among stars",
     title: "Bird's Eye Reviews",
-    tagline: "For rapid high-level understanding of all literature on a topic",
+    tagline: "For rapid high-level understanding of everything being published on a topic - good and bad",
     description:
       "Experiments in AI-powered high-level literature review where results are displayed in an interactive dashboard.",
   },
@@ -73,7 +73,7 @@ export const About = () => {
               {projects.map((project) => {
                 const card = (
                   <Card
-                    className={`flex flex-row items-center gap-4 sm:gap-6 p-2 sm:p-2.5 shadow-lg transition-all ${
+                    className={`flex flex-row items-start gap-4 sm:gap-6 p-2 sm:p-2.5 shadow-lg border-black transition-all ${
                       project.href ? "group-hover:shadow-xl group-hover:border-primary" : ""
                     }`}
                   >

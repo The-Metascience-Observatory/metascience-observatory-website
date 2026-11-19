@@ -52,8 +52,8 @@ export default function NsfOigDataPage() {
       <main className="pt-20 pb-16">
         <div className="container mx-auto max-w-5xl px-4 py-12">
           <DocsBackLink
-            href="/forensic-metascience-ai-toolkit#the-oversight-problem"
-            label="return to the Forensic Metascience AI toolkit"
+            href="/scaling-forensic-metascience#the-oversight-problem"
+            label="return to Scaling Forensic Metascience"
           />
 
           <h1 className="mb-4 mt-0 text-4xl font-bold leading-tight text-foreground">

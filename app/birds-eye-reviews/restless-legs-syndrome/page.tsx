@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
-import { BirdsEyeNavbar } from "@/components/BirdsEyeNavbar";
+import { Navbar } from "@/components/Navbar";
 import { BirdsEyeWarning } from "@/components/BirdsEyeWarning";
 import { Footer } from "@/components/Footer";
 import { parseCSV, stripTags, normalizeTitle } from "./screening/csv-utils";
@@ -274,7 +274,7 @@ export default function ResultsPage() {
 
   return (
     <>
-      <BirdsEyeNavbar />
+      <Navbar />
       <main className="container mx-auto px-2 pt-24 pb-16 min-h-screen">
         <BirdsEyeWarning />
         <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1">

@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { BirdsEyeNavbar } from "@/components/BirdsEyeNavbar";
+import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { MarkdownContent } from "@/components/MarkdownContent";
@@ -46,7 +46,7 @@ export default function BirdsEyeReviewsPage() {
 
   return (
     <div className="min-h-screen">
-      <BirdsEyeNavbar />
+      <Navbar />
       <main className="pt-20 pb-16">
         <div className="container mx-auto px-4 py-12">
           <h2 className="max-w-3xl mx-auto mb-4 font-clarendon text-2xl font-bold text-foreground">

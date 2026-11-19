@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
-import { BirdsEyeNavbar } from "@/components/BirdsEyeNavbar";
+import { Navbar } from "@/components/Navbar";
 import { BirdsEyeWarning } from "@/components/BirdsEyeWarning";
 import { Footer } from "@/components/Footer";
 import { parseCSV, stripTags, normalizeTitle } from "./csv-utils";
@@ -316,7 +316,7 @@ export default function ResultsPage() {
 
   return (
     <>
-      <BirdsEyeNavbar />
+      <Navbar />
       {/* Full-width rather than the shared `container` (capped at 1040px in
           tailwind.config): this page's table carries ten columns and was being
           squeezed into a narrow strip on a wide monitor. Scoped to this page —

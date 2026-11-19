@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import Link from "next/link";
-import { BirdsEyeNavbar } from "@/components/BirdsEyeNavbar";
+import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SCIENTIFIC_RULES_VERSION } from "@/components/birds-eye-dashboard/summary";
 import type { DashboardSummary, DashboardManifest, TrialRow, PrismaData } from "@/components/birds-eye-dashboard";
@@ -30,7 +30,7 @@ export default function NattokinasePage() {
   const updated = read("last_updated.json") as { last_updated_display: string };
 
   return <div className="min-h-screen">
-    <BirdsEyeNavbar />
+    <Navbar />
     <main className="mx-auto max-w-[1440px] px-4 pt-24 pb-12 sm:px-8">
       <Link href="/birds-eye-reviews" className="text-sm text-primary hover:underline">← All Bird’s Eye Reviews</Link>
       <h1 className="mt-4 text-2xl sm:text-3xl font-bold font-clarendon">Nattokinase and cardiovascular outcomes</h1>

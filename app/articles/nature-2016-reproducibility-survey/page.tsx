@@ -529,7 +529,7 @@ export default function Nature2016SurveyPage() {
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
             Nature&rsquo;s 2016 Reproducibility Survey
           </h1>
-          <p className="text-foreground/70 max-w-3xl mb-2">
+          <p className="text-black max-w-3xl mb-2">
             In 2016, <em>Nature</em> surveyed 1,576 researchers about reproducibility in science
             for the feature{" "}
             <a

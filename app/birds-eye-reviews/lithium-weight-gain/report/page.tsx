@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { ReactNode } from "react";
 import Link from "next/link";
-import { BirdsEyeNavbar } from "@/components/BirdsEyeNavbar";
+import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { EXCLUDED_DOIS } from "../utils";
 
@@ -77,7 +77,7 @@ export default function ReportPage() {
 
   return (
     <>
-      <BirdsEyeNavbar />
+      <Navbar />
       <main className="container mx-auto max-w-3xl px-4 pt-24 pb-16 min-h-screen">
         <div className="mb-2">
           <Link

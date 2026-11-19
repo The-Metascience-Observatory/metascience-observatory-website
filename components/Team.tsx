@@ -10,7 +10,7 @@ export const Team = () => {
             <h2 className="font-clarendon text-2xl md:text-3xl font-bold">Team</h2>
           </div>
 
-          <Card className="p-8 md:p-10 shadow-lg">
+          <Card className="p-8 md:p-10 shadow-lg border-black">
             <div className="space-y-6">
                 <div className="flex flex-col md:flex-row gap-6 items-start">
                   <Image 

@@ -3,7 +3,7 @@ import { publicationFor } from "@/lib/long-covid/publications-server";
 import type { PublicationMetadata } from "@/lib/long-covid/publications";
 import fs from "fs";
 import path from "path";
-import { BirdsEyeNavbar } from "@/components/BirdsEyeNavbar";
+import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import Link from "next/link";
 import { ArticleTypeBar } from "./ScreeningFunnelChart";
@@ -112,7 +112,7 @@ export default function ScreeningPage() {
 
   return (
     <>
-      <BirdsEyeNavbar />
+      <Navbar />
       <main className="container mx-auto px-4 pt-24 pb-16 min-h-screen [--border:215_15%_76%]">
         <div className="mb-2">
           <Link

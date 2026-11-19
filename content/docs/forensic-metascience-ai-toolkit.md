@@ -1,65 +1,24 @@
 # The Forensic Metascience AI toolkit
 
-<!-- FINDINGS_CTA -->
+## Overview
 
-The [Metascience Observatory's](/) [research](https://moreisdifferent.blog/p/what-weve-learned-so-far-at-the-metascience) has demonstrated that the replication crisis is a science-wide phenomenon, not just limited to psychology and the social sciences. Across many fields, 40% or more of results are not replicating. 
+The forensic metascience AI toolkit can be thought of as a set of different wrappers for AI agents. The system is modular and allows for different workflows to be run that combine modules in different ways. 
 
-Now, the Metascience Observatory is embarking on an ambitious research program to discovery major issues in the scientific literature -- issues that greatly call into question the provenance and reliability of data and results. James Heathers [estimates](https://metaror.org/kotahi/articles/18/index.html) that about 14% of peer-reviewed papers have major issues. Whether the true number is 5% or 25%, it is high enough that some "cleanup" is needed. 
+The system can be used with AI subscriptions to save money -- Codex, Claude Code, Grok Build, and Antigravity are all supported. 
 
-The presence of major issues in the literature ultimately reduce trust in science and can slow scientific progress.
+[Much of it is open-source and on Github](https://github.com/The-Metascience-Observatory/forensic-metascience-ai-toolkit). To request access to the closed-source components, [send us an email](mailto:info@metascienceobservatory.org). 
 
-Research in [forensic metascience](https://jamesheathers.curve.space/) using tools like statcheck and the GRIM test shows that simple mistakes in data processing are common, with over half of papers in psychology having errors in the [calculation of p-values](https://pmc.ncbi.nlm.nih.gov/articles/PMC7540394/) or [averages](https://journals.sagepub.com/doi/10.1177/1948550616673876). Most errors are harmless, but some change key results, contaminating meta-analyses and causing many downstream problems.
-
-The Metascience Observatory has developed a number of tools for stress-testing calculations, images, and data. These are collected into our "forensic metascience AI toolkit", some of which we have made public. Some of these tools do not require AI, although AI can be used to review findings. 
-
-A key innovation is the introduction of forensic metascience tools to AI, something we pioneered starting in 2025. Our "tools agent" code equips an AI system (like Claude Code) with dozens of tools for "sanity checking" the statistics and data presented in scientific papers. Many of those tools are directly cribbed from the techniques described in detail in James Heathers' book [*An Introduction to Forensic Metascience*](https://doi.org/10.5281/zenodo.14871843).
-
-The codebase is modular, and allows for different workflows to be run. These workflows can bebe used to stress-test existing papers or for perforing "AI peer review" on new papers before they are published. Using AI to check papers is not a new idea, and many startups are already selling "AI for peer review" services. However, auditing the text and images of a single paper using commercial services currently costs \$50 or more. When used with subscription services like Claude Code on the backend, this toolkit's full pipeline costs only \$0.50 - \$1.00 per paper. We are also in the process of validating our tools agent to quantify how well it applies tools, something that commercial services have not yet done. 
-
-
-<!-- INTRO_END -->
-
-## The data integrity problem
-
-<!-- MAJOR_ISSUE_STATS -->
-
-## The rigor problem
-
-<!-- ERROR_STATS -->
-
-
-## The slop problem
-
-<!-- NHANES_CHARTS -->
-
-
-## The oversight problem
-The number of scientific papers being published each year is growing exponentially with a doubling time of [approximately 10 years](https://www.crossref.org/blog/2026-public-data-file-now-available/#:~:text=12.7%20million%20new%20records%20(a%207.6%25%20increase%20since%20last%20year).). Meanwhile, the number of fake papermill papers being published has been estimated to be doubling [every 1.5 years](https://www.pnas.org/doi/10.1073/pnas.2420092122). AI tools make it easier to generate slop papers and fabricate images and data. 
-
-Meanwhile, our ability to detect serious issues in the scientific literature has been constant or decreasing. So far, a handful of largely unpaid image sleuths appear to be responsible for most detections of image issues. 
-
-The US's government's ability to respond to research misconduct has collapsed. In 2025 HHS's Office of Research Integrity's produced the fewest misconduct findings in its 32 years of record. That same year, [NSF's Office of Inspector General stopped investigating research misconduct](https://www.science.org/content/article/exclusive-nsf-watchdog-unit-no-longer-investigating-research-misconduct), referring all allegations back to grantee institutions. (Prior to 2025, the OIG had made about [10–20 misconduct findings per year](https://www.science.org/content/article/data-check-nsf-sends-congress-garbled-message-misconduct-numbers), 80% of which were for plagiarism. 
-
-<!-- ORI_CHART -->
-
-<!-- NSF_OIG_CHART -->
-
-Peer review is useful for catching major issues, but the peer review system is under increasing strain. Studies indicate that peer reviewers do a very incomplete job. Across [four](https://doi.org/10.1001/jama.280.3.237) [independent](https://www.bmj.com/content/bmj/328/7441/673.full.pdf) [studies](https://journals.sagepub.com/doi/full/10.1258/jrsm.2008.080062) [in biomedicine](https://www.sciencedirect.com/science/article/abs/pii/S019606449870006X) where researchers deliberately inserted errors into manuscripts, peer reviewers only caught 25–35% of them.
-
+<!-- HOW_IT_WORKS -->
 
 <span id="where-this-agent-fits-in-the-ai-for-research-integrity-landscape"></span>
 
 ## Where this toolkit fits in the AI for research integrity landscape
 
+Using AI to check papers is not a new idea, and many startups are already selling "AI for peer review" services. However, auditing the text and images of a single paper using commercial services currently costs \$50 or more. When used with subscription services like Claude Code on the backend, this toolkit's full pipeline costs only \$0.50 - \$1.00 per paper. We are also in the process of validating our tools agent to quantify how well it applies tools, something that commercial services have not yet done. We hope to show that are system has significant advantages over commercial competitors. 
+
 <!-- TOOL_LOGOS -->
 
 <!-- TOOLKIT -->
-
-## Overview
-
-The toolkit includes a multi-agent pipeline that performs a detailed audit of a scientific paper, including the text, images, and data.
-
-The toolkit is a “harness” for AI. The backend can be a Codex, Claude Code, or Grok Build subscription, or API calls to any agentic AI system. The “tools agent” module equips the AI with 44 tools it can use to sanity check the statistics and data presented in scientific papers. Each tool is a Python script that performs a specific type of check. Many of the techniques implemented are taken from James Heathers' book [*An Introduction to Forensic Metascience*](https://doi.org/10.5281/zenodo.14871843).
 
 Each check applies only in a very specific set of circumstances. The GRIM tool is a simple example: if N integers in a bounded range (e.g. a 0-10 rating scale) are averaged, then only a finite set of valid averages is possible. The GRIM test checks if the reported average is in that set. We also have a couple of different tools for recalculating p-values. The SPRITE test infers possible underlying data distributions for integer data based on the allowed range, N, mean, and standard deviation. Distributions with many values at the extremes may be implausible.
 
@@ -74,18 +33,6 @@ Before running any checks, the AI is forced to classify each number by type, how
 To assist with human review, we have developed a “rapid review” web application. The left-hand side of the application contains a list of findings, while the right-hand side displays the PDF. Our AI system ranks every finding on a [severity ladder](/forensic-metascience-ai-toolkit/severity-ladder) which helps with triage.  Clicking on each finding jumps the PDF to the relevant section with relevant text and numbers highlighted. Image duplication and manipulation findings are displayed via diagrams and/or videos.
 
 To give you an idea of how thorough our system is, it consumes 1-6 million tokens and takes 25-40 minutes to run per paper. The full system costs \$0.50 - \$1.00 per paper to run depending on the length of the paper and the AI subscription service used. The image analysis module and copy-paste detection module are very cheap to run (pennies per paper) and can be run in isolation.
-
-### Lessons from previous initiatives
-
-We are not the first people to have the idea of using AI to find errors in the published scientific literature.
-
-The first major initiative along these lines was **The Black Spatula project**, which [was launched](https://secondthoughts.ai/p/the-black-spatula-project) as a crowdsourced initiative by Steve Newman in December 2024. The goal was to run the best AI model at the time (o1 preview) on thousands of papers to catch important mistakes. Several hundred people joined the Black Spatula Discord and WhatsApp group, resulting in an initial burst of activity lasting a few weeks. The project eventually petered out after a year or so. We did an “autopsy” on the Black Spatula project to see if there was anything we could learn that would inform our own project. It appears the initiative petered out due to lack of central coordination, high rates of false positives, and lack of volunteers to perform the arduous work of reviewing all the AI outputs and deciding how to act on them.
-
-Another initiative was **YesNoError**, which was also founded in December 2024. The project was funded by a Solana coin/token that reached a peak market cap of \$110 million. YesNoError evaluated 37,000+ papers in two months using o1, with a stated aspiration to audit 90 million. They then publicized the flagged papers, mostly without any human verification. In March 2025, science integrity expert Nick Brown [found a](https://www.nature.com/articles/d41586-025-00648-5#:~:text=.%20Among%2040%20papers,wrong%2C%20he%20says.) false positive rate of 35% in a small sample of 40 papers. Shortly after, all of the results of the run disappeared from the internet and the website pivoted to focusing solely on AI research papers.
-
-### Experiments with “targeting funnels”
-
-We are experimenting with different ways of doing screening/targeting to decide which papers to audit with the toolkit. We have entered into an unpaid collaboration with [IntelliCat](https://intellicat.ai) to test if their system could be helpful. IntelliCat has generated “Content Credibility Index” (CCI) scores for millions of papers. For a much smaller number of papers, they have also generated Data and Observations Risk Index (DORI) scores based on “domain-specific models to assess experimental data and figures for signals of manipulation or fabrication”. Initial work with our replication database indicates that a bad DORI strongly increases the chances of replication failure by 8x, so we are particularly interested in using the DORI for targeting. We are also looking at doing screening using very cheap AI APIs on thousands of open-access papers that are available in XML format to find “canary in the coal mine” issues that may be indicative of more serious issues. Another approach to targeting we are exploring is running the toolkit on papers by authors who have retractions reported by Retraction Watch.
 
 ## Applications
 
@@ -104,3 +51,4 @@ A [recent analysis](https://www.paullitvak.com/p/how-well-does-ai-peer-review-wo
 ### III. Metascientific research
 
 The tools agent can be used in isolation to systematically research the prevalence of different error types within and across scientific fields. When James Heathers [did GRIM test checks](https://journals.sagepub.com/doi/10.1177/1948550616673876) on papers in leading psychology journals, 36 out of 71 papers with testable numbers had at least one discrepancy (51%). [Previous work](https://link.springer.com/article/10.3758/s13428-015-0664-2) in 2016 with the statcheck tool found that about half of psychology papers had an issue with a p-value calculation, while 12.5% had an error that actually reversed a significant conclusion. The tools agent or simplified lower-cost versions can be used to study the prevalence of errors across many different fields.
+

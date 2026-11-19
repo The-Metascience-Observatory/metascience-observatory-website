@@ -85,15 +85,6 @@ function ChartSection({
   );
 }
 
-function StatTile({ value, label }: { value: string; label: string }) {
-  return (
-    <Card className="p-4 md:p-5">
-      <div className="text-3xl font-bold text-foreground">{value}</div>
-      <div className="text-sm text-foreground/60 mt-1">{label}</div>
-    </Card>
-  );
-}
-
 /** Horizontal response distributions, with counts normalized to 100% per field. */
 function StackedFieldChart({
   data,
@@ -316,26 +307,6 @@ export function SurveyDashboard(props: SurveyDashboardProps) {
 
   return (
     <div className="space-y-12 mt-8">
-      {/* KPI row */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatTile
-          value={summary.totalRespondents.toLocaleString()}
-          label="researchers surveyed"
-        />
-        <StatTile
-          value={`${Math.round(summary.anyCrisisPct)}%`}
-          label="say there is a significant or slight reproducibility crisis"
-        />
-        <StatTile
-          value={`${Math.round(summary.failedSomeoneElsePct)}%`}
-          label="have tried and failed to reproduce another scientist's experiment"
-        />
-        <StatTile
-          value={`${Math.round(summary.publishedAnyPct)}%`}
-          label="have published a replication attempt (successful or failed)"
-        />
-      </div>
-
       {/* Crisis opinions, replication experience, and reproducibility procedures */}
       <div className="space-y-8">
         <ChartSection

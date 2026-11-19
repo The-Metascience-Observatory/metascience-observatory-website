@@ -19,38 +19,39 @@ export const Navbar = () => {
               height={40}
               unoptimized
             />
-            <h1 className="font-clarendon font-bold text-lg sm:text-xl text-foreground">
+            <h1 className="font-clarendon font-bold text-lg sm:text-xl text-foreground whitespace-nowrap">
               The Metascience Observatory
             </h1>
           </Link>
 
-          <div className="hidden md:flex items-center gap-3 text-xs">
-            <Button variant="outline-gradient" size="sm" asChild className="border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
+          {/* Full menu from lg up: below 1024px the title and six items do not fit on one line. */}
+          <div className="hidden lg:flex items-center gap-2 mr-6 text-xs">
+            <Button variant="outline-gradient" size="sm" asChild className="px-2 border-0 hover:shadow-none font-sans text-[13px] xl:text-sm font-medium text-gray-600 dark:text-gray-400 bg-transparent">
               <Link href="/#about">
                 Projects
               </Link>
             </Button>
-            <Button variant="outline-gradient" size="sm" asChild className="border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
+            <Button variant="outline-gradient" size="sm" asChild className="px-2 border-0 hover:shadow-none font-sans text-[13px] xl:text-sm font-medium text-gray-600 dark:text-gray-400 bg-transparent">
               <Link href="/articles">
                 Articles
               </Link>
             </Button>
-            <Button variant="outline-gradient" size="sm" asChild className="border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
+            <Button variant="outline-gradient" size="sm" asChild className="px-2 border-0 hover:shadow-none font-sans text-[13px] xl:text-sm font-medium text-gray-600 dark:text-gray-400 bg-transparent">
               <Link href="/birds-eye-reviews">
                 Reviews
               </Link>
             </Button>
-            <Button variant="outline-gradient" size="sm" asChild className="border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
+            <Button variant="outline-gradient" size="sm" asChild className="px-2 border-0 hover:shadow-none font-sans text-[13px] xl:text-sm font-medium text-gray-600 dark:text-gray-400 bg-transparent">
               <Link href="https://explore.metascienceobservatory.org/">
                 Explorer
               </Link>
             </Button>
-            <Button variant="outline-gradient" size="sm" asChild className="border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
+            <Button variant="outline-gradient" size="sm" asChild className="px-2 border-0 hover:shadow-none font-sans text-[13px] xl:text-sm font-medium text-gray-600 dark:text-gray-400 bg-transparent">
               <Link href="/replications-database">
                 Replications Database
               </Link>
             </Button>
-            <Button variant="outline-gradient" size="sm" asChild className="ml-auto border-blue-500 text-blue-700 dark:text-blue-400 bg-transparent">
+            <Button variant="outline-gradient" size="sm" asChild className="ml-auto px-2 border-0 hover:shadow-none font-sans text-[13px] xl:text-sm font-medium text-blue-700 dark:text-blue-400 bg-transparent">
               <Link href="/#donate">
                 Donate
               </Link>
@@ -59,7 +60,7 @@ export const Navbar = () => {
 
           {/* Mobile menu button */}
           <button
-            className="md:hidden p-2 text-foreground/80 hover:text-foreground transition-colors"
+            className="lg:hidden p-2 text-foreground/80 hover:text-foreground transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle mobile menu"
           >
@@ -83,34 +84,34 @@ export const Navbar = () => {
 
         {/* Mobile menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-border mt-3 pt-3 pb-3">
+          <div className="lg:hidden border-t border-border mt-3 pt-3 pb-3">
             <div className="flex flex-col gap-3">
-              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
+              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-0 hover:shadow-none font-clarendon text-base font-semibold text-gray-600 dark:text-gray-400 bg-transparent">
                 <Link href="/#about" onClick={() => setIsMobileMenuOpen(false)}>
                   Projects
                 </Link>
               </Button>
-              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
+              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-0 hover:shadow-none font-clarendon text-base font-semibold text-gray-600 dark:text-gray-400 bg-transparent">
                 <Link href="/articles" onClick={() => setIsMobileMenuOpen(false)}>
                   Articles
                 </Link>
               </Button>
-              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
+              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-0 hover:shadow-none font-clarendon text-base font-semibold text-gray-600 dark:text-gray-400 bg-transparent">
                 <Link href="/birds-eye-reviews" onClick={() => setIsMobileMenuOpen(false)}>
                   Bird&rsquo;s Eye Reviews
                 </Link>
               </Button>
-              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
+              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-0 hover:shadow-none font-clarendon text-base font-semibold text-gray-600 dark:text-gray-400 bg-transparent">
                 <Link href="https://explore.metascienceobservatory.org/" onClick={() => setIsMobileMenuOpen(false)}>
                   Explorer
                 </Link>
               </Button>
-              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-gray-400 text-gray-600 dark:text-gray-400 bg-transparent">
+              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-0 hover:shadow-none font-clarendon text-base font-semibold text-gray-600 dark:text-gray-400 bg-transparent">
                 <Link href="/replications-database" onClick={() => setIsMobileMenuOpen(false)}>
                   Replications Database
                 </Link>
               </Button>
-              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-blue-500 text-blue-700 dark:text-blue-400 bg-transparent">
+              <Button variant="outline-gradient" size="sm" asChild className="w-full justify-center border-0 hover:shadow-none font-clarendon text-base font-semibold text-blue-700 dark:text-blue-400 bg-transparent">
                 <Link href="/#donate" onClick={() => setIsMobileMenuOpen(false)}>
                   Donate
                 </Link>

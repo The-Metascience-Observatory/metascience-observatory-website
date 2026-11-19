@@ -51,7 +51,6 @@ app/                        # Next.js App Router
 components/
   Navbar.tsx                # Default site nav
   ReplicationsNavbar.tsx    # Nav for /replications-database/* pages
-  BirdsEyeNavbar.tsx        # Nav for /birds-eye-reviews/* pages
   Footer.tsx
   Hero.tsx / About.tsx / Team.tsx / AdvisoryBoard.tsx / Donate.tsx
   MarkdownContent.tsx       # react-markdown renderer (math, email obfuscation)

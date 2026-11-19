@@ -143,13 +143,34 @@ const documentation: DocMeta[] = [
 
 const substackArticles: SubstackMeta[] = [
   {
+    date: "2026-11-16",
+    title: "Scaling forensic metascience with AI",
+    href: "https://moreisdifferent.blog/p/forensic-metascience-for-policy-makers",
+  },
+  {
+    date: "2026-08-04",
+    title: "What have we learned about reproducibility at the Metascience Observatory?",
+    href: "https://moreisdifferent.blog/p/what-weve-learned-so-far-at-the-metascience",
+  },
+  {
+    date: "2025-07-12",
+    title: "Four steps to reduce cardiovascular disease",
+    href: "https://moreisdifferent.blog/p/four-steps-to-reduce-cardiovascular",
+  },
+  {
+    date: "2025-06-29",
+    title:
+      "That MIT paper about AI enhancing scientific productivity that everyone has been talking about is fake..",
+    href: "https://moreisdifferent.blog/p/that-mit-paper-about-ai-enhancing",
+  },
+  {
     date: "2025-01-28",
     title: "The golden age of German science (1880 - 1930)",
-    href: "https://moreisdifferent.blog/p/german-scientific-paternalism",
+    href: "https://moreisdifferent.substack.com/p/german-scientific-paternalism-and-the-golden-age",
   },
   {
     date: "2024-10-22",
-    title: "A Defense of Peer Review",
+    title: "(Asimov Press) A Defense of Peer Review",
     href: "https://www.asimov.press/p/peer-review",
   },
   {
@@ -164,6 +185,11 @@ const substackArticles: SubstackMeta[] = [
     href: "https://moreisdifferent.blog/p/wth-is-cerebrolysin-actually",
   },
   {
+    date: "2023-09-29",
+    title: "LK-99 red flags and other miscellany",
+    href: "https://moreisdifferent.substack.com/p/lk-99-red-flags-and-other-miscellany",
+  },
+  {
     date: "2023-08-05",
     title: "How common is scientific fraud?",
     href: "https://moreisdifferent.substack.com/p/how-common-is-scientific-fraud",
@@ -172,6 +198,11 @@ const substackArticles: SubstackMeta[] = [
     date: "2022-02-28",
     title: "The deluge of crappy papers must stop",
     href: "https://moreisdifferent.substack.com/p/the-deluge-of-crappy-papers-must",
+  },
+  {
+    date: "2021-04-15",
+    title: "AI for COVID-19 diagnosis - a case study in bad incentives",
+    href: "https://moreisdifferent.substack.com/p/ai-for-covid-19-diagnosis-a-case",
   },
 ];
 
@@ -279,7 +310,7 @@ export default function ArticlesPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mt-16">
             <div>
               <h2 className="text-2xl font-bold mb-3 text-foreground">
-                Metascience articles by Dan Elton
+                All metascience articles by Dan Elton
               </h2>
               <div className="space-y-4">
                 {substackArticles.map((article) => (

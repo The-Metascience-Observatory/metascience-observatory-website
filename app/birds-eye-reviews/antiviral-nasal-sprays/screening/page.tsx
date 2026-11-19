@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { BirdsEyeNavbar } from "@/components/BirdsEyeNavbar";
+import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import Link from "next/link";
 import { ScreeningClientWrapper } from "./ScreeningClientWrapper";
@@ -121,7 +121,7 @@ export default function ScreeningPage() {
 
   return (
     <>
-      <BirdsEyeNavbar />
+      <Navbar />
       <main className="container mx-auto px-4 pt-24 pb-16 min-h-screen">
         <div className="mb-2 flex flex-wrap gap-x-4 gap-y-1">
           <Link

@@ -2,7 +2,7 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { ArticleDetailPanel } from '../ArticleDetailPanel';
-import { BirdsEyeNavbar } from '@/components/BirdsEyeNavbar';
+import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { BreakdownChart } from '@/components/BreakdownChart';
 import { VERDICT_SEGMENTS, interventionVerdictsFromRows } from '../constants';
@@ -30,7 +30,7 @@ export function PreventionResults({initialData}:{initialData: {rows:PrevRow[];ch
 
   return (
     <div className="min-h-screen">
-      <BirdsEyeNavbar subtitle="Long Covid" />
+      <Navbar />
       <main className="pt-20 pb-16">
         <div className="container mx-auto px-2 py-8 max-w-7xl">
           <Link href="/birds-eye-reviews/long-covid" className="text-sm text-blue-600 hover:text-blue-700 mb-3 inline-block">

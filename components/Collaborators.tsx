@@ -19,7 +19,7 @@ export const Collaborators = () => {
             </h2>
           </div>
 
-          <Card className="p-8 md:p-10 shadow-lg">
+          <Card className="p-8 md:p-10 shadow-lg border-black">
             <div className="flex flex-col md:flex-row md:items-center gap-6">
               <Link
                 href="https://forrt.org/"

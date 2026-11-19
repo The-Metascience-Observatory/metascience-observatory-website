@@ -3,14 +3,15 @@ import Link from "next/link";
 
 export const AdvisoryBoard = () => {
   return (
-    <section id="advisory-board" className="scroll-mt-24 space-y-6">
+    <section id="advisory-board" className="scroll-mt-24 flex flex-col gap-6">
           <div className="text-center space-y-4">
             <h2 className="font-clarendon text-2xl md:text-3xl font-bold">
-                Metascientific Advisory Board
+                Metascientific <br className="hidden md:inline" />
+                Advisory Board
               </h2>
           </div>
 
-          <Card className="p-8 md:p-10 shadow-lg">
+          <Card className="flex-1 p-8 md:p-10 shadow-lg border-black">
             <div className="space-y-4">
               <div>
                 <h3 className="text-lg font-semibold mb-1">

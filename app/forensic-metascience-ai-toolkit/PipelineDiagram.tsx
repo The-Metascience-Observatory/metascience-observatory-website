@@ -19,7 +19,16 @@ import {
 
 const PRODUCERS = [
   {
-    t: "Image analysis module",
+    t: "Other modules",
+    // Node renders `s` inside a <p>, so the list is block spans rather than a <ul>.
+    s: (
+      <>
+        <span className="block italic">(closed source)</span>
+        <span className="mt-1 block">Image analysis module</span>
+        <span className="block">Data analysis module</span>
+        <span className="block">Spectra analysis module</span>
+      </>
+    ),
     tone: "neutral" as const,
   },
   {
@@ -161,26 +170,6 @@ export function PipelineDiagram() {
                 icon={p.agent ? <AgentIcon /> : undefined}
                 className="[&>p]:text-xs lg:[&>p]:text-[11px]"
               />
-              {/*
-                The image track alone carries a second stage. Its detector measures
-                shared pixels correctly but cannot say WHY two panels share them, so
-                a model pass answers that question before the finding leaves the
-                track — and its verdict travels with the finding, which is what stops
-                the main adjudicator re-litigating pixels later.
-              */}
-              {i === 0 && (
-                <>
-                  <Down h={22} />
-                  <Node
-                    title="Image finding adjudication agent"
-                    sub="An agent to screen out false positives and innocuous duplications."
-                    tone="accent"
-                    center
-                    icon={<AgentIcon />}
-                    className="[&>p]:text-xs lg:[&>p]:text-[11px]"
-                  />
-                </>
-              )}
               <div className="hidden grow lg:flex lg:flex-col">
                 <Stem />
               </div>
