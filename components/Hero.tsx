@@ -57,7 +57,7 @@ export const Hero = () => {
                 <p className="font-medium text-foreground">
                   Is science healthy? How do rigor and reproducibility vary across fields, journals, and institutions?
                 </p>
-                <p>
+                <p className="text-black">
                   At The Metascience Observatory, we are using AI to analyze scientific papers at scale to help answer these questions.
                 </p>
               </div>
@@ -72,7 +72,7 @@ export const Hero = () => {
                 ) : null}
 
                 <form onSubmit={handleSubmit}>
-                  <p className="text-xs text-muted-foreground mt-3">Subscribe to our newsletter:</p>
+                  <p className="text-xs text-gray-700 mt-3">Subscribe to our newsletter:</p>
                   <div className="mt-1.5 flex gap-2">
                   <Input
                     type="email"

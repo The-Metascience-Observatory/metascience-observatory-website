@@ -3,17 +3,39 @@ import Link from "next/link";
 
 export const AdvisoryBoard = () => {
   return (
-    <section id="advisory-board" className="py-8 scroll-mt-24">
-      <div className="container px-4">
-        <div className="max-w-4xl mx-auto space-y-6">
+    <section id="advisory-board" className="scroll-mt-24 space-y-6">
           <div className="text-center space-y-4">
             <h2 className="font-clarendon text-2xl md:text-3xl font-bold">
-                Advisory Board
+                Metascientific Advisory Board
               </h2>
           </div>
 
           <Card className="p-8 md:p-10 shadow-lg">
             <div className="space-y-4">
+              <div>
+                <h3 className="text-lg font-semibold mb-1">
+                  <Link
+                    href="https://www.linkedin.com/in/paullitvak/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline"
+                  >
+                    Paul Litvak, Ph.D.
+                  </Link>
+                  <span className="ml-2 font-normal text-foreground/80">
+                    -{" "}
+                    <Link
+                      href="https://www.dawes.institute/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline"
+                    >
+                      Robin Dawes Institute
+                    </Link>
+                  </span>
+                </h3>
+              </div>
+
               <div>
                 <h3 className="text-lg font-semibold mb-1">
                   <Link
@@ -85,58 +107,8 @@ export const AdvisoryBoard = () => {
                   </span>
                 </h3>
               </div>
-
-              <div>
-                <h3 className="text-lg font-semibold mb-1">
-                  <Link
-                    href="https://en.wikipedia.org/wiki/Preston_Estep"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline"
-                  >
-                    Preston Estep III, Ph.D.
-                  </Link>
-                  <span className="ml-2 font-normal text-foreground/80">
-                    -{" "}
-                    <Link
-                      href="http://mindfirst.foundation/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline"
-                    >
-                      Mind First Foundation
-                    </Link>
-                  </span>
-                </h3>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-semibold mb-1">
-                  <Link
-                    href="https://www.linkedin.com/in/paullitvak/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline"
-                  >
-                    Paul Litvak, Ph.D.
-                  </Link>
-                  <span className="ml-2 font-normal text-foreground/80">
-                    -{" "}
-                    <Link
-                      href="https://www.dawes.institute/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline"
-                    >
-                      Robin Dawes Institute
-                    </Link>
-                  </span>
-                </h3>
-              </div>
             </div>
           </Card>
-        </div>
-      </div>
     </section>
   );
 };

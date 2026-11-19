@@ -12,12 +12,18 @@ const COLOR_SCHEMES = [
   { main: "bg-indigo-200", detail: "bg-indigo-50" },
 ];
 
-export function InitiativesList({ fieldGroups }: { fieldGroups: FieldGroup[] }) {
+export function InitiativesList({
+  fieldGroups,
+  defaultOpen = false,
+}: {
+  fieldGroups: FieldGroup[];
+  /** Whether every details panel starts open. The toggle flips every panel at once. */
+  defaultOpen?: boolean;
+}) {
   const allSlugs = fieldGroups.flatMap((g) => g.projects.map((p) => p.slug));
 
-  // Details are open by default; the toggle flips every panel at once.
   const [openSlugs, setOpenSlugs] = useState<Set<string>>(
-    () => new Set(allSlugs)
+    () => new Set(defaultOpen ? allSlugs : [])
   );
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
   const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);

@@ -3,7 +3,7 @@ import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
 import { Team } from "@/components/Team";
-import { AdvisoryBoard } from "@/components/AdvisoryBoard";
+import { Boards } from "@/components/Boards";
 import { Collaborators } from "@/components/Collaborators";
 import { Donate } from "@/components/Donate";
 import { Footer } from "@/components/Footer";
@@ -15,7 +15,7 @@ export default function Page() {
       <Hero />
       <About />
       <Team />
-      <AdvisoryBoard />
+      <Boards />
       <Collaborators />
       <Donate />
       <Footer />

@@ -5,8 +5,8 @@ import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { MarkdownContent } from "@/components/MarkdownContent";
 import { FunnelFigure } from "./FunnelFigure";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata = {
   title: "Bird's Eye Reviews | The Metascience Observatory",
@@ -49,16 +49,6 @@ export default function BirdsEyeReviewsPage() {
       <BirdsEyeNavbar />
       <main className="pt-20 pb-16">
         <div className="container mx-auto px-4 py-12">
-          <div className="max-w-3xl mx-auto mb-8">
-            <Image
-              src="/assets/looking_at_stars_clean.png"
-              alt="Woodcut of two figures among stars"
-              width={2048}
-              height={768}
-              sizes="(max-width: 800px) calc(100vw - 32px), 768px"
-              className="w-full h-auto rounded"
-            />
-          </div>
           <h2 className="max-w-3xl mx-auto mb-4 font-clarendon text-2xl font-bold text-foreground">
             Explore Bird&apos;s Eye Reviews
           </h2>
@@ -77,8 +67,19 @@ export default function BirdsEyeReviewsPage() {
             About Bird&apos;s Eye Reviews
           </h2>
           <FunnelFigure />
-          <div className="max-w-3xl mx-auto">
-            <MarkdownContent content={body} />
+          <div className="max-w-3xl mx-auto md:max-w-6xl md:grid md:grid-cols-[minmax(0,280px)_minmax(0,48rem)] md:justify-center md:gap-10 md:items-start">
+            <div className="relative hidden md:block w-full aspect-[4/5] overflow-hidden rounded-lg shadow-lg md:sticky md:top-24">
+              <Image
+                src="/assets/woodcut-looking-at-world.jpeg"
+                alt="Woodcut illustration of a person observing the world"
+                fill
+                sizes="280px"
+                className="object-cover object-center"
+              />
+            </div>
+            <div className="min-w-0">
+              <MarkdownContent content={body} />
+            </div>
           </div>
         </div>
       </main>

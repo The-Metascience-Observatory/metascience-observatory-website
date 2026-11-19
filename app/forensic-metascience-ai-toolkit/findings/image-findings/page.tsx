@@ -71,7 +71,7 @@ export default function ImageFindingsPage() {
             This page contains a continually-updated list of findings from the
             Forensic Metascience AI toolkit's image analysis system which we have
             submitted to PubPeer. Every finding undergoes thorough human review
-            by Dan Elton and Greg Fitzgerald before submission.
+            before submission.
           </p>
           <FindingsDisclaimer />
           <h2 className="text-2xl font-semibold mb-6 mt-10 text-foreground border-b border-border pb-2">

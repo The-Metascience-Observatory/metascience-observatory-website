@@ -23,19 +23,13 @@ export default function ReanalysisInitiativesPage() {
           <h1 className="text-4xl font-bold mb-4 text-foreground">
             Re-analysis initiatives
           </h1>
-          <p className="text-foreground/70 leading-relaxed mb-8">
-            Initiatives that assess published research by re-analyzing the
-            original study&apos;s data rather than collecting new data: computational
-            reproduction (re-running the original code and data),{" "}
-            <a
-              href="/docs/defining-replication"
-              className="text-primary hover:underline"
-            >
-              technical replication
-            </a>
-            , robustness checks that vary analytical decisions, and similar
-            re-analyses. For initiatives that re-run studies on newly collected
-            data, see our{" "}
+          <p className="text-black leading-relaxed mb-8">
+            This page lists initiatives that assess published research by
+            re-analyzing the original study&apos;s data rather than collecting
+            new data. This includes computational reproduction (re-running the
+            original code and data), robustness checks that vary analytical
+            decisions, and similar types of data re-analyses. For initiatives
+            that re-run experiments and collect new data, see our{" "}
             <a
               href="/replication-initiatives"
               className="text-primary hover:underline"

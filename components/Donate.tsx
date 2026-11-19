@@ -15,7 +15,7 @@ export const Donate = () => {
 
               <p className="text-foreground/90 leading-relaxed">
                 The Metascience Observatory is fiscally sponsored by <a href="https://mindfirst.foundation/" target="_blank" rel="noopener noreferrer" className="underline">Mind First Foundation</a>, a 501(c)(3) nonprofit, so your donation is tax-deductible.
-                The Mind First Foundation charges 0% overhead, so 100% of your donation goes directly to Metascience Observatory work.
+                The Mind First Foundation charges 0% overhead, so 100% of your donation goes directly to Metascience Observatory work. If there is a particular initiative you are excited about and would like to support, please <a href="mailto:info@metascienceobservatory.org" className="underline">get in touch</a>.
               </p>
               <Button size="lg" variant="hero" className="mt-4 ml-4" asChild>
                 <a href="https://manifund.org/projects/llm-driven-metascience-observatory" target="_blank" rel="noopener noreferrer">

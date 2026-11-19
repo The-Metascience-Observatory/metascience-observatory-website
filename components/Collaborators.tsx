@@ -53,29 +53,6 @@ export const Collaborators = () => {
 
             <div className="flex flex-col md:flex-row md:items-center gap-6">
               <Link
-                href="https://blacklight.science/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="shrink-0 self-center"
-              >
-                <Image
-                  src="/assets/collaborators/blacklight_logo.png"
-                  alt="Blacklight logo"
-                  width={540}
-                  height={300}
-                  className="w-36 h-auto"
-                />
-              </Link>
-              <p className="text-foreground/80 leading-relaxed">
-                <ExternalLink href="https://derikk.com/">Derik Kauffman</ExternalLink> &ndash;{" "}
-                <ExternalLink href="https://blacklight.science/">Blacklight</ExternalLink>
-              </p>
-            </div>
-
-            <hr className="my-8 border-border" />
-
-            <div className="flex flex-col md:flex-row md:items-center gap-6">
-              <Link
                 href="https://intellicat.ai/"
                 target="_blank"
                 rel="noopener noreferrer"

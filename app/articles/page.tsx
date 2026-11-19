@@ -27,33 +27,6 @@ interface SubstackMeta {
   href?: string;
 }
 
-const projectOverviews: ArticleMeta[] = [
-  {
-    href: "/overview-replication-database",
-    title: "Replications\nDatabase",
-    image: "/assets/woodcut_square_crops/square_1610_library_Leiden.png",
-    alt: "Engraving of two scholars reading chained books in the 1610 Leiden university library",
-  },
-  {
-    href: "/forensic-metascience-ai-toolkit",
-    title: "Forensic Metascience AI toolkit",
-    image: "/assets/woodcut_square_crops/radiometer_square.png",
-    alt: "Woodcut of a Crookes radiometer",
-  },
-  {
-    href: "/birds-eye-reviews",
-    title: "Bird's Eye\nReviews",
-    image: "/assets/woodcut_square_crops/flying_machine_square.png",
-    alt: "Woodcut of an aerial flying machine",
-  },
-  {
-    href: "/overview-explorer",
-    title: "Metascience Observatory Explorer",
-    image: "/assets/woodcut_square_crops/1556_agricola_digging.png",
-    alt: "Woodcut of two miners sorting ore into a pan, from Agricola's De re metallica (1556)",
-  },
-];
-
 const articles: ArticleMeta[] = [
   {
     href: "https://moreisdifferent.blog/p/what-weve-learned-so-far-at-the-metascience",
@@ -73,12 +46,6 @@ const articles: ArticleMeta[] = [
     title: "Re-analysis\ninitiatives",
     image: "/assets/woodcut_square_crops/ancient_table_watch_1525.png",
     alt: "Engraving of an ornate 1525 table watch",
-  },
-  {
-    href: "/docs/defining-replication",
-    title: "Defining\nreplication",
-    image: "/assets/woodcut_square_crops/compass_square.png",
-    alt: "Woodcut of a weather vane compass",
   },
   {
     href: "/articles/nature-2016-reproducibility-survey",
@@ -133,6 +100,10 @@ const replicationsDatabasePages: DocMeta[] = [
 
 const documentation: DocMeta[] = [
   {
+    href: "/docs/defining-replication",
+    title: "Defining replication",
+  },
+  {
     href: "/sources",
     title: "Sources used to assemble the replications database",
   },
@@ -167,10 +138,6 @@ const documentation: DocMeta[] = [
   {
     href: "/docs/checking-for-bias",
     title: 'Checking for bias by comparing with "random sampled" replication initiatives',
-  },
-  {
-    href: "/forensic-metascience-ai-toolkit/tools",
-    title: "Forensic Metascience AI toolkit: tool catalogue",
   },
 ];
 
@@ -239,31 +206,7 @@ export default function ArticlesPage() {
         <div className="container mx-auto px-4 py-12 max-w-5xl">
           <h1 className="text-3xl font-bold mb-8 text-foreground">Articles</h1>
 
-          <h2 className="text-2xl font-bold mb-6 text-foreground">Project Overviews</h2>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {projectOverviews.map((project) => (
-              <Link key={project.href} href={project.href} className="group block">
-                <Card className="aspect-square flex flex-col overflow-hidden border-border transition-colors hover:border-primary/50 hover:shadow-md">
-                  <div className="relative flex-1 min-h-0 overflow-hidden bg-muted">
-                    <Image
-                      src={project.image}
-                      alt={project.alt}
-                      fill
-                      sizes="(max-width: 1024px) 50vw, 25vw"
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="p-3 shrink-0">
-                    <h2 className="font-clarendon font-semibold text-sm sm:text-base text-foreground text-center whitespace-pre-line line-clamp-3">
-                      {project.title}
-                    </h2>
-                  </div>
-                </Card>
-              </Link>
-            ))}
-          </div>
-
-          <h2 className="text-2xl font-bold mt-16 mb-6 text-foreground">Major Articles/Pages</h2>
+          <h2 className="text-2xl font-bold mb-6 text-foreground">Major Articles/Pages</h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {articles.map((article) => (
               <Link
@@ -316,7 +259,7 @@ export default function ArticlesPage() {
 
             <div>
               <h2 className="text-2xl font-bold mb-3 text-foreground">
-                Technical Documentation
+                Replications Database Documentation
               </h2>
               <div className="space-y-4">
                 {documentation.map((doc) => (

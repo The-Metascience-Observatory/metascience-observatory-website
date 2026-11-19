@@ -42,10 +42,10 @@ export default function ReplicationProjectsPage() {
           <h1 className="text-4xl font-bold mb-4 text-foreground">
             Replication initiatives
           </h1>
-          <p className="text-foreground/70 leading-relaxed mb-8">
-            Initiatives that primarily re-run studies on newly collected data.
-            For initiatives centered on computational reproduction, robustness
-            checks, and other re-analyses of the original data, see our{" "}
+          <p className="text-black leading-relaxed mb-8">
+            This page lists initiatives that re-run studies in their entirety,
+            collecting new data. For initiatives centered on computational
+            reproduction and re-analyses of data, see our{" "}
             <a
               href="/reanalysis-initiatives"
               className="text-primary hover:underline"
