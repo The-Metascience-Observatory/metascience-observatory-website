@@ -43,13 +43,13 @@ const PRODUCERS = [
   },
   {
     t: "Tools agent",
-    s: "Points the forensic toolkit at the paper's numbers. No web access.",
+    s: "Points the forensic toolkit at the paper's numbers.",
     tone: "accent" as const,
     agent: true,
   },
   {
     t: "Scientific proofreading agent",
-    s: "Reads the paper as a scientist would, looking for internal contradictions, scientific mistakes, and severe methodological flaws.",
+    s: "Reads the paper as a scientist would, looking for internal contradictions, scientific mistakes, and methodological flaws.",
     tone: "accent" as const,
     agent: true,
   },
