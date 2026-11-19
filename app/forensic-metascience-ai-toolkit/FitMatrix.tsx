@@ -91,7 +91,7 @@ const companies: ToolCompany[] = [
       "$125 for one manuscript up to 25,000 words; $300 for three (ithenticate.com/pricing, Oct 2026). Organizational pricing is custom.",
   },
   {
-    name: "Reviewer 3",
+    name: "Reviewer3",
     href: "https://reviewer3.com/home",
     src: "/assets/forensic/reviewer3_logo.png",
     showName: true,
@@ -99,6 +99,16 @@ const companies: ToolCompany[] = [
     cost: "$19",
     costNote:
       "$19 for a one-time review, or $29/month for unlimited reviews (reviewer3.com/pricing, Oct 2026).",
+  },
+  {
+    name: "Deep Review (Google Research)",
+    href: "https://research.google/deepreview/",
+    src: "/assets/forensic/deep_review_logo.png",
+    capabilities: ["ai_review"],
+    partial: ["stats"],
+    cost: "Free–API cost",
+    costNote:
+      "2 free reviews per week; beyond that you supply a Gemini API key and pay only the Gemini API cost of the run (research.google/deepreview, Nov 2026).",
   },
   {
     name: "ScienceDetective.org",
@@ -155,7 +165,7 @@ export function FitMatrix({
 }) {
   return (
     <div className="overflow-x-auto my-8">
-      <table className={`border-collapse mx-auto ${boxedLabels ? "" : "border-b border-border"}`}>
+      <table className={`w-[90%] min-w-max border-collapse mx-auto ${boxedLabels ? "" : "border-b border-border"}`}>
         <thead>
           <tr>
             <th className="w-56" aria-label="Tool" />

@@ -21,7 +21,7 @@ for (const ref of references) test(`Python parity: ${ref.name}, ${ref.outcome}, 
 });
 
 test("All saved obesity correlations match the interactive calculation", () => {
-  for (const [file, selectedStates] of [["correlations_main", states], ["texas_obesity", ["TX"]]] as const) {
+  for (const [file, selectedStates] of [["correlations_main", states], ["texas_obesity", ["TX"]]] as [keyof Snapshot["results"], string[]][]) {
     const rows = snapshot.counties.filter(row => selectedStates.includes(row.state));
     for (const saved of snapshot.results[file]) {
       const result = correlations(rows, String(saved.column), "obesity_adjprev");

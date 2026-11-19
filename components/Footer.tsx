@@ -9,7 +9,7 @@ export const Footer = () => {
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center justify-center gap-6">
             <a
-              href="https://twitter.com/metascience_obs"
+              href="https://x.com/MetascienceObs"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors"
