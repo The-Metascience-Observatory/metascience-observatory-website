@@ -247,7 +247,7 @@ export function RetentionSwarm({ rows }: { rows: AnyRecord[] }) {
           #
         </a>
       </h3>
-      <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+      <p className="text-sm text-black dark:text-gray-100 mb-1">
         One point per study pair: the replication&rsquo;s correlation divided by the
         original&rsquo;s, signed so the original is positive. Bar = median, box = IQR.
         Fields ordered by median.

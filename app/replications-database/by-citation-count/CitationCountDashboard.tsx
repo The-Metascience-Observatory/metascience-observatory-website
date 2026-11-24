@@ -365,7 +365,7 @@ export function CitationCountDashboard({
         <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
           Replication Rate by Citation Count
         </h1>
-        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-2 text-sm text-black dark:text-gray-100">
           Are highly cited papers more replicable?{" "}
           <a
             href="https://doi.org/10.1073/pnas.1909046117"

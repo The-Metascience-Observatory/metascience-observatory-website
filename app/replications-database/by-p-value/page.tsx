@@ -519,7 +519,7 @@ export default function ByPValuePage() {
             <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
               Replication rate by p-value of the original finding
             </h1>
-            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mt-2 text-sm text-black dark:text-gray-100">
               Effect-level analysis: each replication is placed in a bin according to the p-value
               reported for the <em>original</em> finding, and we show what fraction of replications in
               each bin were successful. Only <strong>originally-significant</strong> findings (original
@@ -651,7 +651,7 @@ export default function ByPValuePage() {
               <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
                 Observed vs. Expected Replication Rate (z-curve)
               </h2>
-              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mt-2 text-sm text-black dark:text-gray-100">
                 We convert each significant original finding to an absolute z-score and fit a{" "}
                 <strong>z-curve</strong> (Bartoš &amp; Schimmack, 2022): a mixture model that accounts for the
                 fact that the literature is selected for significance. From it we read off the{" "}

@@ -240,7 +240,7 @@ export function HIndexDashboard({
         <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
           Replication Rate by Author h-index
         </h1>
-        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-2 text-sm text-black dark:text-gray-100">
           Are papers by eminent researchers more replicable? This page plots the
           replication rate of original papers in the database against the h-index of
           their authors &mdash; the mean across the byline, the most-cited coauthor, or
@@ -352,7 +352,7 @@ export function HIndexDashboard({
           <h2 className="text-xl md:text-2xl font-semibold tracking-tight">
             Modeled replication probability by {metricLabel.toLowerCase()}
           </h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-black dark:text-gray-100">
             A probit regression of replication success on log&#8321;&#8320;(1 + h), plotted
             as a predicted-probability curve with a 95% confidence band &mdash; the same
             data as the bars above, without the arbitrary bin edges. Bin rates are

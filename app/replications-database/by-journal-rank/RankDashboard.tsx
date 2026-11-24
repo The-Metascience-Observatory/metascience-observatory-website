@@ -417,7 +417,7 @@ export function RankDashboard({
         <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
           Replication Rate by Journal Rank
         </h1>
-        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-2 text-sm text-black dark:text-gray-100">
           Do papers published in more prestigious journals replicate more or less often? Each
           original paper is matched to its journal&rsquo;s {metricNounLower} and classified as
           &ldquo;replicated&rdquo; if at least {Math.round(threshold * 100)}% of its effect

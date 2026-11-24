@@ -220,7 +220,7 @@ export function AuthorOverlapDashboard({
         <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
           Replication Rate by Author Overlap
         </h1>
-        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-2 text-sm text-black dark:text-gray-100">
           Do replications involving the original authors succeed more often than fully
           independent ones? This page plots the replication rate against the number of
           authors shared between the original study and its replication. Authors are

@@ -193,7 +193,7 @@ export default function ByJournalPage() {
             <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
               Paper Replication Success by Journal
             </h1>
-            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mt-2 text-sm text-black dark:text-gray-100">
               Paper-level analysis: a paper is considered &ldquo;replicated&rdquo; if at
               least {Math.round(threshold * 100)}% of its effect replications
               were successful. Only journals with {MIN_PAPERS}+ original papers

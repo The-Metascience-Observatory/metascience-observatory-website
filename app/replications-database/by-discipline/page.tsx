@@ -328,7 +328,7 @@ export default function ByDisciplinePage() {
             <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
               Paper Replication Success by Discipline
             </h1>
-            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mt-2 text-sm text-black dark:text-gray-100">
               Paper-level analysis: a paper is considered &ldquo;replicated&rdquo; if at
               least {Math.round(threshold * 100)}% of the effect replications we have
               in our database for that paper were successful. (Replication work

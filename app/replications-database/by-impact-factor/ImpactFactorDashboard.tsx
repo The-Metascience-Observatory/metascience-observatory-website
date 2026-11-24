@@ -424,7 +424,7 @@ export function ImpactFactorDashboard({
           Replication Rate by Journal {metricNoun}
         </h1>
         {SNAPSHOT_ONLY_METRICS.has(metric) && (
-          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 italic">
+          <p className="mt-2 text-sm text-black dark:text-gray-100 italic">
             {metricLabel} is a single current snapshot from the OpenAlex API (as of {snapYear}),
             so it does not vary by publication year; the basis is fixed to that snapshot.
           </p>
