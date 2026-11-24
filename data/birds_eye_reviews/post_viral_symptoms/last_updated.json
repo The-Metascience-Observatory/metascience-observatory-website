@@ -1,0 +1,16 @@
+{
+  "generated_at": "2026-11-20T03:17:29Z",
+  "published_at": "2026-11-20T03:17:30Z",
+  "bundle_schema": "prevalence-bundle/1",
+  "page_schema": "post-viral-symptoms-page/1",
+  "origin": "gold",
+  "bundle_dir": "projects/post_viral_symptoms/dashboard_gold",
+  "n_papers": 69,
+  "n_papers_usable": 67,
+  "n_cohorts": 54,
+  "n_estimates": 2856,
+  "n_estimates_usable": 2694,
+  "n_contrasts": 1542,
+  "n_contrasts_usable": 1542,
+  "n_derived_pairs": 1185
+}

@@ -5778,5 +5778,569 @@
   "10.7759/cureus.48591": {
     "indication": "treatment",
     "rationale": "This retrospective clinic-based study evaluated inhaled corticosteroid plus long-acting beta-agonist bronchodilator treatment for asthma-like symptoms occurring after COVID-19, and reported symptom improvement at follow-up."
+  },
+  "10.1002/pmrj.12578": {
+    "indication": "treatment",
+    "rationale": "Telehealth physical therapy given to patients with persistent symptoms after COVID hospitalization."
+  },
+  "10.1002/rcr2.1042": {
+    "indication": "treatment",
+    "rationale": "Mycophenolate given to patients with persistent post-COVID organizing pneumonia."
+  },
+  "10.1007/s00392-023-02300-6": {
+    "indication": "treatment",
+    "rationale": "Supervised exercise training for post-COVID fatigue."
+  },
+  "10.1007/s00405-022-07570-w": {
+    "indication": "treatment",
+    "rationale": "Olfactory training given to patients with persistent post-COVID smell loss."
+  },
+  "10.1007/s00415-022-11225-5": {
+    "indication": "treatment",
+    "rationale": "Amitriptyline given to patients with persistent post-COVID headache, with change in headache days as outcome."
+  },
+  "10.1007/s11553-025-01244-1": {
+    "indication": "treatment",
+    "rationale": "Coaching with pacing strategies given to post-COVID patients, fatigue scores measured before/after."
+  },
+  "10.1007/s12026-021-09185-5": {
+    "indication": "treatment",
+    "rationale": "Case series of therapies given to post-COVID orthostatic intolerance patients."
+  },
+  "10.1016/j.actpsy.2026.108116": {
+    "indication": "treatment",
+    "rationale": "Cognitive and motor telerehabilitation for post-COVID condition/ME-CFS."
+  },
+  "10.1016/j.amjmed.2026.11.008": {
+    "indication": "treatment",
+    "rationale": "Phenotype-directed therapy given to patients with persistent post-COVID pulmonary symptoms."
+  },
+  "10.1016/j.bbih.2026.101379": {
+    "indication": "treatment",
+    "rationale": "Low-dose aripiprazole given to long COVID patients with symptom surveys before and after."
+  },
+  "10.1016/j.bjid.2026.105892": {
+    "indication": "treatment",
+    "rationale": "Prednisolone for post-COVID interstitial lung disease with persistent symptoms."
+  },
+  "10.1016/j.ctim.2026.103367": {
+    "indication": "treatment",
+    "rationale": "Yoga program for physician-confirmed post-COVID condition (feasibility RCT)."
+  },
+  "10.1016/j.eclinm.2026.104264": {
+    "indication": "treatment",
+    "rationale": "Prednisolone and/or B vitamins for post-COVID symptoms 12+ weeks after infection."
+  },
+  "10.1016/j.euroneuro.2023.02.006": {
+    "indication": "treatment",
+    "rationale": "Vortioxetine given to patients with post-COVID depressive episode, with symptom outcomes."
+  },
+  "10.1016/j.imlet.2026.107247": {
+    "indication": "treatment",
+    "rationale": "Tixagevimab/cilgavimab given to long COVID ME/CFS patients with circulating spike protein."
+  },
+  "10.1016/j.jacadv.2026.103328": {
+    "indication": "treatment",
+    "rationale": "Tailored exercise for POTS following COVID/post-COVID condition."
+  },
+  "10.1016/j.jaccas.2026.107508": {
+    "indication": "treatment",
+    "rationale": "Anti-anginal and medical therapy given to long COVID patients with coronary microvascular dysfunction."
+  },
+  "10.1016/j.jesf.2024.04.003": {
+    "indication": "treatment",
+    "rationale": "Treadmill exercise with VR for post-COVID dyspnea, fatigue and cognitive impairment."
+  },
+  "10.1016/j.jpsychires.2026.11.021": {
+    "indication": "treatment",
+    "rationale": "tDCS plus cognitive training for post-COVID cognitive decline."
+  },
+  "10.1016/j.jpsychores.2026.112920": {
+    "indication": "treatment",
+    "rationale": "CBT for WHO-defined post-COVID condition."
+  },
+  "10.1016/j.neurom.2026.09.025": {
+    "indication": "treatment",
+    "rationale": "Sonic augmentation and/or vagus nerve stimulation for symptoms persisting 3+ months."
+  },
+  "10.1016/j.rehab.2023.101737": {
+    "indication": "treatment",
+    "rationale": "Rehabilitation care pathways given to post-COVID hospitalization patients; conservative default to treatment."
+  },
+  "10.1016/j.rh.2021.11.001": {
+    "indication": "treatment",
+    "rationale": "Inpatient physiotherapy given after COVID pneumonia, with persistent symptoms assessed at 3 months."
+  },
+  "10.1016/j.rmcr.2021.101356": {
+    "indication": "treatment",
+    "rationale": "Prednisolone given for persistent respiratory failure with organizing pneumonia after COVID-19."
+  },
+  "10.1038/s41467-026-77925-y": {
+    "indication": "treatment",
+    "rationale": "Monoclonal antibody AER002 given to Long COVID patients with symptoms 60+ days."
+  },
+  "10.1038/s41598-024-82412-9": {
+    "indication": "treatment",
+    "rationale": "Photobiomodulation for persistent post-COVID orofacial pain/headache."
+  },
+  "10.1038/s41598-025-13905-4": {
+    "indication": "treatment",
+    "rationale": "Aerobic exercise training for people with ongoing symptoms >12 months post-infection."
+  },
+  "10.1080/07853890.2021.2001043": {
+    "indication": "treatment",
+    "rationale": "Pulmonary rehabilitation given to discharged COVID patients with 6-minute walk outcome."
+  },
+  "10.1080/09638288.2024.2311330": {
+    "indication": "treatment",
+    "rationale": "Allied health therapy given to people with persistent post-COVID complaints."
+  },
+  "10.1080/17476348.2026.2684077": {
+    "indication": "treatment",
+    "rationale": "Longidaza for post-COVID pulmonary sequelae, outcome FVC."
+  },
+  "10.1093/braincomms/fcag364": {
+    "indication": "treatment",
+    "rationale": "Microtesla magnetic therapy for Long COVID cognitive impairment."
+  },
+  "10.1097/md.0000000000048084": {
+    "indication": "treatment",
+    "rationale": "Kampo medicine given to patients with prolonged COVID symptoms."
+  },
+  "10.1097/phm.0000000000002350": {
+    "indication": "treatment",
+    "rationale": "Supervised exercise given to patients with persistent post-COVID symptoms."
+  },
+  "10.1101/2023.08.10.23290338": {
+    "indication": "treatment",
+    "rationale": "Stellate ganglion block given to long COVID patients with symptom follow-up."
+  },
+  "10.1101/2025.06.12.25329489": {
+    "indication": "treatment",
+    "rationale": "Pycnogenol for post-COVID condition with persisting symptoms."
+  },
+  "10.1101/2025.07.24.25331961": {
+    "indication": "treatment",
+    "rationale": "Photobiomodulation for post-COVID cognitive dysfunction."
+  },
+  "10.1136/bmjresp-2022-001377": {
+    "indication": "treatment",
+    "rationale": "Multidisciplinary rehabilitation given to post-COVID patients with persistent symptoms."
+  },
+  "10.1136/thorax-2026-btsabstracts.404": {
+    "indication": "treatment",
+    "rationale": "Long COVID breathlessness programme (ENO-Breathe) completed by patients, with follow-up survey of outcomes; override of administration flag."
+  },
+  "10.1159/000528188": {
+    "indication": "treatment",
+    "rationale": "Olfactory training for persistent post-COVID smell loss."
+  },
+  "10.1159/pps/aemag017": {
+    "indication": "treatment",
+    "rationale": "VR neuromuscular exercise for post-COVID fatigue."
+  },
+  "10.11648/j.ajcem.20261404.16": {
+    "indication": "treatment",
+    "rationale": "Osteopathic correction and breathing exercises for post-COVID syndrome."
+  },
+  "10.1177/0253717621994285": {
+    "indication": "treatment",
+    "rationale": "Tofisopam given to patients with post-COVID neuropsychiatric manifestations."
+  },
+  "10.1177/02537176231222572": {
+    "indication": "treatment",
+    "rationale": "Methylphenidate given for brain fog persisting beyond 12 weeks after COVID."
+  },
+  "10.1177/14799731211015691": {
+    "indication": "treatment",
+    "rationale": "Pulmonary-rehabilitation-based programme given to patients with post-COVID rehabilitation needs."
+  },
+  "10.1177/14799731241255967": {
+    "indication": "treatment",
+    "rationale": "Inspiratory training, exercise and neurorehabilitation for persistent dyspnea and smell/taste loss."
+  },
+  "10.1177/14799731261454679": {
+    "indication": "treatment",
+    "rationale": "Yogic breathing for persistent post-COVID breathlessness."
+  },
+  "10.1177/17534666231167354": {
+    "indication": "treatment",
+    "rationale": "Online respiratory physiotherapy given to post-infection patients with dyspnea."
+  },
+  "10.1177/17534666231212431": {
+    "indication": "treatment",
+    "rationale": "Pulmonary rehabilitation given to post-severe COVID patients with 6MWT outcome."
+  },
+  "10.1177/19458924221113124": {
+    "indication": "treatment",
+    "rationale": "Olfactory training for post-COVID olfactory dysfunction persisting 4+ weeks."
+  },
+  "10.1177/26924366251403292": {
+    "indication": "treatment",
+    "rationale": "Inspiratory muscle training given to post-ICU COVID patients with persistent dyspnea."
+  },
+  "10.1183/23120541.00108-2021": {
+    "indication": "treatment",
+    "rationale": "Inpatient pulmonary rehabilitation given to post-acute COVID patients with persistent impairments, measuring 6MWD."
+  },
+  "10.1186/s13102-024-00909-2": {
+    "indication": "treatment",
+    "rationale": "Inpatient rehabilitation given to patients with symptoms persisting over 12 weeks."
+  },
+  "10.1186/s13223-022-00711-0": {
+    "indication": "treatment",
+    "rationale": "Pyrophosphate for post-COVID anosmia persisting >90 days."
+  },
+  "10.12659/msm.952546": {
+    "indication": "treatment",
+    "rationale": "Olfactory training given to patients with persistent post-COVID olfactory dysfunction."
+  },
+  "10.12865/chsj.48.04.10": {
+    "indication": "treatment",
+    "rationale": "Pulmonary rehabilitation given to post-COVID patients with residual symptoms."
+  },
+  "10.1371/journal.pdig.0001818": {
+    "indication": "treatment",
+    "rationale": "Cognitive training with tDCS or rehabilitation for long COVID cognitive symptoms."
+  },
+  "10.14442/generalist.47.49": {
+    "indication": "treatment",
+    "rationale": "Saikokeishito given to post-COVID clinic patients with fatigue."
+  },
+  "10.14740/jocmr4855": {
+    "indication": "treatment",
+    "rationale": "Zinc acetate given to outpatients with post-COVID conditions, followed 12 weeks."
+  },
+  "10.1513/annalsats.202008-1002oc": {
+    "indication": "treatment",
+    "rationale": "Prednisolone given to patients with persistent post-COVID interstitial lung disease."
+  },
+  "10.1590/1980-5764-dn-2023-0053": {
+    "indication": "treatment",
+    "rationale": "Cognitive stimulation given to patients with post-COVID cognitive complaints."
+  },
+  "10.18103/mra.v14i2.7250": {
+    "indication": "treatment",
+    "rationale": "Benfotiamine and methylcobalamin given for long COVID brain fog."
+  },
+  "10.20452/pamw.16714": {
+    "indication": "treatment",
+    "rationale": "Women receiving post-COVID physiotherapy assessed; therapy is being delivered despite the flag, conservative default to treatment."
+  },
+  "10.20944/preprints202211.0400.v1": {
+    "indication": "treatment",
+    "rationale": "PEMF and integrative therapy given to post-COVID syndrome patients."
+  },
+  "10.20944/preprints202309.0782.v1": {
+    "indication": "treatment",
+    "rationale": "Home-based telerehabilitation given to patients with post-COVID syndrome."
+  },
+  "10.20944/preprints202407.2492.v1": {
+    "indication": "treatment",
+    "rationale": "SPM-enriched marine oil for post-COVID syndrome with symptoms >12 weeks."
+  },
+  "10.20944/preprints202408.0871.v1": {
+    "indication": "treatment",
+    "rationale": "Multidisciplinary rehabilitation given to long COVID clinic patients with follow-up assessments."
+  },
+  "10.20944/preprints202412.0230.v1": {
+    "indication": "treatment",
+    "rationale": "Pacing protocol given to long COVID patients with post-exertional symptoms."
+  },
+  "10.21203/rs.3.rs-10729022/v1": {
+    "indication": "treatment",
+    "rationale": "Manual lymphatic drainage given to post-COVID patients with neurocognitive impairment or headache."
+  },
+  "10.21203/rs.3.rs-10999234/v1": {
+    "indication": "treatment",
+    "rationale": "Telerehabilitation exercise given to people with persistent long COVID symptoms."
+  },
+  "10.21203/rs.3.rs-1452186/v1": {
+    "indication": "treatment",
+    "rationale": "Telerehabilitation exercise for patients with persistent symptoms beyond 110 days."
+  },
+  "10.21203/rs.3.rs-1617822/v1": {
+    "indication": "treatment",
+    "rationale": "Nirmatrelvir/ritonavir used in long COVID patients to treat persistent symptoms."
+  },
+  "10.21203/rs.3.rs-2521799/v1": {
+    "indication": "treatment",
+    "rationale": "Telerehabilitation app for long COVID patients with persistent symptoms."
+  },
+  "10.21203/rs.3.rs-3010169/v1": {
+    "indication": "treatment",
+    "rationale": "Echinochrome A extract given to patients with long COVID for 12+ weeks."
+  },
+  "10.21203/rs.3.rs-3510980/v1": {
+    "indication": "treatment",
+    "rationale": "Balneotherapy administered in a study on post-COVID patients; details sparse, default to treatment."
+  },
+  "10.21203/rs.3.rs-3733202/v1": {
+    "indication": "treatment",
+    "rationale": "Supervised exercise given to patients with post-COVID condition."
+  },
+  "10.21203/rs.3.rs-3744463/v1": {
+    "indication": "treatment",
+    "rationale": "Supervised exercise given to patients with post-COVID condition."
+  },
+  "10.21203/rs.3.rs-4112790/v1": {
+    "indication": "treatment",
+    "rationale": "Ribavirin given to patients diagnosed with long COVID."
+  },
+  "10.21203/rs.3.rs-4213319/v1": {
+    "indication": "treatment",
+    "rationale": "Cognitive training plus physiotherapy given to WHO-defined post-COVID patients."
+  },
+  "10.21203/rs.3.rs-4391458/v1": {
+    "indication": "treatment",
+    "rationale": "TENS device given to PASC patients with persistent pain and fatigue."
+  },
+  "10.21203/rs.3.rs-4459921/v1": {
+    "indication": "treatment",
+    "rationale": "Pacing interventions given to adults with Long COVID."
+  },
+  "10.21203/rs.3.rs-6269439/v1": {
+    "indication": "treatment",
+    "rationale": "Resistance exercise program for people with persistent post-COVID symptoms."
+  },
+  "10.21203/rs.3.rs-7449833/v1": {
+    "indication": "treatment",
+    "rationale": "Nirmatrelvir/ritonavir given to WHO-defined long COVID patients with symptom score change as outcome."
+  },
+  "10.21203/rs.3.rs-7541120/v1": {
+    "indication": "treatment",
+    "rationale": "ICS/LABA given to WHO-defined long COVID patients without asthma."
+  },
+  "10.21203/rs.3.rs-9517130/v1": {
+    "indication": "treatment",
+    "rationale": "Metformin given to patients with post-COVID fatigue and cognitive dysfunction."
+  },
+  "10.2139/ssrn.4356755": {
+    "indication": "treatment",
+    "rationale": "AXA1125 given to fatigue-predominant long COVID patients."
+  },
+  "10.2147/idr.s381715": {
+    "indication": "treatment",
+    "rationale": "Ivermectin given for persistent post-COVID anosmia."
+  },
+  "10.2147/lra.s402197": {
+    "indication": "treatment",
+    "rationale": "Stellate ganglion block given for post-COVID fatigue, parosmia and dysgeusia."
+  },
+  "10.2174/1570159x20666220420113513": {
+    "indication": "treatment",
+    "rationale": "PEA-LUT plus olfactory training for persistent post-COVID olfactory dysfunction."
+  },
+  "10.2196/89631": {
+    "indication": "treatment",
+    "rationale": "Yogic breathing and meditation given to physician-diagnosed long COVID patients."
+  },
+  "10.22246/jikm.2026.47.1.42": {
+    "indication": "treatment",
+    "rationale": "Herbal medicine given to patients with sequelae persisting >=4 weeks, symptoms tracked over time."
+  },
+  "10.22540/jmni-26-242": {
+    "indication": "treatment",
+    "rationale": "Sensory re-education and exercise for post-COVID polyneuropathy patients."
+  },
+  "10.2340/jrm.v58.44828": {
+    "indication": "treatment",
+    "rationale": "Pulmonary telerehabilitation given to patients with respiratory PASC >=4 weeks after infection."
+  },
+  "10.23736/s0026-4806.20.07225-0": {
+    "indication": "treatment",
+    "rationale": "Pycnogenol plus Centella given to post-COVID lung disease patients."
+  },
+  "10.23736/s1973-9087.24.08634-9": {
+    "indication": "treatment",
+    "rationale": "Telerehabilitation given to patients with persistent respiratory dysfunction after COVID pneumonia."
+  },
+  "10.31032/ijbpas/2025/14.1.8588": {
+    "indication": "treatment",
+    "rationale": "Physiotherapy given to post-COVID young adults with functional outcomes."
+  },
+  "10.32471/umj.1680-3051.151.234222": {
+    "indication": "treatment",
+    "rationale": "Glucocorticoids/eltrombopag given to patients with post-COVID thrombocytopenia persisting after infection."
+  },
+  "10.3310/nihropenres.14236.1": {
+    "indication": "treatment",
+    "rationale": "taVNS given to patients with post-COVID fatigue."
+  },
+  "10.3389/fneur.2022.1012685": {
+    "indication": "treatment",
+    "rationale": "Inpatient neurorehabilitation given to post-ICU COVID patients with neurological sequelae; persistent post-acute condition, conservative treatment default."
+  },
+  "10.3389/fnins.2026.1989273": {
+    "indication": "treatment",
+    "rationale": "Low-dose aripiprazole given to adolescents with post-COVID hypersomnia."
+  },
+  "10.3389/fphar.2025.1508276": {
+    "indication": "treatment",
+    "rationale": "Fuzheng Huayu given to recovered COVID patients with persistent pulmonary fibrosis."
+  },
+  "10.3389/fresc.2026.1898250": {
+    "indication": "treatment",
+    "rationale": "Multimodal inpatient rehabilitation for WHO-defined post-COVID syndrome."
+  },
+  "10.3389/fresc.2026.1927300": {
+    "indication": "treatment",
+    "rationale": "CBT-based physiotherapy follow-up for post-COVID condition patients."
+  },
+  "10.3389/fresc.2026.1946566": {
+    "indication": "treatment",
+    "rationale": "Health resort rehabilitation for patients with ongoing post-COVID symptoms."
+  },
+  "10.3389/frhs.2026.1912240": {
+    "indication": "treatment",
+    "rationale": "ECHO intervention evaluated on long COVID patients' physical function outcomes."
+  },
+  "10.3389/fspor.2025.1549132": {
+    "indication": "treatment",
+    "rationale": "Multicomponent exercise for post-COVID condition patients."
+  },
+  "10.3390/arm91060037": {
+    "indication": "treatment",
+    "rationale": "Comprehensive rehabilitation given to patients with post-COVID complications."
+  },
+  "10.3390/healthcare12181864": {
+    "indication": "treatment",
+    "rationale": "Pulmonary telerehabilitation for students diagnosed with post-COVID condition."
+  },
+  "10.3390/healthcare13222892": {
+    "indication": "treatment",
+    "rationale": "Structured physical rehabilitation given to patients with post-COVID conditions, mobility outcomes."
+  },
+  "10.3390/healthcare14030392": {
+    "indication": "treatment",
+    "rationale": "Structured rehabilitation given to post-COVID patients, muscle strength outcome."
+  },
+  "10.3390/ijerph20021468": {
+    "indication": "treatment",
+    "rationale": "Multidisciplinary inpatient rehabilitation given to patients with ongoing post-COVID symptoms."
+  },
+  "10.3390/jcm10194428": {
+    "indication": "treatment",
+    "rationale": "Telerehabilitation given to patients with persistent dyspnea after COVID-19."
+  },
+  "10.3390/jcm15186970": {
+    "indication": "treatment",
+    "rationale": "Breathing retraining physiotherapy given to long COVID patients with dysfunctional breathing."
+  },
+  "10.3390/jcm15187326": {
+    "indication": "treatment",
+    "rationale": "Epidural oxygen injection given to WHO-defined long COVID patients with SF-36 outcomes."
+  },
+  "10.3390/medicines8090047": {
+    "indication": "treatment",
+    "rationale": "Enzyme and probiotic formulation for post-COVID fatigue."
+  },
+  "10.3390/nu18183044": {
+    "indication": "treatment",
+    "rationale": "Mediterranean diet intervention given to long COVID overweight patients."
+  },
+  "10.3390/s23135880": {
+    "indication": "treatment",
+    "rationale": "tDCS for persistent post-COVID smell loss."
+  },
+  "10.36141/svdld.v41i4.14331": {
+    "indication": "treatment",
+    "rationale": "Prednisone given to severe COVID pneumonia survivors for post-COVID lung sequelae."
+  },
+  "10.36959/958/583": {
+    "indication": "treatment",
+    "rationale": "Azithromycin with prednisone given to patients with residual post-COVID lung infiltrates."
+  },
+  "10.4103/atm.atm_121_23": {
+    "indication": "treatment",
+    "rationale": "Prednisone given to post-COVID patients with persistent symptoms and CT abnormalities."
+  },
+  "10.4236/ojtr.2025.133013": {
+    "indication": "treatment",
+    "rationale": "Multidisciplinary rehabilitation given to NICE-defined long COVID patients, pre/post at 12 weeks."
+  },
+  "10.47750/jptcp.2023.30.07.016": {
+    "indication": "treatment",
+    "rationale": "Pulmonary rehabilitation for post-hospitalization COVID patients with restrictive impairment."
+  },
+  "10.47750/pnr.2023.14.s02.87": {
+    "indication": "treatment",
+    "rationale": "Breathing technique and chest physiotherapy for post-COVID patients."
+  },
+  "10.51847/ugvstnjdmp": {
+    "indication": "treatment",
+    "rationale": "Neuro-stimulating exercise program given to students with post-COVID syndrome symptoms."
+  },
+  "10.53365/nrfhh.605": {
+    "indication": "treatment",
+    "rationale": "DNS exercises for post-COVID syndrome balance and gait problems."
+  },
+  "10.5535/arm.23060": {
+    "indication": "treatment",
+    "rationale": "Pulmonary telerehabilitation for post-COVID survivors with persisting issues."
+  },
+  "10.5606/tftrd.2023.11605": {
+    "indication": "treatment",
+    "rationale": "Yoga exercises given to recovered COVID patients with ongoing fatigue and dyspnea at 2-6 months."
+  },
+  "10.6061/clinics/2021/e2804": {
+    "indication": "treatment",
+    "rationale": "Intensive inpatient rehabilitation given to post-acute COVID survivors with symptoms >=28 days."
+  },
+  "10.61186/jps.23.144.13": {
+    "indication": "treatment",
+    "rationale": "Cognitive rehabilitation plus tDCS for recovered COVID patients with health-related outcomes."
+  },
+  "10.64898/2026.10.05.26364531": {
+    "indication": "treatment",
+    "rationale": "Cognitive rehabilitation for long COVID patients with cognitive impairment."
+  },
+  "10.7150/ijms.96575": {
+    "indication": "treatment",
+    "rationale": "Traditional Chinese herbal medicine given to patients diagnosed with COVID-19 sequelae."
+  },
+  "10.7759/cureus.19921": {
+    "indication": "treatment",
+    "rationale": "Steroids/olfactory rehabilitation given to patients with persistent post-COVID parosmia."
+  },
+  "10.7759/cureus.61855": {
+    "indication": "treatment",
+    "rationale": "Mometasone plus olfactory training for residual post-COVID olfactory dysfunction."
+  },
+  "10.1016/j.eclinm.2026.104215": {
+    "indication": "prevention",
+    "rationale": "Fourth vaccine dose evaluated for risk of later post COVID-19 condition diagnosis."
+  },
+  "10.1111/eci.70058": {
+    "indication": "prevention",
+    "rationale": "Supplement given at 14 days after mild-moderate acute COVID, not to long COVID patients; endotheliopathy outcome."
+  },
+  "10.1371/journal.pgph.0005771": {
+    "indication": "prevention",
+    "rationale": "Acute-phase Paxlovid evaluated for incident post-acute conditions."
+  },
+  "10.21203/rs.3.rs-2027075/v1": {
+    "indication": "prevention",
+    "rationale": "Early outpatient drugs given in acute COVID, outcome is persistent symptoms at Day 60 (PASC prevention)."
+  },
+  "10.2139/ssrn.4415655": {
+    "indication": "prevention",
+    "rationale": "Nirmatrelvir-ritonavir given during acute infection with subsequent PASC incidence as outcome."
+  },
+  "10.2147/idr.s499058": {
+    "indication": "prevention",
+    "rationale": "Acute-phase antivirals evaluated for subsequent post-COVID sequelae."
+  },
+  "10.2196/36023": {
+    "indication": "prevention",
+    "rationale": "Inhaled corticosteroids given in early acute infection, outcome is later referral for persistent respiratory symptoms."
+  },
+  "10.3820/jjpe.28.s86": {
+    "indication": "prevention",
+    "rationale": "Evaluates COVID-19 vaccination in relation to incident long COVID diagnoses after infection."
+  },
+  "10.7326/m23-1394": {
+    "indication": "prevention",
+    "rationale": "Nirmatrelvir-ritonavir given in acute infection with incident post-COVID conditions as outcome."
   }
 }

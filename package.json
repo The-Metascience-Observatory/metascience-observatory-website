@@ -82,6 +82,7 @@
     "sonner": "^1.7.4",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
+    "three": "^0.169.0",
     "vaul": "^0.9.9",
     "zod": "^3.25.76"
   },
@@ -89,6 +90,7 @@
     "@playwright/test": "^1.63.0",
     "@types/d3-dsv": "^3.0.5",
     "@types/node": "24.9.2",
+    "@types/three": "^0.169.0",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",

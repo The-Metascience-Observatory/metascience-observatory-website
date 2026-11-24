@@ -35,6 +35,10 @@ const reviews: ReviewMeta[] = [
     href: "/birds-eye-reviews/lithium-weight-gain",
     title: "Lithium and weight gain",
   },
+  {
+    href: "/birds-eye-reviews/post-viral-symptoms",
+    title: "Post-viral symptoms",
+  },
 ];
 
 export default function BirdsEyeReviewsPage() {

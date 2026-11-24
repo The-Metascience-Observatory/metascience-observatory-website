@@ -440,6 +440,14 @@ export function LongCovidDashboard(props: DashboardProps) {
         >
           {isMeCfs ? "View graded-exercise sub-analysis" : "View prevention trials"} &rarr;
         </Link>
+        {!isMeCfs && (
+          <Link
+            href="/birds-eye-reviews/long-covid/trial-audit"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-medium"
+          >
+            View treatment map and AI audit &rarr;
+          </Link>
+        )}
       </div>
 
       {!isMeCfs && <InspectFilters value={inspectFilter} onChange={setInspectFilter}
